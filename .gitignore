@@ -1,0 +1,40 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+build/
+next-env.d.ts
+
+# production
+dist/
+
+# env
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.stackdump
+
+# large binary references
+# `inspirations/` is ~114MB of source-image reference that never changes and that
+# nothing in the build reads. It stays on disk, out of git, so clones stay fast.
+# The design reference the build DOES read is `design/reference/` (exported HTML).
+*.zip
+inspirations/
+
+# tooling output
+graphify-out/
+docs/graphify-out/
+.claude/settings.local.json
