@@ -185,9 +185,9 @@ Only the first three block the current work.
 | B8 | `sections/registry.ts` | Opus |
 | B9 | Supabase schema + RLS migrations | Opus |
 | B10 | Magic-link auth, both login routes | Opus |
-| B11 | Lead capture + owner notification | GPT-5.6 |
-| B12 | Analytics aggregations | GPT-5.6 |
-| B13 | Panel write-back, allowlisted | GPT-5.6 |
+| B11 | Lead capture + owner notification | gpt-5.6-terra |
+| B12 | Analytics aggregations | gpt-5.6-terra |
+| B13 | Panel write-back, allowlisted | gpt-5.6-terra |
 | B14 | `check:tenant-isolation` | Opus |
 
 **B5 is the gate.** Nothing is delegated until the checks exist and `check:hardcode` provably

@@ -1,0 +1,28 @@
+<!-- Extracted from ashish-interiors---home-(standalone).html. {{ }} are Claude Design's own template bindings, not this project's config system — leave them as-is. -->
+<section id="about" data-screen-label="About" style="position:relative;padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5;overflow:hidden">
+    <sc-if value="{{ showVerticalWordmark }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;left:-6px;top:clamp(60px,10vw,140px);display:{{ heroAsideDisplay }};writing-mode:vertical-rl;font-size:clamp(30px,4vw,58px);font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px #D3CBBF;pointer-events:none">ASHISH INTERIORS</div>
+    </sc-if>
+    <div style="position:relative;display:grid;grid-template-columns:{{ aboutCols }};gap:clamp(36px,7vw,96px);align-items:center;padding-left:{{ aboutPadLeft }}">
+      <div style="position:relative">
+        <sc-if value="{{ showOffsetFrames }}" hint-placeholder-val="{{ true }}">
+          <div style="position:absolute;top:-28px;left:-28px;right:28px;bottom:28px;border:1px solid #51372A;pointer-events:none"></div>
+        </sc-if>
+        <div style="position:relative;aspect-ratio:3/4;background:repeating-linear-gradient(135deg,#EAE6DF 0 9px,#E0DBD3 9px 18px);overflow:hidden"><img src="599ee956-26ef-4176-8c4d-9c863d3410e8" alt="Sunlit room corner with soft curtains" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      </div>
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>LEARN MORE</span>
+          <span>ABOUT THE</span>
+          <span>STUDIO</span>
+        </div>
+        <h2 style="margin:0;font-size:clamp(40px,7.5vw,92px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">ABOUT<br><span style="display:block;margin-left:.55em;color:#51372A">THE STUDIO</span></h2>
+        <p style="margin:clamp(28px,4vw,44px) 0 0 0;max-width:36em;font-size:16px;line-height:1.75;text-align:justify;color:#3C3C3C;text-wrap:pretty">Ashish Interiors began in 2013 with one carpenter, one measuring tape and a rented room off Boring Road. The work has always been ordinary homes done properly — a family's first flat, a mother's kitchen, an office for four people.</p>
+        <p style="margin:22px 0 0 0;max-width:36em;font-size:16px;line-height:1.75;text-align:justify;color:#3C3C3C;text-wrap:pretty">We still keep the crew in-house and still visit every site ourselves. Nothing leaves the workshop that we would not put in our own house.</p>
+        <div style="display:flex;align-items:baseline;gap:18px;margin-top:clamp(32px,4vw,48px);padding-top:24px;border-top:1px solid #51372A">
+          <span style="font-size:clamp(40px,5vw,56px);font-weight:400;line-height:1;letter-spacing:-.03em">2013</span>
+          <span style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">FOUNDED IN PATNA</span>
+        </div>
+      </div>
+    </div>
+  </section>

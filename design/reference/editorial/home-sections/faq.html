@@ -1,0 +1,19 @@
+<!-- Extracted from ashish-interiors---home-(standalone).html. {{ }} are Claude Design's own template bindings, not this project's config system — leave them as-is. -->
+<section data-screen-label="FAQ" style="padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FFFFFF">
+    <div style="display:grid;grid-template-columns:{{ faqCols }};gap:clamp(36px,7vw,96px);align-items:start">
+      <h2 style="margin:0;font-size:clamp(40px,7.5vw,92px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">COMMON<br><span style="display:block;margin-left:.55em;color:#51372A">QUESTIONS</span></h2>
+      <div>
+        <sc-for list="{{ faqs }}" as="item" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid #51372A">
+            <button type="button" sc-camel-on-click="{{ item.toggle }}" style="display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;padding:clamp(20px,2.4vw,30px) 0;background:none;border:0;font:inherit;color:#141414;text-align:left;cursor:pointer">
+              <span style="font-size:clamp(16px,1.9vw,22px);font-weight:400;letter-spacing:.01em;text-transform:uppercase">{{ item.q }}</span>
+              <span style="font-size:24px;font-weight:300;line-height:1;color:#51372A">{{ item.sign }}</span>
+            </button>
+            <div style="display:{{ item.display }};padding:0 clamp(0px,8vw,90px) clamp(20px,2.4vw,30px) 0">
+              <p style="margin:0;font-size:15px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ item.a }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
