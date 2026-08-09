@@ -1,0 +1,647 @@
+{
+  "$schema": "./client.schema.json",
+  "slug": "stress",
+  "tier": "t3",
+  "template": "editorial",
+  "status": "demo",
+  "vertical": "interior-design",
+  "business": {
+    "name": "Stress Test Interiors । नमस्ते",
+    "tagline": "बनाएं आपका घर ख़ास",
+    "phone": "+919000000002",
+    "whatsapp": "+919000000002",
+    "yearFounded": 1998,
+    "address": {
+      "locality": "बोरिं रोड",
+      "city": "Patna",
+      "state": "Bihar",
+      "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=stress-sample"
+    },
+    "serviceAreas": [
+      "Patna",
+      "Danapur",
+      "Phulwari Sharif",
+      "Kankarbagh",
+      "Boring Road",
+      "Rajendra Nagar",
+      "Kidwaipuri",
+      "Bailey Road",
+      "Anisabad",
+      "Digha"
+    ]
+  },
+  "brand": {},
+  "domain": {
+    "demoSubdomain": "stress",
+    "customDomain": null
+  },
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "variant": "full-bleed",
+      "headline": "Full-home interiors, modular kitchens, office fit-outs and turnkey renovation for residential and commercial clients across Patna, Danapur, Phulwari Sharif, Kankarbagh, Boring Road, Rajendra Nagar and every locality in between and back again, with a dedicated design team, an in-house execution crew, and a track record of finishing on the date we quote — this headline is deliberately over 600 characters long to prove the hero section does not break, truncate ungracefully, or overflow its container when a real client pastes in far more copy than the design ever assumed they would, because someone always does exactly that during onboarding, and the section needs to survive it gracefully rather than looking broken on their demo.",
+      "sub": "यह एक सब-हेडिंग है जो Hindi और English को mix करती है।"
+    },
+    "quickActions": {
+      "enabled": true,
+      "actions": [
+        "whatsapp",
+        "call",
+        "directions"
+      ]
+    },
+    "trustBar": {
+      "enabled": true,
+      "stats": [
+        {
+          "value": "500+",
+          "label": "PROJECTS DELIVERED SINCE 1998"
+        },
+        {
+          "value": "27",
+          "label": "YEARS OF CONTINUOUS PRACTICE ACROSS PATNA AND SURROUNDING AREAS"
+        },
+        {
+          "value": "10",
+          "label": "LOCALITIES SERVED"
+        },
+        {
+          "value": "★★★★★",
+          "label": "AVERAGE CLIENT RATING"
+        }
+      ]
+    },
+    "services": {
+      "enabled": true,
+      "variant": "detailed",
+      "items": [
+        {
+          "title": "Service 1",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 2",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 3",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 4",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 5",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 6",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 7",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 8",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 9",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 10",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 11",
+          "blurb": "Short blurb."
+        },
+        {
+          "title": "Service 12",
+          "blurb": "Short blurb."
+        }
+      ]
+    },
+    "portfolio": {
+      "enabled": true,
+      "variant": "grid",
+      "detailPages": true,
+      "projects": [
+        {
+          "title": "Project 1 — घर का डिज़ाइन",
+          "slug": "project-1",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 2 — घर का डिज़ाइन",
+          "slug": "project-2",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 3 — घर का डिज़ाइन",
+          "slug": "project-3",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 4 — घर का डिज़ाइन",
+          "slug": "project-4",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 5 — घर का डिज़ाइन",
+          "slug": "project-5",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 6 — घर का डिज़ाइन",
+          "slug": "project-6",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 7 — घर का डिज़ाइन",
+          "slug": "project-7",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 8 — घर का डिज़ाइन",
+          "slug": "project-8",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 9 — घर का डिज़ाइन",
+          "slug": "project-9",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 10 — घर का डिज़ाइन",
+          "slug": "project-10",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 11 — घर का डिज़ाइन",
+          "slug": "project-11",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 12 — घर का डिज़ाइन",
+          "slug": "project-12",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 13 — घर का डिज़ाइन",
+          "slug": "project-13",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 14 — घर का डिज़ाइन",
+          "slug": "project-14",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 15 — घर का डिज़ाइन",
+          "slug": "project-15",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 16 — घर का डिज़ाइन",
+          "slug": "project-16",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 17 — घर का डिज़ाइन",
+          "slug": "project-17",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 18 — घर का डिज़ाइन",
+          "slug": "project-18",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 19 — घर का डिज़ाइन",
+          "slug": "project-19",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 20 — घर का डिज़ाइन",
+          "slug": "project-20",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 21 — घर का डिज़ाइन",
+          "slug": "project-21",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 22 — घर का डिज़ाइन",
+          "slug": "project-22",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 23 — घर का डिज़ाइन",
+          "slug": "project-23",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 24 — घर का डिज़ाइन",
+          "slug": "project-24",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 25 — घर का डिज़ाइन",
+          "slug": "project-25",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 26 — घर का डिज़ाइन",
+          "slug": "project-26",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 27 — घर का डिज़ाइन",
+          "slug": "project-27",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 28 — घर का डिज़ाइन",
+          "slug": "project-28",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 29 — घर का डिज़ाइन",
+          "slug": "project-29",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 30 — घर का डिज़ाइन",
+          "slug": "project-30",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 31 — घर का डिज़ाइन",
+          "slug": "project-31",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 32 — घर का डिज़ाइन",
+          "slug": "project-32",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 33 — घर का डिज़ाइन",
+          "slug": "project-33",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 34 — घर का डिज़ाइन",
+          "slug": "project-34",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 35 — घर का डिज़ाइन",
+          "slug": "project-35",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 36 — घर का डिज़ाइन",
+          "slug": "project-36",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        },
+        {
+          "title": "Project 37 — घर का डिज़ाइन",
+          "slug": "project-37",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "commercial"
+        },
+        {
+          "title": "Project 38 — घर का डिज़ाइन",
+          "slug": "project-38",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "office"
+        },
+        {
+          "title": "Project 39 — घर का डिज़ाइन",
+          "slug": "project-39",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "retail"
+        },
+        {
+          "title": "Project 40 — घर का डिज़ाइन",
+          "slug": "project-40",
+          "cover": "/clients/stress/cover.jpg",
+          "images": [],
+          "location": "Patna",
+          "projectType": "residential"
+        }
+      ]
+    },
+    "about": {
+      "enabled": true,
+      "body": "Long-established studio."
+    },
+    "process": {
+      "enabled": true,
+      "steps": [
+        {
+          "title": "Step 1",
+          "body": "Detail."
+        },
+        {
+          "title": "Step 2",
+          "body": "Detail."
+        },
+        {
+          "title": "Step 3",
+          "body": "Detail."
+        },
+        {
+          "title": "Step 4",
+          "body": "Detail."
+        },
+        {
+          "title": "Step 5",
+          "body": "Detail."
+        },
+        {
+          "title": "Step 6",
+          "body": "Detail."
+        }
+      ]
+    },
+    "testimonials": {
+      "enabled": true,
+      "items": []
+    },
+    "instagram": {
+      "handle": "@stress",
+      "embedPostUrls": []
+    },
+    "faq": {
+      "enabled": true,
+      "items": []
+    },
+    "contact": {
+      "enabled": true
+    },
+    "map": {
+      "enabled": true
+    },
+    "ctaBand": {
+      "enabled": true,
+      "placements": [
+        "mid-page",
+        "pre-footer"
+      ]
+    },
+    "stickyMobileCta": {
+      "enabled": true
+    },
+    "footer": {
+      "enabled": true,
+      "variant": "expanded",
+      "socials": []
+    },
+    "team": {
+      "enabled": true,
+      "detailPages": true,
+      "members": [
+        {
+          "name": "Member 1",
+          "role": "Designer",
+          "slug": "member-1"
+        },
+        {
+          "name": "Member 2",
+          "role": "Designer",
+          "slug": "member-2"
+        },
+        {
+          "name": "Member 3",
+          "role": "Designer",
+          "slug": "member-3"
+        },
+        {
+          "name": "Member 4",
+          "role": "Designer",
+          "slug": "member-4"
+        },
+        {
+          "name": "Member 5",
+          "role": "Designer",
+          "slug": "member-5"
+        },
+        {
+          "name": "Member 6",
+          "role": "Designer",
+          "slug": "member-6"
+        },
+        {
+          "name": "Member 7",
+          "role": "Designer",
+          "slug": "member-7"
+        },
+        {
+          "name": "Member 8",
+          "role": "Designer",
+          "slug": "member-8"
+        }
+      ]
+    },
+    "beforeAfter": {
+      "pairs": []
+    },
+    "reviews": {
+      "googlePlaceId": "ChIJStressTestPlaceId00"
+    },
+    "awards": {
+      "items": []
+    },
+    "inquiryForm": {
+      "provider": "web3forms",
+      "accessKeyEnv": "WEB3FORMS_STRESS",
+      "fields": [
+        "name",
+        "phone",
+        "roomType",
+        "budget",
+        "timeline"
+      ]
+    },
+    "estimate": {
+      "enabled": true,
+      "ratePerSqft": {
+        "basic": 1000,
+        "standard": 1500,
+        "premium": 2000
+      }
+    },
+    "caseStudy": {
+      "items": []
+    },
+    "locations": {
+      "offices": []
+    },
+    "videoTour": {
+      "url": "https://example.com/video"
+    },
+    "companyProfile": {
+      "pdf": "/clients/ashish-interiors/company-profile.pdf"
+    },
+    "journal": {
+      "posts": []
+    },
+    "news": {
+      "items": []
+    },
+    "careers": {
+      "roles": []
+    }
+  },
+  "cta": {
+    "whatsappMessage": "Hi, testing.",
+    "stickyOnMobile": true,
+    "showCallButton": true
+  },
+  "seo": {
+    "title": "Stress Test Interiors",
+    "description": "Fixture for overflow, unicode and missing-empty-state testing.",
+    "noindex": true
+  },
+  "integrations": {
+    "umami": {
+      "enabled": true
+    },
+    "searchConsole": {
+      "enabled": true
+    },
+    "leadDashboard": {
+      "enabled": true
+    },
+    "reviewRequestFlow": {
+      "enabled": true
+    }
+  },
+  "i18n": {
+    "enabled": false
+  },
+  "internal": {
+    "notes": "t3 stress fixture: 40 projects, 10 service areas, Hindi/Devanagari text throughout, a 600+ char hero headline, empty testimonials/faq/awards/beforeAfter/journal/news/careers despite being enabled. Every section must render this without crashing, overflowing horizontally, or showing a broken empty state."
+  }
+}

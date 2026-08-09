@@ -1,0 +1,43 @@
+{
+  "$schema": "./client.schema.json",
+  "slug": "minimal",
+  "tier": "t0",
+  "template": "editorial",
+  "status": "demo",
+  "vertical": "interior-design",
+
+  "business": {
+    "name": "Minimal Fixture Studio",
+    "phone": "+919000000001",
+    "whatsapp": "+919000000001",
+    "address": {
+      "locality": "Test Locality",
+      "city": "Patna",
+      "state": "Bihar"
+    }
+  },
+
+  "domain": {
+    "demoSubdomain": "minimal"
+  },
+
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "headline": "Minimal fixture headline"
+    },
+    "portfolio": {
+      "enabled": true,
+      "projects": []
+    }
+  },
+
+  "seo": {
+    "title": "Minimal Fixture Studio",
+    "description": "The smallest valid config — this is what check:tiers and every section render against to catch code that assumes content exists."
+  },
+
+  "internal": {
+    "notes": "t0 fixture. Only required fields plus the two sections t0 turns on. Every optional array is empty, every optional block is absent. If a section crashes here, it assumed content that a real t0 client won't have."
+  }
+}
