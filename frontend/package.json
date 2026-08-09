@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node --import tsx ../scripts/sync-frontend-env.ts",
     "dev": "next dev",
+    "prebuild": "node --import tsx ../scripts/sync-frontend-env.ts",
     "build": "next build",
     "start": "next start"
   },

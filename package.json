@@ -20,7 +20,8 @@
     "check:tenant-isolation": "node --env-file-if-exists=.env --import tsx scripts/check-tenant-isolation.ts",
     "check:all": "npm run typecheck && npm run lint && npm run check:config && npm run check:tiers && npm run check:tenant-isolation && npm run check:hardcode && npm run check:placeholder",
     "test:rls": "node --env-file-if-exists=.env --import tsx scripts/test-rls.ts",
-    "gen:tenant-map": "node --env-file-if-exists=.env --import tsx scripts/gen-tenant-map.ts"
+    "gen:tenant-map": "node --env-file-if-exists=.env --import tsx scripts/gen-tenant-map.ts",
+    "sync:env": "node --import tsx scripts/sync-frontend-env.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

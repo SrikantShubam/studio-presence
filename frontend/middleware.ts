@@ -27,8 +27,25 @@ import { TENANT_MAP, type TenantEntry } from './lib/tenant-map'
 /** Hosts that are ours, not a client's. */
 const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
 
-/** Paths that are never tenant-scoped. */
-const PASSTHROUGH = /^\/(?:_next|api\/health|favicon\.ico|robots\.txt$)/
+/**
+ * Paths that are never tenant-scoped — served as-is, not rewritten.
+ *
+ * `clients/` is where every uploaded client asset lives (logos, portfolio
+ * photos, company-profile PDFs — see the `assetPath` convention in
+ * `backend/src/config/schema.ts`, all rooted at `/clients/<slug>/...`) and it
+ * has to stay off the rewrite path or Next's static file handler never sees the
+ * request: `/clients/ashish-interiors/p1.jpg` becomes
+ * `/ashish-interiors/clients/ashish-interiors/p1.jpg`, which matches no route
+ * and 404s. Caught by hitting a real asset URL against a running server —
+ * `check:config` proves the path is *referenced* correctly, nothing catches
+ * whether it's *servable*.
+ *
+ * `sitemap.xml`, `robots.txt`, `manifest.webmanifest` and `opengraph-image`
+ * stay OUT of this list on purpose — SPEC.md §5 has them as dynamic,
+ * per-tenant routes (`app/[tenant]/sitemap.ts` etc.), so they need the rewrite
+ * like any other page.
+ */
+const PASSTHROUGH = /^\/(?:_next|api\/health|favicon\.ico|robots\.txt$|clients\/)/
 
 function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
   const hostname = host.split(':')[0]?.toLowerCase() ?? ''

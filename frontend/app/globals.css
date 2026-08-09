@@ -32,6 +32,24 @@
   --t-font-body: ui-sans-serif, system-ui, sans-serif;
 
   --t-radius: 0px;
+
+  /*
+    ADMIN TOKENS — fixed, never per-tenant.
+
+    Panel and dashboard screens are universal by design (see
+    docs/product/prompts/admin-universal/00-universal-system.md): one palette for
+    every client, every tier, every identity. Unlike --t-*, these are never
+    overwritten at request time — there is no per-client admin theme to inject.
+    They exist as variables (not literals in components) purely so
+    check:hardcode's rule holds everywhere, admin included, with no exemption.
+  */
+  --a-surface: #ffffff;
+  --a-bg: #f6f6f5;
+  --a-border: #e4e4e2;
+  --a-ink: #1c1c1b;
+  --a-muted: #6b6b68;
+  --a-primary: #2f6f4e;
+  --a-alert: #b4462f;
 }
 
 @theme inline {
@@ -46,6 +64,14 @@
   --font-body: var(--t-font-body);
 
   --radius-token: var(--t-radius);
+
+  --color-admin-surface: var(--a-surface);
+  --color-admin-bg: var(--a-bg);
+  --color-admin-border: var(--a-border);
+  --color-admin-ink: var(--a-ink);
+  --color-admin-muted: var(--a-muted);
+  --color-admin-primary: var(--a-primary);
+  --color-admin-alert: var(--a-alert);
 }
 
 html {
