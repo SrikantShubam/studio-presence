@@ -2,6 +2,7 @@ import type { ComponentType } from 'react'
 import type { ClientConfig, SectionKey, Sections } from '@studio/backend'
 import type { SectionVariants } from '@/lib/tokens/types'
 import { getTokenSet } from '@/lib/tokens'
+import { Hero } from './Hero'
 
 /**
  * THE SECTION CONTRACT.
@@ -39,7 +40,8 @@ export type SectionComponent<K extends SectionKey = SectionKey> = ComponentType<
  * section than a half-built one reaching a prospect.
  */
 const REGISTRY: Partial<{ [K in SectionKey]: SectionComponent<K> }> = {
-  // Populated as sections land. Each ticket adds exactly one line.
+  hero: Hero,
+  // Everything else populated as sections land. Each ticket adds exactly one line.
 }
 
 /**
