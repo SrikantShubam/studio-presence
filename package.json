@@ -12,13 +12,14 @@
     "build": "npm run check:config && npm run build --workspace frontend",
     "typecheck": "tsc --noEmit -p backend && tsc --noEmit -p frontend",
     "lint": "eslint . --max-warnings 0",
-    "gen:schema": "tsx scripts/gen-schema.ts",
-    "check:config": "tsx scripts/check-config.ts",
-    "check:hardcode": "tsx scripts/check-hardcode.ts",
-    "check:placeholder": "tsx scripts/check-placeholder.ts",
-    "check:tiers": "tsx scripts/check-tiers.ts",
-    "check:tenant-isolation": "tsx scripts/check-tenant-isolation.ts",
-    "check:all": "npm run typecheck && npm run lint && npm run check:config && npm run check:tiers && npm run check:tenant-isolation && npm run check:hardcode && npm run check:placeholder"
+    "gen:schema": "node --env-file-if-exists=.env --import tsx scripts/gen-schema.ts",
+    "check:config": "node --env-file-if-exists=.env --import tsx scripts/check-config.ts",
+    "check:hardcode": "node --env-file-if-exists=.env --import tsx scripts/check-hardcode.ts",
+    "check:placeholder": "node --env-file-if-exists=.env --import tsx scripts/check-placeholder.ts",
+    "check:tiers": "node --env-file-if-exists=.env --import tsx scripts/check-tiers.ts",
+    "check:tenant-isolation": "node --env-file-if-exists=.env --import tsx scripts/check-tenant-isolation.ts",
+    "check:all": "npm run typecheck && npm run lint && npm run check:config && npm run check:tiers && npm run check:tenant-isolation && npm run check:hardcode && npm run check:placeholder",
+    "test:rls": "node --env-file-if-exists=.env --import tsx scripts/test-rls.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

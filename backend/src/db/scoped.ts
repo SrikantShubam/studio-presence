@@ -31,13 +31,38 @@ function requireEnv(name: string): string {
 }
 
 /**
+ * The project URL is the bare origin. supabase-js appends `/rest/v1` and
+ * `/auth/v1` itself.
+ *
+ * Worth guarding because the Supabase dashboard surfaces the *REST* URL
+ * (`…supabase.co/rest/v1/`) in several places, and pasting that produces a
+ * request to `/rest/v1//rest/v1/…`. The resulting error is
+ * `PGRST125 Invalid path specified in request URL`, which says nothing about the
+ * actual cause and cost an hour once already.
+ */
+function projectUrl(): string {
+  const raw = requireEnv('NEXT_PUBLIC_SUPABASE_URL').trim()
+  const url = new URL(raw)
+
+  if (url.pathname !== '/' && url.pathname !== '') {
+    throw new Error(
+      `NEXT_PUBLIC_SUPABASE_URL should be the bare project origin, not a path. ` +
+        `Got "${url.origin}${url.pathname}" — use "${url.origin}". ` +
+        `supabase-js adds /rest/v1 and /auth/v1 on its own.`,
+    )
+  }
+
+  return url.origin
+}
+
+/**
  * A client acting as the signed-in user.
  *
  * @param accessToken the user's Supabase access token, from the session
  */
 export function createScopedClient(accessToken: string): Db {
   return createClient<Database>(
-    requireEnv('NEXT_PUBLIC_SUPABASE_URL'),
+    projectUrl(),
     requireEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY'),
     {
       global: { headers: { Authorization: `Bearer ${accessToken}` } },
@@ -52,7 +77,7 @@ export function createScopedClient(accessToken: string): Db {
  */
 export function createAnonClient(): Db {
   return createClient<Database>(
-    requireEnv('NEXT_PUBLIC_SUPABASE_URL'),
+    projectUrl(),
     requireEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY'),
     { auth: { persistSession: false, autoRefreshToken: false } },
   )

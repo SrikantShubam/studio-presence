@@ -18,7 +18,7 @@
  */
 
 import { createServiceRoleClient } from '../backend/src/db/service-role'
-import { createScopedClient } from '../backend/src/db/scoped'
+import { createAnonClient, createScopedClient } from '../backend/src/db/scoped'
 import { heading, fail } from './_report'
 
 const NAME = 'test:rls'
@@ -92,8 +92,11 @@ async function main() {
     created.push(await provision(A))
     created.push(await provision(B))
 
-    // Sign in as A and act only through the scoped client from here.
-    const anon = createScopedClient('')
+    // A genuinely anonymous client — no Authorization header at all. Using a
+    // scoped client with an empty token instead sends `Bearer `, which Supabase
+    // rejects outright, so the anon path would never actually be exercised.
+    const anon = createAnonClient()
+
     const { data: session, error: se } = await anon.auth.signInWithPassword({
       email: A.email,
       password: PASSWORD,
@@ -144,8 +147,16 @@ async function main() {
       'A inserted a row scoped to B. Check the lead_events_insert with-check clause.',
     )
 
-    // Anonymous submission works, and cannot read back.
-    const { data: newLeadId, error: subErr } = await anon.rpc('submit_lead', {
+    // A FRESH client for the anonymous assertions.
+    //
+    // Reusing `anon` would be wrong and quietly so: signInWithPassword leaves the
+    // session on that client instance in memory, regardless of persistSession, so
+    // every "anonymous" call would actually run as A. The first version of this
+    // test did exactly that and reported anon reading two leads — which looked
+    // like a missing policy and was really the test lying.
+    const trulyAnon = createAnonClient()
+
+    const { data: newLeadId, error: subErr } = await trulyAnon.rpc('submit_lead', {
       p_tenant_slug: A.slug,
       p_name: 'Anonymous visitor',
       p_phone: '+919111111111',
@@ -157,11 +168,27 @@ async function main() {
       `submit_lead failed: ${subErr?.message}`,
     )
 
-    const { data: anonRead } = await anon.from('leads').select('*')
+    const { data: anonLeads } = await trulyAnon.from('leads').select('*')
     assert(
       'an anonymous visitor cannot read any lead',
-      (anonRead ?? []).length === 0,
-      `anon read ${(anonRead ?? []).length} rows. Every table policy should be scoped to authenticated.`,
+      (anonLeads ?? []).length === 0,
+      `anon read ${(anonLeads ?? []).length} rows. Every table policy should be scoped to authenticated.`,
+    )
+
+    const { data: anonTenants } = await trulyAnon.from('tenants').select('*')
+    assert(
+      'an anonymous visitor cannot enumerate tenants',
+      (anonTenants ?? []).length === 0,
+      `anon read ${(anonTenants ?? []).length} tenants. The client list is not public information.`,
+    )
+
+    const { error: anonWrite } = await trulyAnon
+      .from('leads')
+      .insert({ tenant_id: created[0]!.tenantId, name: 'direct', phone: '+919222222222' })
+    assert(
+      'an anonymous visitor cannot insert a lead directly',
+      anonWrite !== null,
+      'anon inserted straight into leads. submit_lead() should be the only way in.',
     )
   } finally {
     await cleanup(created)
