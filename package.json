@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace frontend",
-    "build": "npm run check:config && npm run build --workspace frontend",
+    "build": "npm run check:config && npm run gen:tenant-map && npm run build --workspace frontend",
     "typecheck": "tsc --noEmit -p backend && tsc --noEmit -p frontend",
     "lint": "eslint . --max-warnings 0",
     "gen:schema": "node --env-file-if-exists=.env --import tsx scripts/gen-schema.ts",
@@ -19,7 +19,8 @@
     "check:tiers": "node --env-file-if-exists=.env --import tsx scripts/check-tiers.ts",
     "check:tenant-isolation": "node --env-file-if-exists=.env --import tsx scripts/check-tenant-isolation.ts",
     "check:all": "npm run typecheck && npm run lint && npm run check:config && npm run check:tiers && npm run check:tenant-isolation && npm run check:hardcode && npm run check:placeholder",
-    "test:rls": "node --env-file-if-exists=.env --import tsx scripts/test-rls.ts"
+    "test:rls": "node --env-file-if-exists=.env --import tsx scripts/test-rls.ts",
+    "gen:tenant-map": "node --env-file-if-exists=.env --import tsx scripts/gen-tenant-map.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

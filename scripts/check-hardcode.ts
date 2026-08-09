@@ -28,9 +28,18 @@ const ROOT = join(import.meta.dirname, '..')
 /** Where components live. Tokens and config are exempt — literals are their job. */
 const SCAN = ['frontend/sections/**/*.{ts,tsx}', 'frontend/components/**/*.{ts,tsx}', 'frontend/app/**/*.tsx']
 
+/**
+ * Exempt paths. Keep this list short and keep justifying it — every entry is a
+ * place the guarantee does not hold, and a check with a generous exemption list
+ * is a check that has stopped meaning anything.
+ */
 const EXEMPT = [
-  'frontend/lib/tokens/', // token definitions ARE the literals
-  'frontend/app/layout.tsx', // injects the token variables; the one allowed place
+  // The token definitions ARE the literals. Somewhere has to hold the hex codes.
+  'frontend/lib/tokens/',
+  // Injects the resolved token variables as a style attribute. The values are
+  // not known until a config is read at request time, so no Tailwind class can
+  // express them. This is the single sanctioned `style=` in the codebase.
+  'frontend/app/[tenant]/layout.tsx',
 ]
 
 type Rule = {

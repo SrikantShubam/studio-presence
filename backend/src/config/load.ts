@@ -1,5 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
-import { join, resolve } from 'node:path'
+import { dirname, join } from 'node:path'
 import { applyTierDefaults } from './resolve'
 import { formatIssues, validateClientConfig, type ValidateOptions } from './validate'
 import type { ClientConfig } from './types'
@@ -81,13 +81,44 @@ export function resolveClientConfig(
   return result.config
 }
 
-/** Repo-root `clients/` directory, resolved from this file. */
+/**
+ * Find the repo root by walking up from the working directory.
+ *
+ * Not `import.meta.dirname` — that is undefined once this module is bundled by
+ * Next, which is exactly where it is needed most. Not a bare `process.cwd()`
+ * either, because that is the repo root when a script runs and `frontend/` when
+ * the dev server does.
+ *
+ * Walking up for the marker directory is the only approach that holds in both.
+ */
+let cachedRoot: string | null = null
+
+function repoRoot(): string {
+  if (cachedRoot) return cachedRoot
+
+  let dir = process.cwd()
+  for (let i = 0; i < 6; i++) {
+    if (existsSync(join(dir, 'clients')) && existsSync(join(dir, 'backend'))) {
+      cachedRoot = dir
+      return dir
+    }
+    const parent = dirname(dir)
+    if (parent === dir) break
+    dir = parent
+  }
+
+  throw new Error(
+    `Could not find the repo root from ${process.cwd()}. Expected an ancestor directory ` +
+      `containing both clients/ and backend/.`,
+  )
+}
+
 export function defaultClientsDir(): string {
-  return resolve(import.meta.dirname, '../../../clients')
+  return join(repoRoot(), 'clients')
 }
 
 export function defaultPublicDir(): string {
-  return resolve(import.meta.dirname, '../../../frontend/public')
+  return join(repoRoot(), 'frontend', 'public')
 }
 
 export function listClientSlugs(clientsDir = defaultClientsDir()): string[] {

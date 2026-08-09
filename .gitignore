@@ -38,3 +38,7 @@ inspirations/
 graphify-out/
 docs/graphify-out/
 .claude/settings.local.json
+
+# generated
+frontend/lib/tenant-map.ts
+frontend/next-env.d.ts

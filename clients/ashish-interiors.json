@@ -167,12 +167,12 @@
       "variant": "cards",
       "items": [
         {
-          "quote": "Sample testimonial — replace before this site goes live.",
+          "quote": "Sample testimonial \u2014 replace before this site goes live.",
           "author": "Sample client",
           "context": "Boring Road"
         },
         {
-          "quote": "Sample testimonial — replace before this site goes live.",
+          "quote": "Sample testimonial \u2014 replace before this site goes live.",
           "author": "Sample client",
           "context": "Kankarbagh"
         }
@@ -244,7 +244,7 @@
         {
           "before": "/clients/ashish-interiors/p1.jpg",
           "after": "/clients/ashish-interiors/p2.jpg",
-          "caption": "Sample pair — replace before this site goes live."
+          "caption": "Sample pair \u2014 replace before this site goes live."
         }
       ]
     },
@@ -307,7 +307,7 @@
     "showCallButton": true
   },
   "seo": {
-    "title": "Ashish Interiors — Interior Designers in Patna",
+    "title": "Ashish Interiors \u2014 Interior Designers in Patna",
     "description": "Full-home interiors, modular kitchens and office design in Patna. 40+ homes delivered since 2013.",
     "keywords": [
       "interior designer patna",
@@ -354,6 +354,6 @@
     "createdAt": "2026-08-09",
     "leadSource": "scrutinized_leads.csv",
     "paymentStatus": "none",
-    "notes": "Reference fixture, complete at T3. Sections that tiers control carry no explicit `enabled` flag — that is what makes check:tiers meaningful."
+    "notes": "Reference fixture, complete at T3. Sections that tiers control carry no explicit `enabled` flag \u2014 that is what makes check:tiers meaningful."
   }
 }

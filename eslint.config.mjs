@@ -14,6 +14,10 @@ export default tseslint.config(
     ignores: [
       '**/node_modules/**',
       '**/.next/**',
+      // Next generates these on build; linting generated output only ever
+      // produces errors nobody can act on.
+      '**/next-env.d.ts',
+      'frontend/lib/tenant-map.ts',
       'design/**',
       'graphify-out/**',
       'docs/**',
