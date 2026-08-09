@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  .rail { scrollbar-width: none; -ms-overflow-style: none; }
+  .rail::-webkit-scrollbar { display: none; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <section data-screen-label="Featured projects — carousel" style="padding:clamp(64px,8vw,120px) 0 clamp(56px,7vw,104px) 0;border-top:1px solid #51372A;border-bottom:1px solid #51372A">
+
+    <!-- header -->
+    <div style="display:grid;grid-template-columns:{{ headCols }};gap:clamp(24px,4vw,64px);align-items:end;padding:0 clamp(20px,5vw,72px);margin-bottom:clamp(44px,5.5vw,80px)">
+      <div style="display:grid;gap:9px;padding-bottom:.75em;font-size:10px;font-weight:400;letter-spacing:.3em;line-height:1.6;text-transform:uppercase;color:#51372A">
+        <span>(WORK)</span>
+        <span>SELECTED</span>
+        <span>PROJECTS</span>
+      </div>
+      <h2 style="margin:0;font-size:clamp(42px,7.4vw,104px);font-weight:200;line-height:.86;letter-spacing:-.045em;text-transform:uppercase">OUR<br /><span style="display:block;margin-left:.5em;color:#51372A">PORTFOLIO</span></h2>
+      <div style="display:{{ headRightDisplay }};align-items:center;gap:clamp(18px,2.4vw,34px);justify-self:end;padding-bottom:.9em">
+        <span style="font-size:10.5px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#8B8377">{{ counter }}</span>
+        <a href="projects-category.dc.html" style="display:flex;align-items:center;gap:12px;white-space:nowrap;font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#141414" style-hover="color:#51372A">ALL PROJECTS <span style="font-size:1.2em">&#8599;</span></a>
+      </div>
+    </div>
+
+    <!-- rail -->
+    <div style="position:relative">
+      <div class="rail" ref="{{ railRef }}" style="display:flex;gap:clamp(18px,2.4vw,34px);padding:0 clamp(20px,5vw,72px) clamp(24px,3vw,34px) clamp(20px,5vw,72px);overflow-x:auto;scroll-snap-type:x proximity">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+          <a href="project detail page.dc.html" style="flex:0 0 {{ cardWidth }};scroll-snap-align:start;display:grid;gap:clamp(16px,2vw,24px);color:#141414">
+            <span style="position:relative;display:block;margin:clamp(12px,1.5vw,18px) clamp(12px,1.5vw,18px) 0 0">
+              <span style="position:absolute;top:calc(-1 * clamp(12px,1.5vw,18px));left:clamp(12px,1.5vw,18px);right:calc(-1 * clamp(12px,1.5vw,18px));bottom:clamp(12px,1.5vw,18px);border:1px solid #51372A;pointer-events:none"></span>
+              <span style="position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#EFECE7">
+                <img src="{{ p.photo }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+              </span>
+            </span>
+            <span style="display:grid;gap:10px;padding-top:clamp(12px,1.6vw,18px);border-top:1px solid #51372A">
+              <span style="display:flex;align-items:baseline;justify-content:space-between;gap:14px">
+                <span style="font-size:clamp(16px,1.7vw,21px);font-weight:400;line-height:1.15;letter-spacing:-.018em;text-transform:uppercase">{{ p.name }}</span>
+                <span style="font-size:10px;font-weight:400;letter-spacing:.16em;color:#C7BEB0;flex-shrink:0">{{ p.numeral }}</span>
+              </span>
+              <span style="font-size:10px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#8B8377">location: PATNA</span>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+
+      <!-- arrows, vertically centred on the photo band -->
+      <button type="button" onClick="{{ scrollPrev }}" disabled="{{ prevDisabled }}" aria-label="Previous projects" style="position:absolute;left:clamp(6px,1.4vw,20px);top:{{ arrowTop }};display:{{ arrowDisplay }};align-items:center;justify-content:center;width:46px;height:46px;background:rgba(255,255,255,.92);border:1px solid #51372A;color:#141414;font:inherit;font-size:14px;padding:0;opacity:{{ prevOpacity }};cursor:{{ prevCursor }}" style-hover="background:#141414;color:#FFFFFF">&#8592;</button>
+      <button type="button" onClick="{{ scrollNext }}" disabled="{{ nextDisabled }}" aria-label="Next projects" style="position:absolute;right:clamp(6px,1.4vw,20px);top:{{ arrowTop }};display:{{ arrowDisplay }};align-items:center;justify-content:center;width:46px;height:46px;background:rgba(255,255,255,.92);border:1px solid #51372A;color:#141414;font:inherit;font-size:14px;padding:0;opacity:{{ nextOpacity }};cursor:{{ nextCursor }}" style-hover="background:#141414;color:#FFFFFF">&#8594;</button>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const px = id => "https://images.pexels.com/photos/" + id + "/pexels-photo-" + id + ".jpeg?auto=compress&cs=tinysrgb&w=1200";
+
+const PROJECTS = [
+  { name: "3BHK, BORING ROAD", photo: px(34946066) },
+  { name: "KITCHEN, RAJAPUR PUL", photo: px(3926542) },
+  { name: "DUPLEX, PATLIPUTRA", photo: px(3990542) },
+  { name: "2BHK, KANKARBAGH", photo: px(3797991) },
+  { name: "OFFICE, S.K. PURI", photo: px(5483233) },
+  { name: "3BHK, RAJENDRA NAGAR", photo: px(18692328) }
+];
+
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, index: 1 };
+
+  constructor(props) {
+    super(props);
+    // stable ref callback — a fresh closure per render would detach/reattach on every setState
+    this.setRail = el => {
+      if (this._rail === el) return;
+      if (this._rail) this._rail.removeEventListener("scroll", this.onScroll);
+      this._rail = el;
+      if (el) el.addEventListener("scroll", this.onScroll, { passive: true });
+    };
+    this.onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this._raf = null;
+        const i = this.cardIndex();
+        if (i !== this.state.index) this.setState({ index: i });
+      });
+    };
+  }
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._onResize);
+    if (this._rail) this._rail.removeEventListener("scroll", this.onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
+
+  // 0-based index of the card nearest the rail's left edge
+  cardIndex() {
+    const rail = this._rail;
+    if (!rail || !rail.children.length) return 1;
+    const cards = Array.from(rail.children);
+    const base = cards[0].offsetLeft;
+    const step = cards.length > 1 ? cards[1].offsetLeft - base : cards[0].offsetWidth;
+    if (!step) return 1;
+    return Math.min(cards.length, Math.max(1, Math.round(rail.scrollLeft / step) + 1));
+  }
+
+  step(dir) {
+    const rail = this._rail;
+    if (!rail || !rail.children.length) return;
+    const cards = Array.from(rail.children);
+    const target = cards[Math.min(cards.length - 1, Math.max(0, this.cardIndex() - 1 + dir))];
+    if (!target) return;
+    // scrollTo an explicit card offset — snap-safe, unlike a relative scrollBy
+    rail.scrollTo({ left: target.offsetLeft - cards[0].offsetLeft, behavior: "smooth" });
+  }
+
+  renderVals() {
+    const w = this.state.w;
+    const mobile = w < 760, tablet = w >= 760 && w < 1100;
+
+    // 3 full cards + a sliver of the 4th: card ≈ 30% of the rail on desktop
+    const cardWidth = mobile ? "78%" : tablet ? "44%" : "30%";
+
+    const i = this.state.index;
+    const atStart = i <= 1, atEnd = i >= PROJECTS.length;
+
+    return {
+      headCols: mobile ? "1fr" : "auto 1fr auto",
+      headRightDisplay: mobile ? "none" : "flex",
+      cardWidth,
+      arrowTop: mobile ? "26%" : "32%",
+      arrowDisplay: mobile ? "none" : "flex",
+      counter: String(i).padStart(2, "0") + " / " + String(PROJECTS.length).padStart(2, "0"),
+      prevDisabled: atStart,
+      nextDisabled: atEnd,
+      prevOpacity: atStart ? ".3" : "1",
+      nextOpacity: atEnd ? ".3" : "1",
+      prevCursor: atStart ? "default" : "pointer",
+      nextCursor: atEnd ? "default" : "pointer",
+      railRef: this.setRail,
+      scrollPrev: () => this.step(-1),
+      scrollNext: () => this.step(1),
+      projects: PROJECTS.map((p, i) => ({ ...p, numeral: String(i + 1).padStart(2, "0") }))
+    };
+  }
+}
+</script>
+</body>
+</html>

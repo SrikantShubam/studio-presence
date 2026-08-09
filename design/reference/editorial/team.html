@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  input::placeholder, textarea::placeholder { color: #A8A29A; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="service-detail.dc.html" style="color:#141414">SERVICES</a>
+      <a href="Studio design 1.dc.html#about" style="color:#141414">ABOUT</a>
+      <a href="projects-category.dc.html" style="color:#141414">PORTFOLIO</a>
+      <a href="#contact" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="service-detail.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="projects-category.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">(555) 0123</a>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- ==================== TEAM INDEX ======================= -->
+  <!-- ======================================================= -->
+  <div style="display:{{ indexDisplay }}">
+
+    <section data-screen-label="Studio heading" style="padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(40px,5vw,72px) clamp(20px,5vw,64px)">
+      <div style="display:grid;grid-template-columns:{{ headCols }};gap:clamp(32px,6vw,88px);align-items:end">
+        <div>
+          <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+            <span>TWENTY PEOPLE,</span>
+            <span>ONE WORKSHOP,</span>
+            <span>NO SUBCONTRACTORS</span>
+          </div>
+          <h1 style="margin:0;font-size:clamp(44px,8.5vw,108px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">OUR<br /><span style="display:block;margin-left:.55em;color:#51372A">STUDIO</span></h1>
+        </div>
+        <p style="margin:0;max-width:38em;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">Twenty of us: three who take the brief and draw it, four who supervise sites, eleven carpenters and finishers in our own workshop off Boring Road, and two who keep the accounts and the material invoices straight. Nothing is subcontracted, so the crew that turns up on day one is the crew that hands you the keys — and the person who drew your kitchen will be standing in it while it goes in.</p>
+      </div>
+    </section>
+
+    <!-- PRINCIPALS -->
+    <section data-screen-label="Principals" style="padding:clamp(40px,5vw,64px) clamp(20px,5vw,64px) clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+      <h2 style="margin:0 0 clamp(36px,5vw,64px) 0;font-size:clamp(13px,1.5vw,16px);font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#51372A">PRINCIPALS</h2>
+      <div style="display:grid;grid-template-columns:{{ principalCols }};gap:clamp(40px,6vw,80px) clamp(28px,4vw,52px)">
+        <sc-for list="{{ principals }}" as="p" hint-placeholder-count="3">
+          <button type="button" onClick="{{ p.open }}" style="display:grid;gap:22px;padding:0;background:none;border:0;font:inherit;color:#141414;text-align:left;cursor:pointer">
+            <span style="position:relative;display:block;margin:22px 22px 0 0">
+              <span style="position:absolute;top:-22px;left:22px;right:-22px;bottom:22px;border:1px solid #51372A;pointer-events:none"></span>
+              <span style="position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:#EFECE7">
+                <img src="{{ p.photo }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.04)" />
+              </span>
+            </span>
+            <span style="display:grid;gap:10px">
+              <span style="font-size:clamp(20px,2.4vw,28px);font-weight:400;line-height:1.1;letter-spacing:-.01em;text-transform:uppercase">{{ p.name }}</span>
+              <span style="font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">{{ p.role }}</span>
+              <span style="max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A">{{ p.line }}</span>
+              <span style="margin-top:4px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">READ PROFILE &#8599;</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- WIDER TEAM -->
+    <section data-screen-label="Wider team" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:clamp(32px,4.5vw,52px)">
+        <h2 style="margin:0;font-size:clamp(13px,1.5vw,16px);font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#51372A">THE WIDER TEAM</h2>
+        <span style="display:grid;gap:6px;text-align:right">
+          <span style="font-size:12.5px;letter-spacing:.06em;color:#8B8377">Seventeen people, grouped by what they do</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B8377">stand-in portraits — replace with real staff photos</span>
+        </span>
+      </div>
+
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+        <div style="margin-bottom:clamp(40px,5vw,68px)">
+          <div style="display:flex;align-items:baseline;gap:18px;padding-bottom:16px;margin-bottom:clamp(22px,3vw,32px);border-bottom:1px solid #51372A">
+            <span style="font-size:clamp(30px,3.6vw,48px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #C7BEB0">{{ g.numeral }}</span>
+            <span style="font-size:clamp(13px,1.5vw,17px);font-weight:400;letter-spacing:.16em;text-transform:uppercase">{{ g.label }}</span>
+            <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8B8377">{{ g.count }}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:{{ teamCols }};gap:clamp(20px,3vw,34px)">
+            <sc-for list="{{ g.people }}" as="m" hint-placeholder-count="6">
+              <div style="display:grid;gap:14px;color:#141414;text-align:left">
+                <span style="display:block;aspect-ratio:4/5;overflow:hidden;background:#EAE6DF">
+                  <img src="{{ m.photo }}" alt="{{ m.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.04)" />
+                </span>
+                <span style="display:grid;gap:6px">
+                  <span style="font-size:clamp(14px,1.5vw,16px);font-weight:400;letter-spacing:.02em;text-transform:uppercase">{{ m.name }}</span>
+                  <span style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#51372A">{{ m.role }}</span>
+                </span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <!-- WORKSHOP STRIP -->
+    <section data-screen-label="Workshop" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:clamp(28px,4vw,44px)">
+        <h2 style="margin:0;font-size:clamp(30px,5vw,64px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">THE<br /><span style="display:block;margin-left:.55em;color:#51372A">WORKSHOP</span></h2>
+        <p style="margin:0;max-width:30em;font-size:14.5px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Eleven of the twenty work here rather than on site. Everything you see in a finished flat was cut, assembled and polished in this room off Boring Road before it was carried up a staircase.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ workshopCols }};gap:clamp(12px,1.8vw,22px)">
+        <figure style="margin:0;display:grid;gap:10px;grid-column:{{ workshopWide }}">
+          <div style="aspect-ratio:16/9;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/3637786/pexels-photo-3637786.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Carpenter working at the bench" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+          <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">THE BENCH — WHERE EVERY SHUTTER IS CUT</figcaption>
+        </figure>
+        <figure style="margin:0;display:grid;gap:10px">
+          <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/5691622/pexels-photo-5691622.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1000" alt="Timber and ply stacked in the workshop" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+          <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">PLY STORE</figcaption>
+        </figure>
+        <figure style="margin:0;display:grid;gap:10px">
+          <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/1094767/pexels-photo-1094767.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1000" alt="Hand tools laid out on a workbench" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+          <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">FINISHING TOOLS</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- HIRING -->
+    <section data-screen-label="Hiring" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,56px)">
+        <div>
+          <div style="display:grid;gap:6px;margin-bottom:clamp(18px,3vw,30px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+            <span>TWO SITE SUPERVISORS,</span>
+            <span>ONE JUNIOR DESIGNER</span>
+          </div>
+          <h2 style="margin:0;font-size:clamp(32px,5.2vw,68px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">WE'RE<br /><span style="display:block;margin-left:.55em;color:#51372A">HIRING</span></h2>
+          <p style="margin:24px 0 0 0;max-width:32em;font-size:15px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">On our own rolls, not on contract — provident fund, a fixed salary and site travel paid. Send a line about what you have built.</p>
+        </div>
+        <a href="#contact" style="display:inline-flex;align-items:center;gap:14px;padding:20px 34px;min-height:44px;border:1px solid #141414;color:#141414;font-size:clamp(10.5px,1.1vw,12px);font-weight:500;letter-spacing:.18em;text-transform:uppercase" style-hover="background:#141414;color:#FFFFFF">WRITE TO US <span>&#8599;</span></a>
+      </div>
+
+      <div style="display:grid;grid-template-columns:{{ rolesCols }};gap:clamp(20px,3vw,34px);margin-top:clamp(40px,5vw,68px)">
+        <div style="display:grid;gap:12px;align-content:start;padding-top:22px;border-top:1px solid #51372A">
+          <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #DCD7CE">01</span>
+          <h3 style="margin:0;font-size:clamp(16px,1.8vw,20px);font-weight:400;letter-spacing:.04em;text-transform:uppercase">SITE SUPERVISOR &times; 2</h3>
+          <p style="margin:0;font-size:14px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Running two to three live flats at a time, daily photo updates, and the punch list at handover. Three years on residential sites minimum.</p>
+          <span style="margin-top:4px;font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">FULL TIME &middot; PATNA</span>
+        </div>
+        <div style="display:grid;gap:12px;align-content:start;padding-top:22px;border-top:1px solid #51372A">
+          <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #DCD7CE">02</span>
+          <h3 style="margin:0;font-size:clamp(16px,1.8vw,20px);font-weight:400;letter-spacing:.04em;text-transform:uppercase">JUNIOR DESIGNER</h3>
+          <p style="margin:0;font-size:14px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Joinery sections and shop drawings alongside Sunita, plus site measuring. A diploma and a portfolio of drawings — not renders.</p>
+          <span style="margin-top:4px;font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">FULL TIME &middot; PATNA</span>
+        </div>
+        <div style="display:grid;gap:12px;align-content:start;padding-top:22px;border-top:1px solid #51372A">
+          <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #DCD7CE">03</span>
+          <h3 style="margin:0;font-size:clamp(16px,1.8vw,20px);font-weight:400;letter-spacing:.04em;text-transform:uppercase">CARPENTRY APPRENTICE</h3>
+          <p style="margin:0;font-size:14px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Six months on Manoj's bench before you cut for a client. No experience needed, but you will be here at eight.</p>
+          <span style="margin-top:4px;font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">FULL TIME &middot; WORKSHOP</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- ================= TEAM MEMBER DETAIL ================== -->
+  <!-- ======================================================= -->
+  <div style="display:{{ detailDisplay }}">
+
+    <section data-screen-label="Member detail" style="padding:clamp(32px,4vw,56px) clamp(20px,5vw,64px) clamp(56px,8vw,100px) clamp(20px,5vw,64px)">
+      <button type="button" onClick="{{ backToIndex }}" style="padding:10px 0;min-height:44px;background:none;border:0;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#141414;cursor:pointer">&#8592; ALL OF THE STUDIO</button>
+
+      <div style="display:grid;grid-template-columns:{{ detailCols }};gap:clamp(36px,6vw,90px);margin-top:clamp(24px,3vw,40px);align-items:start">
+        <div style="position:relative;margin:22px 22px 0 0">
+          <div style="position:absolute;top:-22px;left:22px;right:-22px;bottom:22px;border:1px solid #51372A;pointer-events:none"></div>
+          <div style="position:relative;aspect-ratio:3/4;overflow:hidden;background:#EFECE7">
+            <img src="{{ member.photo }}" alt="{{ member.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.04)" />
+          </div>
+        </div>
+
+        <div>
+          <div style="display:grid;gap:6px;margin-bottom:clamp(18px,2.6vw,28px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+            <span>{{ member.eyebrowA }}</span>
+            <span>{{ member.eyebrowB }}</span>
+          </div>
+          <h1 style="margin:0;font-size:clamp(36px,6.5vw,86px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">{{ member.first }}<br /><span style="display:block;margin-left:.55em;color:#51372A">{{ member.last }}</span></h1>
+          <div style="display:flex;flex-wrap:wrap;gap:12px clamp(20px,3vw,40px);margin-top:clamp(24px,3vw,34px);padding-top:20px;border-top:1px solid #51372A;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">
+            <span>{{ member.role }}</span>
+            <span>{{ member.tenure }}</span>
+          </div>
+
+          <div style="display:grid;gap:20px;margin-top:clamp(28px,4vw,44px);max-width:42em">
+            <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ member.p1 }}</p>
+            <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ member.p2 }}</p>
+            <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ member.p3 }}</p>
+          </div>
+
+          <div style="display:grid;gap:10px;margin-top:clamp(28px,4vw,44px);padding-top:22px;border-top:1px solid #DCD7CE">
+            <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">CREDENTIALS</span>
+            <span style="font-size:14.5px;line-height:1.7;color:#3C3C3C">{{ member.credentials }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS LED -->
+    <section data-screen-label="Projects led" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+      <h2 style="margin:0 0 clamp(28px,4vw,48px) 0;font-size:clamp(30px,5vw,64px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">PROJECTS<br /><span style="display:block;margin-left:.55em;color:#51372A">THEY LED</span></h2>
+      <div style="display:grid">
+        <sc-for list="{{ member.projects }}" as="pr" hint-placeholder-count="4">
+          <a href="project detail page.dc.html" style="display:grid;grid-template-columns:{{ projectRowCols }};gap:clamp(16px,3vw,40px);align-items:center;padding:clamp(20px,2.6vw,30px) 0;border-bottom:1px solid #51372A;color:#141414" style-hover="background:#FFFFFF">
+            <span style="font-size:clamp(34px,4.4vw,60px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #C7BEB0">{{ pr.numeral }}</span>
+            <span style="font-size:clamp(17px,2.2vw,26px);font-weight:400;line-height:1.15;letter-spacing:-.01em;text-transform:uppercase">{{ pr.name }}</span>
+            <span style="font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#51372A">{{ pr.meta }}</span>
+            <span style="font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;justify-self:{{ projectArrowJustify }}">&#8599;</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- PREV / NEXT -->
+    <section data-screen-label="Prev next member" style="display:grid;grid-template-columns:{{ prevNextCols }};border-top:1px solid #51372A;border-bottom:1px solid #51372A">
+      <button type="button" onClick="{{ goPrev }}" style="display:grid;gap:12px;padding:clamp(28px,4vw,52px) clamp(20px,5vw,64px);background:none;border:0;border-right:{{ prevNextDivider }};border-bottom:{{ prevNextStackDivider }};font:inherit;color:#141414;text-align:left;cursor:pointer" style-hover="background:#FAF8F5">
+        <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">&#8592; PREVIOUS</span>
+        <span style="font-size:clamp(18px,2.4vw,28px);font-weight:400;line-height:1.1;text-transform:uppercase">{{ prevName }}</span>
+        <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ prevRole }}</span>
+      </button>
+      <button type="button" onClick="{{ goNext }}" style="display:grid;gap:12px;padding:clamp(28px,4vw,52px) clamp(20px,5vw,64px);background:none;border:0;font:inherit;color:#141414;text-align:{{ nextAlign }};justify-items:{{ nextJustify }};cursor:pointer" style-hover="background:#FAF8F5">
+        <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NEXT &#8594;</span>
+        <span style="font-size:clamp(18px,2.4vw,28px);font-weight:400;line-height:1.1;text-transform:uppercase">{{ nextName }}</span>
+        <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ nextRole }}</span>
+      </button>
+    </section>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="contact" data-screen-label="Footer" style="background:#FFFFFF;border-top:1px solid #51372A">
+    <div style="display:grid;grid-template-columns:{{ footerCols }};gap:clamp(36px,5vw,80px);padding:clamp(56px,7vw,100px) clamp(20px,5vw,64px)">
+      <div>
+        <h3 style="margin:0;font-size:clamp(32px,3.6vw,48px);font-weight:300;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">READY<br /><span style="display:block;margin-left:.55em;color:#51372A">WHEN YOU ARE</span></h3>
+        <p style="margin:22px 0 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Send us the flat size and a rough budget — you will hear back the same working day.</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:clamp(32px,4vw,52px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #51372A">
+          <span style="width:38px;height:38px;flex-shrink:0;border:1px solid #51372A;display:grid;place-items:center;font-size:13px;font-weight:500;letter-spacing:.06em;color:#51372A">AI</span>
+          <div style="display:grid;gap:3px;font-size:14px;font-weight:500;letter-spacing:.26em;line-height:1.2;text-transform:uppercase">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </div>
+        </div>
+        <div style="display:grid;gap:18px;margin-top:28px;font-size:14.5px;line-height:1.6;color:#3C3C3C">
+          <span style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="margin-top:4px;flex-shrink:0"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+            <span>2nd Floor, Boring Road Crossing,<br />Patna, Bihar 800001</span>
+          </span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,40px);align-items:center">
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>
+              <span>studio@ashishinteriors.in</span>
+            </span>
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>
+              <span>(555) 0123</span>
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:clamp(24px,3vw,36px);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+          <a href="#" style="color:#141414">INSTAGRAM</a>
+          <span style="color:#51372A">|</span>
+          <a href="#" style="color:#141414">FACEBOOK</a>
+        </div>
+      </div>
+      <div style="display:grid;gap:26px">
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NAME</span>
+          <input type="text" placeholder="Your name" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">EMAIL</span>
+          <input type="email" placeholder="you@email.com" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">PROJECT TYPE</span>
+          <select style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none">
+            <option>Interior design</option>
+            <option>Turnkey renovation</option>
+            <option>Selection of materials</option>
+            <option>Office / commercial</option>
+          </select>
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">TELL US ABOUT YOUR PROJECT</span>
+          <textarea rows="3" placeholder="2BHK in Kankarbagh, possession in October…" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none;resize:vertical"></textarea>
+        </label>
+        <button type="button" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;padding:19px 32px;min-height:44px;background:#D9BC72;border:0;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">SEND INQUIRY <span>&#8599;</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+      <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+      <span style="display:flex;gap:10px"><a href="#" style="color:#FFFFFF">PRIVACY</a><span>|</span><a href="#" style="color:#FFFFFF">TERMS</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const PRINCIPALS = [
+  {
+    name: "ASHISH KUMAR", first: "ASHISH", last: "KUMAR",
+    role: "FOUNDER & PRINCIPAL DESIGNER", tenure: "SINCE 2013 — TWELVE YEARS",
+    line: "Takes every first site visit himself and draws the flats he takes on.",
+    eyebrowA: "FOUNDER,", eyebrowB: "PRINCIPAL DESIGNER",
+    p1: "Ashish started the practice in 2013 with one carpenter, a measuring tape and a rented room off Boring Road. Before that he spent five years on site with a Patna contractor doing builder finishing work — which is where he learned what fails after two monsoons and what does not.",
+    p2: "He still takes the first visit on every project. The measuring, the budget conversation and the decision about whether a wall can honestly come down are his; nothing goes to drawing until he has stood in the room. On site he is in most days before eleven, because in his experience a job drifts in the mornings, not the evenings.",
+    p3: "His own bias in the work is towards storage and away from decoration — he will argue for a taller wardrobe over a feature wall almost every time, and he would rather spend the client's money on plywood grade than on a false ceiling nobody looks at.",
+    credentials: "Diploma in Interior Design, Patna. Registered contractor, Bihar. Twelve years in practice, 240 completed sites.",
+    projects: [
+      { name: "3BHK, BORING CANAL ROAD", meta: "RESIDENTIAL · 45 DAYS" },
+      { name: "CA CHAMBERS, BORING ROAD", meta: "COMMERCIAL · 68 DAYS" },
+      { name: "GUEST HOUSE, BAILEY ROAD", meta: "HOSPITALITY · 96 DAYS" },
+      { name: "DUPLEX, PATLIPUTRA", meta: "RESIDENTIAL · 58 DAYS" }
+    ]
+  },
+  {
+    name: "SUNITA RAJ", first: "SUNITA", last: "RAJ",
+    role: "PARTNER, DESIGN", tenure: "SINCE 2016 — NINE YEARS",
+    line: "Runs the drawing office and every kitchen and joinery detail that leaves it.",
+    eyebrowA: "PARTNER,", eyebrowB: "DESIGN",
+    p1: "Sunita trained at NIFT and worked three years for a Delhi furniture manufacturer before coming back to Patna in 2016. She joined as the practice's first full-time designer and became a partner in 2021.",
+    p2: "She owns the drawing office: layouts, joinery sections, finish boards and the shop drawings the workshop actually builds from. If a wardrobe shutter is 18 mm rather than 16, it is because she specified it and can tell you why.",
+    p3: "Kitchens are her particular subject — work triangles, drawer depths, where the masala shelf has to sit so nobody stretches over a flame. Most of what the studio knows about fitting a modular kitchen into a 1990s Patna flat came out of her drawings.",
+    credentials: "B.Des, NIFT. Nine years with the practice. Member, Institute of Indian Interior Designers.",
+    projects: [
+      { name: "KITCHEN REFIT, RAJAPUR PUL", meta: "RESIDENTIAL · 22 DAYS" },
+      { name: "BORING ROAD KITCHEN", meta: "RESIDENTIAL · 26 DAYS" },
+      { name: "4BHK, BAILEY ROAD", meta: "RESIDENTIAL · 62 DAYS" },
+      { name: "BOUTIQUE STAY, PATLIPUTRA", meta: "HOSPITALITY · 110 DAYS" }
+    ]
+  },
+  {
+    name: "MANOJ SAHU", first: "MANOJ", last: "SAHU",
+    role: "PARTNER, EXECUTION", tenure: "SINCE 2014 — ELEVEN YEARS",
+    line: "Runs the workshop and the site calendar; the reason handover dates hold.",
+    eyebrowA: "PARTNER,", eyebrowB: "EXECUTION",
+    p1: "Manoj is a carpenter by trade — twenty-two years at the bench, eleven of them here. He was the second person Ashish hired and now runs the workshop and the site calendar for every live project.",
+    p2: "The dated schedule clients get on signing is his document. He sequences four to six sites at a time against one workshop, which is why we can promise a handover date at all and why we phase occupied flats around the family's cooking.",
+    p3: "He also trains the apprentices. Every carpenter on our rolls has been through six months on his bench before they are allowed to cut for a client, and he signs off the punch list personally before any key changes hands.",
+    credentials: "ITI Carpentry, Patna. Twenty-two years at the bench. Site safety certification, 2023.",
+    projects: [
+      { name: "SERVICE APARTMENTS, S.K. PURI", meta: "HOSPITALITY · 78 DAYS" },
+      { name: "OFFICE, S.K. PURI", meta: "COMMERCIAL · 52 DAYS" },
+      { name: "3BHK, RAJENDRA NAGAR", meta: "RESIDENTIAL · 38 DAYS" },
+      { name: "SAREE SHOWROOM, BORING ROAD", meta: "RETAIL · 36 DAYS" }
+    ]
+  }
+];
+
+const px = id => "https://images.pexels.com/photos/" + id + "/pexels-photo-" + id + ".jpeg?auto=compress&cs=tinysrgb&w=900";
+
+// portrait pools, kept distinct per group so no face repeats within a band
+const FACES = {
+  principal: [2379004, 3777943, 2182970],
+  design: [3184611, 3778603, 1181690, 2422293, 1116302],
+  site: [1720188, 2379005, 1516680, 1043471],
+  workshop: [3760263, 2422286, 1438081, 1181391, 3796217, 1181562],
+  accounts: [1181519, 2182969]
+};
+
+const TEAM = [
+  { group: "Design office", pool: "design", people: [
+    ["PRIYA NANDAN", "SENIOR DESIGNER"], ["RAHUL VERMA", "DESIGNER"],
+    ["ANJALI SINHA", "DESIGNER"], ["FAIZ AHMED", "JUNIOR DESIGNER"],
+    ["MEERA DAS", "DRAUGHTSMAN"]
+  ]},
+  { group: "Site supervision", pool: "site", people: [
+    ["SANJAY PRASAD", "SENIOR SITE SUPERVISOR"], ["VIKASH ROY", "SITE SUPERVISOR"],
+    ["DEEPAK GUPTA", "SITE SUPERVISOR"], ["ARUN THAKUR", "SITE SUPERVISOR"]
+  ]},
+  { group: "Workshop & finishing", pool: "workshop", people: [
+    ["RAMESH SHARMA", "MASTER CARPENTER"], ["SUNIL PASWAN", "CARPENTER"],
+    ["MOHAN YADAV", "CARPENTER"], ["IRFAN ANSARI", "CARPENTER"],
+    ["KAVITA DEVI", "POLISH & FINISHING"], ["BIRJU MAHTO", "POLISH & FINISHING"]
+  ]},
+  { group: "Accounts & procurement", pool: "accounts", people: [
+    ["SHALINI KUMARI", "ACCOUNTS"], ["NITIN JHA", "PROCUREMENT"]
+  ]}
+];
+
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false, view: "index", idx: 0 };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  show(i) {
+    this.setState({ view: "detail", idx: (i + PRINCIPALS.length) % PRINCIPALS.length });
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
+  }
+
+  renderVals() {
+    const s = this.state, w = s.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+    const member = PRINCIPALS[s.idx];
+    const prev = PRINCIPALS[(s.idx - 1 + PRINCIPALS.length) % PRINCIPALS.length];
+    const next = PRINCIPALS[(s.idx + 1) % PRINCIPALS.length];
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && s.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(st => ({ menu: !st.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      indexDisplay: s.view === "index" ? "block" : "none",
+      detailDisplay: s.view === "detail" ? "block" : "none",
+      backToIndex: () => { this.setState({ view: "index" }); if (typeof window !== "undefined") window.scrollTo(0, 0); },
+
+      headCols: mobile || tablet ? "1fr" : ".9fr 1.1fr",
+      principalCols: mobile ? "1fr" : tablet ? "repeat(2,1fr)" : "repeat(3,1fr)",
+      teamCols: mobile ? "repeat(2,1fr)" : tablet ? "repeat(4,1fr)" : "repeat(6,1fr)",
+      detailCols: mobile || tablet ? "1fr" : "minmax(280px,.75fr) 1.25fr",
+      projectRowCols: mobile ? "auto 1fr" : "auto 1.6fr 1fr auto",
+      projectArrowJustify: mobile ? "start" : "end",
+      prevNextCols: mobile ? "1fr" : "1fr 1fr",
+      prevNextDivider: mobile ? "0" : "1px solid #51372A",
+      prevNextStackDivider: mobile ? "1px solid #51372A" : "0",
+      nextAlign: mobile ? "left" : "right",
+      nextJustify: mobile ? "start" : "end",
+      footerCols: mobile ? "1fr" : "1fr 1fr",
+
+      rolesCols: mobile ? "1fr" : tablet ? "repeat(2,1fr)" : "repeat(3,1fr)",
+      workshopCols: mobile ? "1fr" : "repeat(2,1fr)",
+      workshopWide: mobile ? "span 1" : "span 2",
+
+      principals: PRINCIPALS.map((p, i) => ({
+        name: p.name, role: p.role, line: p.line,
+        photo: px(FACES.principal[i]),
+        open: () => this.show(i)
+      })),
+
+      groups: TEAM.map((g, gi) => ({
+        numeral: String(gi + 1).padStart(2, "0"),
+        label: g.group,
+        count: g.people.length + (g.people.length === 1 ? " person" : " people"),
+        people: g.people.map(([name, role], pi) => ({
+          name, role,
+          photo: px(FACES[g.pool][pi % FACES[g.pool].length])
+        }))
+      })),
+
+      member: {
+        ...member,
+        photo: px(FACES.principal[s.idx]),
+        projects: member.projects.map((pr, i) => ({ ...pr, numeral: String(i + 1).padStart(2, "0") }))
+      },
+      prevName: prev.name, prevRole: prev.role,
+      nextName: next.name, nextRole: next.role,
+      goPrev: () => this.show(s.idx - 1),
+      goNext: () => this.show(s.idx + 1)
+    };
+  }
+}
+</script>
+</body>
+</html>

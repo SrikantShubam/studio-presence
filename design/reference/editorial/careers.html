@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  input::placeholder, textarea::placeholder { color: #A8A29A; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="service-detail.dc.html" style="color:#141414">SERVICES</a>
+      <a href="team.dc.html" style="color:#141414">STUDIO</a>
+      <a href="projects-category.dc.html" style="color:#141414">PORTFOLIO</a>
+      <a href="#apply" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="service-detail.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="team.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">STUDIO</a>
+    <a href="projects-category.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="#apply" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">(555) 0123</a>
+  </div>
+
+  <!-- ============ HEADING + INTRO ============ -->
+  <section data-screen-label="Careers heading" style="padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(40px,5vw,72px) clamp(20px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:{{ headCols }};gap:clamp(32px,6vw,88px);align-items:end">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>TWENTY PEOPLE,</span>
+          <span>FIVE LIVE SITES,</span>
+          <span>ONE WORKSHOP</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(46px,9vw,112px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">WORK<br /><span style="display:block;margin-left:.55em;color:#51372A">WITH US</span></h1>
+      </div>
+      <div style="display:grid;gap:20px;max-width:40em">
+        <p style="margin:0;font-size:clamp(16px,1.8vw,20px);line-height:1.6;color:#141414;text-wrap:pretty">We are twenty people running four to six live sites at a time out of one studio and one workshop off Boring Road. If you join the drawing office you will be measuring flats yourself, drawing joinery sections that our own carpenters build from, and standing in the room while they go in.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">A typical project is a 1,000&ndash;1,500 sq ft flat on an eight to eleven week programme, budget between six and fourteen lakh, for a family who is spending most of what they have. There is no rendering department and no marketing team to hand a scheme to. What you draw is what gets built, and you will find out within the month whether it worked.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STUDIO PHOTO ============ -->
+  <section data-screen-label="Studio at work" style="padding:0 clamp(20px,5vw,64px) clamp(56px,8vw,100px) clamp(20px,5vw,64px)">
+    <figure style="margin:0;display:grid;gap:0">
+      <div style="position:relative;margin:clamp(20px,3vw,32px) clamp(20px,3vw,32px) 0 0">
+        <div style="position:absolute;top:calc(-1 * clamp(20px,3vw,32px));left:clamp(20px,3vw,32px);right:calc(-1 * clamp(20px,3vw,32px));bottom:clamp(20px,3vw,32px);border:1px solid #51372A;pointer-events:none"></div>
+        <div style="position:relative;aspect-ratio:{{ heroRatio }};overflow:hidden;background:#EFECE7">
+          <img src="https://images.pexels.com/photos/3637786/pexels-photo-3637786.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1800" alt="A carpenter working at the bench in the studio workshop" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+      </div>
+      <figcaption style="margin-top:clamp(30px,4vw,46px);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">THE WORKSHOP, A WEEKDAY MORNING &mdash; EVERY DESIGNER SPENDS TIME AT THIS BENCH</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ WHAT WE LOOK FOR ============ -->
+  <section data-screen-label="What we look for" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+    <h2 style="margin:0 0 clamp(36px,5vw,64px) 0;font-size:clamp(34px,6vw,80px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">WHAT WE<br /><span style="display:block;margin-left:.55em;color:#51372A">LOOK FOR</span></h2>
+    <div style="display:grid;grid-template-columns:{{ lookCols }};gap:clamp(28px,4vw,48px)">
+      <div style="display:grid;gap:14px;align-content:start;padding-top:22px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(40px,4.6vw,64px);font-weight:300;line-height:.82;color:transparent;-webkit-text-stroke:1px #C7BEB0">01</span>
+        <h3 style="margin:0;font-size:clamp(17px,1.9vw,21px);font-weight:400;letter-spacing:.03em;text-transform:uppercase">YOU CAN DRAW A SECTION</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.72;text-align:justify;color:#4A4A4A;text-wrap:pretty">Not a render — a section. A wardrobe at 1:10 with the carcass thickness, the shutter overlay and the hinge position on it, that a carpenter can build from without calling you. If your portfolio is all elevations and moodboards we will ask you to draw one in the interview.</p>
+      </div>
+      <div style="display:grid;gap:14px;align-content:start;padding-top:22px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(40px,4.6vw,64px);font-weight:300;line-height:.82;color:transparent;-webkit-text-stroke:1px #C7BEB0">02</span>
+        <h3 style="margin:0;font-size:clamp(17px,1.9vw,21px);font-weight:400;letter-spacing:.03em;text-transform:uppercase">YOU ARE COMFORTABLE ON SITE</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.72;text-align:justify;color:#4A4A4A;text-wrap:pretty">Half this job is standing in dust with a tape measure, arguing pleasantly with a plumber about a waste position. If site work is something you hope to grow out of, this is the wrong studio.</p>
+      </div>
+      <div style="display:grid;gap:14px;align-content:start;padding-top:22px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(40px,4.6vw,64px);font-weight:300;line-height:.82;color:transparent;-webkit-text-stroke:1px #C7BEB0">03</span>
+        <h3 style="margin:0;font-size:clamp(17px,1.9vw,21px);font-weight:400;letter-spacing:.03em;text-transform:uppercase">YOU CAN TALK ABOUT MONEY</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.72;text-align:justify;color:#4A4A4A;text-wrap:pretty">Our clients are spending their savings and they ask direct questions about cost. You will need to say &ldquo;that detail adds forty thousand, here is what I would do instead&rdquo; without flinching or getting defensive.</p>
+      </div>
+      <div style="display:grid;gap:14px;align-content:start;padding-top:22px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(40px,4.6vw,64px);font-weight:300;line-height:.82;color:transparent;-webkit-text-stroke:1px #C7BEB0">04</span>
+        <h3 style="margin:0;font-size:clamp(17px,1.9vw,21px);font-weight:400;letter-spacing:.03em;text-transform:uppercase">YOU WRITE THINGS DOWN</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.72;text-align:justify;color:#4A4A4A;text-wrap:pretty">Every decision on our sites is recorded — a dated schedule, weekly photographs, a punch list. People who work from memory struggle here, and people who keep notes find the job much easier than it looks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OPEN ROLES ============ -->
+  <section data-screen-label="Open roles" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:clamp(28px,4vw,44px)">
+      <h2 style="margin:0;font-size:clamp(34px,6vw,80px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">OPEN<br /><span style="display:block;margin-left:.55em;color:#51372A">ROLES</span></h2>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px">
+        <span style="font-size:12px;letter-spacing:.06em;color:#8B8377">{{ rolesCountLabel }}</span>
+        <button type="button" onClick="{{ toggleEmpty }}" style="min-height:44px;padding:8px 0;background:none;border:0;border-bottom:1px solid #DCD7CE;font:inherit;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#B4ACA0;cursor:pointer">{{ emptyToggleLabel }}</button>
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div style="display:{{ listDisplay }}">
+      <sc-for list="{{ roles }}" as="r" hint-placeholder-count="3">
+        <div style="border-top:1px solid #51372A">
+          <button type="button" onClick="{{ r.toggle }}" style="display:grid;grid-template-columns:{{ roleRowCols }};gap:clamp(14px,2.4vw,32px);width:100%;padding:clamp(24px,3vw,34px) 0;background:none;border:0;font:inherit;color:#141414;text-align:left;align-items:center;cursor:pointer">
+            <span style="font-size:clamp(19px,2.4vw,30px);font-weight:400;line-height:1.15;letter-spacing:-.01em;text-transform:uppercase">{{ r.title }}</span>
+            <span style="font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">{{ r.type }}</span>
+            <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ r.location }}</span>
+            <span style="display:flex;align-items:center;gap:10px;justify-self:{{ roleArrowJustify }};font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">{{ r.cta }} <span style="font-size:18px;font-weight:300;color:#51372A">{{ r.sign }}</span></span>
+          </button>
+
+          <!-- EXPANDED DETAIL -->
+          <div style="display:{{ r.detailDisplay }};padding:0 0 clamp(36px,4.5vw,56px) 0">
+            <div style="display:grid;grid-template-columns:{{ detailCols }};gap:clamp(28px,4vw,56px);padding-top:clamp(8px,1.4vw,14px);border-top:1px solid #DCD7CE">
+              <div style="display:grid;gap:16px;align-content:start;padding-top:clamp(22px,3vw,30px)">
+                <span style="font-size:clamp(46px,5.4vw,76px);font-weight:300;line-height:.82;color:transparent;-webkit-text-stroke:1px #DCD7CE">{{ r.numeral }}</span>
+                <span style="max-width:22em;font-size:11px;font-weight:500;letter-spacing:.2em;line-height:1.7;text-transform:uppercase;color:#51372A">{{ r.standfirst }}</span>
+                <div style="display:grid;gap:12px;margin-top:8px;font-size:13.5px;line-height:1.6;color:#4A4A4A">
+                  <span style="display:grid;gap:4px"><span style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">reports to</span><span>{{ r.reportsTo }}</span></span>
+                  <span style="display:grid;gap:4px"><span style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">salary</span><span>{{ r.salary }}</span></span>
+                  <span style="display:grid;gap:4px"><span style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">starts</span><span>{{ r.starts }}</span></span>
+                </div>
+              </div>
+
+              <div style="display:grid;gap:clamp(28px,3.4vw,40px);padding-top:clamp(22px,3vw,30px);max-width:44em">
+                <div style="display:grid;gap:14px">
+                  <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">WHAT YOU WOULD DO</h3>
+                  <ul style="margin:0;padding:0 0 0 1.1em;display:grid;gap:10px;font-size:15px;line-height:1.7;color:#4A4A4A">
+                    <sc-for list="{{ r.duties }}" as="d" hint-placeholder-count="4">
+                      <li style="text-wrap:pretty">{{ d.text }}</li>
+                    </sc-for>
+                  </ul>
+                </div>
+
+                <div style="display:grid;gap:14px">
+                  <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">WHAT YOU NEED</h3>
+                  <ul style="margin:0;padding:0 0 0 1.1em;display:grid;gap:10px;font-size:15px;line-height:1.7;color:#4A4A4A">
+                    <sc-for list="{{ r.requirements }}" as="q" hint-placeholder-count="4">
+                      <li style="text-wrap:pretty">{{ q.text }}</li>
+                    </sc-for>
+                  </ul>
+                </div>
+
+                <div style="display:grid;gap:14px">
+                  <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">THE FIRST SIX MONTHS</h3>
+                  <div style="display:grid;gap:16px">
+                    <sc-for list="{{ r.months }}" as="m" hint-placeholder-count="3">
+                      <div style="display:grid;grid-template-columns:{{ monthCols }};gap:clamp(12px,2vw,24px);padding-top:14px;border-top:1px solid #DCD7CE">
+                        <span style="font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">{{ m.span }}</span>
+                        <span style="max-width:34em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">{{ m.text }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="display:grid;gap:14px;padding-top:clamp(18px,2.4vw,26px);border-top:1px solid #51372A">
+                  <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">HOW TO APPLY FOR THIS ROLE</h3>
+                  <p style="margin:0;max-width:38em;font-size:15px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">{{ r.apply }}</p>
+                  <a href="#apply" style="justify-self:start;display:inline-flex;align-items:center;gap:12px;margin-top:6px;padding:17px 28px;min-height:44px;background:#D9BC72;color:#141414;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 18px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">APPLY FOR THIS ROLE <span>&#8599;</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+      <div style="border-top:1px solid #51372A"></div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div style="display:{{ emptyDisplay }};padding:clamp(44px,6vw,80px) clamp(20px,4vw,48px);border:1px dashed #51372A">
+      <div style="display:grid;gap:18px;max-width:38em">
+        <span style="font-size:clamp(46px,5.4vw,76px);font-weight:300;line-height:.82;color:transparent;-webkit-text-stroke:1px #DCD7CE">00</span>
+        <h3 style="margin:0;font-size:clamp(20px,2.6vw,32px);font-weight:400;line-height:1.15;letter-spacing:-.01em;text-transform:uppercase">NO OPEN ROLES RIGHT NOW</h3>
+        <p style="margin:0;font-size:15.5px;line-height:1.75;color:#4A4A4A;text-wrap:pretty">Send us your portfolio anyway — we keep good work on file and go back to it first when something opens. That has been how three of our last five hires happened.</p>
+        <a href="#apply" style="font-size:clamp(15px,1.7vw,19px);font-weight:400;color:#141414">studio@ashishinteriors.in</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APPLY ============ -->
+  <section id="apply" data-screen-label="Apply" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+    <div style="display:grid;grid-template-columns:{{ applyCols }};gap:clamp(32px,6vw,88px);align-items:start">
+      <div>
+        <h2 style="margin:0;font-size:clamp(34px,6vw,80px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">HOW TO<br /><span style="display:block;margin-left:.55em;color:#51372A">APPLY</span></h2>
+        <div style="display:grid;gap:10px;margin-top:clamp(28px,4vw,44px);padding-top:22px;border-top:1px solid #51372A">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">SEND IT TO</span>
+          <a href="#apply" style="font-size:clamp(19px,2.4vw,28px);font-weight:400;color:#141414">studio@ashishinteriors.in</a>
+          <span style="margin-top:6px;font-size:13.5px;line-height:1.65;color:#4A4A4A">Subject line: the role name. No cover letter needed.</span>
+        </div>
+      </div>
+      <div style="display:grid;gap:clamp(24px,3vw,34px);max-width:42em">
+        <div style="display:grid;gap:14px">
+          <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">WHAT TO SEND</h3>
+          <ul style="margin:0;padding:0 0 0 1.1em;display:grid;gap:11px;font-size:15px;line-height:1.7;color:#4A4A4A">
+            <li style="text-wrap:pretty">A portfolio PDF, under 15 MB. Six to ten pieces of work is plenty — we would rather see four projects properly documented than twenty thumbnails.</li>
+            <li style="text-wrap:pretty">Include at least one working drawing if you have one. A dimensioned section or a shop drawing tells us more than any render.</li>
+            <li style="text-wrap:pretty">A CV, one page. Where you studied, where you have worked, what you built there.</li>
+            <li style="text-wrap:pretty">Two or three lines in the email about why this studio rather than a bigger one. That is the whole cover letter.</li>
+          </ul>
+        </div>
+        <div style="display:grid;gap:14px;padding-top:clamp(20px,2.6vw,28px);border-top:1px solid #DCD7CE">
+          <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">WHAT HAPPENS NEXT</h3>
+          <p style="margin:0;font-size:15px;line-height:1.72;color:#4A4A4A;text-wrap:pretty">Ashish or Sunita reads every application themselves, usually within five working days, and you will get a reply either way — including a no. If we want to meet you it is one conversation at the studio, an hour, with your drawings on the table. For design roles there is a short paid exercise: draw one wardrobe section, at home, in your own time.</p>
+          <p style="margin:0;font-size:15px;line-height:1.72;color:#4A4A4A;text-wrap:pretty">We do not do panel interviews, personality tests or unpaid trial weeks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer data-screen-label="Footer" style="background:#FFFFFF;border-top:1px solid #51372A">
+    <div style="display:grid;grid-template-columns:{{ footerCols }};gap:clamp(36px,5vw,80px);padding:clamp(56px,7vw,100px) clamp(20px,5vw,64px)">
+      <div>
+        <h3 style="margin:0;font-size:clamp(32px,3.6vw,48px);font-weight:300;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">READY<br /><span style="display:block;margin-left:.55em;color:#51372A">WHEN YOU ARE</span></h3>
+        <p style="margin:22px 0 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Send us the flat size and a rough budget — you will hear back the same working day.</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:clamp(32px,4vw,52px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #51372A">
+          <span style="width:38px;height:38px;flex-shrink:0;border:1px solid #51372A;display:grid;place-items:center;font-size:13px;font-weight:500;letter-spacing:.06em;color:#51372A">AI</span>
+          <div style="display:grid;gap:3px;font-size:14px;font-weight:500;letter-spacing:.26em;line-height:1.2;text-transform:uppercase">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </div>
+        </div>
+        <div style="display:grid;gap:18px;margin-top:28px;font-size:14.5px;line-height:1.6;color:#3C3C3C">
+          <span style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="margin-top:4px;flex-shrink:0"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+            <span>2nd Floor, Shivam Complex, Boring Road Crossing,<br />Patna, Bihar 800001</span>
+          </span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,40px);align-items:center">
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>
+              <span>studio@ashishinteriors.in</span>
+            </span>
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>
+              <span>(555) 0123</span>
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:clamp(24px,3vw,36px);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+          <a href="#" style="color:#141414">INSTAGRAM</a>
+          <span style="color:#51372A">|</span>
+          <a href="#" style="color:#141414">FACEBOOK</a>
+        </div>
+      </div>
+      <div style="display:grid;gap:26px">
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NAME</span>
+          <input type="text" placeholder="Your name" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">EMAIL</span>
+          <input type="email" placeholder="you@email.com" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">PROJECT TYPE</span>
+          <select style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none">
+            <option>Interior design</option>
+            <option>Turnkey renovation</option>
+            <option>Selection of materials</option>
+            <option>Office / commercial</option>
+          </select>
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">TELL US ABOUT YOUR PROJECT</span>
+          <textarea rows="3" placeholder="2BHK in Kankarbagh, possession in October…" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none;resize:vertical"></textarea>
+        </label>
+        <button type="button" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;padding:19px 32px;min-height:44px;background:#D9BC72;border:0;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">SEND INQUIRY <span>&#8599;</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+      <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+      <span style="display:flex;gap:10px"><a href="#" style="color:#FFFFFF">PRIVACY</a><span>|</span><a href="#" style="color:#FFFFFF">TERMS</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const ROLES = [
+  {
+    title: "SITE SUPERVISOR",
+    type: "FULL-TIME",
+    location: "PATNA \u00B7 ON SITE",
+    standfirst: "TWO POSITIONS \u00B7 RESIDENTIAL & SMALL COMMERCIAL \u00B7 OUR OWN ROLLS",
+    reportsTo: "Manoj Sahu, Partner, Execution",
+    salary: "\u20B928,000 \u2013 \u20B942,000 / month, plus site travel",
+    starts: "As soon as you can",
+    duties: [
+      "Run two to three live flats at a time, on site every working day \u2014 not visiting, based there.",
+      "Sequence the trades against the dated schedule and flag slippage the week it happens, not at handover.",
+      "Take the four Friday photographs on every site, including the one showing whatever went wrong.",
+      "Check the joinery against the drawings before it is fixed, and walk the punch list with the client at handover.",
+      "Keep the material register: what arrived, what was short, what went back."
+    ],
+    requirements: [
+      "Three years minimum on residential or small commercial sites in Bihar or nearby.",
+      "You can read a joinery section and tell when what is being built is not what was drawn.",
+      "Enough Hindi and enough patience to negotiate with a plumber, a society secretary and a client in the same morning.",
+      "A two-wheeler and a licence \u2014 sites are spread across the city and travel is paid.",
+      "Not required: a degree. Two of our four supervisors do not have one."
+    ],
+    months: [
+      { span: "MONTH 1", text: "Shadowing Sanjay on two live sites. You will not run anything alone, but you will take the Friday photographs from week two so we can see how you look at work in progress." },
+      { span: "MONTHS 2\u20133", text: "One site of your own, deliberately a small one \u2014 a kitchen or a single-room refit on a three-week programme, with Manoj on the phone daily." },
+      { span: "MONTHS 4\u20136", text: "Two to three concurrent flats, your own material register, and you present your own sites at the Monday programme meeting. By month six you are answering to the client directly." }
+    ],
+    apply: "Email us with the subject line \u201CSite Supervisor\u201D. Send a one-page CV and, if you can, three or four site photographs of work you supervised \u2014 phone photographs are completely fine. No portfolio needed for this role."
+  },
+  {
+    title: "JUNIOR DESIGNER",
+    type: "FULL-TIME",
+    location: "PATNA \u00B7 STUDIO & SITE",
+    standfirst: "ONE POSITION \u00B7 DRAWING OFFICE \u00B7 UNDER SUNITA RAJ",
+    reportsTo: "Sunita Raj, Partner, Design",
+    salary: "\u20B922,000 \u2013 \u20B932,000 / month, reviewed at six months",
+    starts: "September 2026",
+    duties: [
+      "Measure flats yourself \u2014 you will be on the first site visit with Ashish for most projects you draw.",
+      "Draw layouts, joinery sections and shop drawings that our workshop builds from directly.",
+      "Put together finish boards with real samples off the studio racks, not screenshots.",
+      "Sit in on the client sittings where your drawings are reviewed, and take the revisions.",
+      "Walk your own joinery when it is installed and record what you would draw differently."
+    ],
+    requirements: [
+      "A diploma or degree in interior design or architecture.",
+      "A portfolio with at least one dimensioned working drawing in it. Renders alone will not get you an interview.",
+      "AutoCAD or equivalent for 2D drawings; SketchUp is useful, rendering skill is not what we are hiring for.",
+      "Willing to be on site in dust with a tape measure a couple of days a week, from the first month.",
+      "Freshers are welcome. Two of our five designers joined straight out of college."
+    ],
+    months: [
+      { span: "MONTH 1", text: "Two weeks in the workshop before you draw anything for a client \u2014 at the bench, watching your future drawings get built. Everyone who joins the drawing office does this." },
+      { span: "MONTHS 2\u20133", text: "Detailing other people's schemes: wardrobe sections, kitchen elevations, shop drawings. Sunita marks up everything you draw, on paper, in front of you." },
+      { span: "MONTHS 4\u20136", text: "Your first project of your own, start to finish, on a small scope \u2014 usually a single bedroom or a kitchen \u2014 with your name on the drawings and your presence at the client sittings." }
+    ],
+    apply: "Email us with the subject line \u201CJunior Designer\u201D. Send a portfolio PDF under 15 MB and a one-page CV. If you are shortlisted we will ask you to draw one wardrobe section at home \u2014 paid, about three hours of work."
+  },
+  {
+    title: "DESIGN INTERN",
+    type: "INTERNSHIP \u00B7 6 MONTHS",
+    location: "PATNA \u00B7 STUDIO & SITE",
+    standfirst: "ONE POSITION \u00B7 STIPEND \u00B7 SIX MONTHS, EXTENDABLE",
+    reportsTo: "Priya Nandan, Senior Designer",
+    salary: "\u20B912,000 / month stipend",
+    starts: "Rolling \u2014 we take one intern at a time",
+    duties: [
+      "Site measurement with a designer, then producing the measured drawing yourself.",
+      "Material research and sample collection \u2014 you will visit our dealers and learn what things actually cost.",
+      "Drawing production: details, schedules and revisions on live projects, not exercises.",
+      "Keeping the photographic record and the sample library in order.",
+      "One small piece of your own by month five \u2014 a study nook, a shelf wall \u2014 drawn and detailed under supervision."
+    ],
+    requirements: [
+      "Currently studying, or graduated within the last year, in interior design or architecture.",
+      "Basic AutoCAD. We will teach you our drawing standards.",
+      "Available in the studio five days a week for six months. We do not take two-month summer interns \u2014 nobody learns anything useful in eight weeks.",
+      "Curiosity about how things are made matters more than software skill here."
+    ],
+    months: [
+      { span: "MONTHS 1\u20132", text: "Measuring, sample runs and drawing revisions. You will be at the workshop at least one day a week." },
+      { span: "MONTHS 3\u20134", text: "Detail drawings on live projects with your work checked against what gets built." },
+      { span: "MONTHS 5\u20136", text: "One small scope of your own, and a written reference either way. Three of our current designers started here as interns." }
+    ],
+    apply: "Email us with the subject line \u201CDesign Intern\u201D. Send whatever drawings you have \u2014 college work is completely fine \u2014 and tell us which six months you are available."
+  }
+];
+
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false, open: -1, showEmpty: false };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  renderVals() {
+    const s = this.state, w = s.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && s.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(st => ({ menu: !st.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      headCols: mobile || tablet ? "1fr" : ".9fr 1.1fr",
+      heroRatio: mobile ? "4/3" : "16/9",
+      lookCols: mobile ? "1fr" : tablet ? "repeat(2,1fr)" : "repeat(4,1fr)",
+      roleRowCols: mobile ? "1fr" : "1.5fr .7fr .8fr auto",
+      roleArrowJustify: mobile ? "start" : "end",
+      detailCols: mobile || tablet ? "1fr" : ".55fr 1.45fr",
+      monthCols: mobile ? "1fr" : "120px 1fr",
+      applyCols: mobile || tablet ? "1fr" : ".8fr 1.2fr",
+      footerCols: mobile ? "1fr" : "1fr 1fr",
+
+      rolesCountLabel: s.showEmpty ? "Nothing open at the moment" : ROLES.length + " roles open \u00B7 updated July 2026",
+      emptyToggleLabel: s.showEmpty ? "show open roles" : "preview empty state",
+      toggleEmpty: () => this.setState(st => ({ showEmpty: !st.showEmpty, open: -1 })),
+      listDisplay: s.showEmpty ? "none" : "block",
+      emptyDisplay: s.showEmpty ? "block" : "none",
+
+      roles: ROLES.map((r, i) => ({
+        ...r,
+        numeral: String(i + 1).padStart(2, "0"),
+        sign: s.open === i ? "\u2212" : "+",
+        cta: s.open === i ? "CLOSE" : "VIEW DETAILS",
+        detailDisplay: s.open === i ? "block" : "none",
+        duties: r.duties.map(text => ({ text })),
+        requirements: r.requirements.map(text => ({ text })),
+        toggle: () => this.setState(st => ({ open: st.open === i ? -1 : i }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  input::placeholder, textarea::placeholder { color: #A8A29A; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="service-detail.dc.html" style="color:#141414">SERVICES</a>
+      <a href="team.dc.html" style="color:#141414">STUDIO</a>
+      <a href="projects-category.dc.html" style="color:#141414">PORTFOLIO</a>
+      <a href="#contact" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="service-detail.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="team.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">STUDIO</a>
+    <a href="projects-category.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">(555) 0123</a>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- ======================== INDEX ======================== -->
+  <!-- ======================================================= -->
+  <div style="display:{{ indexDisplay }}">
+
+    <section data-screen-label="Journal heading" style="padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(24px,3.4vw,40px) clamp(20px,5vw,64px)">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,56px)">
+        <div>
+          <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+            <span>WHAT WE LEARN</span>
+            <span>ON SITE,</span>
+            <span>WRITTEN DOWN</span>
+          </div>
+          <h1 style="margin:0;font-size:clamp(46px,9vw,112px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">THE<br /><span style="display:block;margin-left:.55em;color:#51372A">JOURNAL</span></h1>
+        </div>
+        <p style="margin:0;max-width:28em;font-size:15px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Notes on drawings, materials and the particular problems of Patna flats — written by the people who do the work, published when there is something worth saying.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Topic filter" style="padding:0 clamp(20px,5vw,64px)">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(16px,2.6vw,40px);padding-bottom:clamp(16px,2vw,22px);border-bottom:1px solid #51372A">
+        <sc-for list="{{ topics }}" as="t" hint-placeholder-count="5">
+          <button type="button" onClick="{{ t.select }}" style="padding:10px 0;min-height:44px;background:none;border:0;border-bottom:2px solid {{ t.underline }};font:inherit;font-size:clamp(12px,1.4vw,15px);letter-spacing:.16em;text-transform:uppercase;color:{{ t.color }};cursor:pointer">{{ t.label }} <span style="color:{{ t.countColor }}">({{ t.count }})</span></button>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- FEATURED -->
+    <section data-screen-label="Featured post" style="padding:clamp(44px,6vw,80px) clamp(20px,5vw,64px) clamp(56px,7vw,96px) clamp(20px,5vw,64px)">
+      <button type="button" onClick="{{ featured.open }}" style="display:grid;grid-template-columns:{{ featuredCols }};gap:clamp(32px,5vw,72px);width:100%;padding:0;background:none;border:0;font:inherit;color:#141414;text-align:left;cursor:pointer;align-items:center">
+        <span style="position:relative;display:block;margin:clamp(18px,2.6vw,28px) clamp(18px,2.6vw,28px) 0 0">
+          <span style="position:absolute;top:calc(-1 * clamp(18px,2.6vw,28px));left:clamp(18px,2.6vw,28px);right:calc(-1 * clamp(18px,2.6vw,28px));bottom:clamp(18px,2.6vw,28px);border:1px solid #51372A;pointer-events:none"></span>
+          <span style="position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#EFECE7">
+            <img src="{{ featured.photo }}" alt="{{ featured.title }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+          </span>
+        </span>
+        <span style="display:grid;gap:clamp(16px,2vw,22px)">
+          <span style="display:flex;flex-wrap:wrap;gap:8px clamp(14px,2vw,24px);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">
+            <span style="color:#51372A">{{ featured.topic }}</span>
+            <span style="color:#8B8377">{{ featured.date }}</span>
+          </span>
+          <span style="max-width:20em;font-size:clamp(28px,4.4vw,58px);font-weight:300;line-height:.98;letter-spacing:-.03em;text-transform:uppercase">{{ featured.titleA }}<span style="display:block;margin-left:.55em;color:#51372A">{{ featured.titleB }}</span></span>
+          <span style="max-width:34em;font-size:clamp(15px,1.7vw,18px);line-height:1.65;color:#4A4A4A">{{ featured.excerpt }}</span>
+          <span style="display:flex;flex-wrap:wrap;gap:10px clamp(16px,2.4vw,28px);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">
+            <span>{{ featured.author }}</span>
+            <span>{{ featured.words }}</span>
+          </span>
+          <span style="margin-top:4px;font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">READ THE POST &#8594;</span>
+        </span>
+      </button>
+    </section>
+
+    <!-- GRID -->
+    <section data-screen-label="Post grid" style="padding:clamp(44px,6vw,80px) clamp(20px,5vw,64px) clamp(40px,5vw,64px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+      <div style="display:grid;grid-template-columns:{{ gridCols }};gap:clamp(32px,4vw,52px) clamp(20px,3vw,34px)">
+        <sc-for list="{{ posts }}" as="p" hint-placeholder-count="9">
+          <button type="button" onClick="{{ p.open }}" style="display:grid;gap:16px;align-content:start;padding:0;background:none;border:0;font:inherit;color:#141414;text-align:left;cursor:pointer">
+            <span style="display:block;aspect-ratio:4/3;overflow:hidden;background:#EFECE7">
+              <img src="{{ p.photo }}" alt="{{ p.title }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+            </span>
+            <span style="display:flex;align-items:flex-start;gap:14px">
+              <span style="font-size:clamp(28px,3.2vw,42px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #C7BEB0;flex-shrink:0">{{ p.numeral }}</span>
+              <span style="display:grid;gap:10px;min-width:0">
+                <span style="display:flex;flex-wrap:wrap;gap:6px clamp(12px,1.6vw,18px);font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+                  <span style="color:#51372A">{{ p.topic }}</span>
+                  <span style="color:#8B8377">{{ p.date }}</span>
+                </span>
+                <span style="font-size:clamp(16px,1.8vw,20px);font-weight:400;line-height:1.2;letter-spacing:-.01em;text-transform:uppercase">{{ p.title }}</span>
+                <span style="max-width:30em;font-size:14px;line-height:1.7;color:#4A4A4A">{{ p.excerpt }}</span>
+              </span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- PAGINATION -->
+    <section data-screen-label="Pagination" style="padding:clamp(28px,3.4vw,40px) clamp(20px,5vw,64px) clamp(64px,9vw,110px) clamp(20px,5vw,64px);background:#FAF8F5">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding-top:clamp(22px,3vw,32px);border-top:1px solid #51372A">
+        <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ pageLabel }}</span>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:clamp(14px,2vw,26px);font-size:12.5px;letter-spacing:.16em">
+          <sc-for list="{{ pages }}" as="pg" hint-placeholder-count="5">
+            <button type="button" onClick="{{ pg.select }}" style="min-width:44px;min-height:44px;padding:8px;background:none;border:0;border-bottom:2px solid {{ pg.underline }};font:inherit;font-size:12.5px;letter-spacing:.16em;color:{{ pg.color }};cursor:pointer">{{ pg.label }}</button>
+          </sc-for>
+          <button type="button" onClick="{{ nextPage }}" style="min-height:44px;padding:8px 0 8px 10px;background:none;border:0;font:inherit;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:{{ nextPageColor }};cursor:pointer">NEXT &#8594;</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- ========================= POST ======================== -->
+  <!-- ======================================================= -->
+  <div style="display:{{ postDisplay }}">
+
+    <section data-screen-label="Post head" style="padding:clamp(32px,4vw,56px) clamp(20px,5vw,64px) 0 clamp(20px,5vw,64px)">
+      <button type="button" onClick="{{ backToIndex }}" style="padding:10px 0;min-height:44px;background:none;border:0;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#141414;cursor:pointer">&#8592; ALL JOURNAL POSTS</button>
+      <div style="display:flex;flex-wrap:wrap;gap:12px clamp(20px,3vw,36px);margin-top:clamp(28px,4vw,44px);font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase">
+        <span style="color:#51372A">{{ post.topic }}</span>
+        <span style="color:#8B8377">{{ post.date }}</span>
+        <span style="color:#8B8377">{{ post.words }}</span>
+      </div>
+      <h1 style="margin:clamp(18px,2.6vw,28px) 0 0 0;max-width:20em;font-size:clamp(34px,6.2vw,84px);font-weight:300;line-height:.92;letter-spacing:-.03em;text-transform:uppercase">{{ post.titleA }}<br /><span style="display:block;margin-left:.55em;color:#51372A">{{ post.titleB }}</span></h1>
+    </section>
+
+    <section data-screen-label="Post lead image" style="padding:clamp(36px,5vw,72px) clamp(20px,5vw,64px) clamp(48px,6vw,88px) clamp(20px,5vw,64px)">
+      <div style="position:relative;margin:clamp(20px,3vw,30px) clamp(20px,3vw,30px) 0 0">
+        <div style="position:absolute;top:calc(-1 * clamp(20px,3vw,30px));left:clamp(20px,3vw,30px);right:calc(-1 * clamp(20px,3vw,30px));bottom:clamp(20px,3vw,30px);border:1px solid #51372A;pointer-events:none"></div>
+        <div style="position:relative;aspect-ratio:{{ leadRatio }};overflow:hidden;background:#EFECE7">
+          <img src="{{ post.photo }}" alt="{{ post.title }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+      </div>
+    </section>
+
+    <!-- BODY at a reading measure -->
+    <section data-screen-label="Post body" style="padding:0 clamp(20px,5vw,64px) clamp(56px,8vw,100px) clamp(20px,5vw,64px)">
+      <div style="max-width:34em;margin:0 auto">
+        <p style="margin:0;font-size:clamp(18px,2vw,22px);line-height:1.55;color:#141414;text-wrap:pretty">{{ post.lead }}</p>
+
+        <p style="margin:26px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p1 }}</p>
+        <p style="margin:22px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p2 }}</p>
+
+        <h2 style="margin:clamp(40px,5vw,60px) 0 0 0;font-size:clamp(24px,3vw,36px);font-weight:300;line-height:1;letter-spacing:-.02em;text-transform:uppercase">{{ post.h2aA }}<span style="display:block;margin-left:.55em;color:#51372A">{{ post.h2aB }}</span></h2>
+        <p style="margin:24px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p3 }}</p>
+        <p style="margin:22px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p4 }}</p>
+
+        <ul style="margin:26px 0 0 0;padding:0 0 0 1.1em;display:grid;gap:12px;font-size:17px;line-height:1.65;color:#3C3C3C">
+          <sc-for list="{{ post.bullets }}" as="b" hint-placeholder-count="4">
+            <li style="text-wrap:pretty">{{ b.text }}</li>
+          </sc-for>
+        </ul>
+
+        <blockquote style="margin:clamp(38px,4.5vw,56px) 0;padding:clamp(24px,3vw,34px) 0;border-top:1px solid #51372A;border-bottom:1px solid #51372A">
+          <p style="margin:0;font-size:clamp(20px,2.4vw,29px);font-weight:300;line-height:1.42;letter-spacing:-.01em;color:#141414;text-wrap:pretty">{{ post.pullquote }}</p>
+        </blockquote>
+
+        <p style="margin:0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p5 }}</p>
+      </div>
+
+      <!-- inline image, breaks the measure deliberately -->
+      <figure style="margin:clamp(44px,5.5vw,72px) auto;max-width:56em;display:grid;gap:12px">
+        <div style="aspect-ratio:16/9;overflow:hidden;background:#EFECE7">
+          <img src="{{ post.inlinePhoto }}" alt="{{ post.inlineCaption }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">{{ post.inlineCaption }}</figcaption>
+      </figure>
+
+      <div style="max-width:34em;margin:0 auto">
+        <h2 style="margin:0;font-size:clamp(24px,3vw,36px);font-weight:300;line-height:1;letter-spacing:-.02em;text-transform:uppercase">{{ post.h2bA }}<span style="display:block;margin-left:.55em;color:#51372A">{{ post.h2bB }}</span></h2>
+        <p style="margin:24px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p6 }}</p>
+        <p style="margin:22px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p7 }}</p>
+        <p style="margin:22px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p8 }}</p>
+
+        <h2 style="margin:clamp(40px,5vw,60px) 0 0 0;font-size:clamp(24px,3vw,36px);font-weight:300;line-height:1;letter-spacing:-.02em;text-transform:uppercase">{{ post.h2cA }}<span style="display:block;margin-left:.55em;color:#51372A">{{ post.h2cB }}</span></h2>
+        <p style="margin:24px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p9 }}</p>
+        <p style="margin:22px 0 0 0;font-size:17px;line-height:1.72;color:#3C3C3C;text-wrap:pretty">{{ post.p10 }}</p>
+      </div>
+    </section>
+
+    <!-- AUTHOR -->
+    <section data-screen-label="Author" style="padding:clamp(44px,6vw,80px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+      <div style="max-width:56em;margin:0 auto;display:grid;grid-template-columns:{{ authorCols }};gap:clamp(20px,3vw,36px);align-items:center">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EAE6DF;max-width:180px">
+          <img src="{{ post.authorPhoto }}" alt="{{ post.author }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.04)" />
+        </div>
+        <div style="display:grid;gap:12px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">WRITTEN BY</span>
+          <span style="font-size:clamp(20px,2.4vw,28px);font-weight:400;line-height:1.1;text-transform:uppercase">{{ post.author }}</span>
+          <span style="font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">{{ post.authorRole }}</span>
+          <p style="margin:0;max-width:38em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">{{ post.authorLine }}</p>
+          <a href="team.dc.html" style="font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#141414">SEE THEIR PROFILE &#8594;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED PROJECTS -->
+    <section data-screen-label="Related projects" style="display:{{ relatedDisplay }};padding:clamp(48px,7vw,90px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+      <h2 style="margin:0 0 clamp(24px,3.4vw,40px) 0;font-size:clamp(13px,1.5vw,16px);font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#51372A">PROJECTS THIS POST DRAWS ON</h2>
+      <div style="display:grid;grid-template-columns:{{ relatedCols }};gap:clamp(18px,2.6vw,28px)">
+        <sc-for list="{{ post.related }}" as="r" hint-placeholder-count="2">
+          <a href="project detail page.dc.html" style="display:grid;gap:18px;padding:clamp(16px,2vw,22px);border:1px solid #51372A;color:#141414" style-hover="background:#FAF8F5">
+            <span style="display:block;aspect-ratio:16/10;overflow:hidden;background:#EFECE7">
+              <img src="{{ r.photo }}" alt="{{ r.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+            </span>
+            <span style="display:grid;gap:12px">
+              <span style="font-size:clamp(17px,2vw,24px);font-weight:400;line-height:1.1;letter-spacing:-.01em;text-transform:uppercase">{{ r.name }}</span>
+              <span style="display:flex;flex-wrap:wrap;gap:8px clamp(16px,2.4vw,28px);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">
+                <span>{{ r.metaA }}</span>
+                <span>{{ r.metaB }}</span>
+              </span>
+              <span style="font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">READ THE CASE STUDY &#8599;</span>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section data-screen-label="Post CTA" style="padding:clamp(48px,7vw,90px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,48px)">
+        <h2 style="margin:0;max-width:18em;font-size:clamp(28px,4.4vw,56px);font-weight:300;line-height:.94;letter-spacing:-.03em;text-transform:uppercase">PLANNING<br /><span style="display:block;margin-left:.55em;color:#51372A">SOMETHING SIMILAR?</span></h2>
+        <a href="#contact" style="display:inline-flex;align-items:center;gap:14px;padding:20px 34px;min-height:44px;background:#D9BC72;color:#141414;font-size:clamp(10.5px,1.1vw,12px);font-weight:500;letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">MESSAGE US ON WHATSAPP <span>&#8599;</span></a>
+      </div>
+    </section>
+
+    <!-- PREV / NEXT -->
+    <section data-screen-label="Prev next post" style="display:grid;grid-template-columns:{{ prevNextCols }};border-top:1px solid #51372A;border-bottom:1px solid #51372A">
+      <button type="button" onClick="{{ goPrev }}" style="display:grid;gap:12px;padding:clamp(28px,4vw,52px) clamp(20px,5vw,64px);background:none;border:0;border-right:{{ prevNextDivider }};border-bottom:{{ prevNextStackDivider }};font:inherit;color:#141414;text-align:left;cursor:pointer" style-hover="background:#FAF8F5">
+        <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">&#8592; PREVIOUS POST</span>
+        <span style="max-width:22em;font-size:clamp(17px,2.2vw,26px);font-weight:400;line-height:1.15;text-transform:uppercase">{{ prevTitle }}</span>
+        <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ prevMeta }}</span>
+      </button>
+      <button type="button" onClick="{{ goNext }}" style="display:grid;gap:12px;padding:clamp(28px,4vw,52px) clamp(20px,5vw,64px);background:none;border:0;font:inherit;color:#141414;text-align:{{ nextAlign }};justify-items:{{ nextJustify }};cursor:pointer" style-hover="background:#FAF8F5">
+        <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NEXT POST &#8594;</span>
+        <span style="max-width:22em;font-size:clamp(17px,2.2vw,26px);font-weight:400;line-height:1.15;text-transform:uppercase">{{ nextTitle }}</span>
+        <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ nextMeta }}</span>
+      </button>
+    </section>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="contact" data-screen-label="Footer" style="background:#FFFFFF;border-top:1px solid #51372A">
+    <div style="display:grid;grid-template-columns:{{ footerCols }};gap:clamp(36px,5vw,80px);padding:clamp(56px,7vw,100px) clamp(20px,5vw,64px)">
+      <div>
+        <h3 style="margin:0;font-size:clamp(32px,3.6vw,48px);font-weight:300;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">READY<br /><span style="display:block;margin-left:.55em;color:#51372A">WHEN YOU ARE</span></h3>
+        <p style="margin:22px 0 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Send us the flat size and a rough budget — you will hear back the same working day.</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:clamp(32px,4vw,52px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #51372A">
+          <span style="width:38px;height:38px;flex-shrink:0;border:1px solid #51372A;display:grid;place-items:center;font-size:13px;font-weight:500;letter-spacing:.06em;color:#51372A">AI</span>
+          <div style="display:grid;gap:3px;font-size:14px;font-weight:500;letter-spacing:.26em;line-height:1.2;text-transform:uppercase">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </div>
+        </div>
+        <div style="display:grid;gap:18px;margin-top:28px;font-size:14.5px;line-height:1.6;color:#3C3C3C">
+          <span style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="margin-top:4px;flex-shrink:0"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+            <span>2nd Floor, Boring Road Crossing,<br />Patna, Bihar 800001</span>
+          </span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,40px);align-items:center">
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>
+              <span>studio@ashishinteriors.in</span>
+            </span>
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>
+              <span>(555) 0123</span>
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:clamp(24px,3vw,36px);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+          <a href="#" style="color:#141414">INSTAGRAM</a>
+          <span style="color:#51372A">|</span>
+          <a href="#" style="color:#141414">FACEBOOK</a>
+        </div>
+      </div>
+      <div style="display:grid;gap:26px">
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NAME</span>
+          <input type="text" placeholder="Your name" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">EMAIL</span>
+          <input type="email" placeholder="you@email.com" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">PROJECT TYPE</span>
+          <select style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none">
+            <option>Interior design</option>
+            <option>Turnkey renovation</option>
+            <option>Selection of materials</option>
+            <option>Office / commercial</option>
+          </select>
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">TELL US ABOUT YOUR PROJECT</span>
+          <textarea rows="3" placeholder="2BHK in Kankarbagh, possession in October…" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none;resize:vertical"></textarea>
+        </label>
+        <button type="button" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;padding:19px 32px;min-height:44px;background:#D9BC72;border:0;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">SEND INQUIRY <span>&#8599;</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+      <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+      <span style="display:flex;gap:10px"><a href="#" style="color:#FFFFFF">PRIVACY</a><span>|</span><a href="#" style="color:#FFFFFF">TERMS</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const px = (id, w) => "https://images.pexels.com/photos/" + id + "/pexels-photo-" + id + ".jpeg?auto=compress&cs=tinysrgb&w=" + (w || 1400);
+
+const AUTHORS = {
+  sunita: { name: "SUNITA RAJ", role: "PARTNER, DESIGN", photo: px(3777943, 600), line: "Runs the drawing office \u2014 layouts, joinery sections and every kitchen detail that leaves the studio." },
+  ashish: { name: "ASHISH KUMAR", role: "FOUNDER & PRINCIPAL DESIGNER", photo: px(2379004, 600), line: "Founded the practice in 2013 and still takes the first site visit on every project." },
+  manoj: { name: "MANOJ SAHU", role: "PARTNER, EXECUTION", photo: px(2182970, 600), line: "Runs the workshop and the site calendar; twenty-two years at the carpentry bench." }
+};
+
+const P_BORING = { name: "3BHK, BORING CANAL ROAD", metaA: "45 DAYS", metaB: "\u20B98\u201310 LAKH", photo: px(3990542) };
+const P_KITCHEN = { name: "KITCHEN REFIT, RAJAPUR PUL", metaA: "22 DAYS", metaB: "\u20B92.4 LAKH", photo: px(3926542) };
+const P_KANKAR = { name: "2BHK, KANKARBAGH", metaA: "38 DAYS", metaB: "\u20B95.5 LAKH", photo: px(3797991) };
+const P_OFFICE = { name: "CA CHAMBERS, BORING ROAD", metaA: "68 DAYS", metaB: "\u20B915\u201320 LAKH", photo: px(5483233) };
+
+// Fully written posts (the first three); the rest are index-level entries.
+const FULL = [
+  {
+    topic: "MATERIALS", date: "24 JULY 2026", words: "1,200 WORDS", author: "sunita",
+    title: "WHICH PLYWOOD ACTUALLY SURVIVES A PATNA MONSOON",
+    titleA: "PLYWOOD", titleB: "IN A MONSOON",
+    excerpt: "Four grades, one humidity problem, and the two places where paying more is the only sensible decision.",
+    photo: px(14495889),
+    lead: "Every second client asks us whether they really need BWP-grade plywood, and the honest answer is: in two places yes, everywhere else no. Here is how we decide, and what it costs.",
+    p1: "Patna sits at eighty per cent relative humidity for a good four months of the year. That is the number that matters \u2014 not the rain itself, but the months of damp air that follow it. Plywood fails in that air by delamination: the glue line between veneers gives up, the sheet swells at the edges, and the shutter stops closing flush. You will notice it as a door that rubs, roughly eighteen months after handover.",
+    p2: "There are four grades worth discussing. MR \u2014 moisture resistant \u2014 is the commodity sheet most job-work carpenters use. BWR is boiling water resistant. BWP is boiling water proof, bonded with phenolic resin. And marine ply is BWP with tighter veneer tolerances and a higher price. The names are close enough that they get used interchangeably in the market, which is exactly the confusion we spend the first material meeting undoing.",
+    h2aA: "WHERE IT", h2aB: "ACTUALLY MATTERS",
+    p3: "In twelve years and 240 sites, plywood has failed on us in three places and three places only: under the kitchen sink, inside the bathroom vanity, and along the bottom rail of a wardrobe that shares a wall with a bathroom. Every other failure we have seen was a hardware or an edge-banding failure wearing plywood's blame.",
+    p4: "So that is where the money goes. BWP under every sink and in every vanity carcass, without exception and without discussion. For the rest of the flat \u2014 wardrobes on internal walls, beds, TV units, corridor storage \u2014 a good BWR sheet from a mill we know is the right specification, and the difference funds better hinges.",
+    bullets: [
+      "Under-sink carcass and bathroom vanity: BWP only, no substitution.",
+      "Wardrobe bottom rails on any bathroom-shared wall: BWP for the lower 300 mm.",
+      "Everything else: BWR from a named mill, with the ISI number on the sheet.",
+      "Edge banding on every exposed edge \u2014 more failures come from a bare edge than from the grade."
+    ],
+    pullquote: "\u201CThe sheet is rarely the problem. An unbanded edge two hundred millimetres from a leaking trap is the problem.\u201D",
+    p5: "The cost difference is smaller than most people expect. On a typical 1,300 sq ft flat, upgrading the whole joinery package from BWR to BWP adds about \u20B942,000. Upgrading only the wet-area carcasses \u2014 which is what we recommend \u2014 adds about \u20B96,500. That is the entire argument in one figure.",
+    inlinePhoto: px(7027976),
+    inlineCaption: "BORING ROAD \u2014 BWP CARCASS UNDER THE SINK, BWR EVERYWHERE ELSE",
+    h2bA: "HOW TO CHECK", h2bB: "WHAT YOU BOUGHT",
+    p6: "Ask for the sheet, not the brand. A mill stamp on the face, an ISI mark with a licence number, and the grade printed along the edge \u2014 all three should be there before the sheet is cut. If a carpenter has already cut the sheets, you have lost the ability to verify anything, which is why we take delivery in front of the client on the first day.",
+    p7: "The second check is weight. A phenolic-bonded BWP sheet is noticeably heavier than an MR sheet of the same thickness; anyone who handles ply daily can feel the difference. If a supplier's BWP feels like MR, it is MR.",
+    p8: "The third is the boil test, which sounds absurd and takes twenty minutes. A 100 mm offcut in boiling water for two hours: BWP holds, MR delaminates at the corners. We have done this on site twice, both times because a client had been sold something at a suspiciously good rate, and both times the sheet failed.",
+    h2cA: "WHAT WE", h2cB: "SPECIFY NOW",
+    p9: "Since 2023 our standard specification has been BWR from one of three mills for general joinery, BWP for all wet areas, 18 mm for carcasses and shutters, 12 mm for backs, and edge banding on every visible edge including the ones inside a wardrobe. It is written into the quotation so a client can hold us to it.",
+    p10: "None of this is exotic. It is the boring, checkable version of a decision that usually gets made on a brand name and a handshake \u2014 and it is why the joinery in that Boring Road flat has been through three monsoons with every shutter still closing flush.",
+    related: [P_BORING, P_KITCHEN]
+  },
+  {
+    topic: "DESIGN", date: "09 JULY 2026", words: "1,050 WORDS", author: "sunita",
+    title: "THE THREE-METRE KITCHEN: WORKING WITH WHAT A 1990S FLAT GIVES YOU",
+    titleA: "THE THREE-METRE", titleB: "KITCHEN",
+    excerpt: "Most Patna kitchens are a single three-metre run behind a door. The plan matters more than any fitting you can buy.",
+    photo: px(3926542),
+    lead: "A 1990s Patna kitchen is usually one three-metre wall, one window in the wrong place, and a gas line that cannot move. Everything good you can do happens inside those three constraints.",
+    p1: "The instinct is to shop \u2014 tandem drawers, soft-close everything, a chimney with a brand name. But a badly planned kitchen with excellent hardware is still a badly planned kitchen, and it costs the same as a well planned one. The plan is the free part.",
+    p2: "So we start by measuring three things and nothing else: the length of the usable run, the height of the window sill, and the fixed position of the gas point. Those three numbers determine almost every decision that follows.",
+    h2aA: "THE WORK", h2aB: "TRIANGLE, COMPRESSED",
+    p3: "Textbook kitchen planning assumes you can spread hob, sink and fridge across two or three walls. In a three-metre run you cannot, so the triangle collapses into a line \u2014 and the question becomes what order that line goes in. We put the sink at the window end, the hob at the far end away from the door, and the fridge outside the run entirely wherever there is any way to do it.",
+    p4: "The reason is traffic. If the fridge sits in the middle of a three-metre run, everyone who wants water walks through the cooking zone. Moving it two metres out of the kitchen \u2014 into a dining-side niche, usually \u2014 buys back the whole counter.",
+    bullets: [
+      "Sink at the window end \u2014 daylight where you stand longest.",
+      "Hob at the far end, never beside the door.",
+      "Fridge outside the run if there is any alternative position at all.",
+      "Masala shelf at shoulder height beside the flame, not on a shelf above it."
+    ],
+    pullquote: "\u201CIf the plan is wrong, no amount of hardware will fix it. Measure first, then argue about finishes.\u201D",
+    p5: "The masala shelf is worth its own sentence. Putting it above the hob is standard and wrong \u2014 it means reaching over a live flame several times a meal. Beside the hob at shoulder height, in a shallow 120 mm unit, costs nothing extra and removes a daily hazard.",
+    inlinePhoto: px(14495889),
+    inlineCaption: "RAJAPUR PUL \u2014 SHALLOW SHELF BESIDE THE HOB, NOT ABOVE IT",
+    h2bA: "TALL UNITS", h2bB: "INSTEAD OF LOFTS",
+    p6: "Every one of these flats has a loft above the kitchen door that holds a suitcase nobody has opened since 2011. It is dead volume: too high to reach, too shallow to be useful, and always the dustiest surface in the house.",
+    p7: "We take that volume into a full-height unit instead \u2014 floor to ceiling, 600 deep, with the top 400 mm as a proper shuttered cupboard rather than an open ledge. The same cubic feet become storage somebody actually opens.",
+    p8: "It also fixes the visual proportion. A three-metre run with a loft above it reads as a corridor with cupboards; the same run taken to the ceiling reads as a fitted kitchen, which is largely why these refits photograph better than they have any right to.",
+    h2cA: "WHAT IT", h2cB: "COSTS TO DO WELL",
+    p9: "A competently planned kitchen in this format \u2014 BWR carcasses with BWP under the sink, laminate shutters, decent hinges and channels, granite counter, chimney and hob \u2014 lands between \u20B92.2 and \u20B92.8 lakh in Patna as of mid-2026. The same kitchen planned badly costs the same and works worse every day for fifteen years.",
+    p10: "We have done eleven of these now. The drawings look almost identical from project to project, which is the point: the constraint is the same in every one of these buildings, and the answer to a repeated constraint should be a repeated answer.",
+    related: [P_KITCHEN, P_BORING]
+  },
+  {
+    topic: "PROCESS", date: "21 JUNE 2026", words: "980 WORDS", author: "manoj",
+    title: "WHY WE PHOTOGRAPH YOUR SITE EVERY WEEK",
+    titleA: "A PHOTOGRAPH", titleB: "EVERY WEEK",
+    excerpt: "Four photographs a week, including the ones that show what went wrong. It changed how we run sites more than any software did.",
+    photo: px(3637786),
+    lead: "Every client gets four photographs a week from their site, sent on a Friday. It sounds like a courtesy. It is actually the single biggest change we have made to how we work.",
+    p1: "We started doing it in 2019 for a client who lived in Delhi and could not visit. By the end of that project we had noticed something we did not expect: the site ran better than our local ones. Not because the client was watching, but because the supervisor had to look at the work once a week with the specific intention of showing it to someone.",
+    p2: "So we made it standard. Four photographs, every Friday, on every live site \u2014 including the ones nobody would choose to send.",
+    h2aA: "WHAT GOES", h2aB: "IN THE FOUR",
+    p3: "One wide shot of the room in progress. One close shot of whatever was completed that week. One of whatever is about to be closed up \u2014 wiring behind a panel, plumbing before tiling, the things that become invisible and unverifiable by Monday. And one of whatever went wrong.",
+    p4: "That fourth photograph is the whole discipline. A cracked slab, a wall chased in the wrong place, a delivery that arrived short. It goes in the set with a line explaining what it means for the schedule.",
+    bullets: [
+      "Wide shot \u2014 the room, so progress is legible week to week.",
+      "Detail shot \u2014 what was actually finished.",
+      "Concealment shot \u2014 wiring and plumbing before they disappear.",
+      "The problem shot \u2014 whatever went wrong, with what it costs in days."
+    ],
+    pullquote: "\u201CA supervisor who has to photograph the mistake on Friday fixes it on Monday. One who does not, sometimes does not.\u201D",
+    p5: "Clients occasionally ask us to stop sending the fourth one. We do not, and we explain why: a project where nothing appears to go wrong for eight weeks is a project where you are being managed rather than informed.",
+    inlinePhoto: px(5691622),
+    inlineCaption: "CONCEALMENT SHOT \u2014 SERVICES PHOTOGRAPHED BEFORE THE PANEL WENT ON",
+    h2bA: "WHAT IT", h2bB: "PREVENTS",
+    p6: "The concealment photograph has paid for the whole practice twice over. When a client calls fourteen months after handover about a socket that has stopped working, we can open a folder and see exactly what is behind that wall before anyone cuts into it.",
+    p7: "It also settles disputes before they become disputes. Twice we have been asked to prove that a wall we were accused of chasing incorrectly was chased to the drawing. Both times the Friday photograph closed the conversation in under a minute.",
+    p8: "And it makes the punch list shorter. Things get noticed in week four rather than at handover, when fixing them means undoing finished work.",
+    h2cA: "THE PART", h2cB: "WE GOT WRONG",
+    p9: "For the first two years we sent twenty or thirty photographs a week, on the theory that more was better. It was not \u2014 nobody looked at them. Four photographs with one line each get read; a folder of thirty gets ignored, and an ignored update is the same as no update.",
+    p10: "It is now in the contract: four photographs, Friday, for the life of the project, and the full set handed over on a drive at completion along with the invoices. It costs us about ten minutes of a supervisor's week.",
+    related: [P_KANKAR, P_OFFICE]
+  }
+];
+
+// Index-only entries — headline, topic, date, excerpt, photo.
+const STUBS = [
+  ["LIVING IN PATNA", "05 JUNE 2026", "WHAT A SOCIETY WILL AND WON'T LET YOU DO", "Drilling hours, lift bookings and the four permissions worth getting in writing before day one.", 16466775],
+  ["DESIGN", "22 MAY 2026", "STORAGE YOU CAN'T SEE: 214 CUBIC FEET IN A CORRIDOR", "Where the volume actually hides in a 1,300 sq ft flat, room by room.", 30737542],
+  ["MATERIALS", "08 MAY 2026", "LAMINATE, VENEER OR PAINT: A COST COMPARISON THAT HOLDS UP", "Three finishes on the same wardrobe, with what each looked like after two years.", 11975931],
+  ["PROCESS", "19 APRIL 2026", "WHAT A DATED SCHEDULE ACTUALLY COMMITS US TO", "How we build a programme, where the float sits, and what happens when a slab arrives cracked.", 3846035],
+  ["LIVING IN PATNA", "02 APRIL 2026", "RENOVATING WITH THE FAMILY STILL IN THE FLAT", "Phasing an occupied home so nobody eats out for six weeks.", 3797991],
+  ["DESIGN", "14 MARCH 2026", "THE BALCONY QUESTION: BRING IT IN OR LEAVE IT ALONE", "Four flats where we enclosed it, two where we argued against.", 34623004],
+  ["MATERIALS", "27 FEBRUARY 2026", "HARDWARE IS WHERE CHEAP KITCHENS FAIL FIRST", "Hinges and channels, tested the only way that counts \u2014 four years of daily use.", 5779553],
+  ["PROCESS", "09 FEBRUARY 2026", "THE PUNCH LIST, AND WHY OURS IS LONGER THAN YOURS", "Nine items on a good handover. What we look for before you do.", 4792297],
+  ["LIVING IN PATNA", "23 JANUARY 2026", "BUDGETS: WHERE \u20B98 LAKH ACTUALLY GOES", "A line-by-line breakdown of a completed three-bedroom, with the invoices.", 18692328]
+];
+
+const POSTS = [
+  ...FULL.map((p, i) => ({ ...p, full: true, idx: i })),
+  ...STUBS.map(([topic, date, title, excerpt, photo], i) => ({
+    topic, date, title, excerpt, photo: px(photo), full: false, idx: FULL.length + i,
+    words: "\u2014", author: "ashish"
+  }))
+];
+
+const TOPICS = ["All", "Design", "Materials", "Process", "Living in Patna"];
+const PER_PAGE = 9;
+
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false, view: "index", idx: 0, topic: "All", page: 1 };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  open(i) {
+    this.setState({ view: "post", idx: Math.min(i, FULL.length - 1) });
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
+  }
+
+  renderVals() {
+    const s = this.state, w = s.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+    const t = s.topic;
+
+    const matches = p => t === "All" || p.topic.toLowerCase() === t.toLowerCase();
+    const filtered = POSTS.filter(matches);
+    const feat = filtered[0] || POSTS[0];
+    const rest = filtered.slice(1);
+
+    // pretend the journal holds 42 posts — pagination reflects a real archive
+    const TOTAL = 42;
+    const totalPages = Math.max(1, Math.ceil((t === "All" ? TOTAL : filtered.length + 6) / PER_PAGE));
+    const page = Math.min(s.page, totalPages);
+    const pageStart = (page - 1) * PER_PAGE;
+    const visible = rest.slice(0, PER_PAGE);
+
+    const post = FULL[s.idx];
+    const prev = FULL[(s.idx - 1 + FULL.length) % FULL.length];
+    const next = FULL[(s.idx + 1) % FULL.length];
+    const author = AUTHORS[post.author];
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && s.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(st => ({ menu: !st.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      indexDisplay: s.view === "index" ? "block" : "none",
+      postDisplay: s.view === "post" ? "block" : "none",
+      backToIndex: () => { this.setState({ view: "index" }); if (typeof window !== "undefined") window.scrollTo(0, 0); },
+
+      topics: TOPICS.map(name => ({
+        label: name,
+        count: name === "All" ? TOTAL : POSTS.filter(p => p.topic.toLowerCase() === name.toLowerCase()).length + 5,
+        color: t === name ? "#141414" : "#8B8377",
+        countColor: t === name ? "#51372A" : "#B4ACA0",
+        select: () => this.setState({ topic: name, page: 1 })
+      })),
+
+      featuredCols: mobile ? "1fr" : "1.1fr 1fr",
+      gridCols: mobile ? "1fr" : tablet ? "repeat(2,1fr)" : "repeat(3,1fr)",
+      leadRatio: mobile ? "4/3" : "16/9",
+      authorCols: mobile ? "1fr" : "180px 1fr",
+      relatedCols: mobile ? "1fr" : "1fr 1fr",
+      relatedDisplay: post.related && post.related.length ? "block" : "none",
+      prevNextCols: mobile ? "1fr" : "1fr 1fr",
+      prevNextDivider: mobile ? "0" : "1px solid #51372A",
+      prevNextStackDivider: mobile ? "1px solid #51372A" : "0",
+      nextAlign: mobile ? "left" : "right",
+      nextJustify: mobile ? "start" : "end",
+      footerCols: mobile ? "1fr" : "1fr 1fr",
+
+      featured: {
+        ...feat,
+        titleA: feat.titleA || feat.title,
+        titleB: feat.titleB || "",
+        author: AUTHORS[feat.author].name,
+        open: () => this.open(feat.idx)
+      },
+
+      posts: visible.map((p, i) => ({
+        ...p,
+        numeral: String(pageStart + i + 1).padStart(2, "0"),
+        open: () => this.open(p.idx)
+      })),
+
+      pageLabel: "Page " + page + " of " + totalPages + " \u00B7 " + (t === "All" ? TOTAL : "filtered") + " posts",
+      pages: Array.from({ length: totalPages }, (_, i) => i + 1).map(n => ({
+        label: String(n),
+        color: n === page ? "#141414" : "#8B8377",
+        underline: n === page ? "#51372A" : "transparent",
+        select: () => this.setState({ page: n })
+      })),
+      nextPage: () => this.setState(st => ({ page: Math.min(st.page + 1, totalPages) })),
+      nextPageColor: page < totalPages ? "#141414" : "#B4ACA0",
+
+      post: {
+        ...post,
+        author: author.name,
+        authorRole: author.role,
+        authorPhoto: author.photo,
+        authorLine: author.line,
+        bullets: post.bullets.map(text => ({ text }))
+      },
+      prevTitle: prev.title, prevMeta: prev.topic + " \u00B7 " + prev.date,
+      nextTitle: next.title, nextMeta: next.topic + " \u00B7 " + next.date,
+      goPrev: () => this.open((s.idx - 1 + FULL.length) % FULL.length),
+      goNext: () => this.open((s.idx + 1) % FULL.length)
+    };
+  }
+}
+</script>
+</body>
+</html>

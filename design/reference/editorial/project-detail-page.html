@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  input::placeholder, textarea::placeholder { color: #A8A29A; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- ============ NAV (white) ============ -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="Studio design 1.dc.html#services" style="color:#141414">SERVICES</a>
+      <a href="Studio design 1.dc.html#about" style="color:#141414">ABOUT</a>
+      <a href="Studio design 1.dc.html#portfolio" style="color:#141414">PORTFOLIO</a>
+      <a href="#contact" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="Studio design 1.dc.html#services" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="Studio design 1.dc.html#about" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">ABOUT</a>
+    <a href="Studio design 1.dc.html#portfolio" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">(555) 0123</a>
+  </div>
+
+  <!-- ============ TITLE ============ -->
+  <section data-screen-label="Project title" style="padding:clamp(48px,7vw,92px) clamp(20px,5vw,64px) clamp(32px,4vw,56px) clamp(20px,5vw,64px)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(20px,4vw,48px)">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>SELECTED WORK,</span>
+          <span>CASE STUDY</span>
+          <span>NO. 07</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(44px,8.5vw,108px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">3BHK,<br /><span style="display:block;margin-left:.55em;color:#51372A">BORING ROAD</span></h1>
+      </div>
+      <a href="Studio design 1.dc.html#portfolio" style="font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#141414">&#8592; ALL PROJECTS</a>
+    </div>
+  </section>
+
+  <!-- ============ HERO PHOTO (offset frame) ============ -->
+  <section data-screen-label="Hero photo" style="padding:0 clamp(20px,5vw,64px) clamp(56px,8vw,110px) clamp(20px,5vw,64px)">
+    <div style="position:relative;margin:clamp(20px,3vw,32px) clamp(20px,3vw,32px) 0 0">
+      <div style="position:absolute;top:calc(-1 * clamp(20px,3vw,32px));left:clamp(20px,3vw,32px);right:calc(-1 * clamp(20px,3vw,32px));bottom:clamp(20px,3vw,32px);border:1px solid #51372A;pointer-events:none"></div>
+      <div style="position:relative;aspect-ratio:{{ heroRatio }};overflow:hidden;background:#EFECE7">
+        <img src="https://images.pexels.com/photos/34946066/pexels-photo-34946066.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1800" alt="Living room with brick accent wall" style="width:100%;height:100%;object-fit:cover;display:block" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METADATA BLOCK ============ -->
+  <section data-screen-label="Metadata" style="padding:clamp(48px,6vw,80px) clamp(20px,5vw,64px);border-top:1px solid #51372A;border-bottom:1px solid #51372A;background:#FAF8F5">
+    <div style="display:grid;grid-template-columns:{{ metaCols }};gap:clamp(28px,4vw,56px)">
+      <div style="display:grid;gap:10px;padding-left:{{ metaPad }};border-left:{{ metaBorder }}">
+        <span style="font-size:11px;letter-spacing:.16em;color:#8B8377">location</span>
+        <span style="font-size:clamp(22px,2.6vw,32px);font-weight:400;line-height:1.1;letter-spacing:.01em;text-transform:uppercase">BORING ROAD,<br />PATNA</span>
+      </div>
+      <div style="display:grid;gap:10px;padding-left:{{ metaPad }};border-left:{{ metaBorder }}">
+        <span style="font-size:11px;letter-spacing:.16em;color:#8B8377">room type</span>
+        <span style="font-size:clamp(22px,2.6vw,32px);font-weight:400;line-height:1.1;letter-spacing:.01em;text-transform:uppercase">RESIDENTIAL<br />— 3BHK</span>
+      </div>
+      <div style="display:grid;gap:10px;padding-left:{{ metaPad }};border-left:{{ metaBorder }}">
+        <span style="font-size:11px;letter-spacing:.16em;color:#8B8377">budget range</span>
+        <span style="font-size:clamp(22px,2.6vw,32px);font-weight:400;line-height:1.1;letter-spacing:.01em;text-transform:uppercase">&#8377;8–10<br />LAKH</span>
+      </div>
+      <div style="display:grid;gap:10px;padding-left:{{ metaPad }};border-left:{{ metaBorder }}">
+        <span style="font-size:11px;letter-spacing:.16em;color:#8B8377">terms of execution</span>
+        <span style="font-size:clamp(22px,2.6vw,32px);font-weight:400;line-height:1.1;letter-spacing:.01em;text-transform:uppercase">45<br />DAYS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 · THE BRIEF ============ -->
+  <section data-screen-label="The brief" style="padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px)">
+    <div style="position:relative;display:grid;grid-template-columns:{{ proseCols }};gap:clamp(32px,6vw,90px);align-items:start">
+      <div>
+        <span style="display:block;font-size:clamp(90px,11vw,160px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #DCD7CE">01</span>
+        <h2 style="margin:clamp(12px,2vw,20px) 0 0 0;font-size:clamp(32px,5vw,62px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">THE<br /><span style="display:block;margin-left:.55em;color:#51372A">BRIEF</span></h2>
+      </div>
+      <div style="display:grid;gap:22px;max-width:40em">
+        <p style="margin:0;font-size:clamp(17px,1.9vw,21px);line-height:1.6;color:#141414;text-wrap:pretty">A family of four had just taken possession of a 1,320 sq ft flat off Boring Road. Two working parents, two school-going children, one grandmother visiting for months at a time — and a builder shell with a dark corridor and a kitchen closed off behind a wall.</p>
+        <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">The brief was practical rather than aspirational. They wanted storage that could absorb a decade of accumulation, a kitchen where two people could cook together during festivals, and a home that would still look right when the furniture inevitably got moved around. The budget was fixed at ten lakh, and they were honest that it could not stretch.</p>
+        <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">We spent the first two sittings measuring, photographing and listening — no drawings, no mood boards. Most of what shaped this project came out of that conversation: the grandmother needed a room she could shut, the children shared study hours, and the family ate at the table every night.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHOTO PAIR ============ -->
+  <section data-screen-label="Photos — living" style="padding:0 clamp(20px,5vw,64px) clamp(56px,8vw,100px) clamp(20px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:{{ pairCols }};gap:clamp(12px,2vw,24px)">
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:4/3;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/3990542/pexels-photo-3990542.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" alt="Sunlit living room with wooden furniture" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">LIVING ROOM — SEATING SIDE</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:4/3;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/34623004/pexels-photo-34623004.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" alt="Living room open to the kitchen" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">LIVING ROOM — TOWARDS THE KITCHEN</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ 02 · OUR APPROACH ============ -->
+  <section data-screen-label="Approach" style="padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+    <div style="position:relative;display:grid;grid-template-columns:{{ proseCols }};gap:clamp(32px,6vw,90px);align-items:start">
+      <div>
+        <span style="display:block;font-size:clamp(90px,11vw,160px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #D3CBBF">02</span>
+        <h2 style="margin:clamp(12px,2vw,20px) 0 0 0;font-size:clamp(32px,5vw,62px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">OUR<br /><span style="display:block;margin-left:.55em;color:#51372A">APPROACH</span></h2>
+      </div>
+      <div style="display:grid;gap:clamp(32px,4vw,48px);max-width:44em">
+        <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">Rather than spread a thin budget across every surface, we put the money into three decisions and kept everything else deliberately plain — white walls, a single laminate family, no false ceilings except where wiring demanded them.</p>
+
+        <div style="display:grid;gap:clamp(24px,3vw,34px)">
+          <div style="display:grid;grid-template-columns:{{ decisionCols }};gap:clamp(14px,2.4vw,32px);padding-top:22px;border-top:1px solid #51372A">
+            <span style="font-size:clamp(40px,5vw,64px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">A</span>
+            <div>
+              <h3 style="margin:0;font-size:clamp(18px,2.1vw,25px);font-weight:400;letter-spacing:-.01em;text-transform:uppercase">THE KITCHEN WALL CAME DOWN</h3>
+              <p style="margin:12px 0 0 0;font-size:15px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">A half-height counter replaced it. The dark corridor became the brightest part of the flat, and two people can now work either side of the hob without colliding.</p>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:{{ decisionCols }};gap:clamp(14px,2.4vw,32px);padding-top:22px;border-top:1px solid #51372A">
+            <span style="font-size:clamp(40px,5vw,64px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">B</span>
+            <div>
+              <h3 style="margin:0;font-size:clamp(18px,2.1vw,25px);font-weight:400;letter-spacing:-.01em;text-transform:uppercase">STORAGE IN THE DEAD SPACE</h3>
+              <p style="margin:12px 0 0 0;font-size:15px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">Every corridor wall, bed base and window seat carries concealed storage — 214 cubic feet of it, built in commercial ply so it survives Patna's humidity.</p>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:{{ decisionCols }};gap:clamp(14px,2.4vw,32px);padding-top:22px;border-top:1px solid #51372A">
+            <span style="font-size:clamp(40px,5vw,64px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">C</span>
+            <div>
+              <h3 style="margin:0;font-size:clamp(18px,2.1vw,25px);font-weight:400;letter-spacing:-.01em;text-transform:uppercase">ONE MATERIAL, REPEATED</h3>
+              <p style="margin:12px 0 0 0;font-size:15px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">A single warm oak laminate runs through joinery in all five rooms. It cost less by volume, it ages evenly, and a damaged panel can be matched years from now.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHOTO MOSAIC ============ -->
+  <section data-screen-label="Photos — rooms" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:{{ mosaicCols }};gap:clamp(12px,2vw,24px)">
+      <figure style="margin:0;display:grid;gap:12px;grid-column:{{ mosaicWide }}">
+        <div style="aspect-ratio:16/9;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/37003186/pexels-photo-37003186.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Dining area with vintage chairs" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">DINING — THE TABLE THEY EAT AT EVERY NIGHT</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:3/4;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/18692328/pexels-photo-18692328.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Bedroom corner with soft curtains" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">MASTER BEDROOM</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:3/4;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/11975931/pexels-photo-11975931.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Shelf with books, cushions and plants" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">STUDY SHELF — CHILDREN'S ROOM</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/4792297/pexels-photo-4792297.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Guest room with plain walls" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">GUEST ROOM</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/5779553/pexels-photo-5779553.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Kitchen counter detail" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">KITCHEN — COUNTER DETAIL</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/30737542/pexels-photo-30737542.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Corridor storage and shelving" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">CORRIDOR STORAGE</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px;grid-column:{{ mosaicWide }}">
+        <div style="aspect-ratio:16/9;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/16466775/pexels-photo-16466775.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Living room with city view" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">BALCONY SIDE — EVENING</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ 03 · THE OUTCOME ============ -->
+  <section data-screen-label="Outcome" style="padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+    <div style="position:relative;display:grid;grid-template-columns:{{ proseCols }};gap:clamp(32px,6vw,90px);align-items:start">
+      <div>
+        <span style="display:block;font-size:clamp(90px,11vw,160px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #DCD7CE">03</span>
+        <h2 style="margin:clamp(12px,2vw,20px) 0 0 0;font-size:clamp(32px,5vw,62px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">THE<br /><span style="display:block;margin-left:.55em;color:#51372A">OUTCOME</span></h2>
+      </div>
+      <div style="display:grid;gap:22px;max-width:40em">
+        <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">Handover was on day 45, three days later than the dated schedule — a delay caused by a marble slab that arrived cracked and had to be re-cut. The final bill came in at ₹9.4 lakh, inside the range they had set, with material invoices handed over in a folder.</p>
+        <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">A year on, the joinery has held through one full monsoon and the family has moved the sofa twice without the room falling apart — which was, in the end, the actual brief. They have since sent us two neighbours in the same building.</p>
+        <div style="display:grid;grid-template-columns:{{ outcomeStatCols }};gap:clamp(20px,3vw,40px);margin-top:clamp(14px,2vw,22px)">
+          <div style="display:grid;gap:8px;padding-top:20px;border-top:1px solid #51372A">
+            <span style="font-size:clamp(30px,3.4vw,44px);font-weight:400;line-height:1;letter-spacing:-.02em">1,320</span>
+            <span style="font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">SQ FT CARPET AREA</span>
+          </div>
+          <div style="display:grid;gap:8px;padding-top:20px;border-top:1px solid #51372A">
+            <span style="font-size:clamp(30px,3.4vw,44px);font-weight:400;line-height:1;letter-spacing:-.02em">214</span>
+            <span style="font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">CU FT STORAGE BUILT</span>
+          </div>
+          <div style="display:grid;gap:8px;padding-top:20px;border-top:1px solid #51372A">
+            <span style="font-size:clamp(30px,3.4vw,44px);font-weight:400;line-height:1;letter-spacing:-.02em">&#8377;9.4L</span>
+            <span style="font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">FINAL BILLED COST</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLIENT QUOTE ============ -->
+  <section data-screen-label="Client quote" style="padding:clamp(56px,8vw,110px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:20px">
+      <span style="font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8B8377">sample content — replace with the real client quote</span>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ quoteCols }};gap:clamp(24px,4vw,48px);padding:clamp(24px,3vw,40px);border:1px solid #51372A;background:#FFFFFF">
+      <div style="aspect-ratio:3/4;overflow:hidden;background:#EAE6DF"><img src="https://images.pexels.com/photos/9345676/pexels-photo-9345676.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1000" alt="Family at the dining table" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+      <div style="display:flex;flex-direction:column;justify-content:space-between;gap:clamp(24px,3vw,36px)">
+        <p style="margin:0;font-size:clamp(19px,2.6vw,32px);font-weight:300;line-height:1.45;letter-spacing:-.01em;color:#141414;text-wrap:pretty">&ldquo;They took down the kitchen wall we had argued about for a month and were right about it. Dated schedule, weekly photographs, bills in our hands — the whole thing felt like dealing with grown-ups.&rdquo;</p>
+        <div>
+          <div style="display:flex;gap:5px;margin-bottom:14px;font-size:13px;letter-spacing:.16em;color:#D9BC72">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+          <div style="font-size:12.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase">R. KUMAR</div>
+          <div style="margin-top:6px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#51372A">BORING ROAD, PATNA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="contact" data-screen-label="CTA" style="padding:clamp(64px,8vw,110px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,56px)">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(18px,3vw,30px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>SAME FLAT SIZE?</span>
+          <span>SIMILAR BUDGET?</span>
+        </div>
+        <h2 style="margin:0;font-size:clamp(34px,5.5vw,72px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">START<br /><span style="display:block;margin-left:.55em;color:#51372A">YOUR OWN</span></h2>
+      </div>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:14px;padding:20px 34px;background:#D9BC72;color:#141414;font-size:clamp(10.5px,1.1vw,12px);font-weight:500;letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">DISCUSS YOUR PROJECT ON WHATSAPP <span>&#8599;</span></a>
+    </div>
+  </section>
+
+  <!-- ============ PREV / NEXT ============ -->
+  <section data-screen-label="Prev next" style="display:grid;grid-template-columns:{{ prevNextCols }};border-top:1px solid #51372A;border-bottom:1px solid #51372A">
+    <a href="#" style="display:grid;gap:14px;padding:clamp(32px,4.5vw,60px) clamp(20px,5vw,64px);border-right:{{ prevNextDivider }};border-bottom:{{ prevNextStackDivider }};color:#141414" style-hover="background:#FAF8F5">
+      <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">&#8592; PREVIOUS PROJECT</span>
+      <span style="font-size:clamp(20px,2.6vw,32px);font-weight:400;line-height:1.1;letter-spacing:-.01em;text-transform:uppercase">2BHK, KANKARBAGH</span>
+      <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">RESIDENTIAL &middot; 38 DAYS</span>
+    </a>
+    <a href="#" style="display:grid;gap:14px;padding:clamp(32px,4.5vw,60px) clamp(20px,5vw,64px);text-align:{{ nextAlign }};justify-items:{{ nextJustify }};color:#141414" style-hover="background:#FAF8F5">
+      <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NEXT PROJECT &#8594;</span>
+      <span style="font-size:clamp(20px,2.6vw,32px);font-weight:400;line-height:1.1;letter-spacing:-.01em;text-transform:uppercase">OFFICE, S.K. PURI</span>
+      <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">COMMERCIAL &middot; 52 DAYS</span>
+    </a>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer data-screen-label="Footer" style="background:#FFFFFF;border-top:1px solid #51372A">
+    <div style="display:grid;grid-template-columns:{{ footerCols }};gap:clamp(36px,5vw,80px);padding:clamp(56px,7vw,100px) clamp(20px,5vw,64px)">
+      <div>
+        <h3 style="margin:0;font-size:clamp(32px,3.6vw,48px);font-weight:300;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">READY<br /><span style="display:block;margin-left:.55em;color:#51372A">WHEN YOU ARE</span></h3>
+        <p style="margin:22px 0 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Send us the flat size and a rough budget — you will hear back the same working day.</p>
+
+        <div style="display:flex;align-items:center;gap:16px;margin-top:clamp(32px,4vw,52px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #51372A">
+          <span style="width:38px;height:38px;flex-shrink:0;border:1px solid #51372A;display:grid;place-items:center;font-size:13px;font-weight:500;letter-spacing:.06em;color:#51372A">AI</span>
+          <div style="display:grid;gap:3px;font-size:14px;font-weight:500;letter-spacing:.26em;line-height:1.2;text-transform:uppercase">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </div>
+        </div>
+
+        <div style="display:grid;gap:18px;margin-top:28px;font-size:14.5px;line-height:1.6;color:#3C3C3C">
+          <span style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="margin-top:4px;flex-shrink:0"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+            <span>2nd Floor, Boring Road Crossing,<br />Patna, Bihar 800001</span>
+          </span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,40px);align-items:center">
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>
+              <span>studio@ashishinteriors.in</span>
+            </span>
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>
+              <span>(555) 0123</span>
+            </span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:clamp(24px,3vw,36px);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+          <a href="#" style="color:#141414">INSTAGRAM</a>
+          <span style="color:#51372A">|</span>
+          <a href="#" style="color:#141414">FACEBOOK</a>
+        </div>
+      </div>
+      <div style="display:grid;gap:26px">
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NAME</span>
+          <input type="text" placeholder="Your name" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">EMAIL</span>
+          <input type="email" placeholder="you@email.com" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">PROJECT TYPE</span>
+          <select style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none">
+            <option>Interior design</option>
+            <option>Turnkey renovation</option>
+            <option>Selection of materials</option>
+            <option>Office / commercial</option>
+          </select>
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">TELL US ABOUT YOUR PROJECT</span>
+          <textarea rows="3" placeholder="2BHK in Kankarbagh, possession in October…" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none;resize:vertical"></textarea>
+        </label>
+        <button type="button" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;padding:19px 32px;background:#D9BC72;border:0;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">SEND INQUIRY <span>&#8599;</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+      <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+      <span style="display:flex;gap:10px"><a href="#" style="color:#FFFFFF">PRIVACY</a><span>|</span><a href="#" style="color:#FFFFFF">TERMS</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._onResize);
+  }
+
+  renderVals() {
+    const w = this.state.w;
+    const mobile = w < 720;
+    const tablet = w >= 720 && w < 1080;
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && this.state.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      heroRatio: mobile ? "4/3" : "16/9",
+
+      metaCols: mobile ? "1fr 1fr" : tablet ? "1fr 1fr" : "repeat(4,1fr)",
+      metaPad: mobile ? "16px" : "clamp(16px,2vw,28px)",
+      metaBorder: "1px solid #51372A",
+
+      proseCols: mobile || tablet ? "1fr" : ".7fr 1.3fr",
+      pairCols: mobile ? "1fr" : "1fr 1fr",
+      decisionCols: mobile ? "44px 1fr" : "clamp(56px,7vw,90px) 1fr",
+
+      mosaicCols: mobile ? "1fr" : tablet ? "repeat(2,1fr)" : "repeat(3,1fr)",
+      mosaicWide: mobile ? "span 1" : tablet ? "span 2" : "span 3",
+
+      outcomeStatCols: mobile ? "1fr 1fr" : "repeat(3,1fr)",
+      quoteCols: mobile ? "1fr" : "minmax(200px,300px) 1fr",
+
+      prevNextCols: mobile ? "1fr" : "1fr 1fr",
+      prevNextDivider: mobile ? "0" : "1px solid #51372A",
+      prevNextStackDivider: mobile ? "1px solid #51372A" : "0",
+      nextAlign: mobile ? "left" : "right",
+      nextJustify: mobile ? "start" : "end",
+
+      footerCols: mobile ? "1fr" : "1fr 1fr"
+    };
+  }
+}
+</script>
+</body>
+</html>

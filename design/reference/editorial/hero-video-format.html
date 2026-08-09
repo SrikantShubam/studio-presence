@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  @keyframes chevronBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- HERO — FULL-BLEED VIDEO -->
+  <section data-screen-label="Hero — video" style="position:relative;min-height:min(860px,100vh);background:repeating-linear-gradient(135deg,#3A322B 0 10px,#332C26 10px 20px);overflow:hidden">
+
+    <!-- representative frame standing in for the looping walkthrough video -->
+    <img src="https://images.pexels.com/photos/34946066/pexels-photo-34946066.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2200" alt="Looping interior walkthrough — representative frame" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" />
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,.6) 0%,rgba(20,20,20,.16) 34%,rgba(20,20,20,.58) 100%)"></div>
+
+    <!-- NAV -->
+    <nav style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);color:#FFFFFF">
+      <div style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase">
+        <span>ASHISH</span>
+        <span>INTERIORS</span>
+      </div>
+      <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+        <a href="Studio design 1.dc.html" style="color:#FFFFFF">HOME</a>
+        <a href="service-detail.dc.html" style="color:#FFFFFF">SERVICES</a>
+        <a href="team.dc.html" style="color:#FFFFFF">ABOUT</a>
+        <a href="projects-category.dc.html" style="color:#FFFFFF">PORTFOLIO</a>
+        <a href="locations.dc.html" style="color:#FFFFFF">CONTACT</a>
+      </div>
+      <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+        <span style="width:1px;height:16px;background:rgba(255,255,255,.4)"></span>
+        <span>(555) 0123</span>
+      </div>
+    </nav>
+
+    <!-- COPY -->
+    <div style="position:relative;padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(120px,14vw,160px) clamp(20px,5vw,64px)">
+      <div style="max-width:1000px">
+        <div style="display:grid;gap:6px;margin-bottom:clamp(24px,4vw,44px);font-size:clamp(9.5px,1vw,11px);font-weight:400;letter-spacing:.24em;line-height:1.5;text-transform:uppercase;color:rgba(255,255,255,.8)">
+          <span>INTERIOR DESIGN STUDIO —</span>
+          <span>RESIDENTIAL &amp; COMMERCIAL,</span>
+          <span>SINCE 2013</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(44px,11vw,140px);font-weight:300;line-height:.9;letter-spacing:-.025em;text-transform:uppercase;color:#FFFFFF">ASHISH<br />INTERIORS</h1>
+        <p style="margin:clamp(18px,2.4vw,28px) 0 0 0;max-width:16em;font-size:clamp(15px,1.6vw,21px);font-weight:400;line-height:1.25;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.92)">CREATING INTERIORS THAT INSPIRE</p>
+        <a href="estimate calculator.dc.html" style="display:inline-flex;align-items:center;gap:14px;margin-top:clamp(32px,4.5vw,52px);padding:20px 34px;min-height:44px;background:#D9BC72;color:#141414;font-size:clamp(10.5px,1.1vw,12px);font-weight:500;letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">CALCULATE THE ESTIMATE <span>&#8599;</span></a>
+      </div>
+    </div>
+
+    <!-- EST. 2013 · PATNA -->
+    <div style="position:absolute;left:clamp(20px,5vw,64px);bottom:clamp(24px,4vw,44px);font-size:clamp(9.5px,1vw,11px);font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:#FFFFFF">EST. 2013 &middot; PATNA</div>
+
+    <!-- audio-off indicator — signals video, no player chrome -->
+    <div style="position:absolute;right:clamp(20px,5vw,64px);bottom:clamp(24px,4vw,44px);display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.85)">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5 6 9H3v6h3l5 4V5z" /><path d="M16 9l5 6M21 9l-5 6" /></svg>
+      <span style="font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">SOUND OFF</span>
+    </div>
+
+    <!-- scroll cue -->
+    <div style="position:absolute;left:50%;bottom:clamp(20px,3vw,30px);transform:translateX(-50%);color:rgba(255,255,255,.7);animation:chevronBob 2.2s ease-in-out infinite">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6" /></svg>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440 };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  renderVals() {
+    const w = this.state.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex"
+    };
+  }
+}
+</script>
+</body>
+</html>

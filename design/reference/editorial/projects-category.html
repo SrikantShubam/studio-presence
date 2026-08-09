@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  input::placeholder, textarea::placeholder { color: #A8A29A; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="Studio design 1.dc.html#services" style="color:#141414">SERVICES</a>
+      <a href="Studio design 1.dc.html#about" style="color:#141414">ABOUT</a>
+      <a href="#portfolio" style="color:#141414">PORTFOLIO</a>
+      <a href="#contact" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="Studio design 1.dc.html#services" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="Studio design 1.dc.html#about" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">ABOUT</a>
+    <a href="#portfolio" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">(555) 0123</a>
+  </div>
+
+  <!-- ============ HEADING ============ -->
+  <section id="portfolio" data-screen-label="Portfolio heading" style="padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(28px,4vw,48px) clamp(20px,5vw,64px)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,56px)">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>FORTY-EIGHT</span>
+          <span>COMPLETED SITES,</span>
+          <span>2013 — 2026</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(44px,8.5vw,108px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">OUR<br /><span style="display:block;margin-left:.55em;color:#51372A">PORTFOLIO</span></h1>
+      </div>
+      <p style="margin:0;max-width:30em;font-size:15px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Everything we have handed over and been allowed to photograph — flats, offices, guest houses and shops, almost all of them within an hour of Patna.</p>
+    </div>
+  </section>
+
+  <!-- ============ CATEGORY FILTER ============ -->
+  <section data-screen-label="Category filter" style="padding:0 clamp(20px,5vw,64px)">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,3vw,44px);padding-bottom:clamp(16px,2vw,22px);border-bottom:1px solid #51372A">
+      <sc-for list="{{ categories }}" as="c" hint-placeholder-count="5">
+        <button type="button" onClick="{{ c.select }}" style="padding:10px 0;min-height:44px;background:none;border:0;border-bottom:2px solid {{ c.underline }};color:{{ c.color }};font:inherit;font-size:clamp(12px,1.4vw,15px);font-weight:400;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">{{ c.label }} <span style="color:{{ c.countColor }}">({{ c.count }})</span></button>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ CATEGORY HEADER (single category only) ============ -->
+  <sc-if value="{{ showCategoryHeader }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Category header" style="padding:clamp(44px,6vw,80px) clamp(20px,5vw,64px) 0 clamp(20px,5vw,64px)">
+      <div style="display:grid;grid-template-columns:{{ catHeaderCols }};gap:clamp(28px,5vw,72px);align-items:end;padding-bottom:clamp(32px,4vw,52px);border-bottom:1px solid #51372A">
+        <h2 style="margin:0;font-size:clamp(34px,6vw,76px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">{{ catHeadA }}<br /><span style="display:block;margin-left:.55em;color:#51372A">{{ catHeadB }}</span></h2>
+        <div style="display:grid;gap:14px;max-width:38em">
+          <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ catLine1 }}</p>
+          <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ catLine2 }}</p>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <!-- ============ MOSAIC ============ -->
+  <section data-screen-label="Project mosaic" style="padding:clamp(32px,5vw,56px) clamp(20px,5vw,64px) clamp(40px,5vw,64px) clamp(20px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:{{ mosaicCols }};grid-auto-flow:row dense;gap:clamp(12px,1.6vw,20px)">
+      <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="12">
+        <div style="grid-column:{{ t.span }};display:{{ t.blockDisplay }};align-items:end;gap:18px;padding:{{ t.blockPad }};border-bottom:{{ t.blockBorder }}">
+          <span style="font-size:clamp(56px,7vw,104px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #DCD7CE">{{ t.breakNumeral }}</span>
+          <span style="padding-bottom:6px;font-size:clamp(13px,1.5vw,17px);font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:#51372A">{{ t.breakLabel }}</span>
+        </div>
+        <a href="project detail page.dc.html" style="grid-column:{{ t.tileSpan }};grid-row:{{ t.rowSpan }};position:relative;display:{{ t.tileDisplay }};overflow:hidden;background:#EFECE7;min-height:{{ t.minHeight }}">
+          <img src="{{ t.photo }}" alt="{{ t.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" />
+          <span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,0) 42%,rgba(20,20,20,.76) 100%)"></span>
+          <span style="position:absolute;left:clamp(14px,1.6vw,22px);right:clamp(14px,1.6vw,22px);bottom:clamp(14px,1.6vw,20px);display:grid;gap:8px;color:#FFFFFF">
+            <span style="font-size:{{ t.nameSize }};font-weight:400;line-height:1.15;letter-spacing:.01em;text-transform:uppercase">{{ t.name }}</span>
+            <span style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.82)">{{ t.meta }}</span>
+          </span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ LOAD MORE ============ -->
+  <section data-screen-label="Load more" style="padding:0 clamp(20px,5vw,64px) clamp(64px,9vw,120px) clamp(20px,5vw,64px)">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding-top:clamp(24px,3vw,36px);border-top:1px solid #51372A">
+      <span style="font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ shownLabel }}</span>
+      <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ true }}">
+        <button type="button" onClick="{{ showMore }}" style="display:inline-flex;align-items:center;gap:14px;padding:18px 32px;min-height:44px;background:transparent;border:1px solid #141414;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer" style-hover="background:#141414;color:#FFFFFF">SHOW 12 MORE <span>&#8595;</span></button>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="contact" data-screen-label="CTA" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,56px)">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(18px,3vw,30px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>SEEN SOMETHING</span>
+          <span>CLOSE TO YOURS?</span>
+        </div>
+        <h2 style="margin:0;font-size:clamp(34px,5.5vw,72px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">START<br /><span style="display:block;margin-left:.55em;color:#51372A">YOUR OWN</span></h2>
+      </div>
+      <a href="estimate calculator.dc.html" style="display:inline-flex;align-items:center;gap:14px;padding:20px 34px;min-height:44px;background:#D9BC72;color:#141414;font-size:clamp(10.5px,1.1vw,12px);font-weight:500;letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">CALCULATE THE ESTIMATE <span>&#8599;</span></a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer data-screen-label="Footer" style="background:#FFFFFF;border-top:1px solid #51372A">
+    <div style="display:grid;grid-template-columns:{{ footerCols }};gap:clamp(36px,5vw,80px);padding:clamp(56px,7vw,100px) clamp(20px,5vw,64px)">
+      <div>
+        <h3 style="margin:0;font-size:clamp(32px,3.6vw,48px);font-weight:300;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">READY<br /><span style="display:block;margin-left:.55em;color:#51372A">WHEN YOU ARE</span></h3>
+        <p style="margin:22px 0 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Send us the flat size and a rough budget — you will hear back the same working day.</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:clamp(32px,4vw,52px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #51372A">
+          <span style="width:38px;height:38px;flex-shrink:0;border:1px solid #51372A;display:grid;place-items:center;font-size:13px;font-weight:500;letter-spacing:.06em;color:#51372A">AI</span>
+          <div style="display:grid;gap:3px;font-size:14px;font-weight:500;letter-spacing:.26em;line-height:1.2;text-transform:uppercase">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </div>
+        </div>
+        <div style="display:grid;gap:18px;margin-top:28px;font-size:14.5px;line-height:1.6;color:#3C3C3C">
+          <span style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="margin-top:4px;flex-shrink:0"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+            <span>2nd Floor, Boring Road Crossing,<br />Patna, Bihar 800001</span>
+          </span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,40px);align-items:center">
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>
+              <span>studio@ashishinteriors.in</span>
+            </span>
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>
+              <span>(555) 0123</span>
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:clamp(24px,3vw,36px);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+          <a href="#" style="color:#141414">INSTAGRAM</a>
+          <span style="color:#51372A">|</span>
+          <a href="#" style="color:#141414">FACEBOOK</a>
+        </div>
+      </div>
+      <div style="display:grid;gap:26px">
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NAME</span>
+          <input type="text" placeholder="Your name" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">EMAIL</span>
+          <input type="email" placeholder="you@email.com" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">PROJECT TYPE</span>
+          <select style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none">
+            <option>Interior design</option>
+            <option>Turnkey renovation</option>
+            <option>Selection of materials</option>
+            <option>Office / commercial</option>
+          </select>
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">TELL US ABOUT YOUR PROJECT</span>
+          <textarea rows="3" placeholder="2BHK in Kankarbagh, possession in October…" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none;resize:vertical"></textarea>
+        </label>
+        <button type="button" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;padding:19px 32px;min-height:44px;background:#D9BC72;border:0;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">SEND INQUIRY <span>&#8599;</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+      <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+      <span style="display:flex;gap:10px"><a href="#" style="color:#FFFFFF">PRIVACY</a><span>|</span><a href="#" style="color:#FFFFFF">TERMS</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const POOLS = {
+  Residential: [34946066, 34623004, 3990542, 18692328, 37003186, 11975931, 4792297, 5779553, 30737542, 16466775, 3797991],
+  Commercial: [5483233, 8477444, 5506057, 19837082],
+  Hospitality: [3910126, 930402, 18285946, 14580368, 27901676, 8082235],
+  Retail: [930402, 3910126, 5506057, 8082235]
+};
+const px = id => "https://images.pexels.com/photos/" + id + "/pexels-photo-" + id + ".jpeg?auto=compress&cs=tinysrgb&w=1200";
+
+const AREAS = ["Boring Road", "Kankarbagh", "Rajendra Nagar", "Patliputra", "S.K. Puri", "Danapur", "Bailey Road", "Ashiana Nagar", "Rajiv Nagar", "Hajipur", "Kadamkuan", "Gardanibagh"];
+
+function make(prefix, names, category, days, budget) {
+  return names.map((n, i) => ({
+    name: n,
+    category,
+    meta: AREAS[(i * 3 + prefix) % AREAS.length] + ", Patna \u00B7 " + days[i % days.length] + " days \u00B7 \u20B9" + budget[i % budget.length]
+  }));
+}
+
+const RESIDENTIAL = make(0, [
+  "3BHK, BORING ROAD", "2BHK, KANKARBAGH", "DUPLEX, PATLIPUTRA", "3BHK, RAJENDRA NAGAR",
+  "4BHK, BAILEY ROAD", "2BHK, ASHIANA NAGAR", "VILLA REFIT, DANAPUR", "1BHK, RAJIV NAGAR",
+  "3BHK, GARDANIBAGH", "FAMILY HOME, HAJIPUR", "2BHK, KADAMKUAN", "3BHK, S.K. PURI",
+  "BEDROOM SUITE, BORING ROAD", "KITCHEN REFIT, KANKARBAGH", "4BHK, PATLIPUTRA", "2BHK, DANAPUR",
+  "STUDY & LIBRARY, BAILEY ROAD", "3BHK, ASHIANA NAGAR", "DUPLEX, RAJIV NAGAR", "2BHK, HAJIPUR",
+  "TERRACE ROOM, KADAMKUAN", "3BHK, BORING ROAD II"
+], "Residential", [32, 45, 58, 38, 62, 41], ["6–8 lakh", "8–10 lakh", "12–15 lakh", "5–7 lakh", "18–22 lakh"]);
+
+const COMMERCIAL = make(1, [
+  "OFFICE, S.K. PURI", "CA CHAMBERS, BORING ROAD", "CLINIC, KANKARBAGH", "COACHING CENTRE, BAILEY ROAD",
+  "LAW OFFICE, PATLIPUTRA", "STARTUP FLOOR, RAJENDRA NAGAR", "DENTAL STUDIO, ASHIANA NAGAR",
+  "ARCHITECT'S OFFICE, DANAPUR", "SALES OFFICE, RAJIV NAGAR", "ACCOUNTS FLOOR, GARDANIBAGH",
+  "STUDIO OFFICE, HAJIPUR", "REALTY OFFICE, KADAMKUAN", "CONSULTING ROOMS, BORING ROAD", "CO-WORK FLOOR, BAILEY ROAD"
+], "Commercial", [52, 68, 44, 74], ["10–14 lakh", "15–20 lakh", "22–28 lakh"]);
+
+const HOSPITALITY = make(2, [
+  "GUEST HOUSE, BAILEY ROAD", "BOUTIQUE STAY, PATLIPUTRA", "CAFE, BORING ROAD",
+  "BANQUET FOYER, KANKARBAGH", "SERVICE APARTMENTS, S.K. PURI", "TIFFIN HOUSE, RAJENDRA NAGAR",
+  "LODGE REFIT, HAJIPUR", "ROOFTOP DINING, DANAPUR"
+], "Hospitality", [78, 96, 64, 110], ["24–30 lakh", "35–45 lakh", "18–24 lakh"]);
+
+const RETAIL = make(3, [
+  "SAREE SHOWROOM, BORING ROAD", "OPTICALS, KANKARBAGH", "SWEET SHOP, PATLIPUTRA", "PHARMACY, BAILEY ROAD"
+], "Retail", [36, 48, 55], ["8–12 lakh", "14–18 lakh"]);
+
+const ALL = [RESIDENTIAL, COMMERCIAL, HOSPITALITY, RETAIL].flatMap(group =>
+  group.map((p, i) => ({ ...p, photo: px(POOLS[p.category][i % POOLS[p.category].length]) }))
+);
+
+// Each band's spans sum to the column count, with uniform row-spans inside the band,
+// so every band closes flush against the right edge at any project count.
+const BANDS = {
+  6: [[[3, 2], [3, 2]], [[2, 1], [2, 1], [2, 1]], [[4, 2], [2, 2]], [[1, 1], [1, 1], [2, 1], [2, 1]], [[2, 2], [4, 2]]],
+  4: [[[2, 2], [2, 2]], [[1, 1], [1, 1], [2, 1]], [[3, 2], [1, 2]], [[2, 1], [2, 1]]],
+  2: [[[2, 2]], [[1, 1], [1, 1]], [[2, 1]], [[1, 1], [1, 1]]]
+};
+
+const CAT_COPY = {
+  Residential: {
+    a: "PRIVATE", b: "RESIDENCES",
+    l1: "Flats, independent houses and duplexes for families who live in them every day — most between 900 and 1,800 sq ft, most finished inside eight to twelve weeks.",
+    l2: "The work is storage-led rather than decorative: corridors, bed bases and window seats carry the volume so the rooms themselves stay open."
+  },
+  Commercial: {
+    a: "OFFICES", b: "& CHAMBERS",
+    l1: "Small professional floors — chartered accountants, lawyers, clinics and coaching centres — usually fitted around a working practice that cannot close for long.",
+    l2: "We phase these jobs so half the floor stays usable, and we do the electrical and networking runs ourselves rather than leaving them to the tenant."
+  },
+  Hospitality: {
+    a: "GUEST HOUSES", b: "& DINING",
+    l1: "Guest houses, service apartments, cafes and banquet spaces across Patna and Hajipur, where the finish has to survive far heavier use than a home ever sees.",
+    l2: "Everything is specified for maintenance first — replaceable panels, commercial-grade hardware, and finishes a housekeeping team can clean without ruining."
+  },
+  Retail: {
+    a: "SHOPS", b: "& SHOWROOMS",
+    l1: "Showrooms and neighbourhood shops where display, lighting and stock storage decide whether the space works, and the shutter has to come up again on schedule.",
+    l2: "These are our fastest jobs — mostly night and Sunday work, so the owner loses as few trading days as possible."
+  }
+};
+
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false, cat: "All", shown: 12 };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  renderVals() {
+    const s = this.state, w = s.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+    const cols = mobile ? 2 : tablet ? 4 : 6;
+
+    const cats = [
+      { id: "All", count: ALL.length },
+      { id: "Residential", count: RESIDENTIAL.length },
+      { id: "Commercial", count: COMMERCIAL.length },
+      { id: "Hospitality", count: HOSPITALITY.length },
+      { id: "Retail", count: RETAIL.length }
+    ];
+
+    const list = s.cat === "All" ? ALL : ALL.filter(p => p.category === s.cat);
+    const visible = list.slice(0, s.shown);
+
+    // Flatten this breakpoint's bands; the sequence restarts at every category break
+    // so a break row can never push the rhythm out of phase with the columns.
+    const bands = BANDS[cols];
+    const flat = bands.flat();
+    const rowH = mobile ? 130 : tablet ? 150 : 168;
+    const tiles = [];
+    const seenCats = new Set();
+
+    // how many tiles belong to each contiguous category block in `visible`
+    const blockCount = {};
+    visible.forEach(p => { blockCount[p.category] = (blockCount[p.category] || 0) + 1; });
+
+    let inBlock = 0;
+    let cursor = 0;
+
+    visible.forEach((p, i) => {
+      const showBreak = s.cat === "All" && !seenCats.has(p.category);
+      if (showBreak) { seenCats.add(p.category); inBlock = 0; cursor = 0; }
+
+      let [span, rows] = flat[inBlock % flat.length];
+      const isBlockEnd = inBlock === blockCount[p.category] - 1;
+      const room = cols - (cursor % cols);
+      if (isBlockEnd) span = room;              // last tile of a block fills the band
+      else if (span > room) span = room;        // never overflow a band
+      cursor += span;
+      inBlock++;
+      const nameSize = rows >= 3 ? "clamp(16px,1.8vw,22px)" : rows === 2 ? "clamp(14px,1.6vw,19px)" : "clamp(12.5px,1.4vw,15px)";
+      tiles.push({
+        name: p.name,
+        meta: p.meta,
+        photo: p.photo,
+        nameSize,
+        tileSpan: "span " + Math.max(1, Math.min(span, cols)),
+        rowSpan: "span " + rows,
+        minHeight: (rowH * rows) + "px",
+        tileDisplay: "block",
+        // category break row
+        span: "1 / -1",
+        blockDisplay: showBreak ? "flex" : "none",
+        blockPad: showBreak ? "clamp(24px,3vw,40px) 0 clamp(10px,1.4vw,16px) 0" : "0",
+        blockBorder: showBreak ? "1px solid #51372A" : "0",
+        breakNumeral: showBreak ? String(cats.findIndex(c => c.id === p.category)).padStart(2, "0") : "",
+        breakLabel: showBreak ? p.category : ""
+      });
+    });
+
+    const copy = CAT_COPY[s.cat];
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && s.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(st => ({ menu: !st.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      categories: cats.map(c => ({
+        label: c.id,
+        count: c.count,
+        color: c.id === s.cat ? "#141414" : "#8B8377",
+        countColor: c.id === s.cat ? "#51372A" : "#B4ACA0",
+        underline: c.id === s.cat ? "#51372A" : "transparent",
+        select: () => this.setState({ cat: c.id, shown: 12 })
+      })),
+
+      showCategoryHeader: s.cat !== "All",
+      catHeaderCols: mobile || tablet ? "1fr" : ".8fr 1.2fr",
+      catHeadA: copy ? copy.a : "",
+      catHeadB: copy ? copy.b : "",
+      catLine1: copy ? copy.l1 : "",
+      catLine2: copy ? copy.l2 : "",
+
+      mosaicCols: "repeat(" + cols + ",1fr)",
+      tiles,
+
+      shownLabel: "Showing " + visible.length + " of " + list.length + (s.cat === "All" ? " projects" : " " + s.cat.toLowerCase() + " projects"),
+      hasMore: visible.length < list.length,
+      showMore: () => this.setState(st => ({ shown: st.shown + 12 })),
+
+      footerCols: mobile ? "1fr" : "1fr 1fr"
+    };
+  }
+}
+</script>
+</body>
+</html>

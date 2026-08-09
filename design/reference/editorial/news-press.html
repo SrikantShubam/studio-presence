@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  input::placeholder, textarea::placeholder { color: #A8A29A; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="service-detail.dc.html" style="color:#141414">SERVICES</a>
+      <a href="team.dc.html" style="color:#141414">STUDIO</a>
+      <a href="projects-category.dc.html" style="color:#141414">PORTFOLIO</a>
+      <a href="#contact" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="service-detail.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="team.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">STUDIO</a>
+    <a href="projects-category.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">(555) 0123</a>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- ======================== INDEX ======================== -->
+  <!-- ======================================================= -->
+  <div style="display:{{ indexDisplay }}">
+
+    <section data-screen-label="News heading" style="padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(28px,4vw,44px) clamp(20px,5vw,64px)">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,56px)">
+        <div>
+          <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+            <span>WHAT OTHERS WROTE,</span>
+            <span>AND WHAT WE</span>
+            <span>ANNOUNCED</span>
+          </div>
+          <h1 style="margin:0;font-size:clamp(44px,8.5vw,108px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">NEWS<br /><span style="display:block;margin-left:.55em;color:#51372A">&amp; PRESS</span></h1>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:clamp(16px,2.4vw,32px);font-size:clamp(12px,1.4vw,15px);letter-spacing:.16em;text-transform:uppercase">
+          <sc-for list="{{ years }}" as="y" hint-placeholder-count="4">
+            <button type="button" onClick="{{ y.select }}" style="padding:10px 0;min-height:44px;background:none;border:0;border-bottom:2px solid {{ y.underline }};font:inherit;color:{{ y.color }};letter-spacing:.16em;text-transform:uppercase;cursor:pointer">{{ y.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRESS COVERAGE -->
+    <section data-screen-label="Press coverage" style="padding:clamp(40px,5vw,64px) clamp(20px,5vw,64px) clamp(56px,8vw,96px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:clamp(28px,4vw,44px)">
+        <h2 style="margin:0;font-size:clamp(13px,1.5vw,16px);font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#51372A">PRESS COVERAGE</h2>
+        <span style="font-size:12px;letter-spacing:.06em;color:#8B8377">Written about us elsewhere &mdash; these links leave this site</span>
+      </div>
+
+      <div style="display:grid">
+        <sc-for list="{{ press }}" as="p" hint-placeholder-count="6">
+          <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:grid;grid-template-columns:{{ pressCols }};gap:clamp(16px,3vw,44px);align-items:start;padding:clamp(24px,3.2vw,38px) 0;border-top:1px solid #51372A;color:#141414" style-hover="background:#FFFFFF">
+            <div style="display:grid;gap:12px">
+              <span style="font-size:clamp(18px,2.2vw,27px);font-weight:400;line-height:1.1;letter-spacing:.02em;text-transform:uppercase;filter:grayscale(1)">{{ p.publication }}</span>
+              <span style="font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">{{ p.date }}</span>
+            </div>
+            <div style="display:grid;gap:16px">
+              <span style="max-width:34em;font-size:clamp(15px,1.7vw,19px);font-weight:400;line-height:1.45;color:#141414">{{ p.headline }}</span>
+              <span style="display:{{ p.quoteDisplay }};max-width:38em;padding-left:clamp(14px,2vw,22px);border-left:1px solid #51372A;font-size:14.5px;line-height:1.7;color:#4A4A4A">{{ p.quote }}</span>
+              <span style="display:flex;align-items:center;gap:10px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">READ ON {{ p.publicationShort }} <span>&#8599;</span></span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- STUDIO NEWS -->
+    <section data-screen-label="Studio news" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:clamp(32px,4.5vw,52px)">
+        <h2 style="margin:0;font-size:clamp(13px,1.5vw,16px);font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#51372A">STUDIO NEWS</h2>
+        <span style="font-size:12px;letter-spacing:.06em;color:#8B8377">Our own announcements &mdash; these open on this site</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:{{ newsCols }};gap:clamp(28px,4vw,48px) clamp(20px,3vw,34px)">
+        <sc-for list="{{ news }}" as="n" hint-placeholder-count="6">
+          <button type="button" onClick="{{ n.open }}" style="display:grid;gap:18px;align-content:start;padding:0;background:none;border:0;font:inherit;color:#141414;text-align:left;cursor:pointer">
+            <span style="display:block;aspect-ratio:4/3;overflow:hidden;background:#EFECE7">
+              <img src="{{ n.photo }}" alt="{{ n.headline }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+            </span>
+            <span style="display:grid;gap:12px">
+              <span style="display:flex;flex-wrap:wrap;gap:8px clamp(14px,2vw,22px);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">
+                <span>{{ n.category }}</span>
+                <span style="color:#8B8377">{{ n.date }}</span>
+              </span>
+              <span style="font-size:clamp(17px,1.9vw,22px);font-weight:400;line-height:1.2;letter-spacing:-.01em;text-transform:uppercase">{{ n.headline }}</span>
+              <span style="max-width:32em;font-size:14.5px;line-height:1.7;color:#4A4A4A">{{ n.summary }}</span>
+              <span style="margin-top:2px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">READ THE FULL ITEM &#8594;</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- ======================= ARTICLE ======================= -->
+  <!-- ======================================================= -->
+  <div style="display:{{ articleDisplay }}">
+
+    <section data-screen-label="Article head" style="padding:clamp(32px,4vw,56px) clamp(20px,5vw,64px) 0 clamp(20px,5vw,64px)">
+      <button type="button" onClick="{{ backToIndex }}" style="padding:10px 0;min-height:44px;background:none;border:0;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#141414;cursor:pointer">&#8592; ALL NEWS &amp; PRESS</button>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px clamp(20px,3vw,36px);margin-top:clamp(28px,4vw,44px);font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase">
+        <span style="color:#51372A">{{ article.category }}</span>
+        <span style="color:#8B8377">{{ article.date }}</span>
+      </div>
+      <h1 style="margin:clamp(18px,2.6vw,28px) 0 0 0;max-width:22em;font-size:clamp(34px,6vw,80px);font-weight:300;line-height:.92;letter-spacing:-.03em;text-transform:uppercase">{{ article.titleA }}<br /><span style="display:block;margin-left:.55em;color:#51372A">{{ article.titleB }}</span></h1>
+    </section>
+
+    <section data-screen-label="Article lead image" style="padding:clamp(36px,5vw,72px) clamp(20px,5vw,64px) clamp(48px,6vw,88px) clamp(20px,5vw,64px)">
+      <div style="position:relative;margin:clamp(20px,3vw,30px) clamp(20px,3vw,30px) 0 0">
+        <div style="position:absolute;top:calc(-1 * clamp(20px,3vw,30px));left:clamp(20px,3vw,30px);right:calc(-1 * clamp(20px,3vw,30px));bottom:clamp(20px,3vw,30px);border:1px solid #51372A;pointer-events:none"></div>
+        <div style="position:relative;aspect-ratio:{{ leadRatio }};overflow:hidden;background:#EFECE7">
+          <img src="{{ article.photo }}" alt="{{ article.headline }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Article body" style="padding:0 clamp(20px,5vw,64px) clamp(56px,8vw,100px) clamp(20px,5vw,64px)">
+      <div style="display:grid;grid-template-columns:{{ bodyCols }};gap:clamp(28px,6vw,88px);align-items:start">
+        <div style="display:grid;gap:22px;align-content:start;padding-top:6px">
+          <span style="font-size:clamp(60px,7vw,110px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #DCD7CE">{{ article.numeral }}</span>
+          <span style="max-width:20em;font-size:11px;font-weight:500;letter-spacing:.2em;line-height:1.7;text-transform:uppercase;color:#51372A">{{ article.standfirst }}</span>
+        </div>
+
+        <div style="display:grid;gap:24px;max-width:40em">
+          <p style="margin:0;font-size:clamp(17px,1.9vw,21px);line-height:1.6;color:#141414;text-wrap:pretty">{{ article.lead }}</p>
+          <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ article.p1 }}</p>
+          <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ article.p2 }}</p>
+
+          <blockquote style="margin:clamp(14px,2vw,22px) 0;padding:clamp(22px,3vw,34px) 0;border-top:1px solid #51372A;border-bottom:1px solid #51372A">
+            <p style="margin:0;font-size:clamp(19px,2.4vw,30px);font-weight:300;line-height:1.45;letter-spacing:-.01em;color:#141414;text-wrap:pretty">{{ article.pullquote }}</p>
+            <footer style="margin-top:18px;font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">{{ article.pullattr }}</footer>
+          </blockquote>
+
+          <h2 style="margin:clamp(8px,1.4vw,14px) 0 0 0;font-size:clamp(20px,2.4vw,28px);font-weight:400;letter-spacing:-.01em;text-transform:uppercase">{{ article.subhead }}</h2>
+          <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ article.p3 }}</p>
+          <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ article.p4 }}</p>
+          <p style="margin:0;font-size:16px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ article.p5 }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED PROJECT -->
+    <section data-screen-label="Related project" style="display:{{ relatedDisplay }};padding:clamp(48px,7vw,90px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+      <h2 style="margin:0 0 clamp(24px,3.4vw,40px) 0;font-size:clamp(13px,1.5vw,16px);font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#51372A">THE PROJECT THIS IS ABOUT</h2>
+      <a href="project detail page.dc.html" style="position:relative;display:grid;grid-template-columns:{{ relatedCols }};gap:clamp(20px,3vw,44px);padding:clamp(18px,2.4vw,26px);border:1px solid #51372A;background:#FFFFFF;color:#141414;align-items:center" style-hover="background:#FAF8F5">
+        <div style="aspect-ratio:4/3;overflow:hidden;background:#EFECE7">
+          <img src="{{ article.relatedPhoto }}" alt="{{ article.relatedName }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+        <div style="display:grid;gap:14px">
+          <span style="font-size:clamp(20px,2.6vw,32px);font-weight:400;line-height:1.1;letter-spacing:-.01em;text-transform:uppercase">{{ article.relatedName }}</span>
+          <p style="margin:0;max-width:34em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">{{ article.relatedLine }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px clamp(18px,3vw,32px);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">
+            <span>{{ article.relatedMetaA }}</span>
+            <span>{{ article.relatedMetaB }}</span>
+          </div>
+          <span style="font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">READ THE CASE STUDY &#8599;</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- PREV / NEXT -->
+    <section data-screen-label="Prev next article" style="display:grid;grid-template-columns:{{ prevNextCols }};border-top:1px solid #51372A;border-bottom:1px solid #51372A">
+      <button type="button" onClick="{{ goPrev }}" style="display:grid;gap:12px;padding:clamp(28px,4vw,52px) clamp(20px,5vw,64px);background:none;border:0;border-right:{{ prevNextDivider }};border-bottom:{{ prevNextStackDivider }};font:inherit;color:#141414;text-align:left;cursor:pointer" style-hover="background:#FAF8F5">
+        <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">&#8592; PREVIOUS ITEM</span>
+        <span style="max-width:22em;font-size:clamp(17px,2.2vw,26px);font-weight:400;line-height:1.15;text-transform:uppercase">{{ prevTitle }}</span>
+        <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ prevMeta }}</span>
+      </button>
+      <button type="button" onClick="{{ goNext }}" style="display:grid;gap:12px;padding:clamp(28px,4vw,52px) clamp(20px,5vw,64px);background:none;border:0;font:inherit;color:#141414;text-align:{{ nextAlign }};justify-items:{{ nextJustify }};cursor:pointer" style-hover="background:#FAF8F5">
+        <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NEXT ITEM &#8594;</span>
+        <span style="max-width:22em;font-size:clamp(17px,2.2vw,26px);font-weight:400;line-height:1.15;text-transform:uppercase">{{ nextTitle }}</span>
+        <span style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">{{ nextMeta }}</span>
+      </button>
+    </section>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="contact" data-screen-label="Footer" style="background:#FFFFFF;border-top:1px solid #51372A">
+    <div style="display:grid;grid-template-columns:{{ footerCols }};gap:clamp(36px,5vw,80px);padding:clamp(56px,7vw,100px) clamp(20px,5vw,64px)">
+      <div>
+        <h3 style="margin:0;font-size:clamp(32px,3.6vw,48px);font-weight:300;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">READY<br /><span style="display:block;margin-left:.55em;color:#51372A">WHEN YOU ARE</span></h3>
+        <p style="margin:22px 0 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Send us the flat size and a rough budget — you will hear back the same working day.</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:clamp(32px,4vw,52px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #51372A">
+          <span style="width:38px;height:38px;flex-shrink:0;border:1px solid #51372A;display:grid;place-items:center;font-size:13px;font-weight:500;letter-spacing:.06em;color:#51372A">AI</span>
+          <div style="display:grid;gap:3px;font-size:14px;font-weight:500;letter-spacing:.26em;line-height:1.2;text-transform:uppercase">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </div>
+        </div>
+        <div style="display:grid;gap:18px;margin-top:28px;font-size:14.5px;line-height:1.6;color:#3C3C3C">
+          <span style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="margin-top:4px;flex-shrink:0"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+            <span>2nd Floor, Boring Road Crossing,<br />Patna, Bihar 800001</span>
+          </span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,40px);align-items:center">
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>
+              <span>studio@ashishinteriors.in</span>
+            </span>
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>
+              <span>(555) 0123</span>
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:clamp(24px,3vw,36px);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+          <a href="#" style="color:#141414">INSTAGRAM</a>
+          <span style="color:#51372A">|</span>
+          <a href="#" style="color:#141414">FACEBOOK</a>
+        </div>
+      </div>
+      <div style="display:grid;gap:26px">
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NAME</span>
+          <input type="text" placeholder="Your name" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">EMAIL</span>
+          <input type="email" placeholder="you@email.com" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">PROJECT TYPE</span>
+          <select style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none">
+            <option>Interior design</option>
+            <option>Turnkey renovation</option>
+            <option>Selection of materials</option>
+            <option>Office / commercial</option>
+          </select>
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">TELL US ABOUT YOUR PROJECT</span>
+          <textarea rows="3" placeholder="2BHK in Kankarbagh, possession in October…" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none;resize:vertical"></textarea>
+        </label>
+        <button type="button" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;padding:19px 32px;min-height:44px;background:#D9BC72;border:0;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">SEND INQUIRY <span>&#8599;</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+      <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+      <span style="display:flex;gap:10px"><a href="#" style="color:#FFFFFF">PRIVACY</a><span>|</span><a href="#" style="color:#FFFFFF">TERMS</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const px = id => "https://images.pexels.com/photos/" + id + "/pexels-photo-" + id + ".jpeg?auto=compress&cs=tinysrgb&w=1400";
+
+const PRESS = [
+  {
+    publication: "THE HINDU", publicationShort: "THE HINDU", year: 2026,
+    date: "18 MARCH 2026",
+    headline: "The Patna studios rethinking the 1990s builder flat",
+    quote: "\u201CAshish Interiors has built a practice on a question most firms in the city avoid: what can honestly be done to a thirty-year-old three-bedroom flat on a middle-class budget.\u201D",
+    url: "https://www.thehindu.com"
+  },
+  {
+    publication: "ELLE DECOR INDIA", publicationShort: "ELLE DECOR", year: 2026,
+    date: "04 FEBRUARY 2026",
+    headline: "Small-city practice, big-city discipline: a Boring Road three-bedroom",
+    quote: "\u201CThe restraint is the point. One oak laminate, white walls, and every rupee spent on storage nobody sees.\u201D",
+    url: "https://elledecor.in"
+  },
+  {
+    publication: "ARCHITECTURAL DIGEST INDIA", publicationShort: "AD INDIA", year: 2025,
+    date: "22 OCTOBER 2025",
+    headline: "Twelve years in Patna: interiors built for how families actually live",
+    quote: "\u201CA rare portfolio with no aspirational renders in it \u2014 only rooms that have been lived in for a year or more.\u201D",
+    url: "https://www.architecturaldigest.in"
+  },
+  {
+    publication: "DAINIK BHASKAR", publicationShort: "DAINIK BHASKAR", year: 2025,
+    date: "07 JULY 2025",
+    headline: "Patna firm completes 200th interior project, keeps crew in-house",
+    quote: "",
+    url: "https://www.bhaskar.com"
+  },
+  {
+    publication: "BETTER INTERIORS", publicationShort: "BETTER INTERIORS", year: 2024,
+    date: "15 NOVEMBER 2024",
+    headline: "Six kitchens that fixed a bad plan",
+    quote: "\u201CThe Rajapur Pul refit is the clearest argument in the issue for taking down a wall rather than working around it.\u201D",
+    url: "https://www.betterinteriors.in"
+  },
+  {
+    publication: "TIMES OF INDIA", publicationShort: "TOI", year: 2024,
+    date: "29 MAY 2024",
+    headline: "City interior firms move away from subcontracted labour",
+    quote: "",
+    url: "https://timesofindia.indiatimes.com"
+  }
+];
+
+const NEWS = [
+  {
+    year: 2026, category: "AWARD", date: "12 JUNE 2026",
+    headline: "Bihar Design Awards: residential interior of the year",
+    summary: "The Boring Canal Road three-bedroom took the residential award, judged on drawings and site photographs rather than styled shoots.",
+    photo: px(34946066),
+    titleA: "RESIDENTIAL", titleB: "OF THE YEAR",
+    numeral: "01",
+    standfirst: "BIHAR DESIGN AWARDS 2026 \u00B7 RESIDENTIAL INTERIOR OF THE YEAR \u00B7 BORING CANAL ROAD",
+    lead: "The Boring Canal Road three-bedroom has been named residential interior of the year at the Bihar Design Awards, judged from working drawings and site photographs rather than a styled shoot.",
+    p1: "We entered one project, not a portfolio. The submission was the same folder the client received at handover: layouts, joinery sections, the dated schedule, weekly site photographs, and the material invoices. The jury asked for a fourth set of photographs taken a year after the family moved in, which is the part we were most glad to supply.",
+    p2: "The flat is 1,320 sq ft in a 2002 building \u2014 high ceilings, a generous balcony, and a kitchen closed off behind a door the way every flat in that block was drawn. The three decisions the award citation singled out were the ones we argued hardest for at the time: the kitchen wall coming down, 214 cubic feet of storage buried in corridors and bed bases, and a single oak laminate running through all five rooms.",
+    pullquote: "\u201CNo feature walls, no false ceilings, no imported stone. The money went where the family would feel it every day and nowhere else.\u201D",
+    pullattr: "FROM THE JURY CITATION",
+    subhead: "WHAT WE TOOK FROM IT",
+    p3: "The award matters to us mainly for what it rewarded. Every entry was asked to show cost against outcome, and ours came in at \u20B99.4 lakh inside a \u20B98\u201310 lakh range, with the delay \u2014 three days, a cracked marble slab \u2014 declared rather than hidden. That framing is unusual for a design prize and we would like to see more of it.",
+    p4: "It also settled an internal argument. We have turned down work where the budget only stretched to surfaces, on the view that a client is better served by a smaller, properly built scope than a whole flat done thinly. Having that approach recognised in public makes the conversation easier the next time somebody asks us to spread \u20B96 lakh across 1,500 sq ft.",
+    p5: "Sunita accepted on behalf of the drawing office and Manoj on behalf of the workshop, which is the correct division of credit. The plaque is on the sample table at the studio, where clients can see it without being told about it.",
+    relatedName: "3BHK, BORING CANAL ROAD",
+    relatedLine: "A 1,320 sq ft builder flat where the kitchen wall came down and the corridor got its window light back.",
+    relatedMetaA: "45 DAYS", relatedMetaB: "\u20B98\u201310 LAKH",
+    relatedPhoto: px(3990542)
+  },
+  {
+    year: 2026, category: "PROJECT", date: "28 APRIL 2026",
+    headline: "Handed over: CA chambers above the crossing",
+    summary: "Four cabins and a waiting area on a first floor near Boring Road crossing, phased over two months so the practice never closed for more than a Sunday.",
+    photo: px(5483233),
+    titleA: "CHAMBERS", titleB: "HANDED OVER",
+    numeral: "02",
+    standfirst: "COMMERCIAL \u00B7 68 DAYS \u00B7 BORING ROAD CROSSING",
+    lead: "A four-cabin chartered accountancy practice on a first floor near the crossing was handed over this month, phased so the firm never shut for more than a Sunday.",
+    p1: "Commercial work on an occupied floor is a sequencing problem before it is a design problem. The practice sees clients six days a week and keeps physical files that cannot be boxed for long, so we split the floor into three zones and finished them one at a time, moving people and cabinets ahead of the work rather than out of the building.",
+    p2: "Everything was cut in the workshop. Nothing louder than a cordless driver ran on site during working hours, and the noisy work \u2014 core drilling for the new network runs and the split units \u2014 was done across three Sundays agreed a month in advance with the building.",
+    pullquote: "\u201CWe were told we would lose three Sundays and no weekdays. We lost three Sundays and no weekdays.\u201D",
+    pullattr: "THE PRINCIPAL PARTNER, ON HANDOVER DAY",
+    subhead: "WHAT A PRACTICE ACTUALLY NEEDS",
+    p3: "The brief was almost entirely acoustic and archival: four cabins where a client conversation cannot be heard in the corridor, a waiting area that does not feel like a passage, and eight running metres of lockable file storage that will still be accessible when the files are twenty years deep.",
+    p4: "We used a double layer of gypsum with a mineral wool infill on the cabin partitions rather than the single-skin partitions that are standard in these buildings \u2014 the cost difference over four cabins was under \u20B940,000 and it is the thing the partners have commented on most since moving back in.",
+    p5: "Sixty-eight days on site, \u20B915\u201320 lakh, handed over with a punch list of nine items, all cleared within the week.",
+    relatedName: "CA CHAMBERS, NEAR THE CROSSING",
+    relatedLine: "Four cabins and a waiting area, phased over two months around a working practice.",
+    relatedMetaA: "68 DAYS", relatedMetaB: "\u20B915\u201320 LAKH",
+    relatedPhoto: px(5483233)
+  },
+  {
+    year: 2025, category: "STUDIO", date: "03 SEPTEMBER 2025",
+    headline: "The workshop has moved, and doubled",
+    summary: "Eleven benches, a proper ply store and dust extraction, five minutes from the studio instead of forty from the sites.",
+    photo: px(3637786),
+    titleA: "THE WORKSHOP", titleB: "HAS MOVED",
+    numeral: "03",
+    standfirst: "STUDIO NEWS \u00B7 NEW WORKSHOP, OFF BORING ROAD \u00B7 ELEVEN BENCHES",
+    lead: "We have moved the workshop to a larger floor five minutes from the studio: eleven benches, a proper ply store, and dust extraction that actually works.",
+    p1: "For nine years we cut in a shed that was too small the day we took it. It worked because Manoj sequenced around it \u2014 one project's joinery at a time, everything stacked vertically, and a delivery van that had to be unloaded on the road. The new floor ends all three compromises.",
+    p2: "The practical gain is schedule. With eleven benches instead of six we can carry two full flats' joinery at the same time, which takes about ten days out of a typical turnkey programme. The ply store means we buy at a better rate on volume and can hold material for a client whose possession date slips \u2014 something we previously had to charge for or refuse.",
+    pullquote: "\u201CNine years of working around a small shed taught us more about sequencing than the new space will ever have to.\u201D",
+    pullattr: "MANOJ SAHU, PARTNER, EXECUTION",
+    subhead: "WHY NOT SUBCONTRACT INSTEAD",
+    p3: "The cheaper route was to keep the shed and put the overflow out to job-work carpenters, which is what most firms our size in Patna do. We have not, for one reason: a subcontracted bench cannot be trained. Every carpenter on our rolls spends six months on Manoj's bench before they cut for a client, and that is only possible if the bench is ours.",
+    p4: "Dust extraction was the other reason to take a floor this size. Eleven people in one room with no extraction is a health question, not a comfort one, and it was the first thing installed \u2014 before the benches were bolted down.",
+    p5: "The studio above the crossing stays where it is. Clients still meet us there, and the sample table has not moved.",
+    relatedName: "", relatedLine: "", relatedMetaA: "", relatedMetaB: "", relatedPhoto: ""
+  },
+  {
+    year: 2025, category: "STUDIO", date: "16 JUNE 2025",
+    headline: "Sunita Raj on kitchens in 1990s Patna flats",
+    summary: "A talk at the Institute of Indian Interior Designers' Patna chapter, drawn from eleven kitchen refits in buildings drawn before modular existed.",
+    photo: px(3926542),
+    titleA: "ELEVEN", titleB: "KITCHENS",
+    numeral: "04",
+    standfirst: "STUDIO NEWS \u00B7 IIID PATNA CHAPTER \u00B7 SUNITA RAJ",
+    lead: "Sunita Raj gave the Patna chapter talk this month on fitting a modular kitchen into a flat drawn thirty years before modular kitchens existed.",
+    p1: "The talk was built from eleven refits in 1990s and 2000s buildings, all with the same three constraints: a kitchen walled off behind a door, one window in the wrong place, and a gas line that cannot move. The argument was that the honest answer in most of these flats is not a better kitchen in the same box \u2014 it is a smaller wall.",
+    p2: "She showed the drawings rather than the photographs, including two projects where the wall could not come down and the compromise had to be documented for the client before work started.",
+    pullquote: "\u201CIf the plan is wrong, no amount of hardware will fix it. Measure first, then argue about finishes.\u201D",
+    pullattr: "SUNITA RAJ, PARTNER, DESIGN",
+    subhead: "THE THREE-METRE RULE",
+    p3: "The most-asked-about slide was the simplest: a work triangle that has to fit in a three-metre run because that is what these kitchens give you. Hob, sink and fridge within a step and a half, the masala shelf at shoulder height beside the flame rather than above it, and the tall unit taken to the ceiling instead of a loft nobody can reach.",
+    p4: "The second was cost. A competently planned kitchen in commercial ply with good hardware lands between \u20B92.2 and \u20B92.8 lakh in Patna; the same kitchen badly planned costs the same and works worse. Plan quality is free.",
+    p5: "Slides are available to chapter members on request. We are happy to give the same talk to any society or resident welfare association in the city that asks.",
+    relatedName: "KITCHEN REFIT, RAJAPUR PUL SIDE",
+    relatedLine: "Kitchen only, in an occupied flat \u2014 fabricated in the workshop and installed over six days.",
+    relatedMetaA: "22 DAYS", relatedMetaB: "\u20B92.4 LAKH",
+    relatedPhoto: px(3926542)
+  },
+  {
+    year: 2024, category: "PROJECT", date: "11 DECEMBER 2024",
+    headline: "Two hundredth project handed over in Kankarbagh",
+    summary: "A 2BHK for a retired schoolteacher, and the two hundredth set of keys the studio has handed back since 2013.",
+    photo: px(3797991),
+    titleA: "TWO", titleB: "HUNDRED",
+    numeral: "05",
+    standfirst: "MILESTONE \u00B7 200TH PROJECT \u00B7 KANKARBAGH",
+    lead: "The two hundredth project since 2013 was handed over this month: a two-bedroom flat in Kankarbagh for a retired schoolteacher, done on a \u20B95.5 lakh budget.",
+    p1: "It was, deliberately, not a showcase. The client had a fixed pension-funded budget and a clear list: a kitchen she could work in standing for an hour, storage for forty years of books, and no work that would take longer than five weeks.",
+    p2: "We did the kitchen, one wardrobe wall, a floor-to-ceiling bookcase in the passage and paint. We did not do the second bedroom, because the money did not stretch to doing it properly and she agreed that half-doing it would be worse than leaving it.",
+    pullquote: "\u201CTwo hundred sites and the lesson has not changed: scope down before you finish down.\u201D",
+    pullattr: "ASHISH KUMAR, FOUNDER",
+    subhead: "WHAT TWO HUNDRED LOOKS LIKE",
+    p3: "Roughly seventy per cent of those two hundred projects have been flats between 900 and 1,500 sq ft. About one in six has been commercial. Fewer than ten have been what anyone would call a luxury brief, and we have turned down more of those than we have taken, usually on timeline.",
+    p4: "Forty-one of the two hundred came from a client who had already worked with us, and another sixty-three from someone in the same building or lane as a previous site. That is the number we watch \u2014 more than any award, it is the one that tells us whether the work holds up after we leave.",
+    p5: "The forty-first repeat client, as it happens, was the schoolteacher's neighbour, who booked a kitchen refit the week the scaffolding came down.",
+    relatedName: "2BHK, KANKARBAGH",
+    relatedLine: "A two-bedroom flat on a fixed budget \u2014 kitchen, one wardrobe wall and a passage bookcase.",
+    relatedMetaA: "38 DAYS", relatedMetaB: "\u20B95.5 LAKH",
+    relatedPhoto: px(3797991)
+  },
+  {
+    year: 2024, category: "STUDIO", date: "22 FEBRUARY 2024",
+    headline: "Four site supervisors now on our own rolls",
+    summary: "Provident fund, fixed salaries and paid site travel for the supervision team, ending the last of our contract hiring.",
+    photo: px(1094767),
+    titleA: "ON OUR", titleB: "OWN ROLLS",
+    numeral: "06",
+    standfirst: "STUDIO NEWS \u00B7 SUPERVISION TEAM \u00B7 FOUR PEOPLE",
+    lead: "All four site supervisors are now permanent employees with provident fund, a fixed monthly salary and paid site travel \u2014 the last of our contract hiring has ended.",
+    p1: "Until this year two of the four were engaged project by project, which is normal in the trade and which we had told ourselves was flexibility. In practice it meant the person answering for quality on a site had no stake in what happened on the next one.",
+    p2: "The cost is real \u2014 about eleven per cent on the supervision line \u2014 and we have not passed it to clients as a separate charge. It comes out of the same place the workshop investment came from: we would rather grow slower with a crew that stays.",
+    pullquote: "\u201CThe person answering for quality on your site should still be here for the site after yours.\u201D",
+    pullattr: "ASHISH KUMAR, FOUNDER",
+    subhead: "WHY IT SHOWS UP IN THE WORK",
+    p3: "A supervisor on their fourth year with us knows which of our carpenters is quick and which is careful, which building societies allow drilling until when, and which of our suppliers will actually deliver on a Saturday. None of that transfers to a contract hire who leaves at handover.",
+    p4: "It also makes the weekly photo update honest. A permanent supervisor photographs the thing that went wrong, because they will be the one fixing it on Monday either way.",
+    p5: "We are hiring two more supervisors on the same terms. Three years on residential sites, and you will be on our rolls from day one.",
+    relatedName: "", relatedLine: "", relatedMetaA: "", relatedMetaB: "", relatedPhoto: ""
+  }
+];
+
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false, view: "index", idx: 0, year: "ALL" };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  show(i) {
+    this.setState({ view: "article", idx: (i + NEWS.length) % NEWS.length });
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
+  }
+
+  renderVals() {
+    const s = this.state, w = s.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+    const yr = s.year;
+
+    const press = PRESS.filter(p => yr === "ALL" || p.year === yr);
+    const news = NEWS.filter(n => yr === "ALL" || n.year === yr);
+
+    const a = NEWS[s.idx];
+    const prev = NEWS[(s.idx - 1 + NEWS.length) % NEWS.length];
+    const next = NEWS[(s.idx + 1) % NEWS.length];
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && s.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(st => ({ menu: !st.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      indexDisplay: s.view === "index" ? "block" : "none",
+      articleDisplay: s.view === "article" ? "block" : "none",
+      backToIndex: () => { this.setState({ view: "index" }); if (typeof window !== "undefined") window.scrollTo(0, 0); },
+
+      years: [["ALL", "ALL"], [2026, "2026"], [2025, "2025"], [2024, "2024"]].map(([v, label]) => ({
+        label,
+        color: yr === v ? "#141414" : "#8B8377",
+        underline: yr === v ? "#51372A" : "transparent",
+        select: () => this.setState({ year: v })
+      })),
+
+      pressCols: mobile ? "1fr" : "minmax(160px,.5fr) 1.5fr",
+      newsCols: mobile ? "1fr" : tablet ? "repeat(2,1fr)" : "repeat(3,1fr)",
+      bodyCols: mobile || tablet ? "1fr" : ".55fr 1.45fr",
+      leadRatio: mobile ? "4/3" : "16/9",
+      relatedCols: mobile ? "1fr" : "minmax(200px,320px) 1fr",
+      relatedDisplay: a.relatedName ? "block" : "none",
+      prevNextCols: mobile ? "1fr" : "1fr 1fr",
+      prevNextDivider: mobile ? "0" : "1px solid #51372A",
+      prevNextStackDivider: mobile ? "1px solid #51372A" : "0",
+      nextAlign: mobile ? "left" : "right",
+      nextJustify: mobile ? "start" : "end",
+      footerCols: mobile ? "1fr" : "1fr 1fr",
+
+      press: press.map(p => ({
+        ...p,
+        quoteDisplay: p.quote ? "block" : "none"
+      })),
+
+      news: news.map(n => ({
+        headline: n.headline,
+        summary: n.summary,
+        category: n.category,
+        date: n.date,
+        photo: n.photo,
+        open: () => this.show(NEWS.indexOf(n))
+      })),
+
+      article: a,
+      prevTitle: prev.headline, prevMeta: prev.category + " \u00B7 " + prev.date,
+      nextTitle: next.headline, nextMeta: next.category + " \u00B7 " + next.date,
+      goPrev: () => this.show(s.idx - 1),
+      goNext: () => this.show(s.idx + 1)
+    };
+  }
+}
+</script>
+</body>
+</html>

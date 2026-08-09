@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  input::placeholder, textarea::placeholder { color: #A8A29A; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="Studio design 1.dc.html#services" style="color:#141414">SERVICES</a>
+      <a href="Studio design 1.dc.html#about" style="color:#141414">ABOUT</a>
+      <a href="projects-category.dc.html" style="color:#141414">PORTFOLIO</a>
+      <a href="#contact" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="Studio design 1.dc.html#services" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="Studio design 1.dc.html#about" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">ABOUT</a>
+    <a href="projects-category.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">(555) 0123</a>
+  </div>
+
+  <!-- ============ HEADING + OPENING COPY ============ -->
+  <section data-screen-label="Service heading" style="padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(36px,5vw,64px) clamp(20px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:{{ headCols }};gap:clamp(32px,6vw,88px);align-items:start">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>WHAT WE DO</span>
+          <span>IN PATNA</span>
+          <span>HOMES</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(42px,8vw,104px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">MODULAR<br /><span style="display:block;margin-left:.55em;color:#51372A">KITCHENS</span></h1>
+        <div style="display:grid;gap:10px;margin-top:clamp(28px,4vw,44px);padding-top:clamp(22px,3vw,30px);border-top:1px solid #51372A">
+          <span style="font-size:clamp(28px,3.6vw,46px);font-weight:400;line-height:1;letter-spacing:-.02em">FROM &#8377;1,450</span>
+          <span style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">PER SQ FT OF KITCHEN AREA</span>
+          <span style="margin-top:6px;font-size:13px;line-height:1.6;color:#8B8377">A 60 sq ft Patna kitchen typically lands between ₹1.9 and ₹2.6 lakh, hob and chimney excluded.</span>
+        </div>
+      </div>
+      <div style="display:grid;gap:20px;max-width:42em">
+        <p style="margin:0;font-size:clamp(16px,1.8vw,19px);line-height:1.65;color:#141414;text-wrap:pretty">A modular kitchen is really a set of decisions about how your family cooks, not a catalogue of shutters. We start there.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">In most Patna flats the kitchen is between 45 and 80 sq ft, with one window, a fixed water line and a gas point the builder put where it suited him. The first thing we work out is the triangle — sink, hob, fridge — and whether the wall between kitchen and dining can come down. About half our clients say yes, and it is usually the single change they mention a year later.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">Then come the choices you will actually have to make: carcass in BWP marine ply or the cheaper BWR (we build in BWP under the sink regardless), shutters in laminate, acrylic or membrane, and a counter in granite or quartz. Granite is still the sensible answer for most Patna kitchens — it takes the heat of a pressure cooker, it survives turmeric, and a local slab costs a third of imported quartz. We push people towards tall units over lofts, because nobody over fifty wants to climb for the atta dabba.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">Fabrication takes 18 to 25 days in our workshop, installation another three, and we do not start until the plumbing and the electrical points are set — moving a chimney point after the counter is down means cutting granite, and cut granite never looks the same again.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHOTOS ============ -->
+  <section data-screen-label="Kitchen photos" style="padding:0 clamp(20px,5vw,64px) clamp(56px,8vw,100px) clamp(20px,5vw,64px)">
+    <div style="position:relative;margin:clamp(20px,3vw,30px) clamp(20px,3vw,30px) clamp(14px,2vw,22px) 0">
+      <div style="position:absolute;top:calc(-1 * clamp(20px,3vw,30px));left:clamp(20px,3vw,30px);right:calc(-1 * clamp(20px,3vw,30px));bottom:clamp(20px,3vw,30px);border:1px solid #51372A;pointer-events:none"></div>
+      <figure style="margin:0;position:relative;display:grid;gap:12px">
+        <div style="aspect-ratio:{{ leadRatio }};overflow:hidden;background:#EFECE7">
+          <img src="https://images.pexels.com/photos/3926542/pexels-photo-3926542.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1800" alt="Modular kitchen with L-shape counter run and vent hood" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">BORING ROAD — L-SHAPE RUN, WINDOW LEFT CLEAR</figcaption>
+      </figure>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ photoCols }};gap:clamp(12px,2vw,22px);margin-top:clamp(28px,4vw,48px)">
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/7027976/pexels-photo-7027976.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Kitchen with white cabinets and granite countertop" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">GRANITE COUNTER, KANKARBAGH</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/14495889/pexels-photo-14495889.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Kitchen with open shelving above the counter" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">OPEN SHELF BESIDE THE HOB</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/34623004/pexels-photo-34623004.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Kitchen counter opening onto the dining area" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">DINING SIDE OF THE SAME COUNTER</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/3623785/pexels-photo-3623785.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Kitchen with full-height cabinetry and built-in oven" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">TALL UNITS INSTEAD OF A LOFT</figcaption>
+      </figure>
+      <figure style="margin:0;display:grid;gap:12px">
+        <div style="aspect-ratio:1;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/6301185/pexels-photo-6301185.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Kitchen counter with stools at the breakfast end" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+        <figcaption style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">BREAKFAST END, PATLIPUTRA</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S INCLUDED ============ -->
+  <section data-screen-label="Whats included" style="padding:clamp(64px,9vw,110px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:clamp(36px,5vw,60px)">
+      <h2 style="margin:0;font-size:clamp(34px,6vw,80px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">WHAT THE<br /><span style="display:block;margin-left:.55em;color:#51372A">PRICE COVERS</span></h2>
+      <span style="max-width:26em;font-size:13.5px;line-height:1.7;color:#8B8377;text-wrap:pretty">Hob, chimney, sink mixer and appliances are billed at dealer cost on top — we take no margin on them.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ includedCols }};gap:clamp(22px,3.5vw,44px)">
+      <div style="display:grid;gap:12px;padding-top:20px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">01</span>
+        <h3 style="margin:0;font-size:clamp(14.5px,1.5vw,17px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">BWP CARCASS &amp; SHUTTERS</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Marine ply below the counter, BWR above, edge-banded on all four sides.</p>
+      </div>
+      <div style="display:grid;gap:12px;padding-top:20px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">02</span>
+        <h3 style="margin:0;font-size:clamp(14.5px,1.5vw,17px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">GRANITE COUNTER &amp; SKIRTING</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Local slab, single joint where possible, with a 4-inch back skirting to save the wall.</p>
+      </div>
+      <div style="display:grid;gap:12px;padding-top:20px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">03</span>
+        <h3 style="margin:0;font-size:clamp(14.5px,1.5vw,17px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">HARDWARE &amp; SOFT-CLOSE</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Hinges, channels and soft-close on every drawer, with a written warranty card.</p>
+      </div>
+      <div style="display:grid;gap:12px;padding-top:20px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">04</span>
+        <h3 style="margin:0;font-size:clamp(14.5px,1.5vw,17px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">DADO TILING &amp; PLUMBING SHIFT</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Backsplash tiling and moving the sink or water line up to four feet.</p>
+      </div>
+      <div style="display:grid;gap:12px;padding-top:20px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">05</span>
+        <h3 style="margin:0;font-size:clamp(14.5px,1.5vw,17px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">POINTS FOR CHIMNEY &amp; RO</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Concealed electrical points positioned before the counter goes down, not after.</p>
+      </div>
+      <div style="display:grid;gap:12px;padding-top:20px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(32px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">06</span>
+        <h3 style="margin:0;font-size:clamp(14.5px,1.5vw,17px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">FITTING &amp; ONE-YEAR SERVICE</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Installation by our own carpenters, plus a free alignment visit at eleven months.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECT CARD ============ -->
+  <section data-screen-label="Linked project" style="padding:clamp(64px,9vw,110px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:clamp(28px,4vw,44px)">
+      <h2 style="margin:0;font-size:clamp(30px,5vw,64px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">A KITCHEN<br /><span style="display:block;margin-left:.55em;color:#51372A">WE BUILT</span></h2>
+      <a href="projects-category.dc.html" style="font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#141414">ALL PROJECTS &#8599;</a>
+    </div>
+    <a href="project detail page.dc.html" style="display:grid;grid-template-columns:{{ cardCols }};gap:clamp(20px,3vw,40px);padding:clamp(18px,2.4vw,26px);border:1px solid #51372A;color:#141414;align-items:center" style-hover="background:#FAF8F5">
+      <div style="aspect-ratio:4/3;overflow:hidden;background:#EFECE7"><img src="https://images.pexels.com/photos/34946066/pexels-photo-34946066.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Finished 3BHK with open kitchen" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+      <div style="display:grid;gap:16px">
+        <span style="font-size:clamp(22px,2.8vw,34px);font-weight:400;line-height:1.1;letter-spacing:-.01em;text-transform:uppercase">3BHK, BORING ROAD</span>
+        <p style="margin:0;max-width:34em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">The kitchen wall came down, a half-height counter replaced it, and two people can now work either side of the hob during festivals without colliding.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px clamp(20px,3vw,36px);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">
+          <span>BORING ROAD, PATNA</span>
+          <span>45 DAYS</span>
+          <span>&#8377;8–10 LAKH</span>
+        </div>
+        <span style="font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">READ THE CASE STUDY &#8599;</span>
+      </div>
+    </a>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section data-screen-label="FAQ" style="padding:clamp(64px,9vw,110px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+    <div style="display:grid;grid-template-columns:{{ faqCols }};gap:clamp(32px,6vw,88px);align-items:start">
+      <h2 style="margin:0;font-size:clamp(34px,6vw,80px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">KITCHEN<br /><span style="display:block;margin-left:.55em;color:#51372A">QUESTIONS</span></h2>
+      <div>
+        <sc-for list="{{ faqs }}" as="item" hint-placeholder-count="3">
+          <div style="border-bottom:1px solid #51372A">
+            <button type="button" onClick="{{ item.toggle }}" style="display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;padding:clamp(20px,2.4vw,30px) 0;min-height:44px;background:none;border:0;font:inherit;color:#141414;text-align:left;cursor:pointer">
+              <span style="font-size:clamp(15px,1.8vw,21px);font-weight:400;letter-spacing:.01em;text-transform:uppercase">{{ item.q }}</span>
+              <span style="font-size:24px;font-weight:300;line-height:1;color:#51372A">{{ item.sign }}</span>
+            </button>
+            <div style="display:{{ item.display }};padding:0 clamp(0px,8vw,90px) clamp(20px,2.4vw,30px) 0">
+              <p style="margin:0;font-size:15px;line-height:1.75;text-align:justify;color:#4A4A4A;text-wrap:pretty">{{ item.a }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="contact" data-screen-label="CTA" style="padding:clamp(56px,8vw,100px) clamp(20px,5vw,64px);border-top:1px solid #51372A">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,56px)">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(18px,3vw,30px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>SEND US THE</span>
+          <span>KITCHEN MEASUREMENTS</span>
+        </div>
+        <h2 style="margin:0;font-size:clamp(32px,5.2vw,68px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">TWO WALLS,<br /><span style="display:block;margin-left:.55em;color:#51372A">ONE NUMBER</span></h2>
+      </div>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:14px;padding:20px 34px;min-height:44px;background:#D9BC72;color:#141414;font-size:clamp(10.5px,1.1vw,12px);font-weight:500;letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">GET A KITCHEN ESTIMATE ON WHATSAPP <span>&#8599;</span></a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer data-screen-label="Footer" style="background:#FFFFFF;border-top:1px solid #51372A">
+    <div style="display:grid;grid-template-columns:{{ footerCols }};gap:clamp(36px,5vw,80px);padding:clamp(56px,7vw,100px) clamp(20px,5vw,64px)">
+      <div>
+        <h3 style="margin:0;font-size:clamp(32px,3.6vw,48px);font-weight:300;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">READY<br /><span style="display:block;margin-left:.55em;color:#51372A">WHEN YOU ARE</span></h3>
+        <p style="margin:22px 0 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Send us the flat size and a rough budget — you will hear back the same working day.</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:clamp(32px,4vw,52px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #51372A">
+          <span style="width:38px;height:38px;flex-shrink:0;border:1px solid #51372A;display:grid;place-items:center;font-size:13px;font-weight:500;letter-spacing:.06em;color:#51372A">AI</span>
+          <div style="display:grid;gap:3px;font-size:14px;font-weight:500;letter-spacing:.26em;line-height:1.2;text-transform:uppercase">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </div>
+        </div>
+        <div style="display:grid;gap:18px;margin-top:28px;font-size:14.5px;line-height:1.6;color:#3C3C3C">
+          <span style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="margin-top:4px;flex-shrink:0"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+            <span>2nd Floor, Boring Road Crossing,<br />Patna, Bihar 800001</span>
+          </span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,40px);align-items:center">
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>
+              <span>studio@ashishinteriors.in</span>
+            </span>
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>
+              <span>(555) 0123</span>
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:clamp(24px,3vw,36px);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+          <a href="#" style="color:#141414">INSTAGRAM</a>
+          <span style="color:#51372A">|</span>
+          <a href="#" style="color:#141414">FACEBOOK</a>
+        </div>
+      </div>
+      <div style="display:grid;gap:26px">
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NAME</span>
+          <input type="text" placeholder="Your name" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">EMAIL</span>
+          <input type="email" placeholder="you@email.com" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">KITCHEN SIZE</span>
+          <input type="text" placeholder="Roughly 8 ft by 7 ft" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">TELL US ABOUT YOUR KITCHEN</span>
+          <textarea rows="3" placeholder="L-shape, one window, want to open the wall to the dining…" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none;resize:vertical"></textarea>
+        </label>
+        <button type="button" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;padding:19px 32px;min-height:44px;background:#D9BC72;border:0;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">SEND INQUIRY <span>&#8599;</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+      <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+      <span style="display:flex;gap:10px"><a href="#" style="color:#FFFFFF">PRIVACY</a><span>|</span><a href="#" style="color:#FFFFFF">TERMS</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false, open: 0 };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  renderVals() {
+    const s = this.state, w = s.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+
+    const faqData = [
+      ["Should I open the kitchen to the dining?", "In a 2BHK or 3BHK flat, usually yes — the corridor gets the window light back and the room stops feeling like a passage. The exceptions are households that cook heavy fried food daily, where the smell will carry into the sofa fabric no matter how good the chimney is. We will tell you which one you are before you commit."],
+      ["Granite or quartz for the counter?", "Granite, for most Patna kitchens. It takes a hot pressure cooker straight off the flame, it does not stain from turmeric or lemon, and a local slab is roughly a third the price of imported quartz. Quartz is worth it only if you want a specific pale colour that granite cannot give you — and it needs a trivet under anything hot."],
+      ["How long is the kitchen unusable?", "Eighteen to twenty-five days of fabrication happen in our workshop while you keep cooking. The kitchen itself is out of use for about six days: two for demolition and plumbing, three for installation, one for the counter to set. Most families manage with a single induction plate on the dining table."]
+    ];
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && s.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(st => ({ menu: !st.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      headCols: mobile || tablet ? "1fr" : ".85fr 1.15fr",
+      leadRatio: mobile ? "4/3" : "16/9",
+      photoCols: mobile ? "1fr 1fr" : tablet ? "repeat(3,1fr)" : "repeat(5,1fr)",
+      includedCols: mobile ? "1fr" : tablet ? "repeat(2,1fr)" : "repeat(3,1fr)",
+      cardCols: mobile ? "1fr" : "minmax(220px,360px) 1fr",
+      faqCols: mobile || tablet ? "1fr" : ".8fr 1.2fr",
+      footerCols: mobile ? "1fr" : "1fr 1fr",
+
+      faqs: faqData.map(([q, a], i) => ({
+        q, a,
+        sign: s.open === i ? "\u2212" : "+",
+        display: s.open === i ? "block" : "none",
+        toggle: () => this.setState(st => ({ open: st.open === i ? -1 : i }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

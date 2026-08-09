@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- NAV — plain white, no scrim -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="service-detail.dc.html" style="color:#141414">SERVICES</a>
+      <a href="team.dc.html" style="color:#141414">ABOUT</a>
+      <a href="projects-category.dc.html" style="color:#141414">PORTFOLIO</a>
+      <a href="locations.dc.html" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="service-detail.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="team.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">ABOUT</a>
+    <a href="projects-category.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="locations.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">CONTACT</a>
+  </div>
+
+  <!-- HERO — STANDARD (contained) -->
+  <section data-screen-label="Hero — standard" style="padding:clamp(48px,7vw,100px) clamp(20px,5vw,64px) clamp(64px,9vw,120px) clamp(20px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:{{ heroCols }};gap:clamp(40px,6vw,88px);align-items:center">
+
+      <!-- LEFT — copy -->
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(22px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>INTERIOR DESIGN STUDIO,</span>
+          <span>PATNA &middot; SINCE 2013</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(46px,7.4vw,96px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">ASHISH<br /><span style="display:block;margin-left:.55em;color:#51372A">INTERIORS</span></h1>
+        <p style="margin:clamp(24px,3.4vw,36px) 0 0 0;max-width:24em;font-size:clamp(16px,1.7vw,19px);line-height:1.5;color:#4A4A4A;text-wrap:pretty">Creating interiors that inspire.</p>
+        <a href="estimate calculator.dc.html" style="display:inline-flex;align-items:center;gap:14px;margin-top:clamp(32px,4.4vw,48px);padding:20px 34px;min-height:44px;background:#D9BC72;color:#141414;font-size:clamp(10.5px,1.1vw,12px);font-weight:500;letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">CALCULATE THE ESTIMATE <span>&#8594;</span></a>
+      </div>
+
+      <!-- RIGHT — one inset, offset-framed photo -->
+      <div style="position:relative;margin:0 clamp(18px,2.6vw,28px) clamp(18px,2.6vw,28px) 0">
+        <div style="position:absolute;top:calc(-1 * clamp(18px,2.6vw,28px));left:clamp(18px,2.6vw,28px);right:calc(-1 * clamp(18px,2.6vw,28px));bottom:clamp(18px,2.6vw,28px);border:1px solid #51372A;pointer-events:none"></div>
+        <div style="position:relative;aspect-ratio:{{ photoRatio }};overflow:hidden;background:#EFECE7">
+          <img src="https://images.pexels.com/photos/34946066/pexels-photo-34946066.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" alt="Living room with brick accent wall" style="width:100%;height:100%;object-fit:cover;display:block" />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  renderVals() {
+    const w = this.state.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && this.state.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      heroCols: mobile || tablet ? "1fr" : "1.15fr .95fr",
+      photoRatio: mobile ? "4/3" : "3/4"
+    };
+  }
+}
+</script>
+</body>
+</html>

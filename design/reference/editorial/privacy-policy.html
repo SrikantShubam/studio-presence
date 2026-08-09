@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- NAV -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="service-detail.dc.html" style="color:#141414">SERVICES</a>
+      <a href="team.dc.html" style="color:#141414">STUDIO</a>
+      <a href="projects-category.dc.html" style="color:#141414">PORTFOLIO</a>
+      <a href="locations.dc.html" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="service-detail.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="team.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">STUDIO</a>
+    <a href="projects-category.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="locations.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">CONTACT</a>
+  </div>
+
+  <!-- HEADING -->
+  <section data-screen-label="Policy heading" style="padding:clamp(44px,6vw,84px) clamp(20px,5vw,64px) clamp(28px,3.4vw,44px) clamp(20px,5vw,64px)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(18px,2.6vw,28px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>LEGAL &mdash;</span>
+          <span>ASHISH INTERIORS</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(38px,7vw,88px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">PRIVACY<br /><span style="display:block;margin-left:.55em;color:#51372A">&amp; TERMS</span></h1>
+      </div>
+      <span style="padding-bottom:8px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8B8377">LAST UPDATED 1 JULY 2026</span>
+    </div>
+  </section>
+
+  <!-- TAB SWITCH -->
+  <section data-screen-label="Policy switch" style="padding:0 clamp(20px,5vw,64px)">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,44px);border-bottom:1px solid #51372A">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
+        <button type="button" onClick="{{ t.select }}" style="min-height:44px;padding:12px 0;background:none;border:0;border-bottom:2px solid {{ t.underline }};font:inherit;font-size:clamp(12px,1.4vw,15px);letter-spacing:.16em;text-transform:uppercase;color:{{ t.color }};cursor:pointer">{{ t.label }}</button>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <section data-screen-label="Policy body" style="padding:clamp(40px,5vw,72px) clamp(20px,5vw,64px) clamp(56px,8vw,100px) clamp(20px,5vw,64px)">
+    <div style="max-width:34em">
+      <p style="margin:0;font-size:clamp(16px,1.8vw,19px);line-height:1.6;color:#141414;text-wrap:pretty">{{ doc.lead }}</p>
+
+      <sc-for list="{{ doc.sections }}" as="sec" hint-placeholder-count="7">
+        <div style="margin-top:clamp(36px,4.5vw,56px)">
+          <div style="display:flex;align-items:baseline;gap:16px;padding-bottom:12px;border-bottom:1px solid #DCD7CE">
+            <span style="font-size:clamp(11px,1.2vw,13px);font-weight:500;letter-spacing:.2em;color:#51372A">{{ sec.numeral }}</span>
+            <h2 style="margin:0;font-size:clamp(17px,1.9vw,21px);font-weight:400;letter-spacing:.04em;text-transform:uppercase">{{ sec.title }}</h2>
+          </div>
+          <div style="display:grid;gap:18px;margin-top:20px">
+            <sc-for list="{{ sec.paras }}" as="p" hint-placeholder-count="2">
+              <p style="margin:0;font-size:16px;line-height:1.75;color:#4A4A4A;text-wrap:pretty">{{ p.text }}</p>
+            </sc-for>
+          </div>
+          <ul style="display:{{ sec.listDisplay }};margin:18px 0 0 0;padding:0 0 0 1.1em;gap:10px;font-size:16px;line-height:1.7;color:#4A4A4A">
+            <sc-for list="{{ sec.bullets }}" as="b" hint-placeholder-count="3">
+              <li style="text-wrap:pretty">{{ b.text }}</li>
+            </sc-for>
+          </ul>
+        </div>
+      </sc-for>
+
+      <div style="margin-top:clamp(44px,5.5vw,72px);padding-top:24px;border-top:1px solid #51372A">
+        <span style="display:block;font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">QUESTIONS ABOUT THIS</span>
+        <p style="margin:16px 0 0 0;font-size:16px;line-height:1.75;color:#4A4A4A;text-wrap:pretty">Write to <a href="locations.dc.html" style="color:#141414">studio@ashishinteriors.in</a> or call (555) 0123. Ashish Interiors, 2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER BAR -->
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+    <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+    <span style="display:flex;gap:10px"><a href="Studio design 1.dc.html" style="color:#FFFFFF">HOME</a><span>|</span><a href="locations.dc.html" style="color:#FFFFFF">CONTACT</a></span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const PRIVACY = {
+  lead: "This policy covers what we do with the information you give us when you enquire about a project, and what we do with photographs of work we complete. It is written to be read rather than to protect us.",
+  sections: [
+    { title: "WHAT WE COLLECT", paras: [
+        "When you use the enquiry form, WhatsApp or the phone, we keep the details you give us: your name, phone number, email address, the location and size of the property, and whatever you tell us about the project."
+      ], bullets: [
+        "Contact details you send us \u2014 name, phone, email.",
+        "Project details \u2014 address, carpet area, budget range, possession date.",
+        "Site information gathered during a visit \u2014 measurements, photographs, existing service positions.",
+        "Correspondence \u2014 WhatsApp messages, emails and quotations exchanged with you."
+      ] },
+    { title: "WHAT WE DO WITH IT", paras: [
+        "We use it to prepare your estimate, run your project and stay in touch about it. Nothing more. We do not sell contact details, we do not pass them to material suppliers or contractors outside the work on your site, and we do not add you to a marketing list without asking."
+      ], bullets: [] },
+    { title: "HOW LONG WE KEEP IT", paras: [
+        "Enquiries that do not become projects are deleted after two years. Completed project records \u2014 drawings, invoices, site photographs and the handover folder \u2014 are kept indefinitely, because clients frequently come back years later asking what is behind a wall, and that record is the only way to answer.",
+        "You can ask us to delete anything at any time and we will, apart from what we are required to keep for tax purposes."
+      ], bullets: [] },
+    { title: "PHOTOGRAPHS OF YOUR HOME", paras: [
+        "We photograph our own work, during construction and after handover. Site photographs taken for the weekly record are internal. Finished photographs may be used on this website, on our Instagram and in printed material \u2014 but only with your written permission, which we ask for at handover and which you can withdraw later.",
+        "We never publish your name, flat number or building name alongside a photograph without asking. Locality alone \u2014 \u201CBoring Road\u201D, \u201CKankarbagh\u201D \u2014 is what we use."
+      ], bullets: [] },
+    { title: "COOKIES & THIS WEBSITE", paras: [
+        "This site sets no advertising or tracking cookies. We use one privacy-respecting analytics service that records page views without storing personal data or following you across other sites. Embedded maps are served by a third party and are subject to their own policy."
+      ], bullets: [] },
+    { title: "WHO ELSE SEES IT", paras: [
+        "Our own team, and nobody else. We do not subcontract design or carpentry, so your details do not travel to a third-party workshop. Where a specialist is genuinely needed \u2014 a structural engineer, for example \u2014 we tell you first and share only what that person needs."
+      ], bullets: [] },
+    { title: "YOUR RIGHTS", paras: [
+        "Ask us what we hold about you and we will send it. Ask us to correct or delete it and we will. There is no form and no fee \u2014 an email or a phone call is enough, and we will answer within five working days."
+      ], bullets: [] },
+    { title: "CHANGES TO THIS POLICY", paras: [
+        "If we change how we handle information we will update this page and change the date at the top. Material changes affecting a live project will be told to you directly rather than left here to be discovered."
+      ], bullets: [] }
+  ]
+};
+
+const TERMS = {
+  lead: "These are the terms we work under. They are the same terms written into every quotation we issue, restated here so you can read them before you ask us for one.",
+  sections: [
+    { title: "QUOTATIONS & ESTIMATES", paras: [
+        "The figure produced by the estimate calculator on this site is indicative only and is not a quotation. A quotation is issued in writing after a site visit, is itemised, and holds for thirty days from its date.",
+        "Rates in a quotation assume the site conditions we observed. If something is discovered once work begins \u2014 damp behind a wall, an unrecorded service run \u2014 we stop, tell you, and price the additional work before continuing. We do not carry out extra chargeable work without your agreement in writing."
+      ], bullets: [] },
+    { title: "PAYMENT SCHEDULE", paras: [
+        "Our standard schedule, unless your quotation says otherwise:"
+      ], bullets: [
+        "10% on signing off the drawings.",
+        "40% at material procurement, before cutting begins.",
+        "40% in stages against site progress, invoiced against work actually completed.",
+        "10% after the punch list is cleared at handover."
+      ] },
+    { title: "PROGRAMME & DELAYS", paras: [
+        "Every project is given a dated schedule at the start. We hold to it, and where we do not we say so in the weekly update with the reason and the revised date.",
+        "Delays caused by us are ours to absorb. Delays caused by things outside our control \u2014 a society refusing access, a possession date moving, material arriving damaged, your own decisions pending \u2014 move the handover date by the same period. We do not levy a charge for these, but we cannot compress the remaining programme to absorb them."
+      ], bullets: [] },
+    { title: "MATERIALS", paras: [
+        "Materials are specified by grade and brand in the quotation. We buy at our dealers' rates and you see the invoices; we take no commission on material.",
+        "Where a specified item is unavailable we substitute only with something of equal or better grade, and we tell you which item changed and why."
+      ], bullets: [] },
+    { title: "WARRANTY", paras: [
+        "We give a written one-year warranty on our own carpentry and finishing from the date of handover, covering workmanship \u2014 joinery coming apart, shutters dropping out of alignment, polish failing.",
+        "Manufacturer warranties on hardware, appliances and fittings are passed to you at handover and are the manufacturer's responsibility. The warranty does not cover normal wear, water damage from a plumbing failure elsewhere in the building, or work altered by someone else after we leave."
+      ], bullets: [] },
+    { title: "CANCELLATION", paras: [
+        "You may cancel at any stage. What you owe is what has been done: drawings produced, material already bought or cut, and work completed on site, less any advance already paid. Nothing beyond that, and no cancellation penalty.",
+        "If material has been cut to your drawings it cannot be returned, and it is charged. That is the only irreversible point in the process, and we tell you the week before we reach it."
+      ], bullets: [] },
+    { title: "ACCESS & SITE CONDITIONS", paras: [
+        "You are responsible for giving us lawful access to the property and for any society permissions the building requires. We work within the drilling and lift hours the building sets; where those hours are unusually restrictive we allow for it in the programme.",
+        "Water and electricity at site are provided by you. We leave the site swept daily and deep-clean before handover."
+      ], bullets: [] },
+    { title: "GOVERNING LAW", paras: [
+        "These terms are governed by the laws of India, and any dispute is subject to the jurisdiction of the courts at Patna, Bihar. We would far rather settle a disagreement across the sample table, and in twelve years that is how every one of them has been settled."
+      ], bullets: [] }
+  ]
+};
+
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false, tab: "privacy" };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  renderVals() {
+    const s = this.state, w = s.w;
+    const mobile = w < 720, tablet = w >= 720 && w < 1080;
+    const doc = s.tab === "privacy" ? PRIVACY : TERMS;
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && s.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(st => ({ menu: !st.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      tabs: [["privacy", "PRIVACY POLICY"], ["terms", "TERMS OF WORK"]].map(([id, label]) => ({
+        label,
+        color: s.tab === id ? "#141414" : "#8B8377",
+        underline: s.tab === id ? "#51372A" : "transparent",
+        select: () => { this.setState({ tab: id }); if (typeof window !== "undefined") window.scrollTo(0, 0); }
+      })),
+
+      doc: {
+        lead: doc.lead,
+        sections: doc.sections.map((sec, i) => ({
+          numeral: String(i + 1).padStart(2, "0"),
+          title: sec.title,
+          paras: sec.paras.map(text => ({ text })),
+          bullets: sec.bullets.map(text => ({ text })),
+          listDisplay: sec.bullets.length ? "grid" : "none"
+        }))
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

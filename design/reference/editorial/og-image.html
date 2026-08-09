@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #EDEAE4; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+</style>
+</helmet>
+
+<div style="background:#EDEAE4;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;padding:clamp(28px,4vw,64px);overflow-x:hidden">
+
+  <!-- SPEC HEADER -->
+  <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:clamp(20px,2.6vw,28px);margin-bottom:clamp(32px,4vw,52px);border-bottom:1px solid #51372A">
+    <div>
+      <div style="display:grid;gap:6px;margin-bottom:20px;font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+        <span>SHARE CARD,</span>
+        <span>1200 &times; 630</span>
+      </div>
+      <h1 style="margin:0;font-size:clamp(32px,5vw,64px);font-weight:300;line-height:.9;letter-spacing:-.03em;text-transform:uppercase">OPEN GRAPH<br /><span style="display:block;margin-left:.55em;color:#51372A">TEMPLATES</span></h1>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px">
+      <span style="font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#51372A">PREVIEW AT</span>
+      <sc-for list="{{ scales }}" as="s" hint-placeholder-count="3">
+        <button type="button" onClick="{{ s.select }}" style="min-height:44px;padding:12px 18px;background:{{ s.bg }};border:1px solid {{ s.border }};color:{{ s.fg }};font:inherit;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">{{ s.label }}</button>
+      </sc-for>
+    </div>
+  </header>
+
+  <div style="display:grid;gap:clamp(40px,6vw,84px)">
+
+    <!-- ================= 01 HOME / DEFAULT ================= -->
+    <section data-screen-label="OG home" style="display:grid;gap:clamp(18px,2.4vw,28px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:18px;padding-bottom:14px;border-bottom:1px solid #51372A">
+        <span style="font-size:clamp(30px,3.6vw,48px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #C7BEB0">01</span>
+        <span style="font-size:clamp(14px,1.6vw,18px);font-weight:400;letter-spacing:.16em;text-transform:uppercase">HOME / DEFAULT</span>
+        <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8B8377">every page without its own card</span>
+      </div>
+
+      <div style="display:flex;justify-content:flex-start;overflow-x:auto">
+        <div style="width:1200px;height:630px;flex-shrink:0;transform:scale({{ scale }});transform-origin:top left;margin-bottom:{{ marginHome }};position:relative;overflow:hidden;background:#141414">
+          <img src="https://images.pexels.com/photos/34946066/pexels-photo-34946066.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1800" alt="Living room with brick accent wall" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" />
+          <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,20,.9) 0%,rgba(20,20,20,.78) 42%,rgba(20,20,20,.12) 78%,rgba(20,20,20,0) 100%)"></div>
+          <div style="position:absolute;left:80px;top:96px;right:420px;display:grid;gap:0">
+            <span style="font-size:96px;font-weight:400;line-height:.92;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">ASHISH<br />INTERIORS</span>
+            <span style="width:120px;height:4px;margin-top:38px;background:#D9BC72"></span>
+            <span style="margin-top:34px;font-size:30px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.94)">INTERIOR DESIGN &middot; PATNA</span>
+          </div>
+          <span style="position:absolute;left:80px;bottom:76px;font-size:24px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.8)">EST. 2013</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 02 PROJECT ================= -->
+    <section data-screen-label="OG project" style="display:grid;gap:clamp(18px,2.4vw,28px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:18px;padding-bottom:14px;border-bottom:1px solid #51372A">
+        <span style="font-size:clamp(30px,3.6vw,48px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #C7BEB0">02</span>
+        <span style="font-size:clamp(14px,1.6vw,18px);font-weight:400;letter-spacing:.16em;text-transform:uppercase">PROJECT PAGE</span>
+        <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8B8377">cover photo, title, location &middot; duration</span>
+      </div>
+
+      <div style="display:flex;justify-content:flex-start;overflow-x:auto">
+        <div style="width:1200px;height:630px;flex-shrink:0;transform:scale({{ scale }});transform-origin:top left;margin-bottom:{{ marginHome }};position:relative;overflow:hidden;background:#141414">
+          <img src="https://images.pexels.com/photos/3990542/pexels-photo-3990542.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1800" alt="Sunlit living room with wooden furniture" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" />
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,.55) 0%,rgba(20,20,20,.1) 26%,rgba(20,20,20,.1) 46%,rgba(20,20,20,.88) 100%)"></div>
+          <span style="position:absolute;left:80px;top:72px;font-size:26px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:#FFFFFF">ASHISH INTERIORS</span>
+          <div style="position:absolute;left:80px;right:80px;bottom:80px;display:grid;gap:0">
+            <span style="max-width:16em;font-size:78px;font-weight:400;line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">3BHK, BORING ROAD</span>
+            <span style="width:120px;height:4px;margin-top:34px;background:#D9BC72"></span>
+            <span style="margin-top:30px;font-size:28px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.92)">BORING ROAD, PATNA &middot; 45 DAYS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 03 ESTIMATE CALCULATOR ================= -->
+    <section data-screen-label="OG calculator" style="display:grid;gap:clamp(18px,2.4vw,28px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:18px;padding-bottom:14px;border-bottom:1px solid #51372A">
+        <span style="font-size:clamp(30px,3.6vw,48px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #C7BEB0">03</span>
+        <span style="font-size:clamp(14px,1.6vw,18px);font-weight:400;letter-spacing:.16em;text-transform:uppercase">ESTIMATE CALCULATOR</span>
+        <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8B8377">no photograph &middot; gold second line for legibility</span>
+      </div>
+
+      <div style="display:flex;justify-content:flex-start;overflow-x:auto">
+        <div style="width:1200px;height:630px;flex-shrink:0;transform:scale({{ scale }});transform-origin:top left;margin-bottom:{{ marginHome }};position:relative;overflow:hidden;background:#141414">
+          <span style="position:absolute;right:64px;top:40px;font-size:300px;font-weight:300;line-height:.8;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.13);pointer-events:none">&#8377;</span>
+          <div style="position:absolute;left:80px;top:104px;right:200px;display:grid;gap:0">
+            <span style="font-size:84px;font-weight:400;line-height:.96;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">CALCULATE YOUR<span style="display:block;margin-left:.55em;color:#D9BC72">INTERIOR ESTIMATE</span></span>
+            <span style="width:120px;height:4px;margin-top:44px;background:#D9BC72"></span>
+            <span style="margin-top:34px;font-size:28px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.86)">THREE INPUTS &middot; HONEST RANGE</span>
+          </div>
+          <span style="position:absolute;left:80px;bottom:76px;font-size:26px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:#FFFFFF">ASHISH INTERIORS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= THUMBNAIL CHECK ================= -->
+    <section data-screen-label="Thumbnail check" style="display:grid;gap:clamp(18px,2.4vw,28px);padding-top:clamp(20px,3vw,32px);border-top:1px solid #51372A">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:18px">
+        <span style="font-size:clamp(14px,1.6vw,18px);font-weight:400;letter-spacing:.16em;text-transform:uppercase">THE ONLY TEST THAT MATTERS</span>
+        <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8B8377">all three at 300px &mdash; whatsapp bubble width</span>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,30px)">
+        <!-- home thumb -->
+        <div style="width:300px;height:157px;position:relative;overflow:hidden;background:#141414">
+          <img src="https://images.pexels.com/photos/34946066/pexels-photo-34946066.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900" alt="Home share card at thumbnail size" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" />
+          <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,20,.9) 0%,rgba(20,20,20,.78) 42%,rgba(20,20,20,.12) 78%,rgba(20,20,20,0) 100%)"></div>
+          <div style="position:absolute;left:20px;top:24px;right:105px">
+            <span style="display:block;font-size:24px;font-weight:400;line-height:.92;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">ASHISH<br />INTERIORS</span>
+            <span style="display:block;width:30px;height:1px;margin-top:10px;background:#D9BC72"></span>
+            <span style="display:block;margin-top:9px;font-size:7.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.94)">INTERIOR DESIGN &middot; PATNA</span>
+          </div>
+          <span style="position:absolute;left:20px;bottom:19px;font-size:6px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.8)">EST. 2013</span>
+        </div>
+
+        <!-- project thumb -->
+        <div style="width:300px;height:157px;position:relative;overflow:hidden;background:#141414">
+          <img src="https://images.pexels.com/photos/3990542/pexels-photo-3990542.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900" alt="Project share card at thumbnail size" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" />
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,.55) 0%,rgba(20,20,20,.1) 26%,rgba(20,20,20,.1) 46%,rgba(20,20,20,.88) 100%)"></div>
+          <span style="position:absolute;left:20px;top:18px;font-size:6.5px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:#FFFFFF">ASHISH INTERIORS</span>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px">
+            <span style="display:block;max-width:9em;font-size:19.5px;font-weight:400;line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">3BHK, BORING ROAD</span>
+            <span style="display:block;width:30px;height:1px;margin-top:9px;background:#D9BC72"></span>
+            <span style="display:block;margin-top:8px;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.92)">BORING ROAD, PATNA &middot; 45 DAYS</span>
+          </div>
+        </div>
+
+        <!-- calculator thumb -->
+        <div style="width:300px;height:157px;position:relative;overflow:hidden;background:#141414">
+          <span style="position:absolute;right:16px;top:10px;font-size:75px;font-weight:300;line-height:.8;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.13)">&#8377;</span>
+          <div style="position:absolute;left:20px;top:26px;right:50px">
+            <span style="display:block;font-size:21px;font-weight:400;line-height:.96;letter-spacing:-.02em;text-transform:uppercase;color:#FFFFFF">CALCULATE YOUR<span style="display:block;margin-left:.55em;color:#D9BC72">INTERIOR ESTIMATE</span></span>
+            <span style="display:block;width:30px;height:1px;margin-top:11px;background:#D9BC72"></span>
+            <span style="display:block;margin-top:9px;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.86)">THREE INPUTS &middot; HONEST RANGE</span>
+          </div>
+          <span style="position:absolute;left:20px;bottom:19px;font-size:6.5px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:#FFFFFF">ASHISH INTERIORS</span>
+        </div>
+      </div>
+
+      <p style="margin:10px 0 0 0;max-width:44em;font-size:14px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">At 300px the wordmark and the project title stay readable; the small caps line sits at the edge of legibility, which is why nothing else is on the card. Everything sits at least 80px from every edge at full size, so platform cropping cannot cut into the type.</p>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+class Component extends DCLogic {
+  state = { scale: 0.62 };
+
+  renderVals() {
+    const s = this.state.scale;
+    const options = [[0.45, "45%"], [0.62, "62%"], [1, "100%"]];
+    return {
+      scale: s,
+      // scaled elements keep their unscaled box, so pull the leftover height back
+      marginHome: (-630 * (1 - s)) + "px",
+      scales: options.map(([v, label]) => ({
+        label,
+        bg: v === s ? "#141414" : "transparent",
+        border: v === s ? "#141414" : "#C7BEB0",
+        fg: v === s ? "#FFFFFF" : "#141414",
+        select: () => this.setState({ scale: v })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

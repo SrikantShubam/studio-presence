@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #141414; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+</style>
+</helmet>
+
+<div style="background:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <section data-screen-label="Hero — split" style="position:relative;min-height:min(920px,100vh);display:grid;grid-template-columns:{{ splitCols }}">
+
+    <!-- ══════════ LEFT — dark half ══════════ -->
+    <div style="position:relative;overflow:hidden;background:#141414;display:flex;flex-direction:column;justify-content:flex-end;padding:{{ leftPad }}">
+
+      <!-- ghost numeral, oversized, bled off the bottom-left -->
+      <span style="position:absolute;left:-.09em;bottom:-.30em;font-size:clamp(200px,26vw,420px);font-weight:200;line-height:.7;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.13);pointer-events:none;user-select:none">13</span>
+
+      <!-- outlined vertical wordmark down the seam -->
+      <span style="position:absolute;display:{{ wordmarkDisplay }};right:clamp(14px,1.5vw,22px);top:clamp(150px,17vw,210px);writing-mode:vertical-rl;font-size:clamp(11px,1.05vw,13px);font-weight:400;letter-spacing:.52em;text-transform:uppercase;color:transparent;-webkit-text-stroke:.6px rgba(255,255,255,.34);pointer-events:none;user-select:none">ASHISH INTERIORS</span>
+
+      <div style="position:relative">
+        <!-- eyebrow, broken across three short lines -->
+        <div style="display:grid;gap:9px;margin-bottom:clamp(30px,4vw,52px);font-size:clamp(9.5px,.92vw,11px);font-weight:400;letter-spacing:.3em;line-height:1.5;text-transform:uppercase;color:rgba(255,255,255,.55)">
+          <span>INTERIOR DESIGN STUDIO</span>
+          <span>PATNA, INDIA</span>
+          <span style="color:rgba(255,255,255,.34)">EST. 2013</span>
+        </div>
+
+        <!-- two-tone heading, adapted for dark -->
+        <h1 style="margin:0;font-size:clamp(46px,6.6vw,86px);font-weight:200;line-height:.93;letter-spacing:-.042em;text-transform:uppercase;color:#FFFFFF">ASHISH<br /><span style="display:block;margin-left:.5em;color:#D9BC72">INTERIORS</span></h1>
+
+        <!-- positioning line, hairline-led -->
+        <div style="display:flex;align-items:flex-start;gap:clamp(16px,2vw,26px);margin-top:clamp(32px,4vw,50px)">
+          <span style="width:clamp(28px,4vw,58px);height:1px;margin-top:.62em;background:#D9BC72;flex-shrink:0"></span>
+          <p style="margin:0;max-width:15em;font-size:clamp(14px,1.35vw,16px);font-weight:400;line-height:1.5;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.86)">Creating interiors that inspire</p>
+        </div>
+
+        <a href="estimate calculator.dc.html" style="display:inline-flex;align-items:center;gap:14px;margin-top:clamp(36px,4.6vw,58px);padding:19px 30px;min-height:44px;white-space:nowrap;background:#D9BC72;color:#141414;font-size:clamp(9.5px,.92vw,11px);font-weight:500;letter-spacing:.2em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 60%,calc(100% - 19px) 100%,0 100%)" style-hover="background:#FFFFFF;color:#141414">CALCULATE THE ESTIMATE <span style="font-size:1.15em">&#8599;</span></a>
+
+        <!-- footing: two figures on a hairline -->
+        <div style="display:flex;flex-wrap:wrap;gap:clamp(24px,3.4vw,52px);margin-top:clamp(48px,6vw,84px);padding-top:clamp(20px,2.4vw,28px);border-top:1px solid rgba(255,255,255,.16)">
+          <span style="display:grid;gap:9px">
+            <span style="font-size:clamp(21px,2.3vw,30px);font-weight:300;line-height:1;letter-spacing:-.02em;color:#FFFFFF">240+</span>
+            <span style="font-size:9.5px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.45)">PROJECTS DELIVERED</span>
+          </span>
+          <span style="width:1px;align-self:stretch;background:rgba(255,255,255,.16)"></span>
+          <span style="display:grid;gap:9px">
+            <span style="font-size:clamp(21px,2.3vw,30px);font-weight:300;line-height:1;letter-spacing:-.02em;color:#FFFFFF">12</span>
+            <span style="font-size:9.5px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.45)">YEARS IN PRACTICE</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ RIGHT — photo half, flush to its own edge ══════════ -->
+    <div style="position:relative;overflow:hidden;min-height:{{ photoMinHeight }};background:#EFECE7">
+      <img src="https://images.pexels.com/photos/34946066/pexels-photo-34946066.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1800" alt="Living room with a brick accent wall and warm daylight" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block" />
+      <!-- light scrim, top only, so the nav links read as dark text -->
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.94) 0%,rgba(255,255,255,.62) 9%,rgba(255,255,255,0) 22%);pointer-events:none"></div>
+      <!-- faint bottom scrim carrying the typology index -->
+      <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,20,20,.5) 0%,rgba(20,20,20,0) 26%);pointer-events:none"></div>
+
+      <!-- typology index, stacked, right edge -->
+      <div style="position:absolute;right:clamp(24px,3.2vw,48px);bottom:clamp(36px,4.4vw,64px);display:grid;gap:13px;justify-items:end;text-align:right;font-size:clamp(9.5px,.92vw,11px);font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#FFFFFF">
+        <span>APARTMENTS</span>
+        <span style="width:26px;height:1px;background:rgba(255,255,255,.4)"></span>
+        <span>HOUSES</span>
+        <span style="width:26px;height:1px;background:rgba(255,255,255,.4)"></span>
+        <span>OFFICES</span>
+      </div>
+
+      <!-- scroll cue, left of the photo half -->
+      <div style="position:absolute;left:clamp(24px,3.2vw,48px);bottom:clamp(36px,4.4vw,64px);display:{{ cueDisplay }};align-items:center;gap:12px;font-size:9.5px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.72)">
+        <span>SCROLL</span>
+        <span style="width:34px;height:1px;background:rgba(255,255,255,.45)"></span>
+      </div>
+    </div>
+
+    <!-- ══════════ NAV — spans both halves, seam-aligned ══════════ -->
+    <nav style="position:absolute;top:0;left:0;right:0;display:grid;grid-template-columns:{{ splitCols }};align-items:start;padding:clamp(28px,3.4vw,42px) 0;pointer-events:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 {{ navPadLeft }};pointer-events:auto">
+        <a href="Studio design 1.dc.html" style="display:grid;gap:5px;font-size:clamp(10.5px,1.02vw,12.5px);font-weight:500;letter-spacing:.3em;line-height:1.1;text-transform:uppercase;color:#FFFFFF">
+          <span>ASHISH</span>
+          <span style="color:rgba(255,255,255,.5)">INTERIORS</span>
+        </a>
+        <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.2vw,30px);font-size:10px;font-weight:400;letter-spacing:.22em;text-transform:uppercase">
+          <a href="Studio design 1.dc.html" style="color:#FFFFFF">HOME</a>
+          <a href="service-detail.dc.html" style="color:rgba(255,255,255,.6)">SERVICES</a>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 {{ navPadRight }};pointer-events:auto">
+        <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.2vw,30px);font-size:10px;font-weight:400;letter-spacing:.22em;text-transform:uppercase">
+          <a href="team.dc.html" style="color:#141414">ABOUT</a>
+          <a href="projects-category.dc.html" style="color:#141414">PORTFOLIO</a>
+          <a href="locations.dc.html" style="color:#141414">CONTACT</a>
+        </div>
+        <div style="display:{{ navPhoneDisplay }};align-items:center;gap:12px;margin-left:auto;white-space:nowrap;flex-shrink:0;font-size:11px;font-weight:400;letter-spacing:.14em;color:#141414">
+          <span style="width:1px;height:13px;background:#51372A;flex-shrink:0"></span>
+          <span style="white-space:nowrap;flex-shrink:0">(555) 0123</span>
+        </div>
+        <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;margin-left:auto;background:rgba(255,255,255,.82);border:1px solid rgba(20,20,20,.22);cursor:pointer;padding:0">
+          <span style="display:block;width:18px;height:1px;background:#141414"></span>
+          <span style="display:block;width:18px;height:1px;background:#141414"></span>
+        </button>
+      </div>
+    </nav>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+class Component extends DCLogic {
+  state = { w: typeof window !== "undefined" ? window.innerWidth : 1440, menu: false };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  renderVals() {
+    const w = this.state.w;
+    const mobile = w < 760, tablet = w >= 760 && w < 1100;
+    return {
+      splitCols: mobile ? "1fr" : "1fr 1fr",
+      leftPad: mobile
+        ? "clamp(140px,26vw,190px) 24px clamp(48px,9vw,64px) 24px"
+        : "clamp(150px,15vw,200px) clamp(34px,4.4vw,76px) clamp(52px,6vw,86px) clamp(34px,4.4vw,76px)",
+      navPadLeft: mobile ? "24px" : "clamp(34px,4.4vw,76px)",
+      navPadRight: mobile ? "24px" : "clamp(34px,4.4vw,76px)",
+      photoMinHeight: mobile ? "62vh" : "auto",
+      wordmarkDisplay: tablet || mobile ? "none" : "block",
+      cueDisplay: mobile ? "none" : "flex",
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile || tablet ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu }))
+    };
+  }
+}
+</script>
+</body>
+</html>

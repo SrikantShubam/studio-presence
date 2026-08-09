@@ -1,0 +1,359 @@
+{
+  "$schema": "./client.schema.json",
+  "slug": "ashish-interiors",
+  "tier": "t3",
+  "template": "editorial",
+  "status": "demo",
+  "vertical": "interior-design",
+  "business": {
+    "name": "Ashish Interiors",
+    "tagline": "Creating interiors that inspire.",
+    "ownerName": "Ashish Kumar",
+    "phone": "+919876543210",
+    "whatsapp": "+919876543210",
+    "email": "hello@ashishinteriors.in",
+    "yearFounded": 2013,
+    "address": {
+      "line1": "2nd Floor, Boring Road",
+      "locality": "Boring Road",
+      "city": "Patna",
+      "state": "Bihar",
+      "pincode": "800001",
+      "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=sample"
+    },
+    "serviceAreas": [
+      "Patna",
+      "Danapur",
+      "Phulwari Sharif"
+    ],
+    "hours": "Mon-Sat, 10am - 7pm"
+  },
+  "brand": {},
+  "domain": {
+    "demoSubdomain": "ashish",
+    "customDomain": null,
+    "procuredByUs": false,
+    "renewalDue": null
+  },
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "variant": "full-bleed",
+      "headline": "Creating interiors that inspire.",
+      "sub": "Full-home and modular interiors in Patna. 40+ homes delivered since 2013.",
+      "ctaLabel": "CALCULATE THE ESTIMATE"
+    },
+    "quickActions": {
+      "enabled": true,
+      "actions": [
+        "whatsapp",
+        "call",
+        "directions"
+      ]
+    },
+    "trustBar": {
+      "enabled": true,
+      "stats": [
+        {
+          "value": "12",
+          "label": "YEARS OF PRACTICE"
+        },
+        {
+          "value": "40+",
+          "label": "HOMES DELIVERED"
+        },
+        {
+          "value": "3",
+          "label": "AREAS SERVED"
+        }
+      ]
+    },
+    "services": {
+      "enabled": true,
+      "variant": "detailed",
+      "items": [
+        {
+          "title": "Interior Design",
+          "blurb": "Turnkey design and execution for full homes.",
+          "slug": "interior-design"
+        },
+        {
+          "title": "Turnkey Renovation",
+          "blurb": "Built to your space, your timeline and your budget.",
+          "slug": "turnkey-renovation"
+        },
+        {
+          "title": "Selection of Materials",
+          "blurb": "Sourcing and specification, from finishes to fittings.",
+          "slug": "selection-of-materials"
+        }
+      ]
+    },
+    "portfolio": {
+      "enabled": true,
+      "variant": "grid",
+      "detailPages": true,
+      "projects": [
+        {
+          "title": "3BHK, Boring Road",
+          "slug": "3bhk-boring-road",
+          "cover": "/clients/ashish-interiors/p1.jpg",
+          "images": [],
+          "blurb": "Contemporary 3BHK for a family of four.",
+          "location": "Boring Road, Patna",
+          "duration": "45 days",
+          "projectType": "residential",
+          "area": "1450 sq ft",
+          "category": "residential"
+        },
+        {
+          "title": "Kankarbagh Duplex",
+          "slug": "kankarbagh-duplex",
+          "cover": "/clients/ashish-interiors/p2.jpg",
+          "images": [],
+          "blurb": "Full-home interiors across two floors.",
+          "location": "Kankarbagh, Patna",
+          "duration": "90 days",
+          "projectType": "residential",
+          "area": "2600 sq ft",
+          "category": "residential"
+        },
+        {
+          "title": "Frazer Road Office",
+          "slug": "frazer-road-office",
+          "cover": "/clients/ashish-interiors/p3.jpg",
+          "images": [],
+          "blurb": "Workspace for a 20-person practice.",
+          "location": "Frazer Road, Patna",
+          "duration": "60 days",
+          "projectType": "office",
+          "area": "1800 sq ft",
+          "category": "commercial"
+        }
+      ]
+    },
+    "about": {
+      "enabled": true,
+      "heading": "ABOUT THE STUDIO",
+      "body": "Twelve years designing homes across Patna. We handle design and execution under one roof, which is why our projects finish when we say they will."
+    },
+    "process": {
+      "enabled": true,
+      "steps": [
+        {
+          "title": "Consultation",
+          "body": "We visit, measure and listen.",
+          "duration": "Week 1"
+        },
+        {
+          "title": "Design",
+          "body": "Layouts, 3D views and material selection.",
+          "duration": "Weeks 2-3"
+        },
+        {
+          "title": "Execution",
+          "body": "Our own team, supervised daily.",
+          "duration": "Weeks 4-10"
+        },
+        {
+          "title": "Handover",
+          "body": "Snagging, cleaning and a written warranty.",
+          "duration": "Week 11"
+        }
+      ]
+    },
+    "testimonials": {
+      "enabled": true,
+      "variant": "cards",
+      "items": [
+        {
+          "quote": "Sample testimonial — replace before this site goes live.",
+          "author": "Sample client",
+          "context": "Boring Road"
+        },
+        {
+          "quote": "Sample testimonial — replace before this site goes live.",
+          "author": "Sample client",
+          "context": "Kankarbagh"
+        }
+      ]
+    },
+    "instagram": {
+      "handle": "@ashishinteriors",
+      "embedPostUrls": [
+        "https://www.instagram.com/p/SAMPLE1/",
+        "https://www.instagram.com/p/SAMPLE2/"
+      ]
+    },
+    "faq": {
+      "enabled": true,
+      "items": [
+        {
+          "q": "How long does a full home take?",
+          "a": "Typically 45 to 90 days depending on size and scope."
+        },
+        {
+          "q": "Do you handle execution or only design?",
+          "a": "Both. Our own team executes, supervised daily."
+        }
+      ]
+    },
+    "contact": {
+      "enabled": true
+    },
+    "map": {
+      "enabled": true
+    },
+    "ctaBand": {
+      "enabled": true,
+      "headline": "Ready when you are.",
+      "ctaLabel": "START A CONVERSATION",
+      "placements": [
+        "mid-page",
+        "pre-footer"
+      ]
+    },
+    "stickyMobileCta": {
+      "enabled": true
+    },
+    "footer": {
+      "enabled": true,
+      "variant": "expanded",
+      "reassuranceLine": "Let's build something exceptional.",
+      "socials": [
+        {
+          "label": "INSTAGRAM",
+          "href": "https://instagram.com/ashishinteriors"
+        }
+      ]
+    },
+    "team": {
+      "enabled": true,
+      "detailPages": true,
+      "members": [
+        {
+          "name": "Ashish Kumar",
+          "role": "Principal Designer",
+          "slug": "ashish-kumar",
+          "bio": "Founded the studio in 2013."
+        }
+      ]
+    },
+    "beforeAfter": {
+      "pairs": [
+        {
+          "before": "/clients/ashish-interiors/p1.jpg",
+          "after": "/clients/ashish-interiors/p2.jpg",
+          "caption": "Sample pair — replace before this site goes live."
+        }
+      ]
+    },
+    "reviews": {
+      "googlePlaceId": "ChIJSAMPLEPlaceIdPatna00",
+      "fetchAtBuild": true
+    },
+    "awards": {
+      "items": [
+        {
+          "title": "Sample award",
+          "issuer": "Sample body",
+          "year": 2024
+        }
+      ]
+    },
+    "inquiryForm": {
+      "provider": "web3forms",
+      "fields": [
+        "name",
+        "phone",
+        "roomType",
+        "budget",
+        "timeline"
+      ],
+      "accessKeyEnv": "WEB3FORMS_ASHISH"
+    },
+    "estimate": {
+      "ratePerSqft": {
+        "basic": 1200,
+        "standard": 1800,
+        "premium": 2600
+      }
+    },
+    "caseStudy": {
+      "items": []
+    },
+    "locations": {
+      "offices": []
+    },
+    "videoTour": {
+      "url": "https://www.youtube.com/watch?v=sample"
+    },
+    "companyProfile": {
+      "pdf": "/clients/ashish-interiors/company-profile.pdf"
+    },
+    "journal": {
+      "posts": []
+    },
+    "news": {
+      "items": []
+    },
+    "careers": {
+      "roles": []
+    }
+  },
+  "cta": {
+    "whatsappMessage": "Hi {{business.name}}, I saw your website and I'd like to discuss an interior project.",
+    "stickyOnMobile": true,
+    "showCallButton": true
+  },
+  "seo": {
+    "title": "Ashish Interiors — Interior Designers in Patna",
+    "description": "Full-home interiors, modular kitchens and office design in Patna. 40+ homes delivered since 2013.",
+    "keywords": [
+      "interior designer patna",
+      "modular kitchen patna",
+      "home interiors patna"
+    ],
+    "localBusinessSchema": true,
+    "sitemap": true,
+    "noindex": true
+  },
+  "integrations": {
+    "umami": {
+      "enabled": true,
+      "siteId": null
+    },
+    "searchConsole": {
+      "enabled": true
+    },
+    "uptimeMonitor": {
+      "enabled": false
+    },
+    "gbpManaged": false,
+    "leadDashboard": {
+      "enabled": true
+    },
+    "reviewRequestFlow": {
+      "enabled": true
+    }
+  },
+  "i18n": {
+    "enabled": false,
+    "defaultLocale": "en",
+    "locales": [
+      "en"
+    ]
+  },
+  "legal": {
+    "privacyPolicy": true,
+    "terms": true,
+    "dataRetentionNote": "Inquiry form submissions are retained for 12 months."
+  },
+  "internal": {
+    "demoWatermark": true,
+    "createdAt": "2026-08-09",
+    "leadSource": "scrutinized_leads.csv",
+    "paymentStatus": "none",
+    "notes": "Reference fixture, complete at T3. Sections that tiers control carry no explicit `enabled` flag — that is what makes check:tiers meaningful."
+  }
+}

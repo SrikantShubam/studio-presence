@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+  a { color: #51372A; text-decoration: none; }
+  a:hover { color: #141414; }
+  input::placeholder, textarea::placeholder { color: #A8A29A; }
+  input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 1px; background: #141414; outline: none; margin: 0; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 44px; background: #141414; border: 0; cursor: grab; }
+  input[type="range"]::-moz-range-thumb { width: 18px; height: 44px; background: #141414; border: 0; border-radius: 0; cursor: grab; }
+</style>
+</helmet>
+
+<div style="background:#FFFFFF;color:#141414;font-family:'Neue Haas Grotesk','Helvetica Neue',Helvetica,Archivo,Arial,sans-serif;overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(20px,3vw,34px) clamp(20px,5vw,64px);border-bottom:1px solid #51372A;color:#141414">
+    <a href="Studio design 1.dc.html" style="display:grid;gap:3px;font-size:clamp(12px,1.2vw,15px);font-weight:500;letter-spacing:.26em;line-height:1;text-transform:uppercase;color:#141414">
+      <span>ASHISH</span>
+      <span>INTERIORS</span>
+    </a>
+    <div style="display:{{ navRowDisplay }};align-items:center;gap:clamp(18px,2.6vw,38px);font-size:11.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+      <a href="Studio design 1.dc.html" style="color:#141414">HOME</a>
+      <a href="Studio design 1.dc.html#services" style="color:#141414">SERVICES</a>
+      <a href="Studio design 1.dc.html#about" style="color:#141414">ABOUT</a>
+      <a href="Studio design 1.dc.html#portfolio" style="color:#141414">PORTFOLIO</a>
+      <a href="#contact" style="color:#141414">CONTACT</a>
+    </div>
+    <div style="display:{{ navPhoneDisplay }};align-items:center;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em">
+      <span style="width:1px;height:16px;background:#51372A"></span>
+      <span>(555) 0123</span>
+    </div>
+    <button type="button" onClick="{{ toggleMenu }}" style="display:{{ menuBtnDisplay }};flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;background:none;border:1px solid #51372A;cursor:pointer;padding:0">
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+      <span style="display:block;width:20px;height:1px;background:#141414"></span>
+    </button>
+  </nav>
+  <div style="display:{{ menuPanelDisplay }};flex-direction:column;gap:2px;margin:0 clamp(20px,5vw,64px);padding:18px 0;border-bottom:1px solid #51372A;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase">
+    <a href="Studio design 1.dc.html" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">HOME</a>
+    <a href="Studio design 1.dc.html#services" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">SERVICES</a>
+    <a href="Studio design 1.dc.html#about" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">ABOUT</a>
+    <a href="Studio design 1.dc.html#portfolio" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">PORTFOLIO</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="color:#141414;padding:11px 0">(555) 0123</a>
+  </div>
+
+  <!-- ============ HEADING ============ -->
+  <section data-screen-label="Calculator heading" style="padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(32px,4vw,56px) clamp(20px,5vw,64px)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:clamp(24px,4vw,56px)">
+      <div>
+        <div style="display:grid;gap:6px;margin-bottom:clamp(20px,3vw,34px);font-size:10.5px;font-weight:400;letter-spacing:.24em;line-height:1.6;text-transform:uppercase;color:#51372A">
+          <span>THREE INPUTS,</span>
+          <span>A HONEST RANGE,</span>
+          <span>NO FORM TO FILL</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(42px,8vw,104px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">CALCULATE<br /><span style="display:block;margin-left:.55em;color:#51372A">THE ESTIMATE</span></h1>
+      </div>
+      <p style="margin:0;max-width:30em;font-size:15px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Move the slider, pick your home and finish level. The range updates as you go — it is drawn from what we actually billed on 240 completed sites in Patna, not a marketing number.</p>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATOR ============ -->
+  <section data-screen-label="Calculator" style="padding:0 clamp(20px,5vw,64px) clamp(64px,9vw,120px) clamp(20px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:{{ calcCols }};gap:{{ calcGap }};border:1px solid #51372A">
+
+      <!-- INPUTS -->
+      <div style="display:grid;gap:clamp(40px,5vw,64px);align-content:start;padding:clamp(28px,4vw,56px);border-right:{{ calcDivider }};border-bottom:{{ calcStackDivider }}">
+
+        <!-- 01 area -->
+        <div style="position:relative">
+          <div style="display:flex;align-items:flex-start;gap:clamp(16px,2.4vw,28px)">
+            <span style="font-size:clamp(38px,4.4vw,60px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #DCD7CE;flex-shrink:0">01</span>
+            <div style="flex:1">
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px">
+                <h2 style="margin:0;font-size:clamp(15px,1.7vw,19px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">CARPET AREA</h2>
+                <span style="font-size:clamp(24px,3vw,38px);font-weight:400;line-height:1;letter-spacing:-.02em">{{ areaLabel }} <span style="font-size:11px;font-weight:500;letter-spacing:.2em;color:#51372A">SQ FT</span></span>
+              </div>
+              <div style="margin-top:clamp(24px,3vw,34px)">
+                <input type="range" min="300" max="4000" step="10" value="{{ area }}" onChange="{{ setArea }}" onInput="{{ setArea }}" aria-label="Carpet area in square feet" />
+                <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8B8377">
+                  <span>300</span>
+                  <span>4,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 home type -->
+        <div style="display:flex;align-items:flex-start;gap:clamp(16px,2.4vw,28px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #DCD7CE">
+          <span style="font-size:clamp(38px,4.4vw,60px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #DCD7CE;flex-shrink:0">02</span>
+          <div style="flex:1">
+            <h2 style="margin:0;font-size:clamp(15px,1.7vw,19px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">HOME TYPE</h2>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:clamp(20px,2.6vw,28px)">
+              <sc-for list="{{ homeTypes }}" as="opt" hint-placeholder-count="4">
+                <button type="button" onClick="{{ opt.select }}" style="padding:18px 8px;background:{{ opt.bg }};border:1px solid {{ opt.border }};color:{{ opt.fg }};font:inherit;font-size:clamp(11px,1.2vw,13px);font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;min-height:44px">{{ opt.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 finish -->
+        <div style="display:flex;align-items:flex-start;gap:clamp(16px,2.4vw,28px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #DCD7CE">
+          <span style="font-size:clamp(38px,4.4vw,60px);font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1px #DCD7CE;flex-shrink:0">03</span>
+          <div style="flex:1">
+            <h2 style="margin:0;font-size:clamp(15px,1.7vw,19px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">FINISH LEVEL</h2>
+            <div style="display:grid;grid-template-columns:{{ finishCols }};gap:10px;margin-top:clamp(20px,2.6vw,28px)">
+              <sc-for list="{{ finishes }}" as="opt" hint-placeholder-count="3">
+                <button type="button" onClick="{{ opt.select }}" style="display:grid;gap:8px;padding:18px 16px;background:{{ opt.bg }};border:1px solid {{ opt.border }};color:{{ opt.fg }};font:inherit;text-align:left;cursor:pointer">
+                  <span style="font-size:clamp(12px,1.3vw,14px);font-weight:500;letter-spacing:.14em;text-transform:uppercase">{{ opt.label }}</span>
+                  <span style="font-size:11px;line-height:1.5;color:{{ opt.subFg }}">{{ opt.note }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div style="display:grid;gap:clamp(28px,3.5vw,44px);align-content:start;padding:clamp(28px,4vw,56px);background:#FAF8F5">
+        <div style="display:grid;gap:14px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#51372A">INDICATIVE ESTIMATE</span>
+          <span style="font-size:clamp(34px,5.4vw,72px);font-weight:300;line-height:.95;letter-spacing:-.035em">{{ rangeLabel }}</span>
+          <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8B8377">{{ summaryLabel }}</span>
+        </div>
+
+        <div style="display:grid;gap:16px;padding-top:clamp(24px,3vw,32px);border-top:1px solid #51372A">
+          <div style="display:flex;justify-content:space-between;gap:16px;font-size:13.5px;color:#4A4A4A">
+            <span>Rate applied</span>
+            <span style="color:#141414">{{ rateLabel }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;gap:16px;font-size:13.5px;color:#4A4A4A">
+            <span>Typical duration</span>
+            <span style="color:#141414">{{ durationLabel }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;gap:16px;font-size:13.5px;color:#4A4A4A">
+            <span>Site supervision</span>
+            <span style="color:#141414">Included</span>
+          </div>
+        </div>
+
+        <p style="margin:0;font-size:13px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">This is an indicative range only, not a quotation. Final cost depends on the site, the extent of civil work and your material choices — we put a firm number in writing after one site visit.</p>
+
+        <a href="#contact" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;padding:22px 30px;background:#D9BC72;color:#141414;font-size:clamp(10.5px,1.1vw,12px);font-weight:500;letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 22px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">GET AN EXACT QUOTE ON WHATSAPP <span>&#8599;</span></a>
+
+        <div style="display:grid;gap:10px;font-size:12px;line-height:1.6;color:#8B8377">
+          <span>Or call the studio directly — (555) 0123, Mon–Sat 10:00–19:00.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S INCLUDED ============ -->
+  <section data-screen-label="Whats included" style="padding:clamp(64px,9vw,110px) clamp(20px,5vw,64px);border-top:1px solid #51372A;background:#FAF8F5">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:clamp(36px,5vw,64px)">
+      <h2 style="margin:0;font-size:clamp(36px,6.5vw,84px);font-weight:300;line-height:.88;letter-spacing:-.03em;text-transform:uppercase">WHAT THE<br /><span style="display:block;margin-left:.55em;color:#51372A">RANGE COVERS</span></h2>
+      <a href="Studio design 1.dc.html#services" style="font-size:11.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#141414">SEE FULL SERVICES &#8599;</a>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ coverCols }};gap:clamp(24px,4vw,48px)">
+      <div style="display:grid;gap:14px;padding-top:22px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(34px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">01</span>
+        <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">DESIGN &amp; DRAWINGS</h3>
+        <p style="margin:0;font-size:14px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Layouts, joinery details and a finish board, revised until you sign them off.</p>
+      </div>
+      <div style="display:grid;gap:14px;padding-top:22px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(34px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">02</span>
+        <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">CARPENTRY &amp; STORAGE</h3>
+        <p style="margin:0;font-size:14px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Wardrobes, kitchen, beds and units built in our own workshop from commercial ply.</p>
+      </div>
+      <div style="display:grid;gap:14px;padding-top:22px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(34px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">03</span>
+        <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">PAINT, LIGHT &amp; POINTS</h3>
+        <p style="margin:0;font-size:14px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Wall finishes, light fittings and electrical points where the drawings call for them.</p>
+      </div>
+      <div style="display:grid;gap:14px;padding-top:22px;border-top:1px solid #51372A">
+        <span style="font-size:clamp(34px,4vw,52px);font-weight:300;line-height:.85;color:transparent;-webkit-text-stroke:1px #C7BEB0">04</span>
+        <h3 style="margin:0;font-size:clamp(15px,1.6vw,18px);font-weight:400;letter-spacing:.06em;text-transform:uppercase">NOT IN THE RANGE</h3>
+        <p style="margin:0;font-size:14px;line-height:1.7;text-align:justify;color:#4A4A4A;text-wrap:pretty">Loose furniture, appliances, heavy civil work and statutory society charges are quoted separately.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="contact" data-screen-label="Footer" style="background:#FFFFFF;border-top:1px solid #51372A">
+    <div style="display:grid;grid-template-columns:{{ footerCols }};gap:clamp(36px,5vw,80px);padding:clamp(56px,7vw,100px) clamp(20px,5vw,64px)">
+      <div>
+        <h3 style="margin:0;font-size:clamp(32px,3.6vw,48px);font-weight:300;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">READY<br /><span style="display:block;margin-left:.55em;color:#51372A">WHEN YOU ARE</span></h3>
+        <p style="margin:22px 0 0 0;max-width:30em;font-size:14.5px;line-height:1.7;color:#4A4A4A;text-wrap:pretty">Send us the flat size and a rough budget — you will hear back the same working day.</p>
+
+        <div style="display:flex;align-items:center;gap:16px;margin-top:clamp(32px,4vw,52px);padding-top:clamp(28px,3.5vw,40px);border-top:1px solid #51372A">
+          <span style="width:38px;height:38px;flex-shrink:0;border:1px solid #51372A;display:grid;place-items:center;font-size:13px;font-weight:500;letter-spacing:.06em;color:#51372A">AI</span>
+          <div style="display:grid;gap:3px;font-size:14px;font-weight:500;letter-spacing:.26em;line-height:1.2;text-transform:uppercase">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </div>
+        </div>
+
+        <div style="display:grid;gap:18px;margin-top:28px;font-size:14.5px;line-height:1.6;color:#3C3C3C">
+          <span style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="margin-top:4px;flex-shrink:0"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+            <span>2nd Floor, Boring Road Crossing,<br />Patna, Bihar 800001</span>
+          </span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,40px);align-items:center">
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" /><path d="M3 6l9 7 9-7" /></svg>
+              <span>studio@ashishinteriors.in</span>
+            </span>
+            <span style="display:flex;gap:12px;align-items:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#51372A" stroke-width="1.5" style="flex-shrink:0"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" /></svg>
+              <span>(555) 0123</span>
+            </span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:clamp(24px,3vw,36px);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase">
+          <a href="#" style="color:#141414">INSTAGRAM</a>
+          <span style="color:#51372A">|</span>
+          <a href="#" style="color:#141414">FACEBOOK</a>
+        </div>
+      </div>
+      <div style="display:grid;gap:26px">
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">NAME</span>
+          <input type="text" placeholder="Your name" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">EMAIL</span>
+          <input type="email" placeholder="you@email.com" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none" />
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">PROJECT TYPE</span>
+          <select style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none">
+            <option>Interior design</option>
+            <option>Turnkey renovation</option>
+            <option>Selection of materials</option>
+            <option>Office / commercial</option>
+          </select>
+        </label>
+        <label style="display:grid;gap:10px">
+          <span style="font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#51372A">TELL US ABOUT YOUR PROJECT</span>
+          <textarea rows="3" placeholder="2BHK in Kankarbagh, possession in October…" style="padding:8px 0;border:0;border-bottom:1px solid #141414;background:transparent;font:inherit;font-size:16px;color:#141414;outline:none;resize:vertical"></textarea>
+        </label>
+        <button type="button" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;padding:19px 32px;background:#D9BC72;border:0;color:#141414;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 20px) 100%,0 100%)" style-hover="background:#141414;color:#D9BC72">SEND INQUIRY <span>&#8599;</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px clamp(20px,5vw,64px);background:#141414;color:#FFFFFF;font-size:10.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase">
+      <span>&copy; 2026 ASHISH INTERIORS. ALL RIGHTS RESERVED.</span>
+      <span style="display:flex;gap:10px"><a href="#" style="color:#FFFFFF">PRIVACY</a><span>|</span><a href="#" style="color:#FFFFFF">TERMS</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const HOME_TYPES = [
+  { id: "1bhk", label: "1 BHK", factor: 0.94 },
+  { id: "2bhk", label: "2 BHK", factor: 1.0 },
+  { id: "3bhk", label: "3 BHK", factor: 1.06 },
+  { id: "4bhk", label: "4 BHK", factor: 1.12 }
+];
+
+const FINISHES = [
+  { id: "essential", label: "ESSENTIAL", note: "Commercial ply, laminate finishes, standard fittings.", low: 1150, high: 1450, weeks: "6–8 weeks" },
+  { id: "premium", label: "PREMIUM", note: "Branded ply, veneer accents, better hardware and lighting.", low: 1650, high: 2050, weeks: "8–11 weeks" },
+  { id: "luxe", label: "LUXE", note: "Solid wood detailing, stone, imported hardware, custom joinery.", low: 2400, high: 3100, weeks: "12–16 weeks" }
+];
+
+class Component extends DCLogic {
+  state = {
+    w: typeof window !== "undefined" ? window.innerWidth : 1440,
+    menu: false,
+    area: 1320,
+    homeType: "3bhk",
+    finish: "premium"
+  };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth;
+      if (Math.abs(w - this.state.w) > 4) this.setState({ w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._onResize);
+  }
+
+  amount(n) {
+    const cr = n / 10000000;
+    if (cr >= 1) return { v: (cr < 10 ? cr.toFixed(2) : cr.toFixed(1)).replace(/\.0+$/, ""), unit: "crore" };
+    const l = n / 100000;
+    return { v: (l < 10 ? l.toFixed(2) : l.toFixed(1)).replace(/\.0+$/, ""), unit: "lakh" };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const w = s.w;
+    const mobile = w < 720;
+    const tablet = w >= 720 && w < 1080;
+
+    const home = HOME_TYPES.find(h => h.id === s.homeType) || HOME_TYPES[2];
+    const fin = FINISHES.find(f => f.id === s.finish) || FINISHES[1];
+
+    const low = s.area * fin.low * home.factor;
+    const high = s.area * fin.high * home.factor;
+
+    const chip = active => ({
+      bg: active ? "#141414" : "transparent",
+      border: active ? "#141414" : "#DCD7CE",
+      fg: active ? "#FFFFFF" : "#141414",
+      subFg: active ? "rgba(255,255,255,.62)" : "#8B8377"
+    });
+
+    return {
+      navRowDisplay: mobile || tablet ? "none" : "flex",
+      navPhoneDisplay: mobile ? "none" : "flex",
+      menuBtnDisplay: mobile || tablet ? "flex" : "none",
+      menuPanelDisplay: (mobile || tablet) && s.menu ? "flex" : "none",
+      toggleMenu: () => this.setState(st => ({ menu: !st.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+
+      calcCols: mobile || tablet ? "1fr" : "1.35fr 1fr",
+      calcGap: "0",
+      calcDivider: mobile || tablet ? "0" : "1px solid #51372A",
+      calcStackDivider: mobile || tablet ? "1px solid #51372A" : "0",
+      finishCols: mobile ? "1fr" : "repeat(3,1fr)",
+      coverCols: mobile ? "1fr" : tablet ? "1fr 1fr" : "repeat(4,1fr)",
+      footerCols: mobile ? "1fr" : "1fr 1fr",
+
+      area: s.area,
+      areaLabel: s.area.toLocaleString("en-IN"),
+      setArea: e => this.setState({ area: Number(e.target.value) }),
+
+      homeTypes: HOME_TYPES.map(h => ({
+        label: h.label,
+        ...chip(h.id === s.homeType),
+        select: () => this.setState({ homeType: h.id })
+      })),
+
+      finishes: FINISHES.map(f => ({
+        label: f.label,
+        note: f.note,
+        ...chip(f.id === s.finish),
+        select: () => this.setState({ finish: f.id })
+      })),
+
+      rangeLabel: (() => {
+        const a = this.amount(low), b = this.amount(high);
+        return a.unit === b.unit
+          ? "\u20B9" + a.v + " – " + b.v + " " + b.unit
+          : "\u20B9" + a.v + " " + a.unit + " – " + b.v + " " + b.unit;
+      })(),
+      summaryLabel: home.label + " \u00B7 " + s.area.toLocaleString("en-IN") + " sq ft \u00B7 " + fin.label + " finish",
+      rateLabel: "\u20B9" + Math.round(fin.low * home.factor).toLocaleString("en-IN") + " – " + Math.round(fin.high * home.factor).toLocaleString("en-IN") + " / sq ft",
+      durationLabel: fin.weeks
+    };
+  }
+}
+</script>
+</body>
+</html>
