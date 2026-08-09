@@ -1,5 +1,8 @@
 # Studio Presence — build todo lists
 
+> **Superseded as a build instruction.** `docs/product/SPEC.md` is the spec of record;
+> where this file disagrees with it, SPEC.md is correct. Kept for the reasoning.
+
 ## Context
 
 Business, pricing, legal and ops docs are complete in `C:\work\studio presence\docs\`.

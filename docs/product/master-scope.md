@@ -1,5 +1,8 @@
 # Master scope — T3 as the superset build
 
+> **Superseded as a build instruction.** `docs/product/SPEC.md` is the spec of record;
+> where this file disagrees with it, SPEC.md is correct. Kept for the reasoning.
+
 **Strategy: build T3 first.** T1 and T2 are config subsets of it, and templates A/B/C are token swaps
 over it. Build the full thing once; everything else is switches.
 

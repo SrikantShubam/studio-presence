@@ -1,5 +1,8 @@
 # Page inventory and tier composition
 
+> **Superseded as a build instruction.** `docs/product/SPEC.md` is the spec of record;
+> where this file disagrees with it, SPEC.md is correct. Kept for the reasoning.
+
 ## Terminology
 
 | Term | Means |

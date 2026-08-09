@@ -1,5 +1,8 @@
 # Feature tiers
 
+> **Superseded as a build instruction.** `docs/product/SPEC.md` is the spec of record;
+> where this file disagrees with it, SPEC.md is correct. Kept for the reasoning.
+
 Working reference for what each tier includes. Every row maps to a flag in
 `config-schema.md`. Tiering is editing JSON — never editing code.
 

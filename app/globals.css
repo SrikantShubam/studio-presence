@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/*
+  TOKEN LAYER — read this before adding a colour or a size anywhere.
+
+  Two levels, deliberately:
+
+  1. `--t-*` are the RAW values. They are injected at runtime by app/layout.tsx from
+     the resolved identity token set (lib/tokens/) merged with the client's palette
+     override. Nothing here sets them — the defaults below exist only so that a
+     component rendered outside the layout (a test, a storybook frame) doesn't
+     explode.
+
+  2. `@theme inline` maps those raw vars into Tailwind utilities. `inline` is load
+     bearing: without it Tailwind copies the value at build time and the runtime
+     swap stops working, which is exactly how "changing template requires a code
+     change" creeps back in.
+
+  So `bg-surface` resolves to `var(--t-surface)` resolves to whatever the client's
+  config asked for. Switching identity is a JSON edit. That is the whole point.
+*/
+
+:root {
+  --t-ink: #141414;
+  --t-accent: #51372a;
+  --t-cta: #d9bc72;
+  --t-surface: #ffffff;
+  --t-muted: #6b6b6b;
+  --t-hairline: #e5e5e5;
+
+  --t-font-display: ui-sans-serif, system-ui, sans-serif;
+  --t-font-body: ui-sans-serif, system-ui, sans-serif;
+
+  --t-radius: 0px;
+}
+
+@theme inline {
+  --color-ink: var(--t-ink);
+  --color-accent: var(--t-accent);
+  --color-cta: var(--t-cta);
+  --color-surface: var(--t-surface);
+  --color-muted: var(--t-muted);
+  --color-hairline: var(--t-hairline);
+
+  --font-display: var(--t-font-display);
+  --font-body: var(--t-font-body);
+
+  --radius-token: var(--t-radius);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--t-surface);
+  color: var(--t-ink);
+  font-family: var(--t-font-body);
+}
+
+/* Demo/sold builds carry a watermark. Driven by `status`, never by hand. */
+[data-watermark="true"]::after {
+  content: "DEMO";
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 50;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  color: var(--t-surface);
+  background-color: var(--t-ink);
+  pointer-events: none;
+}

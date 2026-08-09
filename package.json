@@ -1,0 +1,36 @@
+{
+  "name": "studio-presence",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run check:config && next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit",
+    "gen:schema": "tsx scripts/gen-schema.ts",
+    "check:config": "tsx scripts/check-config.ts",
+    "check:hardcode": "tsx scripts/check-hardcode.ts",
+    "check:placeholder": "tsx scripts/check-placeholder.ts",
+    "check:tiers": "tsx scripts/check-tiers.ts",
+    "check:all": "npm run typecheck && npm run lint && npm run check:config && npm run check:tiers && npm run check:hardcode && npm run check:placeholder"
+  },
+  "dependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "^15.1.0",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,5 +1,8 @@
 # Claude design prompts — whole-page units
 
+> **Superseded as a build instruction.** `docs/product/SPEC.md` is the spec of record;
+> where this file disagrees with it, SPEC.md is correct. Kept for the reasoning.
+
 No Stitch. Run these yourself in Claude design, one whole page at a time. Every reference cited
 below has actually been viewed and described from what's really in the image — not guessed from
 its filename.

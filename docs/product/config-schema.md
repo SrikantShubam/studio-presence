@@ -1,5 +1,8 @@
 # Client config schema
 
+> **Superseded as a build instruction.** `docs/product/SPEC.md` is the spec of record;
+> where this file disagrees with it, SPEC.md is correct. Kept for the reasoning.
+
 The single most important artifact in the codebase. Every client site is one JSON file.
 Tiering is a flag in this file — never a code change, never a branch, never a fork.
 
