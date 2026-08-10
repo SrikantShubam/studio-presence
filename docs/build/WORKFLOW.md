@@ -122,9 +122,9 @@ delegated.
 | B8 | `frontend/sections/registry.ts` — the section interface | Opus | types |
 | B9 | Supabase schema + **RLS policies** | Opus | — |
 | B10 | Magic-link auth, both login routes | Opus | B9 |
-| B11 | Lead capture API + owner notification | gpt-5.6-terra | B9, B10 |
-| B12 | Analytics aggregation queries | gpt-5.6-terra | B9 |
-| B13 | Panel write-back API, scope-locked | gpt-5.6-terra | B9, B10 |
+| B11 | Lead capture API + owner notification — `docs/build/tasks/07-lead-capture.md` | gpt-5.6-terra | B9, B10 |
+| B12 | Analytics aggregation queries — `docs/build/tasks/08-analytics.md` | gpt-5.6-terra | B9 |
+| B13 | Panel write-back API, scope-locked — `docs/build/tasks/09-panel-writeback.md` | gpt-5.6-terra | B9, B10 |
 | B14 | `check:tenant-isolation` | Opus | B9 |
 
 B5 is the gate. Nothing is delegated until the checks exist and are proven — specifically, until
@@ -132,6 +132,20 @@ B5 is the gate. Nothing is delegated until the checks exist and are proven — s
 delegated ticket can come back green and wrong, which is worse than it coming back red.
 
 B11–B13 use `prompts/codex-backend.md` and are reviewed by Opus before merge, never sampled.
+
+### 5.1 Dashboard/panel frontend — tickets 10-12
+
+Once B11-B13 are merged and reviewed, the three admin screens they back are ordinary frontend
+tickets, same tier as 01-06 (`docs/build/tasks/10-panel-ui.md`, `11-dashboard-leads.md`,
+`12-dashboard-analytics.md`). They are **not** themed sections — no identity variants, no `--t-*`
+tokens — they use the fixed `admin-*` palette in `frontend/app/globals.css`, per
+`docs/product/prompts/admin-universal/00-universal-system.md`. Assign them the same way as 07+:
+Sonnet-reviewed, tier-1-buildable, escalate on two failures. `check:hardcode` has no admin exemption,
+so the same gate applies.
+
+Dependency order: 10 depends only on 09. 11 and 12 both depend on their respective backend ticket
+(07, 08) and share one tab-header component — whichever lands first builds it, the second reuses it
+rather than forking.
 
 ---
 
