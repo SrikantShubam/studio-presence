@@ -4,6 +4,9 @@ import type { SectionVariants } from '@/lib/tokens/types'
 import { getTokenSet } from '@/lib/tokens'
 import { Hero } from './Hero'
 import { QuickActions } from './QuickActions'
+import { Portfolio } from './Portfolio'
+import { Services } from './Services'
+import { TrustBar } from './TrustBar'
 
 /**
  * THE SECTION CONTRACT.
@@ -43,6 +46,9 @@ export type SectionComponent<K extends SectionKey = SectionKey> = ComponentType<
 const REGISTRY: Partial<{ [K in SectionKey]: SectionComponent<K> }> = {
   hero: Hero,
   quickActions: QuickActions,
+  trustBar: TrustBar,
+  services: Services,
+  portfolio: Portfolio,
   // Everything else populated as sections land. Each ticket adds exactly one line.
 }
 
