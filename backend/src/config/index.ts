@@ -27,6 +27,8 @@ export type {
 
 export { applyTierDefaults, sectionsForTier, tiersUpTo } from './resolve'
 
+export { interpolate } from './interpolate'
+
 export {
   formatIssues,
   validateClientConfig,
