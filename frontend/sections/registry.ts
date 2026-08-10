@@ -7,6 +7,8 @@ import { QuickActions } from './QuickActions'
 import { Portfolio } from './Portfolio'
 import { Services } from './Services'
 import { TrustBar } from './TrustBar'
+import { About } from './About'
+import { Testimonials } from './Testimonials'
 
 /**
  * THE SECTION CONTRACT.
@@ -49,6 +51,8 @@ const REGISTRY: Partial<{ [K in SectionKey]: SectionComponent<K> }> = {
   trustBar: TrustBar,
   services: Services,
   portfolio: Portfolio,
+  about: About,
+  testimonials: Testimonials,
   // Everything else populated as sections land. Each ticket adds exactly one line.
 }
 
