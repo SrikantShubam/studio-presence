@@ -13,8 +13,8 @@ test this whole codebase is organised around.
 ## Read these, in this order
 
 1. `docs/product/SPEC.md` — the spec of record. Everything else in `docs/` is background history
-2. `lib/config/schema.ts` — the contract. What a client site can contain
-3. `sections/Hero/` — the worked example. Match its shape, not just its rules
+2. `backend/src/config/schema.ts` — the contract. What a client site can contain
+3. `frontend/sections/Hero/` — the worked example. Match its shape, not just its rules
 4. Your ticket in `docs/build/tasks/`
 
 Do not read the other 70 markdown files in `docs/`. They contain superseded decisions and will
@@ -23,8 +23,8 @@ mislead you. Each carries a banner saying so.
 ## Frozen paths — you may not edit these
 
 ```
-lib/config/**          the contract
-sections/registry.ts   the section interface
+backend/src/config/**          the contract
+frontend/sections/registry.ts   the section interface
 docs/product/SPEC.md   the spec
 clients/*.json         client data and test fixtures
 ```
