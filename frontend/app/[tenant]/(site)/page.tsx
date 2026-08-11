@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { loadClientConfig } from '@studio/backend'
+import { loadPublicClientConfig } from '@studio/backend'
 import { HOME_SECTION_ORDER, renderableSections } from '@/sections/registry'
 
 /**
@@ -20,7 +20,7 @@ export default async function HomePage({ params }: { params: Promise<{ tenant: s
 
   let config
   try {
-    config = loadClientConfig(tenant)
+    config = await loadPublicClientConfig(tenant)
   } catch {
     notFound()
   }

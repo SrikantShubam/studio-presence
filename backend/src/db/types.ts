@@ -101,6 +101,10 @@ export type Database = {
         Args: Record<never, never>
         Returns: string[]
       }
+      get_client_overrides: {
+        Args: { p_tenant_slug: string }
+        Returns: Record<string, unknown>
+      }
     }
     Enums: {
       lead_source: LeadSource
