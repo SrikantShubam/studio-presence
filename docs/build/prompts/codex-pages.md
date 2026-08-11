@@ -1,8 +1,10 @@
 # Codex — page assembly
 
-For **gpt-5.6-terra via Codex**. Composing already-built sections into a page layout. Only run this once
-the sections a page needs are merged — assembling a page from sections that do not exist yet is how
-a model ends up inventing them.
+For **gpt-5.5 via Codex CLI** (`codex exec -m gpt-5.5 -s workspace-write -C "<path>" -`). If a run
+fails `check:all` twice, hand the same prompt to **gpt-5.6-luna** for the fix rather than re-running
+gpt-5.5 — luna is the fast/cheap tier for iterating on an existing near-miss, not for the first pass.
+Composing already-built sections into a page layout. Only run this once the sections a page needs are
+merged — assembling a page from sections that do not exist yet is how a model ends up inventing them.
 
 Substitute `<TICKET>`.
 

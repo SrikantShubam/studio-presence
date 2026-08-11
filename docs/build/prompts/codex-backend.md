@@ -1,8 +1,11 @@
 # Codex — backend work
 
-For **gpt-5.6-terra via Codex**: dashboard CRUD, API routes, analytics queries. Everything here is
-reviewed by Opus before merge — that review is mandatory and not sampled, because this is the code
-where a silent failure loses a lead or leaks a tenant's data.
+For **gpt-5.5 via Codex CLI** (`codex exec -m gpt-5.5 -s workspace-write -C "<path>" -`): dashboard
+CRUD, API routes, analytics queries. If a run fails `check:all` twice, hand the same prompt to
+**gpt-5.6-luna** for the fix rather than re-running gpt-5.5 from scratch — luna is for iterating on an
+existing near-miss, not the first pass. Everything here is reviewed by Opus before merge — that
+review is mandatory and not sampled, because this is the code where a silent failure loses a lead or
+leaks a tenant's data.
 
 Substitute `<TICKET>`.
 

@@ -25,9 +25,9 @@ the few places judgement is genuinely the only tool.
 | Section conversion, HTML → React | **DeepSeek v4-flash** (OpenCode) | Highest volume, lowest judgement |
 | Section conversion, parallel queue | **Gemini 3.6** (Antigravity) | Second tier-1 worker on a disjoint slice. Doubles throughput |
 | Bulk mechanical transforms (design-asset splitting, codemods) | **gpt-5.6-luna** (Codex) | "Fast and affordable" per its own catalog entry — deterministic, no judgement, highest volume per token |
-| Page assembly from built sections | **gpt-5.6-terra** (Codex) | "Balanced... everyday work" — more cross-file coherence than one section, less judgement than the contract |
+| Page assembly from built sections | **gpt-5.5** (Codex CLI), **gpt-5.6-luna** for follow-up fixes | gpt-5.6-terra dropped from this table — costed like a frontier model without the frontier label, worse trade than gpt-5.5. gpt-5.5 does the first pass; luna is cheap enough to iterate on a near-miss without re-running the expensive model |
 | Escalation — any ticket failing twice | **gpt-5.6-sol** (Codex) | Catalog's own "latest frontier agentic coding model". Debugging someone else's half-working code is the hardest cheap-tier task |
-| Dashboard CRUD, API routes, analytics queries | **gpt-5.6-terra** (Codex) | Substantial volume, needs coherence across files; Opus reviews rather than writes |
+| Dashboard CRUD, API routes, analytics queries | **gpt-5.5** (Codex CLI), **gpt-5.6-luna** for follow-up fixes | Same reasoning as page assembly above. Opus reviews rather than writes, review is never sampled |
 | — | Gemini 3.5 | Unassigned. Overflow only when 3.6 hits quota. Do not add a tier for it |
 
 Assignments are swappable. If DeepSeek keeps failing section tickets, move that queue to Gemini and
@@ -122,16 +122,18 @@ delegated.
 | B8 | `frontend/sections/registry.ts` — the section interface | Opus | types |
 | B9 | Supabase schema + **RLS policies** | Opus | — |
 | B10 | Magic-link auth, both login routes | Opus | B9 |
-| B11 | Lead capture API + owner notification — `docs/build/tasks/07-lead-capture.md` | gpt-5.6-terra | B9, B10 |
-| B12 | Analytics aggregation queries — `docs/build/tasks/08-analytics.md` | gpt-5.6-terra | B9 |
-| B13 | Panel write-back API, scope-locked — `docs/build/tasks/09-panel-writeback.md` | gpt-5.6-terra | B9, B10 |
+| B11 | Lead capture API + owner notification — `docs/build/tasks/07-lead-capture.md` | gpt-5.5 (Codex CLI), luna for fixes | B9, B10 |
+| B12 | Analytics aggregation queries — `docs/build/tasks/08-analytics.md` | gpt-5.5 (Codex CLI), luna for fixes | B9 |
+| B13 | Panel write-back API, scope-locked — `docs/build/tasks/09-panel-writeback.md` | gpt-5.5 (Codex CLI), luna for fixes | B9, B10 |
 | B14 | `check:tenant-isolation` | Opus | B9 |
 
 B5 is the gate. Nothing is delegated until the checks exist and are proven — specifically, until
 `check:hardcode` demonstrably catches `bg-[#141414]` in the real exported HTML. Until then a
 delegated ticket can come back green and wrong, which is worse than it coming back red.
 
-B11–B13 use `prompts/codex-backend.md` and are reviewed by Opus before merge, never sampled.
+B11–B13 use `prompts/codex-backend.md`: **gpt-5.5 via Codex CLI** for the first pass, **gpt-5.6-luna**
+for a fix after a failed `check:all` run rather than re-running gpt-5.5 from scratch. Reviewed by
+Opus before merge, never sampled.
 
 ### 5.1 Dashboard/panel frontend — tickets 10-12
 
@@ -161,8 +163,12 @@ Sonnet flags a batch           →  Opus 5 reads only what was flagged
 ```
 
 Model slugs confirmed against the actual Codex catalog (`~/.codex/models_cache.json`), not guessed —
-"GPT-5.6" alone isn't installable; the real options are `gpt-5.6-sol` (frontier), `gpt-5.6-terra`
-(balanced), `gpt-5.6-luna` (fast/cheap). Verified via `codex exec -m <slug>` before assigning any
-work to it.
+"GPT-5.6" alone isn't installable. The real options: `gpt-5.6-sol` ("latest frontier agentic coding
+model"), `gpt-5.6-terra` ("balanced... everyday work"), `gpt-5.6-luna` ("fast and affordable"), and
+`gpt-5.5` ("frontier model for complex coding, research, and real-world work"). **Backend and page
+assembly use gpt-5.5, not gpt-5.6-terra** — terra's "balanced" label undersells what it actually
+costs per run, and gpt-5.5 via the CLI is the better spend for that tier of work; gpt-5.6-luna
+absorbs the follow-up-fix passes so the expensive model only runs once per ticket. Verified via
+`codex exec -m <slug>` before assigning any work to it.
 
 Nobody decides whether output "feels right enough". Two failures, move up.

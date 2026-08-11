@@ -11,8 +11,8 @@ the mockups.
 |---|---|---|
 | `tier1-section.md` | DeepSeek v4-flash (OpenCode) · Gemini 3.6 (Antigravity) | One section ticket, HTML → React |
 | `tier2-escalation.md` | gpt-5.6-sol (Codex) | A ticket that failed `check:all` twice at tier 1 |
-| `codex-backend.md` | gpt-5.6-terra (Codex) | Dashboard CRUD, API routes, analytics queries |
-| `codex-pages.md` | gpt-5.6-terra (Codex) | Assembling built sections into a page layout |
+| `codex-backend.md` | gpt-5.5 (Codex CLI), gpt-5.6-luna for follow-up fixes | Dashboard CRUD, API routes, analytics queries |
+| `codex-pages.md` | gpt-5.5 (Codex CLI), gpt-5.6-luna for follow-up fixes | Assembling built sections into a page layout |
 | `sonnet-batch-review.md` | Sonnet 5 | Gate 3, every ~5 merged tickets |
 | `sonnet-tickets.md` | Sonnet 5 | Writing tickets 07+ from the 01–06 templates |
 
