@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { applyTierDefaults } from './resolve'
+import { fetchClientOverridePatch } from './overrides'
 import { formatIssues, validateClientConfig, type ValidateOptions } from './validate'
 import type { ClientConfig } from './types'
 
@@ -165,4 +166,20 @@ export function loadClientConfig(slug: string, opts: ResolveOptions = {}): Clien
     fileExists: existsSync,
     ...opts,
   })
+}
+
+/**
+ * The public site's loader — `loadClientConfig` plus the tenant's panel-edit
+ * patch, fetched anonymously.
+ *
+ * Everywhere else that reads a client's config synchronously (branding in the
+ * panel/login chrome, the `check:*` scripts) uses `loadClientConfig` directly and
+ * never sees panel edits — that's correct, those callers want the seed file, not
+ * what an owner has since changed. Only the pages an anonymous visitor actually
+ * reaches need the merged view, which is why this is a separate, async function
+ * rather than a change to `loadClientConfig` itself.
+ */
+export async function loadPublicClientConfig(slug: string, opts: ResolveOptions = {}): Promise<ClientConfig> {
+  const override = opts.override ?? (await fetchClientOverridePatch(slug))
+  return loadClientConfig(slug, { ...opts, override })
 }

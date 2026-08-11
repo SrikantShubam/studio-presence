@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { ConfigError, loadClientConfig } from '@studio/backend'
+import { ConfigError, loadPublicClientConfig } from '@studio/backend'
 import { getTokenSet, tokensToCssVars } from '@/lib/tokens'
 
 /**
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   let config
   try {
-    config = loadClientConfig(tenant)
+    config = await loadPublicClientConfig(tenant)
   } catch {
     return { title: 'Not found' }
   }
@@ -57,7 +57,7 @@ export default async function TenantLayout({ children, params }: Props) {
 
   let config
   try {
-    config = loadClientConfig(tenant)
+    config = await loadPublicClientConfig(tenant)
   } catch (e) {
     if (e instanceof ConfigError) {
       // A broken config must never render half a site on a client's subdomain.

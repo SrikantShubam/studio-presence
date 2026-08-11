@@ -44,7 +44,10 @@ export {
   defaultPublicDir,
   listClientSlugs,
   loadClientConfig,
+  loadPublicClientConfig,
   mergePatch,
   resolveClientConfig,
   type ResolveOptions,
 } from './load'
+
+export { fetchClientOverridePatch } from './overrides'
