@@ -28,10 +28,12 @@ question on the design doc, nothing that isn't on it.
 - **`enquiryStats`, `monthlyTrend`, `sourceBreakdown`** come from `leads` in Postgres — real SQL
   aggregation, which is `backend/SPEC.md` §2's stated reason for choosing Supabase over Firebase in
   the first place. All three: **scoped client, tenant-filtered by RLS, no exceptions.**
-- **`topProjects`, `visitStats`** come from the Umami API (`UMAMI_API_URL`, `UMAMI_API_KEY` — already
-  named in `backend/SPEC.md` §6). Read-only, called at request time, not stored — see SPEC §4's "No
-  page-views table" note. `topProjects` needs both: view counts from Umami, titles from
-  `loadClientConfig()`'s portfolio projects, joined by slug.
+- **`topProjects`, `visitStats`** come from the Umami API (`UMAMI_API_URL`, `UMAMI_USERNAME`,
+  `UMAMI_PASSWORD` — named in `backend/SPEC.md` §6; self-hosted Umami has no permanent API key, only
+  session-token login via `/api/auth/login` — confirmed against a real self-hosted instance, not
+  assumed). Read-only, called at request time, not stored — see SPEC §4's "No page-views table" note.
+  `topProjects` needs both: view counts from Umami, titles from `loadClientConfig()`'s portfolio
+  projects, joined by slug.
 
 ## Build
 
@@ -53,10 +55,12 @@ scattered into the frontend ticket.
 
 A thin, typed wrapper around whatever subset of the Umami API `visitStats` and `topProjects` need —
 pageviews for the tenant's site this month vs last, and per-page view counts to rank projects by.
-Read `UMAMI_API_URL`/`UMAMI_API_KEY` the same way `backend/src/db/scoped.ts` reads its env vars
-(`requireEnv`-style, fails loudly if unset, not silently returning zeros).
+Read `UMAMI_API_URL`/`UMAMI_USERNAME`/`UMAMI_PASSWORD` the same way `backend/src/db/scoped.ts` reads
+its env vars (`requireEnv`-style, fails loudly if unset, not silently returning zeros). Self-hosted
+Umami has no permanent API key — log in via `POST /api/auth/login` and cache the session token,
+re-logging in once on a 401 rather than assuming it never expires.
 
-**If Umami is unreachable or the two env vars aren't set** (a realistic case before it's provisioned
+**If Umami is unreachable or the env vars aren't set** (a realistic case before it's provisioned
 for a given deployment), `visitStats` and `topProjects` should degrade to `null`/empty rather than
 throwing — the three lead-based numbers should still render even if traffic data can't be fetched.
 Decide and document the exact shape (e.g. `visitStats` returns `null` vs `{thisMonth: 0, lastMonth:
