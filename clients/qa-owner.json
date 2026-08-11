@@ -1,0 +1,121 @@
+{
+  "$schema": "./client.schema.json",
+  "slug": "qa-owner",
+  "tier": "t3",
+  "template": "editorial",
+  "status": "demo",
+  "vertical": "interior-design",
+
+  "business": {
+    "name": "QA Owner Studio",
+    "phone": "+919000000099",
+    "whatsapp": "+919000000099",
+    "email": "qa-owner@example.test",
+    "hours": "Mon-Sat, 10am-6pm",
+    "address": {
+      "locality": "Test Locality",
+      "city": "Patna",
+      "state": "Bihar"
+    },
+    "serviceAreas": ["Patna"]
+  },
+
+  "domain": {
+    "demoSubdomain": "qa-owner"
+  },
+
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "headline": "QA Owner Studio",
+      "image": "/clients/ashish-interiors/p1.jpg"
+    },
+    "quickActions": {
+      "enabled": true,
+      "actions": ["whatsapp", "call"]
+    },
+    "portfolio": {
+      "enabled": true,
+      "projects": [
+        {
+          "title": "3BHK, Boring Road",
+          "slug": "3bhk-boring-road",
+          "cover": "/clients/ashish-interiors/p1.jpg",
+          "images": [],
+          "blurb": "Contemporary 3BHK for a family of four.",
+          "location": "Boring Road, Patna",
+          "duration": "45 days",
+          "projectType": "residential",
+          "area": "1450 sq ft"
+        },
+        {
+          "title": "Kankarbagh Duplex",
+          "slug": "kankarbagh-duplex",
+          "cover": "/clients/ashish-interiors/p2.jpg",
+          "images": [],
+          "blurb": "Full-home interiors across two floors.",
+          "location": "Kankarbagh, Patna",
+          "duration": "90 days",
+          "projectType": "residential",
+          "area": "2600 sq ft"
+        },
+        {
+          "title": "Frazer Road Office",
+          "slug": "frazer-road-office",
+          "cover": "/clients/ashish-interiors/p3.jpg",
+          "images": [],
+          "blurb": "Workspace for a 20-person practice.",
+          "location": "Frazer Road, Patna",
+          "duration": "60 days",
+          "projectType": "office",
+          "area": "1800 sq ft"
+        }
+      ]
+    },
+    "about": {
+      "enabled": true,
+      "heading": "About the studio",
+      "body": "A QA fixture studio used to test the panel and dashboard by hand."
+    },
+    "services": {
+      "enabled": true,
+      "items": [
+        { "title": "Interior Design", "blurb": "Full-home design and execution." },
+        { "title": "Turnkey Renovation", "blurb": "Built to your space and budget." }
+      ]
+    },
+    "testimonials": {
+      "enabled": true,
+      "items": [
+        { "quote": "Great to work with.", "author": "Sample Client", "context": "Boring Road" }
+      ]
+    },
+
+    "reviews": {
+      "googlePlaceId": "ChIJQaOwnerTestPlaceId00"
+    },
+    "inquiryForm": {
+      "provider": "web3forms",
+      "accessKeyEnv": "WEB3FORMS_QA_OWNER",
+      "fields": ["name", "phone", "roomType", "budget", "timeline"]
+    },
+    "estimate": {
+      "ratePerSqft": { "basic": 1000, "standard": 1500, "premium": 2000 }
+    },
+    "videoTour": {
+      "url": "https://example.com/video"
+    },
+    "companyProfile": {
+      "pdf": "/clients/ashish-interiors/company-profile.pdf"
+    }
+  },
+
+  "seo": {
+    "title": "QA Owner Studio",
+    "description": "Fixture tenant for manual QA of the panel and dashboard, tied to a real inbox."
+  },
+
+  "internal": {
+    "notes": "Not a real client. Created for manual click-through testing of tickets 10-12. Delete when QA is done: remove this file, the tenants row, and the auth user."
+  }
+}
