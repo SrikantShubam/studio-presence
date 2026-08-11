@@ -27,8 +27,17 @@ no shadows, 48px+ tap targets) this ticket continues.
 `docs/product/prompts/admin-universal/02-client-panel.md` — the full screen spec: header, the seven
 editable-section cards (contact details, hero image, projects, about text, services, testimonials,
 Instagram posts), the sticky save bar, empty states, anti-goals. Read it in full; it is short and it
-is the actual design brief, there is no HTML fragment to copy from because this screen was designed
-in Stitch, not exported.
+is the actual design brief.
+
+Also `design/reference/admin/` — four screenshots captured from the Stitch project this was designed
+in: `client-panel-overview-27191186.png` (Projects card expanded), `client-panel-overview-d9eb7911.png`
+(all cards collapsed to summary rows, plus a separate empty-state example), `client-panel-edit-project-75340c80.png`
+(the add/edit project form), `content-editor-list-ace239f1.png` (an alternate chevron-row layout, not
+authoritative — the accordion-card pattern in the other two is the one to follow). Read
+`design/reference/admin/INDEX.md` first — **the colours in these screenshots are wrong, ignore them.**
+Stitch generated its own palette (green `#10b981`, Inter) that conflicts with
+`00-universal-system.md`'s spec, which is what `admin-*` in `globals.css` actually implements. Use
+these images for layout, density and information hierarchy only.
 
 Design principle worth repeating because it is easy to drift from while building: **content is
 theirs, structure is ours.** No control on this screen may let an owner change layout, colours,

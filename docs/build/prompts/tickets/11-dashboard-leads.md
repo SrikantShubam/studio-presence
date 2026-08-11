@@ -28,11 +28,15 @@ READ FIRST:
    admin screen uses, regardless of client or tier. Read this in full before writing any markup
 4. docs/product/prompts/admin-universal/03-dashboard-leads.md — the full screen spec: header, summary
    row, filter chips, lead cards, detail view, empty state, anti-goals
-5. backend/src/auth/index.ts — requireTenant() and canAccessDashboard() already exist and do exactly
+5. design/reference/admin/INDEX.md, then look at dashboard-leads-548568e5.png in that same folder —
+   a real screenshot of this screen. IGNORE ITS COLOURS: it's from a design tool that used its own
+   palette, conflicting with this project's actual admin-* tokens (step 8). Use it only for layout,
+   card structure, and information density
+6. backend/src/auth/index.ts — requireTenant() and canAccessDashboard() already exist and do exactly
    the tier gate this screen needs. Do not reimplement it
-6. frontend/app/[tenant]/(admin)/panel/layout.tsx — the existing auth-gate pattern to mirror for
+7. frontend/app/[tenant]/(admin)/panel/layout.tsx — the existing auth-gate pattern to mirror for
    whatever dashboard layout you build
-7. frontend/app/globals.css lines ~36-52 and ~68-74 — the admin-* colour tokens. Use these classes.
+8. frontend/app/globals.css lines ~36-52 and ~68-74 — the admin-* colour tokens. Use these classes.
    Never a literal hex value, never a --t-* token
 
 Do not read anything else in docs/. Most of it is superseded.
@@ -42,9 +46,11 @@ Every row here is worth ₹2–15 lakh to this person, checked on a phone betwee
 doubt, optimize for the owner reaching a lead in one tap over anything else. The WhatsApp/Call buttons
 on each card are, per the design doc, "the point of the screen."
 
-THIS SCREEN WAS DESIGNED IN TEXT, NOT HTML
-There is no exported HTML fragment — docs/product/prompts/admin-universal/03-dashboard-leads.md IS
-the design brief.
+TWO REFERENCES, DIFFERENT AUTHORITY
+docs/product/prompts/admin-universal/03-dashboard-leads.md is the design brief — its structure and
+copy are authoritative. The screenshot in design/reference/admin/ shows the same screen visually,
+useful for layout, but its colours and font are wrong — this project's own admin-* tokens (step 8)
+are what ship, always.
 
 DONE MEANS
 - `npm run check:all` exits 0
@@ -63,6 +69,5 @@ DONE MEANS
 WHEN YOU GET STUCK
 Two failed attempts and you stop with a written report. Do not weaken a check.
 
-Start by reading the seven files above and telling me, in four sentences, what you are about to
-build.
+Start by reading the files above and telling me, in four sentences, what you are about to build.
 ```

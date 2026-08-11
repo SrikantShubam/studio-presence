@@ -29,10 +29,15 @@ READ FIRST:
    any markup
 4. docs/product/prompts/admin-universal/02-client-panel.md — the full screen spec for what you're
    building: header, the seven editable-section cards, sticky save bar, empty states, anti-goals
-5. frontend/app/[tenant]/(admin)/panel/layout.tsx and .../login/LoginForm.tsx — the only admin UI that
+5. design/reference/admin/INDEX.md, then look at client-panel-overview-27191186.png,
+   client-panel-overview-d9eb7911.png and client-panel-edit-project-75340c80.png in that same
+   folder — real screenshots of this screen. IGNORE THEIR COLOURS: they're from a design tool that
+   used its own palette, which conflicts with this project's actual admin-* tokens (step 7). Use them
+   only for layout, card grouping, and information density
+6. frontend/app/[tenant]/(admin)/panel/layout.tsx and .../login/LoginForm.tsx — the only admin UI that
    exists so far. This establishes the actual pattern (rounded-lg cards, 1px borders, no shadows,
    48px+ tap targets, the admin-* Tailwind classes) — match it
-6. frontend/app/globals.css lines ~36-52 and ~68-74 — where the admin-* colour tokens
+7. frontend/app/globals.css lines ~36-52 and ~68-74 — where the admin-* colour tokens
    (admin-surface, admin-bg, admin-border, admin-ink, admin-muted, admin-primary, admin-alert) come
    from. Use these classes. Never a literal hex value, never a --t-* token — check:hardcode has no
    admin exemption
@@ -45,9 +50,11 @@ colours, template, or which sections/pages exist. If you're unsure whether a fie
 screen, it's in the allowlist ticket 09 already enforces server-side — if it isn't there, it doesn't
 go here either.
 
-THIS SCREEN WAS DESIGNED IN TEXT, NOT HTML
-There is no exported HTML fragment to copy layout from — docs/product/prompts/admin-universal/02-client-panel.md
-IS the design brief. Read it as carefully as you would read a mockup.
+TWO REFERENCES, DIFFERENT AUTHORITY
+docs/product/prompts/admin-universal/02-client-panel.md is the design brief — its structure and copy
+are authoritative. The screenshots in design/reference/admin/ show the same screen visually, useful
+for layout and spacing, but their colours and font are wrong — this project's own admin-* tokens
+(step 7) are what ship, always.
 
 DONE MEANS
 - `npm run check:all` exits 0
@@ -66,5 +73,5 @@ Two failed attempts and you stop with a written report. Do not weaken a check. I
 (e.g. an image upload endpoint) doesn't exist yet, say so explicitly rather than inventing a
 mechanism nothing else reads from.
 
-Start by reading the six files above and telling me, in four sentences, what you are about to build.
+Start by reading the files above and telling me, in four sentences, what you are about to build.
 ```

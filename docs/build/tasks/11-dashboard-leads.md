@@ -17,6 +17,12 @@ that needs it.
 Analytics tabs, the three-figure summary row, filter chips, lead cards (never a table), the detail
 view, empty state, anti-goals. Read it in full.
 
+Also `design/reference/admin/dashboard-leads-548568e5.png` — a screenshot captured from the Stitch
+project this was designed in, matching the spec closely (summary row, filter chips, card layout with
+WhatsApp/Call buttons). Read `design/reference/admin/INDEX.md` first — **the colours in it are
+wrong, ignore them**, Stitch used its own palette that conflicts with `00-universal-system.md`. Use
+it for layout and density only, same as the text spec governs everything else.
+
 Same admin token system as ticket 10 — `docs/product/prompts/admin-universal/00-universal-system.md`,
 same `admin-*` Tailwind classes, same "content is theirs, structure is ours" scope discipline (though
 this screen has no editable content at all, only status/notes on existing leads).

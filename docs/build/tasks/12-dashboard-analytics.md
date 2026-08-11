@@ -15,6 +15,12 @@ implementation is exactly what that note warns against. If a stakeholder (includ
 proposes an addition, the bar stated there is "would this owner ever act on it" — apply it before
 adding anything.
 
+Also `design/reference/admin/dashboard-analytics-5f9092cb.png` — a screenshot captured from the
+Stitch project this was designed in, confirmed to match the text spec (headline figure, 6-month
+trend, source ranking, top projects, interpretation line — no extras). Read
+`design/reference/admin/INDEX.md` first — **the colours in it are wrong, ignore them**, same caveat
+as ticket 11.
+
 Same admin token system as tickets 10-11.
 
 ## The exact four things, per the design doc

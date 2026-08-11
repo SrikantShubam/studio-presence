@@ -30,9 +30,13 @@ READ FIRST:
 4. docs/product/prompts/admin-universal/04-dashboard-analytics.md — the full screen spec, INCLUDING
    the "Note for the build phase" at the bottom. Read that note twice — it explains why this screen
    shows deliberately less than the data allows, and that matters more than the layout does
-5. backend/src/auth/index.ts — requireTenant() and canAccessDashboard() already exist, use them, do
+5. design/reference/admin/INDEX.md, then look at dashboard-analytics-5f9092cb.png in that same
+   folder — a real screenshot of this screen, confirmed to match the text spec. IGNORE ITS COLOURS:
+   it's from a design tool that used its own palette, conflicting with this project's actual admin-*
+   tokens (step 7). Use it only for layout and density
+6. backend/src/auth/index.ts — requireTenant() and canAccessDashboard() already exist, use them, do
    not reimplement the tier gate
-6. frontend/app/globals.css lines ~36-52 and ~68-74 — the admin-* colour tokens. Use these classes.
+7. frontend/app/globals.css lines ~36-52 and ~68-74 — the admin-* colour tokens. Use these classes.
    Never a literal hex value, never a --t-* token
 
 Do not read anything else in docs/. Most of it is superseded.
@@ -71,5 +75,5 @@ DONE MEANS
 WHEN YOU GET STUCK
 Two failed attempts and you stop with a written report. Do not weaken a check.
 
-Start by reading the six files above and telling me, in four sentences, what you are about to build.
+Start by reading the files above and telling me, in four sentences, what you are about to build.
 ```
