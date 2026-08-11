@@ -45,7 +45,7 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * per-tenant routes (`app/[tenant]/sitemap.ts` etc.), so they need the rewrite
  * like any other page.
  */
-const PASSTHROUGH = /^\/(?:_next|api\/health|favicon\.ico|robots\.txt$|clients\/)/
+const PASSTHROUGH = /^\/(?:_next|api\/|favicon\.ico|robots\.txt$|clients\/)/
 
 function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
   const hostname = host.split(':')[0]?.toLowerCase() ?? ''
