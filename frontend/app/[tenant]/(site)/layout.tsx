@@ -41,6 +41,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: config.seo.title,
     description: config.seo.description,
     keywords: config.seo.keywords,
+    // Without this a browser falls back to requesting `/favicon.ico` at the
+    // root, which is not a tenant-scoped path and has no file behind it. The
+    // schema has carried `brand.favicon` from the start; nothing was reading it.
+    icons: config.brand.favicon ? { icon: config.brand.favicon } : undefined,
     // Belt and braces with the middleware header. A demo indexed under the
     // client's own name is expensive to undo and cheap to prevent twice.
     robots: config.seo.noindex ? { index: false, follow: false } : undefined,
