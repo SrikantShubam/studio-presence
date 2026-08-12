@@ -333,7 +333,7 @@ export function PanelEditor({ tenant }: { tenant: string }) {
         </div>
         <button
           type="button"
-          className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-surface"
+          className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary"
           onClick={() =>
             update('sections.portfolio.projects', [
               ...projects,
@@ -392,7 +392,7 @@ export function PanelEditor({ tenant }: { tenant: string }) {
         />
         <button
           type="button"
-          className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-surface"
+          className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary"
           onClick={() => update('sections.services.items', [...services, { title: 'New service', blurb: '' }])}
         >
           Add a service
@@ -454,7 +454,7 @@ export function PanelEditor({ tenant }: { tenant: string }) {
         </div>
         <button
           type="button"
-          className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-surface"
+          className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary"
           onClick={() => update('sections.testimonials.items', [...testimonials, { quote: '', author: '', context: '' }])}
         >
           Add a testimonial
@@ -504,7 +504,7 @@ export function PanelEditor({ tenant }: { tenant: string }) {
                 type="button"
                 onClick={() => void save()}
                 disabled={!dirty || saveState === 'saving'}
-                className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-surface disabled:opacity-60"
+                className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:opacity-60"
               >
                 {saveState === 'saving' ? 'Saving...' : 'Save changes'}
               </button>

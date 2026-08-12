@@ -46,7 +46,7 @@ export default async function DashboardPage({
             href={filter.value === 'all' ? '/dashboard' : `/dashboard?filter=${filter.value}`}
             className={`flex min-h-12 shrink-0 items-center rounded-lg border px-4 text-sm font-medium ${
               activeFilter === filter.value
-                ? 'border-admin-primary bg-admin-primary text-admin-surface'
+                ? 'border-admin-primary bg-admin-primary text-admin-on-primary'
                 : 'border-admin-border bg-admin-surface text-admin-ink'
             }`}
           >
@@ -128,8 +128,14 @@ function daysAgo(days: number): Date {
 
 function SummaryCard({ label, value, alert = false }: { label: string; value: number; alert?: boolean }) {
   return (
-    <div className="rounded-lg border border-admin-border bg-admin-surface p-4">
-      <p className={`text-2xl font-semibold ${alert ? 'text-admin-alert' : 'text-admin-ink'}`}>{value}</p>
+    <div
+      className={`rounded-lg border p-4 ${
+        alert ? 'border-admin-alert bg-admin-alert-soft' : 'border-admin-border bg-admin-surface'
+      }`}
+    >
+      <p className={`text-3xl font-semibold tabular-nums ${alert ? 'text-admin-alert' : 'text-admin-ink'}`}>
+        {value}
+      </p>
       <p className={`mt-1 text-sm font-medium ${alert ? 'text-admin-alert' : 'text-admin-muted'}`}>{label}</p>
     </div>
   )
@@ -159,7 +165,7 @@ function LeadCard({ lead }: { lead: Lead }) {
       <div className="mt-4 grid grid-cols-2 gap-2">
         <a
           href={whatsappHref}
-          className="flex min-h-12 items-center justify-center rounded-lg bg-admin-primary px-3 text-base font-semibold text-admin-surface"
+          className="flex min-h-12 items-center justify-center rounded-lg bg-admin-primary px-3 text-base font-semibold text-admin-on-primary"
         >
           WhatsApp
         </a>
@@ -178,10 +184,10 @@ function StatusPill({ status }: { status: LeadStatus }) {
   const isNew = status === 'new'
   return (
     <span
-      className={`shrink-0 rounded-lg border px-2 py-1 text-xs font-semibold ${
+      className={`shrink-0 rounded-lg border px-2 py-1 text-xs font-semibold tracking-wide ${
         isNew
-          ? 'border-admin-primary bg-admin-primary text-admin-surface'
-          : 'border-admin-border bg-admin-bg text-admin-muted'
+          ? 'border-admin-primary bg-admin-primary text-admin-on-primary'
+          : 'border-admin-border bg-admin-raised text-admin-muted'
       }`}
     >
       {STATUS_LABELS[status]}

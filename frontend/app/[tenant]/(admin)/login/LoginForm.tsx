@@ -130,7 +130,7 @@ export function LoginForm({ whatsappHref }: Props) {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-surface disabled:opacity-60"
+        className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:opacity-60"
       >
         {status === 'sending' ? 'Sending…' : 'Email me a sign-in link'}
       </button>
