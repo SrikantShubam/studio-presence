@@ -130,7 +130,7 @@ export function AnalyticsDashboard({ tenant }: { tenant: string }) {
         <div className="mt-5 flex h-32 items-end gap-3">
           {trend.map((point) => (
             <div key={point.month} className="flex min-w-0 flex-1 flex-col items-center gap-2">
-              <div className="flex h-24 w-full items-end">
+              <div className="flex h-24 w-full items-end rounded-t-lg bg-admin-primary-soft">
                 <div
                   className={`w-full rounded-t-lg bg-admin-primary ${barHeightClass(point.count, trend)}`}
                 />

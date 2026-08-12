@@ -10,6 +10,7 @@ import {
 } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { signOut } from '../actions'
+import { ThemeToggle } from '../ThemeToggle'
 import { DashboardTabs } from './DashboardTabs'
 
 export default async function DashboardLayout({
@@ -82,7 +83,8 @@ export default async function DashboardLayout({
           <DashboardTabs />
 
           <div className="flex items-center justify-between gap-3 sm:justify-end">
-            <span className="flex min-h-12 min-w-12 items-center justify-center rounded-lg border border-admin-border bg-admin-bg text-sm font-semibold text-admin-ink">
+            <ThemeToggle />
+            <span className="flex min-h-12 min-w-12 items-center justify-center rounded-lg border border-admin-border bg-admin-raised text-sm font-semibold text-admin-ink">
               {initialsFor(user.email)}
             </span>
             <form action={signOut}>

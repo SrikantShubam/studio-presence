@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { loadClientConfig, requireTenant, AuthError, ConfigError } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { signOut } from '../actions'
+import { ThemeToggle } from '../ThemeToggle'
 
 /**
  * The panel's auth gate.
@@ -90,11 +91,14 @@ export default async function PanelLayout({
           )}
           <span className="text-sm font-medium text-admin-ink">{branding.business.name}</span>
         </div>
-        <form action={signOut}>
-          <button type="submit" className="text-sm font-medium text-admin-muted">
-            Sign out
-          </button>
-        </form>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <form action={signOut}>
+            <button type="submit" className="min-h-11 rounded-lg px-2 text-sm font-medium text-admin-muted">
+              Sign out
+            </button>
+          </form>
+        </div>
       </header>
       <main>{children}</main>
     </div>

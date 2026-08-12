@@ -115,7 +115,7 @@ export default async function LeadDetailPage({
           </label>
           <button
             type="submit"
-            className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-surface sm:self-end"
+            className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary sm:self-end"
           >
             Save status
           </button>
@@ -134,7 +134,7 @@ export default async function LeadDetailPage({
               className="min-h-36 rounded-lg border border-admin-border bg-admin-surface px-3 py-3 text-base font-normal text-admin-ink outline-none focus:border-admin-primary"
             />
           </label>
-          <button type="submit" className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-surface">
+          <button type="submit" className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary">
             Save note
           </button>
         </form>
@@ -144,7 +144,7 @@ export default async function LeadDetailPage({
         <div className="mx-auto grid max-w-3xl grid-cols-2 gap-2">
           <a
             href={whatsappHref}
-            className="flex min-h-12 items-center justify-center rounded-lg bg-admin-primary px-3 text-base font-semibold text-admin-surface"
+            className="flex min-h-12 items-center justify-center rounded-lg bg-admin-primary px-3 text-base font-semibold text-admin-on-primary"
           >
             WhatsApp
           </a>

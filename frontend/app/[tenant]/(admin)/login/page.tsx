@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { loadClientConfig, ConfigError } from '@studio/backend'
+import { ThemeToggle } from '../ThemeToggle'
 import { LoginForm } from './LoginForm'
 
 /**
@@ -49,17 +50,20 @@ export default async function LoginPage({
   return (
     <main className="flex min-h-screen items-center justify-center bg-admin-bg px-4">
       <div className="w-full max-w-sm rounded-lg border border-admin-border bg-admin-surface p-6">
-        <div className="mb-6 flex items-center gap-2">
-          {config.brand.logo && (
-            <Image
-              src={config.brand.logo}
-              alt=""
-              width={28}
-              height={28}
-              className="rounded"
-            />
-          )}
-          <span className="text-sm font-medium text-admin-ink">{config.business.name}</span>
+        <div className="mb-6 flex items-center justify-between gap-2">
+          <div className="flex min-w-0 items-center gap-2">
+            {config.brand.logo && (
+              <Image
+                src={config.brand.logo}
+                alt=""
+                width={28}
+                height={28}
+                className="rounded"
+              />
+            )}
+            <span className="truncate text-sm font-medium text-admin-ink">{config.business.name}</span>
+          </div>
+          <ThemeToggle />
         </div>
 
         <h1 className="mb-6 text-xl font-semibold text-admin-ink">Sign in to your site</h1>
