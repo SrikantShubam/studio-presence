@@ -40,12 +40,19 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * `check:config` proves the path is *referenced* correctly, nothing catches
  * whether it's *servable*.
  *
- * `sitemap.xml`, `robots.txt`, `manifest.webmanifest` and `opengraph-image`
- * stay OUT of this list on purpose — SPEC.md §5 has them as dynamic,
- * per-tenant routes (`app/[tenant]/sitemap.ts` etc.), so they need the rewrite
- * like any other page.
+ * `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, `opengraph-image` and
+ * `favicon.ico` stay OUT of this list on purpose — SPEC.md §5 has them as
+ * dynamic, per-tenant routes (`app/[tenant]/sitemap.ts` etc.), so they need the
+ * rewrite like any other page.
+ *
+ * Passing one of them through is not harmless: `NextResponse.next()` means "keep
+ * routing without a rewrite", and with no static file behind it the request
+ * falls through to the only top-level dynamic segment, `/[tenant]`. The slug
+ * then resolves to the literal string `favicon.ico`, the config loader throws,
+ * and a browser's automatic favicon request 500s the page. `robots.txt` was in
+ * this list against the paragraph above and had the identical bug.
  */
-const PASSTHROUGH = /^\/(?:_next|api\/|favicon\.ico|robots\.txt$|clients\/)/
+const PASSTHROUGH = /^\/(?:_next|api\/|clients\/)/
 
 function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
   const hostname = host.split(':')[0]?.toLowerCase() ?? ''
