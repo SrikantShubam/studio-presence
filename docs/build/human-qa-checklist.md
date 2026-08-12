@@ -12,9 +12,18 @@ npm run dev
 npm run provision:qa-owner -- <your-email>
 ```
 
-Then sign in at the `qa-owner` tenant (t3, so it has both `/panel` and `/dashboard`) plus spot-check
-`ashish-interiors` (also t3, real content) for the public-facing site. `minimal` and `stress` are
-fixtures for edge cases (t0 and a deliberately overloaded t3), not accounts to sign into.
+**`localhost:3000` on its own shows nothing, and that's correct** — every site is a tenant resolved
+by subdomain, so the bare host has no site to serve. The URLs you actually want:
+
+| URL | What it is |
+|---|---|
+| http://qa-owner.localhost:3000/ | your QA tenant — t3, so it has both `/panel` and `/dashboard` |
+| http://ashish.localhost:3000/ | the realistic demo site, t3 with real content |
+| http://minimal.localhost:3000/ | t0 edge case — most sections absent |
+| http://stress.localhost:3000/ | deliberately overloaded t3 — 40 projects, long Hindi text |
+
+Sign in at `qa-owner` for anything admin; use `ashish` for judging the public site. `minimal` and
+`stress` are fixtures for edge cases, not accounts to sign into.
 
 ---
 
