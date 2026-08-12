@@ -85,8 +85,24 @@ export function middleware(request: NextRequest) {
   const resolved = resolveTenant(host)
 
   // Unknown host. Not a 404 page — there is no tenant whose 404 this would be.
+  //
+  // In development this is almost always someone opening `localhost:3000`
+  // straight after `npm run dev`, which resolves to no tenant because every
+  // site is a subdomain. A bare refusal is a dead end, so list the tenants that
+  // do work. In production the message stays opaque on purpose: an unknown host
+  // is a stranger, and the client roster is not theirs to enumerate.
   if (!resolved) {
-    return new NextResponse('No site is configured for this address.', {
+    const body =
+      process.env.NODE_ENV === 'production'
+        ? 'No site is configured for this address.'
+        : 'No site is configured for this address.\n\n' +
+          'Every site is a tenant, resolved by subdomain. Try one of:\n' +
+          Object.keys(TENANT_MAP.bySubdomain)
+            .map((sub) => `  http://${sub}.localhost:${request.nextUrl.port || '3000'}/`)
+            .join('\n') +
+          '\n'
+
+    return new NextResponse(body, {
       status: 404,
       headers: { 'x-robots-tag': 'noindex, nofollow' },
     })
