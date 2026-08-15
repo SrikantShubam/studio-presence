@@ -96,6 +96,10 @@ before anyone looks is thirteen pages of rework.
 For EACH page, in the table order:
 
 STEP 1 — INVENTORY. Before you write a single line of code, read that page's design file and report:
+  - the exact `data-screen-label` bands you found in the file, in order. If a board is marked below
+    as splitting into two routes, say which bands you are taking for THIS route and which you are
+    leaving for the other. If what you find does not match the band list below, STOP and say so —
+    do not reconcile it by guessing
   - every section/component the page needs, in the order it appears down the page
   - for each one: does it REUSE a component that already exists in frontend/sections/, or does it
     need a NEW one? If new, say why the existing one does not fit. Reuse is strongly preferred;
@@ -131,23 +135,92 @@ THREE RULES THAT MAKE THOSE GATES REAL
     touch, or `check:all` failing twice — STOP and report it. Do not skip to an easier page to have
     something to show
 
-Build these, in this order:
+HOW TO READ A DESIGN FILE — THIS IS WHERE PEOPLE GO WRONG
 
-| Design file                        | Route to build                                   |
-|------------------------------------|--------------------------------------------------|
-| project-detail-page.html           | app/[tenant]/(site)/portfolio/[slug]/page.tsx     |
-| projects-category.html             | app/[tenant]/(site)/projects/[category]/page.tsx  |
-| team.html                          | app/[tenant]/(site)/team/page.tsx                 |
-| estimate-calculator.html           | app/[tenant]/(site)/estimate/page.tsx             |
-| journal.md.html                    | app/[tenant]/(site)/journal/page.tsx              |
-| news-press.html                    | app/[tenant]/(site)/news/page.tsx                 |
-| careers.html                       | app/[tenant]/(site)/careers/page.tsx              |
-| locations.html                     | app/[tenant]/(site)/locations/page.tsx            |
-| privacy-policy.html                | app/[tenant]/(site)/privacy/page.tsx AND /terms   |
-| 404.html                           | app/[tenant]/(site)/not-found.tsx                 |
-| service-detail.html                | app/[tenant]/(site)/services/[slug]/page.tsx      |
-| areas-detail.html                  | app/[tenant]/(site)/areas/[locality]/page.tsx     |
-| og-image.html                      | app/[tenant]/opengraph-image.tsx                  |
+Each design file is a BOARD, not a page. Inside it, every band carries a
+`data-screen-label="..."` attribute. Those labels are the authoritative structure of that design:
+they tell you what bands exist and in what order. Read them first, with:
+
+    grep -o 'data-screen-label="[^"]*"' design/reference/editorial/<file>.html
+
+SOME BOARDS CONTAIN TWO DIFFERENT PAGES. team.html is the team index AND the individual member page.
+news-press.html is the news index AND a single article. journal.md.html is the journal index AND a
+single post. Do not try to render one page containing all of it — split at the band listed below.
+Getting this wrong is the single most likely way to waste a day.
+
+Every board ends with a `Footer` band, and most have a `CTA` band. Those are the EXISTING Footer and
+CtaBand section components. Do not rebuild them per page.
+
+Below is the exact contents of each board, verified by reading the files. The band names are quoted
+from the files themselves — if what you see does not match this, say so rather than improvising.
+
+Build in this order, one at a time, following the STEP 1-7 loop above:
+
+1. project-detail-page.html  ->  app/[tenant]/(site)/portfolio/[slug]/page.tsx
+   Bands: Project title | Hero photo | Metadata | The brief | Photos — living | Approach |
+          Photos — rooms | Outcome | Client quote | CTA | Prev next | Footer
+   One page. Start here — it is T1, already in SPEC, and the portfolio data already exists in config.
+
+2. projects-category.html  ->  app/[tenant]/(site)/projects/[category]/page.tsx
+   Bands: Portfolio heading | Category filter | Category header | Project mosaic | Load more | CTA | Footer
+   One page. "Project mosaic" is the existing Portfolio section's grid — reuse it.
+
+3. service-detail.html  ->  app/[tenant]/(site)/services/[slug]/page.tsx
+   Bands: Service heading | Kitchen photos | Whats included | Linked project | FAQ | CTA | Footer
+   One page. "FAQ" is the existing FAQ section — reuse it.
+
+4. areas-detail.html  ->  app/[tenant]/(site)/areas/[locality]/page.tsx
+   Bands: Area heading | Projects in this area | Map and nearby | CTA | Footer
+   One page. "Map and nearby" is the existing Map section — reuse it.
+
+5. team.html  ->  TWO ROUTES, split this board:
+     bands 1-5  (Studio heading | Principals | Wider team | Workshop | Hiring)
+                -> app/[tenant]/(site)/team/page.tsx
+     bands 6-8  (Member detail | Projects led | Prev next member)
+                -> app/[tenant]/(site)/team/[slug]/page.tsx
+   "Principals" and "Wider team" are the existing Team section — reuse it for the index.
+
+6. careers.html  ->  app/[tenant]/(site)/careers/page.tsx
+   Bands: Careers heading | Studio at work | What we look for | Open roles | Apply | Footer
+   One page.
+
+7. locations.html  ->  app/[tenant]/(site)/locations/[office]/page.tsx
+   Bands: Studio heading | Studio photo | Contact block | About this office | Whos here |
+          Projects from studio | Other studios | Visit CTA | Footer
+   One page, and it is the DETAIL of a single office — not an index of all of them. Note it has its
+   own "Visit CTA" band, which is not the shared CtaBand.
+
+8. news-press.html  ->  TWO ROUTES, split this board:
+     bands 1-3  (News heading | Press coverage | Studio news)
+                -> app/[tenant]/(site)/news/page.tsx
+     bands 4-8  (Article head | Article lead image | Article body | Related project | Prev next article)
+                -> app/[tenant]/(site)/news/[slug]/page.tsx
+
+9. journal.md.html  ->  TWO ROUTES, split this board:
+     bands 1-5   (Journal heading | Topic filter | Featured post | Post grid | Pagination)
+                 -> app/[tenant]/(site)/journal/page.tsx
+     bands 6-12  (Post head | Post lead image | Post body | Author | Related projects | Post CTA |
+                  Prev next post)
+                 -> app/[tenant]/(site)/journal/[slug]/page.tsx
+
+10. estimate-calculator.html  ->  app/[tenant]/(site)/estimate/page.tsx
+    Bands: Calculator heading | Calculator | Whats included | Footer
+    One page. The "Calculator" band is interactive — it is the only page here with real client-side
+    state, so expect it to take longer than the others.
+
+11. privacy-policy.html  ->  TWO ROUTES from one board:
+    Bands: Policy heading | Policy switch | Policy body
+    -> app/[tenant]/(site)/privacy/page.tsx AND app/[tenant]/(site)/terms/page.tsx
+    "Policy switch" is the toggle between the two documents. They share a layout and differ only in
+    body content — build one component, render it twice, do not fork it.
+
+12. 404.html  ->  app/[tenant]/(site)/not-found.tsx
+    Bands: 404. One screen, no footer.
+
+13. og-image.html  ->  NOT A PAGE. It is three social-share image templates (OG home | OG project |
+    OG calculator) plus a "Thumbnail check" band that is a proofing aid, not something to build.
+    These become Next.js ImageResponse routes, not pages. LEAVE THIS ONE UNTIL LAST and ask before
+    starting it — it is a different kind of work from everything above.
 
 Then the SECTION VARIANTS. These are not pages — they are alternative compositions of sections that
 already exist, selected from config alone via `defaultVariants` in frontend/lib/tokens/editorial.ts
