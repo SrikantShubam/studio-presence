@@ -135,6 +135,24 @@ THREE RULES THAT MAKE THOSE GATES REAL
     touch, or `check:all` failing twice — STOP and report it. Do not skip to an easier page to have
     something to show
 
+ALL 22 DESIGN FILES, ACCOUNTED FOR
+
+Before anything else: here is every file in design/reference/editorial/ and what it is. This has been
+verified against the repo. You do not need to work out which file is a page and which is a variant —
+that question is answered, and answering it again yourself is how this goes wrong.
+
+  12 page boards   -> 16 routes to build   (listed next, with their bands)
+   1 og-image.html -> image templates, LAST, ask first
+   7 already built -> 6 section variants + the home page. DO NOT REBUILD
+   1 not built     -> footer-compact-version.html, a section variant, AFTER the pages
+   1 ignore        -> studio-design-1.html, a design-system sheet
+
+That is 22. If you find yourself about to touch a file that is not in one of those buckets, stop —
+you have misread something.
+
+The count of ROUTES (16) is higher than the count of page boards (12) because four boards each hold
+two pages. That is explained below and it is the single most common thing to get wrong here.
+
 HOW TO READ A DESIGN FILE — THIS IS WHERE PEOPLE GO WRONG
 
 Each design file is a BOARD, not a page. Inside it, every band carries a
@@ -222,22 +240,43 @@ Build in this order, one at a time, following the STEP 1-7 loop above:
     These become Next.js ImageResponse routes, not pages. LEAVE THIS ONE UNTIL LAST and ask before
     starting it — it is a different kind of work from everything above.
 
-Then the SECTION VARIANTS. These are not pages — they are alternative compositions of sections that
-already exist, selected from config alone via `defaultVariants` in frontend/lib/tokens/editorial.ts
-and the `variant` field on each section. Several are already built; check frontend/sections/<Name>/
-before starting one, and only build the ones that are missing:
+THE OTHER NINE FILES ARE NOT PAGES. DO NOT BUILD THEM AS PAGES.
 
-| Design file                        | Variant                                           |
-|------------------------------------|---------------------------------------------------|
-| hero-standard-variant.html         | Hero, variant "standard"                          |
-| hero---split-format.html           | Hero, variant "split"                             |
-| hero-video-format.html             | Hero, variant "video"                             |
-| services---grid-compact.html       | Services, variant "compact"                       |
-| featured-projects--carousel.html   | Portfolio, variant "carousel"                     |
-| testimonials---carousel-variant.html | Testimonials, variant "carousel"                |
-| footer-compact-version.html        | Footer, variant "compact"                         |
+design/reference/editorial/ holds 22 files. Twelve of them are the page boards listed above, plus
+og-image.html. The remaining nine are section variants or reference material, and every one of them
+has already been checked — this is verified, not a guess, so you do not need to go and work it out:
 
-Ignore studio-design-1.html — it is a design-system sheet, not a page.
+ALREADY BUILT — open the file only if you need it as a reference. Building any of these again is
+duplicated work and will be rejected:
+
+| Design file                          | What it is                  | Already exists as                        |
+|--------------------------------------|-----------------------------|------------------------------------------|
+| home.html                            | the home page               | app/[tenant]/(site)/page.tsx             |
+| hero-standard-variant.html           | Hero variant "standard"     | frontend/sections/Hero/HeroStandard.tsx  |
+| hero---split-format.html             | Hero variant "split"        | frontend/sections/Hero/HeroSplit.tsx     |
+| hero-video-format.html               | Hero variant "video"        | frontend/sections/Hero/HeroVideo.tsx     |
+| services---grid-compact.html         | Services variant "compact"  | frontend/sections/Services/ServicesCompact.tsx |
+| featured-projects--carousel.html     | Portfolio variant "carousel"| frontend/sections/Portfolio/PortfolioCarousel.tsx |
+| testimonials---carousel-variant.html | Testimonials variant "carousel" | frontend/sections/Testimonials/TestimonialsCarousel.tsx |
+
+NOT BUILT — one variant is genuinely missing:
+
+| footer-compact-version.html          | Footer variant "compact"    | frontend/sections/Footer/ has only index.tsx |
+
+  Footer currently has no variant split at all, while `SectionVariants` in frontend/lib/tokens/
+  types.ts declares footer: 'expanded' | 'compact'. Do this ONE AFTER ALL THE PAGES, not before, and
+  follow the shape of Services/ or Testimonials/ when you do: a shared file, one component per
+  variant, index.tsx picking between them. It is a section, not a route.
+
+IGNORE ENTIRELY:
+
+| studio-design-1.html                 | a design-system sheet — swatches and type specimens, not a screen |
+
+A SECTION VARIANT IS NOT A PAGE. It is an alternative composition of a section that already exists,
+chosen from config alone — `defaultVariants` in frontend/lib/tokens/editorial.ts sets the identity's
+default, and a `variant` field on the section config overrides it per client. Nothing about a variant
+gets its own route or its own directory under app/. If you catch yourself creating
+app/[tenant]/(site)/hero-split/ or similar, you have misread this section.
 
 There is currently a catch-all at app/[tenant]/(site)/[...path]/page.tsx that renders a generic stub
 for all of these. As you build each real route, that route takes precedence automatically — but
