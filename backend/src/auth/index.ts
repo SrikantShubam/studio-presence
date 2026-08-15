@@ -1,6 +1,8 @@
 import { createScopedClient, type Db } from '../db/scoped'
 import type { Tenant } from '../db/types'
 
+export { claimDemoTenant } from './claim'
+
 /**
  * Auth.
  *
