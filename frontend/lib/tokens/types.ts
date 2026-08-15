@@ -36,10 +36,14 @@ export type TokenSet = {
     cta: string
     /** Page background. */
     surface: string
-    /** Secondary text. */
+    /** Body copy. Between `ink` and `muted` — paragraphs, not headings, not captions. */
+    body: string
+    /** Secondary text: eyebrows, captions, meta. */
     muted: string
     /** Thin dividers and borders. */
     hairline: string
+    /** Alternating section background, one step off `surface`. */
+    panel: string
   }
 
   fonts: {

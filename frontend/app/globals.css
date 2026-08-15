@@ -41,8 +41,10 @@
   --t-accent: #51372a;
   --t-cta: #d9bc72;
   --t-surface: #ffffff;
-  --t-muted: #6b6b6b;
-  --t-hairline: #e5e5e5;
+  --t-body: #4a4a4a;
+  --t-muted: #8b8377;
+  --t-hairline: #dcd7ce;
+  --t-panel: #faf8f5;
 
   --t-font-display: Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif;
   --t-font-body: Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -121,8 +123,10 @@
   --color-accent: var(--t-accent);
   --color-cta: var(--t-cta);
   --color-surface: var(--t-surface);
+  --color-body: var(--t-body);
   --color-muted: var(--t-muted);
   --color-hairline: var(--t-hairline);
+  --color-panel: var(--t-panel);
 
   --font-display: var(--t-font-display);
   --font-body: var(--t-font-body);
