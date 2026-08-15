@@ -3,9 +3,23 @@
 Paste everything inside the fence. Nothing outside it is part of the prompt.
 
 The home page is already built and is the pattern; this is about the pages that
-still fall through to a generic stub. If Grok fails `check:all` twice on the same
-page, stop and hand that page to Codex with the review prompt in
-`pages-review.md` — do not let it keep guessing.
+still fall through to a generic stub.
+
+**This is a per-page loop, not one long run.** Expect Grok to stop repeatedly —
+that is the prompt working, not it giving up. Each page goes:
+
+```
+inventory → YOU approve → build → check:all + curl
+   → YOU run Codex review (pages-review.md) → fixes → YOU look at it → next page
+```
+
+So per page you are involved three times: approving the component list before any
+code exists, running the review, and looking at the result. Thirteen pages means
+thirteen of those cycles. That is deliberate — every automated check here is
+static analysis and none of it can see whether the page matches the design.
+
+If Grok fails `check:all` twice on the same page, hand that page to Codex with
+`pages-review.md` rather than letting it keep guessing.
 
 ```
 You are working in an existing Next.js 15 / TypeScript / Tailwind v4 monorepo at
@@ -67,7 +81,57 @@ Every page you are building has a finished HTML design in design/reference/edito
 inline styles with literal hex values and literal copy — that is the DESIGN, not the target code.
 Your job is to reproduce the same visual result using tokens and config.
 
-Build these, in this order. Stop after each one and run `npm run check:all`.
+HOW YOU WORK: ONE PAGE AT A TIME, WITH GATES
+
+This is the most important instruction in this prompt, and it overrides any instinct you have to be
+helpful by doing more. You build ONE page, then you STOP and wait. Every time. There are thirteen
+pages below; you are not building thirteen pages in one run.
+
+The reason is specific, not bureaucratic. Everything automated in this repo is static analysis — it
+checks types, lint, and that no literal hex sneaked into a component. NONE of it can see whether
+your page looks like the design. Work has twice now passed every check, been declared done, and
+turned out to have drifted in ways only a human looking at the screen caught. Thirteen pages built
+before anyone looks is thirteen pages of rework.
+
+For EACH page, in the table order:
+
+STEP 1 — INVENTORY. Before you write a single line of code, read that page's design file and report:
+  - every section/component the page needs, in the order it appears down the page
+  - for each one: does it REUSE a component that already exists in frontend/sections/, or does it
+    need a NEW one? If new, say why the existing one does not fit. Reuse is strongly preferred;
+    "it needs slightly different padding" is not a reason to fork a component
+  - which of the 15 photos in frontend/public/clients/ashish-interiors/editorial/ it uses
+  - any config field the page needs that backend/src/config/schema.ts does not already have
+  Then STOP. End your turn. Wait for that list to be approved before building anything.
+
+STEP 2 — BUILD. Only the page you just got approved. Only the components on the approved list.
+
+STEP 3 — SELF-VERIFY. Run `npm run check:all` and report the real exit code. Then start the dev
+  server and request the route, and report the real status code:
+    curl -s -o /dev/null -w "%{http_code}" -H "Host: ashish.localhost:3000" http://127.0.0.1:3000/team
+  Both must pass. Typechecking is not evidence a page renders — pages here have passed every static
+  check and still returned 500.
+
+STEP 4 — STOP FOR REVIEW. Say the page is ready and END YOUR TURN. A separate reviewer runs against
+  it. Do not start the next page. Do not "get a head start".
+
+STEP 5 — APPLY FINDINGS. When the review comes back, fix every BLOCKER and every DRIFT item. Report
+  MINOR items and leave them alone unless told otherwise.
+
+STEP 6 — STOP FOR FINAL REVIEW. State what changed since step 4 and END YOUR TURN.
+
+STEP 7 — Only when explicitly told to continue do you begin the next page. Then back to step 1.
+
+THREE RULES THAT MAKE THOSE GATES REAL
+  - A STOP means END THE TURN. Do not acknowledge the checkpoint and then keep going in the same
+    response. Do not do step 2 in the message where you presented step 1
+  - Never work on two pages at once, even if the second looks trivial, and even if it shares
+    components with the one you just finished
+  - If a page is blocked — a config field that does not exist, a frozen path you would have to
+    touch, or `check:all` failing twice — STOP and report it. Do not skip to an easier page to have
+    something to show
+
+Build these, in this order:
 
 | Design file                        | Route to build                                   |
 |------------------------------------|--------------------------------------------------|
@@ -152,10 +216,13 @@ DONE MEANS
   the design. Using text-muted where the design says #4A4A4A is wrong; that is text-body.
 
 WHEN YOU GET STUCK
-Two failed attempts at `check:all` on the same page: STOP. Do not keep iterating, do not guess, do
-not disable or weaken a check. Report what failed, what you tried, and move on. Escalation is normal
-and costs far less than a plausible-looking wrong answer.
+Two failed attempts at `check:all` on the same page: STOP and END YOUR TURN. Do not keep iterating,
+do not guess, do not disable or weaken a check, and do not move to the next page to have something
+to show. Report what failed and what you tried. Escalation is normal and costs far less than a
+plausible-looking wrong answer.
 
-Start by reading the files listed above, then tell me in four sentences what you are about to build
-and which design file you are starting from.
+START HERE
+Read the files listed above. Then do STEP 1 — and only step 1 — for the FIRST page in the table:
+project-detail-page.html. Give me the component inventory for that one page and stop there. Do not
+build it in the same response. Do not inventory the other twelve.
 ```
