@@ -26,7 +26,8 @@
       "Danapur",
       "Phulwari Sharif"
     ],
-    "hours": "Mon-Sat, 10am - 7pm"
+    "hours": "Mon-Sat, 10am - 7pm",
+    "hoursExtra": "Sunday by appointment"
   },
   "brand": {},
   "domain": {
@@ -39,32 +40,35 @@
     "hero": {
       "enabled": true,
       "variant": "full-bleed",
+      "image": "/clients/ashish-interiors/editorial/hero.jpg",
       "headline": "Creating interiors that inspire.",
-      "sub": "Full-home and modular interiors in Patna. 40+ homes delivered since 2013.",
-      "ctaLabel": "CALCULATE THE ESTIMATE"
+      "sub": "",
+      "ctaLabel": "CALCULATE THE ESTIMATE",
+      "categories": ["Apartments", "Houses", "Offices"]
     },
     "quickActions": {
       "enabled": true,
       "actions": [
         "whatsapp",
         "call",
-        "directions"
+        "directions",
+        "instagram"
       ]
     },
     "trustBar": {
       "enabled": true,
       "stats": [
         {
-          "value": "12",
-          "label": "YEARS OF PRACTICE"
+          "value": "12+",
+          "label": "YEARS OF EXCELLENCE · SAME LANES OF PARTNERS SINCE 2015"
         },
         {
-          "value": "40+",
-          "label": "HOMES DELIVERED"
+          "value": "240+",
+          "label": "PROJECTS COMPLETED · WORKING ACROSS PATNA"
         },
         {
-          "value": "3",
-          "label": "AREAS SERVED"
+          "value": "18",
+          "label": "TEAM MEMBERS · IN-HOUSE CREW"
         }
       ]
     },
@@ -74,17 +78,20 @@
       "items": [
         {
           "title": "Interior Design",
-          "blurb": "Turnkey design and execution for full homes.",
+          "blurb": "Layouts, joinery drawings and finish boards for the whole flat, worked out with you over two or three sittings before a single panel is cut.",
+          "image": "/clients/ashish-interiors/editorial/service-01.jpg",
           "slug": "interior-design"
         },
         {
           "title": "Turnkey Renovation",
-          "blurb": "Built to your space, your timeline and your budget.",
+          "blurb": "Demolition, civil, electrical and carpentry with one dated programme and one person responsible from start to handover.",
+          "image": "/clients/ashish-interiors/editorial/service-02.jpg",
           "slug": "turnkey-renovation"
         },
         {
           "title": "Selection of Materials",
-          "blurb": "Sourcing and specification, from finishes to fittings.",
+          "blurb": "Sourcing and specification from finishes to fittings, with honest starting points rather than teaser rates.",
+          "image": "/clients/ashish-interiors/editorial/trust-03.jpg",
           "slug": "selection-of-materials"
         }
       ]
@@ -93,24 +100,70 @@
       "enabled": true,
       "variant": "grid",
       "detailPages": true,
+      "introText": "Everything we have handed over and been allowed to photograph — flats, offices, guest houses and shops, almost all of them within an hour of Patna.",
+      "rangeEnd": "2026",
+      "categoryHeaders": [
+        {
+          "category": "residential",
+          "lead": "Private",
+          "accent": "Residences",
+          "lines": [
+            "Flats, independent houses and duplexes for families who live in them every day — most between 900 and 1,800 sq ft, most finished inside eight to twelve weeks.",
+            "The work is storage-led rather than decorative: corridors, bed bases and window seats carry the volume so the rooms themselves stay open."
+          ]
+        },
+        {
+          "category": "commercial",
+          "lead": "Offices",
+          "accent": "& Chambers",
+          "lines": [
+            "Small professional floors — chartered accountants, lawyers, clinics and coaching centres — usually fitted around a working practice that cannot close for long.",
+            "We phase these jobs so half the floor stays usable, and we do the electrical and networking runs ourselves rather than leaving them to the tenant."
+          ]
+        },
+        {
+          "category": "hospitality",
+          "lead": "Guest Houses",
+          "accent": "& Dining",
+          "lines": [
+            "Guest houses, service apartments, cafes and banquet spaces across Patna and Hajipur, where the finish has to survive far heavier use than a home ever sees.",
+            "Everything is specified for maintenance first — replaceable panels, commercial-grade hardware, and finishes a housekeeping team can clean without ruining."
+          ]
+        },
+        {
+          "category": "retail",
+          "lead": "Shops",
+          "accent": "& Showrooms",
+          "lines": [
+            "Showrooms and neighbourhood shops where display, lighting and stock storage decide whether the space works, and the shutter has to come up again on schedule.",
+            "These are our fastest jobs — mostly night and Sunday work, so the owner loses as few trading days as possible."
+          ]
+        }
+      ],
       "projects": [
         {
-          "title": "3BHK, Boring Road",
+          "title": "Rajendra Nagar 3BHK",
           "slug": "3bhk-boring-road",
-          "cover": "/clients/ashish-interiors/p1.jpg",
-          "images": [],
-          "blurb": "Contemporary 3BHK for a family of four.",
-          "location": "Boring Road, Patna",
+          "cover": "/clients/ashish-interiors/editorial/portfolio-04.jpg",
+          "images": [
+            "/clients/ashish-interiors/editorial/portfolio-02.jpg",
+            "/clients/ashish-interiors/editorial/instagram-01.jpg"
+          ],
+          "blurb": "A family of four moving into their first owned flat. We opened up the kitchen wall, built storage into every corridor and kept the palette to oak, off-white and one deep brown.",
+          "location": "Patna",
           "duration": "45 days",
           "projectType": "residential",
           "area": "1450 sq ft",
           "category": "residential"
         },
         {
-          "title": "Kankarbagh Duplex",
-          "slug": "kankarbagh-duplex",
-          "cover": "/clients/ashish-interiors/p2.jpg",
-          "images": [],
+          "title": "Boring Road Kitchen",
+          "slug": "boring-road-kitchen",
+          "cover": "/clients/ashish-interiors/editorial/service-02.jpg",
+          "images": [
+            "/clients/ashish-interiors/editorial/portfolio-04.jpg",
+            "/clients/ashish-interiors/editorial/instagram-02.jpg"
+          ],
           "blurb": "Full-home interiors across two floors.",
           "location": "Kankarbagh, Patna",
           "duration": "90 days",
@@ -119,46 +172,92 @@
           "category": "residential"
         },
         {
-          "title": "Frazer Road Office",
-          "slug": "frazer-road-office",
-          "cover": "/clients/ashish-interiors/p3.jpg",
-          "images": [],
+          "title": "Kankarbagh Flat",
+          "slug": "kankarbagh-flat",
+          "cover": "/clients/ashish-interiors/editorial/testimonial-01.jpg",
+          "images": [
+            "/clients/ashish-interiors/editorial/instagram-04.jpg",
+            "/clients/ashish-interiors/editorial/testimonial-01.jpg"
+          ],
           "blurb": "Workspace for a 20-person practice.",
-          "location": "Frazer Road, Patna",
+          "location": "Kankarbagh, Patna",
           "duration": "60 days",
-          "projectType": "office",
+          "projectType": "residential",
           "area": "1800 sq ft",
-          "category": "commercial"
+          "category": "residential"
+        },
+        {
+          "title": "Study Nook",
+          "slug": "study-nook",
+          "cover": "/clients/ashish-interiors/editorial/portfolio-03.jpg",
+          "images": [
+            "/clients/ashish-interiors/editorial/instagram-03.jpg"
+          ],
+          "blurb": "A quiet room designed around books, daylight and work that needs concentration.",
+          "location": "Patna",
+          "duration": "30 days",
+          "projectType": "residential",
+          "area": "220 sq ft",
+          "category": "residential"
+        },
+        {
+          "title": "Patliputra Duplex",
+          "slug": "patliputra-duplex",
+          "cover": "/clients/ashish-interiors/editorial/instagram-04.jpg",
+          "images": [
+            "/clients/ashish-interiors/editorial/testimonial-01.jpg"
+          ],
+          "blurb": "A full-home interior planned for daily life across two floors.",
+          "location": "Patliputra, Patna",
+          "duration": "90 days",
+          "projectType": "residential",
+          "area": "2600 sq ft",
+          "category": "residential"
+        },
+        {
+          "title": "Portfolio",
+          "slug": "portfolio-detail",
+          "cover": "/clients/ashish-interiors/editorial/trust-03.jpg",
+          "images": [
+            "/clients/ashish-interiors/editorial/instagram-01.jpg"
+          ],
+          "blurb": "A considered interior shaped around the way a family lives every day.",
+          "location": "Patna",
+          "duration": "75 days",
+          "projectType": "residential",
+          "area": "1900 sq ft",
+          "category": "residential"
         }
       ]
     },
     "about": {
       "enabled": true,
       "heading": "ABOUT THE STUDIO",
-      "body": "Twelve years designing homes across Patna. We handle design and execution under one roof, which is why our projects finish when we say they will."
+      "body": "Ashish Interiors began in 2013 with one carpenter, one measuring tape and a rented room off Boring Road. The work has always been ordinary homes done properly — a family's first flat, a mother's kitchen, an office for four people.\n\nWe still keep the crew in-house and still visit every site ourselves. Nothing leaves the workshop that we would not put in our own house.",
+      "image": "/clients/ashish-interiors/editorial/trust-03.jpg"
     },
     "process": {
       "enabled": true,
       "steps": [
         {
           "title": "Consultation",
-          "body": "We visit, measure and listen.",
-          "duration": "Week 1"
+          "body": "We visit the site, measure everything and talk budget plainly before drawing anything.",
+          "duration": "3–5 DAYS"
         },
         {
           "title": "Design",
-          "body": "Layouts, 3D views and material selection.",
-          "duration": "Weeks 2-3"
+          "body": "Layouts, joinery details and a finish board, revised with you until the drawings are signed.",
+          "duration": "2–3 WEEKS"
         },
         {
           "title": "Execution",
-          "body": "Our own team, supervised daily.",
-          "duration": "Weeks 4-10"
+          "body": "Our own crew on site with a weekly photo update, so you always know what was done and what is next.",
+          "duration": "6–10 WEEKS"
         },
         {
           "title": "Handover",
-          "body": "Snagging, cleaning and a written warranty.",
-          "duration": "Week 11"
+          "body": "Snagging, cleaning and a written warranty before we hand the keys back.",
+          "duration": "1 WEEK"
         }
       ]
     },
@@ -167,34 +266,63 @@
       "variant": "cards",
       "items": [
         {
-          "quote": "Sample testimonial \u2014 replace before this site goes live.",
-          "author": "Sample client",
-          "context": "Boring Road"
+          "quote": "They gave us a dated schedule and stuck to it. The kitchen was done in five weeks and the bill matched the estimate — that alone was new for us.",
+          "author": "R. Kumar",
+          "context": "Boring Road · 3BHK Turnkey",
+          "image": "/clients/ashish-interiors/editorial/portfolio-02.jpg"
         },
         {
-          "quote": "Sample testimonial \u2014 replace before this site goes live.",
-          "author": "Sample client",
-          "context": "Kankarbagh"
+          "quote": "Small flat, small budget, and still no shortcuts on the plywood.",
+          "author": "S. Devi",
+          "context": "Kankarbagh",
+          "image": "/clients/ashish-interiors/editorial/testimonial-01.jpg"
+        },
+        {
+          "quote": "Weekly site photos meant I could follow the work from Delhi.",
+          "author": "A. Sinha",
+          "context": "Patliputra",
+          "image": "/clients/ashish-interiors/editorial/instagram-04.jpg"
+        },
+        {
+          "quote": "We asked them back for our office two years later. Same supervisor turned up — that says enough.",
+          "author": "N. Singh",
+          "context": "Frazer Road"
         }
       ]
     },
     "instagram": {
       "handle": "@ashishinteriors",
       "embedPostUrls": [
-        "https://www.instagram.com/p/SAMPLE1/",
-        "https://www.instagram.com/p/SAMPLE2/"
+        "https://www.instagram.com/ashishinteriors/",
+        "https://www.instagram.com/ashishinteriors/",
+        "https://www.instagram.com/ashishinteriors/",
+        "https://www.instagram.com/ashishinteriors/",
+        "https://www.instagram.com/ashishinteriors/",
+        "https://www.instagram.com/ashishinteriors/"
       ]
     },
     "faq": {
       "enabled": true,
       "items": [
         {
-          "q": "How long does a full home take?",
-          "a": "Typically 45 to 90 days depending on size and scope."
+          "q": "How long does a 3BHK take?",
+          "a": "A full turnkey 3BHK is usually 8 to 11 weeks on site after the drawings are signed. Design-only work runs 2 to 3 weeks."
         },
         {
-          "q": "Do you handle execution or only design?",
-          "a": "Both. Our own team executes, supervised daily."
+          "q": "Do you handle civil work?",
+          "a": "Yes — demolition, plaster, waterproofing, electrical and plumbing are done by our own supervised crew, not sublet to whoever is free."
+        },
+        {
+          "q": "What's the payment schedule?",
+          "a": "10% on signing the drawings, 40% at material procurement, 40% in stages against site progress, 10% after the punch list is cleared."
+        },
+        {
+          "q": "Why should I trust you with my business?",
+          "a": "Twelve years in Patna, 240 completed sites and a written one-year warranty on our carpentry. We will give you three recent clients to call before you pay anything."
+        },
+        {
+          "q": "Do you work outside Patna?",
+          "a": "We take projects within about 150 km — Hajipur, Danapur, Bihta and Muzaffarpur — with a small travel allowance added to the estimate."
         }
       ]
     },
@@ -202,10 +330,10 @@
       "enabled": true
     },
     "map": {
-      "enabled": true
+      "enabled": false
     },
     "ctaBand": {
-      "enabled": true,
+      "enabled": false,
       "headline": "Ready when you are.",
       "ctaLabel": "START A CONVERSATION",
       "placements": [
@@ -214,21 +342,25 @@
       ]
     },
     "stickyMobileCta": {
-      "enabled": true
+      "enabled": false
     },
     "footer": {
       "enabled": true,
       "variant": "expanded",
-      "reassuranceLine": "Let's build something exceptional.",
+      "reassuranceLine": "Ready when you are.",
       "socials": [
         {
           "label": "INSTAGRAM",
           "href": "https://instagram.com/ashishinteriors"
+        },
+        {
+          "label": "FACEBOOK",
+          "href": "https://facebook.com/ashishinteriors"
         }
       ]
     },
     "team": {
-      "enabled": true,
+      "enabled": false,
       "detailPages": true,
       "members": [
         {
@@ -242,8 +374,8 @@
     "beforeAfter": {
       "pairs": [
         {
-          "before": "/clients/ashish-interiors/p1.jpg",
-          "after": "/clients/ashish-interiors/p2.jpg",
+          "before": "/clients/ashish-interiors/editorial/portfolio-01.jpg",
+          "after": "/clients/ashish-interiors/editorial/portfolio-02.jpg",
           "caption": "Sample pair \u2014 replace before this site goes live."
         }
       ]
@@ -270,7 +402,13 @@
         "budget",
         "timeline"
       ],
-      "accessKeyEnv": "WEB3FORMS_ASHISH"
+      "accessKeyEnv": "WEB3FORMS_ASHISH",
+      "projectTypes": [
+        "Interior design",
+        "Turnkey renovation",
+        "Selection of materials",
+        "Office / commercial"
+      ]
     },
     "estimate": {
       "ratePerSqft": {

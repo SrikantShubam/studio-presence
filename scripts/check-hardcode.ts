@@ -25,8 +25,22 @@ import { report, type Finding } from './_report'
 const NAME = 'check:hardcode'
 const ROOT = join(import.meta.dirname, '..')
 
-/** Where components live. Tokens and config are exempt — literals are their job. */
-const SCAN = ['frontend/sections/**/*.{ts,tsx}', 'frontend/components/**/*.{ts,tsx}', 'frontend/app/**/*.tsx']
+/**
+ * Where components live. Tokens and config are exempt — literals are their job.
+ *
+ * `frontend/lib/**\/*.ts` was added after a real miss: eight pages imported an
+ * entire file of hardcoded per-client copy from `frontend/lib/reference/` —
+ * `.ts`, not `.tsx`, sitting outside `sections/`, `components/` and `app/**`'s
+ * `.tsx`-only pattern, so none of the three original globs ever touched it. A
+ * whole file of hardcoded content, imported straight into a page, was
+ * structurally invisible to the one check whose entire job is catching this.
+ */
+const SCAN = [
+  'frontend/sections/**/*.{ts,tsx}',
+  'frontend/components/**/*.{ts,tsx}',
+  'frontend/app/**/*.tsx',
+  'frontend/lib/**/*.ts',
+]
 
 /**
  * Exempt paths. Keep this list short and keep justifying it — every entry is a
@@ -86,6 +100,17 @@ const RULES: Rule[] = [
     pattern: /\bfont-\[[^\]]+\]/g,
     message: (m) => `Tailwind arbitrary font \`${m}\`.`,
     fix: 'Use font-display or font-body.',
+  },
+  {
+    // Catches the failure mode directly, rather than relying on that file
+    // happening to also contain a hex code or phone number. A page importing
+    // its content from a static reference file instead of the resolved config
+    // is the bug on its own — it means the page cannot change per client no
+    // matter what check:hardcode's other rules do or don't find inside it.
+    id: 'reference-import',
+    pattern: /from\s+['"][^'"]*lib\/reference[^'"]*['"]/g,
+    message: (m) => `Importing hardcoded reference content: \`${m}\`.`,
+    fix: 'Read the content from the resolved ClientConfig instead (the same object every other page already receives from loadPublicClientConfig). A page whose content comes from a static file instead of config cannot vary per client, which defeats the one thing this entire product is built to do.',
   },
 ]
 

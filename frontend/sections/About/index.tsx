@@ -1,12 +1,17 @@
 import React from 'react'
 import Image from 'next/image'
 import type { SectionComponentProps } from '@/sections/registry'
+import { ClipLine, FadeUp } from '@/lib/motion'
+
+/** Fixed UI framing, identical for every client — not content, so not config. */
+const EYEBROW = ['Learn more', 'About the', 'Studio']
+const FOUNDED_LABEL = 'Founded in'
 
 function splitHeading(heading: string): { lead: string; accent: string | null } {
   const words = heading.trim().split(/\s+/)
   if (words.length < 2) return { lead: heading, accent: null }
 
-  const splitAt = Math.ceil(words.length / 2)
+  const splitAt = 1
   return {
     lead: words.slice(0, splitAt).join(' '),
     accent: words.slice(splitAt).join(' '),
@@ -30,10 +35,10 @@ export function About({ config, site }: SectionComponentProps<'about'>) {
   const hasImage = Boolean(config.image)
 
   return (
-    <section id="about" className="overflow-hidden border-t border-accent bg-surface px-5 py-16 text-ink sm:px-8 sm:py-20 lg:px-16 lg:py-28">
+    <section id="about" className="relative border-t border-accent bg-panel px-5 py-[clamp(64px,9vw,120px)] text-ink sm:px-8 lg:px-16">
       <div
-        className={`relative mx-auto grid max-w-6xl items-center gap-10 lg:gap-20 ${
-          hasImage ? 'lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)]' : 'lg:max-w-3xl'
+        className={`relative mx-auto grid max-w-6xl items-center gap-[clamp(36px,7vw,96px)] ${
+          hasImage ? 'lg:grid-cols-[1fr_1.1fr]' : 'lg:max-w-3xl'
         }`}
       >
         {config.image && (
@@ -52,21 +57,30 @@ export function About({ config, site }: SectionComponentProps<'about'>) {
         )}
 
         <div className="min-w-0">
+          <div className="mb-[clamp(20px,3vw,34px)] grid gap-1.5 text-[10.5px] font-normal uppercase leading-[1.6] tracking-[0.24em] text-accent">
+            {EYEBROW.map((line, index) => (
+              <ClipLine key={line} delay={index * 0.05}>{line}</ClipLine>
+            ))}
+          </div>
           {headingParts && (
-            <h2 className="m-0 max-w-4xl break-words font-display text-[clamp(40px,7vw,88px)] font-light uppercase leading-none text-ink">
-              {headingParts.lead}
+            <h2 className="m-0 max-w-4xl break-words font-display text-[clamp(40px,7.5vw,92px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
+              <ClipLine>{headingParts.lead}</ClipLine>
               {headingParts.accent && (
-                <span className="block pl-[0.55em] text-accent">{headingParts.accent}</span>
+                <ClipLine className="pl-[0.55em] text-accent" delay={0.08}>{headingParts.accent}</ClipLine>
               )}
             </h2>
           )}
 
-          <div className={headingParts ? 'mt-8 space-y-5 sm:mt-10' : 'space-y-5'}>
+          <FadeUp className={headingParts ? 'mt-[clamp(28px,4vw,44px)] space-y-5' : 'space-y-5'} delay={0.12}>
             {paragraphs.map((paragraph) => (
-              <p key={paragraph} className="m-0 max-w-prose text-base leading-8 text-muted">
+              <p key={paragraph} className="m-0 max-w-[36em] text-base leading-[1.75] text-ink md:text-justify">
                 {paragraph}
               </p>
             ))}
+          </FadeUp>
+          <div className="mt-[clamp(32px,4vw,48px)] flex items-baseline gap-[18px] border-t border-accent pt-6">
+            <span className="font-display text-[clamp(40px,5vw,56px)] font-normal leading-none tracking-[-0.03em]">{site.business.yearFounded}</span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-accent">{FOUNDED_LABEL} {site.business.address.city}</span>
           </div>
         </div>
       </div>
