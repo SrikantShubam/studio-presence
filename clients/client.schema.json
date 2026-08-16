@@ -510,6 +510,9 @@
                   "category": {
                     "type": "string",
                     "pattern": "^[a-z0-9-]+$"
+                  },
+                  "budget": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -945,6 +948,9 @@
                       },
                       "caption": {
                         "type": "string"
+                      },
+                      "wide": {
+                        "type": "boolean"
                       }
                     },
                     "required": [
@@ -1560,8 +1566,20 @@
                   "title": {
                     "type": "string"
                   },
-                  "titleAccent": {
-                    "type": "string"
+                  "displayTitle": {
+                    "type": "object",
+                    "properties": {
+                      "lead": {
+                        "type": "string"
+                      },
+                      "accent": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "lead",
+                      "accent"
+                    ]
                   },
                   "date": {
                     "type": "string"
@@ -1570,9 +1588,7 @@
                     "type": "string"
                   },
                   "words": {
-                    "type": "integer",
-                    "minimum": -9007199254740991,
-                    "maximum": 9007199254740991
+                    "type": "string"
                   },
                   "excerpt": {
                     "type": "string"
@@ -1610,54 +1626,104 @@
                     "default": [],
                     "type": "array",
                     "items": {
-                      "type": "string"
-                    }
-                  },
-                  "headings": {
-                    "default": [],
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "afterParagraph": {
-                          "type": "integer",
-                          "minimum": -9007199254740991,
-                          "maximum": 9007199254740991
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "p"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "text"
+                          ]
                         },
-                        "text": {
-                          "type": "string"
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "h2"
+                            },
+                            "lead": {
+                              "type": "string"
+                            },
+                            "accent": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "lead",
+                            "accent"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "bullets"
+                            },
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "items"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "pullquote"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "text"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "image"
+                            },
+                            "image": {
+                              "type": "string",
+                              "pattern": "^\\/"
+                            },
+                            "caption": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "image"
+                          ]
                         }
-                      },
-                      "required": [
-                        "afterParagraph",
-                        "text"
                       ]
                     }
                   },
-                  "bullets": {
-                    "default": [],
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "pullquote": {
-                    "type": "string"
-                  },
-                  "inlineImage": {
-                    "type": "object",
-                    "properties": {
-                      "image": {
-                        "type": "string",
-                        "pattern": "^\\/"
-                      },
-                      "caption": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "image"
-                    ]
+                  "full": {
+                    "default": false,
+                    "type": "boolean"
                   },
                   "related": {
                     "default": [],
@@ -1975,8 +2041,23 @@
                     "default": [],
                     "type": "array",
                     "items": {
-                      "type": "string"
+                      "type": "object",
+                      "properties": {
+                        "span": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "span",
+                        "text"
+                      ]
                     }
+                  },
+                  "apply": {
+                    "type": "string"
                   }
                 },
                 "required": [

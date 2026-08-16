@@ -180,6 +180,8 @@ const project = z.object({
   projectType: z.enum(['residential', 'commercial', 'office', 'retail']).optional(),
   area: z.string().optional(),
   category: slug.optional(),
+  /** e.g. "₹8–10 lakh" — a range, never an exact figure a neighbour could compare against theirs. */
+  budget: z.string().optional(),
 })
 
 const portfolio = z.object({
@@ -325,7 +327,9 @@ const team = z.object({
     .object({
       title: z.string().optional(),
       body: z.string().optional(),
-      photos: z.array(z.object({ image: assetPath, caption: z.string().optional() })).default([]),
+      photos: z
+        .array(z.object({ image: assetPath, caption: z.string().optional(), wide: z.boolean().optional() }))
+        .default([]),
     })
     .optional(),
 })
@@ -496,10 +500,12 @@ const journal = z.object({
       z.object({
         slug,
         title: z.string(),
-        titleAccent: z.string().optional(),
+        /** A shorter two-part display title for the post's own page — not derived from `title`, curated separately. */
+        displayTitle: z.object({ lead: z.string(), accent: z.string() }).optional(),
         date: z.string(),
         topic: z.string().optional(),
-        words: z.number().int().optional(),
+        /** Display text, e.g. "1,200 words" — not a value to compute with. */
+        words: z.string().optional(),
         excerpt: z.string().optional(),
         author: z
           .object({
@@ -511,13 +517,27 @@ const journal = z.object({
           })
           .optional(),
         cover: assetPath.optional(),
-        /** Paragraphs, in order. */
-        body: z.array(z.string()).default([]),
-        /** A heading inserted after the given paragraph index (0 = before the first). */
-        headings: z.array(z.object({ afterParagraph: z.number().int(), text: z.string() })).default([]),
-        bullets: z.array(z.string()).default([]),
-        pullquote: z.string().optional(),
-        inlineImage: z.object({ image: assetPath, caption: z.string().optional() }).optional(),
+        /**
+         * Ordered content blocks — this is a real article, not a single body
+         * string, and headings/bullets/a pullquote/an inline photo can appear
+         * anywhere in it. A flat `body: string[]` plus separately-anchored
+         * extras was tried and dropped: two unrelated pieces of content both
+         * wanting "the third paragraph" as their anchor is exactly the kind of
+         * conflict a plain ordered list does not have.
+         */
+        body: z
+          .array(
+            z.discriminatedUnion('type', [
+              z.object({ type: z.literal('p'), text: z.string() }),
+              z.object({ type: z.literal('h2'), lead: z.string(), accent: z.string() }),
+              z.object({ type: z.literal('bullets'), items: z.array(z.string()) }),
+              z.object({ type: z.literal('pullquote'), text: z.string() }),
+              z.object({ type: z.literal('image'), image: assetPath, caption: z.string().optional() }),
+            ]),
+          )
+          .default([]),
+        /** True once a post has real body content. A stub with only an excerpt renders as "coming soon", not a broken article page. */
+        full: z.boolean().default(false),
         related: z
           .array(z.object({ slug, title: z.string(), image: assetPath.optional() }))
           .default([]),
@@ -639,7 +659,9 @@ const careers = z.object({
         starts: z.string().optional(),
         duties: z.array(z.string()).default([]),
         requirements: z.array(z.string()).default([]),
-        months: z.array(z.string()).default([]),
+        /** "The first six months", laid out as a short timeline. */
+        months: z.array(z.object({ span: z.string(), text: z.string() })).default([]),
+        apply: z.string().optional(),
       }),
     )
     .default([]),

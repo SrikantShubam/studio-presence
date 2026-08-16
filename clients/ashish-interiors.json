@@ -44,7 +44,11 @@
       "headline": "Creating interiors that inspire.",
       "sub": "",
       "ctaLabel": "CALCULATE THE ESTIMATE",
-      "categories": ["Apartments", "Houses", "Offices"]
+      "categories": [
+        "Apartments",
+        "Houses",
+        "Offices"
+      ]
     },
     "quickActions": {
       "enabled": true,
@@ -93,6 +97,90 @@
           "blurb": "Sourcing and specification from finishes to fittings, with honest starting points rather than teaser rates.",
           "image": "/clients/ashish-interiors/editorial/trust-03.jpg",
           "slug": "selection-of-materials"
+        },
+        {
+          "title": "Modular Kitchens",
+          "blurb": "A modular kitchen is a set of decisions about how your family cooks, worked out from the triangle up.",
+          "image": "/clients/ashish-interiors/editorial/service-detail/lead.jpg",
+          "slug": "modular-kitchens",
+          "price": {
+            "value": "FROM ₹1,450",
+            "unit": "PER SQ FT OF KITCHEN AREA",
+            "note": "A 60 sq ft Patna kitchen typically lands between ₹1.9 and ₹2.6 lakh, hob and chimney excluded."
+          },
+          "intro": [
+            "A modular kitchen is really a set of decisions about how your family cooks, not a catalogue of shutters. We start there.",
+            "In most Patna flats the kitchen is between 45 and 80 sq ft, with one window, a fixed water line and a gas point the builder put where it suited him. The first thing we work out is the triangle — sink, hob, fridge — and whether the wall between kitchen and dining can come down. About half our clients say yes, and it is usually the single change they mention a year later.",
+            "Then come the choices you will actually have to make: carcass in BWP marine ply or the cheaper BWR (we build in BWP under the sink regardless), shutters in laminate, acrylic or membrane, and a counter in granite or quartz. Granite is still the sensible answer for most Patna kitchens — it takes the heat of a pressure cooker, it survives turmeric, and a local slab costs a third of imported quartz. We push people towards tall units over lofts, because nobody over fifty wants to climb for the atta dabba.",
+            "Fabrication takes 18 to 25 days in our workshop, installation another three, and we do not start until the plumbing and the electrical points are set — moving a chimney point after the counter is down means cutting granite, and cut granite never looks the same again."
+          ],
+          "photos": [
+            {
+              "image": "/clients/ashish-interiors/editorial/service-detail/lead.jpg",
+              "caption": "BORING ROAD — L-SHAPE RUN, WINDOW LEFT CLEAR"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/service-detail/tile-01.jpg",
+              "caption": "GRANITE COUNTER, KANKARBAGH"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/service-detail/tile-02.jpg",
+              "caption": "OPEN SHELF BESIDE THE HOB"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/service-detail/tile-03.jpg",
+              "caption": "DINING SIDE OF THE SAME COUNTER"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/service-detail/tile-04.jpg",
+              "caption": "TALL UNITS INSTEAD OF A LOFT"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/service-detail/tile-05.jpg",
+              "caption": "BREAKFAST END, PATLIPUTRA"
+            }
+          ],
+          "included": [
+            {
+              "title": "BWP CARCASS & SHUTTERS",
+              "body": "Marine ply below the counter, BWR above, edge-banded on all four sides."
+            },
+            {
+              "title": "GRANITE COUNTER & SKIRTING",
+              "body": "Local slab, single joint where possible, with a 4-inch back skirting to save the wall."
+            },
+            {
+              "title": "HARDWARE & SOFT-CLOSE",
+              "body": "Hinges, channels and soft-close on every drawer, with a written warranty card."
+            },
+            {
+              "title": "DADO TILING & PLUMBING SHIFT",
+              "body": "Backsplash tiling and moving the sink or water line up to four feet."
+            },
+            {
+              "title": "POINTS FOR CHIMNEY & RO",
+              "body": "Concealed electrical points positioned before the counter goes down, not after."
+            },
+            {
+              "title": "FITTING & ONE-YEAR SERVICE",
+              "body": "Installation by our own carpenters, plus a free alignment visit at eleven months."
+            }
+          ],
+          "linkedProjectSlug": "3bhk-boring-road",
+          "faq": [
+            {
+              "q": "Should I open the kitchen to the dining?",
+              "a": "In a 2BHK or 3BHK flat, usually yes — the corridor gets the window light back and the room stops feeling like a passage. The exceptions are households that cook heavy fried food daily, where the smell will carry into the sofa fabric no matter how good the chimney is. We will tell you which one you are before you commit."
+            },
+            {
+              "q": "Granite or quartz for the counter?",
+              "a": "Granite, for most Patna kitchens. It takes a hot pressure cooker straight off the flame, it does not stain from turmeric or lemon, and a local slab is roughly a third the price of imported quartz. Quartz is worth it only if you want a specific pale colour that granite cannot give you — and it needs a trivet under anything hot."
+            },
+            {
+              "q": "How long is the kitchen unusable?",
+              "a": "Eighteen to twenty-five days of fabrication happen in our workshop while you keep cooking. The kitchen itself is out of use for about six days: two for demolition and plumbing, three for installation, one for the counter to set. Most families manage with a single induction plate on the dining table."
+            }
+          ]
         }
       ]
     },
@@ -154,7 +242,8 @@
           "duration": "45 days",
           "projectType": "residential",
           "area": "1450 sq ft",
-          "category": "residential"
+          "category": "residential",
+          "budget": "₹8–10 lakh"
         },
         {
           "title": "Boring Road Kitchen",
@@ -169,7 +258,8 @@
           "duration": "90 days",
           "projectType": "residential",
           "area": "2600 sq ft",
-          "category": "residential"
+          "category": "residential",
+          "budget": "₹14–18 lakh"
         },
         {
           "title": "Kankarbagh Flat",
@@ -184,7 +274,8 @@
           "duration": "60 days",
           "projectType": "residential",
           "area": "1800 sq ft",
-          "category": "residential"
+          "category": "residential",
+          "budget": "₹10–12 lakh"
         },
         {
           "title": "Study Nook",
@@ -198,7 +289,8 @@
           "duration": "30 days",
           "projectType": "residential",
           "area": "220 sq ft",
-          "category": "residential"
+          "category": "residential",
+          "budget": "₹1.5–2 lakh"
         },
         {
           "title": "Patliputra Duplex",
@@ -212,7 +304,8 @@
           "duration": "90 days",
           "projectType": "residential",
           "area": "2600 sq ft",
-          "category": "residential"
+          "category": "residential",
+          "budget": "₹14–18 lakh"
         },
         {
           "title": "Portfolio",
@@ -226,7 +319,8 @@
           "duration": "75 days",
           "projectType": "residential",
           "area": "1900 sq ft",
-          "category": "residential"
+          "category": "residential",
+          "budget": "₹11–14 lakh"
         }
       ]
     },
@@ -360,23 +454,221 @@
       ]
     },
     "team": {
-      "enabled": false,
+      "enabled": true,
       "detailPages": true,
       "members": [
         {
-          "name": "Ashish Kumar",
-          "role": "Principal Designer",
+          "name": "ASHISH KUMAR",
+          "role": "FOUNDER & PRINCIPAL DESIGNER",
           "slug": "ashish-kumar",
-          "bio": "Founded the studio in 2013."
+          "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+          "bio": "Takes every first site visit himself and draws the flats he takes on.",
+          "tenure": "SINCE 2013 — TWELVE YEARS",
+          "line": "Takes every first site visit himself and draws the flats he takes on.",
+          "eyebrow": "FOUNDER, PRINCIPAL DESIGNER",
+          "body": [
+            "Ashish started the practice in 2013 with one carpenter, a measuring tape and a rented room off Boring Road. Before that he spent five years on site with a Patna contractor doing builder finishing work — which is where he learned what fails after two monsoons and what does not.",
+            "He still takes the first visit on every project. The measuring, the budget conversation and the decision about whether a wall can honestly come down are his; nothing goes to drawing until he has stood in the room. On site he is in most days before eleven, because in his experience a job drifts in the mornings, not the evenings.",
+            "His own bias in the work is towards storage and away from decoration — he will argue for a taller wardrobe over a feature wall almost every time, and he would rather spend the client's money on plywood grade than on a false ceiling nobody looks at."
+          ],
+          "credentials": [
+            "Diploma in Interior Design, Patna. Registered contractor, Bihar. Twelve years in practice, 240 completed sites."
+          ],
+          "projects": [
+            {
+              "slug": "3bhk-boring-road",
+              "title": "3BHK, BORING CANAL ROAD"
+            },
+            {
+              "slug": "patliputra-duplex",
+              "title": "DUPLEX, PATLIPUTRA"
+            }
+          ]
+        },
+        {
+          "name": "SUNITA RAJ",
+          "role": "PARTNER, DESIGN",
+          "slug": "sunita-raj",
+          "image": "/clients/ashish-interiors/editorial/team/principal-02.jpg",
+          "bio": "Runs the drawing office and every kitchen and joinery detail that leaves it.",
+          "tenure": "SINCE 2016 — NINE YEARS",
+          "line": "Runs the drawing office and every kitchen and joinery detail that leaves it.",
+          "eyebrow": "PARTNER, DESIGN",
+          "body": [
+            "Sunita trained at NIFT and worked three years for a Delhi furniture manufacturer before coming back to Patna in 2016. She joined as the practice's first full-time designer and became a partner in 2021.",
+            "She owns the drawing office: layouts, joinery sections, finish boards and the shop drawings the workshop actually builds from. If a wardrobe shutter is 18 mm rather than 16, it is because she specified it and can tell you why.",
+            "Kitchens are her particular subject — work triangles, drawer depths, where the masala shelf has to sit so nobody stretches over a flame. Most of what the studio knows about fitting a modular kitchen into a 1990s Patna flat came out of her drawings."
+          ],
+          "credentials": [
+            "B.Des, NIFT. Nine years with the practice. Member, Institute of Indian Interior Designers."
+          ],
+          "projects": [
+            {
+              "slug": "boring-road-kitchen",
+              "title": "BORING ROAD KITCHEN"
+            }
+          ]
+        },
+        {
+          "name": "MANOJ SAHU",
+          "role": "PARTNER, EXECUTION",
+          "slug": "manoj-sahu",
+          "image": "/clients/ashish-interiors/editorial/team/principal-03.jpg",
+          "bio": "Runs the workshop and the site calendar; the reason handover dates hold.",
+          "tenure": "SINCE 2014 — ELEVEN YEARS",
+          "line": "Runs the workshop and the site calendar; the reason handover dates hold.",
+          "eyebrow": "PARTNER, EXECUTION",
+          "body": [
+            "Manoj is a carpenter by trade — twenty-two years at the bench, eleven of them here. He was the second person Ashish hired and now runs the workshop and the site calendar for every live project.",
+            "The dated schedule clients get on signing is his document. He sequences four to six sites at a time against one workshop, which is why we can promise a handover date at all and why we phase occupied flats around the family's cooking.",
+            "He also trains the apprentices. Every carpenter on our rolls has been through six months on his bench before they are allowed to cut for a client, and he signs off the punch list personally before any key changes hands."
+          ],
+          "credentials": [
+            "ITI Carpentry, Patna. Twenty-two years at the bench. Site safety certification, 2023."
+          ],
+          "projects": []
         }
-      ]
+      ],
+      "intro": "Twenty of us: three who take the brief and draw it, four who supervise sites, eleven carpenters and finishers in our own workshop off Boring Road, and two who keep the accounts and the material invoices straight. Nothing is subcontracted, so the crew that turns up on day one is the crew that hands you the keys — and the person who drew your kitchen will be standing in it while it goes in.",
+      "groups": [
+        {
+          "label": "Design office",
+          "count": "5 people",
+          "people": [
+            {
+              "name": "PRIYA NANDAN",
+              "role": "SENIOR DESIGNER",
+              "image": "/clients/ashish-interiors/editorial/team/design-01.jpg"
+            },
+            {
+              "name": "RAHUL VERMA",
+              "role": "DESIGNER",
+              "image": "/clients/ashish-interiors/editorial/team/design-02.jpg"
+            },
+            {
+              "name": "ANJALI SINHA",
+              "role": "DESIGNER",
+              "image": "/clients/ashish-interiors/editorial/team/design-03.jpg"
+            },
+            {
+              "name": "FAIZ AHMED",
+              "role": "JUNIOR DESIGNER",
+              "image": "/clients/ashish-interiors/editorial/team/design-04.jpg"
+            },
+            {
+              "name": "MEERA DAS",
+              "role": "DRAUGHTSMAN",
+              "image": "/clients/ashish-interiors/editorial/team/design-05.jpg"
+            }
+          ]
+        },
+        {
+          "label": "Site supervision",
+          "count": "4 people",
+          "people": [
+            {
+              "name": "SANJAY PRASAD",
+              "role": "SENIOR SITE SUPERVISOR",
+              "image": "/clients/ashish-interiors/editorial/team/site-01.jpg"
+            },
+            {
+              "name": "VIKASH ROY",
+              "role": "SITE SUPERVISOR",
+              "image": "/clients/ashish-interiors/editorial/team/site-02.jpg"
+            },
+            {
+              "name": "DEEPAK GUPTA",
+              "role": "SITE SUPERVISOR",
+              "image": "/clients/ashish-interiors/editorial/team/site-03.jpg"
+            },
+            {
+              "name": "ARUN THAKUR",
+              "role": "SITE SUPERVISOR",
+              "image": "/clients/ashish-interiors/editorial/team/site-04.jpg"
+            }
+          ]
+        },
+        {
+          "label": "Workshop & finishing",
+          "count": "6 people",
+          "people": [
+            {
+              "name": "RAMESH SHARMA",
+              "role": "MASTER CARPENTER",
+              "image": "/clients/ashish-interiors/editorial/team/workshop-01.jpg"
+            },
+            {
+              "name": "SUNIL PASWAN",
+              "role": "CARPENTER",
+              "image": "/clients/ashish-interiors/editorial/team/workshop-02.jpg"
+            },
+            {
+              "name": "MOHAN YADAV",
+              "role": "CARPENTER",
+              "image": "/clients/ashish-interiors/editorial/team/workshop-03.jpg"
+            },
+            {
+              "name": "IRFAN ANSARI",
+              "role": "CARPENTER",
+              "image": "/clients/ashish-interiors/editorial/team/workshop-04.jpg"
+            },
+            {
+              "name": "KAVITA DEVI",
+              "role": "POLISH & FINISHING",
+              "image": "/clients/ashish-interiors/editorial/team/workshop-05.jpg"
+            },
+            {
+              "name": "BIRJU MAHTO",
+              "role": "POLISH & FINISHING",
+              "image": "/clients/ashish-interiors/editorial/team/workshop-06.jpg"
+            }
+          ]
+        },
+        {
+          "label": "Accounts & procurement",
+          "count": "2 people",
+          "people": [
+            {
+              "name": "SHALINI KUMARI",
+              "role": "ACCOUNTS",
+              "image": "/clients/ashish-interiors/editorial/team/accounts-01.jpg"
+            },
+            {
+              "name": "NITIN JHA",
+              "role": "PROCUREMENT",
+              "image": "/clients/ashish-interiors/editorial/team/accounts-02.jpg"
+            }
+          ]
+        }
+      ],
+      "workshop": {
+        "title": "THE WORKSHOP",
+        "body": "Eleven of the twenty work here rather than on site. Everything you see in a finished flat was cut, assembled and polished in this room off Boring Road before it was carried up a staircase.",
+        "photos": [
+          {
+            "image": "/clients/ashish-interiors/editorial/team/bench.jpg",
+            "caption": "THE BENCH — WHERE EVERY SHUTTER IS CUT",
+            "wide": true
+          },
+          {
+            "image": "/clients/ashish-interiors/editorial/team/ply.jpg",
+            "caption": "PLY STORE",
+            "wide": false
+          },
+          {
+            "image": "/clients/ashish-interiors/editorial/team/tools.jpg",
+            "caption": "FINISHING TOOLS",
+            "wide": false
+          }
+        ]
+      }
     },
     "beforeAfter": {
       "pairs": [
         {
           "before": "/clients/ashish-interiors/editorial/portfolio-01.jpg",
           "after": "/clients/ashish-interiors/editorial/portfolio-02.jpg",
-          "caption": "Sample pair \u2014 replace before this site goes live."
+          "caption": "Sample pair — replace before this site goes live."
         }
       ]
     },
@@ -418,10 +710,382 @@
       }
     },
     "caseStudy": {
-      "items": []
+      "items": [
+        {
+          "slug": "3bhk-boring-road",
+          "title": "3BHK, BORING ROAD",
+          "problem": [
+            "A family of four had just taken possession of a 1,320 sq ft flat off Boring Road. Two working parents, two school-going children, one grandmother visiting for months at a time — and a builder shell with a dark corridor and a kitchen closed off behind a wall.",
+            "The brief was practical rather than aspirational. They wanted storage that could absorb a decade of accumulation, a kitchen where two people could cook together during festivals, and a home that would still look right when the furniture inevitably got moved around. The budget was fixed at ten lakh, and they were honest that it could not stretch.",
+            "We spent the first two sittings measuring, photographing and listening — no drawings, no mood boards. Most of what shaped this project came out of that conversation: the grandmother needed a room she could shut, the children shared study hours, and the family ate at the table every night."
+          ],
+          "approachIntro": "Rather than spread a thin budget across every surface, we put the money into three decisions and kept everything else deliberately plain — white walls, a single laminate family, no false ceilings except where wiring demanded them.",
+          "decisions": [
+            {
+              "letter": "A",
+              "title": "THE KITCHEN WALL CAME DOWN",
+              "body": "A half-height counter replaced it. The dark corridor became the brightest part of the flat, and two people can now work either side of the hob without colliding."
+            },
+            {
+              "letter": "B",
+              "title": "STORAGE IN THE DEAD SPACE",
+              "body": "Every corridor wall, bed base and window seat carries concealed storage — 214 cubic feet of it, built in commercial ply so it survives Patna's humidity."
+            },
+            {
+              "letter": "C",
+              "title": "ONE MATERIAL, REPEATED",
+              "body": "A single warm oak laminate runs through joinery in all five rooms. It cost less by volume, it ages evenly, and a damaged panel can be matched years from now."
+            }
+          ],
+          "outcome": [
+            "Handover was on day 45, three days later than the dated schedule — a delay caused by a marble slab that arrived cracked and had to be re-cut. The final bill came in at ₹9.4 lakh, inside the range they had set, with material invoices handed over in a folder.",
+            "A year on, the joinery has held through one full monsoon and the family has moved the sofa twice without the room falling apart — which was, in the end, the actual brief. They have since sent us two neighbours in the same building."
+          ],
+          "stats": [
+            {
+              "value": "1,320",
+              "label": "SQ FT CARPET AREA"
+            },
+            {
+              "value": "214",
+              "label": "CU FT STORAGE BUILT"
+            },
+            {
+              "value": "₹9.4L",
+              "label": "FINAL BILLED COST"
+            }
+          ],
+          "quote": {
+            "text": "They took down the kitchen wall we had argued about for a month and were right about it. Dated schedule, weekly photographs, bills in our hands — the whole thing felt like dealing with grown-ups.",
+            "author": "R. KUMAR",
+            "context": "BORING ROAD, PATNA",
+            "image": "/clients/ashish-interiors/editorial/case-study/quote.jpg"
+          },
+          "images": [
+            "/clients/ashish-interiors/editorial/case-study/hero.jpg",
+            "/clients/ashish-interiors/editorial/case-study/living-01.jpg",
+            "/clients/ashish-interiors/editorial/case-study/living-02.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-01.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-02.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-03.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-04.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-05.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-06.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-07.jpg"
+          ]
+        },
+        {
+          "slug": "boring-road-kitchen",
+          "title": "KITCHEN BORING ROAD",
+          "problem": [
+            "A two-floor house in Kankarbagh where the kitchen had to feed festivals as well as weeknights — and the rest of the house had to follow from that one room.",
+            "The existing kitchen was a closed wet box. The brief was to open it, give two people space to cook, and then carry the same joinery language through both floors so the house read as one job, not a kitchen plus leftovers.",
+            "We measured for a week before drawing. The staircase landing became the hinge: storage, light and the route between floors all had to pass through it without feeling like a corridor."
+          ],
+          "approachIntro": "Ninety days is long enough to get greedy. We did not. The money went into the kitchen, the staircase storage and a single finish family; everything else stayed a painted wall.",
+          "decisions": [
+            {
+              "letter": "A",
+              "title": "THE KITCHEN AS THE HOUSE",
+              "body": "A long run of counters on two walls, a window over the sink, and a pass-through so the dining table is in the same conversation as the hob."
+            },
+            {
+              "letter": "B",
+              "title": "THE LANDING EARNS ITS KEEP",
+              "body": "The stair void became full-height cupboards on the blind side — linen, steel and the festival thalis that used to live in cartons."
+            },
+            {
+              "letter": "C",
+              "title": "ONE LAMINATE, BOTH FLOORS",
+              "body": "The same warm oak as the rest of the house, ordered in one lot so a door on the first floor still matches a drawer on the ground five years later."
+            }
+          ],
+          "outcome": [
+            "Handover was on day 90. The kitchen was in use from week six — we phased the wet work so the family could keep cooking on a temporary counter at the back.",
+            "The house now reads as one interior. The owners asked us back for the terrace the following winter."
+          ],
+          "stats": [
+            {
+              "value": "2,600",
+              "label": "SQ FT CARPET AREA"
+            },
+            {
+              "value": "2",
+              "label": "FLOORS HANDED OVER"
+            },
+            {
+              "value": "90",
+              "label": "DAYS ON SITE"
+            }
+          ],
+          "images": []
+        },
+        {
+          "slug": "kankarbagh-flat",
+          "title": "FLAT KANKARBAGH",
+          "problem": [
+            "An 1,800 sq ft flat in Kankarbagh for a family that works from home two days a week and entertains the rest.",
+            "They wanted a desk that could disappear, a living room that could take twelve people, and storage that did not announce itself. The builder had given them a long dark hall and a kitchen with no window.",
+            "The first sitting was only listening. The plan changed once we understood they eat in the living room, not at a separate dining table."
+          ],
+          "approachIntro": "We treated the hall as the project. Open the kitchen to it, put work into a window seat, and keep the bedrooms quiet.",
+          "decisions": [
+            {
+              "letter": "A",
+              "title": "HALL INTO A ROOM",
+              "body": "The kitchen wall dropped to a counter. Daylight from the living window now reaches the hob, and guests no longer stand in a corridor."
+            },
+            {
+              "letter": "B",
+              "title": "A DESK THAT IS A SEAT",
+              "body": "The window seat in the second bedroom lifts. A laptop fits; the room still sleeps a guest without looking like an office."
+            },
+            {
+              "letter": "C",
+              "title": "THE SAME OAK, QUIETER",
+              "body": "Joinery in one laminate, walls left white, no false ceiling except over the air-conditioner chase."
+            }
+          ],
+          "outcome": [
+            "Sixty days, on the dated schedule. The living room has held a festival dinner twice since handover without anyone moving furniture into a bedroom.",
+            "They sent the neighbour on the same floor. That is still how most of our Kankarbagh work arrives."
+          ],
+          "stats": [
+            {
+              "value": "1,800",
+              "label": "SQ FT CARPET AREA"
+            },
+            {
+              "value": "60",
+              "label": "DAYS ON SITE"
+            },
+            {
+              "value": "1",
+              "label": "NEIGHBOUR REFERRED"
+            }
+          ],
+          "images": []
+        },
+        {
+          "slug": "study-nook",
+          "title": "STUDY NOOK",
+          "problem": [
+            "A 220 sq ft room that had been a dumping ground — cartons, a dead treadmill, a window that nobody opened.",
+            "The brief was a quiet room for books, daylight and work that needs concentration. One person, one desk, shelves that would still look right when the books doubled.",
+            "We kept the existing flooring and spent the budget on the window, the desk run and lighting that does not glare on paper."
+          ],
+          "approachIntro": "A single room cannot afford three ideas. We built one wall of shelves, a desk under the window, and left the rest of the room empty on purpose.",
+          "decisions": [
+            {
+              "letter": "A",
+              "title": "THE WINDOW CAME FIRST",
+              "body": "Deep reveal, a seat that is also a lid, and the desk set so the light comes from the side rather than the face."
+            },
+            {
+              "letter": "B",
+              "title": "SHELVES TO THE SLAB",
+              "body": "One wall, floor to ceiling, with the top two shelves for the books that are kept and the lower ones for the books that are used."
+            },
+            {
+              "letter": "C",
+              "title": "ONE TIMBER, NO TRIM",
+              "body": "The same oak laminate as the rest of the house, no cornice, no false ceiling. A room this small shows every extra line."
+            }
+          ],
+          "outcome": [
+            "Thirty days. The treadmill left on day one; the room has been in daily use since handover.",
+            "It is the room visitors ask about first, which is not what anyone expected of the smallest space in the house."
+          ],
+          "stats": [
+            {
+              "value": "220",
+              "label": "SQ FT CARPET AREA"
+            },
+            {
+              "value": "30",
+              "label": "DAYS ON SITE"
+            },
+            {
+              "value": "1",
+              "label": "WALL OF SHELVING"
+            }
+          ],
+          "images": []
+        },
+        {
+          "slug": "patliputra-duplex",
+          "title": "DUPLEX PATLIPUTRA",
+          "problem": [
+            "A full-home interior planned for daily life across two floors in Patliputra — parents below, children above, everyone meeting at the dining table.",
+            "The builder staircase was a leftover. The brief was to make the house work as one address: storage on both floors, a kitchen that serves the table, and bedrooms that shut properly.",
+            "We lived with a measured survey for ten days before the first drawing. Most of the plan came from how they already walked the house."
+          ],
+          "approachIntro": "Two floors tempt two palettes. We refused. One laminate, one floor tile, and the staircase treated as a piece of furniture rather than a leftover.",
+          "decisions": [
+            {
+              "letter": "A",
+              "title": "THE STAIR IS STORAGE",
+              "body": "The void under the flight became the house cupboard — bags, board games, the things that used to live on the landing."
+            },
+            {
+              "letter": "B",
+              "title": "KITCHEN ON THE GARDEN SIDE",
+              "body": "We moved the wet work to the brighter wall so cooking looks onto the small yard instead of the neighbour’s shaft."
+            },
+            {
+              "letter": "C",
+              "title": "THE SAME LANGUAGE UPSTAIRS",
+              "body": "Children’s rooms use the same oak and the same handle. They will grow; the joinery will not have to."
+            }
+          ],
+          "outcome": [
+            "Ninety days, handed over with a snag list of seven items that were closed the same week.",
+            "A year on they asked for the terrace. The downstairs still looks like the upstairs, which was the point."
+          ],
+          "stats": [
+            {
+              "value": "2,600",
+              "label": "SQ FT CARPET AREA"
+            },
+            {
+              "value": "2",
+              "label": "FLOORS HANDED OVER"
+            },
+            {
+              "value": "90",
+              "label": "DAYS ON SITE"
+            }
+          ],
+          "images": []
+        },
+        {
+          "slug": "portfolio-detail",
+          "title": "HOME PATNA",
+          "problem": [
+            "A 1,900 sq ft interior shaped around the way a family lives every day — not around a photograph.",
+            "They asked for storage, a kitchen two people could share, and rooms that would survive furniture being rearranged. The budget was named on the first visit.",
+            "We measured, photographed and listened for two sittings before any drawing left the studio."
+          ],
+          "approachIntro": "Three decisions took the money. The rest of the house is white walls, one laminate, and ceilings left alone unless a wire demanded otherwise.",
+          "decisions": [
+            {
+              "letter": "A",
+              "title": "OPEN THE KITCHEN",
+              "body": "A half-height counter replaced the wall. The hall is no longer a tunnel, and cooking is part of the room."
+            },
+            {
+              "letter": "B",
+              "title": "DEAD SPACE WORKS",
+              "body": "Corridor walls, bed bases and the window seat all conceal storage, built in commercial ply for a Patna monsoon."
+            },
+            {
+              "letter": "C",
+              "title": "ONE MATERIAL",
+              "body": "A single oak laminate through every room, so a damaged shutter can be matched years later from the same family."
+            }
+          ],
+          "outcome": [
+            "Seventy-five days on site. The bill landed inside the range they set, with invoices in a folder at handover.",
+            "The sofa has moved twice. The room still holds, which was the brief they actually gave us."
+          ],
+          "stats": [
+            {
+              "value": "1,900",
+              "label": "SQ FT CARPET AREA"
+            },
+            {
+              "value": "75",
+              "label": "DAYS ON SITE"
+            },
+            {
+              "value": "1",
+              "label": "FINISH FAMILY"
+            }
+          ],
+          "images": []
+        }
+      ],
+      "enabled": true
     },
     "locations": {
-      "offices": []
+      "offices": [
+        {
+          "slug": "patna-studio",
+          "name": "PATNA STUDIO",
+          "address": {
+            "line1": "2nd Floor, Boring Road",
+            "locality": "Boring Road",
+            "city": "Patna",
+            "state": "Bihar",
+            "pincode": "800001",
+            "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=sample"
+          },
+          "phone": "+919876543210",
+          "hours": {
+            "weekday": "10:00 – 19:00",
+            "saturday": "10:00 – 19:00",
+            "sunday": "By appointment",
+            "note": "Saturday mornings are the busiest — someone is always at the sample table and no appointment is needed for a first conversation."
+          },
+          "photo": {
+            "image": "/clients/ashish-interiors/editorial/locations/studio.jpg",
+            "caption": "THE SAMPLE RACKS, SECOND FLOOR — WHERE EVERY PROJECT STARTS"
+          },
+          "findNote": "Above the stationery shop, staircase beside the ATM. Parking on the service lane behind the building.",
+          "about": {
+            "lead": "We took the second floor above the crossing in 2016, three years after starting in a single rented room two lanes away. It is the only office we have.",
+            "body": [
+              "The floor is a drawing office, a sample room and one long table. There is no reception, because nine times out of ten the person who greets you is the person who will draw your flat. Laminates, ply cross-sections, granite offcuts and hardware samples are all on open racks — clients handle the actual material rather than approving a swatch on a screen.",
+              "The work this studio takes is Patna and about 150 km around it: Hajipur, Danapur, Bihta, Muzaffarpur. Roughly seven in ten projects are flats between 900 and 1,500 sq ft; the rest are small professional offices, guest houses and the occasional shop. We do not bid outside that radius, because the whole model depends on a supervisor being able to reach a site the same morning.",
+              "The workshop is a separate floor five minutes away, which moved and doubled in 2025. Clients are welcome to see their joinery being cut — ask on a weekday and Manoj will take you across."
+            ],
+            "stats": [
+              {
+                "value": "2016",
+                "label": "THIS FLOOR TAKEN"
+              },
+              {
+                "value": "20",
+                "label": "PEOPLE, STUDIO & WORKSHOP"
+              },
+              {
+                "value": "150 KM",
+                "label": "WORKING RADIUS"
+              }
+            ]
+          },
+          "team": [
+            {
+              "name": "ASHISH KUMAR",
+              "role": "FOUNDER & PRINCIPAL DESIGNER",
+              "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg"
+            },
+            {
+              "name": "SUNITA RAJ",
+              "role": "PARTNER, DESIGN",
+              "image": "/clients/ashish-interiors/editorial/team/principal-02.jpg"
+            },
+            {
+              "name": "MANOJ SAHU",
+              "role": "PARTNER, EXECUTION",
+              "image": "/clients/ashish-interiors/editorial/team/principal-03.jpg"
+            },
+            {
+              "name": "SHALINI KUMARI",
+              "role": "ACCOUNTS",
+              "image": "/clients/ashish-interiors/editorial/team/accounts-01.jpg"
+            }
+          ],
+          "projectSlugs": [
+            "3bhk-boring-road",
+            "boring-road-kitchen",
+            "kankarbagh-flat",
+            "patliputra-duplex"
+          ]
+        }
+      ],
+      "enabled": true,
+      "otherLocationsNote": "One studio, one workshop and a site office we keep during Hajipur projects. We have been asked about Muzaffarpur and Ranchi and have said no to both — a second city needs a supervisor who lives in it."
     },
     "videoTour": {
       "url": "https://www.youtube.com/watch?v=sample"
@@ -430,13 +1094,989 @@
       "pdf": "/clients/ashish-interiors/company-profile.pdf"
     },
     "journal": {
-      "posts": []
+      "posts": [
+        {
+          "slug": "plywood-in-a-monsoon",
+          "title": "WHICH PLYWOOD ACTUALLY SURVIVES A PATNA MONSOON",
+          "displayTitle": {
+            "lead": "PLYWOOD",
+            "accent": "IN A MONSOON"
+          },
+          "date": "24 JULY 2026",
+          "topic": "MATERIALS",
+          "words": "1,200 WORDS",
+          "excerpt": "Four grades, one humidity problem, and the two places where paying more is the only sensible decision.",
+          "author": {
+            "slug": "sunita-raj",
+            "name": "SUNITA RAJ",
+            "role": "PARTNER, DESIGN",
+            "image": "/clients/ashish-interiors/editorial/team/principal-02.jpg",
+            "line": "Runs the drawing office — layouts, joinery sections and every kitchen detail that leaves the studio."
+          },
+          "cover": "/clients/ashish-interiors/editorial/locations/studio.jpg",
+          "body": [
+            {
+              "type": "p",
+              "text": "Every second client asks us whether they really need BWP-grade plywood, and the honest answer is: in two places yes, everywhere else no. Here is how we decide, and what it costs."
+            },
+            {
+              "type": "p",
+              "text": "Patna sits at eighty per cent relative humidity for a good four months of the year. That is the number that matters — not the rain itself, but the months of damp air that follow it. Plywood fails in that air by delamination: the glue line between veneers gives up, the sheet swells at the edges, and the shutter stops closing flush. You will notice it as a door that rubs, roughly eighteen months after handover."
+            },
+            {
+              "type": "p",
+              "text": "There are four grades worth discussing. MR — moisture resistant — is the commodity sheet most job-work carpenters use. BWR is boiling water resistant. BWP is boiling water proof, bonded with phenolic resin. And marine ply is BWP with tighter veneer tolerances and a higher price. The names are close enough that they get used interchangeably in the market, which is exactly the confusion we spend the first material meeting undoing."
+            },
+            {
+              "type": "h2",
+              "lead": "WHERE IT",
+              "accent": "ACTUALLY MATTERS"
+            },
+            {
+              "type": "p",
+              "text": "In twelve years and 240 sites, plywood has failed on us in three places and three places only: under the kitchen sink, inside the bathroom vanity, and along the bottom rail of a wardrobe that shares a wall with a bathroom. Every other failure we have seen was a hardware or an edge-banding failure wearing plywood's blame."
+            },
+            {
+              "type": "p",
+              "text": "So that is where the money goes. BWP under every sink and in every vanity carcass, without exception and without discussion. For the rest of the flat — wardrobes on internal walls, beds, TV units, corridor storage — a good BWR sheet from a mill we know is the right specification, and the difference funds better hinges."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                "Under-sink carcass and bathroom vanity: BWP only, no substitution.",
+                "Wardrobe bottom rails on any bathroom-shared wall: BWP for the lower 300 mm.",
+                "Everything else: BWR from a named mill, with the ISI number on the sheet.",
+                "Edge banding on every exposed edge — more failures come from a bare edge than from the grade."
+              ]
+            },
+            {
+              "type": "pullquote",
+              "text": "“The sheet is rarely the problem. An unbanded edge two hundred millimetres from a leaking trap is the problem.”"
+            },
+            {
+              "type": "p",
+              "text": "The cost difference is smaller than most people expect. On a typical 1,300 sq ft flat, upgrading the whole joinery package from BWR to BWP adds about ₹42,000. Upgrading only the wet-area carcasses — which is what we recommend — adds about ₹6,500. That is the entire argument in one figure."
+            },
+            {
+              "type": "image",
+              "image": "/clients/ashish-interiors/editorial/service-detail/tile-01.jpg",
+              "caption": "BORING ROAD — BWP CARCASS UNDER THE SINK, BWR EVERYWHERE ELSE"
+            },
+            {
+              "type": "h2",
+              "lead": "HOW TO CHECK",
+              "accent": "WHAT YOU BOUGHT"
+            },
+            {
+              "type": "p",
+              "text": "Ask for the sheet, not the brand. A mill stamp on the face, an ISI mark with a licence number, and the grade printed along the edge — all three should be there before the sheet is cut. If a carpenter has already cut the sheets, you have lost the ability to verify anything, which is why we take delivery in front of the client on the first day."
+            },
+            {
+              "type": "p",
+              "text": "The second check is weight. A phenolic-bonded BWP sheet is noticeably heavier than an MR sheet of the same thickness; anyone who handles ply daily can feel the difference. If a supplier's BWP feels like MR, it is MR."
+            },
+            {
+              "type": "p",
+              "text": "The third is the boil test, which sounds absurd and takes twenty minutes. A 100 mm offcut in boiling water for two hours: BWP holds, MR delaminates at the corners. We have done this on site twice, both times because a client had been sold something at a suspiciously good rate, and both times the sheet failed."
+            },
+            {
+              "type": "h2",
+              "lead": "WHAT WE",
+              "accent": "SPECIFY NOW"
+            },
+            {
+              "type": "p",
+              "text": "Since 2023 our standard specification has been BWR from one of three mills for general joinery, BWP for all wet areas, 18 mm for carcasses and shutters, 12 mm for backs, and edge banding on every visible edge including the ones inside a wardrobe. It is written into the quotation so a client can hold us to it."
+            },
+            {
+              "type": "p",
+              "text": "None of this is exotic. It is the boring, checkable version of a decision that usually gets made on a brand name and a handshake — and it is why the joinery in that Boring Road flat has been through three monsoons with every shutter still closing flush."
+            }
+          ],
+          "full": true,
+          "related": [
+            {
+              "slug": "3bhk-boring-road",
+              "title": "3BHK, BORING CANAL ROAD",
+              "image": "/clients/ashish-interiors/editorial/portfolio-04.jpg"
+            },
+            {
+              "slug": "boring-road-kitchen",
+              "title": "KITCHEN REFIT, RAJAPUR PUL",
+              "image": "/clients/ashish-interiors/editorial/service-01.jpg"
+            }
+          ]
+        },
+        {
+          "slug": "the-three-metre-kitchen",
+          "title": "THE THREE-METRE KITCHEN: WORKING WITH WHAT A 1990S FLAT GIVES YOU",
+          "displayTitle": {
+            "lead": "THE THREE-METRE",
+            "accent": "KITCHEN"
+          },
+          "date": "09 JULY 2026",
+          "topic": "DESIGN",
+          "words": "1,050 WORDS",
+          "excerpt": "Most Patna kitchens are a single three-metre run behind a door. The plan matters more than any fitting you can buy.",
+          "author": {
+            "slug": "sunita-raj",
+            "name": "SUNITA RAJ",
+            "role": "PARTNER, DESIGN",
+            "image": "/clients/ashish-interiors/editorial/team/principal-02.jpg",
+            "line": "Runs the drawing office — layouts, joinery sections and every kitchen detail that leaves the studio."
+          },
+          "cover": "/clients/ashish-interiors/editorial/service-01.jpg",
+          "body": [
+            {
+              "type": "p",
+              "text": "A 1990s Patna kitchen is usually one three-metre wall, one window in the wrong place, and a gas line that cannot move. Everything good you can do happens inside those three constraints."
+            },
+            {
+              "type": "p",
+              "text": "The instinct is to shop — tandem drawers, soft-close everything, a chimney with a brand name. But a badly planned kitchen with excellent hardware is still a badly planned kitchen, and it costs the same as a well planned one. The plan is the free part."
+            },
+            {
+              "type": "p",
+              "text": "So we start by measuring three things and nothing else: the length of the usable run, the height of the window sill, and the fixed position of the gas point. Those three numbers determine almost every decision that follows."
+            },
+            {
+              "type": "h2",
+              "lead": "THE WORK",
+              "accent": "TRIANGLE, COMPRESSED"
+            },
+            {
+              "type": "p",
+              "text": "Textbook kitchen planning assumes you can spread hob, sink and fridge across two or three walls. In a three-metre run you cannot, so the triangle collapses into a line — and the question becomes what order that line goes in. We put the sink at the window end, the hob at the far end away from the door, and the fridge outside the run entirely wherever there is any way to do it."
+            },
+            {
+              "type": "p",
+              "text": "The reason is traffic. If the fridge sits in the middle of a three-metre run, everyone who wants water walks through the cooking zone. Moving it two metres out of the kitchen — into a dining-side niche, usually — buys back the whole counter."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                "Sink at the window end — daylight where you stand longest.",
+                "Hob at the far end, never beside the door.",
+                "Fridge outside the run if there is any alternative position at all.",
+                "Masala shelf at shoulder height beside the flame, not on a shelf above it."
+              ]
+            },
+            {
+              "type": "pullquote",
+              "text": "“If the plan is wrong, no amount of hardware will fix it. Measure first, then argue about finishes.”"
+            },
+            {
+              "type": "p",
+              "text": "The masala shelf is worth its own sentence. Putting it above the hob is standard and wrong — it means reaching over a live flame several times a meal. Beside the hob at shoulder height, in a shallow 120 mm unit, costs nothing extra and removes a daily hazard."
+            },
+            {
+              "type": "image",
+              "image": "/clients/ashish-interiors/editorial/locations/studio.jpg",
+              "caption": "RAJAPUR PUL — SHALLOW SHELF BESIDE THE HOB, NOT ABOVE IT"
+            },
+            {
+              "type": "h2",
+              "lead": "TALL UNITS",
+              "accent": "INSTEAD OF LOFTS"
+            },
+            {
+              "type": "p",
+              "text": "Every one of these flats has a loft above the kitchen door that holds a suitcase nobody has opened since 2011. It is dead volume: too high to reach, too shallow to be useful, and always the dustiest surface in the house."
+            },
+            {
+              "type": "p",
+              "text": "We take that volume into a full-height unit instead — floor to ceiling, 600 deep, with the top 400 mm as a proper shuttered cupboard rather than an open ledge. The same cubic feet become storage somebody actually opens."
+            },
+            {
+              "type": "p",
+              "text": "It also fixes the visual proportion. A three-metre run with a loft above it reads as a corridor with cupboards; the same run taken to the ceiling reads as a fitted kitchen, which is largely why these refits photograph better than they have any right to."
+            },
+            {
+              "type": "h2",
+              "lead": "WHAT IT",
+              "accent": "COSTS TO DO WELL"
+            },
+            {
+              "type": "p",
+              "text": "A competently planned kitchen in this format — BWR carcasses with BWP under the sink, laminate shutters, decent hinges and channels, granite counter, chimney and hob — lands between ₹2.2 and ₹2.8 lakh in Patna as of mid-2026. The same kitchen planned badly costs the same and works worse every day for fifteen years."
+            },
+            {
+              "type": "p",
+              "text": "We have done eleven of these now. The drawings look almost identical from project to project, which is the point: the constraint is the same in every one of these buildings, and the answer to a repeated constraint should be a repeated answer."
+            }
+          ],
+          "full": true,
+          "related": [
+            {
+              "slug": "boring-road-kitchen",
+              "title": "KITCHEN REFIT, RAJAPUR PUL",
+              "image": "/clients/ashish-interiors/editorial/service-01.jpg"
+            },
+            {
+              "slug": "3bhk-boring-road",
+              "title": "3BHK, BORING CANAL ROAD",
+              "image": "/clients/ashish-interiors/editorial/portfolio-04.jpg"
+            }
+          ]
+        },
+        {
+          "slug": "a-photograph-every-week",
+          "title": "WHY WE PHOTOGRAPH YOUR SITE EVERY WEEK",
+          "displayTitle": {
+            "lead": "A PHOTOGRAPH",
+            "accent": "EVERY WEEK"
+          },
+          "date": "21 JUNE 2026",
+          "topic": "PROCESS",
+          "words": "980 WORDS",
+          "excerpt": "Four photographs a week, including the ones that show what went wrong. It changed how we run sites more than any software did.",
+          "author": {
+            "slug": "manoj-sahu",
+            "name": "MANOJ SAHU",
+            "role": "PARTNER, EXECUTION",
+            "image": "/clients/ashish-interiors/editorial/team/principal-03.jpg",
+            "line": "Runs the workshop and the site calendar; twenty-two years at the carpentry bench."
+          },
+          "cover": "/clients/ashish-interiors/editorial/team/bench.jpg",
+          "body": [
+            {
+              "type": "p",
+              "text": "Every client gets four photographs a week from their site, sent on a Friday. It sounds like a courtesy. It is actually the single biggest change we have made to how we work."
+            },
+            {
+              "type": "p",
+              "text": "We started doing it in 2019 for a client who lived in Delhi and could not visit. By the end of that project we had noticed something we did not expect: the site ran better than our local ones. Not because the client was watching, but because the supervisor had to look at the work once a week with the specific intention of showing it to someone."
+            },
+            {
+              "type": "p",
+              "text": "So we made it standard. Four photographs, every Friday, on every live site — including the ones nobody would choose to send."
+            },
+            {
+              "type": "h2",
+              "lead": "WHAT GOES",
+              "accent": "IN THE FOUR"
+            },
+            {
+              "type": "p",
+              "text": "One wide shot of the room in progress. One close shot of whatever was completed that week. One of whatever is about to be closed up — wiring behind a panel, plumbing before tiling, the things that become invisible and unverifiable by Monday. And one of whatever went wrong."
+            },
+            {
+              "type": "p",
+              "text": "That fourth photograph is the whole discipline. A cracked slab, a wall chased in the wrong place, a delivery that arrived short. It goes in the set with a line explaining what it means for the schedule."
+            },
+            {
+              "type": "bullets",
+              "items": [
+                "Wide shot — the room, so progress is legible week to week.",
+                "Detail shot — what was actually finished.",
+                "Concealment shot — wiring and plumbing before they disappear.",
+                "The problem shot — whatever went wrong, with what it costs in days."
+              ]
+            },
+            {
+              "type": "pullquote",
+              "text": "“A supervisor who has to photograph the mistake on Friday fixes it on Monday. One who does not, sometimes does not.”"
+            },
+            {
+              "type": "p",
+              "text": "Clients occasionally ask us to stop sending the fourth one. We do not, and we explain why: a project where nothing appears to go wrong for eight weeks is a project where you are being managed rather than informed."
+            },
+            {
+              "type": "image",
+              "image": "/clients/ashish-interiors/editorial/team/ply.jpg",
+              "caption": "CONCEALMENT SHOT — SERVICES PHOTOGRAPHED BEFORE THE PANEL WENT ON"
+            },
+            {
+              "type": "h2",
+              "lead": "WHAT IT",
+              "accent": "PREVENTS"
+            },
+            {
+              "type": "p",
+              "text": "The concealment photograph has paid for the whole practice twice over. When a client calls fourteen months after handover about a socket that has stopped working, we can open a folder and see exactly what is behind that wall before anyone cuts into it."
+            },
+            {
+              "type": "p",
+              "text": "It also settles disputes before they become disputes. Twice we have been asked to prove that a wall we were accused of chasing incorrectly was chased to the drawing. Both times the Friday photograph closed the conversation in under a minute."
+            },
+            {
+              "type": "p",
+              "text": "And it makes the punch list shorter. Things get noticed in week four rather than at handover, when fixing them means undoing finished work."
+            },
+            {
+              "type": "h2",
+              "lead": "THE PART",
+              "accent": "WE GOT WRONG"
+            },
+            {
+              "type": "p",
+              "text": "For the first two years we sent twenty or thirty photographs a week, on the theory that more was better. It was not — nobody looked at them. Four photographs with one line each get read; a folder of thirty gets ignored, and an ignored update is the same as no update."
+            },
+            {
+              "type": "p",
+              "text": "It is now in the contract: four photographs, Friday, for the life of the project, and the full set handed over on a drive at completion along with the invoices. It costs us about ten minutes of a supervisor's week."
+            }
+          ],
+          "full": true,
+          "related": [
+            {
+              "slug": "kankarbagh-flat",
+              "title": "2BHK, KANKARBAGH",
+              "image": "/clients/ashish-interiors/editorial/testimonial-01.jpg"
+            }
+          ]
+        },
+        {
+          "slug": "what-a-society-will-let-you-do",
+          "title": "WHAT A SOCIETY WILL AND WON'T LET YOU DO",
+          "displayTitle": {
+            "lead": "WHAT A SOCIETY",
+            "accent": "WILL LET YOU DO"
+          },
+          "date": "05 JUNE 2026",
+          "topic": "LIVING IN PATNA",
+          "excerpt": "Drilling hours, lift bookings and the four permissions worth getting in writing before day one.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/areas/office.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        },
+        {
+          "slug": "storage-you-cannot-see",
+          "title": "STORAGE YOU CAN'T SEE: 214 CUBIC FEET IN A CORRIDOR",
+          "displayTitle": {
+            "lead": "STORAGE",
+            "accent": "YOU CAN'T SEE"
+          },
+          "date": "22 MAY 2026",
+          "topic": "DESIGN",
+          "excerpt": "Where the volume actually hides in a 1,300 sq ft flat, room by room.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/portfolio-03.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        },
+        {
+          "slug": "laminate-veneer-or-paint",
+          "title": "LAMINATE, VENEER OR PAINT: A COST COMPARISON THAT HOLDS UP",
+          "displayTitle": {
+            "lead": "LAMINATE,",
+            "accent": "VENEER OR PAINT"
+          },
+          "date": "08 MAY 2026",
+          "topic": "MATERIALS",
+          "excerpt": "Three finishes on the same wardrobe, with what each looked like after two years.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/trust-03.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        },
+        {
+          "slug": "what-a-dated-schedule-commits",
+          "title": "WHAT A DATED SCHEDULE ACTUALLY COMMITS US TO",
+          "displayTitle": {
+            "lead": "A DATED",
+            "accent": "SCHEDULE"
+          },
+          "date": "19 APRIL 2026",
+          "topic": "PROCESS",
+          "excerpt": "How we build a programme, where the float sits, and what happens when a slab arrives cracked.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/team/tools.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        },
+        {
+          "slug": "renovating-with-the-family-in",
+          "title": "RENOVATING WITH THE FAMILY STILL IN THE FLAT",
+          "displayTitle": {
+            "lead": "STILL IN",
+            "accent": "THE FLAT"
+          },
+          "date": "02 APRIL 2026",
+          "topic": "LIVING IN PATNA",
+          "excerpt": "Phasing an occupied home so nobody eats out for six weeks.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/testimonial-01.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        },
+        {
+          "slug": "the-balcony-question",
+          "title": "THE BALCONY QUESTION: BRING IT IN OR LEAVE IT ALONE",
+          "displayTitle": {
+            "lead": "THE BALCONY",
+            "accent": "QUESTION"
+          },
+          "date": "14 MARCH 2026",
+          "topic": "DESIGN",
+          "excerpt": "Four flats where we enclosed it, two where we argued against.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/instagram-04.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        },
+        {
+          "slug": "hardware-is-where-cheap-kitchens-fail",
+          "title": "HARDWARE IS WHERE CHEAP KITCHENS FAIL FIRST",
+          "displayTitle": {
+            "lead": "HARDWARE",
+            "accent": "FAILS FIRST"
+          },
+          "date": "27 FEBRUARY 2026",
+          "topic": "MATERIALS",
+          "excerpt": "Hinges and channels, tested the only way that counts — four years of daily use.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/trust-01.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        },
+        {
+          "slug": "the-punch-list",
+          "title": "THE PUNCH LIST, AND WHY OURS IS LONGER THAN YOURS",
+          "displayTitle": {
+            "lead": "THE",
+            "accent": "PUNCH LIST"
+          },
+          "date": "09 FEBRUARY 2026",
+          "topic": "PROCESS",
+          "excerpt": "Nine items on a good handover. What we look for before you do.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/instagram-02.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        },
+        {
+          "slug": "where-eight-lakh-goes",
+          "title": "BUDGETS: WHERE ₹8 LAKH ACTUALLY GOES",
+          "displayTitle": {
+            "lead": "WHERE EIGHT",
+            "accent": "LAKH GOES"
+          },
+          "date": "23 JANUARY 2026",
+          "topic": "LIVING IN PATNA",
+          "excerpt": "A line-by-line breakdown of a completed three-bedroom, with the invoices.",
+          "author": {
+            "slug": "ashish-kumar",
+            "name": "ASHISH KUMAR",
+            "role": "FOUNDER & PRINCIPAL DESIGNER",
+            "image": "/clients/ashish-interiors/editorial/team/principal-01.jpg",
+            "line": "Founded the practice in 2013 and still takes the first site visit on every project."
+          },
+          "cover": "/clients/ashish-interiors/editorial/portfolio-02.jpg",
+          "body": [],
+          "full": false,
+          "related": []
+        }
+      ],
+      "enabled": true,
+      "intro": "Notes on drawings, materials and the particular problems of Patna flats — written by the people who do the work, published when there is something worth saying.",
+      "topics": [
+        "Design",
+        "Materials",
+        "Process",
+        "Living in Patna"
+      ]
     },
     "news": {
-      "items": []
+      "items": [
+        {
+          "slug": "residential-of-the-year",
+          "title": "RESIDENTIAL OF THE YEAR",
+          "headline": "Bihar Design Awards: residential interior of the year",
+          "date": "12 JUNE 2026",
+          "year": "2026",
+          "category": "AWARD",
+          "summary": "The Boring Canal Road three-bedroom took the residential award, judged on drawings and site photographs rather than styled shoots.",
+          "photo": "/clients/ashish-interiors/editorial/portfolio-04.jpg",
+          "standfirst": "BIHAR DESIGN AWARDS 2026 · RESIDENTIAL INTERIOR OF THE YEAR · BORING CANAL ROAD",
+          "lead": "The Boring Canal Road three-bedroom has been named residential interior of the year at the Bihar Design Awards, judged from working drawings and site photographs rather than a styled shoot.",
+          "body": [
+            "We entered one project, not a portfolio. The submission was the same folder the client received at handover: layouts, joinery sections, the dated schedule, weekly site photographs, and the material invoices. The jury asked for a fourth set of photographs taken a year after the family moved in, which is the part we were most glad to supply.",
+            "The flat is 1,320 sq ft in a 2002 building — high ceilings, a generous balcony, and a kitchen closed off behind a door the way every flat in that block was drawn. The three decisions the award citation singled out were the ones we argued hardest for at the time: the kitchen wall coming down, 214 cubic feet of storage buried in corridors and bed bases, and a single oak laminate running through all five rooms."
+          ],
+          "pullquote": "“No feature walls, no false ceilings, no imported stone. The money went where the family would feel it every day and nowhere else.”",
+          "pullattr": "FROM THE JURY CITATION",
+          "subhead": "WHAT WE TOOK FROM IT",
+          "after": [
+            "The award matters to us mainly for what it rewarded. Every entry was asked to show cost against outcome, and ours came in at ₹9.4 lakh inside a ₹8–10 lakh range, with the delay — three days, a cracked marble slab — declared rather than hidden. That framing is unusual for a design prize and we would like to see more of it.",
+            "It also settled an internal argument. We have turned down work where the budget only stretched to surfaces, on the view that a client is better served by a smaller, properly built scope than a whole flat done thinly. Having that approach recognised in public makes the conversation easier the next time somebody asks us to spread ₹6 lakh across 1,500 sq ft.",
+            "Sunita accepted on behalf of the drawing office and Manoj on behalf of the workshop, which is the correct division of credit. The plaque is on the sample table at the studio, where clients can see it without being told about it."
+          ],
+          "related": {
+            "slug": "3bhk-boring-road",
+            "title": "3BHK, BORING CANAL ROAD",
+            "image": "/clients/ashish-interiors/editorial/portfolio-04.jpg"
+          }
+        },
+        {
+          "slug": "chambers-handed-over",
+          "title": "CHAMBERS HANDED OVER",
+          "headline": "Handed over: CA chambers above the crossing",
+          "date": "28 APRIL 2026",
+          "year": "2026",
+          "category": "PROJECT",
+          "summary": "Four cabins and a waiting area on a first floor near Boring Road crossing, phased over two months so the practice never closed for more than a Sunday.",
+          "photo": "/clients/ashish-interiors/editorial/service-02.jpg",
+          "standfirst": "COMMERCIAL · 68 DAYS · BORING ROAD CROSSING",
+          "lead": "A four-cabin chartered accountancy practice on a first floor near the crossing was handed over this month, phased so the firm never shut for more than a Sunday.",
+          "body": [
+            "Commercial work on an occupied floor is a sequencing problem before it is a design problem. The practice sees clients six days a week and keeps physical files that cannot be boxed for long, so we split the floor into three zones and finished them one at a time, moving people and cabinets ahead of the work rather than out of the building.",
+            "Everything was cut in the workshop. Nothing louder than a cordless driver ran on site during working hours, and the noisy work — core drilling for the new network runs and the split units — was done across three Sundays agreed a month in advance with the building."
+          ],
+          "pullquote": "“We were told we would lose three Sundays and no weekdays. We lost three Sundays and no weekdays.”",
+          "pullattr": "THE PRINCIPAL PARTNER, ON HANDOVER DAY",
+          "subhead": "WHAT A PRACTICE ACTUALLY NEEDS",
+          "after": [
+            "The brief was almost entirely acoustic and archival: four cabins where a client conversation cannot be heard in the corridor, a waiting area that does not feel like a passage, and eight running metres of lockable file storage that will still be accessible when the files are twenty years deep.",
+            "We used a double layer of gypsum with a mineral wool infill on the cabin partitions rather than the single-skin partitions that are standard in these buildings — the cost difference over four cabins was under ₹40,000 and it is the thing the partners have commented on most since moving back in.",
+            "Sixty-eight days on site, ₹15–20 lakh, handed over with a punch list of nine items, all cleared within the week."
+          ]
+        },
+        {
+          "slug": "workshop-has-moved",
+          "title": "THE WORKSHOP HAS MOVED",
+          "headline": "The workshop has moved, and doubled",
+          "date": "03 SEPTEMBER 2025",
+          "year": "2025",
+          "category": "STUDIO",
+          "summary": "Eleven benches, a proper ply store and dust extraction, five minutes from the studio instead of forty from the sites.",
+          "photo": "/clients/ashish-interiors/editorial/team/bench.jpg",
+          "standfirst": "STUDIO NEWS · NEW WORKSHOP, OFF BORING ROAD · ELEVEN BENCHES",
+          "lead": "We have moved the workshop to a larger floor five minutes from the studio: eleven benches, a proper ply store, and dust extraction that actually works.",
+          "body": [
+            "For nine years we cut in a shed that was too small the day we took it. It worked because Manoj sequenced around it — one project's joinery at a time, everything stacked vertically, and a delivery van that had to be unloaded on the road. The new floor ends all three compromises.",
+            "The practical gain is schedule. With eleven benches instead of six we can carry two full flats' joinery at the same time, which takes about ten days out of a typical turnkey programme. The ply store means we buy at a better rate on volume and can hold material for a client whose possession date slips — something we previously had to charge for or refuse."
+          ],
+          "pullquote": "“Nine years of working around a small shed taught us more about sequencing than the new space will ever have to.”",
+          "pullattr": "MANOJ SAHU, PARTNER, EXECUTION",
+          "subhead": "WHY NOT SUBCONTRACT INSTEAD",
+          "after": [
+            "The cheaper route was to keep the shed and put the overflow out to job-work carpenters, which is what most firms our size in Patna do. We have not, for one reason: a subcontracted bench cannot be trained. Every carpenter on our rolls spends six months on Manoj's bench before they cut for a client, and that is only possible if the bench is ours.",
+            "Dust extraction was the other reason to take a floor this size. Eleven people in one room with no extraction is a health question, not a comfort one, and it was the first thing installed — before the benches were bolted down.",
+            "The studio above the crossing stays where it is. Clients still meet us there, and the sample table has not moved."
+          ]
+        },
+        {
+          "slug": "eleven-kitchens",
+          "title": "ELEVEN KITCHENS",
+          "headline": "Sunita Raj on kitchens in 1990s Patna flats",
+          "date": "16 JUNE 2025",
+          "year": "2025",
+          "category": "STUDIO",
+          "summary": "A talk at the Institute of Indian Interior Designers' Patna chapter, drawn from eleven kitchen refits in buildings drawn before modular existed.",
+          "photo": "/clients/ashish-interiors/editorial/service-01.jpg",
+          "standfirst": "STUDIO NEWS · IIID PATNA CHAPTER · SUNITA RAJ",
+          "lead": "Sunita Raj gave the Patna chapter talk this month on fitting a modular kitchen into a flat drawn thirty years before modular kitchens existed.",
+          "body": [
+            "The talk was built from eleven refits in 1990s and 2000s buildings, all with the same three constraints: a kitchen walled off behind a door, one window in the wrong place, and a gas line that cannot move. The argument was that the honest answer in most of these flats is not a better kitchen in the same box — it is a smaller wall.",
+            "She showed the drawings rather than the photographs, including two projects where the wall could not come down and the compromise had to be documented for the client before work started."
+          ],
+          "pullquote": "“If the plan is wrong, no amount of hardware will fix it. Measure first, then argue about finishes.”",
+          "pullattr": "SUNITA RAJ, PARTNER, DESIGN",
+          "subhead": "THE THREE-METRE RULE",
+          "after": [
+            "The most-asked-about slide was the simplest: a work triangle that has to fit in a three-metre run because that is what these kitchens give you. Hob, sink and fridge within a step and a half, the masala shelf at shoulder height beside the flame rather than above it, and the tall unit taken to the ceiling instead of a loft nobody can reach.",
+            "The second was cost. A competently planned kitchen in commercial ply with good hardware lands between ₹2.2 and ₹2.8 lakh in Patna; the same kitchen badly planned costs the same and works worse. Plan quality is free.",
+            "Slides are available to chapter members on request. We are happy to give the same talk to any society or resident welfare association in the city that asks."
+          ],
+          "related": {
+            "slug": "boring-road-kitchen",
+            "title": "KITCHEN REFIT, RAJAPUR PUL SIDE",
+            "image": "/clients/ashish-interiors/editorial/service-01.jpg"
+          }
+        },
+        {
+          "slug": "two-hundred",
+          "title": "TWO HUNDRED",
+          "headline": "Two hundredth project handed over in Kankarbagh",
+          "date": "11 DECEMBER 2024",
+          "year": "2024",
+          "category": "PROJECT",
+          "summary": "A 2BHK for a retired schoolteacher, and the two hundredth set of keys the studio has handed back since 2013.",
+          "photo": "/clients/ashish-interiors/editorial/testimonial-01.jpg",
+          "standfirst": "MILESTONE · 200TH PROJECT · KANKARBAGH",
+          "lead": "The two hundredth project since 2013 was handed over this month: a two-bedroom flat in Kankarbagh for a retired schoolteacher, done on a ₹5.5 lakh budget.",
+          "body": [
+            "It was, deliberately, not a showcase. The client had a fixed pension-funded budget and a clear list: a kitchen she could work in standing for an hour, storage for forty years of books, and no work that would take longer than five weeks.",
+            "We did the kitchen, one wardrobe wall, a floor-to-ceiling bookcase in the passage and paint. We did not do the second bedroom, because the money did not stretch to doing it properly and she agreed that half-doing it would be worse than leaving it."
+          ],
+          "pullquote": "“Two hundred sites and the lesson has not changed: scope down before you finish down.”",
+          "pullattr": "ASHISH KUMAR, FOUNDER",
+          "subhead": "WHAT TWO HUNDRED LOOKS LIKE",
+          "after": [
+            "Roughly seventy per cent of those two hundred projects have been flats between 900 and 1,500 sq ft. About one in six has been commercial. Fewer than ten have been what anyone would call a luxury brief, and we have turned down more of those than we have taken, usually on timeline.",
+            "Forty-one of the two hundred came from a client who had already worked with us, and another sixty-three from someone in the same building or lane as a previous site. That is the number we watch — more than any award, it is the one that tells us whether the work holds up after we leave.",
+            "The forty-first repeat client, as it happens, was the schoolteacher's neighbour, who booked a kitchen refit the week the scaffolding came down."
+          ],
+          "related": {
+            "slug": "kankarbagh-flat",
+            "title": "2BHK, KANKARBAGH",
+            "image": "/clients/ashish-interiors/editorial/testimonial-01.jpg"
+          }
+        },
+        {
+          "slug": "on-our-own-rolls",
+          "title": "ON OUR OWN ROLLS",
+          "headline": "Four site supervisors now on our own rolls",
+          "date": "22 FEBRUARY 2024",
+          "year": "2024",
+          "category": "STUDIO",
+          "summary": "Provident fund, fixed salaries and paid site travel for the supervision team, ending the last of our contract hiring.",
+          "photo": "/clients/ashish-interiors/editorial/team/tools.jpg",
+          "standfirst": "STUDIO NEWS · SUPERVISION TEAM · FOUR PEOPLE",
+          "lead": "All four site supervisors are now permanent employees with provident fund, a fixed monthly salary and paid site travel — the last of our contract hiring has ended.",
+          "body": [
+            "Until this year two of the four were engaged project by project, which is normal in the trade and which we had told ourselves was flexibility. In practice it meant the person answering for quality on a site had no stake in what happened on the next one.",
+            "The cost is real — about eleven per cent on the supervision line — and we have not passed it to clients as a separate charge. It comes out of the same place the workshop investment came from: we would rather grow slower with a crew that stays."
+          ],
+          "pullquote": "“The person answering for quality on your site should still be here for the site after yours.”",
+          "pullattr": "ASHISH KUMAR, FOUNDER",
+          "subhead": "WHY IT SHOWS UP IN THE WORK",
+          "after": [
+            "A supervisor on their fourth year with us knows which of our carpenters is quick and which is careful, which building societies allow drilling until when, and which of our suppliers will actually deliver on a Saturday. None of that transfers to a contract hire who leaves at handover.",
+            "It also makes the weekly photo update honest. A permanent supervisor photographs the thing that went wrong, because they will be the one fixing it on Monday either way.",
+            "We are hiring two more supervisors on the same terms. Three years on residential sites, and you will be on our rolls from day one."
+          ]
+        }
+      ],
+      "enabled": true,
+      "press": [
+        {
+          "publication": "THE HINDU",
+          "publicationShort": "THE HINDU",
+          "year": "2026",
+          "date": "18 MARCH 2026",
+          "headline": "The Patna studios rethinking the 1990s builder flat",
+          "quote": "“Ashish Interiors has built a practice on a question most firms in the city avoid: what can honestly be done to a thirty-year-old three-bedroom flat on a middle-class budget.”",
+          "url": "https://www.thehindu.com"
+        },
+        {
+          "publication": "ELLE DECOR INDIA",
+          "publicationShort": "ELLE DECOR",
+          "year": "2026",
+          "date": "04 FEBRUARY 2026",
+          "headline": "Small-city practice, big-city discipline: a Boring Road three-bedroom",
+          "quote": "“The restraint is the point. One oak laminate, white walls, and every rupee spent on storage nobody sees.”",
+          "url": "https://elledecor.in"
+        },
+        {
+          "publication": "ARCHITECTURAL DIGEST INDIA",
+          "publicationShort": "AD INDIA",
+          "year": "2025",
+          "date": "22 OCTOBER 2025",
+          "headline": "Twelve years in Patna: interiors built for how families actually live",
+          "quote": "“A rare portfolio with no aspirational renders in it — only rooms that have been lived in for a year or more.”",
+          "url": "https://www.architecturaldigest.in"
+        },
+        {
+          "publication": "DAINIK BHASKAR",
+          "publicationShort": "DAINIK BHASKAR",
+          "year": "2025",
+          "date": "07 JULY 2025",
+          "headline": "Patna firm completes 200th interior project, keeps crew in-house",
+          "url": "https://www.bhaskar.com"
+        },
+        {
+          "publication": "BETTER INTERIORS",
+          "publicationShort": "BETTER INTERIORS",
+          "year": "2024",
+          "date": "15 NOVEMBER 2024",
+          "headline": "Six kitchens that fixed a bad plan",
+          "quote": "“The Rajapur Pul refit is the clearest argument in the issue for taking down a wall rather than working around it.”",
+          "url": "https://www.betterinteriors.in"
+        },
+        {
+          "publication": "TIMES OF INDIA",
+          "publicationShort": "TOI",
+          "year": "2024",
+          "date": "29 MAY 2024",
+          "headline": "City interior firms move away from subcontracted labour",
+          "url": "https://timesofindia.indiatimes.com"
+        }
+      ]
     },
     "careers": {
-      "roles": []
+      "roles": [
+        {
+          "slug": "site-supervisor",
+          "title": "SITE SUPERVISOR",
+          "location": "PATNA · ON SITE",
+          "body": "TWO POSITIONS · RESIDENTIAL & SMALL COMMERCIAL · OUR OWN ROLLS",
+          "type": "FULL-TIME",
+          "standfirst": "TWO POSITIONS · RESIDENTIAL & SMALL COMMERCIAL · OUR OWN ROLLS",
+          "reportsTo": "Manoj Sahu, Partner, Execution",
+          "salary": "₹28,000 – ₹42,000 / month, plus site travel",
+          "starts": "As soon as you can",
+          "duties": [
+            "Run two to three live flats at a time, on site every working day — not visiting, based there.",
+            "Sequence the trades against the dated schedule and flag slippage the week it happens, not at handover.",
+            "Take the four Friday photographs on every site, including the one showing whatever went wrong.",
+            "Check the joinery against the drawings before it is fixed, and walk the punch list with the client at handover.",
+            "Keep the material register: what arrived, what was short, what went back."
+          ],
+          "requirements": [
+            "Three years minimum on residential or small commercial sites in Bihar or nearby.",
+            "You can read a joinery section and tell when what is being built is not what was drawn.",
+            "Enough Hindi and enough patience to negotiate with a plumber, a society secretary and a client in the same morning.",
+            "A two-wheeler and a licence — sites are spread across the city and travel is paid.",
+            "Not required: a degree. Two of our four supervisors do not have one."
+          ],
+          "months": [
+            {
+              "span": "MONTH 1",
+              "text": "Shadowing Sanjay on two live sites. You will not run anything alone, but you will take the Friday photographs from week two so we can see how you look at work in progress."
+            },
+            {
+              "span": "MONTHS 2–3",
+              "text": "One site of your own, deliberately a small one — a kitchen or a single-room refit on a three-week programme, with Manoj on the phone daily."
+            },
+            {
+              "span": "MONTHS 4–6",
+              "text": "Two to three concurrent flats, your own material register, and you present your own sites at the Monday programme meeting. By month six you are answering to the client directly."
+            }
+          ],
+          "apply": "Email us with the subject line “Site Supervisor”. Send a one-page CV and, if you can, three or four site photographs of work you supervised — phone photographs are completely fine. No portfolio needed for this role."
+        },
+        {
+          "slug": "junior-designer",
+          "title": "JUNIOR DESIGNER",
+          "location": "PATNA · STUDIO & SITE",
+          "body": "ONE POSITION · DRAWING OFFICE · UNDER SUNITA RAJ",
+          "type": "FULL-TIME",
+          "standfirst": "ONE POSITION · DRAWING OFFICE · UNDER SUNITA RAJ",
+          "reportsTo": "Sunita Raj, Partner, Design",
+          "salary": "₹22,000 – ₹32,000 / month, reviewed at six months",
+          "starts": "September 2026",
+          "duties": [
+            "Measure flats yourself — you will be on the first site visit with Ashish for most projects you draw.",
+            "Draw layouts, joinery sections and shop drawings that our workshop builds from directly.",
+            "Put together finish boards with real samples off the studio racks, not screenshots.",
+            "Sit in on the client sittings where your drawings are reviewed, and take the revisions.",
+            "Walk your own joinery when it is installed and record what you would draw differently."
+          ],
+          "requirements": [
+            "A diploma or degree in interior design or architecture.",
+            "A portfolio with at least one dimensioned working drawing in it. Renders alone will not get you an interview.",
+            "AutoCAD or equivalent for 2D drawings; SketchUp is useful, rendering skill is not what we are hiring for.",
+            "Willing to be on site in dust with a tape measure a couple of days a week, from the first month.",
+            "Freshers are welcome. Two of our five designers joined straight out of college."
+          ],
+          "months": [
+            {
+              "span": "MONTH 1",
+              "text": "Two weeks in the workshop before you draw anything for a client — at the bench, watching your future drawings get built. Everyone who joins the drawing office does this."
+            },
+            {
+              "span": "MONTHS 2–3",
+              "text": "Detailing other people's schemes: wardrobe sections, kitchen elevations, shop drawings. Sunita marks up everything you draw, on paper, in front of you."
+            },
+            {
+              "span": "MONTHS 4–6",
+              "text": "Your first project of your own, start to finish, on a small scope — usually a single bedroom or a kitchen — with your name on the drawings and your presence at the client sittings."
+            }
+          ],
+          "apply": "Email us with the subject line “Junior Designer”. Send a portfolio PDF under 15 MB and a one-page CV. If you are shortlisted we will ask you to draw one wardrobe section at home — paid, about three hours of work."
+        },
+        {
+          "slug": "design-intern",
+          "title": "DESIGN INTERN",
+          "location": "PATNA · STUDIO & SITE",
+          "body": "ONE POSITION · STIPEND · SIX MONTHS, EXTENDABLE",
+          "type": "INTERNSHIP · 6 MONTHS",
+          "standfirst": "ONE POSITION · STIPEND · SIX MONTHS, EXTENDABLE",
+          "reportsTo": "Priya Nandan, Senior Designer",
+          "salary": "₹12,000 / month stipend",
+          "starts": "Rolling — we take one intern at a time",
+          "duties": [
+            "Site measurement with a designer, then producing the measured drawing yourself.",
+            "Material research and sample collection — you will visit our dealers and learn what things actually cost.",
+            "Drawing production: details, schedules and revisions on live projects, not exercises.",
+            "Keeping the photographic record and the sample library in order.",
+            "One small piece of your own by month five — a study nook, a shelf wall — drawn and detailed under supervision."
+          ],
+          "requirements": [
+            "Currently studying, or graduated within the last year, in interior design or architecture.",
+            "Basic AutoCAD. We will teach you our drawing standards.",
+            "Available in the studio five days a week for six months. We do not take two-month summer interns — nobody learns anything useful in eight weeks.",
+            "Curiosity about how things are made matters more than software skill here."
+          ],
+          "months": [
+            {
+              "span": "MONTHS 1–2",
+              "text": "Measuring, sample runs and drawing revisions. You will be at the workshop at least one day a week."
+            },
+            {
+              "span": "MONTHS 3–4",
+              "text": "Detail drawings on live projects with your work checked against what gets built."
+            },
+            {
+              "span": "MONTHS 5–6",
+              "text": "One small scope of your own, and a written reference either way. Three of our current designers started here as interns."
+            }
+          ],
+          "apply": "Email us with the subject line “Design Intern”. Send whatever drawings you have — college work is completely fine — and tell us which six months you are available."
+        }
+      ],
+      "intro": [
+        "We are twenty people running four to six live sites at a time out of one studio and one workshop off Boring Road. If you join the drawing office you will be measuring flats yourself, drawing joinery sections that our own carpenters build from, and standing in the room while they go in.",
+        "A typical project is a 1,000–1,500 sq ft flat on an eight to eleven week programme, budget between six and fourteen lakh, for a family who is spending most of what they have. There is no rendering department and no marketing team to hand a scheme to. What you draw is what gets built, and you will find out within the month whether it worked."
+      ],
+      "studioPhoto": {
+        "image": "/clients/ashish-interiors/editorial/team/bench.jpg",
+        "caption": "THE WORKSHOP, A WEEKDAY MORNING — EVERY DESIGNER SPENDS TIME AT THIS BENCH"
+      },
+      "lookFor": [
+        {
+          "title": "YOU CAN DRAW A SECTION",
+          "body": "Not a render — a section. A wardrobe at 1:10 with the carcass thickness, the shutter overlay and the hinge position on it, that a carpenter can build from without calling you. If your portfolio is all elevations and moodboards we will ask you to draw one in the interview."
+        },
+        {
+          "title": "YOU ARE COMFORTABLE ON SITE",
+          "body": "Half this job is standing in dust with a tape measure, arguing pleasantly with a plumber about a waste position. If site work is something you hope to grow out of, this is the wrong studio."
+        },
+        {
+          "title": "YOU CAN TALK ABOUT MONEY",
+          "body": "Our clients are spending their savings and they ask direct questions about cost. You will need to say “that detail adds forty thousand, here is what I would do instead” without flinching or getting defensive."
+        },
+        {
+          "title": "YOU WRITE THINGS DOWN",
+          "body": "Every decision on our sites is recorded — a dated schedule, weekly photographs, a punch list. People who work from memory struggle here, and people who keep notes find the job much easier than it looks."
+        }
+      ],
+      "emptyState": {
+        "title": "NO OPEN ROLES RIGHT NOW",
+        "body": "Send us your portfolio anyway — we keep good work on file and go back to it first when something opens. That has been how three of our last five hires happened."
+      },
+      "applyProcess": {
+        "title": "HOW TO APPLY",
+        "sendTo": "SEND IT TO",
+        "subject": "Subject line: the role name. No cover letter needed.",
+        "sendItems": [
+          "A portfolio PDF, under 15 MB. Six to ten pieces of work is plenty — we would rather see four projects properly documented than twenty thumbnails.",
+          "Include at least one working drawing if you have one. A dimensioned section or a shop drawing tells us more than any render.",
+          "A CV, one page. Where you studied, where you have worked, what you built there.",
+          "Two or three lines in the email about why this studio rather than a bigger one. That is the whole cover letter."
+        ],
+        "next": "WHAT HAPPENS NEXT",
+        "nextBody": [
+          "Ashish or Sunita reads every application themselves, usually within five working days, and you will get a reply either way — including a no. If we want to meet you it is one conversation at the studio, an hour, with your drawings on the table. For design roles there is a short paid exercise: draw one wardrobe section, at home, in your own time.",
+          "We do not do panel interviews, personality tests or unpaid trial weeks."
+        ]
+      }
+    },
+    "areas": {
+      "enabled": true,
+      "items": [
+        {
+          "slug": "boring-road",
+          "name": "BORING ROAD PATNA",
+          "stats": [
+            {
+              "value": "31",
+              "label": "PROJECTS FINISHED HERE"
+            },
+            {
+              "value": "1.4 KM",
+              "label": "FROM OUR STUDIO DOOR"
+            }
+          ],
+          "intro": [
+            "Our studio is on the second floor above the crossing, so most of this work is within walking distance — which changes how we run a site here.",
+            "Boring Road is two kinds of housing sitting side by side. The lanes off the main road — Boring Canal Road, the stretch towards Rajapur Pul — are full of 1990s and 2000s builder flats: solid 1,200 to 1,500 sq ft three-bedroom units with high ceilings, generous balconies, and kitchens walled off behind a door because that is how they were drawn thirty years ago. Almost every job we take in those buildings starts with the same two questions: can that kitchen wall come down, and can the balcony be brought inside.",
+            "The newer towers along the main road are a different brief entirely — 900 to 1,100 sq ft, lower ceilings, better plumbing, and a society office that will only allow drilling between ten and five on weekdays. We plan those sites around the lift schedule and cut everything in our workshop, because you cannot run a cutting machine in that lobby.",
+            "What people here ask for is fairly consistent: storage that hides a decade of accumulation, a study corner for children in coaching, and a drawing room presentable enough for the guests who arrive without calling. Budgets usually land between ₹8 and ₹14 lakh for a full flat."
+          ],
+          "nearby": [
+            "Kankarbagh",
+            "Rajendra Nagar",
+            "Patliputra Colony",
+            "S.K. Puri",
+            "Bailey Road",
+            "Ashiana Nagar",
+            "Danapur"
+          ],
+          "cards": [
+            {
+              "slug": "3bhk-boring-road",
+              "title": "3BHK, BORING CANAL ROAD",
+              "body": "A 1,320 sq ft builder flat where the kitchen wall came down and the corridor finally got the window light back. Storage built into every corridor wall and bed base.",
+              "meta": "45 DAYS · ₹8–10 LAKH · HANDED OVER MAY 2025",
+              "image": "/clients/ashish-interiors/editorial/case-study/hero.jpg"
+            },
+            {
+              "slug": "boring-road-kitchen",
+              "title": "KITCHEN REFIT, RAJAPUR PUL SIDE",
+              "body": "Kitchen only, in an occupied flat. Fabricated in the workshop and installed over six days so the family cooked on an induction plate for less than a week.",
+              "meta": "22 DAYS · ₹2.4 LAKH · HANDED OVER NOV 2025",
+              "image": "/clients/ashish-interiors/editorial/service-detail/lead.jpg"
+            },
+            {
+              "slug": "kankarbagh-flat",
+              "title": "CA CHAMBERS, NEAR THE CROSSING",
+              "body": "Four cabins and a waiting area on a first floor above a shop, phased over two months so the practice never shut for more than a Sunday.",
+              "meta": "68 DAYS · ₹15–20 LAKH · HANDED OVER FEB 2026",
+              "image": "/clients/ashish-interiors/editorial/areas/office.jpg"
+            }
+          ]
+        }
+      ]
     }
   },
   "cta": {
@@ -445,7 +2085,7 @@
     "showCallButton": true
   },
   "seo": {
-    "title": "Ashish Interiors \u2014 Interior Designers in Patna",
+    "title": "Ashish Interiors — Interior Designers in Patna",
     "description": "Full-home interiors, modular kitchens and office design in Patna. 40+ homes delivered since 2013.",
     "keywords": [
       "interior designer patna",
@@ -485,13 +2125,155 @@
   "legal": {
     "privacyPolicy": true,
     "terms": true,
-    "dataRetentionNote": "Inquiry form submissions are retained for 12 months."
+    "dataRetentionNote": "Inquiry form submissions are retained for 12 months.",
+    "privacyPolicyDoc": {
+      "lead": "This policy covers what we do with the information you give us when you enquire about a project, and what we do with photographs of work we complete. It is written to be read rather than to protect us.",
+      "updated": "LAST UPDATED 1 JULY 2026",
+      "sections": [
+        {
+          "title": "WHAT WE COLLECT",
+          "paragraphs": [
+            "When you use the enquiry form, WhatsApp or the phone, we keep the details you give us: your name, phone number, email address, the location and size of the property, and whatever you tell us about the project."
+          ],
+          "bullets": [
+            "Contact details you send us — name, phone, email.",
+            "Project details — address, carpet area, budget range, possession date.",
+            "Site information gathered during a visit — measurements, photographs, existing service positions.",
+            "Correspondence — WhatsApp messages, emails and quotations exchanged with you."
+          ]
+        },
+        {
+          "title": "WHAT WE DO WITH IT",
+          "paragraphs": [
+            "We use it to prepare your estimate, run your project and stay in touch about it. Nothing more. We do not sell contact details, we do not pass them to material suppliers or contractors outside the work on your site, and we do not add you to a marketing list without asking."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "HOW LONG WE KEEP IT",
+          "paragraphs": [
+            "Enquiries that do not become projects are deleted after two years. Completed project records — drawings, invoices, site photographs and the handover folder — are kept indefinitely, because clients frequently come back years later asking what is behind a wall, and that record is the only way to answer.",
+            "You can ask us to delete anything at any time and we will, apart from what we are required to keep for tax purposes."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "PHOTOGRAPHS OF YOUR HOME",
+          "paragraphs": [
+            "We photograph our own work, during construction and after handover. Site photographs taken for the weekly record are internal. Finished photographs may be used on this website, on our Instagram and in printed material — but only with your written permission, which we ask for at handover and which you can withdraw later.",
+            "We never publish your name, flat number or building name alongside a photograph without asking. Locality alone — “Boring Road”, “Kankarbagh” — is what we use."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "COOKIES & THIS WEBSITE",
+          "paragraphs": [
+            "This site sets no advertising or tracking cookies. We use one privacy-respecting analytics service that records page views without storing personal data or following you across other sites. Embedded maps are served by a third party and are subject to their own policy."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "WHO ELSE SEES IT",
+          "paragraphs": [
+            "Our own team, and nobody else. We do not subcontract design or carpentry, so your details do not travel to a third-party workshop. Where a specialist is genuinely needed — a structural engineer, for example — we tell you first and share only what that person needs."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "YOUR RIGHTS",
+          "paragraphs": [
+            "Ask us what we hold about you and we will send it. Ask us to correct or delete it and we will. There is no form and no fee — an email or a phone call is enough, and we will answer within five working days."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "CHANGES TO THIS POLICY",
+          "paragraphs": [
+            "If we change how we handle information we will update this page and change the date at the top. Material changes affecting a live project will be told to you directly rather than left here to be discovered."
+          ],
+          "bullets": []
+        }
+      ]
+    },
+    "termsDoc": {
+      "lead": "These are the terms we work under. They are the same terms written into every quotation we issue, restated here so you can read them before you ask us for one.",
+      "updated": "LAST UPDATED 1 JULY 2026",
+      "sections": [
+        {
+          "title": "QUOTATIONS & ESTIMATES",
+          "paragraphs": [
+            "The figure produced by the estimate calculator on this site is indicative only and is not a quotation. A quotation is issued in writing after a site visit, is itemised, and holds for thirty days from its date.",
+            "Rates in a quotation assume the site conditions we observed. If something is discovered once work begins — damp behind a wall, an unrecorded service run — we stop, tell you, and price the additional work before continuing. We do not carry out extra chargeable work without your agreement in writing."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "PAYMENT SCHEDULE",
+          "paragraphs": [
+            "Our standard schedule, unless your quotation says otherwise:"
+          ],
+          "bullets": [
+            "10% on signing off the drawings.",
+            "40% at material procurement, before cutting begins.",
+            "40% in stages against site progress, invoiced against work actually completed.",
+            "10% after the punch list is cleared at handover."
+          ]
+        },
+        {
+          "title": "PROGRAMME & DELAYS",
+          "paragraphs": [
+            "Every project is given a dated schedule at the start. We hold to it, and where we do not we say so in the weekly update with the reason and the revised date.",
+            "Delays caused by us are ours to absorb. Delays caused by things outside our control — a society refusing access, a possession date moving, material arriving damaged, your own decisions pending — move the handover date by the same period. We do not levy a charge for these, but we cannot compress the remaining programme to absorb them."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "MATERIALS",
+          "paragraphs": [
+            "Materials are specified by grade and brand in the quotation. We buy at our dealers' rates and you see the invoices; we take no commission on material.",
+            "Where a specified item is unavailable we substitute only with something of equal or better grade, and we tell you which item changed and why."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "WARRANTY",
+          "paragraphs": [
+            "We give a written one-year warranty on our own carpentry and finishing from the date of handover, covering workmanship — joinery coming apart, shutters dropping out of alignment, polish failing.",
+            "Manufacturer warranties on hardware, appliances and fittings are passed to you at handover and are the manufacturer's responsibility. The warranty does not cover normal wear, water damage from a plumbing failure elsewhere in the building, or work altered by someone else after we leave."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "CANCELLATION",
+          "paragraphs": [
+            "You may cancel at any stage. What you owe is what has been done: drawings produced, material already bought or cut, and work completed on site, less any advance already paid. Nothing beyond that, and no cancellation penalty.",
+            "If material has been cut to your drawings it cannot be returned, and it is charged. That is the only irreversible point in the process, and we tell you the week before we reach it."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "ACCESS & SITE CONDITIONS",
+          "paragraphs": [
+            "You are responsible for giving us lawful access to the property and for any society permissions the building requires. We work within the drilling and lift hours the building sets; where those hours are unusually restrictive we allow for it in the programme.",
+            "Water and electricity at site are provided by you. We leave the site swept daily and deep-clean before handover."
+          ],
+          "bullets": []
+        },
+        {
+          "title": "GOVERNING LAW",
+          "paragraphs": [
+            "These terms are governed by the laws of India, and any dispute is subject to the jurisdiction of the courts at Patna, Bihar. We would far rather settle a disagreement across the sample table, and in twelve years that is how every one of them has been settled."
+          ],
+          "bullets": []
+        }
+      ]
+    }
   },
   "internal": {
     "demoWatermark": true,
     "createdAt": "2026-08-09",
     "leadSource": "scrutinized_leads.csv",
     "paymentStatus": "none",
-    "notes": "Reference fixture, complete at T3. Sections that tiers control carry no explicit `enabled` flag \u2014 that is what makes check:tiers meaningful."
+    "notes": "Reference fixture, complete at T3. Sections that tiers control carry no explicit `enabled` flag — that is what makes check:tiers meaningful."
   }
 }
