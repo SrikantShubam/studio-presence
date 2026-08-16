@@ -105,10 +105,6 @@ export type Database = {
         Args: { p_tenant_slug: string }
         Returns: Record<string, unknown>
       }
-      claim_demo_tenant: {
-        Args: { p_slug: string }
-        Returns: boolean
-      }
     }
     Enums: {
       lead_source: LeadSource

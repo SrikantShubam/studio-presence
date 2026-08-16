@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { AuthError, claimDemoTenant, destinationForTenant, requireTenant } from '@studio/backend'
+import { AuthError, destinationForTenant, requireTenant } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 
 /**
@@ -29,26 +29,38 @@ function originFrom(request: NextRequest): string {
   return `${proto}://${host}`
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ tenant: string }> },
-) {
+export async function GET(request: NextRequest) {
   const origin = originFrom(request)
   const { searchParams } = request.nextUrl
   const code = searchParams.get('code')
+  const tokenHash = searchParams.get('token_hash')
+  const otpType = searchParams.get('type')
 
-  if (!code) {
+  const supabase = await createSupabaseServerClient()
+
+  let session =
+    (await supabase.auth.getSession()).data.session ??
+    null
+
+  if (code) {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    if (error || !data.session) {
+      return NextResponse.redirect(`${origin}/login?error=link-expired`)
+    }
+    session = data.session
+  } else if (tokenHash) {
+    const type =
+      otpType === 'recovery' || otpType === 'email' || otpType === 'signup' ? otpType : 'email'
+    const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash })
+    if (error || !data.session) {
+      return NextResponse.redirect(`${origin}/login?error=link-expired`)
+    }
+    session = data.session
+  } else if (!session) {
     return NextResponse.redirect(`${origin}/login?error=missing-code`)
   }
 
-  const supabase = await createSupabaseServerClient()
-  const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-
-  if (error || !data.session) {
-    return NextResponse.redirect(`${origin}/login?error=link-expired`)
-  }
-
-  const { user, access_token } = data.session
+  const { user, access_token } = session
 
   if (!user.email) {
     // Should not happen for an email-magic-link session, but requireTenant's
@@ -65,21 +77,12 @@ export async function GET(
   } catch (e) {
     if (!(e instanceof AuthError)) throw e
 
-    // Signed in, but this account belongs to no tenant. If the site they signed
-    // in ON is a demo nobody owns yet, that is not a failure — it is the moment
-    // it becomes theirs. Everything that makes this safe lives in the database
-    // (migration 0003): demo status only, no existing members, always for
-    // auth.uid(). If any of that does not hold, the claim quietly returns false
-    // and we fall through to the same error screen as before.
-    if (e.code === 'no-tenant') {
-      const { tenant: tenantSlug } = await params
-
-      if (await claimDemoTenant(access_token, tenantSlug)) {
-        const { tenant } = await requireTenant(sessionUser)
-        return NextResponse.redirect(`${origin}${destinationForTenant(tenant)}`)
-      }
-    }
-
+    // Signed in, but this account belongs to no tenant. There used to be a
+    // self-claim fallback here — the first person to click a magic link on an
+    // unowned demo site became its permanent owner, no approval step. That made
+    // access uncontrolled by design and has been removed entirely: every tenant
+    // is now handed over deliberately, at /handover, by an operator. A no-tenant
+    // account is simply not yet linked to anything and goes back to /login.
     return NextResponse.redirect(`${origin}/login?error=${e.code}`)
   }
 }
