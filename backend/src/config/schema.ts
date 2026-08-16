@@ -70,6 +70,8 @@ const business = z.object({
   address,
   serviceAreas: z.array(z.string()).default([]),
   hours: z.string().optional(),
+  /** A short addition to `hours`, e.g. "Sunday by appointment". Not every studio needs one. */
+  hoursExtra: z.string().optional(),
 })
 
 // ---------------------------------------------------------------------------
@@ -116,6 +118,8 @@ const hero = z.object({
   /** `video` variant only. Ignored by the others. */
   videoUrl: url.optional(),
   ctaLabel: z.string().optional(),
+  /** The 2-3 verticals this studio serves, shown as small labels — e.g. "Apartments", "Offices". */
+  categories: z.array(z.string()).max(3).default([]),
 })
 
 const quickActions = z.object({
@@ -134,19 +138,31 @@ const trustBar = z.object({
     .default([]),
 })
 
+/**
+ * A service's fields beyond `title`/`blurb`/`image` only matter once it has its
+ * own `/services/[slug]` detail page — every one of them is optional so a
+ * homepage-only service card never has to carry empty structure.
+ */
+const service = z.object({
+  title: z.string(),
+  blurb: z.string(),
+  image: assetPath.optional(),
+  slug: slug.optional(),
+  price: z
+    .object({ value: z.string(), unit: z.string().optional(), note: z.string().optional() })
+    .optional(),
+  intro: z.array(z.string()).default([]),
+  photos: z.array(z.object({ image: assetPath, caption: z.string().optional() })).default([]),
+  included: z.array(z.object({ title: z.string(), body: z.string() })).default([]),
+  /** References `sections.portfolio.projects[].slug` — a worked example of this service. */
+  linkedProjectSlug: slug.optional(),
+  faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+})
+
 const services = z.object({
   ...sectionBase,
   variant: z.enum(['compact', 'detailed']).optional(),
-  items: z
-    .array(
-      z.object({
-        title: z.string(),
-        blurb: z.string(),
-        image: assetPath.optional(),
-        slug: slug.optional(),
-      }),
-    )
-    .default([]),
+  items: z.array(service).default([]),
 })
 
 const project = z.object({
@@ -173,6 +189,25 @@ const portfolio = z.object({
   detailPages: z.boolean().default(false),
   /** No upper limit. A studio with 40 projects lists 40. */
   projects: z.array(project).default([]),
+  /** `/projects` index page only. */
+  introText: z.string().optional(),
+  /** e.g. "2026" — the end of the studio's project-history range shown on the index. */
+  rangeEnd: z.string().optional(),
+  /**
+   * Descriptive copy per `project.category`/`projectType` value, shown at the top
+   * of `/projects/[category]`. A category with projects but no header here still
+   * lists them — this is decoration, not a gate.
+   */
+  categoryHeaders: z
+    .array(
+      z.object({
+        category: z.string(),
+        lead: z.string(),
+        accent: z.string().optional(),
+        lines: z.array(z.string()).default([]),
+      }),
+    )
+    .default([]),
 })
 
 const about = z.object({
@@ -252,6 +287,7 @@ const team = z.object({
   ...sectionBase,
   /** T3 turns each member into `/team/[slug]`. */
   detailPages: z.boolean().default(false),
+  intro: z.string().optional(),
   members: z
     .array(
       z.object({
@@ -260,9 +296,38 @@ const team = z.object({
         slug: slug.optional(),
         image: assetPath.optional(),
         bio: z.string().optional(),
+        // The rest are detail-page fields, populated only for a member with a
+        // `/team/[slug]` page — a member listed without one just has name/role/bio.
+        tenure: z.string().optional(),
+        line: z.string().optional(),
+        eyebrow: z.string().optional(),
+        body: z.array(z.string()).default([]),
+        credentials: z.array(z.string()).default([]),
+        projects: z
+          .array(z.object({ slug, title: z.string(), image: assetPath.optional() }))
+          .default([]),
       }),
     )
     .default([]),
+  /** The wider team, grouped by department — "Design office", "Site supervision" and so on. */
+  groups: z
+    .array(
+      z.object({
+        label: z.string(),
+        count: z.string().optional(),
+        people: z
+          .array(z.object({ name: z.string(), role: z.string(), image: assetPath.optional() }))
+          .default([]),
+      }),
+    )
+    .default([]),
+  workshop: z
+    .object({
+      title: z.string().optional(),
+      body: z.string().optional(),
+      photos: z.array(z.object({ image: assetPath, caption: z.string().optional() })).default([]),
+    })
+    .optional(),
 })
 
 // ---------------------------------------------------------------------------
@@ -302,14 +367,46 @@ const inquiryForm = z.object({
   fields: z
     .array(z.enum(['name', 'phone', 'email', 'roomType', 'budget', 'timeline', 'message']))
     .default(['name', 'phone', 'roomType', 'budget', 'timeline']),
+  /** The actual project types this studio offers, shown as a dropdown/checkbox list. */
+  projectTypes: z.array(z.string()).default([]),
 })
 
 const estimate = z.object({
   ...sectionBase,
-  /** Rate table drives the calculator. Config-driven so it never needs a code edit. */
+  /**
+   * Flat fallback figures. `homeTypes`/`finishLevels` below is the model the
+   * calculator actually renders when present — this stays for a studio that
+   * hasn't set up the fuller pricing structure yet.
+   */
   ratePerSqft: z
     .object({ basic: z.number(), standard: z.number(), premium: z.number() })
     .optional(),
+  intro: z.string().optional(),
+  area: z
+    .object({
+      min: z.number(),
+      max: z.number(),
+      step: z.number().optional(),
+      default: z.number().optional(),
+    })
+    .optional(),
+  /** Per-home-type price multiplier — e.g. a 1BHK vs. a duplex costs a different rate per sqft. */
+  homeTypes: z.array(z.object({ id: z.string(), label: z.string(), factor: z.number() })).default([]),
+  /** Named, described finish tiers — replaces the flat basic/standard/premium numbers above. */
+  finishLevels: z
+    .array(
+      z.object({
+        id: z.string(),
+        label: z.string(),
+        note: z.string().optional(),
+        weeks: z.string().optional(),
+        low: z.number().optional(),
+        high: z.number().optional(),
+      }),
+    )
+    .default([]),
+  resultNote: z.string().optional(),
+  included: z.array(z.object({ title: z.string(), body: z.string() })).default([]),
 })
 
 // ---------------------------------------------------------------------------
@@ -323,9 +420,23 @@ const caseStudy = z.object({
       z.object({
         slug,
         title: z.string(),
-        problem: z.string(),
-        approach: z.string(),
-        outcome: z.string(),
+        /** Paragraphs, in order. */
+        problem: z.array(z.string()).default([]),
+        approachIntro: z.string().optional(),
+        /** The lettered highlight cards — "A. The layout", "B. The materials"... */
+        decisions: z
+          .array(z.object({ letter: z.string(), title: z.string(), body: z.string() }))
+          .default([]),
+        outcome: z.array(z.string()).default([]),
+        stats: z.array(z.object({ value: z.string(), label: z.string() })).max(4).default([]),
+        quote: z
+          .object({
+            text: z.string(),
+            author: z.string(),
+            context: z.string().optional(),
+            image: assetPath.optional(),
+          })
+          .optional(),
         images: z.array(assetPath).default([]),
       }),
     )
@@ -335,8 +446,40 @@ const caseStudy = z.object({
 const locations = z.object({
   ...sectionBase,
   offices: z
-    .array(z.object({ slug, name: z.string(), address, phone: phone.optional() }))
+    .array(
+      z.object({
+        slug,
+        name: z.string(),
+        address,
+        phone: phone.optional(),
+        hours: z
+          .object({
+            weekday: z.string().optional(),
+            saturday: z.string().optional(),
+            sunday: z.string().optional(),
+            note: z.string().optional(),
+          })
+          .optional(),
+        photo: z.object({ image: assetPath, caption: z.string().optional() }).optional(),
+        /** How to actually find the door — landmark-based directions matter more than an address here. */
+        findNote: z.string().optional(),
+        about: z
+          .object({
+            lead: z.string().optional(),
+            body: z.array(z.string()).default([]),
+            stats: z.array(z.object({ value: z.string(), label: z.string() })).max(4).default([]),
+          })
+          .optional(),
+        team: z
+          .array(z.object({ name: z.string(), role: z.string(), image: assetPath.optional() }))
+          .default([]),
+        /** References `sections.portfolio.projects[].slug` — work delivered from this office. */
+        projectSlugs: z.array(slug).default([]),
+      }),
+    )
     .default([]),
+  /** Shown alongside a list of the studio's other offices, e.g. why a nearby city isn't covered yet. */
+  otherLocationsNote: z.string().optional(),
 })
 
 const videoTour = z.object({ ...sectionBase, url: url.optional() })
@@ -345,14 +488,39 @@ const companyProfile = z.object({ ...sectionBase, pdf: assetPath.optional() })
 
 const journal = z.object({
   ...sectionBase,
+  intro: z.string().optional(),
+  /** The filter chips on `/journal` — "Design", "Materials", "Process"... */
+  topics: z.array(z.string()).default([]),
   posts: z
     .array(
       z.object({
         slug,
         title: z.string(),
+        titleAccent: z.string().optional(),
         date: z.string(),
-        body: z.string(),
+        topic: z.string().optional(),
+        words: z.number().int().optional(),
+        excerpt: z.string().optional(),
+        author: z
+          .object({
+            slug: slug.optional(),
+            name: z.string(),
+            role: z.string().optional(),
+            image: assetPath.optional(),
+            line: z.string().optional(),
+          })
+          .optional(),
         cover: assetPath.optional(),
+        /** Paragraphs, in order. */
+        body: z.array(z.string()).default([]),
+        /** A heading inserted after the given paragraph index (0 = before the first). */
+        headings: z.array(z.object({ afterParagraph: z.number().int(), text: z.string() })).default([]),
+        bullets: z.array(z.string()).default([]),
+        pullquote: z.string().optional(),
+        inlineImage: z.object({ image: assetPath, caption: z.string().optional() }).optional(),
+        related: z
+          .array(z.object({ slug, title: z.string(), image: assetPath.optional() }))
+          .default([]),
       }),
     )
     .default([]),
@@ -360,15 +528,80 @@ const journal = z.object({
 
 const news = z.object({
   ...sectionBase,
+  /** Written about the studio elsewhere — leaves the site. */
+  press: z
+    .array(
+      z.object({
+        publication: z.string(),
+        publicationShort: z.string().optional(),
+        year: z.string().optional(),
+        date: z.string().optional(),
+        headline: z.string(),
+        quote: z.string().optional(),
+        url: url.optional(),
+      }),
+    )
+    .default([]),
+  /** The studio's own announcements — opens on this site, gets a `/news/[slug]` page. */
   items: z
     .array(
       z.object({
         slug,
         title: z.string(),
+        headline: z.string().optional(),
         date: z.string(),
+        year: z.string().optional(),
+        category: z.string().optional(),
+        summary: z.string().optional(),
+        photo: assetPath.optional(),
+        standfirst: z.string().optional(),
+        lead: z.string().optional(),
+        /** Paragraphs, in order. */
+        body: z.array(z.string()).default([]),
+        pullquote: z.string().optional(),
+        pullattr: z.string().optional(),
+        subhead: z.string().optional(),
+        /** Paragraphs after the pullquote/subhead break, in order. */
+        after: z.array(z.string()).default([]),
+        related: z.object({ slug, title: z.string(), image: assetPath.optional() }).optional(),
+        // Kept for a studio that only wants to link out rather than write a full article.
         outlet: z.string().optional(),
         href: url.optional(),
-        body: z.string().optional(),
+      }),
+    )
+    .default([]),
+})
+
+/**
+ * Per-locality micro-pages, `/areas/[locality]`. `business.serviceAreas` is the
+ * flat list of neighbourhood names shown in copy elsewhere; an entry here is
+ * what actually gives one of them a real page — a name in `serviceAreas` with
+ * no matching entry here has no page, which is the correct default rather than
+ * a thin stub for every neighbourhood the studio has ever mentioned.
+ */
+const areas = z.object({
+  ...sectionBase,
+  items: z
+    .array(
+      z.object({
+        slug,
+        name: z.string(),
+        stats: z.array(z.object({ value: z.string(), label: z.string() })).max(4).default([]),
+        /** Paragraphs, in order. */
+        intro: z.array(z.string()).default([]),
+        /** Other neighbourhoods served near this one. */
+        nearby: z.array(z.string()).default([]),
+        cards: z
+          .array(
+            z.object({
+              slug,
+              title: z.string(),
+              body: z.string().optional(),
+              meta: z.string().optional(),
+              image: assetPath.optional(),
+            }),
+          )
+          .default([]),
       }),
     )
     .default([]),
@@ -376,8 +609,39 @@ const news = z.object({
 
 const careers = z.object({
   ...sectionBase,
+  /** Paragraphs, in order. */
+  intro: z.array(z.string()).default([]),
+  studioPhoto: z.object({ image: assetPath, caption: z.string().optional() }).optional(),
+  /** The studio's hiring philosophy — a short list of what actually gets someone hired here. */
+  lookFor: z.array(z.object({ title: z.string(), body: z.string() })).default([]),
+  emptyState: z.object({ title: z.string().optional(), body: z.string().optional() }).optional(),
+  applyProcess: z
+    .object({
+      title: z.string().optional(),
+      sendTo: z.string().optional(),
+      subject: z.string().optional(),
+      sendItems: z.array(z.string()).default([]),
+      next: z.string().optional(),
+      nextBody: z.array(z.string()).default([]),
+    })
+    .optional(),
   roles: z
-    .array(z.object({ slug, title: z.string(), location: z.string(), body: z.string() }))
+    .array(
+      z.object({
+        slug,
+        title: z.string(),
+        location: z.string(),
+        body: z.string(),
+        type: z.string().optional(),
+        standfirst: z.string().optional(),
+        reportsTo: z.string().optional(),
+        salary: z.string().optional(),
+        starts: z.string().optional(),
+        duties: z.array(z.string()).default([]),
+        requirements: z.array(z.string()).default([]),
+        months: z.array(z.string()).default([]),
+      }),
+    )
     .default([]),
 })
 
@@ -423,10 +687,27 @@ const i18n = z
   })
   .default({ enabled: false, defaultLocale: 'en', locales: ['en'] })
 
+const legalDoc = z.object({
+  lead: z.string().optional(),
+  updated: z.string().optional(),
+  sections: z
+    .array(
+      z.object({
+        title: z.string(),
+        paragraphs: z.array(z.string()).default([]),
+        bullets: z.array(z.string()).default([]),
+      }),
+    )
+    .default([]),
+})
+
 const legal = z.object({
   privacyPolicy: z.boolean().default(true),
   terms: z.boolean().default(true),
   dataRetentionNote: z.string().optional(),
+  /** The actual document body. `privacyPolicy`/`terms` above still gate whether the page exists at all. */
+  privacyPolicyDoc: legalDoc.optional(),
+  termsDoc: legalDoc.optional(),
 })
 
 const internal = z
@@ -478,6 +759,7 @@ export const sectionsSchema = z.object({
   journal: journal.optional(),
   news: news.optional(),
   careers: careers.optional(),
+  areas: areas.optional(),
 })
 
 export const clientConfigSchema = z.object({
