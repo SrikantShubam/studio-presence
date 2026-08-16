@@ -703,11 +703,37 @@
       ]
     },
     "estimate": {
+      "enabled": true,
       "ratePerSqft": {
         "basic": 1200,
         "standard": 1800,
         "premium": 2600
-      }
+      },
+      "intro": "Move the slider, pick your home and finish level. The range updates as you go — it is drawn from what we actually billed on 240 completed sites in Patna, not a marketing number.",
+      "area": {
+        "min": 300,
+        "max": 4000,
+        "step": 10,
+        "default": 1320
+      },
+      "homeTypes": [
+        { "id": "1bhk", "label": "1 BHK", "factor": 0.94 },
+        { "id": "2bhk", "label": "2 BHK", "factor": 1 },
+        { "id": "3bhk", "label": "3 BHK", "factor": 1.06 },
+        { "id": "4bhk", "label": "4 BHK", "factor": 1.12 }
+      ],
+      "finishLevels": [
+        { "id": "basic", "label": "Essential", "note": "Commercial ply, laminate finishes, standard fittings.", "weeks": "6–8 weeks", "low": 0.95, "high": 1.2 },
+        { "id": "standard", "label": "Premium", "note": "Branded ply, veneer accents, better hardware and lighting.", "weeks": "8–11 weeks", "low": 0.92, "high": 1.14 },
+        { "id": "premium", "label": "Luxe", "note": "Solid wood detailing, stone, imported hardware, custom joinery.", "weeks": "12–16 weeks", "low": 0.92, "high": 1.19 }
+      ],
+      "resultNote": "This is an indicative range only, not a quotation. Final cost depends on the site, the extent of civil work and your material choices — we put a firm number in writing after one site visit.",
+      "included": [
+        { "title": "Design & drawings", "body": "Layouts, joinery details and a finish board, revised until you sign them off." },
+        { "title": "Carpentry & storage", "body": "Wardrobes, kitchen, beds and units built in our own workshop from commercial ply." },
+        { "title": "Paint, light & points", "body": "Wall finishes, light fittings and electrical points where the drawings call for them." },
+        { "title": "Not in the range", "body": "Loose furniture, appliances, heavy civil work and statutory society charges are quoted separately." }
+      ]
     },
     "caseStudy": {
       "items": [
