@@ -31,7 +31,10 @@ function numeralPositionClasses(index: number, hasImage: boolean): string {
 }
 
 const buttonBase =
-  'inline-flex min-h-11 items-center gap-3.5 px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium uppercase tracking-[0.18em] transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)]'
+  'group/button relative inline-flex min-h-10 items-center gap-2.5 px-6 py-4 text-[10px] font-medium uppercase tracking-[0.16em] transition-colors sm:min-h-11 sm:gap-3.5 sm:px-[34px] sm:py-5 sm:text-[clamp(10.5px,1.1vw,12px)] sm:tracking-[0.18em]'
+
+const buttonShape =
+  '[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] sm:[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)]'
 
 export function ServicesDetailed({
   config,
@@ -41,7 +44,7 @@ export function ServicesDetailed({
   site: ClientConfig
 }) {
   return (
-    <section id="services" className="border-t border-accent bg-surface px-5 pb-[clamp(72px,10vw,130px)] pt-[clamp(64px,8vw,110px)] text-ink sm:px-8 lg:px-16">
+    <section id="services" className="border-t border-accent bg-surface px-6 pb-[clamp(72px,10vw,130px)] pt-[clamp(64px,8vw,110px)] text-ink sm:px-8 lg:px-16">
       <div className="mb-[clamp(48px,7vw,96px)] flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,60px)]">
         <h2 className="m-0 font-display text-[clamp(46px,9vw,112px)] font-light uppercase leading-[0.88] tracking-[-0.03em]">
           <ClipLine>{TITLE.lead}</ClipLine>
@@ -49,7 +52,7 @@ export function ServicesDetailed({
         </h2>
       </div>
 
-      <Stagger className="grid gap-[clamp(56px,8vw,110px)]">
+      <Stagger className="grid gap-[clamp(72px,10vw,130px)] md:gap-[clamp(110px,12vw,150px)]">
         {config.items.map((item, index) => {
           const hasImage = Boolean(item.image)
           const href = serviceHref(item)
@@ -57,9 +60,9 @@ export function ServicesDetailed({
           return (
             <FadeUpItem
               key={`${item.title}-${index}`}
-              className={`group grid min-w-0 gap-[clamp(32px,6vw,80px)] text-ink md:grid-cols-[1.15fr_1fr] md:items-center ${hasImage ? '' : 'md:grid-cols-1'}`}
+              className={`group grid min-w-0 gap-[clamp(40px,7vw,80px)] text-ink md:grid-cols-[1.15fr_1fr] md:items-center ${hasImage ? '' : 'md:grid-cols-1'}`}
             >
-              <div className={`relative min-w-0 pt-5 ${hasImage ? (index % 2 === 0 ? 'md:order-2' : 'md:order-1') : ''}`}>
+              <div className={`relative min-w-0 px-1 pt-8 sm:px-0 sm:pt-5 ${hasImage ? (index % 2 === 0 ? 'md:order-2' : 'md:order-1') : ''}`}>
                 <span
                   aria-hidden
                   className={`pointer-events-none absolute -top-14 select-none font-display text-[clamp(110px,14vw,190px)] font-light leading-none text-transparent transition-[color] duration-300 [-webkit-text-stroke:1px_var(--t-hairline)] group-hover:[-webkit-text-stroke:1px_var(--color-accent)] ${numeralPositionClasses(
@@ -81,19 +84,20 @@ export function ServicesDetailed({
                   {item.blurb}
                 </p>
 
-                <div className="relative mt-7 flex flex-wrap items-center gap-3">
+                <div className="relative mt-8 flex flex-wrap items-center gap-4">
                   {href ? (
-                    <Link href={href} className={`${buttonBase} bg-cta text-ink hover:bg-ink hover:text-cta`}>
+                    <Link href={href} className={`${buttonBase} ${buttonShape} bg-cta text-ink hover:bg-ink hover:text-cta`}>
                       {READ_MORE}
-                      <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
+                      <EditorialIcon name="arrow-up-right" className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                     </Link>
                   ) : null}
                   <Link
                     href={site.sections.estimate?.enabled ? '/estimate' : '#contact'}
-                    className={`${buttonBase} border border-ink bg-transparent text-ink hover:bg-ink hover:text-surface`}
+                    className={`${buttonBase} ${buttonShape} bg-ink text-ink hover:text-surface`}
                   >
-                    {ESTIMATE_CTA}
-                    <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
+                    <span className={`pointer-events-none absolute inset-px ${buttonShape} bg-surface transition-colors group-hover/button:bg-ink`} aria-hidden />
+                    <span className="relative">{ESTIMATE_CTA}</span>
+                    <EditorialIcon name="arrow-up-right" className="relative h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </Link>
                 </div>
               </div>

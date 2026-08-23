@@ -1,7 +1,12 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion, useReducedMotion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
+import { EditorialIcon } from '@/lib/icons'
+import { FadeUpItem, Stagger } from '@/lib/motion'
 import { Wordmark } from './Wordmark'
 import { heroEyebrowLines } from './eyebrow'
 
@@ -41,43 +46,53 @@ export function HeroContent({
   const ctaHref = site.sections.estimate?.enabled ? '/estimate' : '#contact'
 
   return (
-    <div>
-      <div className={`mb-5 grid gap-1.5 text-[10.5px] font-normal uppercase leading-relaxed tracking-[0.24em] sm:mb-8 ${eyebrowColor}`}>
-        {heroEyebrowLines(site).map((line, i) => (
-          <span key={i}>{line}</span>
-        ))}
-      </div>
+    <Stagger delay={0.15}>
+      <FadeUpItem>
+        <div className={`mb-8 grid gap-3 text-[10.5px] font-normal uppercase leading-relaxed tracking-[0.24em] sm:mb-8 md:gap-2 ${eyebrowColor}`}>
+          {heroEyebrowLines(site).map((line, i) => (
+            <span key={i}>{line}</span>
+          ))}
+        </div>
+      </FadeUpItem>
 
-      <h1
-        className={`m-0 font-display font-light uppercase leading-[0.9] tracking-tight ${
-          headingSize === 'display'
-            ? 'text-[clamp(44px,11vw,140px)]'
-            : 'text-[clamp(46px,7.4vw,96px)]'
-        }`}
-      >
-        <Wordmark
-          businessName={site.business.name}
-          className={tone === 'on-photo' ? 'text-surface' : 'text-ink'}
-        />
-      </h1>
-
-      <p className={`mt-6 max-w-md text-[clamp(16px,1.7vw,19px)] leading-snug sm:mt-9 ${bodyColor}`}>
-        {config.headline}
-      </p>
-
-      {config.sub && (
-        <p className={`mt-3 max-w-lg text-sm leading-relaxed ${bodyColor}`}>{config.sub}</p>
-      )}
-
-      {config.ctaLabel && (
-        <Link
-          href={ctaHref}
-          className="mt-8 inline-flex min-h-11 items-center gap-3 bg-cta px-8 py-5 text-[11px] font-medium uppercase tracking-[0.18em] text-ink sm:mt-12"
+      <FadeUpItem>
+        <h1
+          className={`m-0 font-display font-light uppercase leading-[0.9] tracking-[-0.025em] ${
+            headingSize === 'display'
+              ? 'text-[clamp(44px,11vw,140px)]'
+              : 'text-[clamp(46px,7.4vw,96px)]'
+          }`}
         >
-          {config.ctaLabel} <span aria-hidden>→</span>
-        </Link>
-      )}
-    </div>
+          <Wordmark
+            businessName={site.business.name}
+            className={tone === 'on-photo' ? 'text-surface' : 'text-ink'}
+          />
+        </h1>
+      </FadeUpItem>
+
+      <FadeUpItem>
+        <p className={`mt-[clamp(30px,4.2vh,42px)] max-w-[16em] text-[clamp(15px,1.6vw,21px)] font-normal uppercase leading-[1.25] tracking-[0.18em] md:mt-[clamp(24px,3vw,34px)] ${bodyColor}`}>
+          {config.headline}
+        </p>
+      </FadeUpItem>
+
+      {config.sub ? (
+        <FadeUpItem>
+          <p className={`mt-5 max-w-lg text-sm leading-relaxed ${bodyColor}`}>{config.sub}</p>
+        </FadeUpItem>
+      ) : null}
+
+      {config.ctaLabel ? (
+        <FadeUpItem>
+          <Link
+            href={ctaHref}
+            className="mt-[clamp(40px,6vh,64px)] inline-flex min-h-10 items-center gap-2.5 [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] bg-cta px-6 py-4 text-[10px] font-medium uppercase tracking-[0.16em] text-ink sm:min-h-11 sm:gap-[14px] sm:[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] sm:px-[34px] sm:py-5 sm:text-[clamp(10.5px,1.1vw,12px)] sm:tracking-[0.18em] md:mt-[clamp(32px,4.5vw,52px)]"
+          >
+            {config.ctaLabel} <EditorialIcon name="arrow-right" className="h-3 w-3" />
+          </Link>
+        </FadeUpItem>
+      ) : null}
+    </Stagger>
   )
 }
 
@@ -91,9 +106,20 @@ export function HeroBackdrop({
   alt: string
   children?: ReactNode
 }) {
+  const reduce = useReducedMotion()
+
   return (
     <div className="absolute inset-0 bg-ink">
-      {image && <Image src={image} alt={alt} fill priority className="object-cover" />}
+      {image ? (
+        <motion.div
+          className="absolute inset-0"
+          initial={reduce ? false : { scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Image src={image} alt={alt} fill priority className="object-cover" />
+        </motion.div>
+      ) : null}
       <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/15 to-ink/60" />
       {children}
     </div>

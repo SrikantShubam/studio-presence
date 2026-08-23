@@ -1,9 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
+import { EditorialIcon } from '@/lib/icons'
 import { Wordmark } from './Wordmark'
 import { heroEyebrowLines } from './eyebrow'
 
@@ -29,6 +31,7 @@ import { heroEyebrowLines } from './eyebrow'
  */
 export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; site: ClientConfig }) {
   const [open, setOpen] = useState(false)
+  const reduce = useReducedMotion()
   const ghostDigits = site.business.yearFounded ? String(site.business.yearFounded).slice(-2) : null
   const ctaHref = site.sections.estimate?.enabled ? '/estimate' : '#contact'
 
@@ -73,9 +76,9 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
           {config.ctaLabel && (
             <Link
               href={ctaHref}
-              className="mt-10 inline-flex min-h-11 items-center gap-3 whitespace-nowrap bg-cta px-7 py-5 text-[11px] font-medium uppercase tracking-[0.2em] text-ink sm:mt-14"
+              className="mt-10 inline-flex min-h-10 items-center gap-2.5 whitespace-nowrap bg-cta px-6 py-4 text-[10px] font-medium uppercase tracking-[0.16em] text-ink sm:mt-14 sm:min-h-11 sm:gap-3 sm:px-7 sm:py-5 sm:text-[11px] sm:tracking-[0.2em]"
             >
-              {config.ctaLabel} <span aria-hidden>↗</span>
+              {config.ctaLabel} <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
             </Link>
           )}
         </div>
@@ -98,29 +101,29 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
       {/* NAV — spans both halves, seam-aligned */}
       <nav className="absolute inset-x-0 top-0 grid items-start py-6 sm:py-8 md:grid-cols-2">
         <div className="flex items-center justify-between gap-5 px-6 sm:px-10">
-          <span className="grid gap-1 text-xs font-medium uppercase leading-tight tracking-[0.3em] text-surface">
+          <Link href="/" className="grid gap-1 text-xs font-medium uppercase leading-tight tracking-[0.3em] text-surface">
             <Wordmark businessName={site.business.name} />
-          </span>
+          </Link>
           <div className="hidden items-center gap-6 text-[10px] font-normal uppercase tracking-[0.22em] text-surface md:flex">
-            <a href="#hero">Home</a>
+            <Link href="/">Home</Link>
           </div>
         </div>
         <div className="flex items-center justify-between gap-5 px-6 sm:px-10">
           <div className="hidden items-center gap-6 text-[10px] font-normal uppercase tracking-[0.22em] text-ink md:flex">
-            <a href="#about">About</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#contact">Contact</a>
+            <Link href="/#about">About</Link>
+            <Link href="/portfolio">Portfolio</Link>
+            <Link href="/#contact">Contact</Link>
           </div>
           <div className="ml-auto hidden items-center gap-3 whitespace-nowrap text-[11px] tracking-[0.14em] text-ink md:flex">
             <span className="h-3 w-px shrink-0 bg-accent" />
-            {site.business.phone}
+            <a href={`tel:${site.business.phone}`}>{site.business.phone}</a>
           </div>
           <button
             type="button"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="ml-auto flex h-11 w-11 flex-col items-center justify-center gap-[5px] border border-ink/20 bg-surface/80 md:hidden"
+            className="ml-auto flex h-11 w-11 flex-col items-center justify-center gap-[5px] bg-surface/80 md:hidden"
           >
             <span className="block h-px w-[18px] bg-ink" />
             <span className="block h-px w-[18px] bg-ink" />
@@ -128,20 +131,70 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
         </div>
       </nav>
 
-      {open && (
-        <div className="absolute inset-x-0 top-[64px] z-10 flex flex-col gap-[2px] bg-surface px-6 py-4 text-[13px] font-normal uppercase tracking-[0.2em] text-ink md:hidden">
-          {['Home', 'About', 'Portfolio', 'Contact'].map((label) => (
-            <a
-              key={label}
-              href={`#${label.toLowerCase()}`}
-              onClick={() => setOpen(false)}
-              className="py-3"
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            key="split-mobile-menu"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            className="fixed inset-0 z-50 bg-surface text-ink md:hidden"
+          >
+            <motion.div
+              initial={reduce ? false : { y: -18 }}
+              animate={{ y: 0 }}
+              exit={reduce ? { opacity: 0 } : { y: -18, opacity: 0 }}
+              transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              className="flex min-h-screen flex-col px-6 py-6 sm:px-8"
             >
-              {label}
-            </a>
-          ))}
-        </div>
-      )}
+              <div className="flex items-center justify-between gap-5 border-b border-accent pb-5">
+                <Link
+                  href="/"
+                  onClick={() => setOpen(false)}
+                  className="grid gap-1 text-xs font-medium uppercase leading-tight tracking-[0.3em] text-ink"
+                >
+                  <Wordmark businessName={site.business.name} />
+                </Link>
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  onClick={() => setOpen(false)}
+                  className="flex h-11 w-11 items-center justify-center bg-transparent text-ink"
+                >
+                  <EditorialIcon name="close" className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="grid flex-1 content-center gap-1 py-10 text-[clamp(28px,10vw,54px)] font-display uppercase leading-none tracking-normal">
+                {[
+                  { href: '/', label: 'Home' },
+                  { href: '/#about', label: 'About' },
+                  { href: '/portfolio', label: 'Portfolio' },
+                  { href: '/#contact', label: 'Contact' },
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="border-b border-hairline py-4 text-ink"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              <a
+                href={`tel:${site.business.phone}`}
+                onClick={() => setOpen(false)}
+                className="border-t border-accent pt-5 text-[12px] font-normal uppercase tracking-[0.14em] text-ink"
+              >
+                {site.business.phone}
+              </a>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   )
 }
