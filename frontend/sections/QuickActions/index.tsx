@@ -1,16 +1,10 @@
 import { interpolate, type ClientConfig, type SectionConfig } from '@studio/backend'
 import type { SectionComponentProps } from '@/sections/registry'
+import { chromeCopy, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { EditorialIcon, type EditorialIconName } from '@/lib/icons'
 import { FadeUpItem, Stagger } from '@/lib/motion'
 
 type Action = SectionConfig<'quickActions'>['actions'][number]
-
-const ACTION_LABELS: Record<Action, string> = {
-  whatsapp: 'WHATSAPP',
-  call: 'CALL',
-  directions: 'DIRECTIONS',
-  instagram: 'INSTAGRAM',
-}
 
 function actionHref(action: Action, site: ClientConfig): string | null {
   switch (action) {
@@ -37,6 +31,8 @@ function ActionIcon({ action }: { action: Action }) {
 
 export function QuickActions({ config, site }: SectionComponentProps<'quickActions'>) {
   if (!config?.enabled || !config.actions?.length) return null
+  const locale = publicLocaleFromSite(site)
+  const copy = chromeCopy[locale].quickActions
 
   const resolved = config.actions
     .map((action) => ({ action, href: actionHref(action, site) }))
@@ -60,7 +56,7 @@ export function QuickActions({ config, site }: SectionComponentProps<'quickActio
           >
           <a
             href={href}
-            aria-label={ACTION_LABELS[action]}
+            aria-label={copy[action]}
             className={`flex min-h-[76px] w-full flex-col items-center justify-center gap-1.5 px-1.5 py-3 text-center transition-colors md:min-h-[132px] md:flex-row md:gap-3 md:px-[clamp(18px,3vw,48px)] md:py-[26px] ${
               isWhatsapp ? 'bg-ink text-surface hover:bg-accent' : 'text-ink hover:bg-muted/15'
             }`}
@@ -70,14 +66,14 @@ export function QuickActions({ config, site }: SectionComponentProps<'quickActio
             </span>
             {isWhatsapp ? (
               <span className="grid gap-[5px]">
-                <span className="text-[9px] font-medium uppercase tracking-[0.08em] md:text-sm md:tracking-[0.2em]">WHATSAPP</span>
-                <span className="hidden text-[10.5px] uppercase tracking-[0.12em] text-surface/60 md:block">
-                  FASTEST REPLY · {site.business.phone}
+                <span className={`text-[9px] font-medium md:text-sm ${localeTextClass(locale, 'uppercase tracking-[0.08em] md:tracking-[0.2em]')}`}>{copy.whatsapp}</span>
+                <span className={`hidden text-[10.5px] text-surface/60 md:block ${localeTextClass(locale, 'uppercase tracking-[0.12em]')}`}>
+                  {copy.fastestReply} · {site.business.phone}
                 </span>
               </span>
             ) : (
-              <span className="text-[9px] font-medium uppercase tracking-[0.08em] md:text-[clamp(10.5px,1.1vw,11.5px)] md:tracking-[0.18em]">
-                {ACTION_LABELS[action]}
+              <span className={`text-[9px] font-medium md:text-[clamp(10.5px,1.1vw,11.5px)] ${localeTextClass(locale, 'uppercase tracking-[0.08em] md:tracking-[0.18em]')}`}>
+                {copy[action]}
               </span>
             )}
           </a>

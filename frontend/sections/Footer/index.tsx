@@ -1,30 +1,54 @@
 import Link from 'next/link'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
+import { localeHref, localeTextClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
 import { ClipLine } from '@/lib/motion'
 import type { SectionComponentProps } from '@/sections/registry'
 import { Wordmark } from '../Hero/Wordmark'
 
 /** Fixed UI framing, identical for every client — not content, so not config. */
 const COPY = {
-  links: {
-    home: 'Home',
-    about: 'About',
-    team: 'Team',
-    careers: 'Careers',
-    locations: 'Locations',
-    portfolio: 'Portfolio',
-    services: 'Services',
-    estimate: 'Estimate',
-    news: 'News',
-    journal: 'Journal',
-    privacy: 'Privacy',
-    terms: 'Terms',
+  en: {
+    links: {
+      home: 'Home',
+      about: 'About',
+      team: 'Team',
+      careers: 'Careers',
+      locations: 'Locations',
+      portfolio: 'Portfolio',
+      services: 'Services',
+      estimate: 'Estimate',
+      news: 'News',
+      journal: 'Journal',
+      privacy: 'Privacy',
+      terms: 'Terms',
+    },
+    groups: { studio: 'Studio', work: 'Work', areas: 'Areas', writing: 'Writing', legal: 'Legal' },
+    reserved: 'All rights reserved.',
+    whatsappCta: 'WhatsApp',
+    contactTitle: { lead: 'Come', accent: 'See us' },
+    mapLabel: 'Studio location',
   },
-  groups: { studio: 'Studio', work: 'Work', areas: 'Areas', writing: 'Writing', legal: 'Legal' },
-  reserved: 'All rights reserved.',
-  whatsappCta: 'WhatsApp',
-  contactTitle: { lead: 'Come', accent: 'See us' },
-  mapLabel: 'Studio location',
+  hi: {
+    links: {
+      home: 'होम',
+      about: 'परिचय',
+      team: 'टीम',
+      careers: 'करियर',
+      locations: 'लोकेशन',
+      portfolio: 'पोर्टफोलियो',
+      services: 'सेवाएं',
+      estimate: 'अनुमान',
+      news: 'समाचार',
+      journal: 'जर्नल',
+      privacy: 'प्राइवेसी',
+      terms: 'नियम',
+    },
+    groups: { studio: 'स्टूडियो', work: 'काम', areas: 'क्षेत्र', writing: 'लेखन', legal: 'कानूनी' },
+    reserved: 'सर्वाधिकार सुरक्षित।',
+    whatsappCta: 'WhatsApp',
+    contactTitle: { lead: 'आइए', accent: 'मिलते हैं' },
+    mapLabel: 'स्टूडियो लोकेशन',
+  },
 }
 
 type FooterConfig = SectionConfig<'footer'>
@@ -60,8 +84,9 @@ function mapEmbedSrc(site: ClientConfig): string | undefined {
   return query ? `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=16&output=embed` : undefined
 }
 
-function footerGroups(site: ClientConfig): { title: string; links: FooterLink[] }[] {
-  const labels = COPY.links
+function footerGroups(site: ClientConfig, locale: PublicLocale): { title: string; links: FooterLink[] }[] {
+  const copy = COPY[locale]
+  const labels = copy.links
   const studio: FooterLink[] = [
     { href: '/', label: labels.home },
     { href: '/#about', label: labels.about },
@@ -95,15 +120,15 @@ function footerGroups(site: ClientConfig): { title: string; links: FooterLink[] 
   }
 
   return [
-    { title: COPY.groups.studio, links: studio },
-    { title: COPY.groups.work, links: work },
-    { title: COPY.groups.areas, links: areas },
-    { title: COPY.groups.writing, links: writing },
-    { title: COPY.groups.legal, links: legal },
+    { title: copy.groups.studio, links: studio },
+    { title: copy.groups.work, links: work },
+    { title: copy.groups.areas, links: areas },
+    { title: copy.groups.writing, links: writing },
+    { title: copy.groups.legal, links: legal },
   ].filter((group) => group.links.length > 0)
 }
 
-function FooterNavLink({ href, label }: FooterLink) {
+function FooterNavLink({ href, label, locale }: FooterLink & { locale: PublicLocale }) {
   const className = 'text-surface transition-colors hover:text-cta'
   if (href.startsWith('http')) {
     return (
@@ -113,23 +138,24 @@ function FooterNavLink({ href, label }: FooterLink) {
     )
   }
   return (
-    <Link href={href} className={className}>
+    <Link href={localeHref(href, locale)} className={className}>
       {label}
     </Link>
   )
 }
 
 function VisitSitemap({ site }: { site: ClientConfig }) {
-  const groups = footerGroups(site)
+  const locale = publicLocaleFromSite(site)
+  const groups = footerGroups(site, locale)
   if (!groups.length) return null
 
   return (
-    <div className="grid grid-cols-2 gap-[clamp(20px,3vw,36px)] border-t border-accent px-[clamp(20px,5vw,64px)] pb-[clamp(48px,6vw,72px)] pt-[clamp(32px,4vw,48px)] min-[900px]:grid-cols-5">
+    <div className="grid grid-cols-2 items-start gap-x-[clamp(20px,3vw,36px)] gap-y-10 border-t border-accent px-[clamp(20px,5vw,64px)] pb-[clamp(48px,6vw,72px)] pt-[clamp(32px,4vw,48px)] min-[700px]:grid-cols-5">
       {groups.map((group) => (
-        <nav key={group.title} className="grid gap-[11px] text-[12.5px] uppercase tracking-[0.08em]">
-          <span className="mb-1 text-[10.5px] tracking-[0.22em] text-cta">{group.title}</span>
+        <nav key={group.title} className={`grid content-start gap-4 text-[11.5px] leading-none ${localeTextClass(locale, 'uppercase tracking-[0.16em]')}`}>
+          <span className={`mb-3 block min-h-4 text-[10.5px] text-cta ${localeTextClass(locale, 'tracking-[0.22em]')}`}>{group.title}</span>
           {group.links.map((link) => (
-            <FooterNavLink key={`${group.title}-${link.href}`} {...link} />
+            <FooterNavLink key={`${group.title}-${link.href}`} {...link} locale={locale} />
           ))}
         </nav>
       ))}
@@ -161,22 +187,24 @@ function ExpandedFooter({ site }: { config: FooterConfig; site: ClientConfig }) 
   const body = [addressText(site), site.business.hours, site.business.hoursExtra].filter(Boolean).join(' — ')
   const embedSrc = mapEmbedSrc(site)
   const wa = whatsappHref(site.business.whatsapp)
+  const locale = publicLocaleFromSite(site)
+  const copy = COPY[locale]
 
   return (
     <footer id="footer" className="overflow-hidden border-t border-accent bg-ink text-surface">
       <div className="grid items-end gap-[clamp(28px,5vw,64px)] px-[clamp(20px,5vw,64px)] py-[clamp(56px,7vw,100px)] min-[900px]:grid-cols-[minmax(0,1.15fr)_minmax(220px,0.85fr)]">
         <div className="min-w-0">
           {eyebrow.length ? (
-            <p className="mb-[22px] m-0 grid gap-1.5 text-[10.5px] uppercase tracking-[0.24em] text-cta">
+            <p className={`mb-[22px] m-0 grid gap-1.5 text-[10.5px] text-cta ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
               {eyebrow.map((line) => (
                 <ClipLine key={line}>{line}</ClipLine>
               ))}
             </p>
           ) : null}
           <h2 className="m-0 font-display text-[clamp(36px,6vw,80px)] font-light uppercase leading-[0.88] tracking-[-0.03em]">
-            <ClipLine>{COPY.contactTitle.lead}</ClipLine>
+            <ClipLine>{copy.contactTitle.lead}</ClipLine>
             <ClipLine className="ml-[0.55em] block text-cta" delay={0.08}>
-              {COPY.contactTitle.accent}
+              {copy.contactTitle.accent}
             </ClipLine>
           </h2>
           {body ? (
@@ -200,9 +228,9 @@ function ExpandedFooter({ site }: { config: FooterConfig; site: ClientConfig }) 
             {wa ? (
               <a
                 href={wa}
-                className="mt-1 inline-flex min-h-11 items-center border border-cta px-7 py-4 text-[11px] font-medium uppercase tracking-[0.18em] text-cta transition-colors hover:bg-cta hover:text-ink"
+                className={`mt-1 inline-flex min-h-11 items-center border border-cta px-7 py-4 text-[11px] font-medium text-cta transition-colors hover:bg-cta hover:text-ink ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
               >
-                {COPY.whatsappCta}
+                {copy.whatsappCta}
               </a>
             ) : null}
           </div>
@@ -212,7 +240,7 @@ function ExpandedFooter({ site }: { config: FooterConfig; site: ClientConfig }) 
             <iframe
               className="absolute inset-0 h-full w-full border-0 grayscale"
               src={embedSrc}
-              title={COPY.mapLabel}
+              title={copy.mapLabel}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
@@ -220,9 +248,9 @@ function ExpandedFooter({ site }: { config: FooterConfig; site: ClientConfig }) 
         ) : null}
       </div>
       <VisitSitemap site={site} />
-      <div className="flex flex-wrap justify-between gap-[14px] border-t border-accent px-[clamp(20px,5vw,64px)] py-[22px] text-[10.5px] uppercase tracking-[0.16em] text-muted">
+      <div className={`grid gap-3 border-t border-accent px-[clamp(20px,5vw,64px)] py-[22px] text-[10.5px] leading-relaxed text-muted min-[720px]:grid-cols-[1fr_auto] min-[720px]:items-center ${localeTextClass(locale, 'uppercase tracking-[0.16em]')}`}>
         <span className="break-words">
-          © {new Date().getFullYear()} {site.business.name.toUpperCase()}. {COPY.reserved}
+          © {new Date().getFullYear()} {site.business.name.toUpperCase()}. {copy.reserved}
         </span>
         {site.business.hours ? <span>{site.business.hours}</span> : null}
       </div>
@@ -232,7 +260,9 @@ function ExpandedFooter({ site }: { config: FooterConfig; site: ClientConfig }) 
 
 function CompactFooter({ config, site }: { config: FooterConfig; site: ClientConfig }) {
   const address = addressText(site)
-  const labels = COPY.links
+  const locale = publicLocaleFromSite(site)
+  const copy = COPY[locale]
+  const labels = copy.links
   const showSeparator = site.legal.privacyPolicy && site.legal.terms
 
   return (
@@ -263,8 +293,8 @@ function CompactFooter({ config, site }: { config: FooterConfig; site: ClientCon
         </div>
         <SocialLinks socials={config.socials} />
       </div>
-      <nav className="flex flex-wrap gap-x-5 gap-y-2 border-t border-hairline px-5 py-4 text-[11px] uppercase tracking-[0.18em] sm:px-8 lg:px-16">
-        {footerGroups(site)
+      <nav className={`flex flex-wrap gap-x-5 gap-y-2 border-t border-hairline px-5 py-4 text-[11px] sm:px-8 lg:px-16 ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>
+        {footerGroups(site, locale)
           .flatMap((group) => group.links)
           .filter((link, index, all) => all.findIndex((item) => item.href === link.href) === index)
           .slice(0, 10)
@@ -274,26 +304,26 @@ function CompactFooter({ config, site }: { config: FooterConfig; site: ClientCon
                 {link.label}
               </a>
             ) : (
-              <Link key={link.href} href={link.href} className="text-ink hover:text-accent">
+              <Link key={link.href} href={localeHref(link.href, locale)} className="text-ink hover:text-accent">
                 {link.label}
               </Link>
             ),
           )}
       </nav>
-      <div className="flex flex-wrap justify-between gap-[14px] bg-ink px-5 py-[22px] text-[10.5px] font-normal uppercase tracking-[0.16em] text-surface sm:px-8 lg:px-16">
+      <div className={`flex flex-wrap justify-between gap-[14px] bg-ink px-5 py-[22px] text-[10.5px] font-normal text-surface sm:px-8 lg:px-16 ${localeTextClass(locale, 'uppercase tracking-[0.16em]')}`}>
         <span className="break-words">
-          © {new Date().getFullYear()} {site.business.name.toUpperCase()}. {COPY.reserved}
+          © {new Date().getFullYear()} {site.business.name.toUpperCase()}. {copy.reserved}
         </span>
         {(site.legal.privacyPolicy || site.legal.terms) && (
           <span className="flex flex-wrap gap-2">
             {site.legal.privacyPolicy ? (
-              <a href="/privacy" className="text-surface hover:text-cta">
+              <a href={localeHref('/privacy', locale)} className="text-surface hover:text-cta">
                 {labels.privacy}
               </a>
             ) : null}
             {showSeparator ? <span aria-hidden>|</span> : null}
             {site.legal.terms ? (
-              <a href="/terms" className="text-surface hover:text-cta">
+              <a href={localeHref('/terms', locale)} className="text-surface hover:text-cta">
                 {labels.terms}
               </a>
             ) : null}

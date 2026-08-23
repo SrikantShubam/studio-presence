@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
+import { chromeCopy, localeHref, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { FadeUpItem, Stagger } from '@/lib/motion'
 import type { PortfolioProject } from '@/sections/Portfolio/shared'
@@ -14,15 +15,13 @@ import { ProjectImage, ProjectLink } from '@/sections/Portfolio/shared'
  * editorial-identity site groups its work the same way. "office" buckets under
  * "hospitality" here to match the reference design's grouping.
  */
-export const FILTERS: Array<{ id: string; label: string }> = [
-  { id: 'all', label: 'All' },
-  { id: 'residential', label: 'Residential' },
-  { id: 'commercial', label: 'Commercial' },
-  { id: 'hospitality', label: 'Hospitality' },
-  { id: 'retail', label: 'Retail' },
+export const FILTERS: Array<{ id: keyof typeof chromeCopy.en.portfolio.filters }> = [
+  { id: 'all' },
+  { id: 'residential' },
+  { id: 'commercial' },
+  { id: 'hospitality' },
+  { id: 'retail' },
 ]
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const COPY = { viewMore: 'View more', showing: 'Showing', of: 'of', projectsWord: 'projects', loadMore: 'Show 12 more' }
 const PAGE_SIZE = 12
 
 const BANDS: Record<2 | 4 | 6, Array<Array<[number, number]>>> = {
@@ -97,14 +96,18 @@ export function ProjectsBrowser({
   active,
   detailPages,
   categoryHeaders,
+  locale = 'en',
 }: {
   projects: PortfolioProject[]
   active: string
   detailPages: boolean
   categoryHeaders: ClientConfig['sections']['portfolio']['categoryHeaders']
+  locale?: PublicLocale
 }) {
   const cols = useColumnCount()
   const [shown, setShown] = useState(PAGE_SIZE)
+  const copy = chromeCopy[locale].portfolio
+  const labelClass = localeTextClass(locale, 'uppercase tracking-[0.16em]')
 
   useEffect(() => {
     setShown(PAGE_SIZE)
@@ -114,12 +117,13 @@ export function ProjectsBrowser({
     () =>
       FILTERS.map((filter) => ({
         ...filter,
+        label: copy.filters[filter.id],
         count:
           filter.id === 'all'
             ? projects.length
             : projects.filter((project) => bucket(project.projectType) === filter.id).length,
       })),
-    [projects],
+    [copy.filters, projects],
   )
 
   const filtered = useMemo(() => {
@@ -190,8 +194,8 @@ export function ProjectsBrowser({
             return (
               <Link
                 key={category.id}
-                href={filterHref(category.id)}
-                className={`min-h-11 border-b-2 py-2.5 text-[clamp(12px,1.4vw,15px)] font-normal uppercase tracking-[0.16em] transition-colors ${
+                href={localeHref(filterHref(category.id), locale)}
+                className={`min-h-11 border-b-2 py-2.5 text-[clamp(12px,1.4vw,15px)] font-normal transition-colors ${labelClass} ${
                   isActive ? 'border-accent text-ink' : 'border-transparent text-muted hover:text-ink'
                 }`}
               >
@@ -231,8 +235,8 @@ export function ProjectsBrowser({
                     <span className="font-display text-[clamp(56px,7vw,104px)] font-light leading-[0.8] text-transparent [-webkit-text-stroke:1px_var(--color-hairline)]">
                       {String(breakIndex + 1).padStart(2, '0')}
                     </span>
-                    <span className="pb-1.5 text-[clamp(13px,1.5vw,17px)] font-normal uppercase tracking-[0.16em] text-accent">
-                      {breakKey}
+                    <span className={`pb-1.5 text-[clamp(13px,1.5vw,17px)] font-normal text-accent ${localeTextClass(locale, 'uppercase tracking-[0.16em]')}`}>
+                      {copy.filters[breakKey as keyof typeof copy.filters] ?? breakKey}
                     </span>
                   </div>
                 )}
@@ -240,6 +244,7 @@ export function ProjectsBrowser({
                 <ProjectLink
                   project={project}
                   detailPages={detailPages}
+                  locale={locale}
                   className="group relative block h-full min-h-0 min-w-0 overflow-hidden bg-hairline"
                 >
                   <ProjectImage
@@ -252,14 +257,14 @@ export function ProjectsBrowser({
                       {project.title}
                     </span>
                     {projectMeta(project) && (
-                      <span className="break-words text-[10px] uppercase tracking-[0.16em] text-surface/80">
+                      <span className={`break-words text-[10px] text-surface/80 ${localeTextClass(locale, 'uppercase tracking-[0.16em]')}`}>
                         {projectMeta(project)}
                       </span>
                     )}
                   </span>
                   <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <span className="inline-flex items-center gap-2 border border-surface bg-ink/70 px-4 py-2.5 text-[10.5px] font-medium uppercase tracking-[0.18em] text-surface">
-                      {COPY.viewMore}
+                    <span className={`inline-flex items-center gap-2 border border-surface bg-ink/70 px-4 py-2.5 text-[10.5px] font-medium text-surface ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>
+                      {copy.viewMore}
                       <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
                     </span>
                   </span>
@@ -273,16 +278,16 @@ export function ProjectsBrowser({
 
       <section className="px-5 pb-[clamp(64px,9vw,120px)] sm:px-8 lg:px-16">
         <div className="flex flex-wrap items-center justify-between gap-5 border-t border-accent pt-[clamp(24px,3vw,36px)]">
-          <span className="text-[11.5px] uppercase tracking-[0.18em] text-muted">
-            {COPY.showing} {visible.length} {COPY.of} {filtered.length} {COPY.projectsWord}
+          <span className={`text-[11.5px] text-muted ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>
+            {copy.showing} {visible.length} {copy.of} {filtered.length} {copy.projectsWord}
           </span>
           {hasMore && (
             <button
               type="button"
               onClick={() => setShown((count) => count + PAGE_SIZE)}
-              className="inline-flex min-h-11 items-center gap-3.5 border border-ink px-8 py-[18px] text-[11.5px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-surface"
+              className={`inline-flex min-h-11 items-center gap-3.5 border border-ink px-8 py-[18px] text-[11.5px] font-medium text-ink transition-colors hover:bg-ink hover:text-surface ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
             >
-              {COPY.loadMore}
+              {copy.loadMore}
               <EditorialIcon name="arrow-down" className="h-3.5 w-3.5" />
             </button>
           )}

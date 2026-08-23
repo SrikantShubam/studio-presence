@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import type { SectionConfig } from '@studio/backend'
+import { chromeCopy, localeHref, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
+import { EditorialIcon } from '@/lib/icons'
 
 export type PortfolioConfig = SectionConfig<'portfolio'>
 export type PortfolioProject = PortfolioConfig['projects'][number]
@@ -19,11 +21,13 @@ export function ProjectLink({
   project,
   detailPages,
   className,
+  locale = 'en',
   children,
 }: {
   project: PortfolioProject
   detailPages: boolean
   className: string
+  locale?: PublicLocale
   children: ReactNode
 }) {
   const href = projectHref(project, detailPages)
@@ -31,7 +35,7 @@ export function ProjectLink({
   if (!href) return <div className={className}>{children}</div>
 
   return (
-    <a href={href} className={className}>
+    <a href={localeHref(href, locale)} className={className}>
       {children}
     </a>
   )
@@ -47,30 +51,37 @@ export function ProjectLink({
 export function PortfolioHeader({
   detailPages,
   compact = false,
+  locale = 'en',
 }: {
   detailPages: boolean
   compact?: boolean
+  locale?: PublicLocale
 }) {
+  const copy = chromeCopy[locale].portfolio
+
   return (
     <div
       className={
         compact
           ? 'grid gap-6 px-5 pb-12 sm:px-8 md:grid-cols-[1fr_auto] md:items-end md:gap-12 lg:px-16'
-          : 'mb-12 flex flex-wrap items-end justify-between gap-6 sm:mb-16 lg:mb-20'
+          : 'mb-[clamp(40px,6vw,76px)] flex flex-wrap items-end justify-between gap-6'
       }
     >
-      <h2 className="m-0 font-display text-[clamp(42px,8vw,112px)] font-light uppercase leading-[0.88] tracking-tighter text-ink">
-        OUR
+      <h2 className="m-0 font-display text-[clamp(46px,9vw,112px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
+        {copy.titleLead}
         <br />
-        <span className="ml-[0.5em] block text-accent">PORTFOLIO</span>
+        <span className="ml-[0.5em] block text-accent">{copy.titleAccent}</span>
       </h2>
 
       {detailPages && (
         <a
-          href="/portfolio"
-          className="pb-2 text-[10.5px] font-medium uppercase tracking-[0.22em] text-ink transition-colors hover:text-accent"
+          href={localeHref('/portfolio', locale)}
+          className={`text-[11.5px] font-medium text-ink transition-colors hover:text-accent ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}
         >
-          VIEW ALL PROJECTS -&gt;
+          <span className="inline-flex items-center gap-2">
+            {copy.viewAll}
+            <EditorialIcon name="arrow-right" className="h-3 w-3" />
+          </span>
         </a>
       )}
     </div>

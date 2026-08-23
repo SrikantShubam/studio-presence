@@ -1,4 +1,5 @@
 import type { ClientConfig, SectionConfig } from '@studio/backend'
+import { localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { HeroContent } from './HeroContent'
 import { HeroNav } from './HeroNav'
 
@@ -16,8 +17,10 @@ import { HeroNav } from './HeroNav'
  * Matches `design/reference/editorial/hero-video-format.html`.
  */
 export function HeroVideo({ config, site }: { config: SectionConfig<'hero'>; site: ClientConfig }) {
+  const locale = publicLocaleFromSite(site)
+
   return (
-    <section id="hero" className="relative min-h-[min(860px,100vh)] overflow-hidden bg-ink">
+    <section id="hero" className="relative min-h-screen overflow-hidden bg-ink">
       {config.videoUrl ? (
         <video
           className="absolute inset-0 h-full w-full object-cover"
@@ -43,7 +46,13 @@ export function HeroVideo({ config, site }: { config: SectionConfig<'hero'>; sit
       <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/15 to-ink/60" />
 
       <div className="relative">
-        <HeroNav businessName={site.business.name} phone={site.business.phone} tone="on-photo" />
+        <HeroNav
+          businessName={site.business.name}
+          phone={site.business.phone}
+          tone="on-photo"
+          services={site.sections.services?.items}
+          locales={site.i18n.locales}
+        />
       </div>
 
       <div className="relative px-5 py-10 sm:px-8 sm:py-16 md:pb-24">
@@ -57,7 +66,7 @@ export function HeroVideo({ config, site }: { config: SectionConfig<'hero'>; sit
           <path d="M11 5 6 9H3v6h3l5 4V5z" />
           <path d="M16 9l5 6M21 9l-5 6" />
         </svg>
-        <span className="text-[10px] font-medium uppercase tracking-[0.2em]">Sound off</span>
+        <span className={`text-[10px] font-medium ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}>{locale === 'hi' ? 'आवाज बंद' : 'Sound off'}</span>
       </div>
     </section>
   )

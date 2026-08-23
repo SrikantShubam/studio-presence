@@ -14,7 +14,13 @@ import { HeroNav } from './HeroNav'
 export function HeroStandard({ config, site }: { config: SectionConfig<'hero'>; site: ClientConfig }) {
   return (
     <section id="hero" className="bg-surface text-ink">
-      <HeroNav businessName={site.business.name} phone={site.business.phone} tone="on-surface" />
+      <HeroNav
+        businessName={site.business.name}
+        phone={site.business.phone}
+        tone="on-surface"
+        services={site.sections.services?.items}
+        locales={site.i18n.locales}
+      />
 
       <div className="grid gap-10 px-5 py-12 sm:px-8 sm:py-16 md:grid-cols-[1.15fr_0.95fr] md:items-center md:gap-16 md:py-20">
         <HeroContent config={config} site={site} tone="on-surface" />

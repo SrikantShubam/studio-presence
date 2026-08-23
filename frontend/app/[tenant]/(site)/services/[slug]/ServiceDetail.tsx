@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
+import { localeHref, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, FadeUp, FadeUpItem, HomeSection, Stagger } from '@/lib/motion'
 import { HeroNav } from '@/sections/Hero/HeroNav'
@@ -10,16 +11,28 @@ import { ServiceFaq } from './ServiceFaq'
 
 type Service = NonNullable<ClientConfig['sections']['services']>['items'][number]
 
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const copy = {
-  back: 'All projects',
-  includedTitle: { lead: 'What the', accent: 'price covers' },
-  linkedTitle: { lead: 'A project', accent: 'we built' },
-  read: 'Read the case study',
-  cta: {
-    eyebrow: ['Send us the', 'measurements'],
-    title: { lead: 'Two walls,', accent: 'one number' },
-    action: 'Get an estimate on WhatsApp',
+const serviceDetailCopy = {
+  en: {
+    back: 'All projects',
+    includedTitle: { lead: 'What the', accent: 'price covers' },
+    linkedTitle: { lead: 'A project', accent: 'we built' },
+    read: 'Read the case study',
+    cta: {
+      eyebrow: ['Send us the', 'measurements'],
+      title: { lead: 'One site,', accent: 'one written estimate' },
+      action: 'Get an estimate on WhatsApp',
+    },
+  },
+  hi: {
+    back: 'सभी प्रोजेक्ट',
+    includedTitle: { lead: 'इसमें', accent: 'क्या शामिल है' },
+    linkedTitle: { lead: 'हमारा', accent: 'मिलता-जुलता काम' },
+    read: 'केस स्टडी पढ़ें',
+    cta: {
+      eyebrow: ['हमें अपने', 'माप भेजें'],
+      title: { lead: 'एक साइट,', accent: 'एक लिखित अनुमान' },
+      action: 'WhatsApp पर अनुमान लें',
+    },
   },
 }
 const pagePad = 'px-[clamp(20px,5vw,64px)]'
@@ -49,11 +62,11 @@ function Photo({
   )
 }
 
-function Caption({ children }: { children: string }) {
-  return <figcaption className="text-[10.5px] uppercase tracking-[0.2em] text-muted">{children}</figcaption>
+function Caption({ children, locale }: { children: string; locale: PublicLocale }) {
+  return <figcaption className={`text-[10.5px] text-muted ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}>{children}</figcaption>
 }
 
-function ServiceHeading({ service }: { service: Service }) {
+function ServiceHeading({ service, locale }: { service: Service; locale: PublicLocale }) {
   const [lead, ...rest] = service.intro
 
   return (
@@ -69,7 +82,7 @@ function ServiceHeading({ service }: { service: Service }) {
                 {service.price.value}
               </span>
               {service.price.unit && (
-                <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-accent">{service.price.unit}</span>
+	                <span className={`text-[11px] font-medium uppercase text-accent ${locale === 'hi' ? 'tracking-normal' : 'tracking-[0.22em]'}`}>{service.price.unit}</span>
               )}
               {service.price.note && (
                 <span className="mt-1.5 text-[13px] leading-[1.6] text-muted">{service.price.note}</span>
@@ -97,7 +110,7 @@ function ServiceHeading({ service }: { service: Service }) {
   )
 }
 
-function ServicePhotos({ service }: { service: Service }) {
+function ServicePhotos({ service, locale }: { service: Service; locale: PublicLocale }) {
   const [lead, ...tiles] = service.photos
   if (!lead) return null
 
@@ -107,7 +120,7 @@ function ServicePhotos({ service }: { service: Service }) {
         <div className="pointer-events-none absolute -top-[clamp(20px,3vw,30px)] bottom-[clamp(20px,3vw,30px)] left-[clamp(20px,3vw,30px)] -right-[clamp(20px,3vw,30px)] border border-accent" />
         <figure className="relative m-0 grid gap-3">
           <Photo src={lead.image} alt={lead.caption ?? service.title} sizes="100vw" ratio="aspect-[4/3] lg:aspect-video" priority />
-          {lead.caption && <Caption>{lead.caption}</Caption>}
+          {lead.caption && <Caption locale={locale}>{lead.caption}</Caption>}
         </figure>
       </div>
       {tiles.length > 0 && (
@@ -116,7 +129,7 @@ function ServicePhotos({ service }: { service: Service }) {
             <FadeUpItem key={tile.image + i}>
               <figure className="m-0 grid min-w-0 gap-3">
                 <Photo src={tile.image} alt={tile.caption ?? service.title} sizes="(max-width: 768px) 50vw, 20vw" ratio="aspect-square" />
-                {tile.caption && <Caption>{tile.caption}</Caption>}
+                {tile.caption && <Caption locale={locale}>{tile.caption}</Caption>}
               </figure>
             </FadeUpItem>
           ))}
@@ -126,8 +139,9 @@ function ServicePhotos({ service }: { service: Service }) {
   )
 }
 
-function WhatsIncluded({ service }: { service: Service }) {
+function WhatsIncluded({ service, locale }: { service: Service; locale: PublicLocale }) {
   if (!service.included.length) return null
+  const copy = serviceDetailCopy[locale]
 
   return (
     <section className={`${pagePad} border-t border-accent bg-panel py-[clamp(64px,9vw,110px)]`}>
@@ -143,7 +157,7 @@ function WhatsIncluded({ service }: { service: Service }) {
             <span className="font-display text-[clamp(32px,4vw,52px)] font-light leading-[0.85] text-transparent [-webkit-text-stroke:1px_var(--color-muted)]">
               {String(i + 1).padStart(2, '0')}
             </span>
-            <h3 className="m-0 text-[clamp(14.5px,1.5vw,17px)] font-normal uppercase tracking-[0.06em] text-ink">
+            <h3 className={`m-0 text-[clamp(14.5px,1.5vw,17px)] font-normal text-ink ${localeTextClass(locale, 'uppercase tracking-[0.06em]')}`}>
               {item.title}
             </h3>
             <p className="m-0 text-pretty text-[13.5px] leading-[1.7] text-body">{item.body}</p>
@@ -154,8 +168,9 @@ function WhatsIncluded({ service }: { service: Service }) {
   )
 }
 
-function LinkedProject({ project }: { project?: PortfolioProject }) {
+function LinkedProject({ project, locale }: { project?: PortfolioProject; locale: PublicLocale }) {
   if (!project) return null
+  const copy = serviceDetailCopy[locale]
 
   return (
     <section className={`${pagePad} border-t border-accent py-[clamp(64px,9vw,110px)]`}>
@@ -165,15 +180,15 @@ function LinkedProject({ project }: { project?: PortfolioProject }) {
           <span className="ml-[0.55em] block text-accent">{copy.linkedTitle.accent}</span>
         </h2>
         <Link
-          href="/portfolio"
-          className="inline-flex min-h-11 items-center gap-2 text-[11.5px] font-medium uppercase tracking-[0.2em] text-ink hover:text-accent"
+          href={localeHref('/portfolio', locale)}
+          className={`inline-flex min-h-11 items-center gap-2 text-[11.5px] font-medium text-ink hover:text-accent ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}
         >
           {copy.back}
           <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
         </Link>
       </div>
       <Link
-        href={`/portfolio/${project.slug}`}
+        href={localeHref(`/portfolio/${project.slug}`, locale)}
         className="grid grid-cols-1 items-center gap-[clamp(20px,3vw,40px)] border border-accent p-[clamp(18px,2.4vw,26px)] text-ink hover:bg-panel md:grid-cols-[minmax(220px,360px)_minmax(0,1fr)]"
       >
         <Photo src={project.cover} alt={project.title} sizes="360px" ratio="aspect-[4/3]" />
@@ -185,13 +200,13 @@ function LinkedProject({ project }: { project?: PortfolioProject }) {
             <p className="m-0 max-w-[34em] text-pretty text-[14.5px] leading-[1.7] text-body">{project.blurb}</p>
           )}
           {[project.location, project.duration].filter(Boolean).length > 0 && (
-            <div className="flex flex-wrap gap-x-[clamp(20px,3vw,36px)] gap-y-3 text-[10.5px] font-medium uppercase tracking-[0.2em] text-accent">
+            <div className={`flex flex-wrap gap-x-[clamp(20px,3vw,36px)] gap-y-3 text-[10.5px] font-medium text-accent ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}>
               {[project.location, project.duration].filter(Boolean).map((item) => (
                 <span key={item}>{item}</span>
               ))}
             </div>
           )}
-          <span className="inline-flex items-center gap-2 text-[11.5px] font-medium uppercase tracking-[0.2em]">
+          <span className={`inline-flex items-center gap-2 text-[11.5px] font-medium ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}>
             {copy.read}
             <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
           </span>
@@ -201,12 +216,14 @@ function LinkedProject({ project }: { project?: PortfolioProject }) {
   )
 }
 
-function ServiceCta({ href }: { href: string }) {
+function ServiceCta({ href, locale }: { href: string; locale: PublicLocale }) {
+  const copy = serviceDetailCopy[locale]
+
   return (
     <section id="contact" className={`${pagePad} border-t border-accent py-[clamp(56px,8vw,100px)]`}>
       <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
         <div className="min-w-0">
-          <div className="mb-[clamp(18px,3vw,30px)] grid gap-1.5 text-[10.5px] font-normal uppercase leading-relaxed tracking-[0.24em] text-accent">
+          <div className={`mb-[clamp(18px,3vw,30px)] grid gap-1.5 text-[10.5px] font-normal leading-relaxed text-accent ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
             {copy.cta.eyebrow.map((line) => (
               <span key={line}>{line}</span>
             ))}
@@ -218,7 +235,7 @@ function ServiceCta({ href }: { href: string }) {
         </div>
         <Link
           href={href}
-          className="inline-flex min-h-11 items-center gap-3.5 bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium uppercase tracking-[0.18em] text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta"
+          className={`inline-flex min-h-11 items-center gap-3.5 bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
         >
           {copy.cta.action}
           <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
@@ -231,36 +248,40 @@ function ServiceCta({ href }: { href: string }) {
 export function ServiceDetail({
   site,
   service,
+  locale = 'en',
 }: {
   site: ClientConfig
   service: Service
+  locale?: PublicLocale
 }) {
   const linked = service.linkedProjectSlug
     ? site.sections.portfolio.projects.find((item) => item.slug === service.linkedProjectSlug)
     : undefined
   const closing = renderableSections(site, ['footer'])
-  const ctaHref = whatsappHref(site.business.whatsapp) ?? (site.sections.estimate?.enabled ? '/estimate' : '#footer')
+  const ctaHref = whatsappHref(site.business.whatsapp) ?? (site.sections.estimate?.enabled ? localeHref('/estimate', locale) : '#footer')
 
   return (
-    <article className="overflow-x-clip bg-surface text-ink">
+    <article lang={locale} className="overflow-x-clip bg-surface text-ink">
       <HeroNav
         businessName={site.business.name}
         phone={site.business.phone}
         tone="on-surface"
         inner
         services={site.sections.services?.items}
+        locale={locale}
+        locales={site.i18n.locales}
       />
       <HomeSection first>
-        <ServiceHeading service={service} />
+          <ServiceHeading service={service} locale={locale} />
       </HomeSection>
       <HomeSection>
-        <ServicePhotos service={service} />
+        <ServicePhotos service={service} locale={locale} />
       </HomeSection>
       <HomeSection>
-        <WhatsIncluded service={service} />
+        <WhatsIncluded service={service} locale={locale} />
       </HomeSection>
       <HomeSection>
-        <LinkedProject project={linked} />
+          <LinkedProject project={linked} locale={locale} />
       </HomeSection>
       {service.faq.length > 0 && (
         <HomeSection>
@@ -268,7 +289,7 @@ export function ServiceDetail({
         </HomeSection>
       )}
       <HomeSection>
-        <ServiceCta href={ctaHref} />
+        <ServiceCta href={ctaHref} locale={locale} />
       </HomeSection>
       {closing.map(({ key, Component, config, variant }) => (
         <HomeSection key={key}>

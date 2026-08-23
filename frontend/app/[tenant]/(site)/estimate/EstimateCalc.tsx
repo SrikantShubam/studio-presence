@@ -2,25 +2,48 @@
 
 import { useMemo, useState } from 'react'
 import type { ClientConfig } from '@studio/backend'
+import { localeTextClass, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { formatInrRange } from '@/lib/currency'
 
 type Estimate = NonNullable<ClientConfig['sections']['estimate']>
 
-/** Fixed UI framing, identical for every client — not content, so not config. */
 const copy = {
-  areaTitle: 'Carpet area',
-  homeTitle: 'Home type',
-  finishTitle: 'Finish level',
-  result: {
-    eyebrow: 'Indicative estimate',
-    rate: 'Rate applied',
-    duration: 'Typical duration',
-    supervision: 'Site supervision',
-    supervisionValue: 'Included',
-    perSqft: '/ sq ft',
-    whatsapp: 'Get an exact quote on WhatsApp',
-    orCall: 'Or call the studio directly —',
+  en: {
+    areaTitle: 'Carpet area',
+    homeTitle: 'Home type',
+    finishTitle: 'Finish level',
+    sqFt: 'sq ft',
+    finishWord: 'finish',
+    messagePrefix: 'Indicative range',
+    result: {
+      eyebrow: 'Indicative estimate',
+      rate: 'Rate applied',
+      duration: 'Typical duration',
+      supervision: 'Site supervision',
+      supervisionValue: 'Included',
+      perSqft: '/ sq ft',
+      whatsapp: 'Get an exact quote on WhatsApp',
+      orCall: 'Or call the studio directly —',
+    },
+  },
+  hi: {
+    areaTitle: 'कार्पेट एरिया',
+    homeTitle: 'घर का प्रकार',
+    finishTitle: 'फिनिश लेवल',
+    sqFt: 'वर्ग फुट',
+    finishWord: 'फिनिश',
+    messagePrefix: 'अनुमानित रेंज',
+    result: {
+      eyebrow: 'अनुमानित खर्च',
+      rate: 'लागू दर',
+      duration: 'सामान्य समय',
+      supervision: 'साइट सुपरविजन',
+      supervisionValue: 'शामिल',
+      perSqft: '/ वर्ग फुट',
+      whatsapp: 'WhatsApp पर सही कोट लें',
+      orCall: 'या सीधे स्टूडियो को कॉल करें —',
+    },
   },
 }
 
@@ -30,8 +53,9 @@ function whatsappHref(phone: string, message: string): string | null {
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`
 }
 
-export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; phone: string; hours?: string }) {
+export function EstimateCalc({ estimate, phone, hours, locale = 'en' }: { estimate: Estimate; phone: string; hours?: string; locale?: PublicLocale }) {
   const rates = estimate.ratePerSqft
+  const text = copy[locale]
   const homeTypes = estimate.homeTypes
   const finishLevels = estimate.finishLevels
   const area = estimate.area
@@ -55,9 +79,9 @@ export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; p
 
   const rangeLabel = formatInrRange(low, high)
   const areaLabel = areaValue.toLocaleString('en-IN')
-  const summary = `${home.label} · ${areaLabel} sq ft · ${finish.label} finish`
-  const rateLabel = `₹${rateLow.toLocaleString('en-IN')} – ${rateHigh.toLocaleString('en-IN')} ${copy.result.perSqft}`
-  const message = `${summary}. Indicative range ${rangeLabel}.`
+  const summary = `${home.label} · ${areaLabel} ${text.sqFt} · ${finish.label} ${text.finishWord}`
+  const rateLabel = `₹${rateLow.toLocaleString('en-IN')} – ${rateHigh.toLocaleString('en-IN')} ${text.result.perSqft}`
+  const message = `${summary}. ${text.messagePrefix} ${rangeLabel}.`
   const wa = whatsappHref(phone, message)
 
   return (
@@ -69,9 +93,9 @@ export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; p
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-baseline justify-between gap-3">
-              <h2 className="m-0 text-[clamp(15px,1.7vw,19px)] font-normal uppercase tracking-[0.06em]">{copy.areaTitle}</h2>
+              <h2 className={`m-0 text-[clamp(15px,1.7vw,19px)] font-normal ${localeTextClass(locale, 'uppercase tracking-[0.06em]')}`}>{text.areaTitle}</h2>
               <span className="text-[clamp(24px,3vw,38px)] font-normal leading-none tracking-[-0.02em]">
-                {areaLabel} <span className="text-[11px] font-medium tracking-[0.2em] text-accent">sq ft</span>
+                {areaLabel} <span className={`text-[11px] font-medium text-accent ${localeTextClass(locale, 'tracking-[0.2em]')}`}>{text.sqFt}</span>
               </span>
             </div>
             <div className="mt-[clamp(24px,3vw,34px)]">
@@ -81,11 +105,11 @@ export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; p
                 max={area.max}
                 step={area.step ?? 10}
                 value={areaValue}
-                aria-label={copy.areaTitle}
+                aria-label={text.areaTitle}
                 onChange={(event) => setAreaValue(Number(event.target.value))}
                 className="h-px w-full cursor-grab appearance-none bg-ink accent-ink [&::-moz-range-thumb]:h-11 [&::-moz-range-thumb]:w-[18px] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-ink [&::-webkit-slider-thumb]:h-11 [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-ink"
               />
-              <div className="mt-3.5 flex justify-between text-[10.5px] uppercase tracking-[0.18em] text-muted">
+              <div className={`mt-3.5 flex justify-between text-[10.5px] text-muted ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>
                 <span>{area.min.toLocaleString('en-IN')}</span>
                 <span>{area.max.toLocaleString('en-IN')}</span>
               </div>
@@ -98,7 +122,7 @@ export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; p
             02
           </span>
           <div className="min-w-0 flex-1">
-            <h2 className="m-0 text-[clamp(15px,1.7vw,19px)] font-normal uppercase tracking-[0.06em]">{copy.homeTitle}</h2>
+            <h2 className={`m-0 text-[clamp(15px,1.7vw,19px)] font-normal ${localeTextClass(locale, 'uppercase tracking-[0.06em]')}`}>{text.homeTitle}</h2>
             <div className="mt-[clamp(20px,2.6vw,28px)] grid grid-cols-2 gap-2.5 min-[720px]:grid-cols-4">
               {homeTypes.map((item) => {
                 const active = item.id === home.id
@@ -107,7 +131,7 @@ export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; p
                     key={item.id}
                     type="button"
                     onClick={() => setHomeId(item.id)}
-                    className={`min-h-11 px-2 py-[18px] text-[clamp(11px,1.2vw,13px)] font-medium uppercase tracking-[0.12em] ${
+                    className={`min-h-11 px-2 py-[18px] text-[clamp(11px,1.2vw,13px)] font-medium ${localeTextClass(locale, 'uppercase tracking-[0.12em]')} ${
                       active ? 'border border-ink bg-ink text-surface' : 'border border-hairline bg-transparent text-ink'
                     }`}
                   >
@@ -124,7 +148,7 @@ export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; p
             03
           </span>
           <div className="min-w-0 flex-1">
-            <h2 className="m-0 text-[clamp(15px,1.7vw,19px)] font-normal uppercase tracking-[0.06em]">{copy.finishTitle}</h2>
+            <h2 className={`m-0 text-[clamp(15px,1.7vw,19px)] font-normal ${localeTextClass(locale, 'uppercase tracking-[0.06em]')}`}>{text.finishTitle}</h2>
             <div className="mt-[clamp(20px,2.6vw,28px)] grid grid-cols-1 gap-2.5 min-[720px]:grid-cols-3">
               {finishLevels.map((item) => {
                 const active = item.id === finish.id
@@ -137,7 +161,7 @@ export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; p
                       active ? 'border border-ink bg-ink text-surface' : 'border border-hairline bg-transparent text-ink'
                     }`}
                   >
-                    <span className="text-[clamp(12px,1.3vw,14px)] font-medium uppercase tracking-[0.14em]">{item.label}</span>
+                    <span className={`text-[clamp(12px,1.3vw,14px)] font-medium ${localeTextClass(locale, 'uppercase tracking-[0.14em]')}`}>{item.label}</span>
                     {item.note && <span className={`text-[11px] leading-normal ${active ? 'text-surface/70' : 'text-muted'}`}>{item.note}</span>}
                   </button>
                 )
@@ -149,38 +173,38 @@ export function EstimateCalc({ estimate, phone, hours }: { estimate: Estimate; p
 
       <div className="grid content-start gap-[clamp(28px,3.5vw,44px)] bg-panel p-[clamp(28px,4vw,56px)]">
         <div className="grid gap-3.5">
-          <span className="text-[10.5px] font-medium uppercase tracking-[0.24em] text-accent">{copy.result.eyebrow}</span>
+          <span className={`text-[10.5px] font-medium text-accent ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>{text.result.eyebrow}</span>
           <span className="font-display text-[clamp(34px,5.4vw,72px)] font-light leading-[0.95] tracking-[-0.035em]">{rangeLabel}</span>
-          <span className="text-[11px] uppercase tracking-[0.16em] text-muted">{summary}</span>
+          <span className={`text-[11px] text-muted ${localeTextClass(locale, 'uppercase tracking-[0.16em]')}`}>{summary}</span>
         </div>
         <div className="grid gap-4 border-t border-accent pt-[clamp(24px,3vw,32px)] text-[13.5px] text-body">
           <div className="flex justify-between gap-4">
-            <span>{copy.result.rate}</span>
+            <span>{text.result.rate}</span>
             <span className="text-ink">{rateLabel}</span>
           </div>
           {finish.weeks && (
             <div className="flex justify-between gap-4">
-              <span>{copy.result.duration}</span>
+              <span>{text.result.duration}</span>
               <span className="text-ink">{finish.weeks}</span>
             </div>
           )}
           <div className="flex justify-between gap-4">
-            <span>{copy.result.supervision}</span>
-            <span className="text-ink">{copy.result.supervisionValue}</span>
+            <span>{text.result.supervision}</span>
+            <span className="text-ink">{text.result.supervisionValue}</span>
           </div>
         </div>
         {estimate.resultNote && <p className="m-0 text-pretty text-[13px] leading-[1.7] text-body">{estimate.resultNote}</p>}
         {wa ? (
           <a
             href={wa}
-            className="inline-flex min-h-11 items-center justify-between gap-3.5 bg-cta px-[30px] py-[22px] text-[clamp(10.5px,1.1vw,12px)] font-medium uppercase tracking-[0.18em] text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-22px)_100%,0_100%)] hover:bg-ink hover:text-cta"
+            className={`inline-flex min-h-11 items-center justify-between gap-3.5 bg-cta px-[30px] py-[22px] text-[clamp(10.5px,1.1vw,12px)] font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-22px)_100%,0_100%)] hover:bg-ink hover:text-cta ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
           >
-            {copy.result.whatsapp}
+            {text.result.whatsapp}
             <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
           </a>
         ) : null}
         <p className="m-0 text-xs leading-[1.6] text-muted">
-          {copy.result.orCall} {phone}
+          {text.result.orCall} {phone}
           {hours ? `, ${hours}` : ''}.
         </p>
       </div>

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
 import Link from 'next/link'
+import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { serviceHref, serviceNumber } from './shared'
 import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, FadeUpItem, Stagger } from '@/lib/motion'
@@ -15,10 +16,6 @@ import { ClipLine, FadeUpItem, Stagger } from '@/lib/motion'
  * every client would put the same sentence in every studio's mouth regardless
  * of whether it sounds like them.
  */
-const TITLE = { lead: 'Our', accent: 'Services' }
-const READ_MORE = 'Read more'
-const ESTIMATE_CTA = 'Calculate the estimate'
-
 function offsetFrameClasses(index: number): string {
   return index % 2 === 0
     ? 'sm:-top-7 sm:-left-7 sm:right-7 sm:bottom-7'
@@ -43,12 +40,16 @@ export function ServicesDetailed({
   config: SectionConfig<'services'>
   site: ClientConfig
 }) {
+  const locale = publicLocaleFromSite(site)
+  const copy = chromeCopy[locale].services
+  const buttonTextClass = localeTextClass(locale, 'uppercase tracking-[0.16em] sm:tracking-[0.18em]')
+
   return (
     <section id="services" className="border-t border-accent bg-surface px-6 pb-[clamp(72px,10vw,130px)] pt-[clamp(64px,8vw,110px)] text-ink sm:px-8 lg:px-16">
       <div className="mb-[clamp(48px,7vw,96px)] flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,60px)]">
         <h2 className="m-0 font-display text-[clamp(46px,9vw,112px)] font-light uppercase leading-[0.88] tracking-[-0.03em]">
-          <ClipLine>{TITLE.lead}</ClipLine>
-          <ClipLine className="pl-[0.55em] text-accent" delay={0.08}>{TITLE.accent}</ClipLine>
+          <ClipLine>{copy.titleLead}</ClipLine>
+          <ClipLine className="pl-[0.55em] text-accent" delay={0.08}>{copy.titleAccent}</ClipLine>
         </h2>
       </div>
 
@@ -86,17 +87,17 @@ export function ServicesDetailed({
 
                 <div className="relative mt-8 flex flex-wrap items-center gap-4">
                   {href ? (
-                    <Link href={href} className={`${buttonBase} ${buttonShape} bg-cta text-ink hover:bg-ink hover:text-cta`}>
-                      {READ_MORE}
+                    <Link href={localeHref(href, locale)} className={`${buttonBase} ${buttonShape} ${buttonTextClass} bg-cta text-ink hover:bg-ink hover:text-cta`}>
+                      {copy.readMore}
                       <EditorialIcon name="arrow-up-right" className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                     </Link>
                   ) : null}
                   <Link
-                    href={site.sections.estimate?.enabled ? '/estimate' : '#contact'}
-                    className={`${buttonBase} ${buttonShape} bg-ink text-ink hover:text-surface`}
+                    href={site.sections.estimate?.enabled ? localeHref('/estimate', locale) : '#contact'}
+                    className={`${buttonBase} ${buttonShape} ${buttonTextClass} bg-ink text-ink hover:text-surface`}
                   >
                     <span className={`pointer-events-none absolute inset-px ${buttonShape} bg-surface transition-colors group-hover/button:bg-ink`} aria-hidden />
-                    <span className="relative">{ESTIMATE_CTA}</span>
+                    <span className="relative">{copy.estimate}</span>
                     <EditorialIcon name="arrow-up-right" className="relative h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </Link>
                 </div>

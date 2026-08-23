@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
+import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { Wordmark } from './Wordmark'
 import { heroEyebrowLines } from './eyebrow'
@@ -32,8 +33,13 @@ import { heroEyebrowLines } from './eyebrow'
 export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; site: ClientConfig }) {
   const [open, setOpen] = useState(false)
   const reduce = useReducedMotion()
+  const locale = publicLocaleFromSite(site)
+  const copy = chromeCopy[locale].nav
+  const showHindi = site.i18n.locales.includes('hi')
+  const alternateLocale = locale === 'hi' ? 'en' : 'hi'
+  const alternateLabel = copy.languageShort
   const ghostDigits = site.business.yearFounded ? String(site.business.yearFounded).slice(-2) : null
-  const ctaHref = site.sections.estimate?.enabled ? '/estimate' : '#contact'
+  const ctaHref = site.sections.estimate?.enabled ? localeHref('/estimate', locale) : '#contact'
 
   return (
     <section id="hero" className="relative grid min-h-[min(920px,100vh)] bg-ink md:grid-cols-2">
@@ -76,7 +82,7 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
           {config.ctaLabel && (
             <Link
               href={ctaHref}
-              className="mt-10 inline-flex min-h-10 items-center gap-2.5 whitespace-nowrap bg-cta px-6 py-4 text-[10px] font-medium uppercase tracking-[0.16em] text-ink sm:mt-14 sm:min-h-11 sm:gap-3 sm:px-7 sm:py-5 sm:text-[11px] sm:tracking-[0.2em]"
+              className={`mt-10 inline-flex min-h-10 items-center gap-2.5 whitespace-nowrap bg-cta px-6 py-4 text-[10px] font-medium text-ink sm:mt-14 sm:min-h-11 sm:gap-3 sm:px-7 sm:py-5 sm:text-[11px] ${localeTextClass(locale, 'uppercase tracking-[0.16em] sm:tracking-[0.2em]')}`}
             >
               {config.ctaLabel} <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
             </Link>
@@ -101,18 +107,18 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
       {/* NAV — spans both halves, seam-aligned */}
       <nav className="absolute inset-x-0 top-0 grid items-start py-6 sm:py-8 md:grid-cols-2">
         <div className="flex items-center justify-between gap-5 px-6 sm:px-10">
-          <Link href="/" className="grid gap-1 text-xs font-medium uppercase leading-tight tracking-[0.3em] text-surface">
+          <Link href={localeHref('/', locale)} className="grid gap-1 text-xs font-medium uppercase leading-tight tracking-[0.3em] text-surface">
             <Wordmark businessName={site.business.name} />
           </Link>
           <div className="hidden items-center gap-6 text-[10px] font-normal uppercase tracking-[0.22em] text-surface md:flex">
-            <Link href="/">Home</Link>
+            <Link href={localeHref('/', locale)}>{copy.home}</Link>
           </div>
         </div>
         <div className="flex items-center justify-between gap-5 px-6 sm:px-10">
           <div className="hidden items-center gap-6 text-[10px] font-normal uppercase tracking-[0.22em] text-ink md:flex">
-            <Link href="/#about">About</Link>
-            <Link href="/portfolio">Portfolio</Link>
-            <Link href="/#contact">Contact</Link>
+            <Link href={localeHref('/#about', locale)}>{copy.about}</Link>
+            <Link href={localeHref('/portfolio', locale)}>{copy.portfolio}</Link>
+            <Link href={localeHref('/#contact', locale)}>{copy.contact}</Link>
           </div>
           <div className="ml-auto hidden items-center gap-3 whitespace-nowrap text-[11px] tracking-[0.14em] text-ink md:flex">
             <span className="h-3 w-px shrink-0 bg-accent" />
@@ -120,7 +126,7 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
           </div>
           <button
             type="button"
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? copy.closeMenu : copy.openMenu}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
             className="ml-auto flex h-11 w-11 flex-col items-center justify-center gap-[5px] bg-surface/80 md:hidden"
@@ -150,28 +156,40 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
             >
               <div className="flex items-center justify-between gap-5 border-b border-accent pb-5">
                 <Link
-                  href="/"
+                  href={localeHref('/', locale)}
                   onClick={() => setOpen(false)}
                   className="grid gap-1 text-xs font-medium uppercase leading-tight tracking-[0.3em] text-ink"
                 >
                   <Wordmark businessName={site.business.name} />
                 </Link>
-                <button
-                  type="button"
-                  aria-label="Close menu"
-                  onClick={() => setOpen(false)}
-                  className="flex h-11 w-11 items-center justify-center bg-transparent text-ink"
-                >
-                  <EditorialIcon name="close" className="h-4 w-4" />
-                </button>
+                <div className="flex items-center gap-3">
+                  {showHindi && (
+                    <Link
+                      href={localeHref('/', alternateLocale)}
+                      hrefLang={alternateLocale}
+                      onClick={() => setOpen(false)}
+                      className={`inline-flex min-h-10 items-center border border-ink px-3 text-[12px] font-medium text-ink ${localeTextClass(locale, 'uppercase tracking-[0.14em]')}`}
+                    >
+                      {alternateLabel}
+                    </Link>
+                  )}
+                  <button
+                    type="button"
+                    aria-label={copy.closeMenu}
+                    onClick={() => setOpen(false)}
+                    className="flex h-11 w-11 items-center justify-center bg-transparent text-ink"
+                  >
+                    <EditorialIcon name="close" className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
               <div className="grid flex-1 content-center gap-1 py-10 text-[clamp(28px,10vw,54px)] font-display uppercase leading-none tracking-normal">
                 {[
-                  { href: '/', label: 'Home' },
-                  { href: '/#about', label: 'About' },
-                  { href: '/portfolio', label: 'Portfolio' },
-                  { href: '/#contact', label: 'Contact' },
+                  { href: localeHref('/', locale), label: copy.home },
+                  { href: localeHref('/#about', locale), label: copy.about },
+                  { href: localeHref('/portfolio', locale), label: copy.portfolio },
+                  { href: localeHref('/#contact', locale), label: copy.contact },
                 ].map((item) => (
                   <Link
                     key={item.href}
@@ -191,6 +209,16 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
               >
                 {site.business.phone}
               </a>
+              {showHindi && (
+                <Link
+                  href={localeHref('/', alternateLocale)}
+                  hrefLang={alternateLocale}
+                  onClick={() => setOpen(false)}
+                  className={`pt-4 text-[12px] font-normal text-ink ${localeTextClass(locale, 'uppercase tracking-[0.14em]')}`}
+                >
+                  {alternateLabel}
+                </Link>
+              )}
             </motion.div>
           </motion.div>
         ) : null}

@@ -2,6 +2,7 @@
 
 import { useRef } from 'react'
 import type { ClientConfig } from '@studio/backend'
+import { localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import type { PortfolioConfig } from './shared'
 import { PortfolioHeader, ProjectImage, ProjectLink, ProjectLocation, teaserProjects } from './shared'
 
@@ -13,15 +14,16 @@ function scrollRail(rail: HTMLDivElement | null, direction: -1 | 1) {
   rail.scrollBy({ left: step * direction, behavior: 'smooth' })
 }
 
-export function PortfolioCarousel({ config }: { config: PortfolioConfig; site: ClientConfig }) {
+export function PortfolioCarousel({ config, site }: { config: PortfolioConfig; site: ClientConfig }) {
   const projects = teaserProjects(config)
+  const locale = publicLocaleFromSite(site)
   const railRef = useRef<HTMLDivElement>(null)
 
   if (!config.enabled || !projects.length) return null
 
   return (
     <section id="portfolio" className="overflow-hidden border-y border-accent bg-surface py-16 text-ink sm:py-20 lg:py-28">
-      <PortfolioHeader detailPages={config.detailPages} compact />
+      <PortfolioHeader detailPages={config.detailPages} compact locale={locale} />
 
       <div className="relative">
         <div
@@ -34,6 +36,7 @@ export function PortfolioCarousel({ config }: { config: PortfolioConfig; site: C
               key={project.slug}
               project={project}
               detailPages={config.detailPages}
+              locale={locale}
               className="grid min-w-0 flex-[0_0_78%] snap-start gap-5 text-ink sm:flex-[0_0_44%] lg:flex-[0_0_30%]"
             >
               <span data-project-card className="relative mt-4 mr-4 block">
@@ -54,7 +57,7 @@ export function PortfolioCarousel({ config }: { config: PortfolioConfig; site: C
                 </span>
                 <ProjectLocation
                   project={project}
-                  className="break-words text-[10px] font-normal uppercase tracking-[0.22em] text-muted"
+                  className={`break-words text-[10px] font-normal text-muted ${localeTextClass(locale, 'uppercase tracking-[0.22em]')}`}
                 />
               </span>
             </ProjectLink>

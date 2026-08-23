@@ -1,5 +1,6 @@
-import type { SectionConfig } from '@studio/backend'
+import type { ClientConfig, SectionConfig } from '@studio/backend'
 import Link from 'next/link'
+import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { serviceHref, serviceNumber } from './shared'
 
@@ -9,16 +10,16 @@ import { serviceHref, serviceNumber } from './shared'
  * isn't reproduced here. See ServicesDetailed.tsx's comment for the reasoning:
  * fabricated copy for a field the schema doesn't have.
  */
-const TITLE = { lead: 'Our', accent: 'Services' }
-const READ_MORE = 'Read more'
+export function ServicesCompact({ config, site }: { config: SectionConfig<'services'>; site: ClientConfig }) {
+  const locale = publicLocaleFromSite(site)
+  const copy = chromeCopy[locale].services
 
-export function ServicesCompact({ config }: { config: SectionConfig<'services'> }) {
   return (
     <section id="services" className="border-y border-accent bg-surface px-5 py-16 text-ink sm:px-8 sm:py-20 lg:px-16 lg:py-28">
       <div className="border-b border-accent pb-12">
         <h2 className="m-0 font-display text-[clamp(42px,13vw,104px)] font-extralight uppercase leading-[0.86] tracking-tight">
-          {TITLE.lead}
-          <span className="block pl-[0.5em] text-accent">{TITLE.accent}</span>
+          {copy.titleLead}
+          <span className="block pl-[0.5em] text-accent">{copy.titleAccent}</span>
         </h2>
       </div>
 
@@ -48,10 +49,10 @@ export function ServicesCompact({ config }: { config: SectionConfig<'services'> 
 
               {href ? (
                 <Link
-                  href={href}
-                  className="inline-flex min-h-11 items-center gap-3.5 justify-self-start bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium uppercase tracking-[0.18em] text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta lg:justify-self-end"
+                  href={localeHref(href, locale)}
+                  className={`inline-flex min-h-11 items-center gap-3.5 justify-self-start bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta lg:justify-self-end ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
                 >
-                  {READ_MORE}
+                  {copy.readMore}
                   <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
                 </Link>
               ) : null}

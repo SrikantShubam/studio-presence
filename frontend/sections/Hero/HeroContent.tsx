@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
+import { localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { FadeUpItem, Stagger } from '@/lib/motion'
 import { Wordmark } from './Wordmark'
@@ -44,11 +45,12 @@ export function HeroContent({
   // there rather than to a generic anchor. `site` is documented for exactly
   // this kind of cross-cutting, non-content read.
   const ctaHref = site.sections.estimate?.enabled ? '/estimate' : '#contact'
+  const locale = publicLocaleFromSite(site)
 
   return (
     <Stagger delay={0.15}>
       <FadeUpItem>
-        <div className={`mb-8 grid gap-3 text-[10.5px] font-normal uppercase leading-relaxed tracking-[0.24em] sm:mb-8 md:gap-2 ${eyebrowColor}`}>
+        <div className={`mb-8 grid gap-3 text-[10.5px] font-normal leading-relaxed sm:mb-8 md:gap-2 ${eyebrowColor} ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
           {heroEyebrowLines(site).map((line, i) => (
             <span key={i}>{line}</span>
           ))}
@@ -71,7 +73,7 @@ export function HeroContent({
       </FadeUpItem>
 
       <FadeUpItem>
-        <p className={`mt-[clamp(30px,4.2vh,42px)] max-w-[16em] text-[clamp(15px,1.6vw,21px)] font-normal uppercase leading-[1.25] tracking-[0.18em] md:mt-[clamp(24px,3vw,34px)] ${bodyColor}`}>
+        <p className={`mt-[clamp(30px,4.2vh,42px)] max-w-[16em] text-[clamp(15px,1.6vw,21px)] font-normal leading-[1.25] md:mt-[clamp(24px,3vw,34px)] ${bodyColor} ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>
           {config.headline}
         </p>
       </FadeUpItem>
@@ -85,8 +87,8 @@ export function HeroContent({
       {config.ctaLabel ? (
         <FadeUpItem>
           <Link
-            href={ctaHref}
-            className="mt-[clamp(40px,6vh,64px)] inline-flex min-h-10 items-center gap-2.5 [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] bg-cta px-6 py-4 text-[10px] font-medium uppercase tracking-[0.16em] text-ink sm:min-h-11 sm:gap-[14px] sm:[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] sm:px-[34px] sm:py-5 sm:text-[clamp(10.5px,1.1vw,12px)] sm:tracking-[0.18em] md:mt-[clamp(32px,4.5vw,52px)]"
+            href={ctaHref.startsWith('/') ? localeHref(ctaHref, locale) : ctaHref}
+            className={`mt-[clamp(40px,6vh,64px)] inline-flex min-h-10 items-center gap-2.5 [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] bg-cta px-6 py-4 text-[10px] font-medium text-ink sm:min-h-11 sm:gap-[14px] sm:[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] sm:px-[34px] sm:py-5 sm:text-[clamp(10.5px,1.1vw,12px)] md:mt-[clamp(32px,4.5vw,52px)] ${localeTextClass(locale, 'uppercase tracking-[0.16em] sm:tracking-[0.18em]')}`}
           >
             {config.ctaLabel} <EditorialIcon name="arrow-right" className="h-3 w-3" />
           </Link>
