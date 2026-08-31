@@ -12,7 +12,9 @@ import {
   faChevronDown,
   faChevronLeft,
   faChevronRight,
+  faEnvelope,
   faLocationDot,
+  faLanguage,
   faPhone,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
@@ -24,7 +26,9 @@ export type EditorialIconName =
   | 'message-circle'
   | 'phone'
   | 'map-pin'
+  | 'email'
   | 'instagram'
+  | 'language'
   | 'arrow-up-right'
   | 'arrow-down'
   | 'arrow-left'
@@ -39,7 +43,9 @@ const icons: Record<EditorialIconName, IconDefinition> = {
   'message-circle': faWhatsapp,
   phone: faPhone,
   'map-pin': faLocationDot,
+  email: faEnvelope,
   instagram: faInstagram,
+  language: faLanguage,
   'arrow-up-right': faArrowUpRightFromSquare,
   'arrow-down': faArrowDown,
   'arrow-left': faArrowLeft,

@@ -1,30 +1,13 @@
 import React from 'react'
 import type { SectionComponentProps } from '@/sections/registry'
-import { localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
-import { EditorialIcon } from '@/lib/icons'
+import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { EditorialIcon, type EditorialIconName } from '@/lib/icons'
 import { ClipLine } from '@/lib/motion'
-
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const COPY = {
-  en: {
-    detailLabels: { phone: 'Phone', whatsapp: 'WhatsApp', studio: 'Studio', hours: 'Hours' },
-    title: { lead: 'Come', accent: 'See us' },
-    estimateCta: 'Calculate the estimate',
-    mapLabel: 'Studio location',
-    mapAction: 'Open map',
-  },
-  hi: {
-    detailLabels: { phone: 'फोन', whatsapp: 'WhatsApp', studio: 'स्टूडियो', hours: 'समय' },
-    title: { lead: 'आइए', accent: 'मिलते हैं' },
-    estimateCta: 'अनुमान निकालें',
-    mapLabel: 'स्टूडियो लोकेशन',
-    mapAction: 'मैप खोलें',
-  },
-}
 
 type ContactDetail = {
   label: string
   value: string
+  icon?: EditorialIconName
   href?: string
 }
 
@@ -68,12 +51,13 @@ export function Contact({ config, site }: SectionComponentProps<'contact'>) {
 
   const { business } = site
   const locale = publicLocaleFromSite(site)
-  const copy = COPY[locale]
+  const copy = chromeCopy[locale].contact
   const address = formatAddress(business.address)
   const details: ContactDetail[] = [
-    { label: copy.detailLabels.phone, value: business.phone, href: `tel:${business.phone}` },
-    { label: copy.detailLabels.whatsapp, value: business.whatsapp, href: whatsappHref(business.whatsapp) },
-    { label: copy.detailLabels.studio, value: address },
+    { label: copy.detailLabels.phone, value: business.phone, icon: 'phone' as const, href: `tel:${business.phone}` },
+    { label: copy.detailLabels.whatsapp, value: business.whatsapp, icon: 'message-circle' as const, href: whatsappHref(business.whatsapp) },
+    { label: copy.detailLabels.email, value: business.email ?? '', icon: 'email' as const, href: business.email ? `mailto:${business.email}` : undefined },
+    { label: copy.detailLabels.studio, value: address, icon: 'map-pin' as const },
     {
       label: copy.detailLabels.hours,
       value: [business.hours?.trim(), business.hoursExtra?.trim()].filter(Boolean).join('\n'),
@@ -86,6 +70,7 @@ export function Contact({ config, site }: SectionComponentProps<'contact'>) {
     .filter(Boolean)
     .join(', ')
   const estimateHref = site.sections.estimate?.enabled ? localeHref('/estimate', locale) : '#contact'
+  const ctaLabel = site.sections.estimate?.enabled ? copy.estimateCta : (site.sections.ctaBand?.ctaLabel ?? site.sections.hero.ctaLabel ?? copy.estimateCta)
   const embedSrc = mapEmbedSrc(business.address)
   const openMapHref = mapOpenHref(business.address)
 
@@ -94,28 +79,29 @@ export function Contact({ config, site }: SectionComponentProps<'contact'>) {
       id="contact"
       className="border-t border-accent bg-panel px-5 py-[clamp(64px,9vw,120px)] text-ink sm:px-8 lg:px-16"
     >
-      <div className="grid items-start gap-[clamp(36px,6vw,90px)] md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+      <div className="grid items-start gap-[clamp(36px,6vw,90px)] lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] lg:items-center">
         <div>
           <h2 className="m-0 font-display text-[clamp(40px,7.5vw,92px)] font-light uppercase leading-[0.88] tracking-[-0.03em]">
             <ClipLine>{copy.title.lead}</ClipLine>
             <ClipLine className="pl-[0.55em] text-accent" delay={0.08}>{copy.title.accent}</ClipLine>
           </h2>
 
-          <div className="mt-[clamp(32px,4.5vw,52px)] grid max-w-3xl gap-x-[clamp(24px,4vw,48px)] gap-y-[26px] sm:grid-cols-2">
+          <div className="mt-[clamp(32px,4.5vw,52px)] grid max-w-5xl gap-x-[clamp(24px,4vw,48px)] gap-y-[26px] sm:grid-cols-2 xl:grid-cols-3">
             {details.map((detail) => (
               <div key={detail.label} className="grid gap-2 border-b border-hairline pb-[22px] last:border-b-0">
-                <span className={`text-[10.5px] font-medium text-accent ${localeTextClass(locale, 'uppercase tracking-[0.22em]')}`}>
+                <span className={`inline-flex items-center gap-2 text-[10.5px] font-medium text-accent ${localeTextClass(locale, 'uppercase tracking-[0.22em]')}`}>
+                  {detail.icon && <EditorialIcon name={detail.icon} className="h-3 w-3" />}
                   {detail.label}
                 </span>
                 {detail.href ? (
                   <a
                     href={detail.href}
-                    className="break-words text-[clamp(20px,2.4vw,24px)] font-normal leading-tight transition-colors hover:text-accent"
+                    className="break-words text-[clamp(18px,1.7vw,22px)] font-normal leading-tight transition-colors hover:text-accent"
                   >
                     {detail.value}
                   </a>
                 ) : (
-                  <span className="whitespace-pre-line break-words text-base leading-relaxed">
+                  <span className="whitespace-pre-line break-words text-[clamp(18px,1.7vw,22px)] leading-relaxed">
                     {detail.value}
                   </span>
                 )}
@@ -127,12 +113,12 @@ export function Contact({ config, site }: SectionComponentProps<'contact'>) {
             href={estimateHref}
             className={`mt-[clamp(32px,4.5vw,52px)] inline-flex min-h-11 items-center gap-[14px] [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium text-ink transition-colors hover:bg-ink hover:text-cta ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
           >
-            {copy.estimateCta}
+            {ctaLabel}
             <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
           </a>
         </div>
 
-        <div className="relative min-h-[22rem] overflow-hidden border border-accent bg-hairline md:min-h-[30rem]">
+        <div className="relative hidden min-h-[22rem] overflow-hidden border border-accent bg-hairline lg:block lg:min-h-[24rem]">
           {embedSrc ? (
             <iframe
               className="absolute inset-0 h-full w-full border-0 grayscale"

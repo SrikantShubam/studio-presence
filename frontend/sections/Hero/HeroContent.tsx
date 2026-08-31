@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
-import { localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localeRoleClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { FadeUpItem, Stagger } from '@/lib/motion'
 import { Wordmark } from './Wordmark'
@@ -46,51 +46,51 @@ export function HeroContent({
   // this kind of cross-cutting, non-content read.
   const ctaHref = site.sections.estimate?.enabled ? '/estimate' : '#contact'
   const locale = publicLocaleFromSite(site)
+  const ctaLabel = site.sections.estimate?.enabled ? chromeCopy[locale].hero.estimateCta : config.ctaLabel
 
   return (
     <Stagger delay={0.15}>
       <FadeUpItem>
-        <div className={`mb-8 grid gap-3 text-[10.5px] font-normal leading-relaxed sm:mb-8 md:gap-2 ${eyebrowColor} ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
-          {heroEyebrowLines(site).map((line, i) => (
-            <span key={i}>{line}</span>
+        <div className={`mb-8 grid gap-3 font-normal leading-relaxed sm:mb-8 md:gap-2 ${eyebrowColor} ${localeRoleClass(locale, 'eyebrow')}`}>
+          {heroEyebrowLines(site, locale).map((line, i) => (
+            <h2 key={i} className="ai-heading-reset m-0">
+              {line}
+            </h2>
           ))}
         </div>
       </FadeUpItem>
 
       <FadeUpItem>
-        <h1
+        <Wordmark
+          as="h1"
+          businessName={site.business.name}
           className={`m-0 font-display font-light uppercase leading-[0.9] tracking-[-0.025em] ${
             headingSize === 'display'
-              ? 'text-[clamp(44px,11vw,140px)]'
-              : 'text-[clamp(46px,7.4vw,96px)]'
-          }`}
-        >
-          <Wordmark
-            businessName={site.business.name}
-            className={tone === 'on-photo' ? 'text-surface' : 'text-ink'}
-          />
-        </h1>
+              ? 'ai-type-hero-wordmark-display'
+              : 'ai-type-hero-wordmark'
+          } ${tone === 'on-photo' ? 'text-surface' : 'text-ink'}`}
+        />
       </FadeUpItem>
 
       <FadeUpItem>
-        <p className={`mt-[clamp(30px,4.2vh,42px)] max-w-[16em] text-[clamp(15px,1.6vw,21px)] font-normal leading-[1.25] md:mt-[clamp(24px,3vw,34px)] ${bodyColor} ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>
+        <h2 className={`mt-[clamp(30px,4.2vh,42px)] max-w-[18em] font-normal md:mt-[clamp(24px,3vw,34px)] ${bodyColor} ai-type-hero-support`}>
           {config.headline}
-        </p>
+        </h2>
       </FadeUpItem>
 
       {config.sub ? (
         <FadeUpItem>
-          <p className={`mt-5 max-w-lg text-sm leading-relaxed ${bodyColor}`}>{config.sub}</p>
+          <p className={`mt-5 max-w-[34rem] leading-[1.65] ${bodyColor} ${localeRoleClass(locale, 'heroSub')}`}>{config.sub}</p>
         </FadeUpItem>
       ) : null}
 
-      {config.ctaLabel ? (
+      {ctaLabel ? (
         <FadeUpItem>
           <Link
             href={ctaHref.startsWith('/') ? localeHref(ctaHref, locale) : ctaHref}
-            className={`mt-[clamp(40px,6vh,64px)] inline-flex min-h-10 items-center gap-2.5 [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] bg-cta px-6 py-4 text-[10px] font-medium text-ink sm:min-h-11 sm:gap-[14px] sm:[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] sm:px-[34px] sm:py-5 sm:text-[clamp(10.5px,1.1vw,12px)] md:mt-[clamp(32px,4.5vw,52px)] ${localeTextClass(locale, 'uppercase tracking-[0.16em] sm:tracking-[0.18em]')}`}
+            className="ai-type-hero-cta mt-[clamp(24px,4vh,42px)] inline-flex min-h-11 items-center gap-2.5 [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] bg-cta px-6 py-4 font-medium text-ink sm:gap-[14px] sm:[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] sm:px-[34px] sm:py-5 md:mt-[clamp(24px,3.5vw,40px)]"
           >
-            {config.ctaLabel} <EditorialIcon name="arrow-right" className="h-3 w-3" />
+            {ctaLabel} <EditorialIcon name="arrow-right" className="h-3 w-3" />
           </Link>
         </FadeUpItem>
       ) : null}

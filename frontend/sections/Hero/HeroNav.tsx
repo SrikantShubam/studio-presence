@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { chromeCopy, localeHref, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localeRoleClass, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { serviceHref, type ServiceItem } from '@/sections/Services/shared'
 import { Wordmark } from './Wordmark'
@@ -30,7 +30,7 @@ import { Wordmark } from './Wordmark'
 const LINKS = [
   { href: '/', key: 'home' },
   { href: '/#services', key: 'services' },
-  { href: '/#about', key: 'about' },
+  { href: '/about', key: 'about' },
   { href: '/portfolio', key: 'portfolio' },
   { href: '/#contact', key: 'contact' },
 ] as const
@@ -40,6 +40,47 @@ function serviceLinks(items: ServiceItem[]): Array<{ title: string; href: string
     const href = serviceHref(item)
     return href ? [{ title: item.title, href }] : []
   })
+}
+
+function LanguageSwitcher({
+  activeLocale,
+  pathname,
+  tone,
+  onNavigate,
+}: {
+  activeLocale: PublicLocale
+  pathname: string
+  tone: 'on-photo' | 'on-surface'
+  onNavigate?: () => void
+}) {
+  const copy = chromeCopy[activeLocale].nav
+  const base = tone === 'on-photo' ? 'border-transparent text-surface/70' : 'border-hairline bg-transparent text-muted'
+  const inactive = tone === 'on-photo' ? 'border-transparent text-surface/70 hover:text-surface' : 'border-transparent text-muted hover:text-ink'
+
+  return (
+    <div
+      aria-label={copy.languageLabel}
+      className={`ai-language-switcher inline-flex min-h-11 items-center border p-1 font-medium ${localeRoleClass(activeLocale, 'switcher')} ${base}`}
+    >
+      <span className="grid h-9 w-9 shrink-0 place-items-center bg-ink text-surface">
+        <EditorialIcon name="language" className="h-4 w-4" />
+      </span>
+      {(['en', 'hi'] as const).map((item) => (
+        <Link
+          key={item}
+          href={localeHref(pathname, item)}
+          hrefLang={item}
+          aria-current={activeLocale === item ? 'true' : undefined}
+          onClick={onNavigate}
+          className={`inline-flex min-h-9 min-w-11 items-center justify-center border px-3 ${
+            activeLocale === item ? 'border-cta bg-cta text-ink' : inactive
+          }`}
+        >
+          {item === 'en' ? copy.english : copy.hindi}
+        </Link>
+      ))}
+    </div>
+  )
 }
 
 function ServicesDropdown({
@@ -77,25 +118,23 @@ function ServicesDropdown({
   if (!items.length) {
     return (
       <Link href="/#services" className={textColor} onClick={onNavigate}>
-        {label}
+        <h5 className="ai-type-menu-item m-0 font-normal">{label}</h5>
       </Link>
     )
   }
 
-  const primaryHref = items[0]?.href ?? '/#services'
-
   return (
-    <div ref={root} className="relative inline-flex items-center gap-1">
-      <Link href={primaryHref} className={textColor} onClick={onNavigate}>
-        {label}
-      </Link>
+    <div ref={root} className="relative inline-flex items-center gap-1" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button type="button" className={`bg-transparent transition-colors ${open ? 'text-cta' : textColor}`} onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-haspopup="true">
+        <h5 className="ai-type-menu-item m-0 font-normal">{label}</h5>
+      </button>
       <button
         type="button"
         aria-label={chromeCopy[locale].nav.openServices}
         aria-expanded={open}
         aria-haspopup="true"
         onClick={() => setOpen((value) => !value)}
-        className={`inline-flex h-8 w-5 items-center justify-center bg-transparent ${textColor}`}
+        className={`inline-flex h-8 w-5 items-center justify-center bg-transparent transition-colors ${open ? 'text-cta' : textColor}`}
       >
         <EditorialIcon name="chevron-down" className={`h-2.5 w-2.5 ${open ? 'rotate-180' : ''}`} />
       </button>
@@ -109,9 +148,9 @@ function ServicesDropdown({
                 setOpen(false)
                 onNavigate?.()
               }}
-              className={`block px-4 py-3 text-[11px] font-normal text-ink hover:bg-panel hover:text-accent ${localeTextClass(locale)}`}
+              className={`block px-4 py-3 font-normal text-ink hover:bg-panel hover:text-accent ${localeRoleClass(locale, 'label')}`}
             >
-              {item.title}
+              <h6 className="ai-heading-reset m-0">{item.title}</h6>
             </Link>
           ))}
         </div>
@@ -128,6 +167,7 @@ export function HeroNav({
   services = [],
   locale = 'en',
   locales = ['en'],
+  stickyOnScroll = false,
 }: {
   businessName: string
   phone: string
@@ -136,64 +176,75 @@ export function HeroNav({
   services?: ServiceItem[]
   locale?: PublicLocale
   locales?: string[]
+  stickyOnScroll?: boolean
 }) {
   const [open, setOpen] = useState(false)
   const [mobileServices, setMobileServices] = useState(false)
+  const [isDocked, setIsDocked] = useState(false)
+  const lastScrollY = useRef(0)
   const reduce = useReducedMotion()
   const pathname = usePathname() || '/'
+  const resolvedTone = isDocked ? 'on-surface' : tone
   const activeLocale: PublicLocale = pathname === '/hi' || pathname.startsWith('/hi/') ? 'hi' : locale
-  const textColor = tone === 'on-photo' ? 'text-surface' : 'text-ink'
-  const dividerColor = tone === 'on-photo' ? 'bg-surface/40' : 'bg-accent'
-  const borderClass = tone === 'on-surface' ? 'border-b border-accent' : ''
+  const textColor = resolvedTone === 'on-photo' ? 'text-surface' : 'text-ink'
+  const dividerColor = resolvedTone === 'on-photo' ? 'bg-surface/40' : 'bg-accent'
+  const borderClass = resolvedTone === 'on-surface' ? 'border-b border-accent' : ''
   const links = serviceLinks(services).map((item) => ({ ...item, href: localeHref(item.href, activeLocale) }))
   const copy = chromeCopy[activeLocale].nav
   const navLinks = LINKS.map((link) => ({ ...link, href: localeHref(link.href, activeLocale), label: copy[link.key] }))
   const showHindi = locales.includes('hi')
-  const alternateLocale: PublicLocale = activeLocale === 'hi' ? 'en' : 'hi'
-  const alternateLabel = copy.languageShort
-  const alternateHref = localeHref(pathname, alternateLocale)
-  const navTextClass = activeLocale === 'hi' ? 'tracking-normal' : 'tracking-[0.2em]'
 
   useEffect(() => {
     if (!open) setMobileServices(false)
   }, [open])
 
+  useEffect(() => {
+    if (!stickyOnScroll) return
+
+    const onScroll = () => {
+      const current = window.scrollY
+      const shouldDock = current > window.innerHeight * 0.55 && current < lastScrollY.current
+      setIsDocked((value) => (value === shouldDock ? value : shouldDock))
+      lastScrollY.current = current
+    }
+
+    lastScrollY.current = window.scrollY
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [stickyOnScroll])
+
   return (
     <>
-      <nav
-        className={`relative z-40 flex items-center justify-between gap-6 px-5 py-[clamp(20px,3vw,34px)] md:px-[clamp(20px,5vw,64px)] ${textColor} ${borderClass} bg-transparent`}
+      <motion.nav
+        key={isDocked ? 'docked' : 'hero'}
+        initial={isDocked && !reduce ? { opacity: 0, y: -64 } : false}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.58, ease: [0.16, 1, 0.3, 1] }}
+        className={`${isDocked ? 'fixed inset-x-0 top-0 bg-surface/95 backdrop-blur-sm' : 'relative bg-transparent'} z-40 flex items-center justify-between gap-6 px-5 py-[clamp(20px,3vw,34px)] md:px-[clamp(20px,5vw,64px)] ${textColor} ${borderClass}`}
       >
         <Link href={localeHref('/', activeLocale)} className={textColor}>
           <Wordmark
+            as="h2"
             businessName={businessName}
-            className="grid gap-[3px] text-[13px] font-medium leading-none tracking-[0.26em]"
+            className="ai-type-wordmark-nav m-0 grid gap-[3px] font-medium leading-none"
           />
         </Link>
 
-        <div className={`hidden items-center gap-8 text-[11.5px] font-normal md:flex ${navTextClass}`}>
+        <div className={`hidden items-center gap-8 font-normal lg:flex lg:[&_.ai-type-menu-item]:text-xs ${localeRoleClass(activeLocale, 'nav')}`}>
           {navLinks.map((link) =>
             link.key === 'services' ? (
               <ServicesDropdown key={link.href} items={links} textColor={textColor} label={link.label} locale={activeLocale} />
             ) : (
-              <Link key={link.href} href={link.href} className={textColor}>
-                {link.label}
+              <Link key={link.href} href={link.href} className={`${textColor} transition-colors hover:text-cta`}>
+                <h5 className="ai-type-menu-item m-0 font-normal">{link.label}</h5>
               </Link>
             ),
           )}
         </div>
 
-        <div className="hidden items-center gap-4 text-xs tracking-[0.14em] md:flex">
+        <div className={`hidden items-center gap-4 lg:flex ${localeRoleClass(activeLocale, 'label')}`}>
+          {showHindi && <LanguageSwitcher activeLocale={activeLocale} pathname={pathname} tone={resolvedTone} />}
           <span className={`h-4 w-px ${dividerColor}`} />
-          {showHindi && (
-            <Link
-              href={alternateHref}
-              className={`inline-flex min-h-9 items-center border border-current px-3 text-[11px] font-medium ${activeLocale === 'hi' ? 'tracking-normal' : 'tracking-[0.14em]'}`}
-              hrefLang={alternateLocale}
-              aria-label={copy.languageLabel}
-            >
-              {alternateLabel}
-            </Link>
-          )}
           <a href={`tel:${phone}`} className={textColor}>
             {phone}
           </a>
@@ -204,11 +255,11 @@ export function HeroNav({
           aria-label={open ? copy.closeMenu : copy.openMenu}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-11 items-center justify-center bg-transparent md:hidden"
+          className="flex h-11 w-11 items-center justify-center bg-transparent lg:hidden"
         >
           <EditorialIcon name={open ? 'close' : 'bars'} className="h-4 w-4" />
         </button>
-      </nav>
+      </motion.nav>
 
       <AnimatePresence>
         {open ? (
@@ -218,7 +269,7 @@ export function HeroNav({
             animate={{ opacity: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0 }}
             transition={{ duration: 0.22 }}
-            className="fixed inset-0 z-50 bg-surface text-ink md:hidden"
+            className="fixed inset-0 z-50 bg-surface text-ink lg:hidden"
           >
             <motion.div
               initial={reduce ? false : { y: -18 }}
@@ -230,22 +281,12 @@ export function HeroNav({
               <div className="flex items-center justify-between gap-5 border-b border-accent pb-5">
                 <Link href={localeHref('/', activeLocale)} onClick={() => setOpen(false)} className="text-ink">
                   <Wordmark
+                    as="h2"
                     businessName={businessName}
-                    className="grid gap-[3px] text-[13px] font-medium leading-none tracking-[0.26em]"
+                    className="ai-type-wordmark-nav m-0 grid gap-[3px] font-medium leading-none"
                   />
                 </Link>
                 <div className="flex items-center gap-3">
-                  {showHindi && (
-                    <Link
-                      href={alternateHref}
-                      hrefLang={alternateLocale}
-                      aria-label={copy.languageLabel}
-                      onClick={() => setOpen(false)}
-                      className={`inline-flex min-h-10 items-center border border-ink px-3 text-[12px] font-medium text-ink ${activeLocale === 'hi' ? 'tracking-normal' : 'tracking-[0.14em]'}`}
-                    >
-                      {alternateLabel}
-                    </Link>
-                  )}
                   <button
                     type="button"
                     aria-label={copy.closeMenu}
@@ -257,14 +298,14 @@ export function HeroNav({
                 </div>
               </div>
 
-              <div className="grid flex-1 content-center gap-1 py-10 text-[clamp(28px,10vw,54px)] font-display leading-none tracking-normal">
+              <div className="ai-type-mobile-nav grid flex-1 content-center gap-1 py-10 font-display leading-none tracking-normal">
                 {navLinks.map((link) =>
                   link.key === 'services' && links.length ? (
                     <div key={link.href} className="border-b border-hairline py-4">
                       <div className="flex items-center justify-between gap-5">
-                        <Link href={links[0]?.href ?? '/#services'} onClick={() => setOpen(false)} className="text-ink">
-                          {link.label}
-                        </Link>
+                        <button type="button" onClick={() => setMobileServices((value) => !value)} className="bg-transparent text-left text-ink">
+                          <h5 className="ai-heading-reset m-0">{link.label}</h5>
+                        </button>
                         <button
                           type="button"
                           aria-label={copy.openServices}
@@ -288,10 +329,10 @@ export function HeroNav({
                             transition={{ duration: 0.24 }}
                             className="overflow-hidden"
                           >
-                            <div className={`grid gap-3 pt-5 text-[12px] font-normal leading-snug text-accent ${localeTextClass(activeLocale, 'uppercase tracking-[0.16em]')}`}>
+                            <div className={`grid gap-4 pt-5 font-normal leading-snug text-accent ${localeRoleClass(activeLocale, 'meta')}`}>
                               {links.map((item) => (
                                 <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
-                                  {item.title}
+                                  <h6 className="ai-heading-reset m-0">{item.title}</h6>
                                 </Link>
                               ))}
                             </div>
@@ -306,19 +347,22 @@ export function HeroNav({
                       onClick={() => setOpen(false)}
                       className="border-b border-hairline py-4 text-ink"
                     >
-                      {link.label}
+                      <h5 className="ai-heading-reset m-0">{link.label}</h5>
                     </Link>
                   ),
                 )}
               </div>
 
-              <a
-                href={`tel:${phone}`}
-                onClick={() => setOpen(false)}
-                className="border-t border-accent pt-5 text-[12px] font-normal uppercase tracking-[0.14em] text-ink"
-              >
-                {phone}
-              </a>
+              <div className="flex items-center justify-between gap-5 border-t border-accent pt-5">
+                <a
+                  href={`tel:${phone}`}
+                  onClick={() => setOpen(false)}
+                  className={`font-normal text-ink ${localeRoleClass(activeLocale, 'meta')}`}
+                >
+                  {phone}
+                </a>
+                {showHindi && <LanguageSwitcher activeLocale={activeLocale} pathname={pathname} tone="on-surface" onNavigate={() => setOpen(false)} />}
+              </div>
             </motion.div>
           </motion.div>
         ) : null}

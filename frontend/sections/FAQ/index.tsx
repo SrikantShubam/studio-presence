@@ -3,13 +3,13 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import type { SectionComponentProps } from '@/sections/registry'
-import { ClipLine, FadeUpItem, Stagger } from '@/lib/motion'
+import { chromeCopy, localeRoleClass, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { FadeUpItem, Stagger } from '@/lib/motion'
 
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const TITLE = { lead: 'Common', accent: 'Questions' }
-
-export function FAQ({ config }: SectionComponentProps<'faq'>) {
+export function FAQ({ config, site }: SectionComponentProps<'faq'>) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const locale = publicLocaleFromSite(site)
+  const title = chromeCopy[locale].faq.title
 
   if (!config?.enabled || !config.items?.length) return null
 
@@ -19,9 +19,10 @@ export function FAQ({ config }: SectionComponentProps<'faq'>) {
       className="border-t border-accent bg-surface px-5 py-[clamp(64px,9vw,120px)] text-ink sm:px-8 lg:px-16"
     >
       <div className="grid items-start gap-[clamp(36px,7vw,96px)] lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
-        <h2 className="m-0 max-w-md font-display text-[clamp(40px,7.5vw,92px)] font-light uppercase leading-[0.88] tracking-[-0.03em]">
-          <ClipLine>{TITLE.lead}</ClipLine>
-          <ClipLine className="pl-[0.55em] text-accent" delay={0.08}>{TITLE.accent}</ClipLine>
+        <h2 className={`m-0 max-w-md font-display text-[clamp(42px,7.5vw,92px)] font-light leading-[0.95] text-ink ${localeRoleClass(locale, 'sectionTitle')}`}>
+          <span className="block">
+            {title.lead} <span className="text-accent">{title.accent}</span>
+          </span>
         </h2>
 
         <Stagger className="min-w-0">
@@ -38,7 +39,7 @@ export function FAQ({ config }: SectionComponentProps<'faq'>) {
                   className="flex w-full items-center justify-between gap-6 bg-transparent py-[clamp(20px,2.4vw,30px)] text-left text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                 >
-                  <span className="min-w-0 break-words text-[clamp(16px,1.9vw,22px)] font-normal uppercase tracking-[0.01em]">
+                  <span className={`min-w-0 break-words text-[clamp(17px,1.9vw,23px)] font-normal ${localeTextClass(locale, 'uppercase tracking-[0.01em]')}`}>
                     {item.q}
                   </span>
                   <span aria-hidden className="shrink-0 text-2xl font-light leading-none text-accent">
@@ -57,7 +58,7 @@ export function FAQ({ config }: SectionComponentProps<'faq'>) {
                       transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="m-0 max-w-2xl pb-[clamp(20px,2.4vw,30px)] pr-[clamp(0px,8vw,90px)] text-pretty text-justify text-[15px] leading-[1.75] text-body">
+                      <p className={`m-0 max-w-2xl pb-[clamp(20px,2.4vw,30px)] pr-[clamp(0px,8vw,90px)] text-pretty text-justify leading-[1.75] text-body ${localeRoleClass(locale, 'body')}`}>
                         {item.a}
                       </p>
                     </motion.div>

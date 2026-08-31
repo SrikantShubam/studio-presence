@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
 import Link from 'next/link'
-import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localeRoleClass, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { serviceHref, serviceNumber } from './shared'
 import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, FadeUpItem, Stagger } from '@/lib/motion'
@@ -28,7 +28,7 @@ function numeralPositionClasses(index: number, hasImage: boolean): string {
 }
 
 const buttonBase =
-  'group/button relative inline-flex min-h-10 items-center gap-2.5 px-6 py-4 text-[10px] font-medium uppercase tracking-[0.16em] transition-colors sm:min-h-11 sm:gap-3.5 sm:px-[34px] sm:py-5 sm:text-[clamp(10.5px,1.1vw,12px)] sm:tracking-[0.18em]'
+  'group/button relative inline-flex min-h-10 items-center gap-2.5 px-5 py-3 text-[10px] font-medium uppercase tracking-[0.16em] transition-colors sm:min-h-11 sm:gap-3 sm:px-5 sm:py-3 sm:text-[10.5px] sm:tracking-[0.16em] lg:gap-3.5 lg:px-[34px] lg:py-5 lg:text-[clamp(10.5px,1.1vw,12px)] lg:tracking-[0.18em]'
 
 const buttonShape =
   '[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] sm:[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)]'
@@ -66,7 +66,7 @@ export function ServicesDetailed({
               <div className={`relative min-w-0 px-1 pt-8 sm:px-0 sm:pt-5 ${hasImage ? (index % 2 === 0 ? 'md:order-2' : 'md:order-1') : ''}`}>
                 <span
                   aria-hidden
-                  className={`pointer-events-none absolute -top-14 select-none font-display text-[clamp(110px,14vw,190px)] font-light leading-none text-transparent transition-[color] duration-300 [-webkit-text-stroke:1px_var(--t-hairline)] group-hover:[-webkit-text-stroke:1px_var(--color-accent)] ${numeralPositionClasses(
+                  className={`pointer-events-none absolute -top-14 select-none font-display text-[clamp(110px,14vw,190px)] font-light leading-none text-transparent opacity-20 transition-[opacity,color] duration-300 group-hover:opacity-35 [-webkit-text-stroke:1px_var(--t-hairline)] group-hover:[-webkit-text-stroke:1px_var(--color-accent)] ${numeralPositionClasses(
                     index,
                     hasImage,
                   )}`}
@@ -81,11 +81,11 @@ export function ServicesDetailed({
                   <span className="hidden h-px max-w-16 flex-1 bg-ink transition-all duration-300 group-hover:max-w-28 group-hover:bg-accent sm:block" aria-hidden />
                 </div>
 
-                <p className="relative m-0 mt-6 max-w-[34em] text-[15px] leading-[1.75] text-muted md:text-justify">
+                <p className={`relative m-0 mt-6 max-w-[34em] leading-[1.75] text-muted md:text-justify ${localeRoleClass(locale, 'body')}`}>
                   {item.blurb}
                 </p>
 
-                <div className="relative mt-8 flex flex-wrap items-center gap-4">
+                <div className="relative mt-8 flex flex-wrap items-center gap-4 md:flex-nowrap">
                   {href ? (
                     <Link href={localeHref(href, locale)} className={`${buttonBase} ${buttonShape} ${buttonTextClass} bg-cta text-ink hover:bg-ink hover:text-cta`}>
                       {copy.readMore}
@@ -97,7 +97,7 @@ export function ServicesDetailed({
                     className={`${buttonBase} ${buttonShape} ${buttonTextClass} bg-ink text-ink hover:text-surface`}
                   >
                     <span className={`pointer-events-none absolute inset-px ${buttonShape} bg-surface transition-colors group-hover/button:bg-ink`} aria-hidden />
-                    <span className="relative">{copy.estimate}</span>
+                    <span className="relative">{site.sections.estimate?.enabled ? copy.estimate : (site.sections.ctaBand?.ctaLabel ?? site.sections.hero.ctaLabel ?? copy.estimate)}</span>
                     <EditorialIcon name="arrow-up-right" className="relative h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </Link>
                 </div>
