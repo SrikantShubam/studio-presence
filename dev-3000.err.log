@@ -1,0 +1,126 @@
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[ResponseAborted: ]
+[TypeError: controller[kState].transformAlgorithm is not a function]
+[TypeError: controller[kState].transformAlgorithm is not a function]
+ ⨯ ./sections/Footer/index.tsx
+Module parse failed: Identifier 'address' has already been declared (247:10)
+|     const whatsapp = site.business.whatsapp ?? '';
+|     const email = site.business.email ?? '';
+>     const address = addressText(site);
+|     const hours = [
+|         site.business.hours?.trim(),
+
+Import trace for requested module:
+./sections/Footer/index.tsx
+./sections/registry.ts
+./app/[tenant]/(site)/page.tsx
+ ⨯ ./sections/Footer/index.tsx
+Module parse failed: Identifier 'address' has already been declared (247:10)
+|     const whatsapp = site.business.whatsapp ?? '';
+|     const email = site.business.email ?? '';
+>     const address = addressText(site);
+|     const hours = [
+|         site.business.hours?.trim(),
+
+Import trace for requested module:
+./sections/Footer/index.tsx
+./sections/registry.ts
+./app/[tenant]/(site)/page.tsx
+ ⨯ ./sections/Footer/index.tsx
+Module parse failed: Identifier 'address' has already been declared (247:10)
+|     const whatsapp = site.business.whatsapp ?? '';
+|     const email = site.business.email ?? '';
+>     const address = addressText(site);
+|     const hours = [
+|         site.business.hours?.trim(),
+
+Import trace for requested module:
+./sections/Footer/index.tsx
+./sections/registry.ts
+./app/[tenant]/(site)/page.tsx
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⨯ ./sections/Contact/index.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     ,-[[36;1;4mC:\work\studio presence\frontend\sections\Contact\index.tsx[0m:112:1]
+ [2m109[0m |             ))}
+ [2m110[0m |           </div>
+ [2m111[0m |               </div>
+ [2m112[0m |             ) : null}
+     : [35;1m                    ^[0m
+ [2m113[0m |           <a
+ [2m114[0m |             href={estimateHref}
+ [2m115[0m |             className={`mt-[clamp(32px,4.5vw,52px)] inline-flex min-h-11 items-center gap-[14px] [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium text-ink transition-colors hover:bg-ink hover:text-cta ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4mC:\work\studio presence\frontend\sections\Contact\index.tsx[0m:153:1]
+ [2m150[0m |           </div>
+ [2m151[0m |         </div>
+ [2m152[0m |       </div>
+ [2m153[0m |     </section>
+     : [35;1m    ^[0m
+ [2m154[0m |   )
+ [2m155[0m | }
+     `----
+  [31mx[0m Unterminated regexp literal
+     ,-[[36;1;4mC:\work\studio presence\frontend\sections\Contact\index.tsx[0m:153:1]
+ [2m150[0m |           </div>
+ [2m151[0m |         </div>
+ [2m152[0m |       </div>
+ [2m153[0m |     </section>
+     : [35;1m     ^^^^^^^^^[0m
+ [2m154[0m |   )
+ [2m155[0m | }
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./sections/Contact/index.tsx
+./sections/registry.ts
+./app/[tenant]/(site)/page.tsx
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⨯ ./sections/Footer/index.tsx
+Module parse failed: Identifier 'EditorialIcon' has already been declared (5:9)
+| import { chromeCopy, localeHref, localeRoleClass, publicLocaleFromSite } from '@/lib/i18n-client';
+| import { EditorialIcon } from '@/lib/icons';
+> import { EditorialIcon } from '@/lib/icons';
+| import { Wordmark } from '../Hero/Wordmark';
+| function addressText(site) {
+
+Import trace for requested module:
+./sections/Footer/index.tsx
+./sections/registry.ts
+./app/[tenant]/(site)/page.tsx
+ ⨯ ./sections/Footer/index.tsx
+Module parse failed: Identifier 'EditorialIcon' has already been declared (5:9)
+| import { chromeCopy, localeHref, localeRoleClass, publicLocaleFromSite } from '@/lib/i18n-client';
+| import { EditorialIcon } from '@/lib/icons';
+> import { EditorialIcon } from '@/lib/icons';
+| import { Wordmark } from '../Hero/Wordmark';
+| function addressText(site) {
+
+Import trace for requested module:
+./sections/Footer/index.tsx
+./sections/registry.ts
+./app/[tenant]/(site)/page.tsx
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⨯ ./sections/Footer/index.tsx
+Module parse failed: Identifier 'EditorialIcon' has already been declared (5:9)
+| import { chromeCopy, localeHref, localeRoleClass, publicLocaleFromSite } from '@/lib/i18n-client';
+| import { EditorialIcon } from '@/lib/icons';
+> import { EditorialIcon } from '@/lib/icons';
+| import { Wordmark } from '../Hero/Wordmark';
+| function addressText(site) {
+
+Import trace for requested module:
+./sections/Footer/index.tsx
+./sections/registry.ts
+./app/[tenant]/(site)/page.tsx
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload

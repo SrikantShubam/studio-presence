@@ -3,11 +3,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
-import { chromeCopy, localeHref, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localeRoleClass, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { FadeUpItem, Stagger } from '@/lib/motion'
 import type { PortfolioProject } from '@/sections/Portfolio/shared'
 import { ProjectImage, ProjectLink } from '@/sections/Portfolio/shared'
+import { PROJECT_FILTER_IDS, type ProjectFilterId } from './project-filters'
 
 /**
  * The filter tabs are a fixed taxonomy tied to `project.projectType`
@@ -15,14 +16,13 @@ import { ProjectImage, ProjectLink } from '@/sections/Portfolio/shared'
  * editorial-identity site groups its work the same way. "office" buckets under
  * "hospitality" here to match the reference design's grouping.
  */
-export const FILTERS: Array<{ id: keyof typeof chromeCopy.en.portfolio.filters }> = [
-  { id: 'all' },
-  { id: 'residential' },
-  { id: 'commercial' },
-  { id: 'hospitality' },
-  { id: 'retail' },
-]
 const PAGE_SIZE = 12
+
+const secondaryButtonBase =
+  'inline-flex min-h-10 items-center gap-2.5 bg-ink px-5 py-3 text-[10px] font-medium uppercase tracking-[0.16em] text-surface transition-colors hover:text-cta sm:min-h-11 sm:gap-3 sm:px-5 sm:py-3 sm:text-[10.5px] sm:tracking-[0.16em] lg:gap-3.5 lg:px-[34px] lg:py-5 lg:text-[clamp(10.5px,1.1vw,12px)] lg:tracking-[0.18em]'
+
+const secondaryButtonShape =
+  '[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] sm:[clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)]'
 
 const BANDS: Record<2 | 4 | 6, Array<Array<[number, number]>>> = {
   6: [
@@ -87,7 +87,7 @@ function nameSize(rows: number): string {
   return 'text-[clamp(12.5px,1.4vw,15px)]'
 }
 
-function filterHref(id: string): string {
+function filterHref(id: ProjectFilterId): string {
   return id === 'all' ? '/portfolio' : `/projects/${id}`
 }
 
@@ -107,7 +107,7 @@ export function ProjectsBrowser({
   const cols = useColumnCount()
   const [shown, setShown] = useState(PAGE_SIZE)
   const copy = chromeCopy[locale].portfolio
-  const labelClass = localeTextClass(locale, 'uppercase tracking-[0.16em]')
+  const labelClass = locale === 'hi' ? localeRoleClass(locale, 'label') : localeTextClass(locale, 'uppercase tracking-[0.16em]')
 
   useEffect(() => {
     setShown(PAGE_SIZE)
@@ -115,13 +115,13 @@ export function ProjectsBrowser({
 
   const categories = useMemo(
     () =>
-      FILTERS.map((filter) => ({
-        ...filter,
-        label: copy.filters[filter.id],
+      PROJECT_FILTER_IDS.map((id) => ({
+        id,
+        label: copy.filters[id],
         count:
-          filter.id === 'all'
+          id === 'all'
             ? projects.length
-            : projects.filter((project) => bucket(project.projectType) === filter.id).length,
+            : projects.filter((project) => bucket(project.projectType) === id).length,
       })),
     [copy.filters, projects],
   )
@@ -210,9 +210,9 @@ export function ProjectsBrowser({
       {header && (
         <section className="px-5 pt-[clamp(44px,6vw,80px)] sm:px-8 lg:px-16">
           <div className="grid grid-cols-1 items-end gap-[clamp(28px,5vw,72px)] border-b border-accent pb-[clamp(32px,4vw,52px)] lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-            <h2 className="m-0 min-w-0 break-words font-display text-[clamp(34px,6vw,76px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-              {header.lead}
-              <span className="ml-[0.55em] block text-accent">{header.accent}</span>
+            <h2 className="m-0 min-w-0 font-display text-[clamp(30px,5.2vw,66px)] font-light uppercase leading-[0.95] tracking-[-0.01em] text-ink">
+              <span className="inline-block whitespace-nowrap">{header.lead}</span>{' '}
+              <span className="inline-block whitespace-nowrap text-accent">{header.accent}</span>
             </h2>
             <div className="grid max-w-[38em] gap-3.5">
               {header.lines.map((line) => (
@@ -251,21 +251,21 @@ export function ProjectsBrowser({
                     project={project}
                     className="transition-transform duration-500 ease-out group-hover:scale-110"
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/0 from-[42%] to-ink/75 transition-opacity duration-500 group-hover:from-ink/20 group-hover:to-ink/80" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/25 from-[28%] via-ink/45 to-ink/90 transition-opacity duration-500 group-hover:from-ink/35 group-hover:via-ink/55 group-hover:to-ink/95" />
                   <span className="absolute inset-x-[clamp(14px,1.6vw,22px)] bottom-[clamp(14px,1.6vw,20px)] grid gap-2 text-surface transition-transform duration-500 group-hover:-translate-y-2">
                     <span className={`break-words font-normal uppercase leading-[1.15] tracking-[0.01em] ${nameSize(rows)}`}>
                       {project.title}
                     </span>
                     {projectMeta(project) && (
-                      <span className={`break-words text-[10px] text-surface/80 ${localeTextClass(locale, 'uppercase tracking-[0.16em]')}`}>
+                      <span className={`break-words text-surface/80 ${localeRoleClass(locale, 'meta')}`}>
                         {projectMeta(project)}
                       </span>
                     )}
                   </span>
                   <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <span className={`inline-flex items-center gap-2 border border-surface bg-ink/70 px-4 py-2.5 text-[10.5px] font-medium text-surface ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>
+                    <span className={`${secondaryButtonBase} ${secondaryButtonShape} ${localeRoleClass(locale, 'button')}`}>
                       {copy.viewMore}
-                      <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
+                      <EditorialIcon name="arrow-right" className="h-3 w-3" />
                     </span>
                   </span>
                 </ProjectLink>
@@ -278,14 +278,14 @@ export function ProjectsBrowser({
 
       <section className="px-5 pb-[clamp(64px,9vw,120px)] sm:px-8 lg:px-16">
         <div className="flex flex-wrap items-center justify-between gap-5 border-t border-accent pt-[clamp(24px,3vw,36px)]">
-          <span className={`text-[11.5px] text-muted ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>
+          <span className={`text-muted ${localeRoleClass(locale, 'label')}`}>
             {copy.showing} {visible.length} {copy.of} {filtered.length} {copy.projectsWord}
           </span>
           {hasMore && (
             <button
               type="button"
               onClick={() => setShown((count) => count + PAGE_SIZE)}
-              className={`inline-flex min-h-11 items-center gap-3.5 border border-ink px-8 py-[18px] text-[11.5px] font-medium text-ink transition-colors hover:bg-ink hover:text-surface ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
+              className={`${secondaryButtonBase} ${secondaryButtonShape} ${localeRoleClass(locale, 'button')}`}
             >
               {copy.loadMore}
               <EditorialIcon name="arrow-down" className="h-3.5 w-3.5" />

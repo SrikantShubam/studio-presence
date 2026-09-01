@@ -1,0 +1,126 @@
+
+> @studio/frontend@0.1.0 predev
+> node --import tsx ../scripts/sync-frontend-env.ts
+
+Synced 3 key(s) to frontend/.env.local
+
+> @studio/frontend@0.1.0 dev
+> next dev --port 3000
+
+   ▲ Next.js 15.5.23
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.11:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 6.1s
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 18.8s (1841 modules)
+ ○ Compiling /[tenant] ...
+ GET /_next/static/webpack/cfaf0aeedd64982c.webpack.hot-update.json 404 in 23184ms
+ ✓ Compiled /[tenant] in 8.2s (1831 modules)
+ GET / 200 in 4952ms
+ GET /_next/static/webpack/cfaf0aeedd64982c.webpack.hot-update.json 404 in 1442ms
+ GET / 200 in 11135ms
+ GET /ashish-interiors 200 in 18306ms
+ GET /ashish-interiors 200 in 1807ms
+ GET /ashish-interiors 200 in 1486ms
+ GET /ashish-interiors 200 in 1716ms
+ GET /ashish-interiors 200 in 1562ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 743ms
+ GET /_next/static/chunks/app/%5Btenant%5D/(site)/LayoutGroupContext.mjs.map 404 in 748ms
+ GET /_next/static/chunks/app/%5Btenant%5D/(site)/LayoutGroupContext.mjs.map 404 in 467ms
+ GET / 200 in 1703ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1033ms
+ GET /_next/static/chunks/app/%5Btenant%5D/(site)/LayoutGroupContext.mjs.map 404 in 650ms
+ GET /_next/static/chunks/app/%5Btenant%5D/(site)/LayoutGroupContext.mjs.map 404 in 706ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1232ms
+ GET /_next/static/chunks/app/%5Btenant%5D/(site)/LayoutGroupContext.mjs.map 404 in 1124ms
+ GET /_next/static/chunks/app/%5Btenant%5D/(site)/LayoutGroupContext.mjs.map 404 in 725ms
+ ✓ Compiled in 2.1s (1829 modules)
+ GET / 200 in 1709ms
+ GET / 200 in 3944ms
+ GET / 200 in 1148ms
+ GET / 200 in 669ms
+ GET / 200 in 653ms
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 628ms (1087 modules)
+ GET /contact 404 in 2231ms
+ GET / 200 in 1743ms
+ ✓ Compiled in 1309ms (1831 modules)
+ GET / 200 in 924ms
+ GET /ashish-interiors 200 in 2081ms
+ GET /ashish-interiors 200 in 1199ms
+ GET /ashish-interiors 200 in 725ms
+ GET /ashish-interiors 200 in 654ms
+ GET /ashish-interiors 200 in 782ms
+ GET /ashish-interiors 200 in 812ms
+ ✓ Compiled in 998ms (1831 modules)
+ GET / 200 in 720ms
+ GET /ashish-interiors 200 in 1746ms
+ GET /ashish-interiors 200 in 1036ms
+ GET /ashish-interiors 200 in 841ms
+ GET / 200 in 1728ms
+ ○ Compiling /_error ...
+ GET / 500 in 5602ms
+ GET / 500 in 38ms
+ GET / 500 in 38ms
+ GET / 500 in 39ms
+ GET /_next/static/webpack/bf2c8dc78ffd9e93.webpack.hot-update.json 500 in 1392ms
+ GET / 500 in 57ms
+ ✓ Compiled /_error in 1679ms (2164 modules)
+ GET /_next/static/webpack/bf2c8dc78ffd9e93.webpack.hot-update.json 500 in 1688ms
+ GET / 200 in 1982ms
+ GET /ashish-interiors 200 in 1023ms
+ GET /ashish-interiors 200 in 858ms
+ GET /ashish-interiors 200 in 1001ms
+ ✓ Compiled in 1270ms (2178 modules)
+ GET / 200 in 744ms
+ ✓ Compiled in 612ms (2178 modules)
+ GET / 200 in 497ms
+ GET / 200 in 2212ms
+ GET / 200 in 1458ms
+ GET / 500 in 63ms
+ GET / 500 in 57ms
+ ✓ Compiled in 1815ms (2178 modules)
+ GET /_next/static/webpack/bf2c8dc78ffd9e93.webpack.hot-update.json 404 in 2618ms
+ GET / 200 in 2133ms
+ ✓ Compiled in 957ms (2178 modules)
+ GET / 200 in 727ms
+ ✓ Compiled in 2.5s (2178 modules)
+ GET / 200 in 1697ms
+ ✓ Compiled in 1946ms (2178 modules)
+ GET / 200 in 880ms
+ ✓ Compiled in 3.7s (2178 modules)
+ GET / 200 in 797ms
+ ✓ Compiled in 1501ms (2178 modules)
+ GET / 200 in 932ms
+ ✓ Compiled in 897ms (2178 modules)
+ GET / 200 in 750ms
+ GET /ashish-interiors 200 in 2828ms
+ GET /ashish-interiors 200 in 1119ms
+ GET /ashish-interiors 200 in 946ms
+ GET /ashish-interiors 200 in 1258ms
+ GET /ashish-interiors 200 in 1151ms
+ ✓ Compiled in 1416ms (2178 modules)
+ GET / 200 in 838ms
+ GET / 500 in 61ms
+ GET / 500 in 44ms
+ GET /_next/static/webpack/bf2c8dc78ffd9e93.webpack.hot-update.json 500 in 4168ms
+ GET / 500 in 71ms
+ GET /_next/static/webpack/bf2c8dc78ffd9e93.webpack.hot-update.json 500 in 1659ms
+ GET / 500 in 70ms
+ GET /ashish-interiors 500 in 57ms
+ GET /ashish-interiors 500 in 59ms
+ GET /ashish-interiors 500 in 52ms
+ GET /ashish-interiors 500 in 51ms
+ GET /ashish-interiors 500 in 48ms
+ ✓ Compiled in 2.1s (2164 modules)
+ GET /_next/static/webpack/bf2c8dc78ffd9e93.webpack.hot-update.json 500 in 2182ms
+ GET / 200 in 2629ms
+ GET /ashish-interiors 200 in 1507ms
+ GET /ashish-interiors 200 in 1344ms
+ GET /ashish-interiors 200 in 1047ms
+ GET /ashish-interiors 200 in 1214ms
+ GET /ashish-interiors 200 in 1062ms
+ GET / 200 in 4038ms

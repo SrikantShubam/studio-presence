@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { AuthError, destinationForTenant, requireTenant } from '@studio/backend'
+import { AuthError, claimOperatorAccess, claimPendingAccess, createScopedClient, destinationForTenant, recordDemoContact, requireTenant } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 
 /**
@@ -29,12 +29,67 @@ function originFrom(request: NextRequest): string {
   return `${proto}://${host}`
 }
 
+function authFailureTarget(
+  origin: string,
+  error: { code?: string; status?: number; message?: string } | null | undefined,
+): string {
+  const message = (error?.message ?? '').toLowerCase()
+  const providerCode = (error?.code ?? '').toLowerCase()
+  let code = 'auth-invalid'
+
+  if (message.includes('fetch failed') || message.includes('network') || error?.status === 503) {
+    code = 'auth-unreachable'
+  } else if (
+    providerCode.includes('expired') ||
+    providerCode.includes('otp') && providerCode.includes('invalid') ||
+    message.includes('expired') ||
+    message.includes('already been used') ||
+    message.includes('token has been used')
+  ) {
+    code = 'link-expired'
+  } else if (
+    message.includes('code verifier') ||
+    message.includes('pkce') ||
+    message.includes('exchange the code')
+  ) {
+    code = 'auth-pkce'
+  }
+
+  return `${origin}/login?error=${code}`
+}
+
+function providerErrorTarget(origin: string, searchParams: URLSearchParams): string | null {
+  const providerError = searchParams.get('error')
+  const providerCode = searchParams.get('error_code')
+  const providerDescription = searchParams.get('error_description')
+  if (!providerError && !providerCode && !providerDescription) return null
+
+  console.error('[auth/callback] provider returned auth error', {
+    error: providerError,
+    code: providerCode,
+  })
+
+  return authFailureTarget(origin, {
+    code: providerCode ?? providerError ?? undefined,
+    message: providerDescription ?? providerError ?? undefined,
+  })
+}
+
 export async function GET(request: NextRequest) {
   const origin = originFrom(request)
   const { searchParams } = request.nextUrl
+  const providerFailure = providerErrorTarget(origin, searchParams)
+  if (providerFailure) return NextResponse.redirect(providerFailure)
+
   const code = searchParams.get('code')
+  // Supabase's PKCE flow uses `code`. Branded email templates should send
+  // `token_hash`; local/operator test links may send a plain OTP `token` with
+  // `email`, which verifies through the same Supabase Auth endpoint.
   const tokenHash = searchParams.get('token_hash')
+  const token = searchParams.get('token')
+  const email = searchParams.get('email')
   const otpType = searchParams.get('type')
+  const tenantSlug = searchParams.get('tenant')
 
   const supabase = await createSupabaseServerClient()
 
@@ -45,7 +100,11 @@ export async function GET(request: NextRequest) {
   if (code) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
     if (error || !data.session) {
-      return NextResponse.redirect(`${origin}/login?error=link-expired`)
+      console.error('[auth/callback] code exchange failed', {
+        code: error?.code ?? null,
+        status: error?.status ?? null,
+      })
+      return NextResponse.redirect(authFailureTarget(origin, error))
     }
     session = data.session
   } else if (tokenHash) {
@@ -53,7 +112,21 @@ export async function GET(request: NextRequest) {
       otpType === 'recovery' || otpType === 'email' || otpType === 'signup' ? otpType : 'email'
     const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash })
     if (error || !data.session) {
-      return NextResponse.redirect(`${origin}/login?error=link-expired`)
+      console.error('[auth/callback] token verification failed', {
+        code: error?.code ?? null,
+        status: error?.status ?? null,
+      })
+      return NextResponse.redirect(authFailureTarget(origin, error))
+    }
+    session = data.session
+  } else if (token && email) {
+    const { data, error } = await supabase.auth.verifyOtp({ type: 'email', email, token })
+    if (error || !data.session) {
+      console.error('[auth/callback] email token verification failed', {
+        code: error?.code ?? null,
+        status: error?.status ?? null,
+      })
+      return NextResponse.redirect(authFailureTarget(origin, error))
     }
     session = data.session
   } else if (!session) {
@@ -70,19 +143,28 @@ export async function GET(request: NextRequest) {
   }
 
   const sessionUser = { id: user.id, email: user.email, accessToken: access_token }
+  const db = createScopedClient(access_token)
+
+  await claimOperatorAccess(db)
+  const { data: isOperator } = await db.rpc('is_operator')
+  if (isOperator) return NextResponse.redirect(`${origin}/super`)
+  if (tenantSlug) {
+    await claimPendingAccess(db)
+    await recordDemoContact(db, tenantSlug)
+  }
 
   try {
     const { tenant } = await requireTenant(sessionUser)
+    if (tenantSlug && tenant.slug !== tenantSlug) {
+      return NextResponse.redirect(`${origin}/dashboard?demo=1`)
+    }
     return NextResponse.redirect(`${origin}${destinationForTenant(tenant)}`)
   } catch (e) {
     if (!(e instanceof AuthError)) throw e
 
-    // Signed in, but this account belongs to no tenant. There used to be a
-    // self-claim fallback here — the first person to click a magic link on an
-    // unowned demo site became its permanent owner, no approval step. That made
-    // access uncontrolled by design and has been removed entirely: every tenant
-    // is now handed over deliberately, at /handover, by an operator. A no-tenant
-    // account is simply not yet linked to anything and goes back to /login.
+    // Signed in, but not yet granted customer access. Keep the visitor in the
+    // same panel UI, where the page will run local-only persistence.
+    if (e.code === 'no-tenant') return NextResponse.redirect(`${origin}/dashboard?demo=1`)
     return NextResponse.redirect(`${origin}/login?error=${e.code}`)
   }
 }

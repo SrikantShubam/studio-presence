@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How Ashish Interiors Works | About the Patna Interior Design Process</title>
+    <meta
+      name="description"
+      content="See how Ashish Interiors moves an interior project from enquiry to site visit, budget discussion, design freeze, supervision, progress updates and handover."
+    />
+    <style>
+      :root {
+        --surface: #ffffff;
+        --panel: #f6f1ea;
+        --ink: #141414;
+        --body: #5e574f;
+        --accent: #51372a;
+        --cta: #d9bc72;
+        --line: rgba(81, 55, 42, 0.28);
+        --photo-scrim: rgba(20, 20, 20, 0.54);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .page {
+        min-height: 100vh;
+        overflow-x: clip;
+      }
+
+      .section,
+      .nav {
+        padding-inline: clamp(20px, 5vw, 72px);
+      }
+
+      .nav {
+        min-height: 78px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 11px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .mark {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--ink);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0;
+      }
+
+      .hero {
+        position: relative;
+        min-height: calc(100vh - 78px);
+        display: grid;
+        align-items: end;
+        padding-block: clamp(54px, 8vw, 112px);
+        color: var(--surface);
+        isolation: isolate;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--photo-scrim);
+        z-index: -1;
+      }
+
+      .hero-photo {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+      }
+
+      .hero-content {
+        max-width: 980px;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--cta);
+        text-transform: uppercase;
+        letter-spacing: 0.24em;
+        line-height: 1.7;
+        font-size: 11px;
+      }
+
+      h1 {
+        font-size: clamp(48px, 8.2vw, 104px);
+        line-height: 0.86;
+      }
+
+      .accent {
+        display: block;
+        margin-left: 0.42em;
+        color: var(--cta);
+      }
+
+      .lead {
+        max-width: 38em;
+        margin-top: 28px;
+        font-size: clamp(18px, 2vw, 25px);
+        line-height: 1.55;
+      }
+
+      .story {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1fr);
+        gap: clamp(34px, 6vw, 96px);
+        padding-block: clamp(64px, 9vw, 128px);
+      }
+
+      .sticky-title {
+        position: sticky;
+        top: 28px;
+        align-self: start;
+      }
+
+      .sticky-title .eyebrow {
+        color: var(--accent);
+      }
+
+      .sticky-title h2 {
+        font-size: clamp(42px, 7vw, 96px);
+        line-height: 0.9;
+      }
+
+      .steps {
+        display: grid;
+        border-top: 1px solid var(--accent);
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 100px minmax(0, 0.55fr) minmax(0, 1fr);
+        gap: clamp(18px, 4vw, 58px);
+        padding-block: clamp(28px, 4vw, 46px);
+        border-bottom: 1px solid var(--line);
+        align-items: start;
+      }
+
+      .num {
+        color: transparent;
+        -webkit-text-stroke: 1px var(--accent);
+        font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+        font-size: clamp(50px, 7vw, 88px);
+        line-height: 0.82;
+      }
+
+      .step h3 {
+        font-size: clamp(22px, 3vw, 38px);
+        line-height: 0.98;
+      }
+
+      .step p {
+        color: var(--body);
+        line-height: 1.7;
+        font-size: 17px;
+      }
+
+      .evidence {
+        background: var(--panel);
+        border-block: 1px solid var(--accent);
+        padding-block: clamp(56px, 8vw, 110px);
+      }
+
+      .evidence-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: clamp(30px, 5vw, 82px);
+        align-items: center;
+      }
+
+      .evidence figure {
+        position: relative;
+        margin: 0;
+        aspect-ratio: 5 / 4;
+        border: 1px solid var(--line);
+      }
+
+      .evidence figure::before {
+        content: "";
+        position: absolute;
+        inset: -14px 14px 14px -14px;
+        border: 1px solid var(--accent);
+        z-index: -1;
+      }
+
+      .evidence h2 {
+        font-size: clamp(42px, 7vw, 92px);
+        line-height: 0.9;
+      }
+
+      .evidence p {
+        margin-top: 24px;
+        color: var(--body);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .close {
+        padding-block: clamp(58px, 8vw, 112px);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+        gap: clamp(30px, 5vw, 78px);
+        align-items: end;
+      }
+
+      .close .eyebrow {
+        color: var(--accent);
+      }
+
+      .close h2 {
+        font-size: clamp(42px, 7vw, 92px);
+        line-height: 0.9;
+      }
+
+      .close p {
+        max-width: 44em;
+        margin-top: 22px;
+        color: var(--body);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .panel {
+        border: 1px solid var(--accent);
+        padding: clamp(22px, 3vw, 34px);
+      }
+
+      .panel b {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--accent);
+        font-size: 11px;
+      }
+
+      .panel p {
+        margin-top: 14px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 52px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+        border: 1px solid var(--accent);
+        background: var(--cta);
+        padding: 15px 22px;
+        color: var(--ink);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 11px;
+      }
+
+      @media (max-width: 900px) {
+        .story,
+        .evidence-grid,
+        .close {
+          grid-template-columns: 1fr;
+        }
+
+        .sticky-title {
+          position: static;
+        }
+
+        .step {
+          grid-template-columns: 82px minmax(0, 1fr);
+        }
+
+        .step p {
+          grid-column: 2;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .nav span:last-child {
+          display: none;
+        }
+
+        h1 {
+          font-size: clamp(48px, 15vw, 68px);
+        }
+
+        .step {
+          grid-template-columns: 1fr;
+        }
+
+        .step p {
+          grid-column: auto;
+        }
+
+        .button {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+        "name": "Ashish Interiors",
+        "description": "Interior design and turnkey renovation studio in Patna with a clear enquiry, site visit, design and handover process.",
+        "telephone": "+919876543210",
+        "email": "hello@ashishinteriors.in",
+        "foundingDate": "2013",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "2nd Floor, Boring Road",
+          "addressLocality": "Patna",
+          "addressRegion": "Bihar",
+          "postalCode": "800001",
+          "addressCountry": "IN"
+        },
+        "areaServed": ["Patna", "Danapur", "Phulwari Sharif"],
+        "url": "https://ashishinteriors.in/about"
+      }
+    </script>
+  </head>
+  <body>
+    <main class="page">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Ashish Interiors home">
+          <span class="mark">AI</span>
+          <span>Ashish Interiors</span>
+        </a>
+        <span>From enquiry to handover</span>
+      </nav>
+
+      <section id="top" class="section hero" aria-labelledby="story-title">
+        <div class="hero-photo">
+          <img
+            src="../../../frontend/public/clients/ashish-interiors/editorial/case-study/hero.jpg"
+            alt="Completed home interior used to explain the Ashish Interiors process"
+          />
+        </div>
+        <div class="hero-content">
+          <p class="eyebrow">About the process<br />Site proof story</p>
+          <h1 id="story-title">The project should feel clear <span class="accent">before it feels beautiful</span></h1>
+          <p class="lead">
+            This About concept turns the studio story into a client journey: what happens after an
+            enquiry, when cost is discussed, when drawings freeze, and how the homeowner knows work
+            is moving.
+          </p>
+        </div>
+      </section>
+
+      <section class="section story" aria-labelledby="steps-title">
+        <div class="sticky-title">
+          <p class="eyebrow">The path</p>
+          <h2 id="steps-title">Six moments where trust is won</h2>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <div class="num">01</div>
+            <h3>Enquiry</h3>
+            <p>The visitor shares location, flat size, rooms, possession date and a rough budget range.</p>
+          </article>
+          <article class="step">
+            <div class="num">02</div>
+            <h3>Site visit</h3>
+            <p>The studio measures the space and checks utility points before promising scope or cost.</p>
+          </article>
+          <article class="step">
+            <div class="num">03</div>
+            <h3>Budget conversation</h3>
+            <p>Must-have work is separated from optional upgrades so the client can choose with control.</p>
+          </article>
+          <article class="step">
+            <div class="num">04</div>
+            <h3>Design freeze</h3>
+            <p>Layouts, finish boards, storage dimensions and major decisions are signed before execution.</p>
+          </article>
+          <article class="step">
+            <div class="num">05</div>
+            <h3>Site supervision</h3>
+            <p>Progress is coordinated against milestones, with photos and notes when decisions change.</p>
+          </article>
+          <article class="step">
+            <div class="num">06</div>
+            <h3>Handover</h3>
+            <p>Snags, bills, material references and care notes are closed before the project is called done.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section evidence" aria-labelledby="evidence-title">
+        <div class="evidence-grid">
+          <figure>
+            <img
+              src="../../../frontend/public/clients/ashish-interiors/editorial/team/site-02.jpg"
+              alt="Site supervision visit during an interior design project"
+            />
+          </figure>
+          <div>
+            <p class="eyebrow">Why this converts</p>
+            <h2 id="evidence-title">People hire the studio that lowers risk</h2>
+            <p>
+              The page should answer the questions a hesitant homeowner is already carrying: Will
+              this run over budget? Who supervises? What if we change a finish? What evidence will
+              we see before the next payment?
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section close" aria-labelledby="close-title">
+        <div>
+          <p class="eyebrow">Next step</p>
+          <h2 id="close-title">Make the first call concrete</h2>
+          <p>
+            The closing block asks for only the details needed to judge fit. That keeps the CTA
+            practical, especially for homeowners comparing multiple interior designers in Patna.
+          </p>
+        </div>
+        <aside class="panel">
+          <b>Bring to the first conversation</b>
+          <p>Flat size, location, possession date, room list, reference photos and the budget you do not want to cross.</p>
+          <a class="button" href="tel:+919876543210">Call the studio</a>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio Presence by Vector Veda - Admin Prototype</title>
+  <style>
+    :root {
+      --page: #102019;
+      --page-2: #172a22;
+      --panel: #f7f4ec;
+      --panel-2: #ede7dc;
+      --ink: #101713;
+      --muted: #68746d;
+      --line: #ddd5c8;
+      --green: #117a52;
+      --green-2: #d9eee3;
+      --mint: #76d3aa;
+      --blue: #6ca8e8;
+      --pink: #e37fb8;
+      --amber: #d99a35;
+      --shadow: 0 28px 70px rgba(5, 14, 10, .34);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--page);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      background: linear-gradient(145deg, var(--page), #0c1712 55%, var(--page-2));
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .stage { min-height: 100vh; padding: 38px; display: grid; place-items: center; }
+    .shell {
+      width: min(1220px, 100%);
+      min-height: 760px;
+      display: grid;
+      grid-template-columns: 212px minmax(0, 1fr) 292px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .rail {
+      padding: 28px 18px 24px;
+      border-right: 1px solid var(--line);
+      background: #fbfaf5;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-height: 42px; }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 13px;
+      font-weight: 850;
+    }
+    .brand strong { display: block; font-size: 14px; }
+    .brand span { color: var(--muted); font-size: 11px; }
+    .nav-title {
+      margin: 0 0 5px 12px;
+      color: #87918b;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .nav { display: grid; gap: 7px; }
+    .nav button {
+      width: 100%;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 12px;
+      color: #5c6861;
+      background: transparent;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .nav button:hover { color: var(--ink); background: #f0eadf; }
+    .nav button.active {
+      color: #091610;
+      background: var(--green-2);
+      box-shadow: inset 3px 0 0 var(--green);
+    }
+    .icon { width: 18px; height: 18px; display: inline-grid; place-items: center; color: currentColor; }
+    .icon svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.9; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .rail-card { margin-top: auto; padding: 16px; border-radius: 18px; color: white; background: #12251d; }
+    .rail-card strong { display: block; margin-bottom: 7px; font-size: 13px; }
+    .rail-card p { margin: 0 0 14px; color: #b9c8c0; font-size: 12px; line-height: 1.45; }
+    .mini-button {
+      min-height: 34px;
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      color: #0e1914;
+      background: var(--mint);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .main { min-width: 0; padding: 26px 28px 28px; background: var(--panel); }
+    .topbar { display: flex; align-items: center; gap: 16px; min-height: 48px; margin-bottom: 24px; }
+    .back-forward { display: flex; gap: 6px; }
+    .circle {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--muted);
+      background: #fffdf8;
+    }
+    .search {
+      flex: 1;
+      min-width: 120px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fffdf8;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .segment { display: inline-flex; padding: 4px; border-radius: 999px; background: #ece6da; }
+    .segment button {
+      min-height: 30px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .segment button.active { color: white; background: #101713; }
+    .view { display: none; animation: appear .16s ease-out; }
+    .view.active { display: block; }
+    @keyframes appear { from { opacity: .2; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 6px; font-size: 30px; line-height: 1; letter-spacing: -.03em; }
+    .lede { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      white-space: nowrap;
+    }
+    .badge.green { color: var(--green); background: var(--green-2); }
+    .badge.amber { color: #7d530e; background: #f5e2bf; }
+    .badge.dark { color: #edf7f2; background: #14241d; }
+    .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+    .kpi {
+      min-height: 104px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fffdf8;
+    }
+    .kpi strong { display: block; margin-bottom: 8px; font-size: 27px; line-height: 1; letter-spacing: -.04em; }
+    .kpi span { color: var(--muted); font-size: 11px; line-height: 1.35; }
+    .delta {
+      float: right;
+      margin-left: 8px;
+      color: var(--green);
+      background: var(--green-2);
+      border-radius: 999px;
+      padding: 3px 6px;
+      font-size: 10px;
+      font-weight: 850;
+    }
+    .layout { display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr); gap: 12px; }
+    .card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fffdf8;
+      overflow: hidden;
+    }
+    .card-pad { padding: 18px; }
+    .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+    .card h2 { margin-bottom: 4px; font-size: 15px; letter-spacing: -.02em; }
+    .card h3 { margin-bottom: 3px; font-size: 13px; }
+    .card p { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .radar { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: center; }
+    .radar-shape {
+      width: 150px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, transparent 0 26%, rgba(17,122,82,.14) 27% 28%, transparent 29% 50%, rgba(17,122,82,.14) 51% 52%, transparent 53%),
+        conic-gradient(from 20deg, rgba(17,122,82,.18), rgba(118,211,170,.42), rgba(17,122,82,.18), rgba(108,168,232,.32), rgba(17,122,82,.18));
+      clip-path: polygon(50% 8%, 82% 26%, 76% 66%, 50% 88%, 24% 66%, 18% 27%);
+      border: 1px solid rgba(17,122,82,.25);
+    }
+    .rank { display: grid; gap: 10px; }
+    .rank-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; font-size: 12px; }
+    .progress { height: 8px; margin-top: 5px; overflow: hidden; border-radius: 999px; background: #e8e1d5; }
+    .progress i { display: block; height: 100%; border-radius: 999px; background: var(--green); }
+    .progress.w1 i { width: 88%; }
+    .progress.w2 i { width: 64%; background: var(--blue); }
+    .progress.w3 i { width: 47%; background: var(--pink); }
+    .progress.w4 i { width: 35%; background: var(--amber); }
+    .chart {
+      height: 210px;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(#ece5d8 1px, transparent 1px) 0 33% / 100% 33%;
+    }
+    .chart svg { width: 100%; height: 100%; display: block; }
+    .chart-tip {
+      position: absolute;
+      left: 48%;
+      top: 34px;
+      padding: 11px 13px;
+      border-radius: 10px;
+      color: white;
+      background: #101713;
+      font-size: 11px;
+      box-shadow: 0 12px 24px rgba(0,0,0,.18);
+    }
+    .chart-labels { display: flex; justify-content: space-between; padding-top: 9px; color: var(--muted); font-size: 10px; }
+    .list { display: grid; gap: 8px; }
+    .person, .task, .activity, .member {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 11px;
+      align-items: center;
+      min-height: 58px;
+      padding: 10px;
+      border-radius: 15px;
+      background: #f1eadf;
+    }
+    .person.active { color: white; background: #111713; }
+    .person.active p, .person.active span { color: #cdd6d1; }
+    .face {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #101713;
+      background: #d9eee3;
+      font-size: 11px;
+      font-weight: 850;
+    }
+    .face.blue { background: #dbeafb; }
+    .face.pink { background: #f6d7e8; }
+    .face.amber { background: #f7e1b7; }
+    .list strong { display: block; margin-bottom: 3px; font-size: 12px; }
+    .list p, .list span { margin: 0; color: var(--muted); font-size: 11px; }
+    .actions { display: flex; gap: 7px; align-items: center; }
+    .pill-button {
+      min-height: 32px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fffdf8;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .pill-button.primary { color: white; border-color: var(--green); background: var(--green); }
+    .mini-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .field-card { min-height: 110px; padding: 15px; border-radius: 18px; background: #fffdf8; border: 1px solid var(--line); }
+    .field-card strong { display: block; margin-bottom: 6px; font-size: 13px; }
+    .field-card p { margin-bottom: 12px; }
+    .right { padding: 22px 18px; border-left: 1px solid var(--line); background: #f1eee7; display: flex; flex-direction: column; gap: 16px; }
+    .profile-card { padding: 22px; border-radius: 20px; background: #fffdf8; text-align: center; }
+    .big-face {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      color: #102019;
+      background: var(--mint);
+      font-weight: 850;
+    }
+    .profile-card strong { display: block; font-size: 14px; }
+    .profile-card span { color: var(--muted); font-size: 12px; }
+    .side-card { padding: 18px; border: 1px solid var(--line); border-radius: 20px; background: #fffdf8; }
+    .side-card h2 { margin-bottom: 14px; font-size: 15px; }
+    .event { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+    .event:first-of-type { padding-top: 0; border-top: 0; }
+    .time { color: var(--muted); font-size: 11px; }
+    .event-box { padding: 12px; border-radius: 14px; background: #f2eadf; }
+    .event-box strong { display: block; margin-bottom: 3px; font-size: 12px; }
+    .event-box p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .mobile-tabs { display: none; }
+    .spaced { margin-top: 12px; }
+    @media (max-width: 1120px) {
+      .stage { padding: 22px; }
+      .shell { grid-template-columns: 190px minmax(0, 1fr); }
+      .right { display: none; }
+      .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 780px) {
+      .stage { padding: 0; place-items: stretch; }
+      .shell { min-height: 100vh; grid-template-columns: 1fr; border: 0; border-radius: 0; }
+      .rail { display: none; }
+      .main { padding: 18px 14px 24px; }
+      .topbar { margin-bottom: 12px; }
+      .back-forward, .segment { display: none; }
+      .mobile-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 12px; }
+      .mobile-tabs button {
+        flex: 0 0 auto;
+        min-height: 34px;
+        padding: 0 13px;
+        border: 0;
+        border-radius: 999px;
+        color: #435149;
+        background: #e8e1d5;
+        font-size: 12px;
+        font-weight: 750;
+      }
+      .mobile-tabs button.active { color: white; background: #101713; }
+      .intro { flex-direction: column; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .layout, .mini-grid { grid-template-columns: 1fr; }
+      .radar { grid-template-columns: 1fr; }
+      .radar-shape { margin: 0 auto; }
+    }
+    @media (max-width: 460px) {
+      .search { display: none; }
+      .kpis { grid-template-columns: 1fr; }
+      .person, .task, .activity, .member { grid-template-columns: auto minmax(0, 1fr); }
+      .actions { grid-column: 1 / -1; justify-content: flex-start; }
+      h1 { font-size: 25px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="shell">
+      <aside class="rail">
+        <div class="brand">
+          <span class="brand-mark">SP</span>
+          <div><strong>Studio Presence</strong><span>Vector Veda</span></div>
+        </div>
+        <div>
+          <p class="nav-title">General</p>
+          <nav class="nav" aria-label="Primary">
+            <button class="active" data-view="home"><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 5l8 6.5"></path><path d="M6.5 10.5V20h11v-9.5"></path></svg></span>Home</button>
+            <button data-view="inbox"><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"></path><path d="m4 8 8 6 8-6"></path></svg></span>Inbox</button>
+            <button data-view="website"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"></path><path d="M8 8h8M8 12h8M8 16h5"></path></svg></span>Website</button>
+            <button data-view="reports"><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 19V5"></path><path d="M5 19h14"></path><path d="M9 16v-5M13 16V8M17 16v-8"></path></svg></span>Reports</button>
+            <button data-view="people"><span class="icon"><svg viewBox="0 0 24 24"><path d="M16 18c0-2-1.8-3.5-4-3.5S8 16 8 18"></path><circle cx="12" cy="9" r="3"></circle><path d="M19 18c0-1.4-.8-2.6-2-3.1"></path></svg></span>People</button>
+          </nav>
+        </div>
+        <div>
+          <p class="nav-title">Tools</p>
+          <nav class="nav" aria-label="Tools">
+            <button data-view="website"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path></svg></span>Editor</button>
+            <button data-view="people"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 15v6"></path><path d="M9 18h6"></path><path d="M6 9a6 6 0 1 1 12 0c0 3-3 5-6 5s-6-2-6-5Z"></path></svg></span>Access</button>
+          </nav>
+        </div>
+        <div class="rail-card">
+          <strong>Demo mode</strong>
+          <p>Local edits are visible only in this browser until a customer account is granted.</p>
+          <button class="mini-button" data-view="website">Open editor</button>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div class="back-forward">
+            <button class="circle" aria-label="Back">&#8249;</button>
+            <button class="circle" aria-label="Forward">&#8250;</button>
+          </div>
+          <div class="search"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 3.5 3.5"></path></svg></span>Search leads, pages, or members</div>
+          <div class="segment" aria-label="Time range"><button class="active">Today</button><button>Week</button><button>Month</button></div>
+          <span class="badge amber">Sample data</span>
+        </header>
+        <nav class="mobile-tabs" aria-label="Mobile primary">
+          <button class="active" data-view="home">Home</button>
+          <button data-view="inbox">Inbox</button>
+          <button data-view="website">Website</button>
+          <button data-view="reports">Reports</button>
+          <button data-view="people">People</button>
+        </nav>
+        <section id="home" class="view active">
+          <div class="intro">
+            <div>
+              <h1>Hello, Shrikant</h1>
+              <p class="lede">Ashish Interiors has a live demo, active enquiries, and one pending admin decision.</p>
+            </div>
+            <span class="badge green">Live demo</span>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><span class="delta">+18%</span><strong>312</strong><span>Website visits this month</span></div>
+            <div class="kpi"><span class="delta">+6</span><strong>43</strong><span>Total enquiries</span></div>
+            <div class="kpi"><span class="delta">2 new</span><strong>14</strong><span>Qualified conversations</span></div>
+            <div class="kpi"><strong>4.5%</strong><span>Visit to enquiry rate</span></div>
+            <div class="kpi"><span class="delta">INR</span><strong>28L</strong><span>Estimated pipeline value</span></div>
+          </div>
+          <div class="layout">
+            <article class="card card-pad">
+              <div class="card-head"><div><h2>Website health</h2><p>What this client demo is doing right now.</p></div><span class="badge green">Healthy</span></div>
+              <div class="radar">
+                <div class="radar-shape" aria-label="Website health shape"></div>
+                <div class="rank">
+                  <div class="rank-row"><div><strong>Lead capture</strong><div class="progress w1"><i></i></div></div><span>88%</span></div>
+                  <div class="rank-row"><div><strong>Project proof</strong><div class="progress w2"><i></i></div></div><span>64%</span></div>
+                  <div class="rank-row"><div><strong>Local SEO</strong><div class="progress w3"><i></i></div></div><span>47%</span></div>
+                  <div class="rank-row"><div><strong>Admin readiness</strong><div class="progress w4"><i></i></div></div><span>35%</span></div>
+                </div>
+              </div>
+            </article>
+            <article class="card card-pad">
+              <div class="card-head"><div><h2>Performance</h2><p>Visits and enquiries over the last seven days.</p></div><span class="badge dark">7 days</span></div>
+              <div class="chart">
+                <svg viewBox="0 0 520 210" role="img" aria-label="Visits and enquiries line chart">
+                  <path d="M10 152 C70 122, 90 128, 128 119 S198 80, 245 103 S318 138, 365 83 S448 70, 510 102" stroke="#6ca8e8" stroke-width="4" fill="none"></path>
+                  <path d="M10 130 C64 156, 104 148, 146 151 S210 132, 245 141 S318 162, 365 117 S442 142, 510 98" stroke="#d99a35" stroke-width="4" fill="none"></path>
+                  <circle cx="245" cy="103" r="5" fill="#6ca8e8"></circle>
+                  <line x1="245" y1="20" x2="245" y2="190" stroke="#d9d1c4" stroke-dasharray="4 5"></line>
+                </svg>
+                <div class="chart-tip"><strong>Friday</strong><br>52 visits<br>7 enquiries</div>
+              </div>
+              <div class="chart-labels"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+            </article>
+          </div>
+        </section>
+        <section id="inbox" class="view">
+          <div class="intro"><div><h1>Inbox</h1><p class="lede">Lead handling first: who asked, what they want, and the next action.</p></div><button class="pill-button primary">Export</button></div>
+          <div class="kpis">
+            <div class="kpi"><strong>6</strong><span>New this week</span></div>
+            <div class="kpi"><strong>2</strong><span>Waiting for first response</span></div>
+            <div class="kpi"><strong>4</strong><span>Won jobs</span></div>
+            <div class="kpi"><strong>18</strong><span>Active pipeline</span></div>
+            <div class="kpi"><strong>8</strong><span>WhatsApp enquiries</span></div>
+          </div>
+          <article class="card card-pad">
+            <div class="card-head"><div><h2>Lead queue</h2><p>Populated sample records to judge density and actions.</p></div><span class="badge amber">2 pending</span></div>
+            <div class="list">
+              <div class="person active"><span class="face">RM</span><div><strong>Rohan Mehta</strong><p>3BHK full home interiors - Indore - 12 minutes ago</p></div><div class="actions"><button class="pill-button primary">WhatsApp</button><button class="pill-button">Call</button></div></div>
+              <div class="person"><span class="face pink">PK</span><div><strong>Priya Kapoor</strong><p>Kitchen and living room - Bhopal - 2 hours ago</p></div><div class="actions"><button class="pill-button primary">WhatsApp</button><button class="pill-button">Call</button></div></div>
+              <div class="person"><span class="face blue">AS</span><div><strong>Arjun Sethi</strong><p>4BHK renovation - Lucknow - yesterday</p></div><div class="actions"><button class="pill-button primary">WhatsApp</button><button class="pill-button">Call</button></div></div>
+              <div class="person"><span class="face amber">MS</span><div><strong>Meera Shah</strong><p>Bedroom and study redesign - Patna - 2 days ago</p></div><div class="actions"><button class="pill-button primary">WhatsApp</button><button class="pill-button">Call</button></div></div>
+            </div>
+          </article>
+        </section>
+        <section id="website" class="view">
+          <div class="intro"><div><h1>Website</h1><p class="lede">Edit the client site without confusing demo changes with published changes.</p></div><span class="badge amber">Local draft</span></div>
+          <div class="mini-grid">
+            <article class="field-card"><strong>Homepage hero</strong><p>Headline, intro, primary image, and WhatsApp prompt.</p><button class="pill-button primary">Edit</button></article>
+            <article class="field-card"><strong>Projects</strong><p>Featured work, captions, and priority order.</p><button class="pill-button">Manage</button></article>
+            <article class="field-card"><strong>Services</strong><p>Room types, package copy, and enquiry framing.</p><button class="pill-button">Edit</button></article>
+            <article class="field-card"><strong>Contact</strong><p>Phone, WhatsApp, address, and lead routing.</p><button class="pill-button">Edit</button></article>
+          </div>
+          <article class="card card-pad spaced">
+            <div class="card-head"><div><h2>Publishing boundary</h2><p>Logged-in prospects can test changes locally. Granted admins publish globally.</p></div><span class="badge green">Protected</span></div>
+            <div class="list">
+              <div class="task"><span class="face">1</span><div><strong>Visitor or ungranted login</strong><p>Can explore the editor. Saves stay inside this browser.</p></div><span class="badge amber">Local</span></div>
+              <div class="task"><span class="face blue">2</span><div><strong>Customer admin</strong><p>Granted by operator. Saves write to tenant overrides.</p></div><span class="badge green">Global</span></div>
+            </div>
+          </article>
+        </section>
+        <section id="reports" class="view">
+          <div class="intro"><div><h1>Reports</h1><p class="lede">Only the owner-facing signal blocks required by the product docs.</p></div><span class="badge green">Updated</span></div>
+          <div class="layout">
+            <article class="card card-pad">
+              <div class="card-head"><div><h2>Enquiry headline and visits</h2><p>One direct answer for the studio owner.</p></div><span class="badge green">+55%</span></div>
+              <p class="lede"><strong>14 enquiries</strong> from <strong>312 visits</strong> this month. Last month had 9 enquiries from 260 visits.</p>
+              <div class="chart spaced">
+                <svg viewBox="0 0 520 210" aria-label="Six month enquiries">
+                  <path d="M15 160 L105 143 L195 151 L285 119 L375 88 L505 54" stroke="#117a52" stroke-width="5" fill="none"></path>
+                  <path d="M15 160 L105 143 L195 151 L285 119 L375 88 L505 54 L505 190 L15 190Z" fill="rgba(17,122,82,.12)"></path>
+                </svg>
+              </div>
+            </article>
+            <article class="card card-pad">
+              <div class="card-head"><div><h2>Source ranking</h2><p>Where completed enquiries came from.</p></div></div>
+              <div class="rank">
+                <div class="rank-row"><div><strong>WhatsApp button</strong><div class="progress w1"><i></i></div></div><span>8</span></div>
+                <div class="rank-row"><div><strong>Estimate calculator</strong><div class="progress w2"><i></i></div></div><span>4</span></div>
+                <div class="rank-row"><div><strong>Enquiry form</strong><div class="progress w3"><i></i></div></div><span>2</span></div>
+              </div>
+            </article>
+          </div>
+          <article class="card card-pad spaced">
+            <div class="card-head"><div><h2>Most-viewed projects</h2><p>What to push harder in the next sales conversation.</p></div></div>
+            <div class="list">
+              <div class="task"><span class="face">01</span><div><strong>Modern 3BHK, Indore</strong><p>Residential interiors</p></div><strong>86 views</strong></div>
+              <div class="task"><span class="face blue">02</span><div><strong>Warm family home, Bhopal</strong><p>Full home interiors</p></div><strong>64 views</strong></div>
+              <div class="task"><span class="face amber">03</span><div><strong>Contemporary kitchen, Patna</strong><p>Kitchen renovation</p></div><strong>41 views</strong></div>
+            </div>
+          </article>
+        </section>
+        <section id="people" class="view">
+          <div class="intro"><div><h1>People</h1><p class="lede">Marketing capture and customer admin rights stay separate.</p></div><button class="pill-button primary">Grant access</button></div>
+          <div class="layout">
+            <article class="card card-pad">
+              <div class="card-head"><div><h2>Approved members</h2><p>These accounts can make global tenant changes.</p></div><span class="badge green">2 members</span></div>
+              <div class="list">
+                <div class="member"><span class="face">VV</span><div><strong>Vector Veda operator</strong><p>vector.veda.dev@gmail.com</p></div><span class="badge green">Owner</span></div>
+                <div class="member"><span class="face pink">PK</span><div><strong>Priya Kapoor</strong><p>priya.kapoor@example.com</p></div><span class="badge amber">Admin</span></div>
+              </div>
+            </article>
+            <article class="card card-pad">
+              <div class="card-head"><div><h2>Captured prospects</h2><p>Signed-in users without publishing rights.</p></div><span class="badge amber">Local only</span></div>
+              <div class="list">
+                <div class="member"><span class="face blue">SS</span><div><strong>Shrikant personal</strong><p>Signed in. No tenant grant yet.</p></div><button class="pill-button">Grant</button></div>
+                <div class="member"><span class="face amber">RM</span><div><strong>Rohan Mehta</strong><p>Requested pricing after demo.</p></div><button class="pill-button">Grant</button></div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+      <aside class="right">
+        <div class="profile-card">
+          <div class="big-face">AI</div>
+          <strong>Ashish Interiors</strong>
+          <span>Demo workspace</span>
+        </div>
+        <div class="side-card">
+          <h2>Today</h2>
+          <div class="event"><span class="time">10:20</span><div class="event-box"><strong>New lead</strong><p>Rohan Mehta asked for a 3BHK estimate.</p></div></div>
+          <div class="event"><span class="time">11:00</span><div class="event-box"><strong>Review demo</strong><p>Check hero copy before sending link.</p></div></div>
+          <div class="event"><span class="time">15:30</span><div class="event-box"><strong>Access decision</strong><p>Grant admin only after payment confirmation.</p></div></div>
+        </div>
+        <div class="side-card">
+          <h2>Activity</h2>
+          <div class="list">
+            <div class="activity"><span class="face">PK</span><div><strong>Priya Kapoor</strong><p>Admin access granted yesterday.</p></div><span></span></div>
+            <div class="activity"><span class="face blue">SP</span><div><strong>Homepage draft</strong><p>Local browser change, unpublished.</p></div><span></span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <script>
+    const controls = document.querySelectorAll('[data-view]');
+    const views = document.querySelectorAll('.view');
+    function show(view) {
+      views.forEach((item) => item.classList.toggle('active', item.id === view));
+      controls.forEach((control) => control.classList.toggle('active', control.dataset.view === view));
+      window.history.replaceState(null, '', '#' + view);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    controls.forEach((control) => control.addEventListener('click', () => show(control.dataset.view)));
+    const initial = window.location.hash.slice(1);
+    if (document.getElementById(initial)) show(initial);
+  </script>
+</body>
+</html>

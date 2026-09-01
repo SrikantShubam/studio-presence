@@ -4,29 +4,28 @@ import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
+import { chromeCopy, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, DrawFrame, RevealImage, Stagger, StaggerItem } from '@/lib/motion'
 
 type Journal = NonNullable<ClientConfig['sections']['journal']>
 type Post = Journal['posts'][number]
+type JournalCopy = (typeof chromeCopy)[PublicLocale]['journal']
 
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const copy = {
-  read: 'Read the post',
-  next: 'Next',
-}
 const pagePad = 'px-[clamp(20px,5vw,64px)]'
 const perPage = 9
-const ALL = 'All'
 
-export function JournalBrowser({ journal }: { journal: Journal }) {
-  const topics = useMemo(() => [ALL, ...journal.topics], [journal.topics])
-  const [topic, setTopic] = useState<string>(ALL)
+export function JournalBrowser({ journal, site }: { journal: Journal; site: ClientConfig }) {
+  const locale = publicLocaleFromSite(site)
+  const labels = chromeCopy[locale].journal
+  const all = labels.all
+  const topics = useMemo(() => [all, ...journal.topics], [all, journal.topics])
+  const [topic, setTopic] = useState<string>(all)
   const [page, setPage] = useState(1)
 
   const filtered = useMemo(
-    () => journal.posts.filter((item) => topic === ALL || item.topic?.toLowerCase() === topic.toLowerCase()),
-    [journal.posts, topic],
+    () => journal.posts.filter((item) => topic === all || item.topic?.toLowerCase() === topic.toLowerCase()),
+    [all, journal.posts, topic],
   )
   const featured = filtered[0]
   const rest = filtered.slice(1)
@@ -45,9 +44,9 @@ export function JournalBrowser({ journal }: { journal: Journal }) {
         <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
           <div className="min-w-0">
             <h1 className="m-0 font-display text-[clamp(46px,9vw,112px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-              <ClipLine>The</ClipLine>
+              <ClipLine>{labels.title.lead}</ClipLine>
               <ClipLine className="ml-[0.55em] block text-accent" delay={0.08}>
-                Journal
+                {labels.title.accent}
               </ClipLine>
             </h1>
           </div>
@@ -62,7 +61,7 @@ export function JournalBrowser({ journal }: { journal: Journal }) {
           <div className="flex flex-wrap gap-[clamp(16px,2.6vw,40px)] border-b border-accent pb-[clamp(16px,2vw,22px)]">
             {topics.map((name) => {
               const count =
-                name === ALL ? journal.posts.length : journal.posts.filter((item) => item.topic?.toLowerCase() === name.toLowerCase()).length
+                name === all ? journal.posts.length : journal.posts.filter((item) => item.topic?.toLowerCase() === name.toLowerCase()).length
               const active = topic === name
               return (
                 <button
@@ -83,7 +82,7 @@ export function JournalBrowser({ journal }: { journal: Journal }) {
 
       {featured ? (
         <section className={`${pagePad} pb-[clamp(56px,7vw,96px)] pt-[clamp(44px,6vw,80px)]`}>
-          <Featured post={featured} />
+          <Featured post={featured} labels={labels} />
         </section>
       ) : null}
 
@@ -143,7 +142,7 @@ export function JournalBrowser({ journal }: { journal: Journal }) {
         <section className={`${pagePad} bg-panel pb-[clamp(64px,9vw,110px)] pt-[clamp(28px,3.4vw,40px)]`}>
           <div className="flex flex-wrap items-center justify-between gap-5 border-t border-accent pt-[clamp(22px,3vw,32px)]">
             <span className="text-[11px] uppercase tracking-[0.18em] text-muted">
-              Page {safePage} of {totalPages} · {filtered.length} posts
+              {labels.page} {safePage} {labels.of} {totalPages} · {filtered.length} {labels.posts}
             </span>
             <div className="flex flex-wrap items-center gap-[clamp(14px,2vw,26px)] text-[12.5px] tracking-[0.16em]">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
@@ -164,7 +163,7 @@ export function JournalBrowser({ journal }: { journal: Journal }) {
                 disabled={safePage >= totalPages}
                 className="min-h-11 bg-transparent py-2 pl-2.5 text-[11px] font-medium uppercase tracking-[0.2em] text-ink disabled:text-muted"
               >
-                {copy.next} →
+                {labels.next} →
               </button>
             </div>
           </div>
@@ -174,7 +173,7 @@ export function JournalBrowser({ journal }: { journal: Journal }) {
   )
 }
 
-function Featured({ post }: { post: Post }) {
+function Featured({ post, labels }: { post: Post; labels: JournalCopy }) {
   const title = post.displayTitle ?? { lead: post.title, accent: '' }
   const body = (
     <>
@@ -204,7 +203,7 @@ function Featured({ post }: { post: Post }) {
         </span>
         {post.full ? (
           <span className="mt-1 inline-flex items-center gap-2 text-[11.5px] font-medium uppercase tracking-[0.2em]">
-            {copy.read}
+            {labels.read}
             <EditorialIcon name="arrow-right" className="h-3 w-3" />
           </span>
         ) : null}

@@ -82,21 +82,255 @@
       "items": [
         {
           "title": "Interior Design",
-          "blurb": "Layouts, joinery drawings and finish boards for the whole flat, worked out with you over two or three sittings before a single panel is cut.",
+          "blurb": "Interior design in Patna for flats and independent homes: layouts, joinery drawings, lighting plans and finish boards worked out before a single panel is cut.",
           "image": "/clients/ashish-interiors/editorial/service-01.jpg",
-          "slug": "interior-design"
+          "slug": "interior-design",
+          "price": {
+            "value": "FROM ₹85",
+            "unit": "PER SQ FT FOR DESIGN",
+            "note": "Design-only work for a 1,200 sq ft Patna flat usually lands between ₹1.0 and ₹1.4 lakh, depending on drawing depth."
+          },
+          "intro": [
+            "Interior design is where we decide how the flat should work before anybody starts buying plywood.",
+            "For most Patna homes, the problem is not decoration first. It is storage, daylight, circulation and whether the kitchen, dining and living room can stop fighting each other. We measure the site, map the doors, windows, beams and existing electrical points, then redraw the plan around how the family actually lives: who cooks, who studies at home, who needs a quiet room, what gets stored once a year and what gets used every day.",
+            "The design package includes furniture layouts, wardrobe and kitchen elevations, false-ceiling intent where it is useful, lighting points, finish boards and a room-by-room budget range. We show you the expensive decisions early: veneer or laminate, quartz or granite, sliding wardrobe or hinged, wall panelling or plain paint. That means the design is not a mood board that collapses on site; it is a working instruction for carpenters, electricians and masons.",
+            "A typical 2BHK or 3BHK design takes two to three weeks and two serious sittings. By the end, you know what will be built, what it should cost and which choices can be delayed without disturbing the programme."
+          ],
+          "photos": [
+            {
+              "image": "/clients/ashish-interiors/editorial/service-01.jpg",
+              "caption": "LAYOUT AND STORAGE STUDY FOR A PATNA FLAT"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/portfolio-01.jpg",
+              "caption": "LIVING ROOM FINISH BOARD"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/portfolio-03.jpg",
+              "caption": "STUDY NOOK DRAWN AROUND DAYLIGHT"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/design-01.jpg",
+              "caption": "JOINERY DETAILS FROM THE DRAWING OFFICE"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/design-02.jpg",
+              "caption": "MATERIAL PALETTE BEFORE SITE WORK"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/instagram-03.jpg",
+              "caption": "FINAL SITE CHECK AGAINST DRAWINGS"
+            }
+          ],
+          "included": [
+            {
+              "title": "MEASURED LAYOUT PLAN",
+              "body": "A working plan based on site measurements, not builder brochure dimensions."
+            },
+            {
+              "title": "ROOM-BY-ROOM FURNITURE PLAN",
+              "body": "Beds, wardrobes, study units, TV walls and loose furniture placed before drawings begin."
+            },
+            {
+              "title": "JOINERY ELEVATIONS",
+              "body": "Wardrobes, kitchens and storage units drawn so the workshop can price them properly."
+            },
+            {
+              "title": "LIGHTING AND ELECTRICAL INTENT",
+              "body": "Switching, task lights and appliance points marked before chasing or ceiling work."
+            },
+            {
+              "title": "FINISH AND MATERIAL BOARD",
+              "body": "Laminates, paint, counters, handles and flooring choices kept inside the agreed budget."
+            },
+            {
+              "title": "BUDGET RANGE",
+              "body": "A practical estimate by room so design decisions do not become surprises during execution."
+            }
+          ],
+          "linkedProjectSlug": "study-nook",
+          "faq": [
+            {
+              "q": "Can you do design only if my contractor executes?",
+              "a": "Yes. We can hand over drawings, finish schedules and joinery details for your contractor, but we price that separately from turnkey work because site supervision is not included."
+            },
+            {
+              "q": "How many revisions are included?",
+              "a": "Two rounds after the first layout. That is usually enough for a 2BHK or 3BHK because the first visit fixes the real constraints: walls, beams, windows, plumbing and budget."
+            },
+            {
+              "q": "Will the design include exact materials?",
+              "a": "Yes. We specify the finish family, plywood grade, counter material, visible laminate or veneer, hardware level and lighting intent so the estimate can be checked line by line."
+            }
+          ]
         },
         {
           "title": "Turnkey Renovation",
-          "blurb": "Demolition, civil, electrical and carpentry with one dated programme and one person responsible from start to handover.",
+          "blurb": "Turnkey renovation for Patna apartments and houses: demolition, civil work, electrical, plumbing, carpentry and handover under one dated programme.",
           "image": "/clients/ashish-interiors/editorial/service-02.jpg",
-          "slug": "turnkey-renovation"
+          "slug": "turnkey-renovation",
+          "price": {
+            "value": "FROM ₹1,650",
+            "unit": "PER SQ FT FOR TURNKEY WORK",
+            "note": "A full 3BHK renovation usually depends more on civil and electrical changes than on decorative finishes."
+          },
+          "intro": [
+            "Turnkey renovation is for clients who want one responsible team from breaking the first tile to handing back the cleaned flat.",
+            "We take on demolition, civil repair, waterproofing, electrical rewiring, plumbing shifts, false ceiling where needed, carpentry, painting and final fitting. The important part is sequencing. If the electrician arrives before the kitchen drawing is frozen, points move later. If waterproofing is rushed, the new cabinet hides an old problem. Our renovation calendar is written backwards from handover, with material procurement and workshop fabrication running while civil work is still happening on site.",
+            "Most Patna renovation jobs are lived-in apartments or recently purchased builder flats. That means lift timings, neighbour complaints, dust control, old plumbing lines and society restrictions matter as much as the design. We assign one site lead, share weekly photo updates and keep a written list of decisions still pending from the client: tiles, fans, sanitaryware, hardware and appliances.",
+            "A full 3BHK usually takes eight to eleven weeks after drawings are signed. Smaller kitchen or bedroom renovations can finish faster, but we do not compress drying time, waterproofing checks or electrical testing to make a date look good."
+          ],
+          "photos": [
+            {
+              "image": "/clients/ashish-interiors/editorial/service-02.jpg",
+              "caption": "FULL-HOME RENOVATION PROGRAMME IN PATNA"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/site-01.jpg",
+              "caption": "SITE MARKING BEFORE CIVIL WORK"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/site-02.jpg",
+              "caption": "ELECTRICAL AND CARPENTRY COORDINATION"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/workshop-01.jpg",
+              "caption": "WORKSHOP FABRICATION WHILE SITE WORK CONTINUES"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/workshop-03.jpg",
+              "caption": "CABINETS CHECKED BEFORE DISPATCH"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/portfolio-04.jpg",
+              "caption": "RENOVATED FLAT AFTER HANDOVER"
+            }
+          ],
+          "included": [
+            {
+              "title": "DEMOLITION AND CARTING",
+              "body": "Old tiles, cabinets, ceilings and damaged surfaces removed with daily debris planning."
+            },
+            {
+              "title": "CIVIL AND WATERPROOFING",
+              "body": "Wall repair, floor correction, bathroom waterproofing and kitchen platform preparation."
+            },
+            {
+              "title": "ELECTRICAL AND PLUMBING",
+              "body": "New points, concealed lines and practical shifts coordinated with the final furniture plan."
+            },
+            {
+              "title": "WORKSHOP CARPENTRY",
+              "body": "Wardrobes, kitchen cabinets, beds, TV units and storage fabricated by the in-house crew."
+            },
+            {
+              "title": "PAINTING AND FINAL FITTINGS",
+              "body": "Surface preparation, paint, lights, fans, hardware and final visible fittings coordinated together."
+            },
+            {
+              "title": "SNAGGING AND HANDOVER",
+              "body": "A written punch list, cleaning, adjustment visit and warranty handover before the job closes."
+            }
+          ],
+          "linkedProjectSlug": "patliputra-duplex",
+          "faq": [
+            {
+              "q": "Can we live in the flat during renovation?",
+              "a": "For a single room or kitchen, sometimes. For a full 2BHK or 3BHK renovation, we usually advise moving out because dust, wiring shutdowns and bathroom waterproofing make daily life difficult."
+            },
+            {
+              "q": "Who buys tiles, lights and sanitaryware?",
+              "a": "We can source them with you or give you exact quantities and specs. Large branded items are billed transparently, and you can pay the dealer directly if you prefer."
+            },
+            {
+              "q": "How do you control delays?",
+              "a": "The site calendar is tied to signed drawings, material approvals and procurement dates. We also fabricate carpentry in the workshop while civil work is still on, so the site is not waiting for cabinets."
+            }
+          ]
         },
         {
           "title": "Selection of Materials",
-          "blurb": "Sourcing and specification from finishes to fittings, with honest starting points rather than teaser rates.",
+          "blurb": "Material selection and specification for Patna interiors: plywood, laminates, counters, tiles, hardware, lights and fittings chosen for budget and daily use.",
           "image": "/clients/ashish-interiors/editorial/trust-03.jpg",
-          "slug": "selection-of-materials"
+          "slug": "selection-of-materials",
+          "price": {
+            "value": "FROM ₹35,000",
+            "unit": "FOR A FLAT MATERIAL PACKAGE",
+            "note": "Best used before procurement, when changing a counter, tile or plywood grade still costs nothing."
+          },
+          "intro": [
+            "Selection of materials is where we turn a vague budget into actual surfaces, boards, counters, handles and fittings.",
+            "Clients often arrive with screenshots: one kitchen in acrylic, one wardrobe in fluted glass, one bathroom tile from a showroom display and a budget that cannot hold all three. Our job is to make the trade-offs visible before anything is ordered. We compare plywood grades, laminate thickness, veneer use, edge bands, counter materials, tile sizes, grout colours, hardware brands, lights and sanitary fittings against the way the home will be used.",
+            "In Patna, availability also matters. A finish that looks perfect online is a bad choice if replacement sheets take three weeks or only one dealer keeps stock. We push for materials that can be repaired, matched and cleaned by the people who will actually live with them. Granite often beats quartz in kitchens. Good laminate often beats cheap veneer in children's rooms. Marine ply is non-negotiable below sinks and wet counters.",
+            "The output is a room-wise material schedule with quantities, alternates and a procurement order. You can use it with our execution team or with your own contractor."
+          ],
+          "photos": [
+            {
+              "image": "/clients/ashish-interiors/editorial/trust-03.jpg",
+              "caption": "FINISHES SHORTLISTED BEFORE PROCUREMENT"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/ply.jpg",
+              "caption": "PLYWOOD GRADE CHECK"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/tools.jpg",
+              "caption": "HARDWARE AND FITTING REVIEW"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/design-03.jpg",
+              "caption": "LAMINATE AND COUNTER PAIRING"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/team/design-04.jpg",
+              "caption": "ROOM-WISE MATERIAL SCHEDULE"
+            },
+            {
+              "image": "/clients/ashish-interiors/editorial/trust-02.jpg",
+              "caption": "SITE SAMPLE CHECK IN DAYLIGHT"
+            }
+          ],
+          "included": [
+            {
+              "title": "PLYWOOD AND BOARD SPEC",
+              "body": "Where to use BWP, BWR or commercial ply, with wet-area rules made explicit."
+            },
+            {
+              "title": "LAMINATE AND VENEER SHORTLIST",
+              "body": "Visible finishes chosen by room, with alternates that stay inside the same budget band."
+            },
+            {
+              "title": "COUNTER AND TILE GUIDANCE",
+              "body": "Granite, quartz, dado tiles and flooring compared for cost, cleaning and replacement."
+            },
+            {
+              "title": "HARDWARE AND LIGHTING LEVEL",
+              "body": "Hinges, channels, handles, profiles and basic lighting specs matched to expected use."
+            },
+            {
+              "title": "PROCUREMENT SCHEDULE",
+              "body": "What to order first, what can wait, and where a late decision will delay the site."
+            },
+            {
+              "title": "DEALER COORDINATION",
+              "body": "Quantity checks and dealer conversations so the client is not buying from a mood board."
+            }
+          ],
+          "linkedProjectSlug": "portfolio-detail",
+          "faq": [
+            {
+              "q": "Can you help if another contractor is doing the work?",
+              "a": "Yes. We can prepare a material schedule for your contractor, but we will mark which specs are mandatory and which have cheaper alternates so substitutions are visible."
+            },
+            {
+              "q": "Do you take commission from dealers?",
+              "a": "For client-purchased branded items, we prefer transparent dealer billing. If we procure through our account, the handling and coordination margin is stated in the estimate."
+            },
+            {
+              "q": "When should material selection happen?",
+              "a": "Before procurement and before electrical or plumbing points are closed. After site work starts, changing tile size, counter material or appliance dimensions can create rework."
+            }
+          ]
         },
         {
           "title": "Modular Kitchens",

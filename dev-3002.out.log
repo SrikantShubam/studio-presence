@@ -1,0 +1,251 @@
+
+> @studio/frontend@0.1.0 predev
+> node --import tsx ../scripts/sync-frontend-env.ts
+
+Synced 2 NEXT_PUBLIC_* value(s) to frontend/.env.local
+
+> @studio/frontend@0.1.0 dev
+> next dev --port 3002
+
+   ▲ Next.js 15.5.23
+   - Local:        http://localhost:3002
+   - Network:      http://192.168.1.11:3002
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.5s
+ ✓ Compiled /middleware in 411ms (116 modules)
+ ○ Compiling /[tenant] ...
+ ✓ Compiled /[tenant] in 7.9s (855 modules)
+ GET / 200 in 18710ms
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 29.8s (860 modules)
+ GET / 200 in 4652ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 41366ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 1880ms
+ GET /favicon.ico 404 in 1781ms
+ ✓ Compiled in 2.3s (856 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 21.5s (1189 modules)
+ GET / 500 in 27150ms
+ GET / 200 in 5636ms
+ GET / 200 in 4945ms
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 5.7s (789 modules)
+ GET / 200 in 19100ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 10442ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 3380ms
+ ✓ Compiled in 4.7s (417 modules)
+ GET / 200 in 9902ms
+ ○ Compiling /_error ...
+ GET / 200 in 13312ms
+ ✓ Compiled /_error in 10.1s (1193 modules)
+ GET /fonts/archivo/archivo-latin-ext.woff2 500 in 15624ms
+ ✓ Compiled in 14.2s (1208 modules)
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 23699ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 22444ms
+ GET / 200 in 6927ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 3604ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 3517ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 2162ms
+ ✓ Compiled in 5.2s (1113 modules)
+ GET / 200 in 2852ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 2931ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 4258ms
+ ✓ Compiled in 6.3s (1112 modules)
+ GET / 200 in 8122ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 2323ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 3254ms
+ GET / 200 in 1205ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 865ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 1193ms
+ ✓ Compiled in 4.5s (1112 modules)
+ GET / 200 in 7083ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 4058ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 8.6s (1117 modules)
+ GET /fonts/archivo/archivo-latin.woff2 404 in 12921ms
+ GET / 200 in 13516ms
+ ✓ Compiled in 6.5s (1117 modules)
+ ✓ Compiled in 4.9s (1117 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 5.7s (1213 modules)
+ GET / 500 in 22408ms
+ GET / 500 in 9514ms
+ GET / 200 in 36953ms
+ GET / 200 in 38434ms
+ ✓ Compiled in 6.7s (1209 modules)
+ GET / 200 in 11569ms
+ GET / 200 in 6947ms
+ GET / 200 in 15569ms
+ GET / 200 in 14567ms
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 1176ms (790 modules)
+ GET / 200 in 11026ms
+ GET / 200 in 5520ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 15625ms
+ GET / 200 in 7211ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 3454ms
+ GET / 200 in 3553ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 1131ms
+ ✓ Compiled in 5.9s (1112 modules)
+ GET /fonts/archivo/archivo-latin.woff2 404 in 12641ms
+ ✓ Compiled in 6.3s (1112 modules)
+ GET / 200 in 14102ms
+ GET / 200 in 7975ms
+ GET / 200 in 5847ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 2628ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 2647ms
+ GET / 200 in 4227ms
+ ✓ Compiled in 2.7s (1112 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 3.1s (1194 modules)
+ GET / 500 in 5306ms
+ GET / 500 in 1221ms
+ GET / 500 in 427ms
+ GET / 500 in 396ms
+ ✓ Compiled in 27.6s (1204 modules)
+ GET / 200 in 1045ms
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 2.6s (790 modules)
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 8316ms
+ GET / 200 in 26103ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 3942ms
+ ✓ Compiled in 7.8s (1320 modules)
+ GET / 200 in 4944ms
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 7.8s (790 modules)
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 11244ms
+ GET / 200 in 11590ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 1397ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 1258ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 1532ms
+ ✓ Compiled in 7.8s (1204 modules)
+ ✓ Compiled in 3.1s (418 modules)
+ GET / 500 in 3187ms
+ GET / 500 in 1402ms
+ ✓ Compiled in 4.3s (1204 modules)
+ GET / 500 in 5803ms
+ GET / 200 in 859ms
+ GET / 500 in 630ms
+ ✓ Compiled in 3.7s (1204 modules)
+ ○ Compiling /[tenant]/[...path] ...
+ GET / 200 in 12404ms
+ ✓ Compiled /[tenant]/[...path] in 7.3s (1208 modules)
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 10252ms
+ GET /fonts/archivo/archivo-latin.woff2 404 in 2031ms
+ ✓ Compiled in 4.5s (1208 modules)
+ ✓ Compiled in 5.3s (1208 modules)
+ GET / 200 in 24851ms
+ GET / 200 in 17330ms
+ GET / 200 in 8313ms
+ GET / 200 in 9218ms
+ ✓ Compiled in 5s (1208 modules)
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 4122ms
+ ○ Compiling /_not-found ...
+ GET / 200 in 5659ms
+ ✓ Compiled /_not-found in 8s (1213 modules)
+ GET /fonts/archivo/archivo-latin.woff2 404 in 11036ms
+ GET /fonts/archivo/archivo-latin-ext.woff2 404 in 8436ms
+ GET / 500 in 13416ms
+ GET / 500 in 10969ms
+ GET / 500 in 9853ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 548ms
+ GET / 500 in 11719ms
+ GET / 500 in 1673ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1459ms
+ GET / 500 in 6839ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1425ms
+ GET / 500 in 7352ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 432ms
+ GET / 500 in 8837ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 601ms
+ GET / 500 in 7910ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 522ms
+ GET / 500 in 7099ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1454ms
+ GET / 500 in 5312ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 965ms
+ GET / 500 in 4546ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 695ms
+ GET / 500 in 4725ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 558ms
+ GET / 500 in 6568ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 457ms
+ GET / 500 in 8223ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1191ms
+ GET / 500 in 8072ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 789ms
+ GET / 500 in 11763ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 2832ms
+ GET / 500 in 5151ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1252ms
+ GET / 500 in 6572ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1254ms
+ GET / 500 in 5712ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 3184ms
+ GET / 500 in 5806ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 503ms
+ GET / 500 in 8940ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 952ms
+ GET / 500 in 11074ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 527ms
+ GET / 500 in 7565ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1970ms
+ GET / 500 in 6780ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 513ms
+ GET / 500 in 6051ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 483ms
+ GET / 500 in 2444ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 431ms
+ GET / 500 in 5843ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 369ms
+ GET / 500 in 3896ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 668ms
+ GET / 500 in 5604ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1457ms
+ GET / 500 in 5108ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 590ms
+ GET / 500 in 9267ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 316ms
+ GET / 500 in 5652ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 514ms
+ GET / 500 in 8640ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 315ms
+ GET / 500 in 6016ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 351ms
+ GET / 500 in 7509ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 308ms
+ GET / 500 in 19128ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 1641ms
+ GET / 500 in 12210ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 584ms
+ GET / 500 in 3240ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 379ms
+ GET / 500 in 5357ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 535ms
+ GET / 500 in 4497ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 975ms
+ GET / 500 in 6670ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 326ms
+ GET / 500 in 10311ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 709ms
+ GET / 500 in 3865ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 314ms
+ GET / 500 in 7487ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 305ms
+ GET / 500 in 9483ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 394ms
+ GET / 500 in 7040ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 905ms
+ GET / 500 in 7199ms
+ GET /_next/static/webpack/c6410539d84900b4.webpack.hot-update.json 404 in 353ms
+ GET / 500 in 31831ms
+ GET / 500 in 140ms
+ GET / 500 in 268ms
+ GET / 500 in 70ms
+ GET /favicon.ico 500 in 243ms
+ GET /favicon.ico 500 in 67ms
+ GET / 500 in 167ms
+ GET / 500 in 62ms
+[?25h

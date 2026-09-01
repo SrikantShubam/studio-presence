@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
-import { localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { localeHref, localePageClass, localeRoleClass, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { ClipLine, FadeUp, HomeSection, Stagger, StaggerItem } from '@/lib/motion'
 import { HeroNav } from '@/sections/Hero/HeroNav'
 import { renderableSections } from '@/sections/registry'
@@ -32,7 +32,7 @@ export function EstimatePage({ site }: { site: ClientConfig }) {
   if (!estimate) return null
 
   return (
-    <article lang={locale} className="overflow-x-clip bg-surface text-ink">
+    <article lang={locale} data-public-locale={locale} className={`overflow-x-clip bg-surface text-ink ${localePageClass(locale)}`}>
       <HeroNav
         businessName={site.business.name}
         phone={site.business.phone}
@@ -46,7 +46,7 @@ export function EstimatePage({ site }: { site: ClientConfig }) {
         <section className={`${pagePad} pb-[clamp(32px,4vw,56px)] pt-[clamp(48px,7vw,96px)]`}>
           <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
             <div className="min-w-0">
-              <p className={`mb-[clamp(20px,3vw,34px)] m-0 grid gap-1.5 text-[10.5px] font-normal leading-[1.6] text-accent ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
+              <p className={`mb-[clamp(20px,3vw,34px)] m-0 grid gap-1.5 font-normal leading-[1.6] text-accent ${localeRoleClass(locale, 'eyebrow')}`}>
                 {text.eyebrow.map((line, index) => (
                   <ClipLine key={line} delay={index * 0.05}>
                     {line}
@@ -62,7 +62,7 @@ export function EstimatePage({ site }: { site: ClientConfig }) {
             </div>
             {estimate.intro && (
               <FadeUp className="max-w-[30em]" delay={0.1}>
-                <p className="m-0 text-pretty text-justify text-[15px] leading-[1.7] text-body">{estimate.intro}</p>
+                <p className={`m-0 text-pretty text-justify leading-[1.7] text-body ${localeRoleClass(locale, 'body')}`}>{estimate.intro}</p>
               </FadeUp>
             )}
           </div>
@@ -77,7 +77,7 @@ export function EstimatePage({ site }: { site: ClientConfig }) {
         <HomeSection>
           <section className={`${pagePad} border-t border-accent bg-panel py-[clamp(64px,9vw,110px)]`}>
             <div className="mb-[clamp(36px,5vw,64px)] flex flex-wrap items-end justify-between gap-6">
-              <h2 className="m-0 font-display text-[clamp(36px,6.5vw,84px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
+              <h2 className={`m-0 font-display text-[clamp(36px,6.5vw,84px)] font-light leading-[0.88] text-ink ${localeRoleClass(locale, 'sectionTitle')}`}>
                 <ClipLine>{text.includedTitle.lead}</ClipLine>
                 <ClipLine className="ml-[0.55em] block text-accent" delay={0.08}>
                   {text.includedTitle.accent}
@@ -95,7 +95,7 @@ export function EstimatePage({ site }: { site: ClientConfig }) {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <h3 className={`m-0 text-[clamp(15px,1.6vw,18px)] font-normal ${localeTextClass(locale, 'uppercase tracking-[0.06em]')}`}>{item.title}</h3>
-                    <p className="m-0 text-pretty text-justify text-sm leading-[1.7] text-body">{item.body}</p>
+                    <p className={`m-0 text-pretty text-justify leading-[1.7] text-body ${localeRoleClass(locale, 'body')}`}>{item.body}</p>
                   </div>
                 </StaggerItem>
               ))}

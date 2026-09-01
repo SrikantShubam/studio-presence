@@ -1,0 +1,163 @@
+- generic [ref=e2]:
+  - article [ref=e3]:
+    - navigation [ref=e4]:
+      - link [ref=e5] [cursor=pointer]:
+        - /url: /hi
+        - heading "ASHISH INTERIORS" [level=2] [ref=e6]: ASHISHINTERIORS
+      - button "मेन्यू खोलें" [ref=e7]
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - heading "मॉड्यूलर किचन" [level=1] [ref=e14]
+        - generic [ref=e15]:
+          - generic [ref=e16]: ₹1,450 से
+          - generic [ref=e17]: किचन एरिया के प्रति वर्ग फुट
+          - generic [ref=e18]: पटना की 60 वर्ग फुट किचन आम तौर पर ₹1.9 से ₹2.6 लाख के बीच आती है, हॉब और चिमनी अलग।
+      - generic [ref=e19]:
+        - paragraph [ref=e20]: मॉड्यूलर किचन असल में शटर कैटलॉग नहीं, बल्कि इस बात के फैसलों का सेट है कि आपका परिवार खाना कैसे बनाता है। हम शुरुआत वहीं से करते हैं।
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: पटना के ज्यादातर फ्लैटों में किचन 45 से 80 वर्ग फुट के बीच होता है, एक खिड़की, तय पानी की लाइन और बिल्डर की सुविधा से रखा गया गैस पॉइंट। पहले हम सिंक, हॉब और फ्रिज का त्रिकोण समझते हैं, फिर देखते हैं कि किचन और डाइनिंग की दीवार हट सकती है या नहीं। करीब आधे ग्राहक हां कहते हैं, और एक साल बाद वही बदलाव सबसे ज्यादा याद करते हैं।
+          - paragraph [ref=e23]: "इसके बाद वे फैसले आते हैं जो सच में लेने होते हैं: कार्कस BWP मरीन प्लाई में हो या सस्ते BWR में (सिंक के नीचे हम हर हाल में BWP लगाते हैं), शटर लैमिनेट, ऐक्रेलिक या मेम्ब्रेन में हों, और काउंटर ग्रेनाइट या क्वार्ट्ज में। पटना की ज्यादातर किचन के लिए ग्रेनाइट अभी भी समझदारी का जवाब है — यह प्रेशर कुकर की गर्मी सह लेता है, हल्दी झेलता है, और स्थानीय स्लैब आयातित क्वार्ट्ज की एक-तिहाई कीमत में मिल जाता है। हम लोगों को लॉफ्ट के बजाय टॉल यूनिट्स की तरफ ले जाते हैं, क्योंकि पचास से ऊपर का कोई भी व्यक्ति आटे का डब्बा निकालने के लिए चढ़ना नहीं चाहता।"
+          - paragraph [ref=e24]: हमारे वर्कशॉप में फैब्रिकेशन 18 से 25 दिन लेता है, इंस्टॉलेशन में लगभग तीन दिन और लगते हैं, और हम तब तक शुरू नहीं करते जब तक प्लंबिंग और इलेक्ट्रिकल पॉइंट सेट न हों — काउंटर लगने के बाद चिमनी पॉइंट बदलने का मतलब ग्रेनाइट काटना है, और कटा हुआ ग्रेनाइट फिर वैसा नहीं दिखता।
+    - generic [ref=e26]:
+      - figure "बोरिंग रोड — L-शेप रन, खिड़की खुली रखी गई" [ref=e28]:
+        - img "बोरिंग रोड — L-शेप रन, खिड़की खुली रखी गई" [ref=e30]
+      - generic [ref=e32]:
+        - figure "ग्रेनाइट काउंटर, कंकड़बाग" [ref=e34]:
+          - img "ग्रेनाइट काउंटर, कंकड़बाग" [ref=e36]
+        - figure "हॉब के पास खुली शेल्फ" [ref=e39]:
+          - img "हॉब के पास खुली शेल्फ" [ref=e41]
+        - figure "उसी काउंटर का डाइनिंग साइड" [ref=e44]:
+          - img "उसी काउंटर का डाइनिंग साइड" [ref=e46]
+        - figure "लॉफ्ट की जगह टॉल यूनिट्स" [ref=e49]:
+          - img "लॉफ्ट की जगह टॉल यूनिट्स" [ref=e51]
+        - figure "ब्रेकफास्ट एंड, पाटलिपुत्र" [ref=e54]:
+          - img "ब्रेकफास्ट एंड, पाटलिपुत्र" [ref=e56]
+    - generic [ref=e59]:
+      - heading "इसमें क्या शामिल है" [level=2] [ref=e61]:
+        - generic [ref=e62]: इसमें
+        - generic [ref=e64]: क्या शामिल है
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]: "01"
+          - heading "BWP कार्कस और शटर" [level=3] [ref=e69]
+          - paragraph [ref=e70]: काउंटर के नीचे मरीन प्लाई, ऊपर BWR, और चारों तरफ एज-बैंडिंग।
+        - generic [ref=e71]:
+          - generic [ref=e72]: "02"
+          - heading "ग्रेनाइट काउंटर और स्कर्टिंग" [level=3] [ref=e73]
+          - paragraph [ref=e74]: स्थानीय स्लैब, जहां संभव हो सिंगल जॉइंट, और दीवार बचाने के लिए 4 इंच बैक स्कर्टिंग।
+        - generic [ref=e75]:
+          - generic [ref=e76]: "03"
+          - heading "हार्डवेयर और सॉफ्ट-क्लोज" [level=3] [ref=e77]
+          - paragraph [ref=e78]: हर ड्रॉअर में हिंज, चैनल और सॉफ्ट-क्लोज, साथ में लिखित वारंटी कार्ड।
+        - generic [ref=e79]:
+          - generic [ref=e80]: "04"
+          - heading "डैडो टाइलिंग और प्लंबिंग शिफ्ट" [level=3] [ref=e81]
+          - paragraph [ref=e82]: बैकस्प्लैश टाइलिंग और सिंक या पानी की लाइन को चार फुट तक शिफ्ट करना।
+        - generic [ref=e83]:
+          - generic [ref=e84]: "05"
+          - heading "चिमनी और RO के पॉइंट" [level=3] [ref=e85]
+          - paragraph [ref=e86]: काउंटर लगने से पहले तय किए गए छिपे हुए इलेक्ट्रिकल पॉइंट, बाद में नहीं।
+        - generic [ref=e87]:
+          - generic [ref=e88]: "06"
+          - heading "फिटिंग और एक साल की सर्विस" [level=3] [ref=e89]
+          - paragraph [ref=e90]: हमारे अपने कारपेंटर से इंस्टॉलेशन, और ग्यारहवें महीने एक मुफ्त अलाइनमेंट विजिट।
+    - generic [ref=e92]:
+      - generic [ref=e93]:
+        - heading "हमारा मिलता-जुलता काम" [level=2] [ref=e94]:
+          - text: हमारा
+          - generic [ref=e95]: मिलता-जुलता काम
+        - link "सभी प्रोजेक्ट" [ref=e96] [cursor=pointer]:
+          - /url: /hi/portfolio
+      - link "राजेंद्र नगर 3BHK राजेंद्र नगर 3BHK चार लोगों का परिवार अपने पहले घर में आया। किचन की दीवार खोली गई, हर गलियारे में स्टोरेज बनाया गया और ओक, ऑफ-व्हाइट तथा गहरे भूरे रंग का संतुलित पैलेट रखा गया। पटना 45 दिन केस स्टडी पढ़ें" [ref=e99] [cursor=pointer]:
+        - /url: /hi/portfolio/3bhk-boring-road
+        - img "राजेंद्र नगर 3BHK" [ref=e101]
+        - generic [ref=e102]:
+          - generic [ref=e103]: राजेंद्र नगर 3BHK
+          - paragraph [ref=e104]: चार लोगों का परिवार अपने पहले घर में आया। किचन की दीवार खोली गई, हर गलियारे में स्टोरेज बनाया गया और ओक, ऑफ-व्हाइट तथा गहरे भूरे रंग का संतुलित पैलेट रखा गया।
+          - generic [ref=e105]:
+            - generic [ref=e106]: पटना
+            - generic [ref=e107]: 45 दिन
+          - generic [ref=e108]: केस स्टडी पढ़ें
+    - generic [ref=e113]:
+      - heading "आम सवाल" [level=2] [ref=e114]
+      - generic [ref=e117]:
+        - button "क्या किचन को डाइनिंग से खोल देना चाहिए?" [ref=e119]:
+          - generic [ref=e121]: +
+        - button "काउंटर के लिए ग्रेनाइट बेहतर है या क्वार्ट्ज?" [ref=e123]:
+          - generic [ref=e125]: +
+        - button "किचन कितने दिन इस्तेमाल के लायक नहीं रहेगा?" [ref=e127]:
+          - generic [ref=e129]: +
+    - generic [ref=e132]:
+      - generic [ref=e133]:
+        - generic [ref=e134]:
+          - generic [ref=e135]: हमें अपने
+          - generic [ref=e136]: माप भेजें
+        - heading "एक साइट, एक लिखित अनुमान" [level=2] [ref=e137]:
+          - text: एक साइट,
+          - generic [ref=e138]: एक लिखित अनुमान
+      - link "WhatsApp पर अनुमान लें" [ref=e139] [cursor=pointer]:
+        - /url: https://wa.me/919876543210
+    - generic [ref=e143]:
+      - generic [ref=e144]:
+        - generic [ref=e145]:
+          - paragraph [ref=e146]:
+            - generic [ref=e147]: Boring Road
+            - generic [ref=e149]: पटना 800001
+          - heading "आइए मिलते हैं" [level=2] [ref=e151]:
+            - generic [ref=e152]: आइए
+            - generic [ref=e154]: मिलते हैं
+          - paragraph [ref=e156]: 2nd Floor, Boring Road, Boring Road, पटना, Bihar, 800001 — सोमवार से शनिवार, सुबह 10 बजे से शाम 7 बजे तक — Sunday by appointment
+          - generic [ref=e157]:
+            - link "+919876543210" [ref=e158] [cursor=pointer]:
+              - /url: tel:+919876543210
+            - link "hello@ashishinteriors.in" [ref=e159] [cursor=pointer]:
+              - /url: mailto:hello@ashishinteriors.in
+            - link "WhatsApp" [ref=e160] [cursor=pointer]:
+              - /url: https://wa.me/919876543210
+              - heading "WhatsApp" [level=5] [ref=e163]
+        - iframe [ref=e165]
+      - generic [ref=e166]:
+        - navigation [ref=e167]:
+          - heading "स्टूडियो" [level=5] [ref=e168]
+          - link "होम" [ref=e169] [cursor=pointer]:
+            - /url: /hi
+          - link "परिचय" [ref=e170] [cursor=pointer]:
+            - /url: /hi#about
+          - link "टीम" [ref=e171] [cursor=pointer]:
+            - /url: /hi/team
+          - link "करियर" [ref=e172] [cursor=pointer]:
+            - /url: /hi/careers
+          - link "लोकेशन" [ref=e173] [cursor=pointer]:
+            - /url: /hi/locations
+        - navigation [ref=e174]:
+          - heading "काम" [level=5] [ref=e175]
+          - link "पोर्टफोलियो" [ref=e176] [cursor=pointer]:
+            - /url: /hi/portfolio
+          - link "सेवाएं" [ref=e177] [cursor=pointer]:
+            - /url: /hi#services
+          - link "अनुमान" [ref=e178] [cursor=pointer]:
+            - /url: /hi/estimate
+        - navigation [ref=e179]:
+          - heading "क्षेत्र" [level=5] [ref=e180]
+          - link "BORING ROAD PATNA" [ref=e181] [cursor=pointer]:
+            - /url: /hi/areas/boring-road
+        - navigation [ref=e182]:
+          - heading "लेखन" [level=5] [ref=e183]
+          - link "समाचार" [ref=e184] [cursor=pointer]:
+            - /url: /hi/news
+          - link "जर्नल" [ref=e185] [cursor=pointer]:
+            - /url: /hi/journal
+        - navigation [ref=e186]:
+          - heading "कानूनी" [level=5] [ref=e187]
+          - link "प्राइवेसी" [ref=e188] [cursor=pointer]:
+            - /url: /hi/privacy
+          - link "नियम" [ref=e189] [cursor=pointer]:
+            - /url: /hi/terms
+          - link "INSTAGRAM" [ref=e190] [cursor=pointer]:
+            - /url: https://instagram.com/ashishinteriors
+          - link "FACEBOOK" [ref=e191] [cursor=pointer]:
+            - /url: https://facebook.com/ashishinteriors
+      - generic [ref=e192]:
+        - generic [ref=e193]: © 2026 ASHISH INTERIORS. सर्वाधिकार सुरक्षित।
+        - paragraph [ref=e194]: सोमवार से शनिवार, सुबह 10 बजे से शाम 7 बजे तक
+  - text: DEMO

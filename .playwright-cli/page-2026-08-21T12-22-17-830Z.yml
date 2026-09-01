@@ -1,0 +1,137 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: SP
+      - generic [ref=e7]:
+        - strong [ref=e8]: Studio Presence
+        - text: Vector Veda
+    - generic [ref=e9]:
+      - paragraph [ref=e10]: General
+      - navigation "Primary" [ref=e11]:
+        - button [ref=e12] [cursor=pointer]
+        - button [ref=e17] [cursor=pointer]
+        - button [ref=e22] [cursor=pointer]
+        - button [ref=e27] [cursor=pointer]
+        - button [ref=e31] [cursor=pointer]
+    - generic [ref=e37]:
+      - paragraph [ref=e38]: Tools
+      - navigation "Tools" [ref=e39]:
+        - button [ref=e40] [cursor=pointer]
+        - button [ref=e44] [cursor=pointer]
+    - generic [ref=e48]:
+      - strong [ref=e49]: Demo mode
+      - paragraph [ref=e50]: Local edits are visible only in this browser until a customer account is granted.
+      - button "Open editor" [ref=e51] [cursor=pointer]
+  - main [ref=e52]:
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - button "Back" [ref=e55] [cursor=pointer]: ‹
+        - button "Forward" [ref=e56] [cursor=pointer]: ›
+      - generic [ref=e57]: Search leads, pages, or members
+      - generic "Time range" [ref=e62]:
+        - button "Today" [ref=e63] [cursor=pointer]
+        - button "Week" [ref=e64] [cursor=pointer]
+        - button "Month" [ref=e65] [cursor=pointer]
+      - generic [ref=e66]: Sample data
+    - generic [ref=e67]:
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - heading "Hello, Shrikant" [level=1] [ref=e70]
+          - paragraph [ref=e71]: Ashish Interiors has a live demo, active enquiries, and one pending admin decision.
+        - generic [ref=e72]: Live demo
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - generic [ref=e75]: +18%
+          - strong [ref=e76]: "312"
+          - text: Website visits this month
+        - generic [ref=e77]:
+          - generic [ref=e78]: "+6"
+          - strong [ref=e79]: "43"
+          - text: Total enquiries
+        - generic [ref=e80]:
+          - generic [ref=e81]: 2 new
+          - strong [ref=e82]: "14"
+          - text: Qualified conversations
+        - generic [ref=e83]:
+          - strong [ref=e84]: 4.5%
+          - text: Visit to enquiry rate
+        - generic [ref=e85]:
+          - generic [ref=e86]: INR
+          - strong [ref=e87]: 28L
+          - text: Estimated pipeline value
+      - generic [ref=e88]:
+        - article [ref=e89]:
+          - generic [ref=e90]:
+            - generic [ref=e91]:
+              - heading "Website health" [level=2] [ref=e92]
+              - paragraph [ref=e93]: What this client demo is doing right now.
+            - generic [ref=e94]: Healthy
+          - generic [ref=e95]:
+            - generic "Website health shape" [ref=e96]
+            - generic [ref=e97]:
+              - generic [ref=e98]:
+                - strong [ref=e100]: Lead capture
+                - generic [ref=e103]: 88%
+              - generic [ref=e104]:
+                - strong [ref=e106]: Project proof
+                - generic [ref=e109]: 64%
+              - generic [ref=e110]:
+                - strong [ref=e112]: Local SEO
+                - generic [ref=e115]: 47%
+              - generic [ref=e116]:
+                - strong [ref=e118]: Admin readiness
+                - generic [ref=e121]: 35%
+        - article [ref=e122]:
+          - generic [ref=e123]:
+            - generic [ref=e124]:
+              - heading "Performance" [level=2] [ref=e125]
+              - paragraph [ref=e126]: Visits and enquiries over the last seven days.
+            - generic [ref=e127]: 7 days
+          - generic [ref=e128]:
+            - img "Visits and enquiries line chart" [ref=e129]
+            - generic [ref=e133]:
+              - strong [ref=e134]: Friday
+              - text: 52 visits7 enquiries
+          - generic [ref=e135]:
+            - generic [ref=e136]: Mon
+            - generic [ref=e137]: Tue
+            - generic [ref=e138]: Wed
+            - generic [ref=e139]: Thu
+            - generic [ref=e140]: Fri
+            - generic [ref=e141]: Sat
+            - generic [ref=e142]: Sun
+  - complementary [ref=e143]:
+    - generic [ref=e144]:
+      - generic [ref=e145]: AI
+      - strong [ref=e146]: Ashish Interiors
+      - text: Demo workspace
+    - generic [ref=e147]:
+      - heading "Today" [level=2] [ref=e148]
+      - generic [ref=e149]:
+        - generic [ref=e150]: 10:20
+        - generic [ref=e151]:
+          - strong [ref=e152]: New lead
+          - paragraph [ref=e153]: Rohan Mehta asked for a 3BHK estimate.
+      - generic [ref=e154]:
+        - generic [ref=e155]: 11:00
+        - generic [ref=e156]:
+          - strong [ref=e157]: Review demo
+          - paragraph [ref=e158]: Check hero copy before sending link.
+      - generic [ref=e159]:
+        - generic [ref=e160]: 15:30
+        - generic [ref=e161]:
+          - strong [ref=e162]: Access decision
+          - paragraph [ref=e163]: Grant admin only after payment confirmation.
+    - generic [ref=e164]:
+      - heading "Activity" [level=2] [ref=e165]
+      - generic [ref=e166]:
+        - generic [ref=e167]:
+          - generic [ref=e168]: PK
+          - generic [ref=e169]:
+            - strong [ref=e170]: Priya Kapoor
+            - paragraph [ref=e171]: Admin access granted yesterday.
+        - generic [ref=e172]:
+          - generic [ref=e173]: SP
+          - generic [ref=e174]:
+            - strong [ref=e175]: Homepage draft
+            - paragraph [ref=e176]: Local browser change, unpublished.

@@ -2,7 +2,7 @@
 
 import { config, type IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
+import { faFacebookF, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import {
   faArrowDown,
   faArrowLeft,
@@ -28,6 +28,7 @@ export type EditorialIconName =
   | 'map-pin'
   | 'email'
   | 'instagram'
+  | 'facebook'
   | 'language'
   | 'arrow-up-right'
   | 'arrow-down'
@@ -45,6 +46,7 @@ const icons: Record<EditorialIconName, IconDefinition> = {
   'map-pin': faLocationDot,
   email: faEnvelope,
   instagram: faInstagram,
+  facebook: faFacebookF,
   language: faLanguage,
   'arrow-up-right': faArrowUpRightFromSquare,
   'arrow-down': faArrowDown,

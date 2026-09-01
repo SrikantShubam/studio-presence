@@ -1,0 +1,215 @@
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { AuthError, canAccessDashboard, leads, requireTenant, type Lead, type LeadStatus } from '@studio/backend'
+import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { AdminCard, AdminChip, AdminMetric, AdminShell } from '../../components'
+import { DEMO_LEADS } from '../../demo-data'
+
+type Filter = 'all' | 'new' | 'not-contacted' | 'this-month'
+
+const FILTERS: Array<{ value: Filter; label: string }> = [
+  { value: 'all', label: 'All' },
+  { value: 'new', label: 'New' },
+  { value: 'not-contacted', label: 'Not contacted' },
+  { value: 'this-month', label: 'This month' },
+]
+
+const STATUS_LABELS: Record<LeadStatus, string> = {
+  new: 'NEW',
+  contacted: 'CONTACTED',
+  quoted: 'QUOTED',
+  won: 'WON',
+  lost: 'LOST',
+}
+
+export default async function EnquiriesPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ tenant: string }>
+  searchParams?: Promise<{ filter?: string; demo?: string }>
+}) {
+  const { tenant } = await params
+  const query = await searchParams
+  const activeFilter = filterFrom(query?.filter)
+  const forceDemo = query?.demo === '1'
+  const { leads: allLeads, mode } = await loadLeads(tenant, forceDemo)
+  const visibleLeads = filterLeads(allLeads, activeFilter)
+  const sampleMode = mode === 'demo'
+  const unavailableMode = mode === 'unavailable'
+  const notContacted = allLeads.filter(isNotContacted).length
+  const thisMonth = allLeads.filter((lead) => isThisMonth(lead.created_at)).length
+
+  return (
+    <AdminShell>
+      <AdminCard className={`p-4 ${sampleMode ? 'border-admin-alert bg-admin-alert-soft' : unavailableMode ? 'border-admin-alert bg-admin-alert-soft' : 'border-admin-primary bg-admin-primary-soft'}`}>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold text-admin-ink">{sampleMode ? 'Sample enquiries' : unavailableMode ? 'Live enquiries unavailable' : 'Live enquiries'}</p>
+            <p className="mt-1 text-sm text-admin-muted">
+              {sampleMode
+                ? 'These are seeded examples for testing the owner workflow.'
+                : unavailableMode
+                  ? 'Sample data is off, but this login is not connected to this tenant. No fake enquiries are shown.'
+                  : 'All enquiries submitted through the website are listed here.'}
+            </p>
+          </div>
+          <Link href={sampleMode ? '/dashboard/enquiries' : '/dashboard/enquiries?demo=1'} className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
+            {sampleMode ? 'Turn sample data off' : 'Turn sample data on'}
+          </Link>
+        </div>
+      </AdminCard>
+
+      <AdminCard className="p-5 sm:p-6">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Enquiries</p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-admin-ink">All customer enquiries</h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-admin-muted">
+              This is the separate owner sheet for every lead captured by WhatsApp, estimate, form, call, or other source.
+            </p>
+          </div>
+          <Link href="/dashboard" className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+            Back to overview
+          </Link>
+        </div>
+        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <AdminMetric label="total enquiries" value={allLeads.length} tone="primary" />
+          <AdminMetric label="this month" value={thisMonth} />
+          <AdminMetric label="not contacted" value={notContacted} tone={notContacted > 0 ? 'alert' : 'neutral'} />
+          <AdminMetric label="shown now" value={visibleLeads.length} />
+        </div>
+      </AdminCard>
+
+      <div className="flex gap-2 overflow-x-auto pb-1">
+        {FILTERS.map((filter) => (
+          <Link
+            key={filter.value}
+            href={filter.value === 'all' ? (sampleMode ? '/dashboard/enquiries?demo=1' : '/dashboard/enquiries') : `/dashboard/enquiries?${sampleMode ? 'demo=1&' : ''}filter=${filter.value}`}
+            className={`flex min-h-11 shrink-0 items-center rounded border px-4 text-sm font-semibold ${
+              activeFilter === filter.value ? 'border-admin-primary bg-admin-primary-soft text-admin-primary' : 'border-admin-border bg-admin-surface text-admin-ink'
+            }`}
+          >
+            {filter.label}
+          </Link>
+        ))}
+      </div>
+
+      {visibleLeads.length === 0 ? <EmptyState unavailable={unavailableMode} /> : <AdminCard className="overflow-hidden">{visibleLeads.map((lead) => <LeadRow key={lead.id} lead={lead} demo={sampleMode} />)}</AdminCard>}
+    </AdminShell>
+  )
+}
+
+async function loadLeads(tenantSlug: string, forceDemo: boolean): Promise<{ leads: Lead[]; mode: 'paid' | 'demo' | 'unavailable' }> {
+  if (forceDemo) return { leads: DEMO_LEADS, mode: 'demo' }
+  const supabase = await createSupabaseServerClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (!user?.email || !session) redirect('/login')
+
+  try {
+    const tenantContext = await requireTenant({
+      id: user.id,
+      email: user.email,
+      accessToken: session.access_token,
+    })
+
+    if (tenantContext.tenant.slug !== tenantSlug || !canAccessDashboard(tenantContext.tenant)) return { leads: [], mode: 'unavailable' }
+    return { leads: await leads.list(tenantContext.db), mode: 'paid' }
+  } catch (e) {
+    if (e instanceof AuthError && (e.code === 'no-tenant' || e.code === 'wrong-tenant')) return { leads: [], mode: 'unavailable' }
+    throw e
+  }
+}
+
+function filterFrom(value: string | undefined): Filter {
+  if (value === 'new' || value === 'not-contacted' || value === 'this-month') return value
+  return 'all'
+}
+
+function filterLeads(items: Lead[], filter: Filter): Lead[] {
+  if (filter === 'new') return items.filter((lead) => lead.status === 'new')
+  if (filter === 'not-contacted') return items.filter(isNotContacted)
+  if (filter === 'this-month') return items.filter((lead) => isThisMonth(lead.created_at))
+  return items
+}
+
+function isNotContacted(lead: Lead): boolean {
+  return lead.status === 'new' && lead.contacted_at === null
+}
+
+function isThisMonth(value: string): boolean {
+  const date = new Date(value)
+  const now = new Date()
+  return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
+}
+
+function LeadRow({ lead, demo }: { lead: Lead; demo: boolean }) {
+  const whatsappHref = `https://wa.me/${lead.phone.replace(/\D/g, '')}`
+  const detailLines = [lead.project_type, lead.locality, lead.timeline].filter(Boolean).join(' - ')
+  const budget = lead.source === 'estimate' ? lead.budget_band : null
+
+  return (
+    <article className="grid gap-3 border-b border-admin-border p-4 last:border-b-0 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] lg:items-center">
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="truncate text-base font-semibold text-admin-ink">{lead.name}</h2>
+          <StatusPill status={lead.status} />
+        </div>
+        {detailLines && <p className="mt-1 text-sm text-admin-muted">{detailLines}</p>}
+        {lead.message && <p className="mt-2 line-clamp-2 text-sm leading-6 text-admin-ink">{lead.message}</p>}
+      </div>
+      <div className="grid gap-1 text-sm text-admin-muted">
+        <span>{lead.phone}</span>
+        {lead.email && <span>{lead.email}</span>}
+        {budget && <span>{budget}</span>}
+        <span>{relativeTime(lead.created_at)} · {lead.source}</span>
+        {demo && <span>read-only sample</span>}
+      </div>
+      <div className="grid grid-cols-2 gap-2 lg:w-48">
+        <a href={whatsappHref} className="flex min-h-11 items-center justify-center rounded bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary">
+          WhatsApp
+        </a>
+        <a href={`tel:${lead.phone}`} className="flex min-h-11 items-center justify-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
+          Call
+        </a>
+      </div>
+    </article>
+  )
+}
+
+function StatusPill({ status }: { status: LeadStatus }) {
+  const tone = status === 'new' ? 'primary' : status === 'lost' ? 'alert' : 'neutral'
+  return <AdminChip tone={tone}>{STATUS_LABELS[status]}</AdminChip>
+}
+
+function relativeTime(value: string): string {
+  const then = new Date(value).getTime()
+  const now = Date.now()
+  const diffSeconds = Math.round((then - now) / 1000)
+  const absSeconds = Math.abs(diffSeconds)
+  const formatter = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
+
+  if (absSeconds < 60) return 'just now'
+  if (absSeconds < 3600) return formatter.format(Math.round(diffSeconds / 60), 'minute')
+  if (absSeconds < 86400) return formatter.format(Math.round(diffSeconds / 3600), 'hour')
+  return formatter.format(Math.round(diffSeconds / 86400), 'day')
+}
+
+function EmptyState({ unavailable = false }: { unavailable?: boolean }) {
+  return (
+    <AdminCard className="p-5">
+      <h1 className="text-lg font-semibold text-admin-ink">{unavailable ? 'Live enquiries unavailable.' : 'No enquiries yet.'}</h1>
+      <p className="mt-2 text-base text-admin-muted">
+        {unavailable
+          ? 'This confirms sample data is off. Connect this login to the tenant to load the real enquiry sheet.'
+          : 'Put your website link in your Instagram bio and send it to anyone who asks for your work.'}
+      </p>
+    </AdminCard>
+  )
+}

@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { loadPublicClientConfigForLocale } from '@/lib/i18n'
 import { notFoundMeta, pageMeta } from '@/lib/page-meta'
-import { FILTERS } from '../ProjectsBrowser'
 import { ProjectsCategory } from '../ProjectsCategory'
+import { isProjectFilterId } from '../project-filters'
 
 type Props = { params: Promise<{ tenant: string; category: string }> }
 
@@ -46,8 +46,7 @@ export default async function ProjectsCategoryPage({ params }: Props) {
   if (!portfolio.enabled || !portfolio.projects.length) notFound()
 
   const slug = category.toLowerCase()
-  const known = FILTERS.some((filter) => filter.id === slug)
-  if (!known) notFound()
+  if (!isProjectFilterId(slug)) notFound()
 
   return <ProjectsCategory site={site} category={slug} />
 }

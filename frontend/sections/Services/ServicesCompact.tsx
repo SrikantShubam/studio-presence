@@ -1,6 +1,6 @@
 import type { ClientConfig, SectionConfig } from '@studio/backend'
 import Link from 'next/link'
-import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localeRoleClass, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { serviceHref, serviceNumber } from './shared'
 
@@ -43,7 +43,7 @@ export function ServicesCompact({ config, site }: { config: SectionConfig<'servi
                 {item.title}
               </h3>
 
-              <p className="m-0 min-w-0 max-w-prose text-sm leading-relaxed text-muted sm:col-start-2 md:col-start-auto md:text-base">
+                <p className={`m-0 min-w-0 max-w-prose leading-relaxed text-muted sm:col-start-2 md:col-start-auto md:text-base ${localeRoleClass(locale, 'body')}`}>
                 {item.blurb}
               </p>
 

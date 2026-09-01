@@ -1,4 +1,5 @@
 import type { ClientConfig } from '@studio/backend'
+import { chromeCopy, type PublicLocale } from '@/lib/i18n-client'
 
 /**
  * Composes the small uppercase eyebrow line — one of Editorial's five
@@ -22,14 +23,19 @@ function verticalLabel(vertical: string): string {
   return `${vertical.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())} Studio`
 }
 
-export function heroEyebrowLines(site: ClientConfig): string[] {
-  const lines: string[] = [`${verticalLabel(site.vertical)},`]
+export function heroEyebrowLines(site: ClientConfig, locale: PublicLocale = 'en'): string[] {
+  if (locale === 'hi') {
+    const copy = chromeCopy.hi.hero
+    return [
+      `${copy.vertical} —`,
+      `${copy.category},`,
+      site.business.yearFounded ? `${site.business.yearFounded} ${copy.since}` : copy.since,
+    ]
+  }
 
-  const city = site.business.address.city
-  const since = site.business.yearFounded ? `SINCE ${site.business.yearFounded}` : null
-  const second = [city, since].filter(Boolean).join(' · ')
-
-  if (second) lines.push(second.toUpperCase())
-
-  return lines
+  return [
+    `${verticalLabel(site.vertical)} —`,
+    'RESIDENTIAL & COMMERCIAL,',
+    site.business.yearFounded ? `SINCE ${site.business.yearFounded}` : 'SINCE',
+  ]
 }

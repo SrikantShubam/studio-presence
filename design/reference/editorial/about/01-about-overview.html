@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Overview — Editorial Interior Studio</title>
+    <style>
+      :root { --surface: #f4efe6; --ink: #1d1a16; --body: #5c554a; --accent: #8d5c3c; --line: rgba(29, 26, 22, 0.18); --panel: #ebe2d4; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--surface); color: var(--ink); font-family: Inter, Arial, sans-serif; }
+      .page { min-height: 100vh; overflow: hidden; }
+      .nav, .section { padding-inline: clamp(20px, 5vw, 64px); }
+      .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; }
+      .brand { display: flex; align-items: center; gap: 14px; }
+      .mark { width: 36px; height: 36px; border: 1px solid var(--ink); display: grid; place-items: center; }
+      .hero { padding-block: clamp(54px, 8vw, 112px); display: grid; gap: clamp(30px, 5vw, 72px); grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); align-items: end; }
+      .kicker { margin: 0 0 18px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.22em; font-size: 11px; }
+      h1 { margin: 0; font-family: Georgia, serif; font-weight: 400; font-size: clamp(56px, 11vw, 144px); line-height: 0.86; letter-spacing: -0.06em; text-transform: uppercase; }
+      .accent { color: var(--accent); display: block; margin-left: 0.45em; }
+      .lead { font-size: clamp(18px, 2.1vw, 28px); line-height: 1.45; max-width: 34em; margin: 0; }
+      .image { aspect-ratio: 4 / 5; background: linear-gradient(135deg, #d9c8b6, #a9866b); border: 1px solid var(--line); display: grid; align-items: end; padding: 24px; color: white; text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; }
+      .stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--accent); border-bottom: 1px solid var(--accent); }
+      .stat { padding: clamp(22px, 3vw, 40px); border-right: 1px solid var(--line); }
+      .stat:last-child { border-right: 0; }
+      .stat strong { display: block; font-size: clamp(34px, 5vw, 70px); font-weight: 400; letter-spacing: -0.04em; }
+      .stat span { color: var(--body); text-transform: uppercase; letter-spacing: 0.18em; font-size: 10px; }
+      .body { padding-block: clamp(56px, 8vw, 100px); display: grid; grid-template-columns: 0.6fr 1.4fr; gap: clamp(28px, 5vw, 80px); }
+      .body h2 { margin: 0; font-family: Georgia, serif; font-weight: 400; font-size: clamp(34px, 6vw, 82px); line-height: 0.9; text-transform: uppercase; letter-spacing: -0.04em; }
+      .copy { display: grid; gap: 22px; color: var(--body); font-size: 17px; line-height: 1.75; }
+      @media (max-width: 760px) { .hero, .body { grid-template-columns: 1fr; } .stats { grid-template-columns: 1fr; } .stat { border-right: 0; border-bottom: 1px solid var(--line); } }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <nav class="nav">
+        <div class="brand"><span class="mark">AI</span><span>Ashish Interiors</span></div>
+        <span>Patna interior studio</span>
+      </nav>
+      <section class="section hero">
+        <div>
+          <p class="kicker">About the studio</p>
+          <h1>Homes with <span class="accent">site sense</span></h1>
+        </div>
+        <div>
+          <p class="lead">Ashish Interiors plans, fabricates and installs practical homes for families who need storage, durable finishes and a site team that explains trade-offs before money is spent.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="image">Residence handover review · Rajendra Nagar</div>
+      </section>
+      <section class="stats">
+        <div class="stat"><strong>12+</strong><span>years on residential sites</span></div>
+        <div class="stat"><strong>280</strong><span>rooms measured and detailed</span></div>
+        <div class="stat"><strong>45</strong><span>day typical flat execution</span></div>
+      </section>
+      <section class="section body">
+        <h2>How we work</h2>
+        <div class="copy">
+          <p>Every project begins with a room-by-room survey, family routine notes and a budget discussion that separates must-have work from optional upgrades.</p>
+          <p>The drawings stay useful on site: cabinet depths, switch positions, appliance clearances and storage heights are checked before workshop fabrication begins.</p>
+          <p>Clients get material shortlists, procurement dates and handover notes so the home can be maintained without depending on memory or verbal promises.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

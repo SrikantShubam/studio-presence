@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920],
+    imageSizes: [256, 384, 640],
+    qualities: [75, 90],
   },
   // Multi-tenancy: Host header -> tenant slug. Wired in middleware.ts.
   // Wildcard domain is *.vectorveda.online.

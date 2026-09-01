@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import type { ClientConfig } from '@studio/backend'
-import { localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { localeRoleClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import type { PortfolioConfig } from './shared'
 import { PortfolioHeader, ProjectImage, ProjectLink, ProjectLocation, teaserProjects } from './shared'
 
@@ -48,16 +48,16 @@ export function PortfolioCarousel({ config, site }: { config: PortfolioConfig; s
 
               <span className="grid gap-3 border-t border-accent pt-4">
                 <span className="flex items-baseline justify-between gap-4">
-                  <span className="break-words font-display text-[clamp(16px,1.7vw,21px)] font-normal uppercase leading-tight tracking-tight">
+                  <span className="ai-type-portfolio-carousel-title break-words font-display font-normal uppercase leading-tight tracking-tight">
                     {project.title}
                   </span>
-                  <span className="shrink-0 text-[10px] tracking-[0.16em] text-hairline">
+                  <span className="ai-type-portfolio-carousel-index shrink-0 tracking-[0.16em] text-hairline">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                 </span>
                 <ProjectLocation
                   project={project}
-                  className={`break-words text-[10px] font-normal text-muted ${localeTextClass(locale, 'uppercase tracking-[0.22em]')}`}
+                  className={`break-words font-normal text-muted ${localeRoleClass(locale, 'meta')}`}
                 />
               </span>
             </ProjectLink>
@@ -68,7 +68,7 @@ export function PortfolioCarousel({ config, site }: { config: PortfolioConfig; s
           type="button"
           aria-label="Previous projects"
           onClick={() => scrollRail(railRef.current, -1)}
-          className="absolute top-[32%] left-2 hidden h-11 w-11 items-center justify-center border border-accent bg-surface/90 text-sm text-ink transition-colors hover:bg-ink hover:text-surface md:flex"
+          className="ai-type-icon-control absolute top-[32%] left-2 hidden h-11 w-11 items-center justify-center border border-accent bg-surface/90 text-ink transition-colors hover:bg-ink hover:text-surface md:flex"
         >
           &lt;
         </button>
@@ -76,7 +76,7 @@ export function PortfolioCarousel({ config, site }: { config: PortfolioConfig; s
           type="button"
           aria-label="Next projects"
           onClick={() => scrollRail(railRef.current, 1)}
-          className="absolute top-[32%] right-2 hidden h-11 w-11 items-center justify-center border border-accent bg-surface/90 text-sm text-ink transition-colors hover:bg-ink hover:text-surface md:flex"
+          className="ai-type-icon-control absolute top-[32%] right-2 hidden h-11 w-11 items-center justify-center border border-accent bg-surface/90 text-ink transition-colors hover:bg-ink hover:text-surface md:flex"
         >
           &gt;
         </button>

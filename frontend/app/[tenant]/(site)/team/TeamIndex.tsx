@@ -5,21 +5,10 @@ import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, DrawFrame, FadeUp, HomeSection, RevealImage, Stagger, StaggerItem } from '@/lib/motion'
 import { HeroNav } from '@/sections/Hero/HeroNav'
 import { renderableSections } from '@/sections/registry'
+import { chromeCopy, localePageClass, localeRoleClass, publicLocaleFromSite } from '@/lib/i18n-client'
 
 type Team = NonNullable<ClientConfig['sections']['team']>
 
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const copy = {
-  title: { lead: 'Our', accent: 'Studio' },
-  principalsLabel: 'Principals',
-  readProfile: 'Read profile',
-  widerTitle: 'The wider team',
-  hiring: {
-    title: { lead: "We're", accent: 'Hiring' },
-    body: 'Open roles, on our own rolls — provident fund, a fixed salary and site travel paid.',
-    action: 'See open roles',
-  },
-}
 const pagePad = 'px-[clamp(20px,5vw,64px)]'
 
 function Portrait({
@@ -51,21 +40,22 @@ function Portrait({
   )
 }
 
-function Heading({ team, businessName }: { team: Team; businessName: string }) {
+function Heading({ team, locale }: { team: Team; locale: ReturnType<typeof publicLocaleFromSite> }) {
+  const labels = chromeCopy[locale].team
   return (
     <section className={`${pagePad} pb-[clamp(40px,5vw,72px)] pt-[clamp(48px,7vw,96px)]`}>
       <div className="grid grid-cols-1 items-end gap-[clamp(32px,6vw,88px)] min-[1080px]:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
         <div className="min-w-0">
           <h1 className="m-0 font-display text-[clamp(44px,8.5vw,108px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-            <ClipLine>{copy.title.lead}</ClipLine>
+            <ClipLine>{labels.pageTitle.lead}</ClipLine>
             <ClipLine className="ml-[0.55em] text-accent" delay={0.08}>
-              {copy.title.accent}
+              {labels.pageTitle.accent}
             </ClipLine>
           </h1>
         </div>
         {team.intro && (
           <FadeUp className="min-w-0 max-w-[38em]" delay={0.12}>
-            <p className="m-0 text-pretty text-justify text-[15.5px] leading-[1.75] text-body">{team.intro}</p>
+            <p className={`m-0 text-pretty text-justify leading-[1.75] text-body ${localeRoleClass(locale, 'body')}`}>{team.intro}</p>
           </FadeUp>
         )}
       </div>
@@ -73,13 +63,14 @@ function Heading({ team, businessName }: { team: Team; businessName: string }) {
   )
 }
 
-function Principals({ members }: { members: Team['members'] }) {
+function Principals({ members, locale }: { members: Team['members']; locale: ReturnType<typeof publicLocaleFromSite> }) {
   if (!members.length) return null
+  const labels = chromeCopy[locale].team
 
   return (
     <section className={`${pagePad} border-t border-accent pb-[clamp(56px,8vw,100px)] pt-[clamp(40px,5vw,64px)]`}>
       <h2 className="mb-[clamp(36px,5vw,64px)] m-0 text-[clamp(13px,1.5vw,16px)] font-medium uppercase tracking-[0.24em] text-accent">
-        <ClipLine>{copy.principalsLabel}</ClipLine>
+        <ClipLine>{labels.principalsLabel}</ClipLine>
       </h2>
       <Stagger className="grid grid-cols-1 gap-x-[clamp(28px,4vw,52px)] gap-y-[clamp(40px,6vw,80px)] min-[720px]:grid-cols-2 min-[1080px]:grid-cols-3">
         {members.map((person) => {
@@ -95,13 +86,13 @@ function Principals({ members }: { members: Team['members'] }) {
                 <span className="text-[clamp(20px,2.4vw,28px)] font-normal uppercase leading-[1.1] tracking-[-0.01em]">
                   {person.name}
                 </span>
-                <span className="text-[10.5px] font-medium uppercase tracking-[0.2em] text-accent">{person.role}</span>
+                <span className={`font-medium text-accent ${localeRoleClass(locale, 'label')}`}>{person.role}</span>
                 {(person.line ?? person.bio) && (
-                  <span className="max-w-[30em] text-[14.5px] leading-[1.7] text-body">{person.line ?? person.bio}</span>
+                  <span className={`max-w-[30em] leading-[1.7] text-body ${localeRoleClass(locale, 'body')}`}>{person.line ?? person.bio}</span>
                 )}
                 {person.slug && (
-                  <span className="mt-1 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em]">
-                    {copy.readProfile}
+                  <span className={`mt-1 inline-flex items-center gap-2 font-medium ${localeRoleClass(locale, 'label')}`}>
+                    {labels.readProfile}
                     <EditorialIcon name="arrow-up-right" className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>
                 )}
@@ -126,13 +117,14 @@ function Principals({ members }: { members: Team['members'] }) {
   )
 }
 
-function WiderTeam({ groups }: { groups: Team['groups'] }) {
+function WiderTeam({ groups, locale }: { groups: Team['groups']; locale: ReturnType<typeof publicLocaleFromSite> }) {
   if (!groups.length) return null
+  const labels = chromeCopy[locale].team
 
   return (
     <section className={`${pagePad} border-t border-accent bg-panel py-[clamp(56px,8vw,100px)]`}>
       <h2 className="mb-[clamp(32px,4.5vw,52px)] m-0 text-[clamp(13px,1.5vw,16px)] font-medium uppercase tracking-[0.24em] text-accent">
-        <ClipLine>{copy.widerTitle}</ClipLine>
+        <ClipLine>{labels.widerTitle}</ClipLine>
       </h2>
       {groups.map((group, index) => (
         <div key={group.label} className="mb-[clamp(40px,5vw,68px)] last:mb-0">
@@ -216,21 +208,22 @@ function Workshop({ workshop }: { workshop: Team['workshop'] }) {
   )
 }
 
-function Hiring({ hasRoles }: { hasRoles: boolean }) {
+function Hiring({ hasRoles, locale }: { hasRoles: boolean; locale: ReturnType<typeof publicLocaleFromSite> }) {
   if (!hasRoles) return null
+  const labels = chromeCopy[locale].team
 
   return (
     <section className={`${pagePad} border-t border-accent py-[clamp(56px,8vw,100px)]`}>
       <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
         <div className="min-w-0">
           <h2 className="m-0 font-display text-[clamp(32px,5.2vw,68px)] font-light uppercase leading-[0.9] tracking-[-0.03em] text-ink">
-            <ClipLine>{copy.hiring.title.lead}</ClipLine>
+            <ClipLine>{labels.hiring.title.lead}</ClipLine>
             <ClipLine className="ml-[0.55em] block text-accent" delay={0.08}>
-              {copy.hiring.title.accent}
+              {labels.hiring.title.accent}
             </ClipLine>
           </h2>
           <FadeUp className="mt-6 max-w-[32em]" delay={0.12}>
-            <p className="m-0 text-pretty text-[15px] leading-[1.7] text-body">{copy.hiring.body}</p>
+            <p className="m-0 text-pretty text-[15px] leading-[1.7] text-body">{labels.hiring.body}</p>
           </FadeUp>
         </div>
         <FadeUp delay={0.16}>
@@ -238,7 +231,7 @@ function Hiring({ hasRoles }: { hasRoles: boolean }) {
             href="/careers"
             className="group inline-flex min-h-11 items-center gap-3.5 border border-ink px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-surface"
           >
-            {copy.hiring.action}
+            {labels.hiring.action}
             <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </FadeUp>
@@ -250,32 +243,35 @@ function Hiring({ hasRoles }: { hasRoles: boolean }) {
 export function TeamIndex({ site }: { site: ClientConfig }) {
   const team = site.sections.team
   if (!team) return null
+  const locale = publicLocaleFromSite(site)
 
   const closing = renderableSections(site, ['footer'])
 
   return (
-    <article className="overflow-x-clip bg-surface text-ink">
+    <article lang={locale} data-public-locale={locale} className={`overflow-x-clip bg-surface text-ink ${localePageClass(locale)}`}>
       <HeroNav
         businessName={site.business.name}
         phone={site.business.phone}
         tone="on-surface"
         inner
         services={site.sections.services?.items}
+        locale={locale}
+        locales={site.i18n.locales}
       />
       <HomeSection first>
-        <Heading team={team} businessName={site.business.name} />
+        <Heading team={team} locale={locale} />
       </HomeSection>
       <HomeSection>
-        <Principals members={team.members} />
+        <Principals members={team.members} locale={locale} />
       </HomeSection>
       <HomeSection>
-        <WiderTeam groups={team.groups} />
+        <WiderTeam groups={team.groups} locale={locale} />
       </HomeSection>
       <HomeSection>
         <Workshop workshop={team.workshop} />
       </HomeSection>
       <HomeSection>
-        <Hiring hasRoles={Boolean(site.sections.careers?.enabled && site.sections.careers.roles.length)} />
+        <Hiring hasRoles={Boolean(site.sections.careers?.enabled && site.sections.careers.roles.length)} locale={locale} />
       </HomeSection>
       {closing.map(({ key, Component, config, variant }) => (
         <HomeSection key={key}>

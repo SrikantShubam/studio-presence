@@ -1,5 +1,7 @@
 import { createAnonClient } from '../db/scoped'
 
+const reportedOverrideFailures = new Set<string>()
+
 /**
  * Fetch a tenant's panel-edit patch for the public site to merge in.
  *
@@ -19,7 +21,12 @@ export async function fetchClientOverridePatch(slug: string): Promise<unknown> {
   const { data, error } = await db.rpc('get_client_overrides', { p_tenant_slug: slug })
 
   if (error) {
-    console.error('Failed to fetch client overrides', { slug, error: error.message })
+    if (!reportedOverrideFailures.has(slug)) {
+      reportedOverrideFailures.add(slug)
+      const message = `Client overrides unavailable for ${slug}: ${error.message || 'Supabase request failed'}`
+      if (process.env.NODE_ENV === 'production') console.error(message)
+      else console.warn(message)
+    }
     return undefined
   }
 

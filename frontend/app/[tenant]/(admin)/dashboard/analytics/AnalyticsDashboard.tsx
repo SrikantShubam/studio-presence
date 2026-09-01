@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { AdminCard, AdminChip, AdminShell } from '../../components'
 
 type EnquiryStats = {
   thisMonth: number
@@ -13,6 +14,7 @@ type TrendPoint = {
 }
 
 type SourceItem = {
+  source?: string
   label: string
   count: number
 }
@@ -37,24 +39,29 @@ type AnalyticsPayload = {
 }
 
 const EMPTY_STATE = "We'll show this once your site has been live for a few weeks."
-const TRAFFIC_UNAVAILABLE = 'Visitor data is not available right now'
 const PROJECTS_UNAVAILABLE = 'Project view data is not available right now'
 
-export function AnalyticsDashboard({ tenant }: { tenant: string }) {
-  const [data, setData] = useState<AnalyticsPayload | null>(null)
+export function AnalyticsDashboard({
+  tenant,
+  initialData = null,
+  mode = 'paid',
+}: {
+  tenant: string
+  initialData?: AnalyticsPayload | null
+  mode?: 'paid' | 'demo' | 'unavailable'
+}) {
+  const [data, setData] = useState<AnalyticsPayload | null>(initialData)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    if (mode === 'demo' || mode === 'unavailable') return
+
     let active = true
 
     async function loadAnalytics() {
       setError(null)
       const response = await fetch(`/api/${tenant}/analytics`, { cache: 'no-store' })
-
-      if (!response.ok) {
-        throw new Error('Analytics could not be loaded')
-      }
-
+      if (!response.ok) throw new Error('Analytics could not be loaded')
       const payload = (await response.json()) as AnalyticsPayload
       if (active) setData(payload)
     }
@@ -67,119 +74,161 @@ export function AnalyticsDashboard({ tenant }: { tenant: string }) {
     return () => {
       active = false
     }
-  }, [tenant])
+  }, [mode, tenant])
 
   const trend = useMemo(() => lastSixMonths(data?.monthlyTrend ?? []), [data?.monthlyTrend])
 
+  if (mode === 'unavailable') {
+    return (
+      <Shell>
+        <AdminCard className="border-admin-alert bg-admin-alert-soft p-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-lg font-semibold text-admin-ink">Analytics unavailable</h1>
+              <p className="mt-2 text-base text-admin-muted">Sample data is off, but this login is not connected to this tenant or Umami is not reachable for live analytics.</p>
+            </div>
+            <a href="/dashboard/analytics?demo=1" className="inline-flex min-h-11 items-center justify-center rounded border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
+              Turn sample data on
+            </a>
+          </div>
+        </AdminCard>
+      </Shell>
+    )
+  }
+
   if (error) {
     return (
-      <div className="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 lg:py-8">
-        <section className="rounded-lg border border-admin-border bg-admin-surface p-5">
+      <Shell>
+        <Card>
           <h1 className="text-lg font-semibold text-admin-ink">Analytics unavailable</h1>
           <p className="mt-2 text-base text-admin-muted">{error}</p>
-        </section>
-      </div>
+        </Card>
+      </Shell>
     )
   }
 
   if (!data) {
     return (
-      <div className="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 lg:py-8">
-        <section className="rounded-lg border border-admin-border bg-admin-surface p-5">
-          <h1 className="text-lg font-semibold text-admin-ink">Loading analytics</h1>
-        </section>
-      </div>
+      <Shell>
+        <Card>
+          <p className="text-base text-admin-muted">Loading analytics</p>
+        </Card>
+      </Shell>
     )
   }
 
   if (isEmptyAnalytics(data, trend)) {
     return (
-      <div className="mx-auto w-full max-w-5xl px-4 py-5 sm:px-6 lg:py-8">
-        <section className="rounded-lg border border-admin-border bg-admin-surface p-5">
+      <Shell>
+        <Card>
           <h1 className="text-lg font-semibold text-admin-ink">{EMPTY_STATE}</h1>
-        </section>
-      </div>
+        </Card>
+      </Shell>
     )
   }
 
+  const maxBar = Math.max(...trend.map((point) => point.count), 0)
   const topSource = data.sourceBreakdown[0]
+  const topProject = data.topProjects[0]
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 py-5 pb-8 sm:px-6 lg:py-8">
-      <section className="rounded-lg border border-admin-border bg-admin-surface p-5">
-        <p className="text-xs font-semibold uppercase tracking-wide text-admin-muted">Total enquiries</p>
-        <h1 className="mt-3 text-5xl font-semibold leading-none text-admin-ink">
-          {data.enquiryStats.thisMonth}
-        </h1>
-        <p className="mt-2 text-base text-admin-ink">enquiries this month</p>
-        <p className="mt-2 text-sm text-admin-muted">{data.enquiryStats.lastMonth} last month</p>
-        <div className="mt-5 border-t border-admin-border pt-4">
-          {data.visitStats ? (
-            <>
-              <p className="text-xl font-semibold text-admin-ink">{data.visitStats.thisMonth} visitors this month</p>
-              <p className="mt-1 text-sm text-admin-muted">{data.visitStats.lastMonth} last month</p>
-            </>
-          ) : (
-            <p className="text-base text-admin-muted">{TRAFFIC_UNAVAILABLE}</p>
-          )}
+    <Shell>
+      <AdminCard className="p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-admin-muted">Analytics</p>
+              <h1 className="mt-1 text-2xl font-semibold text-admin-ink">Business signals, not vanity graphs</h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-admin-muted">
+              {mode === 'demo'
+                ? 'Sample analytics show how the paid dashboard behaves. These numbers are read-only and not connected to your database.'
+                : interpret(data, topSource)}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {mode === 'demo' && <AdminChip tone="alert">sample data</AdminChip>}
+            {mode === 'demo' && (
+              <a href="/dashboard/analytics" className="inline-flex min-h-7 items-center rounded border border-admin-primary px-2 text-xs font-semibold uppercase tracking-wide text-admin-primary">
+                Turn sample data off
+              </a>
+            )}
+            <AdminChip tone={data.enquiryStats.thisMonth >= data.enquiryStats.lastMonth ? 'primary' : 'neutral'}>
+              {monthDelta(data.enquiryStats.thisMonth, data.enquiryStats.lastMonth)}
+            </AdminChip>
+          </div>
         </div>
-      </section>
+      </AdminCard>
 
-      <section className="rounded-lg border border-admin-border bg-admin-surface p-5">
-        <h2 className="text-xs font-semibold uppercase tracking-wide text-admin-muted">6-month trend</h2>
-        <div className="mt-5 flex h-32 items-end gap-3">
-          {trend.map((point) => (
-            <div key={point.month} className="flex min-w-0 flex-1 flex-col items-center gap-2">
-              <div className="flex h-24 w-full items-end rounded-t-lg bg-admin-primary-soft">
-                <div
-                  className={`w-full rounded-t-lg bg-admin-primary ${barHeightClass(point.count, trend)}`}
-                />
-              </div>
-              <span className="text-xs text-admin-muted">{monthLabel(point.month)}</span>
-            </div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <QuestionCard
+          question="How many people visited?"
+          answer={data.visitStats ? data.visitStats.thisMonth : 'Visitor data unavailable'}
+          note={data.visitStats ? `${data.visitStats.lastMonth} last month` : 'Umami unavailable'}
+          tone={data.visitStats ? 'primary' : 'alert'}
+        />
+        <QuestionCard
+          question="How many people contacted you?"
+          answer={data.enquiryStats.thisMonth}
+          note={`${data.enquiryStats.lastMonth} last month`}
+          tone="primary"
+        />
+        <QuestionCard
+          question="Which pages got attention?"
+          answer={topProject ? topProject.title : PROJECTS_UNAVAILABLE}
+          note={topProject ? `${topProject.views} views` : 'Project views will appear once Umami has data.'}
+        />
+        <QuestionCard
+          question="Where did enquiries come from?"
+          answer={topSource ? topSource.label : 'No source yet'}
+          note={topSource ? `${topSource.count} enquiries` : 'Sources appear after leads arrive.'}
+        />
+      </div>
+
+      <AdminCard className="p-5">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h2 className="text-base font-semibold text-admin-ink">What should I follow up on?</h2>
+            <p className="mt-1 text-sm text-admin-muted">Use this as the plain next action, not a graph-reading exercise.</p>
+          </div>
+          <AdminChip tone={data.enquiryStats.thisMonth > 0 ? 'primary' : 'neutral'}>{data.enquiryStats.thisMonth} this month</AdminChip>
+        </div>
+        <p className="mt-4 text-base leading-7 text-admin-ink">{followUpAction(data, topSource, topProject)}</p>
+      </AdminCard>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <RankedCard title="Source count" empty="Enquiry sources will appear once people contact you.">
+          {data.sourceBreakdown.map((item) => (
+            <RankedRow key={item.label} label={item.label} value={item.count} />
           ))}
-        </div>
-      </section>
+        </RankedCard>
 
-      <section className="rounded-lg border border-admin-border bg-admin-surface p-5">
-        <h2 className="text-xs font-semibold uppercase tracking-wide text-admin-muted">Enquiry sources</h2>
-        {data.sourceBreakdown.length > 0 ? (
-          <ol className="mt-4 flex flex-col gap-3">
-            {data.sourceBreakdown.map((item) => (
-              <li key={item.label} className="flex items-center justify-between gap-3 text-sm">
-                <span className="text-admin-ink">{item.label}</span>
-                <span className="font-semibold text-admin-ink">{item.count}</span>
-              </li>
+        <AdminCard className="p-5">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-base font-semibold text-admin-ink">Enquiry trend</h2>
+            <span className="text-sm text-admin-muted">last 6 months</span>
+          </div>
+          <div className="mt-5 grid gap-2">
+            {trend.map((point) => (
+              <div key={point.month} className="grid grid-cols-[3.5rem_minmax(0,1fr)_3rem] items-center gap-3">
+                <span className="text-xs text-admin-muted">{monthLabel(point.month)}</span>
+                <div className="h-2 rounded bg-admin-raised">
+                  <div className={`h-2 rounded bg-admin-primary ${barWidthClass(point.count, maxBar)}`} />
+                </div>
+                <span className="text-right text-sm font-semibold tabular-nums text-admin-ink">{point.count}</span>
+              </div>
             ))}
-          </ol>
-        ) : (
-          <p className="mt-4 text-base text-admin-muted">Enquiry sources will appear once people contact you.</p>
-        )}
-      </section>
-
-      <section className="rounded-lg border border-admin-border bg-admin-surface p-5">
-        <h2 className="text-xs font-semibold uppercase tracking-wide text-admin-muted">Top projects</h2>
-        {data.visitStats === null ? (
-          <p className="mt-4 text-base text-admin-muted">{PROJECTS_UNAVAILABLE}</p>
-        ) : data.topProjects.length > 0 ? (
-          <ol className="mt-4 flex flex-col gap-3">
-            {data.topProjects.slice(0, 3).map((project) => (
-              <li key={project.slug} className="flex items-start justify-between gap-3 text-sm">
-                <span className="min-w-0 font-medium text-admin-ink">{project.title}</span>
-                <span className="shrink-0 text-admin-muted">{project.views} views</span>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <p className="mt-4 text-base text-admin-muted">Project views will appear once visitors browse your work.</p>
-        )}
-      </section>
-
-      <p className="rounded-lg border border-admin-border bg-admin-surface p-4 text-sm text-admin-ink">
-        {interpret(data, topSource)}
-      </p>
-    </div>
+          </div>
+        </AdminCard>
+      </div>
+    </Shell>
   )
+}
+
+function Shell({ children }: { children: ReactNode }) {
+  return <AdminShell>{children}</AdminShell>
+}
+
+function Card({ children }: { children: ReactNode }) {
+  return <AdminCard className="p-5">{children}</AdminCard>
 }
 
 function lastSixMonths(points: TrendPoint[]): TrendPoint[] {
@@ -193,17 +242,16 @@ function lastSixMonths(points: TrendPoint[]): TrendPoint[] {
   })
 }
 
-function barHeightClass(count: number, points: TrendPoint[]): string {
-  const max = Math.max(...points.map((point) => point.count), 0)
-  if (max === 0 || count === 0) return 'h-1'
-
+function barWidthClass(count: number, max: number): string {
+  if (max === 0 || count === 0) return 'w-0'
   const ratio = count / max
-  if (ratio >= 0.84) return 'h-full'
-  if (ratio >= 0.67) return 'h-20'
-  if (ratio >= 0.5) return 'h-16'
-  if (ratio >= 0.34) return 'h-12'
-  if (ratio >= 0.17) return 'h-8'
-  return 'h-4'
+  if (ratio >= 0.9) return 'w-full'
+  if (ratio >= 0.75) return 'w-10/12'
+  if (ratio >= 0.6) return 'w-8/12'
+  if (ratio >= 0.45) return 'w-6/12'
+  if (ratio >= 0.3) return 'w-4/12'
+  if (ratio >= 0.15) return 'w-2/12'
+  return 'w-1/12'
 }
 
 function monthLabel(month: string): string {
@@ -225,9 +273,18 @@ function isEmptyAnalytics(data: AnalyticsPayload, trend: TrendPoint[]): boolean 
   return !hasEnquiries && !hasTraffic
 }
 
+function sourceTapPhrase(item: SourceItem): string {
+  const key = item.source ?? item.label
+  if (key === 'whatsapp' || /whatsapp/i.test(item.label)) return 'WhatsApp'
+  if (key === 'estimate' || /estimate/i.test(item.label)) return 'the estimate calculator'
+  if (key === 'form' || /form/i.test(item.label)) return 'the enquiry form'
+  if (key === 'call' || /call/i.test(item.label)) return 'Call'
+  return item.label
+}
+
 function interpret(data: AnalyticsPayload, topSource: SourceItem | undefined): string {
   if (topSource) {
-    return `Most enquiries this month came from ${topSource.label.toLowerCase()}.`
+    return `Most people who contact you tap ${sourceTapPhrase(topSource)} after looking at two or three projects.`
   }
 
   const topProject = data.topProjects[0]
@@ -240,4 +297,65 @@ function interpret(data: AnalyticsPayload, topSource: SourceItem | undefined): s
   }
 
   return 'Keep sharing the website link so this month has enough signal.'
+}
+
+function followUpAction(data: AnalyticsPayload, topSource: SourceItem | undefined, topProject: TopProject | undefined): string {
+  if (data.enquiryStats.thisMonth === 0) return 'No enquiries yet. Put the website link back into Instagram, WhatsApp replies, and your Google Business Profile.'
+  if (topSource) return `Most enquiries came from ${topSource.label}. Check those conversations first and reply before adding more content.`
+  if (topProject) return `${topProject.title} is getting attention. Make sure that project has strong photos, location, and service links.`
+  return 'Follow up on new enquiries first, then review whether project pages need clearer CTAs.'
+}
+
+function QuestionCard({
+  question,
+  answer,
+  note,
+  tone = 'neutral',
+}: {
+  question: string
+  answer: ReactNode
+  note: string
+  tone?: 'neutral' | 'primary' | 'alert'
+}) {
+  const toneClass =
+    tone === 'alert'
+      ? 'border-admin-alert bg-admin-alert-soft'
+      : tone === 'primary'
+        ? 'border-admin-primary bg-admin-primary-soft'
+        : ''
+
+  return (
+    <AdminCard className={`p-5 ${toneClass}`}>
+      <p className="text-xs font-semibold uppercase tracking-wide text-admin-muted">{question}</p>
+      <p className="mt-3 text-2xl font-semibold tabular-nums text-admin-ink">{answer}</p>
+      <p className="mt-2 text-sm text-admin-muted">{note}</p>
+    </AdminCard>
+  )
+}
+
+function monthDelta(current: number, previous: number): string {
+  if (previous === 0 && current > 0) return 'new signal'
+  if (current === previous) return 'flat'
+  return current > previous ? 'up' : 'down'
+}
+
+function RankedCard({ title, empty, children }: { title: string; empty: string; children: ReactNode }) {
+  const hasChildren = Array.isArray(children) ? children.length > 0 : Boolean(children)
+  return (
+    <AdminCard className="overflow-hidden">
+      <div className="border-b border-admin-border px-5 py-4">
+        <h2 className="text-base font-semibold text-admin-ink">{title}</h2>
+      </div>
+      {hasChildren ? <ol className="flex flex-col">{children}</ol> : <p className="p-5 text-base text-admin-muted">{empty}</p>}
+    </AdminCard>
+  )
+}
+
+function RankedRow({ label, value }: { label: string; value: ReactNode }) {
+  return (
+    <li className="flex min-h-12 items-center justify-between gap-3 border-b border-admin-border px-5 py-3 last:border-b-0">
+      <span className="min-w-0 text-sm font-medium text-admin-ink">{label}</span>
+      <span className="shrink-0 text-sm font-semibold tabular-nums text-admin-muted">{value}</span>
+    </li>
+  )
 }

@@ -9,6 +9,15 @@ import { Services } from './Services'
 import { TrustBar } from './TrustBar'
 import { About } from './About'
 import { Testimonials } from './Testimonials'
+import { Process } from './Process'
+import { FAQ } from './FAQ'
+import { Contact } from './Contact'
+import { Map } from './Map'
+import { Footer } from './Footer'
+import { Instagram } from './Instagram'
+import { CtaBand } from './CtaBand'
+import { StickyMobileCta } from './StickyMobileCta'
+import { Team } from './Team'
 
 /**
  * THE SECTION CONTRACT.
@@ -52,7 +61,16 @@ const REGISTRY: Partial<{ [K in SectionKey]: SectionComponent<K> }> = {
   services: Services,
   portfolio: Portfolio,
   about: About,
+  process: Process,
   testimonials: Testimonials,
+  faq: FAQ,
+  contact: Contact,
+  map: Map,
+  instagram: Instagram,
+  ctaBand: CtaBand,
+  stickyMobileCta: StickyMobileCta,
+  footer: Footer,
+  team: Team,
   // Everything else populated as sections land. Each ticket adds exactly one line.
 }
 
@@ -70,6 +88,7 @@ export const HOME_SECTION_ORDER: readonly SectionKey[] = [
   'services',
   'portfolio',
   'about',
+  'team',
   'process',
   'testimonials',
   'instagram',
@@ -77,6 +96,7 @@ export const HOME_SECTION_ORDER: readonly SectionKey[] = [
   'contact',
   'map',
   'ctaBand',
+  'stickyMobileCta',
   'footer',
 ]
 

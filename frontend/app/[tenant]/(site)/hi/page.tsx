@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { loadPublicClientConfigForLocale } from '@/lib/i18n'
+import { localePageClass } from '@/lib/i18n-client'
 import { notFoundMeta, pageMeta } from '@/lib/page-meta'
 import { HomeSection } from '@/lib/motion'
 import { HOME_SECTION_ORDER, renderableSections } from '@/sections/registry'
@@ -42,7 +43,7 @@ export default async function HindiHomePage({ params }: Props) {
   const sections = renderableSections(config, HOME_SECTION_ORDER)
 
   return (
-    <main lang="hi">
+    <main lang="hi" data-public-locale="hi" className={localePageClass('hi')}>
       {sections.map(({ key, Component, config: block, variant }) => (
         <HomeSection key={key} first={key === 'hero'}>
           <Component config={block as never} site={config} variant={variant} />

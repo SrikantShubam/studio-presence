@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
-import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localePageClass, localeRoleClass, localeTextClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, HomeSection } from '@/lib/motion'
 import { GalleryPhoto, ProjectGallery, type GalleryItem } from './ProjectGallery'
@@ -47,7 +47,7 @@ function ProjectTitle({ title, number, locale }: { title: { lead: string; accent
     <section className={`${pagePad} pb-[clamp(32px,4vw,56px)] pt-[clamp(48px,7vw,92px)]`}>
       <div className="flex flex-wrap items-end justify-between gap-[clamp(20px,4vw,48px)]">
         <div className="min-w-0">
-          <div className={`mb-[clamp(20px,3vw,34px)] grid gap-1.5 text-[10.5px] font-normal leading-relaxed text-accent ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
+          <div className={`mb-[clamp(20px,3vw,34px)] grid gap-1.5 font-normal leading-relaxed text-accent ${locale === 'hi' ? 'text-[clamp(14px,1.45vw,17px)]' : 'text-[10.5px]'} ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
             <ClipLine>{copy.selected}</ClipLine>
             <ClipLine delay={0.05}>{copy.caseStudy}</ClipLine>
             <ClipLine delay={0.1}>
@@ -100,8 +100,8 @@ function Metadata({ project, budget, locale }: { project: PortfolioProject; budg
       <div className="grid grid-cols-2 gap-[clamp(28px,4vw,56px)] lg:grid-cols-4">
         {entries.map((entry) => (
           <div key={entry.label} className="min-w-0 border-l border-accent pl-4 lg:pl-[clamp(16px,2vw,28px)]">
-            <span className={`block text-[11px] text-muted ${locale === 'hi' ? 'tracking-normal' : 'lowercase tracking-[0.16em]'}`}>{entry.label}</span>
-            <span className={`mt-2.5 block break-words text-[clamp(22px,2.6vw,32px)] font-normal leading-[1.1] text-ink ${localeTextClass(locale, 'uppercase tracking-[0.01em]')}`}>
+            <span className={`block text-muted ${locale === 'hi' ? localeRoleClass(locale, 'label') : 'text-[11px] lowercase tracking-[0.16em]'}`}>{entry.label}</span>
+            <span className={`mt-2.5 block break-words font-normal text-ink ${locale === 'hi' ? 'text-[clamp(26px,3vw,38px)] leading-[1.25]' : 'text-[clamp(22px,2.6vw,32px)] leading-[1.1]'} ${localeTextClass(locale, 'uppercase tracking-[0.01em]')}`}>
               {entry.value}
             </span>
           </div>
@@ -287,7 +287,7 @@ function DetailCta({ href, locale }: { href: string; locale: PublicLocale }) {
         </div>
         <Link
           href={href}
-          className={`inline-flex min-h-11 items-center gap-3.5 bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
+          className={`inline-flex min-h-11 items-center gap-3.5 bg-cta px-[34px] py-5 font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta ${localeRoleClass(locale, 'button')}`}
         >
           {copy.ctaAction}
           <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
@@ -309,13 +309,13 @@ function NeighborLink({ project, direction, locale }: { project: PortfolioProjec
         direction === 'next' ? 'md:justify-items-end md:text-right' : ''
       } ${direction === 'prev' ? 'border-b border-accent md:border-b-0 md:border-r' : ''}`}
     >
-      <span className={`inline-flex items-center gap-2 text-[10.5px] font-medium text-accent ${localeTextClass(locale, 'uppercase tracking-[0.22em]')}`}>
+      <span className={`inline-flex items-center gap-2 font-medium text-accent ${locale === 'hi' ? 'text-[clamp(14px,1.35vw,16px)]' : 'text-[10.5px]'} ${localeTextClass(locale, 'uppercase tracking-[0.22em]')}`}>
         {direction === 'prev' ? <EditorialIcon name="chevron-left" className="h-3 w-3" /> : null}
         {direction === 'prev' ? copy.previous : copy.next}
         {direction === 'next' ? <EditorialIcon name="chevron-right" className="h-3 w-3" /> : null}
       </span>
       <span className="break-words text-[clamp(20px,2.6vw,32px)] font-normal uppercase leading-[1.1] tracking-[-0.01em]">{project.title}</span>
-      {meta ? <span className={`break-words text-[10.5px] text-muted ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>{meta}</span> : null}
+      {meta ? <span className={`break-words text-muted ${locale === 'hi' ? 'text-[clamp(14px,1.35vw,16px)]' : 'text-[10.5px]'} ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}>{meta}</span> : null}
     </Link>
   )
 }
@@ -346,9 +346,9 @@ export function ProjectDetail({ site, project }: { site: ClientConfig; project: 
   const ctaHref = whatsappHref(site.business.whatsapp) ?? (site.sections.estimate?.enabled ? localeHref('/estimate', locale) : '#footer')
 
   return (
-    <article lang={locale} className="overflow-x-clip bg-surface text-ink">
+    <article lang={locale} data-public-locale={locale} className={`overflow-x-clip bg-surface text-ink ${localePageClass(locale)}`}>
       <HeroNav businessName={site.business.name} phone={site.business.phone} tone="on-surface" inner services={site.sections.services?.items} locale={locale} locales={site.i18n.locales} />
-      <ProjectGallery items={items}>
+      <ProjectGallery items={items} locale={locale}>
         <HomeSection first>
           <ProjectTitle title={title} number={String((index >= 0 ? index : 0) + 1).padStart(2, '0')} locale={locale} />
         </HomeSection>

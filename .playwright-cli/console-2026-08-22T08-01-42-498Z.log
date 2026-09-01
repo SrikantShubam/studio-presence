@@ -1,0 +1,6 @@
+[    1277ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[  168122ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/team/principal-01.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  394295ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  395232ms] [LOG] [Fast Refresh] done in 938ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[  395757ms] [WARNING] %c%s%c Client overrides unavailable for ashish-interiors: TypeError: fetch failed background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ about://React/Server/webpack-internal:///(rsc)/../backend/src/config/overrides.ts?219:30

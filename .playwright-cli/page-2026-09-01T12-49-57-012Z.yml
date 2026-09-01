@@ -1,0 +1,193 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e2]:
+    - article [ref=f10e3]:
+      - navigation [ref=f10e4]:
+        - link [ref=f10e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f10e6]: AI
+          - heading "ASHISH INTERIORS" [level=2] [ref=f10e12]: ASHISHINTERIORS
+        - generic [ref=f10e13]:
+          - link [ref=f10e14] [cursor=pointer]:
+            - /url: /
+            - heading "HOME" [level=5] [ref=f10e15]
+          - generic [ref=f10e16]:
+            - button [ref=f10e17]:
+              - heading "SERVICES" [level=5] [ref=f10e18]
+            - button "Open services menu" [ref=f10e19]
+          - link [ref=f10e22] [cursor=pointer]:
+            - /url: /about
+            - heading "ABOUT" [level=5] [ref=f10e23]
+          - link [ref=f10e24] [cursor=pointer]:
+            - /url: /portfolio
+            - heading "PORTFOLIO" [level=5] [ref=f10e25]
+          - link [ref=f10e26] [cursor=pointer]:
+            - /url: /#contact
+            - heading "CONTACT" [level=5] [ref=f10e27]
+        - generic [ref=f10e28]:
+          - generic "Language" [ref=f10e29]:
+            - link "EN" [ref=f10e33] [cursor=pointer]:
+              - /url: /ashish-interiors/portfolio
+            - link "HI" [ref=f10e34] [cursor=pointer]:
+              - /url: /hi/ashish-interiors/portfolio
+          - link "+919876543210" [ref=f10e36] [cursor=pointer]:
+            - /url: tel:+919876543210
+      - generic [ref=f10e39]:
+        - generic [ref=f10e40]:
+          - generic [ref=f10e41]:
+            - generic [ref=f10e42]: "6"
+            - generic [ref=f10e44]: Completed sites,
+            - generic [ref=f10e46]: 2013 — 2026
+          - heading "Our Portfolio" [level=1] [ref=f10e48]:
+            - generic [ref=f10e49]: Our
+            - generic [ref=f10e51]: Portfolio
+        - paragraph [ref=f10e54]: Everything we have handed over and been allowed to photograph — flats, offices, guest houses and shops, almost all of them within an hour of Patna.
+      - generic [ref=f10e55]:
+        - generic [ref=f10e57]:
+          - link "All (6)" [ref=f10e58] [cursor=pointer]:
+            - /url: /portfolio
+            - text: All
+            - generic [ref=f10e59]: (6)
+          - link "Residential (6)" [ref=f10e60] [cursor=pointer]:
+            - /url: /projects/residential
+            - text: Residential
+            - generic [ref=f10e61]: (6)
+          - link "Commercial (0)" [ref=f10e62] [cursor=pointer]:
+            - /url: /projects/commercial
+            - text: Commercial
+            - generic [ref=f10e63]: (0)
+          - link "Hospitality (0)" [ref=f10e64] [cursor=pointer]:
+            - /url: /projects/hospitality
+            - text: Hospitality
+            - generic [ref=f10e65]: (0)
+          - link "Retail (0)" [ref=f10e66] [cursor=pointer]:
+            - /url: /projects/retail
+            - text: Retail
+            - generic [ref=f10e67]: (0)
+        - generic [ref=f10e69]:
+          - generic [ref=f10e70]:
+            - generic [ref=f10e71]:
+              - generic [ref=f10e72]: "01"
+              - generic [ref=f10e73]: Residential
+            - link "Rajendra Nagar 3BHK cover photograph Rajendra Nagar 3BHK Patna · 45 days View more" [ref=f10e75] [cursor=pointer]:
+              - /url: /portfolio/3bhk-boring-road
+              - img "Rajendra Nagar 3BHK cover photograph" [ref=f10e76]
+              - generic [ref=f10e77]:
+                - generic [ref=f10e78]: Rajendra Nagar 3BHK
+                - generic [ref=f10e79]: Patna · 45 days
+              - generic [ref=f10e80]: View more
+          - link "Boring Road Kitchen cover photograph Boring Road Kitchen Kankarbagh, Patna · 90 days View more" [ref=f10e87] [cursor=pointer]:
+            - /url: /portfolio/boring-road-kitchen
+            - img "Boring Road Kitchen cover photograph" [ref=f10e88]
+            - generic [ref=f10e89]:
+              - generic [ref=f10e90]: Boring Road Kitchen
+              - generic [ref=f10e91]: Kankarbagh, Patna · 90 days
+            - generic [ref=f10e92]: View more
+          - link "Kankarbagh Flat cover photograph Kankarbagh Flat Kankarbagh, Patna · 60 days View more" [ref=f10e99] [cursor=pointer]:
+            - /url: /portfolio/kankarbagh-flat
+            - img "Kankarbagh Flat cover photograph" [ref=f10e100]
+            - generic [ref=f10e101]:
+              - generic [ref=f10e102]: Kankarbagh Flat
+              - generic [ref=f10e103]: Kankarbagh, Patna · 60 days
+            - generic [ref=f10e104]: View more
+          - link "Study Nook cover photograph Study Nook Patna · 30 days View more" [ref=f10e111] [cursor=pointer]:
+            - /url: /portfolio/study-nook
+            - img "Study Nook cover photograph" [ref=f10e112]
+            - generic [ref=f10e113]:
+              - generic [ref=f10e114]: Study Nook
+              - generic [ref=f10e115]: Patna · 30 days
+            - generic [ref=f10e116]: View more
+          - link "Patliputra Duplex cover photograph Patliputra Duplex Patliputra, Patna · 90 days View more" [ref=f10e123] [cursor=pointer]:
+            - /url: /portfolio/patliputra-duplex
+            - img "Patliputra Duplex cover photograph" [ref=f10e124]
+            - generic [ref=f10e125]:
+              - generic [ref=f10e126]: Patliputra Duplex
+              - generic [ref=f10e127]: Patliputra, Patna · 90 days
+            - generic [ref=f10e128]: View more
+          - link "Portfolio cover photograph Portfolio Patna · 75 days View more" [ref=f10e135] [cursor=pointer]:
+            - /url: /portfolio/portfolio-detail
+            - img "Portfolio cover photograph" [ref=f10e136]
+            - generic [ref=f10e137]:
+              - generic [ref=f10e138]: Portfolio
+              - generic [ref=f10e139]: Patna · 75 days
+            - generic [ref=f10e140]: View more
+        - generic [ref=f10e145]: Showing 6 of 6 projects
+      - generic [ref=f10e150]:
+        - generic [ref=f10e151]:
+          - generic [ref=f10e152]:
+            - generic [ref=f10e153]: Seen something
+            - generic [ref=f10e154]: close to yours?
+          - heading "Start Your own" [level=2] [ref=f10e155]:
+            - text: Start
+            - generic [ref=f10e156]: Your own
+        - link "Calculate the estimate" [ref=f10e157] [cursor=pointer]:
+          - /url: /estimate
+      - generic [ref=f10e161]:
+        - generic [ref=f10e162]:
+          - generic [ref=f10e163]:
+            - generic "Ashish Interiors" [ref=f10e164]:
+              - generic [ref=f10e165]: AI
+              - heading "ASHISH INTERIORS" [level=2] [ref=f10e171]: ASHISHINTERIORS
+            - generic [ref=f10e172]:
+              - generic [ref=f10e173]:
+                - generic [ref=f10e174]: Phone
+                - link "+919876543210" [ref=f10e177] [cursor=pointer]:
+                  - /url: tel:+919876543210
+              - generic [ref=f10e178]:
+                - generic [ref=f10e179]: WhatsApp
+                - link "+919876543210" [ref=f10e182] [cursor=pointer]:
+                  - /url: https://wa.me/919876543210
+              - generic [ref=f10e183]:
+                - generic [ref=f10e184]: Email
+                - link "hello@ashishinteriors.in" [ref=f10e187] [cursor=pointer]:
+                  - /url: mailto:hello@ashishinteriors.in
+          - iframe [ref=f10e189]:
+            - link "Open in Maps (opens in new tab)" [ref=f11e4] [cursor=pointer]:
+              - /url: about:invalid#zClosurez
+              - text: Open in Maps
+        - generic [ref=f10e190]:
+          - navigation [ref=f10e191]:
+            - heading "Studio" [level=5] [ref=f10e192]
+            - link "Home" [ref=f10e193] [cursor=pointer]:
+              - /url: /
+            - link "About" [ref=f10e194] [cursor=pointer]:
+              - /url: /#about
+            - link "Team" [ref=f10e195] [cursor=pointer]:
+              - /url: /team
+            - link "Careers" [ref=f10e196] [cursor=pointer]:
+              - /url: /careers
+            - link "Locations" [ref=f10e197] [cursor=pointer]:
+              - /url: /locations
+          - navigation [ref=f10e198]:
+            - heading "Work" [level=5] [ref=f10e199]
+            - link "Portfolio" [ref=f10e200] [cursor=pointer]:
+              - /url: /portfolio
+            - link "Services" [ref=f10e201] [cursor=pointer]:
+              - /url: /#services
+            - link "Estimate" [ref=f10e202] [cursor=pointer]:
+              - /url: /estimate
+          - navigation [ref=f10e203]:
+            - heading "Areas" [level=5] [ref=f10e204]
+            - link "BORING ROAD PATNA" [ref=f10e205] [cursor=pointer]:
+              - /url: /areas/boring-road
+          - navigation [ref=f10e206]:
+            - heading "Writing" [level=5] [ref=f10e207]
+            - link "News" [ref=f10e208] [cursor=pointer]:
+              - /url: /news
+            - link "Journal" [ref=f10e209] [cursor=pointer]:
+              - /url: /journal
+          - navigation [ref=f10e210]:
+            - heading "Legal" [level=5] [ref=f10e211]
+            - link "Privacy" [ref=f10e212] [cursor=pointer]:
+              - /url: /privacy
+            - link "Terms" [ref=f10e213] [cursor=pointer]:
+              - /url: /terms
+            - link "INSTAGRAM" [ref=f10e214] [cursor=pointer]:
+              - /url: https://instagram.com/ashishinteriors
+            - link "FACEBOOK" [ref=f10e215] [cursor=pointer]:
+              - /url: https://facebook.com/ashishinteriors
+        - generic [ref=f10e216]:
+          - generic [ref=f10e217]: © 2026 ASHISH INTERIORS. All rights reserved.
+          - paragraph [ref=f10e218]: Mon-Sat, 10am - 7pm
+    - text: DEMO
+  - button "Open Next.js Dev Tools" [ref=f10e224] [cursor=pointer]
+  - alert [ref=f10e228]

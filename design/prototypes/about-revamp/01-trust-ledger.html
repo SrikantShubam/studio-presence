@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ashish Interiors About Us | Interior Designer in Patna</title>
+    <meta
+      name="description"
+      content="Meet Ashish Interiors, a Patna interior design studio for practical homes, modular kitchens and turnkey renovations with clear budgets, site supervision and client references."
+    />
+    <style>
+      :root {
+        --surface: #ffffff;
+        --panel: #f6f1ea;
+        --ink: #141414;
+        --body: #5e574f;
+        --accent: #51372a;
+        --cta: #d9bc72;
+        --line: rgba(81, 55, 42, 0.28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .shell {
+        min-height: 100vh;
+        overflow-x: clip;
+      }
+
+      .section,
+      .nav {
+        padding-inline: clamp(20px, 5vw, 72px);
+      }
+
+      .nav {
+        min-height: 78px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 11px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .mark {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--ink);
+        letter-spacing: 0.08em;
+      }
+
+      .navlinks {
+        display: flex;
+        align-items: center;
+        gap: clamp(14px, 2.6vw, 34px);
+      }
+
+      .hero {
+        min-height: calc(100vh - 78px);
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+        gap: clamp(34px, 6vw, 96px);
+        align-items: center;
+        padding-block: clamp(56px, 8vw, 116px);
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.24em;
+        line-height: 1.7;
+        font-size: 11px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1,
+      h2 {
+        font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        max-width: 900px;
+        font-size: clamp(54px, 10vw, 136px);
+        line-height: 0.86;
+      }
+
+      .accent {
+        display: block;
+        color: var(--accent);
+        margin-left: 0.42em;
+      }
+
+      .lead {
+        max-width: 38em;
+        margin-top: clamp(28px, 4vw, 46px);
+        color: var(--body);
+        font-size: clamp(18px, 2.1vw, 26px);
+        line-height: 1.5;
+      }
+
+      .hero-card {
+        position: relative;
+        padding: clamp(18px, 3vw, 32px);
+        border: 1px solid var(--accent);
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: clamp(10px, 1.8vw, 22px) clamp(10px, 1.8vw, 22px) auto auto;
+        width: 64%;
+        aspect-ratio: 1;
+        border: 1px solid var(--line);
+        pointer-events: none;
+      }
+
+      .portrait {
+        position: relative;
+        aspect-ratio: 4 / 5;
+        border: 1px solid var(--line);
+      }
+
+      .caption {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 18px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        line-height: 1.55;
+        font-size: 10px;
+      }
+
+      .proof-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-block: 1px solid var(--accent);
+      }
+
+      .proof-item {
+        min-height: 190px;
+        padding: clamp(24px, 4vw, 48px);
+        border-right: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 26px;
+      }
+
+      .proof-item:last-child {
+        border-right: 0;
+      }
+
+      .proof-item strong {
+        font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+        font-size: clamp(42px, 7vw, 82px);
+        font-weight: 400;
+        line-height: 0.9;
+      }
+
+      .proof-item span {
+        max-width: 19em;
+        color: var(--body);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 11px;
+        line-height: 1.55;
+      }
+
+      .ledger {
+        padding-block: clamp(64px, 9vw, 124px);
+        display: grid;
+        grid-template-columns: 0.55fr 1.45fr;
+        gap: clamp(34px, 6vw, 92px);
+        background: var(--panel);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .ledger h2,
+      .references h2,
+      .cta h2 {
+        font-size: clamp(42px, 7vw, 96px);
+        line-height: 0.9;
+      }
+
+      .ledger-list {
+        display: grid;
+        border-top: 1px solid var(--accent);
+      }
+
+      .ledger-row {
+        display: grid;
+        grid-template-columns: minmax(110px, 0.3fr) minmax(0, 1fr);
+        gap: clamp(18px, 4vw, 58px);
+        padding-block: clamp(24px, 3.4vw, 38px);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .ledger-row b {
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        line-height: 1.5;
+        font-size: 11px;
+      }
+
+      .ledger-row p {
+        color: var(--body);
+        font-size: clamp(17px, 1.45vw, 20px);
+        line-height: 1.7;
+      }
+
+      .references {
+        padding-block: clamp(64px, 9vw, 124px);
+      }
+
+      .reference-grid {
+        margin-top: clamp(34px, 5vw, 70px);
+        display: grid;
+        grid-template-columns: 1fr 0.82fr;
+        gap: clamp(24px, 5vw, 72px);
+        align-items: start;
+      }
+
+      .quote {
+        border-top: 1px solid var(--accent);
+        padding-top: clamp(24px, 4vw, 42px);
+      }
+
+      .quote p {
+        font-size: clamp(24px, 3.1vw, 44px);
+        line-height: 1.25;
+      }
+
+      .quote cite {
+        display: block;
+        margin-top: 28px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-style: normal;
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .photo-stack {
+        display: grid;
+        grid-template-columns: 1fr 0.64fr;
+        gap: 14px;
+      }
+
+      .photo-stack figure {
+        margin: 0;
+        border: 1px solid var(--line);
+      }
+
+      .photo-stack figure:first-child {
+        aspect-ratio: 4 / 5;
+      }
+
+      .photo-stack figure:last-child {
+        aspect-ratio: 3 / 4;
+        margin-top: 20%;
+      }
+
+      .cta {
+        padding-block: clamp(56px, 8vw, 104px);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 28px;
+        align-items: end;
+        border-top: 1px solid var(--accent);
+      }
+
+      .cta p {
+        max-width: 44em;
+        margin-top: 22px;
+        color: var(--body);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 52px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--accent);
+        background: var(--cta);
+        padding: 15px 24px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 840px) {
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          padding-block: 16px;
+        }
+
+        .navlinks {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .hero,
+        .ledger,
+        .reference-grid,
+        .cta {
+          grid-template-columns: 1fr;
+        }
+
+        .proof-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .proof-item {
+          min-height: 0;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .proof-item:last-child {
+          border-bottom: 0;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .navlinks {
+          display: none;
+        }
+
+        h1 {
+          font-size: clamp(48px, 15vw, 68px);
+        }
+
+        .ledger-row {
+          grid-template-columns: 1fr;
+        }
+
+        .photo-stack {
+          grid-template-columns: 1fr;
+        }
+
+        .photo-stack figure:last-child {
+          margin-top: 0;
+        }
+
+        .button {
+          width: 100%;
+          white-space: normal;
+          text-align: center;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+        "name": "Ashish Interiors",
+        "description": "Interior design studio in Patna for full-home interiors, modular kitchens and office design.",
+        "telephone": "+919876543210",
+        "email": "hello@ashishinteriors.in",
+        "foundingDate": "2013",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "2nd Floor, Boring Road",
+          "addressLocality": "Patna",
+          "addressRegion": "Bihar",
+          "postalCode": "800001",
+          "addressCountry": "IN"
+        },
+        "areaServed": ["Patna", "Danapur", "Phulwari Sharif"],
+        "url": "https://ashishinteriors.in/about"
+      }
+    </script>
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Ashish Interiors home">
+          <span class="mark">AI</span>
+          <span>Ashish Interiors</span>
+        </a>
+        <div class="navlinks" aria-label="About page sections">
+          <a href="#proof">Proof</a>
+          <a href="#process">Process</a>
+          <a href="#references">References</a>
+        </div>
+      </nav>
+
+      <section id="top" class="section hero" aria-labelledby="trust-title">
+        <div>
+          <p class="eyebrow">About the studio<br />Interior designer in Patna</p>
+          <h1 id="trust-title">Trust is built <span class="accent">before work begins</span></h1>
+          <p class="lead">
+            Ashish Interiors helps families and small businesses make interior decisions with less
+            guesswork: clear site visits, practical drawings, budget conversations and visible proof
+            from completed Patna projects.
+          </p>
+        </div>
+        <aside class="hero-card" aria-label="Founder accountability">
+          <figure class="portrait">
+            <img
+              src="../../../frontend/public/clients/ashish-interiors/editorial/team/principal-01.jpg"
+              alt="Ashish Kumar, founder of Ashish Interiors in Patna"
+            />
+          </figure>
+          <div class="caption">
+            <span>Ashish Kumar</span>
+            <span>Founder led since 2013</span>
+          </div>
+        </aside>
+      </section>
+
+      <section id="proof" class="proof-strip" aria-label="Ashish Interiors trust indicators">
+        <article class="proof-item">
+          <strong>2013</strong>
+          <span>Founded in Patna with residential interiors as the main work</span>
+        </article>
+        <article class="proof-item">
+          <strong>3</strong>
+          <span>Core project types: full-home interiors, modular kitchens and offices</span>
+        </article>
+        <article class="proof-item">
+          <strong>150 km</strong>
+          <span>Practical service radius for site visits and supervision</span>
+        </article>
+      </section>
+
+      <section id="process" class="section ledger" aria-labelledby="ledger-title">
+        <div>
+          <p class="eyebrow">What removes doubt</p>
+          <h2 id="ledger-title">The proof a client looks for</h2>
+        </div>
+        <div class="ledger-list">
+          <article class="ledger-row">
+            <b>First visit</b>
+            <p>
+              A serious estimate starts after the site is measured and the family routine is
+              understood, not from a catalogue price or a rushed phone quote.
+            </p>
+          </article>
+          <article class="ledger-row">
+            <b>Budget clarity</b>
+            <p>
+              The conversation separates necessary work from optional upgrades, so the client knows
+              what changes cost, durability and maintenance before approving finishes.
+            </p>
+          </article>
+          <article class="ledger-row">
+            <b>Comparable work</b>
+            <p>
+              Visitors can judge similar flats, kitchens and offices before they enquire, instead
+              of trusting a claim that every studio can handle every style.
+            </p>
+          </article>
+          <article class="ledger-row">
+            <b>Site updates</b>
+            <p>
+              Progress should be visible through photos, milestone notes and direct communication,
+              because most client anxiety starts when work disappears behind vague promises.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="references" class="section references" aria-labelledby="references-title">
+        <p class="eyebrow">References and finished work</p>
+        <h2 id="references-title">Proof beats persuasion</h2>
+        <div class="reference-grid">
+          <blockquote class="quote">
+            <p>
+              They gave us a dated schedule and stuck to it. The kitchen was done in five weeks and
+              the bill matched the estimate.
+            </p>
+            <cite>R. Kumar, Boring Road 3BHK turnkey project</cite>
+          </blockquote>
+          <div class="photo-stack" aria-label="Completed interior work examples">
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/portfolio-02.jpg"
+                alt="Completed living room interior by Ashish Interiors"
+              />
+            </figure>
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/service-01.jpg"
+                alt="Modular kitchen detail from a Patna interior project"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section cta" aria-labelledby="cta-title">
+        <div>
+          <p class="eyebrow">Before you commit</p>
+          <h2 id="cta-title">Ask for a site visit</h2>
+          <p>
+            Share your flat size, location and rough budget. The first useful conversation is about
+            fit: what can be done, what should wait, and where the money will actually show.
+          </p>
+        </div>
+        <a class="button" href="https://wa.me/919876543210">Start on WhatsApp</a>
+      </section>
+    </main>
+  </body>
+</html>

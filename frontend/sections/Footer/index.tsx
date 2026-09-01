@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
 import { chromeCopy, localeHref, localeRoleClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
-import { ClipLine } from '@/lib/motion'
+import { EditorialIcon, type EditorialIconName } from '@/lib/icons'
 import type { SectionComponentProps } from '@/sections/registry'
+import { BrandMark } from '../Hero/BrandMark'
 import { Wordmark } from '../Hero/Wordmark'
 
 type FooterConfig = SectionConfig<'footer'>
@@ -25,6 +26,13 @@ function addressQuery(site: ClientConfig): string {
 function whatsappHref(phone: string): string | null {
   const digits = phone.replace(/\D/g, '')
   return digits ? `https://wa.me/${digits}` : null
+}
+
+function socialIcon(label: string): EditorialIconName | undefined {
+  const normalized = label.toLowerCase()
+  if (normalized.includes('instagram')) return 'instagram'
+  if (normalized.includes('facebook')) return 'facebook'
+  return undefined
 }
 
 function mapEmbedSrc(site: ClientConfig): string | undefined {
@@ -125,7 +133,8 @@ function SocialLinks({ socials, locale }: { socials: FooterConfig['socials']; lo
       {socials.map((social, index) => (
         <span key={`${social.label}-${social.href}`} className="flex items-center gap-3">
           {index > 0 && <span className="text-accent" aria-hidden>|</span>}
-          <a href={social.href} className="text-ink transition-colors hover:text-accent">
+          <a href={social.href} className="inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
+            {socialIcon(social.label) ? <EditorialIcon name={socialIcon(social.label) as EditorialIconName} className="h-3 w-3" /> : null}
             {social.label}
           </a>
         </span>
@@ -135,63 +144,37 @@ function SocialLinks({ socials, locale }: { socials: FooterConfig['socials']; lo
 }
 
 function ExpandedFooter({ site }: { config: FooterConfig; site: ClientConfig }) {
-  const { address } = site.business
-  const cityLine = [address.city, address.pincode].filter(Boolean).join(' ')
-  const eyebrow = [address.locality, cityLine].filter(Boolean)
-  const body = [addressText(site), site.business.hours, site.business.hoursExtra].filter(Boolean).join(' — ')
   const embedSrc = mapEmbedSrc(site)
-  const wa = whatsappHref(site.business.whatsapp)
   const locale = publicLocaleFromSite(site)
   const copy = chromeCopy[locale].footer
+  const contactCopy = chromeCopy[locale].contact
+  const phone = site.business.phone ?? ''
+  const whatsapp = site.business.whatsapp ?? ''
+  const email = site.business.email ?? ''
 
   return (
     <footer id="footer" className="overflow-hidden border-t border-accent bg-ink text-surface">
       <div className="grid items-end gap-[clamp(28px,5vw,64px)] px-[clamp(20px,5vw,64px)] py-[clamp(56px,7vw,100px)] min-[900px]:grid-cols-[minmax(0,1.15fr)_minmax(220px,0.85fr)]">
         <div className="min-w-0">
-          {eyebrow.length ? (
-            <p className={`mb-[22px] m-0 grid gap-1.5 text-cta ${localeRoleClass(locale, 'eyebrow')}`}>
-              {eyebrow.map((line) => (
-                <ClipLine key={line}>{line}</ClipLine>
-              ))}
-            </p>
-          ) : null}
-          <h2 className="ai-type-footer-heading m-0 font-display font-light uppercase leading-[0.88] tracking-[-0.03em]">
-            <ClipLine>{copy.contactTitle.lead}</ClipLine>
-            <ClipLine className="ml-[0.55em] block text-cta" delay={0.08}>
-              {copy.contactTitle.accent}
-            </ClipLine>
-          </h2>
-          {body ? (
-            <p className={`mt-[22px] mb-0 max-w-[32em] text-pretty leading-[1.7] text-muted ${localeRoleClass(locale, 'body')}`}>{body}</p>
-          ) : null}
-          <div className="mt-[clamp(22px,3vw,32px)] grid justify-items-start gap-3">
-            <a
-              href={`tel:${site.business.phone}`}
-                className="ai-type-footer-phone font-normal tracking-[-0.02em] text-surface hover:text-cta"
-            >
-              {site.business.phone}
-            </a>
-            {site.business.email ? (
-              <a
-                href={`mailto:${site.business.email}`}
-                className="ai-type-footer-email text-surface hover:text-cta"
-              >
-                {site.business.email}
-              </a>
-            ) : null}
-            {wa ? (
-              <a
-                href={wa}
-                aria-label={copy.whatsappCta}
-                className={`mt-1 inline-flex min-h-11 items-center gap-3 border border-cta px-5 py-4 font-medium text-cta transition-colors hover:bg-cta hover:text-ink ${localeRoleClass(locale, 'button')}`}
-              >
-                <h5 className="ai-heading-reset m-0">{copy.whatsappCta}</h5>
-              </a>
-            ) : null}
+          <div className="flex items-center gap-3 text-cta" aria-label={site.business.name}>
+            <BrandMark businessName={site.business.name} />
+            <Wordmark as="h2" businessName={site.business.name} className="m-0 grid gap-1 font-display text-[clamp(22px,3vw,38px)] font-medium uppercase leading-[0.9] tracking-[0.08em]" />
+          </div>
+          <div className="mt-[clamp(28px,4vw,46px)] grid gap-x-[clamp(24px,4vw,48px)] gap-y-6 min-[720px]:grid-cols-3">
+            {[
+              { label: contactCopy.detailLabels.phone, value: phone, icon: 'phone' as const, href: phone ? `tel:${phone}` : undefined },
+              { label: contactCopy.detailLabels.whatsapp, value: whatsapp, icon: 'message-circle' as const, href: whatsappHref(whatsapp) ?? undefined },
+              { label: contactCopy.detailLabels.email, value: email, icon: 'email' as const, href: email ? `mailto:${email}` : undefined },
+            ].filter((detail) => detail.value).map((detail) => (
+              <div key={detail.label} className="grid min-w-0 gap-2 pb-5">
+                <span className={`inline-flex items-center gap-2 text-cta ${localeRoleClass(locale, 'label')}`}><EditorialIcon name={detail.icon} className="h-3 w-3" />{detail.label}</span>
+                <a href={detail.href} className="break-words text-[clamp(16px,1.5vw,21px)] leading-tight text-surface transition-colors hover:text-cta">{detail.value}</a>
+              </div>
+            ))}
           </div>
         </div>
         {embedSrc ? (
-          <div className="relative aspect-[4/3] min-h-[200px] w-full overflow-hidden border border-accent bg-hairline min-[900px]:max-h-[280px] min-[900px]:aspect-auto min-[900px]:h-[280px]">
+          <div className="relative flex aspect-[4/3] min-h-[200px] w-full items-center justify-center overflow-hidden border border-accent bg-hairline min-[900px]:max-h-[280px] min-[900px]:aspect-auto min-[900px]:h-[280px]">
             <iframe
               className="absolute inset-0 h-full w-full border-0 grayscale"
               src={embedSrc}

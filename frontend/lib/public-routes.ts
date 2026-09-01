@@ -1,9 +1,12 @@
 import type { ClientConfig } from '@studio/backend'
+import { loadI18nSeed } from '@studio/backend'
 
 /** Public paths that belong in the sitemap. Admin, thank-you and 404 stay out. */
 export function publicPaths(site: ClientConfig): string[] {
   const paths = new Set<string>(['/'])
   const sections = site.sections
+
+  if (sections.about?.enabled && sections.about.body?.trim()) paths.add('/about')
 
   if (sections.portfolio?.enabled && sections.portfolio.projects.length) {
     paths.add('/portfolio')
@@ -62,4 +65,10 @@ export function publicPaths(site: ClientConfig): string[] {
   if (site.legal.terms) paths.add('/terms')
 
   return [...paths]
+}
+
+export function localizedPublicPaths(site: ClientConfig, tenant: string): string[] {
+  const paths = publicPaths(site)
+  if (!loadI18nSeed(tenant, 'hi')) return paths
+  return [...paths, ...paths.map((path) => (path === '/' ? '/hi' : `/hi${path}`))]
 }

@@ -4,31 +4,28 @@ import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
+import { chromeCopy, publicLocaleFromSite } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, FadeUp, Stagger, StaggerItem } from '@/lib/motion'
 
 type News = NonNullable<ClientConfig['sections']['news']>
 
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const copy = {
-  title: { lead: 'News', accent: '& Press' },
-  press: { title: 'Press coverage', note: 'Written about us elsewhere — these links leave this site', readOn: 'Read on' },
-  studio: { title: 'Studio news', note: 'Our own announcements — these open on this site', read: 'Read the full item' },
-}
 const pagePad = 'px-[clamp(20px,5vw,64px)]'
-const ALL = 'All'
 
-export function NewsBrowser({ news }: { news: News }) {
+export function NewsBrowser({ news, site }: { news: News; site: ClientConfig }) {
+  const locale = publicLocaleFromSite(site)
+  const labels = chromeCopy[locale].news
+  const all = labels.all
   const years = useMemo(() => {
     const set = new Set<string>()
     for (const item of news.press) if (item.year) set.add(item.year)
     for (const item of news.items) if (item.year) set.add(item.year)
-    return [ALL, ...[...set].sort().reverse()]
-  }, [news.press, news.items])
+    return [all, ...[...set].sort().reverse()]
+  }, [all, news.press, news.items])
 
-  const [year, setYear] = useState<string>(ALL)
-  const press = useMemo(() => news.press.filter((item) => year === ALL || item.year === year), [news.press, year])
-  const items = useMemo(() => news.items.filter((item) => year === ALL || item.year === year), [news.items, year])
+  const [year, setYear] = useState<string>(all)
+  const press = useMemo(() => news.press.filter((item) => year === all || item.year === year), [all, news.press, year])
+  const items = useMemo(() => news.items.filter((item) => year === all || item.year === year), [all, news.items, year])
 
   return (
     <>
@@ -36,9 +33,9 @@ export function NewsBrowser({ news }: { news: News }) {
         <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
           <div className="min-w-0">
             <h1 className="m-0 font-display text-[clamp(44px,8.5vw,108px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-              <ClipLine>{copy.title.lead}</ClipLine>
+              <ClipLine>{labels.title.lead}</ClipLine>
               <ClipLine className="ml-[0.55em] block text-accent" delay={0.08}>
-                {copy.title.accent}
+                {labels.title.accent}
               </ClipLine>
             </h1>
           </div>
@@ -68,9 +65,9 @@ export function NewsBrowser({ news }: { news: News }) {
         <section className={`${pagePad} border-t border-accent bg-panel pb-[clamp(56px,8vw,96px)] pt-[clamp(40px,5vw,64px)]`}>
           <div className="mb-[clamp(28px,4vw,44px)] flex flex-wrap items-end justify-between gap-[18px]">
             <h2 className="m-0 text-[clamp(13px,1.5vw,16px)] font-medium uppercase tracking-[0.24em] text-accent">
-              {copy.press.title}
+              {labels.press.title}
             </h2>
-            <span className="text-xs tracking-[0.06em] text-muted">{copy.press.note}</span>
+            <span className="text-xs tracking-[0.06em] text-muted">{labels.press.note}</span>
           </div>
           <div className="grid">
             {press.map((item) => (
@@ -95,7 +92,7 @@ export function NewsBrowser({ news }: { news: News }) {
                     </span>
                   ) : null}
                   <span className="inline-flex items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.2em] text-accent">
-                    {copy.press.readOn} {item.publicationShort ?? item.publication}
+                    {labels.press.readOn} {item.publicationShort ?? item.publication}
                     <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
                   </span>
                 </span>
@@ -109,9 +106,9 @@ export function NewsBrowser({ news }: { news: News }) {
         <section className={`${pagePad} border-t border-accent py-[clamp(56px,8vw,100px)]`}>
           <div className="mb-[clamp(32px,4.5vw,52px)] flex flex-wrap items-end justify-between gap-[18px]">
             <h2 className="m-0 text-[clamp(13px,1.5vw,16px)] font-medium uppercase tracking-[0.24em] text-accent">
-              {copy.studio.title}
+              {labels.studio.title}
             </h2>
-            <span className="text-xs tracking-[0.06em] text-muted">{copy.studio.note}</span>
+            <span className="text-xs tracking-[0.06em] text-muted">{labels.studio.note}</span>
           </div>
           <Stagger className="grid grid-cols-1 gap-x-[clamp(20px,3vw,34px)] gap-y-[clamp(28px,4vw,48px)] min-[720px]:grid-cols-2 min-[1080px]:grid-cols-3">
             {items.map((item) => (
@@ -139,7 +136,7 @@ export function NewsBrowser({ news }: { news: News }) {
                     </span>
                     {item.summary && <span className="max-w-[32em] text-[14.5px] leading-[1.7] text-body">{item.summary}</span>}
                     <span className="mt-0.5 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em]">
-                      {copy.studio.read}
+                      {labels.studio.read}
                       <EditorialIcon name="arrow-right" className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                     </span>
                   </span>
@@ -151,7 +148,7 @@ export function NewsBrowser({ news }: { news: News }) {
       ) : press.length === 0 ? (
         <section className={`${pagePad} border-t border-accent py-[clamp(56px,8vw,100px)]`}>
           <FadeUp>
-            <p className="m-0 text-[14.5px] text-muted">Nothing for {year}.</p>
+            <p className="m-0 text-[14.5px] text-muted">{labels.empty} {year}.</p>
           </FadeUp>
         </section>
       ) : null}

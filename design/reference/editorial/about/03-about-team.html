@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Team — Editorial Interior Studio</title>
+    <style>
+      :root { --surface: #f4efe6; --ink: #1d1a16; --body: #5c554a; --accent: #8d5c3c; --line: rgba(29, 26, 22, 0.18); --panel: #ebe2d4; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--surface); color: var(--ink); font-family: Inter, Arial, sans-serif; }
+      .section { padding-inline: clamp(20px, 5vw, 64px); }
+      .top { min-height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; }
+      .intro { padding-block: clamp(54px, 8vw, 110px); display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(30px, 5vw, 80px); align-items: end; }
+      .index { font-family: Georgia, serif; font-size: clamp(76px, 12vw, 170px); line-height: 0.8; color: transparent; -webkit-text-stroke: 1px var(--accent); }
+      h1 { margin: 0; font-family: Georgia, serif; font-weight: 400; font-size: clamp(46px, 8vw, 110px); line-height: 0.88; letter-spacing: -0.055em; text-transform: uppercase; }
+      h1 span { color: var(--accent); display: block; margin-left: 0.45em; }
+      .lead { margin: 24px 0 0; max-width: 36em; color: var(--body); font-size: 18px; line-height: 1.7; }
+      .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(18px, 2.4vw, 30px); padding-bottom: clamp(54px, 8vw, 100px); }
+      .card { display: grid; gap: 16px; }
+      .photo { aspect-ratio: 3 / 4; background: linear-gradient(150deg, #d1bc9f, #68513f); border: 1px solid var(--line); }
+      .card h2 { margin: 0; font-size: 18px; line-height: 1.15; text-transform: uppercase; }
+      .card p { margin: 0; color: var(--accent); text-transform: uppercase; letter-spacing: 0.18em; font-size: 10px; }
+      .handoff { border-top: 1px solid var(--accent); background: var(--panel); padding-block: clamp(42px, 7vw, 80px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+      .handoff article { border-right: 1px solid var(--line); padding-right: 30px; }
+      .handoff article:last-child { border-right: 0; }
+      .handoff strong { display: block; margin-bottom: 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); }
+      .handoff span { color: var(--body); line-height: 1.65; }
+      @media (max-width: 900px) { .grid, .handoff { grid-template-columns: repeat(2, 1fr); } .intro { grid-template-columns: 1fr; } }
+      @media (max-width: 560px) { .grid, .handoff { grid-template-columns: 1fr; } .handoff { gap: 28px; } .handoff article { border-right: 0; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="section top"><span>Ashish Interiors</span><span>Team</span></header>
+      <section class="section intro">
+        <div class="index">03</div>
+        <div>
+          <h1>People who carry <span>the project</span></h1>
+          <p class="lead">The team is split by responsibility, so clients know who owns drawings, procurement, workshop fabrication, site execution and final snags.</p>
+        </div>
+      </section>
+      <section class="section grid">
+        <article class="card"><div class="photo"></div><h2>Design lead</h2><p>Layouts and material palette</p></article>
+        <article class="card"><div class="photo"></div><h2>Site supervisor</h2><p>Daily coordination</p></article>
+        <article class="card"><div class="photo"></div><h2>Workshop head</h2><p>Cabinet fabrication</p></article>
+        <article class="card"><div class="photo"></div><h2>Client coordinator</h2><p>Updates and approvals</p></article>
+      </section>
+      <section class="section handoff">
+        <article><strong>Before site</strong><span>Survey, requirement notes, drawing freeze and procurement dates are confirmed.</span></article>
+        <article><strong>During site</strong><span>Measurements, utility checks, fabrication status and installation dependencies are tracked.</span></article>
+        <article><strong>After handover</strong><span>Snag list closure, care notes and vendor references are shared with the homeowner.</span></article>
+      </section>
+    </main>
+  </body>
+</html>

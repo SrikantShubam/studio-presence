@@ -1,0 +1,89 @@
+[    1828ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[   20244ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/portfolio-04.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[   33300ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/trust-03.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  116475ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  117284ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:111
+[  120624ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[  120995ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/portfolio-04.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  121705ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/service-02.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  150025ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[  150399ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/portfolio-04.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  151104ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/service-02.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  241380ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  242254ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:111
+[  245590ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[  245952ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/portfolio-04.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  246651ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/service-02.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  402694ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  403580ms] [LOG] [Fast Refresh] done in 887ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[  518229ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  518942ms] [LOG] [Fast Refresh] done in 713ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[  521005ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  521482ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:111
+[  523828ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  524196ms] [LOG] [Fast Refresh] done in 368ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[  526102ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[  526517ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/portfolio-04.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  527213ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/service-02.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  722239ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  724960ms] [LOG] [Fast Refresh] done in 2722ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[  766724ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[  767693ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/portfolio-04.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  767776ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/service-02.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[ 1044721ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 1047819ms] [LOG] [Fast Refresh] done in 3099ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 1086630ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[ 1087022ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/portfolio-04.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[ 1087713ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/service-02.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[ 1161677ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 1162896ms] [LOG] [Fast Refresh] done in 1219ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 1174919ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 1175512ms] [LOG] [Fast Refresh] done in 593ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 1207546ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[ 1208553ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/portfolio-04.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[ 1208656ms] [WARNING] Image with src "/clients/ashish-interiors/editorial/service-02.jpg" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[ 2668028ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 2669444ms] [LOG] [Fast Refresh] done in 1416ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 4630239ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 4634587ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 4634675ms] [LOG] [Fast Refresh] done in 89ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 4635989ms] [LOG] [Fast Refresh] done in 1403ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 4639038ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 4641025ms] [LOG] [Fast Refresh] done in 1987ms @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/client/dev/report-hmr-latency.js:13

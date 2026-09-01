@@ -20,4 +20,8 @@ export type {
   TenantMember,
   TenantStatus,
   TenantTier,
+  DemoWorkflowState,
+  PaidDraftState,
+  PaidContentDraft,
+  ProspectDemo,
 } from './types'

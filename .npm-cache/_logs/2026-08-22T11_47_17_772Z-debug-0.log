@@ -1,0 +1,53 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.6.2
+2 info using node@v25.2.1
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\work\studio presence\.npmrc
+5 silly config load:file:C:\Users\srika\.npmrc
+6 silly config load:file:C:\Users\srika\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm exec ctx7@latest library Supabase Supabase Auth signInWithOAuth Google provider redirectTo Next.js PKCE
+8 verbose argv "exec" "--" "ctx7@latest" "library" "Supabase" "Supabase Auth signInWithOAuth Google provider redirectTo Next.js PKCE"
+9 verbose logfile logs-max:10 dir:C:\work\studio presence\.npm-cache\_logs\2026-08-22T11_47_17_772Z-
+10 verbose logfile C:\work\studio presence\.npm-cache\_logs\2026-08-22T11_47_17_772Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 verbose shrinkwrap failed to load node_modules/.package-lock.json out of date, updated: frontend
+14 http fetch GET https://registry.npmjs.org/ctx7 attempt 1 failed with EACCES
+15 http fetch GET https://registry.npmjs.org/ctx7 attempt 2 failed with EACCES
+16 http fetch GET https://registry.npmjs.org/ctx7 attempt 3 failed with EACCES
+17 verbose type system
+18 verbose stack FetchError: request to https://registry.npmjs.org/ctx7 failed, reason: 
+18 verbose stack     at ClientRequest.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\minipass-fetch\lib\index.js:130:14)
+18 verbose stack     at ClientRequest.emit (node:events:508:28)
+18 verbose stack     at emitErrorEvent (node:_http_client:108:11)
+18 verbose stack     at _destroy (node:_http_client:962:9)
+18 verbose stack     at onSocketNT (node:_http_client:982:5)
+18 verbose stack     at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+19 error code EACCES
+20 error errno EACCES
+21 error FetchError: request to https://registry.npmjs.org/ctx7 failed, reason: 
+21 error     at ClientRequest.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\minipass-fetch\lib\index.js:130:14)
+21 error     at ClientRequest.emit (node:events:508:28)
+21 error     at emitErrorEvent (node:_http_client:108:11)
+21 error     at _destroy (node:_http_client:962:9)
+21 error     at onSocketNT (node:_http_client:982:5)
+21 error     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+21 error   code: 'EACCES',
+21 error   errno: 'EACCES',
+21 error   type: 'system'
+21 error }
+22 error
+22 error The operation was rejected by your operating system.
+22 error It's possible that the file was already in use (by a text editor or antivirus),
+22 error or that you lack permissions to access it.
+22 error
+22 error If you believe this might be a permissions issue, please double-check the
+22 error permissions of the file and its containing directories, or try running
+22 error the command again as root/Administrator.
+23 verbose cwd C:\work\studio presence
+24 verbose os Windows_NT 10.0.26200
+25 verbose node v25.2.1
+26 verbose npm  v11.6.2
+27 verbose exit 1
+28 verbose code 1
+29 error A complete log of this run can be found in: C:\work\studio presence\.npm-cache\_logs\2026-08-22T11_47_17_772Z-debug-0.log

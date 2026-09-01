@@ -295,11 +295,383 @@ body {
   --t-font-display: 'Noto Sans Devanagari', 'Nirmala UI', Mangal, sans-serif;
   --t-font-body: 'Noto Sans Devanagari', 'Nirmala UI', Mangal, sans-serif;
   font-family: var(--t-font-body);
+  line-height: 1.65;
+}
+
+.public-locale-hi,
+[data-public-locale="hi"] {
+  --t-font-display: 'Noto Sans Devanagari', 'Nirmala UI', Mangal, sans-serif;
+  --t-font-body: 'Noto Sans Devanagari', 'Nirmala UI', Mangal, sans-serif;
+  font-family: var(--t-font-body);
   line-height: 1.55;
 }
 
-[lang="hi"] * {
+[lang="hi"] *,
+.public-locale-hi *,
+[data-public-locale="hi"] * {
   letter-spacing: normal;
+}
+
+.ai-type-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.ai-type-body {
+  font-size: 0.875rem;
+}
+
+.ai-type-button {
+  font-size: clamp(0.625rem, 1vw, 0.6875rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ai-type-section-title {
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.ai-type-hero-sub {
+  font-size: 0.8125rem;
+}
+
+.ai-type-meta {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.ai-type-nav {
+  font-size: 0.65625rem;
+  letter-spacing: 0.2em;
+}
+
+.ai-type-switcher {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+}
+
+.ai-type-footer {
+  font-size: 0.65625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ai-type-label {
+  font-size: 0.65625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.ai-type-hero-support {
+  font-size: clamp(0.875rem, 1.35vw, 1.0625rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ai-type-hero-cta {
+  font-size: 0.59375rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ai-type-mobile-nav {
+  font-size: clamp(1.5rem, 8.5vw, 3rem);
+}
+
+.ai-type-menu-item {
+  font-size: 0.875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ai-type-wordmark-nav {
+  font-size: 0.8125rem;
+  letter-spacing: 0.26em;
+}
+
+.ai-type-wordmark-footer {
+  font-size: clamp(0.6875rem, 1.05vw, 0.8125rem);
+  letter-spacing: 0.28em;
+}
+
+.ai-type-project-meta-value {
+  font-size: clamp(1.125rem, 2.2vw, 1.75rem);
+}
+
+.ai-type-hero-wordmark {
+  font-size: clamp(2.5rem, 6.7vw, 5.25rem);
+}
+
+.ai-type-hero-wordmark-display {
+  font-size: clamp(2.5rem, 8.8vw, 7.25rem);
+}
+
+.ai-type-split-ghost {
+  font-size: clamp(12.5rem, 26vw, 26.25rem);
+}
+
+.ai-type-split-vertical {
+  font-size: clamp(0.6875rem, 1.05vw, 0.8125rem);
+  letter-spacing: 0.52em;
+}
+
+.ai-type-split-wordmark {
+  font-size: clamp(2.875rem, 6.6vw, 5.375rem);
+}
+
+.ai-type-corner-meta {
+  font-size: clamp(0.75rem, 1vw, 0.875rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.ai-type-quick-action {
+  font-size: clamp(0.75rem, 1.1vw, 0.9375rem);
+}
+
+.ai-type-quick-action-detail {
+  font-size: 0.8125rem;
+}
+
+.ai-type-process-body {
+  font-size: 0.9375rem;
+}
+
+.ai-type-instagram-heading {
+  font-size: clamp(1.25rem, 2.45vw, 2rem);
+}
+
+.ai-type-footer-group-heading {
+  font-size: clamp(0.875rem, 1.25vw, 1.0625rem);
+}
+
+.ai-type-team-member-name {
+  font-size: clamp(1.75rem, 2.7vw, 2.5rem);
+}
+
+.ai-type-testimonial-heading {
+  font-size: clamp(2.5rem, 7.5vw, 5.75rem);
+}
+
+.ai-type-footer-heading {
+  font-size: clamp(2.25rem, 6vw, 5rem);
+}
+
+.ai-type-footer-phone {
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+}
+
+.ai-type-footer-email {
+  font-size: clamp(0.9375rem, 1.6vw, 1.125rem);
+}
+
+.ai-type-trust-value {
+  font-size: clamp(3.25rem, 6vw, 4.75rem);
+}
+
+.ai-type-trust-label {
+  font-size: clamp(0.8125rem, 1.15vw, 1.0625rem);
+}
+
+.ai-type-portfolio-heading {
+  font-size: clamp(2.875rem, 9vw, 7rem);
+}
+
+.ai-type-form-control {
+  font-size: 1rem;
+}
+
+.ai-type-portfolio-feature-index {
+  font-size: clamp(4.75rem, 10vw, 8.75rem);
+}
+
+.ai-type-portfolio-feature-title {
+  font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+}
+
+.ai-type-portfolio-feature-body {
+  font-size: 0.9375rem;
+}
+
+.ai-type-portfolio-tile-title {
+  font-size: clamp(0.8125rem, 1.6vw, 1.375rem);
+}
+
+.ai-type-portfolio-carousel-title {
+  font-size: clamp(1rem, 1.7vw, 1.3125rem);
+}
+
+.ai-type-portfolio-carousel-index {
+  font-size: 0.625rem;
+}
+
+.ai-type-icon-control {
+  font-size: 0.875rem;
+}
+
+.ai-heading-reset {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+@media (min-width: 640px) {
+  .ai-type-hero-cta {
+    font-size: clamp(0.625rem, 1vw, 0.6875rem);
+    letter-spacing: 0.18em;
+  }
+}
+
+[lang="hi"] .ai-type-eyebrow,
+.public-locale-hi .ai-type-eyebrow,
+[data-public-locale="hi"] .ai-type-eyebrow {
+  font-size: 1.0625rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-body,
+.public-locale-hi .ai-type-body,
+[data-public-locale="hi"] .ai-type-body {
+  font-size: 1.03125rem;
+}
+
+[lang="hi"] .ai-type-button,
+.public-locale-hi .ai-type-button,
+[data-public-locale="hi"] .ai-type-button {
+  font-size: 0.8125rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-section-title,
+.public-locale-hi .ai-type-section-title,
+[data-public-locale="hi"] .ai-type-section-title {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-hero-sub,
+.public-locale-hi .ai-type-hero-sub,
+[data-public-locale="hi"] .ai-type-hero-sub {
+  font-size: 1rem;
+}
+
+[lang="hi"] .ai-type-meta,
+.public-locale-hi .ai-type-meta,
+[data-public-locale="hi"] .ai-type-meta {
+  font-size: 0.875rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-nav,
+.public-locale-hi .ai-type-nav,
+[data-public-locale="hi"] .ai-type-nav {
+  font-size: 0.96875rem;
+  line-height: 1.35;
+  letter-spacing: normal;
+}
+
+[lang="hi"] .ai-type-switcher,
+.public-locale-hi .ai-type-switcher,
+[data-public-locale="hi"] .ai-type-switcher {
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: normal;
+}
+
+[lang="hi"] .ai-type-footer,
+.public-locale-hi .ai-type-footer,
+[data-public-locale="hi"] .ai-type-footer {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-label,
+.public-locale-hi .ai-type-label,
+[data-public-locale="hi"] .ai-type-label {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-hero-support,
+.public-locale-hi .ai-type-hero-support,
+[data-public-locale="hi"] .ai-type-hero-support {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.45;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-hero-cta,
+.public-locale-hi .ai-type-hero-cta,
+[data-public-locale="hi"] .ai-type-hero-cta {
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-mobile-nav,
+.public-locale-hi .ai-type-mobile-nav,
+[data-public-locale="hi"] .ai-type-mobile-nav {
+  font-size: clamp(1.9375rem, 10vw, 3.625rem);
+}
+
+[lang="hi"] .ai-type-menu-item,
+.public-locale-hi .ai-type-menu-item,
+[data-public-locale="hi"] .ai-type-menu-item {
+  font-size: 1.125rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-corner-meta,
+.public-locale-hi .ai-type-corner-meta,
+[data-public-locale="hi"] .ai-type-corner-meta {
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[lang="hi"] .ai-type-quick-action,
+.public-locale-hi .ai-type-quick-action,
+[data-public-locale="hi"] .ai-type-quick-action {
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+}
+
+[lang="hi"] .ai-type-trust-label,
+.public-locale-hi .ai-type-trust-label,
+[data-public-locale="hi"] .ai-type-trust-label {
+  font-size: clamp(1.125rem, 1.7vw, 1.375rem);
+}
+
+[lang="hi"] .ai-type-process-body,
+.public-locale-hi .ai-type-process-body,
+[data-public-locale="hi"] .ai-type-process-body {
+  font-size: 1.125rem;
+}
+
+[lang="hi"] .ai-type-instagram-heading,
+.public-locale-hi .ai-type-instagram-heading,
+[data-public-locale="hi"] .ai-type-instagram-heading {
+  font-size: clamp(1.75rem, 3.4vw, 2.625rem);
+}
+
+[lang="hi"] .ai-type-footer-group-heading,
+.public-locale-hi .ai-type-footer-group-heading,
+[data-public-locale="hi"] .ai-type-footer-group-heading {
+  font-size: clamp(1.125rem, 1.7vw, 1.375rem);
 }
 
 /* Demo/sold builds carry a watermark. Driven by `status`, never by hand. */

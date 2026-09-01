@@ -1,0 +1,23 @@
+[    4859ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/../node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[    4924ms] [WARNING] %c%s%c 
+Config warnings for "ashish-interiors":
+
+  warning  sections.inquiryForm.accessKeyEnv
+           names env var "WEB3FORMS_ASHISH", which is not set. The form would render and silently post nowhere — a lost enquiry looks exactly like no enquiry.
+ background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ about://React/Server/webpack-internal:///(rsc)/../backend/src/config/load.ts?2:72
+[    4925ms] [WARNING] %c%s%c 
+Config warnings for "ashish-interiors":
+
+  warning  sections.inquiryForm.accessKeyEnv
+           names env var "WEB3FORMS_ASHISH", which is not set. The form would render and silently post nowhere — a lost enquiry looks exactly like no enquiry.
+ background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ about://React/Server/webpack-internal:///(rsc)/../backend/src/config/load.ts?2:72
+[    4925ms] [WARNING] %c%s%c 
+Config warnings for "ashish-interiors":
+
+  warning  sections.inquiryForm.accessKeyEnv
+           names env var "WEB3FORMS_ASHISH", which is not set. The form would render and silently post nowhere — a lost enquiry looks exactly like no enquiry.
+ background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ about://React/Server/webpack-internal:///(rsc)/../backend/src/config/load.ts?2:72
+[    4953ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://ashish.localhost:3002/fonts/archivo/archivo-latin-ext.woff2:0
+[    5849ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://ashish.localhost:3002/fonts/archivo/archivo-latin.woff2:0
+[    8857ms] [WARNING] The resource http://ashish.localhost:3002/_next/static/css/app/layout.css?v=1786548520105 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://ashish.localhost:3002/:0
+[    8858ms] [WARNING] The resource http://ashish.localhost:3002/_next/static/css/app/layout.css?v=1786548521117 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://ashish.localhost:3002/:0

@@ -1,5 +1,5 @@
 import type { ClientConfig, SectionConfig } from '@studio/backend'
-import { localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { localeRoleClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { HeroContent } from './HeroContent'
 import { HeroNav } from './HeroNav'
 
@@ -66,7 +66,7 @@ export function HeroVideo({ config, site }: { config: SectionConfig<'hero'>; sit
           <path d="M11 5 6 9H3v6h3l5 4V5z" />
           <path d="M16 9l5 6M21 9l-5 6" />
         </svg>
-        <span className={`text-[10px] font-medium ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}>{locale === 'hi' ? 'आवाज बंद' : 'Sound off'}</span>
+        <h2 className={`m-0 font-medium ${localeRoleClass(locale, 'meta')}`}>{locale === 'hi' ? 'आवाज बंद' : 'Sound off'}</h2>
       </div>
     </section>
   )

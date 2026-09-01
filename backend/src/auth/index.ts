@@ -79,12 +79,12 @@ export async function requireTenant(user: SessionUser): Promise<TenantContext> {
 /**
  * Where to send someone after sign-in.
  *
- * One login screen serves both routes; the tier decides the destination. The
- * dashboard is t3 only — it is what justifies the price difference — so everyone
- * else lands on the panel.
+ * One login screen serves every route. Signed-in users land on the dashboard
+ * shell first; feature access inside it still depends on tenant membership and
+ * tier checks.
  */
-export function destinationForTenant(tenant: Tenant): '/panel' | '/dashboard' {
-  return tenant.tier === 't3' ? '/dashboard' : '/panel'
+export function destinationForTenant(_tenant: Tenant): '/dashboard' {
+  return '/dashboard'
 }
 
 /** Whether this tenant may see the leads dashboard at all. */

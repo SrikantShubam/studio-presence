@@ -52,13 +52,36 @@ function shapeOf(schema: z.ZodTypeAny): Record<string, z.ZodTypeAny> {
 }
 
 const businessShape = shapeOf(clientConfigSchema.shape.business)
+const ctaShape = shapeOf(clientConfigSchema.shape.cta)
+const seoShape = shapeOf(clientConfigSchema.shape.seo)
+const legalShape = shapeOf(clientConfigSchema.shape.legal)
 const sectionsShape = shapeOf(clientConfigSchema.shape.sections)
 const heroShape = shapeOf(sectionsShape.hero!)
+const quickActionsShape = shapeOf(sectionsShape.quickActions!)
+const trustBarShape = shapeOf(sectionsShape.trustBar!)
 const portfolioShape = shapeOf(sectionsShape.portfolio!)
 const servicesShape = shapeOf(sectionsShape.services!)
 const aboutShape = shapeOf(sectionsShape.about!)
+const processShape = shapeOf(sectionsShape.process!)
 const testimonialsShape = shapeOf(sectionsShape.testimonials!)
 const instagramShape = shapeOf(sectionsShape.instagram!)
+const faqShape = shapeOf(sectionsShape.faq!)
+const ctaBandShape = shapeOf(sectionsShape.ctaBand!)
+const footerShape = shapeOf(sectionsShape.footer!)
+const teamShape = shapeOf(sectionsShape.team!)
+const beforeAfterShape = shapeOf(sectionsShape.beforeAfter!)
+const reviewsShape = shapeOf(sectionsShape.reviews!)
+const awardsShape = shapeOf(sectionsShape.awards!)
+const inquiryFormShape = shapeOf(sectionsShape.inquiryForm!)
+const estimateShape = shapeOf(sectionsShape.estimate!)
+const caseStudyShape = shapeOf(sectionsShape.caseStudy!)
+const locationsShape = shapeOf(sectionsShape.locations!)
+const videoTourShape = shapeOf(sectionsShape.videoTour!)
+const companyProfileShape = shapeOf(sectionsShape.companyProfile!)
+const journalShape = shapeOf(sectionsShape.journal!)
+const newsShape = shapeOf(sectionsShape.news!)
+const careersShape = shapeOf(sectionsShape.careers!)
+const areasShape = shapeOf(sectionsShape.areas!)
 
 /**
  * dot-path → the exact Zod schema that path must satisfy. The field list is
@@ -72,19 +95,106 @@ const ALLOWLIST: Record<string, z.ZodTypeAny> = {
   'business.email': businessShape.email!,
   'business.hours': businessShape.hours!,
   'business.address': businessShape.address!,
+  'business.tagline': businessShape.tagline!,
+  'business.ownerName': businessShape.ownerName!,
+  'business.serviceAreas': businessShape.serviceAreas!,
+  'cta.whatsappMessage': ctaShape.whatsappMessage!,
+  'cta.stickyOnMobile': ctaShape.stickyOnMobile!,
+  'cta.showCallButton': ctaShape.showCallButton!,
+  'seo.title': seoShape.title!,
+  'seo.description': seoShape.description!,
+  'seo.keywords': seoShape.keywords!,
+  'legal.privacyPolicyDoc': legalShape.privacyPolicyDoc!,
+  'legal.termsDoc': legalShape.termsDoc!,
   'sections.hero.image': heroShape.image!,
+  'sections.hero.headline': heroShape.headline!,
+  'sections.hero.sub': heroShape.sub!,
+  'sections.hero.ctaLabel': heroShape.ctaLabel!,
+  'sections.hero.categories': heroShape.categories!,
+  'sections.quickActions.actions': quickActionsShape.actions!,
+  'sections.trustBar.stats': trustBarShape.stats!,
   'sections.portfolio.projects': portfolioShape.projects!,
+  'sections.portfolio.introText': portfolioShape.introText!,
+  'sections.portfolio.rangeEnd': portfolioShape.rangeEnd!,
+  'sections.portfolio.categoryHeaders': portfolioShape.categoryHeaders!,
   'sections.about.heading': aboutShape.heading!,
   'sections.about.body': aboutShape.body!,
+  'sections.about.image': aboutShape.image!,
+  'sections.process.steps': processShape.steps!,
   'sections.services.items': servicesShape.items!,
   'sections.testimonials.items': testimonialsShape.items!,
+  'sections.instagram.handle': instagramShape.handle!,
   'sections.instagram.embedPostUrls': instagramShape.embedPostUrls!,
+  'sections.faq.items': faqShape.items!,
+  'sections.ctaBand.headline': ctaBandShape.headline!,
+  'sections.ctaBand.ctaLabel': ctaBandShape.ctaLabel!,
+  'sections.ctaBand.placements': ctaBandShape.placements!,
+  'sections.footer.reassuranceLine': footerShape.reassuranceLine!,
+  'sections.footer.socials': footerShape.socials!,
+  'sections.team.intro': teamShape.intro!,
+  'sections.team.members': teamShape.members!,
+  'sections.team.groups': teamShape.groups!,
+  'sections.team.workshop': teamShape.workshop!,
+  'sections.beforeAfter.pairs': beforeAfterShape.pairs!,
+  'sections.reviews.googlePlaceId': reviewsShape.googlePlaceId!,
+  'sections.awards.items': awardsShape.items!,
+  'sections.inquiryForm.fields': inquiryFormShape.fields!,
+  'sections.inquiryForm.projectTypes': inquiryFormShape.projectTypes!,
+  'sections.estimate.enabled': estimateShape.enabled!,
+  'sections.estimate.ratePerSqft': estimateShape.ratePerSqft!,
+  'sections.estimate.intro': estimateShape.intro!,
+  'sections.estimate.area': estimateShape.area!,
+  'sections.estimate.homeTypes': estimateShape.homeTypes!,
+  'sections.estimate.finishLevels': estimateShape.finishLevels!,
+  'sections.estimate.resultNote': estimateShape.resultNote!,
+  'sections.estimate.included': estimateShape.included!,
+  'sections.caseStudy.items': caseStudyShape.items!,
+  'sections.locations.offices': locationsShape.offices!,
+  'sections.locations.otherLocationsNote': locationsShape.otherLocationsNote!,
+  'sections.videoTour.url': videoTourShape.url!,
+  'sections.companyProfile.pdf': companyProfileShape.pdf!,
+  'sections.journal.intro': journalShape.intro!,
+  'sections.journal.topics': journalShape.topics!,
+  'sections.journal.posts': journalShape.posts!,
+  'sections.news.press': newsShape.press!,
+  'sections.news.items': newsShape.items!,
+  'sections.careers.intro': careersShape.intro!,
+  'sections.careers.studioPhoto': careersShape.studioPhoto!,
+  'sections.careers.lookFor': careersShape.lookFor!,
+  'sections.careers.emptyState': careersShape.emptyState!,
+  'sections.careers.applyProcess': careersShape.applyProcess!,
+  'sections.careers.roles': careersShape.roles!,
+  'sections.areas.items': areasShape.items!,
 }
 
 export type AllowlistedField = keyof typeof ALLOWLIST
 
 export function allowlistedFields(): AllowlistedField[] {
   return Object.keys(ALLOWLIST) as AllowlistedField[]
+}
+
+export function validateEditablePatch(changes: Record<string, unknown>): Json {
+  const badKeys = Object.keys(changes).filter((key) => !(key in ALLOWLIST))
+  if (badKeys.length > 0) {
+    throw new PanelScopeError(
+      `These fields cannot be edited from the panel: ${badKeys.join(', ')}. Layout, colours, ` +
+        `template, tier and structure are not owner-editable.`,
+    )
+  }
+
+  let delta: Json = {}
+  for (const [key, rawValue] of Object.entries(changes)) {
+    const schema = ALLOWLIST[key]
+    if (!schema) throw new PanelScopeError(`These fields cannot be edited from the panel: ${key}.`)
+
+    const result = schema.safeParse(rawValue)
+    if (!result.success) {
+      const issue = result.error.issues[0]?.message ?? 'invalid value'
+      throw new PanelScopeError(`"${key}" is not valid: ${issue}.`)
+    }
+    delta = setAtPath(delta, key.split('.'), result.data)
+  }
+  return delta
 }
 
 function getAtPath(obj: unknown, path: string[]): unknown {
@@ -157,26 +267,7 @@ export async function saveEditableConfig(
   updatedBy: string,
   changes: Record<string, unknown>,
 ): Promise<{ patch: Json }> {
-  const badKeys = Object.keys(changes).filter((key) => !(key in ALLOWLIST))
-  if (badKeys.length > 0) {
-    throw new PanelScopeError(
-      `These fields cannot be edited from the panel: ${badKeys.join(', ')}. Layout, colours, ` +
-        `template, tier and structure are not owner-editable.`,
-    )
-  }
-
-  let delta: Json = {}
-  for (const [key, rawValue] of Object.entries(changes)) {
-    const schema = ALLOWLIST[key]
-    if (!schema) throw new PanelScopeError(`These fields cannot be edited from the panel: ${key}.`)
-
-    const result = schema.safeParse(rawValue)
-    if (!result.success) {
-      const issue = result.error.issues[0]?.message ?? 'invalid value'
-      throw new PanelScopeError(`"${key}" is not valid: ${issue}.`)
-    }
-    delta = setAtPath(delta, key.split('.'), result.data)
-  }
+  const delta = validateEditablePatch(changes)
 
   const existingPatch = await readPatch(db, tenant.id)
   const mergedPatch = mergePatch(existingPatch, delta) as Json
@@ -197,4 +288,5 @@ export const panel = {
   getEditableConfig,
   saveEditableConfig,
   allowlistedFields,
+  validateEditablePatch,
 }

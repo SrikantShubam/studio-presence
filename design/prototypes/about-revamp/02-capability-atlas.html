@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Ashish Interiors | Home Interiors, Kitchens and Offices in Patna</title>
+    <meta
+      name="description"
+      content="Explore what Ashish Interiors handles: full-home interiors, modular kitchens, office design, material selection, team responsibilities and project-fit guidance in Patna."
+    />
+    <style>
+      :root {
+        --surface: #ffffff;
+        --panel: #f5f0e8;
+        --ink: #141414;
+        --body: #5e574f;
+        --accent: #51372a;
+        --cta: #d9bc72;
+        --line: rgba(81, 55, 42, 0.28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .page {
+        min-height: 100vh;
+        overflow-x: clip;
+      }
+
+      .section,
+      .nav {
+        padding-inline: clamp(20px, 5vw, 72px);
+      }
+
+      .nav {
+        min-height: 78px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 11px;
+      }
+
+      .wordmark {
+        display: grid;
+        grid-template-columns: 38px auto;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .mark {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--ink);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0;
+      }
+
+      .hero {
+        padding-block: clamp(52px, 8vw, 118px);
+        display: grid;
+        grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+        gap: clamp(36px, 6vw, 92px);
+      }
+
+      .index {
+        color: transparent;
+        -webkit-text-stroke: 1px var(--accent);
+        font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+        font-size: clamp(96px, 17vw, 230px);
+        line-height: 0.78;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.24em;
+        line-height: 1.7;
+        font-size: 11px;
+      }
+
+      h1 {
+        font-size: clamp(52px, 9vw, 126px);
+        line-height: 0.86;
+      }
+
+      .accent {
+        display: block;
+        color: var(--accent);
+        margin-left: 0.44em;
+      }
+
+      .lead {
+        max-width: 41em;
+        margin-top: 28px;
+        color: var(--body);
+        font-size: clamp(18px, 2vw, 25px);
+        line-height: 1.55;
+      }
+
+      .atlas {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-block: 1px solid var(--accent);
+      }
+
+      .tile {
+        min-height: 360px;
+        padding: clamp(22px, 3.3vw, 42px);
+        border-right: 1px solid var(--line);
+        display: grid;
+        align-content: space-between;
+        gap: 30px;
+      }
+
+      .tile:last-child {
+        border-right: 0;
+      }
+
+      .tile h2 {
+        max-width: 8em;
+        font-size: clamp(30px, 4vw, 58px);
+        line-height: 0.95;
+      }
+
+      .tile p {
+        color: var(--body);
+        line-height: 1.7;
+        font-size: 16px;
+      }
+
+      .tile-num {
+        color: var(--accent);
+        font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+        font-size: clamp(42px, 7vw, 88px);
+        line-height: 0.9;
+      }
+
+      .work-grid {
+        padding-block: clamp(64px, 9vw, 124px);
+        display: grid;
+        grid-template-columns: 0.6fr 1.4fr;
+        gap: clamp(34px, 6vw, 92px);
+      }
+
+      .work-grid h2 {
+        font-size: clamp(42px, 7vw, 92px);
+        line-height: 0.9;
+        position: sticky;
+        top: 24px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .card {
+        border-top: 1px solid var(--accent);
+        padding-top: 20px;
+      }
+
+      .card figure {
+        margin: 0 0 20px;
+        aspect-ratio: 5 / 4;
+        border: 1px solid var(--line);
+      }
+
+      .card h3 {
+        font-size: 22px;
+        line-height: 1.1;
+      }
+
+      .card p {
+        margin-top: 12px;
+        color: var(--body);
+        line-height: 1.65;
+      }
+
+      .team {
+        background: var(--panel);
+        border-block: 1px solid var(--accent);
+        padding-block: clamp(56px, 8vw, 108px);
+      }
+
+      .team-head {
+        display: grid;
+        grid-template-columns: 0.7fr 1.3fr;
+        gap: clamp(28px, 5vw, 74px);
+        align-items: end;
+        margin-bottom: clamp(36px, 5vw, 70px);
+      }
+
+      .team-head h2 {
+        font-size: clamp(42px, 7vw, 92px);
+        line-height: 0.9;
+      }
+
+      .team-head p {
+        color: var(--body);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .people {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(18px, 3vw, 34px);
+      }
+
+      .person {
+        display: grid;
+        gap: 16px;
+      }
+
+      .person figure {
+        position: relative;
+        margin: 0;
+        aspect-ratio: 3 / 4;
+        border: 1px solid var(--line);
+      }
+
+      .person figure::before {
+        content: "";
+        position: absolute;
+        inset: -12px 12px 12px -12px;
+        border: 1px solid var(--accent);
+        z-index: -1;
+      }
+
+      .person h3 {
+        font-size: 21px;
+      }
+
+      .person p {
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        line-height: 1.55;
+        font-size: 10px;
+      }
+
+      .fit {
+        padding-block: clamp(58px, 8vw, 112px);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+        gap: clamp(30px, 5vw, 78px);
+        align-items: start;
+      }
+
+      .fit h2 {
+        font-size: clamp(42px, 7vw, 92px);
+        line-height: 0.9;
+      }
+
+      .fit-list {
+        display: grid;
+        border-top: 1px solid var(--accent);
+      }
+
+      .fit-list p {
+        padding-block: 20px;
+        border-bottom: 1px solid var(--line);
+        color: var(--body);
+        line-height: 1.65;
+      }
+
+      .cta {
+        border: 1px solid var(--accent);
+        padding: clamp(22px, 3vw, 34px);
+      }
+
+      .cta p {
+        color: var(--body);
+        line-height: 1.65;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 52px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+        border: 1px solid var(--accent);
+        background: var(--cta);
+        padding: 15px 22px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 11px;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .work-grid,
+        .team-head,
+        .fit {
+          grid-template-columns: 1fr;
+        }
+
+        .atlas,
+        .people {
+          grid-template-columns: 1fr;
+        }
+
+        .tile {
+          min-height: 0;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .tile:last-child {
+          border-bottom: 0;
+        }
+
+        .work-grid h2 {
+          position: static;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .nav span:last-child {
+          display: none;
+        }
+
+        h1 {
+          font-size: clamp(48px, 15vw, 68px);
+        }
+
+        .cards {
+          grid-template-columns: 1fr;
+        }
+
+        .button {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+        "name": "Ashish Interiors",
+        "description": "Patna interior design studio for full-home interiors, modular kitchens, selection of materials and office projects.",
+        "telephone": "+919876543210",
+        "email": "hello@ashishinteriors.in",
+        "foundingDate": "2013",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "2nd Floor, Boring Road",
+          "addressLocality": "Patna",
+          "addressRegion": "Bihar",
+          "postalCode": "800001",
+          "addressCountry": "IN"
+        },
+        "areaServed": ["Patna", "Danapur", "Phulwari Sharif"],
+        "url": "https://ashishinteriors.in/about"
+      }
+    </script>
+  </head>
+  <body>
+    <main class="page">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="wordmark" href="#top" aria-label="Ashish Interiors home">
+          <span class="mark">AI</span>
+          <span>Ashish Interiors</span>
+        </a>
+        <span>Capability atlas</span>
+      </nav>
+
+      <section id="top" class="section hero" aria-labelledby="atlas-title">
+        <div class="index" aria-hidden="true">02</div>
+        <div>
+          <p class="eyebrow">About the practice<br />What the studio can carry</p>
+          <h1 id="atlas-title">One studio for the decisions <span class="accent">inside the home</span></h1>
+          <p class="lead">
+            A useful About page should not only say the studio is trustworthy. It should show what
+            kind of projects fit, which decisions the team owns, and where the client will be asked
+            to choose.
+          </p>
+        </div>
+      </section>
+
+      <section class="atlas" aria-label="Service capability summary">
+        <article class="tile">
+          <span class="tile-num">01</span>
+          <div>
+            <h2>Full-home interiors</h2>
+            <p>Layouts, storage, finishes, lighting points and phased execution for occupied or newly handed-over flats.</p>
+          </div>
+        </article>
+        <article class="tile">
+          <span class="tile-num">02</span>
+          <div>
+            <h2>Modular kitchens</h2>
+            <p>Work triangle, wet-area material choices, appliance clearances and daily-use storage planned before installation.</p>
+          </div>
+        </article>
+        <article class="tile">
+          <span class="tile-num">03</span>
+          <div>
+            <h2>Small offices</h2>
+            <p>Reception, workstations, storage and client-facing rooms shaped around staff count, maintenance and budget.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="section work-grid" aria-labelledby="work-title">
+        <div>
+          <p class="eyebrow">Visible work</p>
+          <h2 id="work-title">Capability needs examples</h2>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/portfolio-01.jpg"
+                alt="Finished apartment interior project in Patna"
+              />
+            </figure>
+            <h3>Apartment planning</h3>
+            <p>Storage, circulation and room use are made legible before a visitor asks for a quote.</p>
+          </article>
+          <article class="card">
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/service-02.jpg"
+                alt="Interior material and finish detail for a residential project"
+              />
+            </figure>
+            <h3>Material selection</h3>
+            <p>The page should explain trade-offs in cost, cleaning, durability and replacement.</p>
+          </article>
+          <article class="card">
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/portfolio-03.jpg"
+                alt="Bedroom interior with built-in storage"
+              />
+            </figure>
+            <h3>Storage and furniture</h3>
+            <p>Built-ins, wardrobes and beds are presented as practical decisions, not only as styling.</p>
+          </article>
+          <article class="card">
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/areas/office.jpg"
+                alt="Office interior design example by Ashish Interiors"
+              />
+            </figure>
+            <h3>Commercial fit-outs</h3>
+            <p>Small offices need the same clarity: who uses the space, what must last, and when it opens.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section team" aria-labelledby="team-title">
+        <div class="team-head">
+          <div>
+            <p class="eyebrow">Who owns what</p>
+            <h2 id="team-title">People make the pitch real</h2>
+          </div>
+          <p>
+            For an interior design client, capability is not abstract. They want to know who will
+            listen, who will draw, who will coordinate site work and who will answer when something
+            changes.
+          </p>
+        </div>
+        <div class="people">
+          <article class="person">
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/team/principal-01.jpg"
+                alt="Ashish Kumar, founder and principal designer"
+              />
+            </figure>
+            <h3>Ashish Kumar</h3>
+            <p>Founder and principal designer</p>
+          </article>
+          <article class="person">
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/team/principal-02.jpg"
+                alt="Sunita Raj, design partner"
+              />
+            </figure>
+            <h3>Sunita Raj</h3>
+            <p>Partner, design and drawings</p>
+          </article>
+          <article class="person">
+            <figure>
+              <img
+                src="../../../frontend/public/clients/ashish-interiors/editorial/team/principal-03.jpg"
+                alt="Manoj Sahu, execution partner"
+              />
+            </figure>
+            <h3>Manoj Sahu</h3>
+            <p>Partner, execution calendar</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section fit" aria-labelledby="fit-title">
+        <div>
+          <p class="eyebrow">Project fit</p>
+          <h2 id="fit-title">A clear no builds more trust than a vague yes</h2>
+        </div>
+        <aside class="cta">
+          <div class="fit-list">
+            <p>Best fit: flats, homes, modular kitchens and small professional offices in Patna and nearby areas.</p>
+            <p>First conversation: location, size, possession date, budget range and rooms that need work.</p>
+            <p>Useful next step: one site visit, then a written scope and estimate before design is locked.</p>
+          </div>
+          <a class="button" href="mailto:hello@ashishinteriors.in">Email project details</a>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>

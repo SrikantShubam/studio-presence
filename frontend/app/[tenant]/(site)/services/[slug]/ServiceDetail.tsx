@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
-import { localeHref, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localePageClass, localeRoleClass, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, FadeUp, FadeUpItem, HomeSection, Stagger } from '@/lib/motion'
 import { HeroNav } from '@/sections/Hero/HeroNav'
@@ -11,30 +11,6 @@ import { ServiceFaq } from './ServiceFaq'
 
 type Service = NonNullable<ClientConfig['sections']['services']>['items'][number]
 
-const serviceDetailCopy = {
-  en: {
-    back: 'All projects',
-    includedTitle: { lead: 'What the', accent: 'price covers' },
-    linkedTitle: { lead: 'A project', accent: 'we built' },
-    read: 'Read the case study',
-    cta: {
-      eyebrow: ['Send us the', 'measurements'],
-      title: { lead: 'One site,', accent: 'one written estimate' },
-      action: 'Get an estimate on WhatsApp',
-    },
-  },
-  hi: {
-    back: 'सभी प्रोजेक्ट',
-    includedTitle: { lead: 'इसमें', accent: 'क्या शामिल है' },
-    linkedTitle: { lead: 'हमारा', accent: 'मिलता-जुलता काम' },
-    read: 'केस स्टडी पढ़ें',
-    cta: {
-      eyebrow: ['हमें अपने', 'माप भेजें'],
-      title: { lead: 'एक साइट,', accent: 'एक लिखित अनुमान' },
-      action: 'WhatsApp पर अनुमान लें',
-    },
-  },
-}
 const pagePad = 'px-[clamp(20px,5vw,64px)]'
 
 function whatsappHref(phone: string): string | undefined {
@@ -63,7 +39,7 @@ function Photo({
 }
 
 function Caption({ children, locale }: { children: string; locale: PublicLocale }) {
-  return <figcaption className={`text-[10.5px] text-muted ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}>{children}</figcaption>
+  return <figcaption className={`text-muted ${localeRoleClass(locale, 'meta')}`}>{children}</figcaption>
 }
 
 function ServiceHeading({ service, locale }: { service: Service; locale: PublicLocale }) {
@@ -73,7 +49,7 @@ function ServiceHeading({ service, locale }: { service: Service; locale: PublicL
     <section className={`${pagePad} pb-[clamp(36px,5vw,64px)] pt-[clamp(48px,7vw,96px)]`}>
       <div className="grid grid-cols-1 items-start gap-[clamp(32px,6vw,88px)] min-[1080px]:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
         <div className="min-w-0">
-          <h1 className="m-0 font-display text-[clamp(42px,8vw,104px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
+          <h1 className={`m-0 font-display text-[clamp(42px,8vw,104px)] font-light leading-[0.95] text-ink ${localeRoleClass(locale, 'sectionTitle')}`}>
             {service.title}
           </h1>
           {service.price ? (
@@ -82,10 +58,10 @@ function ServiceHeading({ service, locale }: { service: Service; locale: PublicL
                 {service.price.value}
               </span>
               {service.price.unit && (
-	                <span className={`text-[11px] font-medium uppercase text-accent ${locale === 'hi' ? 'tracking-normal' : 'tracking-[0.22em]'}`}>{service.price.unit}</span>
+	              <span className={`font-medium text-accent ${localeRoleClass(locale, 'meta')}`}>{service.price.unit}</span>
               )}
               {service.price.note && (
-                <span className="mt-1.5 text-[13px] leading-[1.6] text-muted">{service.price.note}</span>
+                <span className={`mt-1.5 leading-[1.65] text-muted ${locale === 'hi' ? 'text-[15px]' : 'text-[13px]'}`}>{service.price.note}</span>
               )}
             </FadeUp>
           ) : null}
@@ -93,12 +69,12 @@ function ServiceHeading({ service, locale }: { service: Service; locale: PublicL
 
         <FadeUp className="min-w-0 max-w-[42em] font-body" delay={0.16}>
           {lead ? (
-            <p className="m-0 text-pretty text-[clamp(16px,1.8vw,19px)] leading-[1.65] text-ink">{lead}</p>
+            <p className={`m-0 text-pretty leading-[1.65] text-ink ${locale === 'hi' ? 'text-[clamp(18px,2vw,21px)]' : 'text-[clamp(16px,1.8vw,19px)]'}`}>{lead}</p>
           ) : null}
           {rest.length ? (
             <div className="mt-5 grid gap-5">
               {rest.map((part) => (
-                <p key={part.slice(0, 24)} className="m-0 text-pretty text-justify text-[15.5px] leading-[1.75] text-body">
+                <p key={part.slice(0, 24)} className={`m-0 text-pretty text-justify leading-[1.75] text-body ${localeRoleClass(locale, 'body')}`}>
                   {part}
                 </p>
               ))}
@@ -141,12 +117,12 @@ function ServicePhotos({ service, locale }: { service: Service; locale: PublicLo
 
 function WhatsIncluded({ service, locale }: { service: Service; locale: PublicLocale }) {
   if (!service.included.length) return null
-  const copy = serviceDetailCopy[locale]
+  const copy = chromeCopy[locale].serviceDetail
 
   return (
     <section className={`${pagePad} border-t border-accent bg-panel py-[clamp(64px,9vw,110px)]`}>
       <div className="mb-[clamp(36px,5vw,60px)] flex flex-wrap items-end justify-between gap-6">
-        <h2 className="m-0 font-display text-[clamp(34px,6vw,80px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
+        <h2 className={`m-0 font-display text-[clamp(36px,6vw,80px)] font-light leading-[0.95] text-ink ${localeRoleClass(locale, 'sectionTitle')}`}>
           <ClipLine>{copy.includedTitle.lead}</ClipLine>
           <ClipLine className="ml-[0.55em] text-accent" delay={0.08}>{copy.includedTitle.accent}</ClipLine>
         </h2>
@@ -160,7 +136,7 @@ function WhatsIncluded({ service, locale }: { service: Service; locale: PublicLo
             <h3 className={`m-0 text-[clamp(14.5px,1.5vw,17px)] font-normal text-ink ${localeTextClass(locale, 'uppercase tracking-[0.06em]')}`}>
               {item.title}
             </h3>
-            <p className="m-0 text-pretty text-[13.5px] leading-[1.7] text-body">{item.body}</p>
+            <p className={`m-0 text-pretty leading-[1.7] text-body ${locale === 'hi' ? 'text-[15px]' : 'text-[13.5px]'}`}>{item.body}</p>
           </FadeUpItem>
         ))}
       </Stagger>
@@ -170,12 +146,12 @@ function WhatsIncluded({ service, locale }: { service: Service; locale: PublicLo
 
 function LinkedProject({ project, locale }: { project?: PortfolioProject; locale: PublicLocale }) {
   if (!project) return null
-  const copy = serviceDetailCopy[locale]
+  const copy = chromeCopy[locale].serviceDetail
 
   return (
     <section className={`${pagePad} border-t border-accent py-[clamp(64px,9vw,110px)]`}>
       <div className="mb-[clamp(28px,4vw,44px)] flex flex-wrap items-end justify-between gap-5">
-        <h2 className="m-0 font-display text-[clamp(30px,5vw,64px)] font-light uppercase leading-[0.9] tracking-[-0.03em] text-ink">
+        <h2 className={`m-0 font-display text-[clamp(32px,5vw,66px)] font-light leading-[0.95] text-ink ${localeRoleClass(locale, 'sectionTitle')}`}>
           {copy.linkedTitle.lead}
           <span className="ml-[0.55em] block text-accent">{copy.linkedTitle.accent}</span>
         </h2>
@@ -217,13 +193,13 @@ function LinkedProject({ project, locale }: { project?: PortfolioProject; locale
 }
 
 function ServiceCta({ href, locale }: { href: string; locale: PublicLocale }) {
-  const copy = serviceDetailCopy[locale]
+  const copy = chromeCopy[locale].serviceDetail
 
   return (
     <section id="contact" className={`${pagePad} border-t border-accent py-[clamp(56px,8vw,100px)]`}>
       <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
         <div className="min-w-0">
-          <div className={`mb-[clamp(18px,3vw,30px)] grid gap-1.5 text-[10.5px] font-normal leading-relaxed text-accent ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
+          <div className={`mb-[clamp(18px,3vw,30px)] grid gap-1.5 font-normal leading-relaxed text-accent ${locale === 'hi' ? 'text-[clamp(15px,1.55vw,18px)]' : 'text-[10.5px]'} ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
             {copy.cta.eyebrow.map((line) => (
               <span key={line}>{line}</span>
             ))}
@@ -235,7 +211,7 @@ function ServiceCta({ href, locale }: { href: string; locale: PublicLocale }) {
         </div>
         <Link
           href={href}
-          className={`inline-flex min-h-11 items-center gap-3.5 bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
+          className={`inline-flex min-h-11 items-center gap-3.5 bg-cta px-[34px] py-5 font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta ${locale === 'hi' ? 'text-[clamp(14px,1.45vw,16px)]' : 'text-[clamp(10.5px,1.1vw,12px)]'} ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
         >
           {copy.cta.action}
           <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
@@ -261,7 +237,7 @@ export function ServiceDetail({
   const ctaHref = whatsappHref(site.business.whatsapp) ?? (site.sections.estimate?.enabled ? localeHref('/estimate', locale) : '#footer')
 
   return (
-    <article lang={locale} className="overflow-x-clip bg-surface text-ink">
+    <article lang={locale} data-public-locale={locale} className={`overflow-x-clip bg-surface text-ink ${localePageClass(locale)}`}>
       <HeroNav
         businessName={site.business.name}
         phone={site.business.phone}
@@ -285,7 +261,7 @@ export function ServiceDetail({
       </HomeSection>
       {service.faq.length > 0 && (
         <HomeSection>
-          <ServiceFaq faq={service.faq} />
+          <ServiceFaq faq={service.faq} locale={locale} />
         </HomeSection>
       )}
       <HomeSection>

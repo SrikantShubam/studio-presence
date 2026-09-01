@@ -1,0 +1,153 @@
+
+> @studio/frontend@0.1.0 predev
+> node --import tsx ../scripts/sync-frontend-env.ts
+
+Synced 3 key(s) to frontend/.env.local
+
+> @studio/frontend@0.1.0 dev
+> next dev --port 3004
+
+   ▲ Next.js 15.5.23
+   - Local:        http://localhost:3004
+   - Network:      http://192.168.1.11:3004
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 9.6s
+ ✓ Compiled /middleware in 413ms (116 modules)
+ ○ Compiling /[tenant] ...
+ ✓ Compiled /[tenant] in 3.9s (1812 modules)
+ GET /ashish-interiors 200 in 8211ms
+ ✓ Compiled in 6.8s (743 modules)
+ ✓ Compiled in 520ms (743 modules)
+ ✓ Compiled in 480ms (743 modules)
+ ✓ Compiled in 372ms (743 modules)
+ ✓ Compiled in 356ms (743 modules)
+ ✓ Compiled in 835ms (743 modules)
+ ✓ Compiled in 380ms (743 modules)
+ ✓ Compiled in 570ms (743 modules)
+ ✓ Compiled in 778ms (743 modules)
+ ✓ Compiled in 358ms (743 modules)
+ ✓ Compiled in 409ms (743 modules)
+ ✓ Compiled in 441ms (743 modules)
+ ✓ Compiled in 605ms (743 modules)
+ ✓ Compiled in 376ms (743 modules)
+ ○ Compiling /[tenant] ...
+ ✓ Compiled /[tenant] in 625ms (1083 modules)
+ GET /ashish-interiors 200 in 3184ms
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 1704ms (1814 modules)
+ GET /favicon.ico 404 in 3590ms
+ GET /ashish-interiors 200 in 1157ms
+ GET /ashish-interiors 200 in 874ms
+ GET /ashish-interiors 200 in 795ms
+ GET /ashish-interiors 200 in 1151ms
+ GET /ashish-interiors 200 in 1083ms
+ GET /ashish-interiors 200 in 882ms
+ GET /ashish-interiors 200 in 1575ms
+ GET /ashish-interiors 200 in 1417ms
+ GET /ashish-interiors 200 in 1104ms
+ GET /ashish-interiors 200 in 1956ms
+ ✓ Compiled in 1483ms (1942 modules)
+ GET /ashish-interiors 200 in 842ms
+ ✓ Compiled in 1658ms (1826 modules)
+ GET /ashish-interiors 200 in 1274ms
+ ✓ Compiled in 1515ms (1826 modules)
+ GET /ashish-interiors 200 in 845ms
+ ✓ Compiled in 2.3s (1826 modules)
+ ✓ Compiled in 994ms (1826 modules)
+ ✓ Compiled in 1260ms (1826 modules)
+ ✓ Compiled in 836ms (1826 modules)
+ ✓ Compiled in 671ms (1826 modules)
+ ✓ Compiled in 1191ms (1826 modules)
+ ✓ Compiled in 1128ms (1826 modules)
+ ✓ Compiled in 1584ms (1826 modules)
+ ✓ Compiled in 921ms (1826 modules)
+ ✓ Compiled in 849ms (1826 modules)
+ ✓ Compiled in 1041ms (1826 modules)
+ GET /ashish-interiors 200 in 2620ms
+ GET /ashish-interiors 200 in 2411ms
+ GET /ashish-interiors 200 in 2541ms
+ ✓ Compiled /[tenant]/[...path] in 1885ms (1826 modules)
+ ✓ Compiled in 1ms (1085 modules)
+ GET /_next/static/webpack/2afa54c1c877d7fc.webpack.hot-update.json 404 in 3415ms
+ GET /ashish-interiors 200 in 4112ms
+ GET /ashish-interiors 200 in 1563ms
+ GET /ashish-interiors 200 in 1028ms
+ GET /ashish-interiors 200 in 1581ms
+ GET /ashish-interiors 200 in 1715ms
+ GET /ashish-interiors 200 in 1301ms
+ GET /ashish-interiors 200 in 1211ms
+ GET /ashish-interiors 200 in 1159ms
+ GET /ashish-interiors 200 in 1331ms
+ GET /ashish-interiors 200 in 1264ms
+ ✓ Compiled in 2.1s (1826 modules)
+ ✓ Compiled in 12.5s (2206 modules)
+ ✓ Compiled in 2.7s (2206 modules)
+ ✓ Compiled in 986ms (2206 modules)
+ ✓ Compiled in 1056ms (2206 modules)
+ ✓ Compiled in 1574ms (2206 modules)
+ ✓ Compiled in 1185ms (2209 modules)
+ GET /ashish-interiors 500 in 1859ms
+ ✓ Compiled /[tenant]/[...path] in 2.4s (2209 modules)
+ ✓ Compiled in 1ms (1467 modules)
+ GET /_next/static/webpack/d58738f4d16373f8.webpack.hot-update.json 404 in 3756ms
+ GET /ashish-interiors 500 in 2924ms
+ GET /ashish-interiors 500 in 728ms
+ ✓ Compiled in 1297ms (744 modules)
+ ✓ Compiled in 2.2s (744 modules)
+ ○ Compiling /_not-found ...
+ GET /_next/static/webpack/76a9fafe471fd679.webpack.hot-update.json 404 in 2768ms
+ GET /ashish-interiors 500 in 5381ms
+ GET /ashish-interiors 500 in 2919ms
+ ✓ Compiled /_not-found in 6.7s (1839 modules)
+ ○ Compiling /_error ...
+ GET /ashish-interiors 200 in 11590ms
+ GET /ashish-interiors 200 in 3201ms
+ ✓ Compiled /_error in 14.4s (2172 modules)
+ GET /ashish-interiors 200 in 5379ms
+ GET /ashish-interiors 200 in 2232ms
+ GET /ashish-interiors 200 in 1576ms
+ GET /ashish-interiors 200 in 1936ms
+ ✓ Compiled in 5.6s (2083 modules)
+ GET /ashish-interiors 200 in 3580ms
+ GET /ashish-interiors 200 in 2386ms
+ GET /ashish-interiors 200 in 2329ms
+ GET /ashish-interiors 200 in 1980ms
+ GET /ashish-interiors 200 in 1256ms
+ GET /ashish-interiors 200 in 719ms
+ GET /ashish-interiors 200 in 2223ms
+ GET /ashish-interiors 200 in 3321ms
+ ○ Compiling /[tenant]/[...path] ...
+ ✓ Compiled /[tenant]/[...path] in 5.2s (2083 modules)
+ ✓ Compiled in 1ms (1188 modules)
+ GET /_next/static/webpack/fb96603d52df74b3.webpack.hot-update.json 404 in 9165ms
+ GET /_next/static/webpack/dbc4534206032d3a.webpack.hot-update.json 404 in 3198ms
+ GET /ashish-interiors 200 in 10004ms
+ GET /ashish-interiors 200 in 1978ms
+ GET /ashish-interiors 200 in 7500ms
+ GET /ashish-interiors 200 in 9479ms
+ GET /ashish-interiors 200 in 7557ms
+ GET /ashish-interiors 200 in 7123ms
+ GET /ashish-interiors 200 in 5469ms
+ GET /ashish-interiors 200 in 3117ms
+ GET /ashish-interiors 200 in 2291ms
+ GET /ashish-interiors 200 in 1803ms
+ ✓ Compiled in 1602ms (2083 modules)
+ ✓ Compiled in 841ms (2066 modules)
+ ✓ Compiled in 658ms (2080 modules)
+ GET /ashish-interiors 200 in 2621ms
+ ✓ Compiled /[tenant]/[...path] in 296ms (1186 modules)
+ GET /minimal 404 in 1211ms
+ GET /ashish-interiors 200 in 1526ms
+ GET /ashish-interiors 200 in 1155ms
+ GET /ashish-interiors 200 in 1124ms
+ GET /ashish-interiors 200 in 1286ms
+ GET /ashish-interiors 200 in 1447ms
+ GET /ashish-interiors 200 in 2393ms
+ GET /ashish-interiors 200 in 1675ms
+ GET /ashish-interiors 200 in 1081ms
+ GET /ashish-interiors 200 in 1119ms
+ GET /ashish-interiors 200 in 1307ms
+ GET /ashish-interiors 200 in 1182ms
+[?25h

@@ -1,0 +1,405 @@
+- generic [ref=e2]:
+  - main [ref=e3]:
+    - generic [ref=e6]:
+      - img "Creating interiors that inspire. — hero photograph" [ref=e8]
+      - navigation [ref=e11]:
+        - link "ASHISH INTERIORS" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e13]:
+            - generic [ref=e14]: ASHISH
+            - generic [ref=e15]: INTERIORS
+        - generic [ref=e16]:
+          - link "HOME" [ref=e17] [cursor=pointer]:
+            - /url: /
+          - button "SERVICES" [ref=e19]
+          - link "ABOUT" [ref=e22] [cursor=pointer]:
+            - /url: /#about
+          - link "PORTFOLIO" [ref=e23] [cursor=pointer]:
+            - /url: /portfolio
+          - link "CONTACT" [ref=e24] [cursor=pointer]:
+            - /url: /#contact
+        - link "+919876543210" [ref=e27] [cursor=pointer]:
+          - /url: tel:+919876543210
+      - generic [ref=e29]:
+        - generic [ref=e31]:
+          - generic [ref=e33]:
+            - generic [ref=e34]: Interior Design Studio —
+            - generic [ref=e35]: RESIDENTIAL & COMMERCIAL,
+            - generic [ref=e36]: SINCE 2013
+          - heading "ASHISH INTERIORS" [level=1] [ref=e38]:
+            - generic [ref=e39]:
+              - generic [ref=e40]: ASHISH
+              - generic [ref=e41]: INTERIORS
+          - paragraph [ref=e43]: Creating interiors that inspire.
+          - link "CALCULATE THE ESTIMATE" [ref=e45] [cursor=pointer]:
+            - /url: /estimate
+        - generic [ref=e48]:
+          - generic [ref=e49]: Apartments
+          - generic [ref=e51]: Houses
+          - generic [ref=e53]: Offices
+      - generic [ref=e54]: EST. 2013 · Patna
+    - generic "Quick actions" [ref=e56]:
+      - link "WHATSAPP" [ref=e58] [cursor=pointer]:
+        - /url: https://wa.me/919876543210?text=Hi%20Ashish%20Interiors%2C%20I%20saw%20your%20website%20and%20I'd%20like%20to%20discuss%20an%20interior%20project.
+        - generic [ref=e62]:
+          - generic [ref=e63]: WHATSAPP
+          - generic [ref=e64]: FASTEST REPLY · +919876543210
+      - link "CALL" [ref=e66] [cursor=pointer]:
+        - /url: tel:+919876543210
+      - link "DIRECTIONS" [ref=e72] [cursor=pointer]:
+        - /url: https://www.google.com/maps/embed?pb=sample
+      - link "INSTAGRAM" [ref=e78] [cursor=pointer]:
+        - /url: https://instagram.com/ashishinteriors
+    - generic [ref=e85]:
+      - generic [ref=e86]:
+        - img "YEARS OF EXCELLENCE · SAME LANES OF PARTNERS SINCE 2015" [ref=e88]
+        - generic [ref=e89]:
+          - paragraph [ref=e90]: 12+
+          - paragraph [ref=e91]: YEARS OF EXCELLENCE
+      - generic [ref=e92]:
+        - img "PROJECTS COMPLETED · WORKING ACROSS PATNA" [ref=e94]
+        - generic [ref=e95]:
+          - paragraph [ref=e96]: 240+
+          - paragraph [ref=e97]: PROJECTS COMPLETED
+      - generic [ref=e98]:
+        - img "TEAM MEMBERS · IN-HOUSE CREW" [ref=e100]
+        - generic [ref=e101]:
+          - paragraph [ref=e102]: "18"
+          - paragraph [ref=e103]: TEAM MEMBERS
+    - generic [ref=e105]:
+      - heading "Our Services" [level=2] [ref=e107]:
+        - generic [ref=e108]: Our
+        - generic [ref=e110]: Services
+      - generic [ref=e112]:
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - generic: "01"
+            - heading "Interior Design" [level=3] [ref=e116]
+            - paragraph [ref=e118]: Layouts, joinery drawings and finish boards for the whole flat, worked out with you over two or three sittings before a single panel is cut.
+            - generic [ref=e119]:
+              - link "Read more" [ref=e120] [cursor=pointer]:
+                - /url: /services/interior-design
+              - link "Calculate the estimate" [ref=e123] [cursor=pointer]:
+                - /url: /estimate
+          - img "Interior Design" [ref=e128]
+        - generic [ref=e129]:
+          - generic [ref=e130]:
+            - generic: "02"
+            - heading "Turnkey Renovation" [level=3] [ref=e132]
+            - paragraph [ref=e134]: Demolition, civil, electrical and carpentry with one dated programme and one person responsible from start to handover.
+            - generic [ref=e135]:
+              - link "Read more" [ref=e136] [cursor=pointer]:
+                - /url: /services/turnkey-renovation
+              - link "Calculate the estimate" [ref=e139] [cursor=pointer]:
+                - /url: /estimate
+          - img "Turnkey Renovation" [ref=e144]
+        - generic [ref=e145]:
+          - generic [ref=e146]:
+            - generic: "03"
+            - heading "Selection of Materials" [level=3] [ref=e148]
+            - paragraph [ref=e149]: Sourcing and specification from finishes to fittings, with honest starting points rather than teaser rates.
+            - generic [ref=e150]:
+              - link "Read more" [ref=e151] [cursor=pointer]:
+                - /url: /services/selection-of-materials
+              - link "Calculate the estimate" [ref=e154] [cursor=pointer]:
+                - /url: /estimate
+          - img "Selection of Materials" [ref=e159]
+        - generic [ref=e160]:
+          - generic [ref=e161]:
+            - generic: "04"
+            - heading "Modular Kitchens" [level=3] [ref=e163]
+            - paragraph [ref=e165]: A modular kitchen is a set of decisions about how your family cooks, worked out from the triangle up.
+            - generic [ref=e166]:
+              - link "Read more" [ref=e167] [cursor=pointer]:
+                - /url: /services/modular-kitchens
+              - link "Calculate the estimate" [ref=e170] [cursor=pointer]:
+                - /url: /estimate
+          - img "Modular Kitchens" [ref=e175]
+    - generic [ref=e177]:
+      - generic [ref=e178]:
+        - heading "OUR PORTFOLIO" [level=2] [ref=e179]:
+          - text: OUR
+          - generic [ref=e180]: PORTFOLIO
+        - link "VIEW ALL PROJECTS" [ref=e181] [cursor=pointer]:
+          - /url: /portfolio
+      - generic [ref=e185]:
+        - generic [ref=e186]:
+          - generic: "01"
+          - generic [ref=e187]:
+            - heading "Rajendra Nagar 3BHK" [level=3] [ref=e188]
+            - paragraph [ref=e189]: A family of four moving into their first owned flat. We opened up the kitchen wall, built storage into every corridor and kept the palette to oak, off-white and one deep brown.
+          - generic [ref=e190]:
+            - generic [ref=e191]:
+              - generic [ref=e192]: location
+              - generic [ref=e193]: Patna
+            - generic [ref=e194]:
+              - generic [ref=e195]: terms of execution
+              - generic [ref=e196]: 45 days
+        - generic [ref=e197]:
+          - 'link "Rajendra Nagar 3BHK cover photograph Rajendra Nagar 3BHK LOCATION: Patna" [ref=e198] [cursor=pointer]':
+            - /url: /portfolio/3bhk-boring-road
+            - img "Rajendra Nagar 3BHK cover photograph" [ref=e199]
+            - generic [ref=e201]:
+              - generic [ref=e202]: Rajendra Nagar 3BHK
+              - generic [ref=e203]: "LOCATION: Patna"
+          - 'link "Boring Road Kitchen cover photograph Boring Road Kitchen LOCATION: Kankarbagh, Patna" [ref=e204] [cursor=pointer]':
+            - /url: /portfolio/boring-road-kitchen
+            - img "Boring Road Kitchen cover photograph" [ref=e205]
+            - generic [ref=e207]:
+              - generic [ref=e208]: Boring Road Kitchen
+              - generic [ref=e209]: "LOCATION: Kankarbagh, Patna"
+          - 'link "Kankarbagh Flat cover photograph Kankarbagh Flat LOCATION: Kankarbagh, Patna" [ref=e210] [cursor=pointer]':
+            - /url: /portfolio/kankarbagh-flat
+            - img "Kankarbagh Flat cover photograph" [ref=e211]
+            - generic [ref=e213]:
+              - generic [ref=e214]: Kankarbagh Flat
+              - generic [ref=e215]: "LOCATION: Kankarbagh, Patna"
+          - 'link "Study Nook cover photograph Study Nook LOCATION: Patna" [ref=e216] [cursor=pointer]':
+            - /url: /portfolio/study-nook
+            - img "Study Nook cover photograph" [ref=e217]
+            - generic [ref=e219]:
+              - generic [ref=e220]: Study Nook
+              - generic [ref=e221]: "LOCATION: Patna"
+          - 'link "Patliputra Duplex cover photograph Patliputra Duplex LOCATION: Patliputra, Patna" [ref=e222] [cursor=pointer]':
+            - /url: /portfolio/patliputra-duplex
+            - img "Patliputra Duplex cover photograph" [ref=e223]
+            - generic [ref=e225]:
+              - generic [ref=e226]: Patliputra Duplex
+              - generic [ref=e227]: "LOCATION: Patliputra, Patna"
+          - 'link "Portfolio cover photograph Portfolio LOCATION: Patna" [ref=e228] [cursor=pointer]':
+            - /url: /portfolio/portfolio-detail
+            - img "Portfolio cover photograph" [ref=e229]
+            - generic [ref=e231]:
+              - generic [ref=e232]: Portfolio
+              - generic [ref=e233]: "LOCATION: Patna"
+    - generic [ref=e236]:
+      - img "ABOUT THE STUDIO" [ref=e240]
+      - generic [ref=e241]:
+        - generic [ref=e242]:
+          - generic [ref=e243]: Learn more
+          - generic [ref=e245]: About the
+          - generic [ref=e247]: Studio
+        - heading "ABOUT THE STUDIO" [level=2] [ref=e249]:
+          - generic [ref=e250]: ABOUT
+          - generic [ref=e252]: THE STUDIO
+        - generic [ref=e254]:
+          - paragraph [ref=e255]: Ashish Interiors began in 2013 with one carpenter, one measuring tape and a rented room off Boring Road. The work has always been ordinary homes done properly — a family's first flat, a mother's kitchen, an office for four people.
+          - paragraph [ref=e256]: We still keep the crew in-house and still visit every site ourselves. Nothing leaves the workshop that we would not put in our own house.
+        - generic [ref=e257]:
+          - generic [ref=e258]: "2013"
+          - generic [ref=e259]: Founded in Patna
+    - generic [ref=e262]:
+      - heading "Ashish Interiors" [level=2] [ref=e263]
+      - generic [ref=e264]:
+        - article [ref=e265]:
+          - img "ASHISH KUMAR" [ref=e267]
+          - paragraph [ref=e268]: FOUNDER & PRINCIPAL DESIGNER
+          - heading "ASHISH KUMAR" [level=3] [ref=e269]
+          - paragraph [ref=e270]: Takes every first site visit himself and draws the flats he takes on.
+          - link "ASHISH KUMAR" [ref=e271] [cursor=pointer]:
+            - /url: /team/ashish-kumar
+        - article [ref=e272]:
+          - img "SUNITA RAJ" [ref=e274]
+          - paragraph [ref=e275]: PARTNER, DESIGN
+          - heading "SUNITA RAJ" [level=3] [ref=e276]
+          - paragraph [ref=e277]: Runs the drawing office and every kitchen and joinery detail that leaves it.
+          - link "SUNITA RAJ" [ref=e278] [cursor=pointer]:
+            - /url: /team/sunita-raj
+        - article [ref=e279]:
+          - img "MANOJ SAHU" [ref=e281]
+          - paragraph [ref=e282]: PARTNER, EXECUTION
+          - heading "MANOJ SAHU" [level=3] [ref=e283]
+          - paragraph [ref=e284]: Runs the workshop and the site calendar; the reason handover dates hold.
+          - link "MANOJ SAHU" [ref=e285] [cursor=pointer]:
+            - /url: /team/manoj-sahu
+    - generic [ref=e287]:
+      - heading "How we Work" [level=2] [ref=e288]:
+        - generic [ref=e289]: How we
+        - generic [ref=e291]: Work
+      - generic [ref=e293]:
+        - article [ref=e294]:
+          - generic [ref=e295]:
+            - generic [ref=e296]: "01"
+            - heading "Consultation" [level=3] [ref=e299]
+            - paragraph [ref=e301]: We visit the site, measure everything and talk budget plainly before drawing anything.
+            - paragraph [ref=e303]: 3–5 DAYS
+        - article [ref=e304]:
+          - generic [ref=e305]:
+            - generic [ref=e306]: "02"
+            - heading "Design" [level=3] [ref=e309]
+            - paragraph [ref=e311]: Layouts, joinery details and a finish board, revised with you until the drawings are signed.
+            - paragraph [ref=e313]: 2–3 WEEKS
+        - article [ref=e314]:
+          - generic [ref=e315]:
+            - generic [ref=e316]: "03"
+            - heading "Execution" [level=3] [ref=e319]
+            - paragraph [ref=e321]: Our own crew on site with a weekly photo update, so you always know what was done and what is next.
+            - paragraph [ref=e323]: 6–10 WEEKS
+        - article [ref=e324]:
+          - generic [ref=e325]:
+            - generic [ref=e326]: "04"
+            - heading "Handover" [level=3] [ref=e329]
+            - paragraph [ref=e331]: Snagging, cleaning and a written warranty before we hand the keys back.
+            - paragraph [ref=e333]: 1 WEEK
+    - generic [ref=e335]:
+      - generic [ref=e336]:
+        - heading "What clients Say" [level=2] [ref=e337]:
+          - generic [ref=e338]: What clients
+          - generic [ref=e340]: Say
+        - generic [ref=e343]:
+          - button "Previous" [ref=e344]
+          - button "Next" [ref=e347]
+      - generic [ref=e350]:
+        - article [ref=e353]:
+          - generic [ref=e355]:
+            - paragraph [ref=e356]: “They gave us a dated schedule and stuck to it. The kitchen was done in five weeks and the bill matched the estimate — that alone was new for us.”
+            - generic [ref=e357]:
+              - generic [ref=e358]:
+                - generic [ref=e359]: ★
+                - generic [ref=e360]: ★
+                - generic [ref=e361]: ★
+                - generic [ref=e362]: ★
+                - generic [ref=e363]: ★
+              - generic [ref=e364]: R. Kumar
+              - generic [ref=e365]: Boring Road · 3BHK Turnkey
+        - generic [ref=e366]:
+          - button [ref=e367]:
+            - article [ref=e368]:
+              - paragraph [ref=e369]: “Small flat, small budget, and still no shortcuts on the plywood.”
+              - generic [ref=e373]:
+                - generic [ref=e374]: S. Devi
+                - generic [ref=e375]: Kankarbagh
+          - button [ref=e376]:
+            - article [ref=e377]:
+              - paragraph [ref=e378]: “Weekly site photos meant I could follow the work from Delhi.”
+              - generic [ref=e382]:
+                - generic [ref=e383]: A. Sinha
+                - generic [ref=e384]: Patliputra
+          - button [ref=e385]:
+            - article [ref=e386]:
+              - paragraph [ref=e387]: “We asked them back for our office two years later. Same supervisor turned up — that says enough.”
+              - generic [ref=e390]:
+                - generic [ref=e391]: N. Singh
+                - generic [ref=e392]: Frazer Road
+    - generic [ref=e395]:
+      - generic [ref=e396]:
+        - generic [ref=e397]:
+          - generic [ref=e398]: From the site,
+          - generic [ref=e399]: Week by week
+        - link "Follow @ashishinteriors" [ref=e400] [cursor=pointer]:
+          - /url: https://www.instagram.com/ashishinteriors/
+      - generic [ref=e403]:
+        - img "Ashish Interiors studio work 1" [ref=e406]
+        - img "Ashish Interiors studio work 2" [ref=e409]
+        - img "Ashish Interiors studio work 3" [ref=e412]
+        - img "Ashish Interiors studio work 4" [ref=e415]
+        - img "Ashish Interiors studio work 5" [ref=e418]
+        - img "Ashish Interiors studio work 6" [ref=e421]
+    - generic [ref=e424]:
+      - heading "Common Questions" [level=2] [ref=e425]:
+        - generic [ref=e426]: Common
+        - generic [ref=e428]: Questions
+      - generic [ref=e430]:
+        - button "How long does a 3BHK take?" [ref=e432]:
+          - generic [ref=e434]: +
+        - button "Do you handle civil work?" [ref=e436]:
+          - generic [ref=e438]: +
+        - button "What's the payment schedule?" [ref=e440]:
+          - generic [ref=e442]: +
+        - button "Why should I trust you with my business?" [ref=e444]:
+          - generic [ref=e446]: +
+        - button "Do you work outside Patna?" [ref=e448]:
+          - generic [ref=e450]: +
+    - generic [ref=e453]:
+      - generic [ref=e454]:
+        - heading "Come See us" [level=2] [ref=e455]:
+          - generic [ref=e456]: Come
+          - generic [ref=e458]: See us
+        - generic [ref=e460]:
+          - generic [ref=e461]:
+            - generic [ref=e462]: Phone
+            - link "+919876543210" [ref=e463] [cursor=pointer]:
+              - /url: tel:+919876543210
+          - generic [ref=e464]:
+            - generic [ref=e465]: WhatsApp
+            - link "+919876543210" [ref=e466] [cursor=pointer]:
+              - /url: https://wa.me/919876543210
+          - generic [ref=e467]:
+            - generic [ref=e468]: Studio
+            - generic [ref=e469]: 2nd Floor, Boring Road, Boring Road Patna, Bihar, 800001
+          - generic [ref=e470]:
+            - generic [ref=e471]: Hours
+            - generic [ref=e472]: Mon-Sat, 10am - 7pm Sunday by appointment
+        - link "Calculate the estimate" [ref=e473] [cursor=pointer]:
+          - /url: /estimate
+      - generic [ref=e476]:
+        - iframe [ref=e477]
+        - generic:
+          - generic:
+            - generic: Studio location
+            - generic: Boring Road, Patna
+          - link "Open map" [ref=e478] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=2nd%20Floor%2C%20Boring%20Road%2C%20Boring%20Road%2C%20Patna%2C%20Bihar%2C%20800001
+    - generic [ref=e482]:
+      - generic [ref=e483]:
+        - generic [ref=e484]:
+          - paragraph [ref=e485]:
+            - generic [ref=e486]: Boring Road
+            - generic [ref=e488]: Patna 800001
+          - heading "Come See us" [level=2] [ref=e490]:
+            - generic [ref=e491]: Come
+            - generic [ref=e493]: See us
+          - paragraph [ref=e495]: 2nd Floor, Boring Road, Boring Road, Patna, Bihar, 800001 — Mon-Sat, 10am - 7pm — Sunday by appointment
+          - generic [ref=e496]:
+            - link "+919876543210" [ref=e497] [cursor=pointer]:
+              - /url: tel:+919876543210
+            - link "hello@ashishinteriors.in" [ref=e498] [cursor=pointer]:
+              - /url: mailto:hello@ashishinteriors.in
+            - link "WhatsApp" [ref=e499] [cursor=pointer]:
+              - /url: https://wa.me/919876543210
+        - iframe [ref=e501]
+      - generic [ref=e502]:
+        - navigation [ref=e503]:
+          - generic [ref=e504]: Studio
+          - link "Home" [ref=e505] [cursor=pointer]:
+            - /url: /
+          - link "About" [ref=e506] [cursor=pointer]:
+            - /url: /#about
+          - link "Team" [ref=e507] [cursor=pointer]:
+            - /url: /team
+          - link "Careers" [ref=e508] [cursor=pointer]:
+            - /url: /careers
+          - link "Locations" [ref=e509] [cursor=pointer]:
+            - /url: /locations
+        - navigation [ref=e510]:
+          - generic [ref=e511]: Work
+          - link "Portfolio" [ref=e512] [cursor=pointer]:
+            - /url: /portfolio
+          - link "Services" [ref=e513] [cursor=pointer]:
+            - /url: /#services
+          - link "Estimate" [ref=e514] [cursor=pointer]:
+            - /url: /estimate
+        - navigation [ref=e515]:
+          - generic [ref=e516]: Areas
+          - link "BORING ROAD PATNA" [ref=e517] [cursor=pointer]:
+            - /url: /areas/boring-road
+        - navigation [ref=e518]:
+          - generic [ref=e519]: Writing
+          - link "News" [ref=e520] [cursor=pointer]:
+            - /url: /news
+          - link "Journal" [ref=e521] [cursor=pointer]:
+            - /url: /journal
+        - navigation [ref=e522]:
+          - generic [ref=e523]: Legal
+          - link "Privacy" [ref=e524] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms" [ref=e525] [cursor=pointer]:
+            - /url: /terms
+          - link "INSTAGRAM" [ref=e526] [cursor=pointer]:
+            - /url: https://instagram.com/ashishinteriors
+          - link "FACEBOOK" [ref=e527] [cursor=pointer]:
+            - /url: https://facebook.com/ashishinteriors
+      - generic [ref=e528]:
+        - generic [ref=e529]: © 2026 ASHISH INTERIORS. All rights reserved.
+        - generic [ref=e530]: Mon-Sat, 10am - 7pm
+  - text: DEMO

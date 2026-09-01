@@ -1,0 +1,20 @@
+
+> @studio/frontend@0.1.0 predev
+> node --import tsx ../scripts/sync-frontend-env.ts
+
+Synced 2 NEXT_PUBLIC_* value(s) to frontend/.env.local
+
+> @studio/frontend@0.1.0 dev
+> next dev --port 3002
+
+   ▲ Next.js 15.5.23
+   - Local:        http://localhost:3002
+   - Network:      http://192.168.1.11:3002
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 54.3s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 15.2s (116 modules)
+ ○ Compiling /[tenant] ...
+ ✓ Compiled /[tenant] in 40.9s (856 modules)

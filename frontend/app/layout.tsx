@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { AuthHashCatcher } from '@/lib/auth-hash-catcher'
 import './globals.css'
 
 /**
@@ -9,13 +10,16 @@ import './globals.css'
  * every request to `/[tenant]/...` and that is the first place a slug exists.
  *
  * `suppressHydrationWarning` is on <html> because the tenant layer sets style
- * attributes there; without it React complains about a mismatch that is expected
- * and correct.
+ * attributes there, and on <body> because browser extensions (Grammarly, etc.)
+ * inject attributes before React hydrates. That mismatch is expected and not ours.
  */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
+      <body suppressHydrationWarning>
+        <AuthHashCatcher />
+        {children}
+      </body>
     </html>
   )
 }

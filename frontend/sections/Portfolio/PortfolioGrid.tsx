@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import type { ClientConfig } from '@studio/backend'
-import { localeTextClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
+import { localeRoleClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
 import type { PortfolioConfig, PortfolioProject } from './shared'
 import { PortfolioHeader, ProjectImage, ProjectLink, ProjectLocation, ProjectMeta, teaserProjects } from './shared'
 
@@ -33,23 +33,23 @@ const TILE_ASPECTS = [
   'aspect-[5/4] lg:aspect-auto',
 ]
 
-function FeaturedProject({ project }: { project: PortfolioProject }) {
+function FeaturedProject({ project, locale }: { project: PortfolioProject; locale: PublicLocale }) {
   return (
     <div className="relative grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(220px,0.42fr)] md:items-start md:gap-12 lg:gap-16">
-      <span className="pointer-events-none absolute -top-10 right-0 font-display text-[clamp(76px,10vw,140px)] font-light leading-none text-transparent [-webkit-text-stroke:1px_var(--color-hairline)]">
+      <h2 className="ai-type-portfolio-feature-index pointer-events-none absolute -top-10 right-0 m-0 font-display font-light leading-none text-transparent [-webkit-text-stroke:1px_var(--color-hairline)]">
         01
-      </span>
+      </h2>
 
       <div className="relative min-w-0">
-        <h3 className="m-0 break-words font-display text-[clamp(24px,2.8vw,34px)] font-semibold uppercase leading-tight tracking-tight text-ink">
+        <h3 className="ai-type-portfolio-feature-title m-0 break-words font-display font-semibold uppercase leading-tight tracking-tight text-ink">
           {project.title}
         </h3>
         {project.blurb && (
-          <p className="mt-5 max-w-3xl text-pretty text-[15px] leading-relaxed text-muted">{project.blurb}</p>
+          <p className="ai-type-portfolio-feature-body mt-5 max-w-3xl text-pretty leading-relaxed text-muted">{project.blurb}</p>
         )}
       </div>
 
-      <ProjectMeta project={project} />
+      <ProjectMeta project={project} locale={locale} />
     </div>
   )
 }
@@ -77,12 +77,13 @@ function MosaicTile({
       <ProjectImage project={project} priority className="transition-transform duration-500 group-hover:scale-[1.03]" />
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-ink/0 via-ink/10 to-ink/75" />
       <div className="absolute inset-x-0 bottom-0 grid gap-2 p-4 text-surface sm:p-5">
-        <span className="break-words font-display text-[clamp(13px,1.6vw,22px)] font-normal uppercase leading-tight">
+        <h3 className="ai-type-portfolio-tile-title m-0 break-words font-display font-normal uppercase leading-tight">
           {project.title}
-        </span>
+        </h3>
         <ProjectLocation
           project={project}
-          className={`break-words text-[9.5px] font-medium text-surface/80 ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
+          locale={locale}
+          className={`break-words font-medium text-surface/80 ${localeRoleClass(locale, 'meta')}`}
         />
       </div>
     </ProjectLink>
@@ -111,7 +112,7 @@ export function PortfolioGrid({ config, site }: { config: PortfolioConfig; site:
       <PortfolioHeader detailPages={config.detailPages} locale={locale} />
 
       <div className="grid gap-[clamp(32px,4vw,52px)]">
-        <FeaturedProject project={featuredProject} />
+        <FeaturedProject project={featuredProject} locale={locale} />
 
         <div
           ref={railRef}

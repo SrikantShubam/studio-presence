@@ -1,6 +1,36 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { loadPublicClientConfig } from '@studio/backend'
+import { notFoundMeta, pageMeta } from '@/lib/page-meta'
+import { loadPublicClientConfigForLocale } from '@/lib/i18n'
+import { HomeSection } from '@/lib/motion'
 import { HOME_SECTION_ORDER, renderableSections } from '@/sections/registry'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ tenant: string }>
+}): Promise<Metadata> {
+  const { tenant } = await params
+  try {
+    const site = await loadPublicClientConfigForLocale(tenant)
+    if (!site) return notFoundMeta()
+    const meta = pageMeta(site, site.seo.title, site.seo.description, { absolute: true })
+    return {
+      ...meta,
+      alternates: site.i18n.locales.includes('hi')
+        ? {
+            canonical: '/',
+            languages: {
+              en: '/',
+              hi: '/hi',
+            },
+          }
+        : { canonical: '/' },
+    }
+  } catch {
+    return notFoundMeta()
+  }
+}
 
 /**
  * The home page.
@@ -20,17 +50,20 @@ export default async function HomePage({ params }: { params: Promise<{ tenant: s
 
   let config
   try {
-    config = await loadPublicClientConfig(tenant)
+    config = await loadPublicClientConfigForLocale(tenant)
   } catch {
     notFound()
   }
+  if (!config) notFound()
 
   const sections = renderableSections(config, HOME_SECTION_ORDER)
 
   return (
-    <main>
+    <main lang="en">
       {sections.map(({ key, Component, config: block, variant }) => (
-        <Component key={key} config={block as never} site={config} variant={variant} />
+        <HomeSection key={key} first={key === 'hero'}>
+          <Component config={block as never} site={config} variant={variant} />
+        </HomeSection>
       ))}
     </main>
   )

@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig, SectionConfig } from '@studio/backend'
-import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localeRoleClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { Wordmark } from './Wordmark'
 import { heroEyebrowLines } from './eyebrow'
@@ -36,53 +36,84 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
   const locale = publicLocaleFromSite(site)
   const copy = chromeCopy[locale].nav
   const showHindi = site.i18n.locales.includes('hi')
-  const alternateLocale = locale === 'hi' ? 'en' : 'hi'
-  const alternateLabel = copy.languageShort
   const ghostDigits = site.business.yearFounded ? String(site.business.yearFounded).slice(-2) : null
   const ctaHref = site.sections.estimate?.enabled ? localeHref('/estimate', locale) : '#contact'
+  const languageSwitcher = (tone: 'dark' | 'light') => (
+    <div className={`ai-language-switcher inline-flex min-h-11 items-center border p-1 font-medium ${localeRoleClass(locale, 'switcher')} ${
+      tone === 'dark' ? 'border-surface/50 text-surface/70' : 'border-hairline bg-transparent text-muted'
+    }`}>
+      <span className={`grid h-9 w-9 shrink-0 place-items-center border bg-ink text-surface ${
+        tone === 'dark' ? 'border-surface/35' : 'border-hairline'
+      }`}>
+        <EditorialIcon name="language" className="h-4 w-4" />
+      </span>
+      {(['en', 'hi'] as const).map((item: PublicLocale) => (
+        <Link
+          key={item}
+          href={localeHref('/', item)}
+          hrefLang={item}
+          onClick={() => setOpen(false)}
+          aria-current={locale === item ? 'true' : undefined}
+          className={`inline-flex min-h-9 min-w-11 items-center justify-center border px-3 ${
+            locale === item
+              ? 'border-cta bg-cta text-ink'
+              : tone === 'dark'
+                ? 'border-transparent text-surface/70 hover:text-surface'
+                : 'border-transparent text-muted hover:text-ink'
+          }`}
+        >
+          {item === 'en' ? copy.english : copy.hindi}
+        </Link>
+      ))}
+    </div>
+  )
 
   return (
     <section id="hero" className="relative grid min-h-[min(920px,100vh)] bg-ink md:grid-cols-2">
       {/* LEFT — dark half */}
       <div className="relative flex flex-col justify-end overflow-hidden bg-ink px-6 pt-36 pb-12 sm:px-10 sm:pt-44 sm:pb-16 md:pt-52">
         {ghostDigits && (
-          <span
+          <h2
             aria-hidden
-            className="pointer-events-none absolute -bottom-[0.3em] -left-[0.09em] select-none text-[clamp(200px,26vw,420px)] font-extralight leading-[0.7] tracking-tight text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.13)]"
+            className="ai-type-split-ghost pointer-events-none absolute -bottom-[0.3em] -left-[0.09em] m-0 select-none font-extralight leading-[0.7] tracking-tight text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.13)]"
           >
             {ghostDigits}
-          </span>
+          </h2>
         )}
 
-        <span
+        <h2
           aria-hidden
-          className="pointer-events-none absolute top-[clamp(150px,17vw,210px)] right-5 hidden select-none text-[clamp(11px,1.05vw,13px)] font-normal uppercase tracking-[0.52em] text-transparent [-webkit-text-stroke:0.6px_rgba(255,255,255,0.34)] [writing-mode:vertical-rl] md:block"
+          className="ai-type-split-vertical pointer-events-none absolute top-[clamp(150px,17vw,210px)] right-5 m-0 hidden select-none font-normal uppercase text-transparent [-webkit-text-stroke:0.6px_rgba(255,255,255,0.34)] [writing-mode:vertical-rl] md:block"
         >
           {site.business.name}
-        </span>
+        </h2>
 
         <div className="relative">
-          <div className="mb-8 grid gap-2 text-[10px] font-normal uppercase leading-relaxed tracking-[0.3em] text-surface/55 sm:mb-11">
-            {heroEyebrowLines(site).map((line, i) => (
-              <span key={i}>{line}</span>
+          <div className={`mb-8 grid gap-2 font-normal leading-relaxed text-surface/55 sm:mb-11 ${localeRoleClass(locale, 'eyebrow')}`}>
+            {heroEyebrowLines(site, locale).map((line, i) => (
+              <h2 key={i} className="ai-heading-reset m-0">
+                {line}
+              </h2>
             ))}
           </div>
 
-          <h1 className="m-0 text-[clamp(46px,6.6vw,86px)] font-extralight uppercase leading-[0.93] tracking-tight text-surface">
-            <Wordmark businessName={site.business.name} />
-          </h1>
+          <Wordmark
+            as="h1"
+            businessName={site.business.name}
+            className="ai-type-split-wordmark m-0 font-display font-extralight uppercase leading-[0.93] tracking-tight text-surface"
+          />
 
           <div className="mt-8 flex items-start gap-5 sm:mt-12">
             <span className="mt-[0.62em] h-px w-10 shrink-0 bg-cta sm:w-14" />
-            <p className="m-0 max-w-xs text-sm font-normal uppercase leading-snug tracking-[0.14em] text-surface/85">
+            <h2 className={`m-0 max-w-sm font-normal leading-[1.55] text-surface/85 ${locale === 'hi' ? 'ai-type-hero-sub tracking-normal' : 'ai-type-hero-sub uppercase tracking-[0.14em]'}`}>
               {config.headline}
-            </p>
+            </h2>
           </div>
 
           {config.ctaLabel && (
             <Link
               href={ctaHref}
-              className={`mt-10 inline-flex min-h-10 items-center gap-2.5 whitespace-nowrap bg-cta px-6 py-4 text-[10px] font-medium text-ink sm:mt-14 sm:min-h-11 sm:gap-3 sm:px-7 sm:py-5 sm:text-[11px] ${localeTextClass(locale, 'uppercase tracking-[0.16em] sm:tracking-[0.2em]')}`}
+              className="ai-type-hero-cta mt-8 inline-flex min-h-11 items-center gap-2.5 whitespace-nowrap bg-cta px-6 py-4 font-medium text-ink sm:mt-10 sm:gap-3 sm:px-7 sm:py-5"
             >
               {config.ctaLabel} <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
             </Link>
@@ -107,20 +138,22 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
       {/* NAV — spans both halves, seam-aligned */}
       <nav className="absolute inset-x-0 top-0 grid items-start py-6 sm:py-8 md:grid-cols-2">
         <div className="flex items-center justify-between gap-5 px-6 sm:px-10">
-          <Link href={localeHref('/', locale)} className="grid gap-1 text-xs font-medium uppercase leading-tight tracking-[0.3em] text-surface">
-            <Wordmark businessName={site.business.name} />
+          <Link href={localeHref('/', locale)} className="text-surface">
+            <Wordmark as="h2" businessName={site.business.name} className="ai-type-wordmark-nav m-0 grid gap-1 font-medium uppercase leading-tight" />
           </Link>
-          <div className="hidden items-center gap-6 text-[10px] font-normal uppercase tracking-[0.22em] text-surface md:flex">
-            <Link href={localeHref('/', locale)}>{copy.home}</Link>
+          <div className={`hidden items-center gap-6 font-normal text-surface md:flex ${localeRoleClass(locale, 'nav')}`}>
+            <Link href={localeHref('/', locale)}><h5 className="ai-type-menu-item m-0 font-normal">{copy.home}</h5></Link>
+            {showHindi && languageSwitcher('dark')}
           </div>
         </div>
         <div className="flex items-center justify-between gap-5 px-6 sm:px-10">
-          <div className="hidden items-center gap-6 text-[10px] font-normal uppercase tracking-[0.22em] text-ink md:flex">
-            <Link href={localeHref('/#about', locale)}>{copy.about}</Link>
-            <Link href={localeHref('/portfolio', locale)}>{copy.portfolio}</Link>
-            <Link href={localeHref('/#contact', locale)}>{copy.contact}</Link>
+          <div className={`hidden items-center gap-6 font-normal text-ink md:flex ${localeRoleClass(locale, 'nav')}`}>
+            <Link href={localeHref('/about', locale)}><h5 className="ai-type-menu-item m-0 font-normal">{copy.about}</h5></Link>
+            <Link href={localeHref('/portfolio', locale)}><h5 className="ai-type-menu-item m-0 font-normal">{copy.portfolio}</h5></Link>
+            <Link href={localeHref('/#contact', locale)}><h5 className="ai-type-menu-item m-0 font-normal">{copy.contact}</h5></Link>
           </div>
-          <div className="ml-auto hidden items-center gap-3 whitespace-nowrap text-[11px] tracking-[0.14em] text-ink md:flex">
+          <div className={`ml-auto hidden items-center gap-3 whitespace-nowrap text-ink md:flex ${localeRoleClass(locale, 'label')}`}>
+            {showHindi && languageSwitcher('light')}
             <span className="h-3 w-px shrink-0 bg-accent" />
             <a href={`tel:${site.business.phone}`}>{site.business.phone}</a>
           </div>
@@ -158,20 +191,13 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
                 <Link
                   href={localeHref('/', locale)}
                   onClick={() => setOpen(false)}
-                  className="grid gap-1 text-xs font-medium uppercase leading-tight tracking-[0.3em] text-ink"
+                  className="text-ink"
                 >
-                  <Wordmark businessName={site.business.name} />
+                  <Wordmark as="h2" businessName={site.business.name} className="ai-type-wordmark-nav m-0 grid gap-1 font-medium uppercase leading-tight" />
                 </Link>
                 <div className="flex items-center gap-3">
                   {showHindi && (
-                    <Link
-                      href={localeHref('/', alternateLocale)}
-                      hrefLang={alternateLocale}
-                      onClick={() => setOpen(false)}
-                      className={`inline-flex min-h-10 items-center border border-ink px-3 text-[12px] font-medium text-ink ${localeTextClass(locale, 'uppercase tracking-[0.14em]')}`}
-                    >
-                      {alternateLabel}
-                    </Link>
+                    languageSwitcher('light')
                   )}
                   <button
                     type="button"
@@ -184,10 +210,10 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
                 </div>
               </div>
 
-              <div className="grid flex-1 content-center gap-1 py-10 text-[clamp(28px,10vw,54px)] font-display uppercase leading-none tracking-normal">
+              <div className={`ai-type-mobile-nav grid flex-1 content-center gap-1 py-10 font-display leading-none tracking-normal ${locale === 'en' ? 'uppercase' : ''}`}>
                 {[
                   { href: localeHref('/', locale), label: copy.home },
-                  { href: localeHref('/#about', locale), label: copy.about },
+                  { href: localeHref('/about', locale), label: copy.about },
                   { href: localeHref('/portfolio', locale), label: copy.portfolio },
                   { href: localeHref('/#contact', locale), label: copy.contact },
                 ].map((item) => (
@@ -197,7 +223,7 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
                     onClick={() => setOpen(false)}
                     className="border-b border-hairline py-4 text-ink"
                   >
-                    {item.label}
+                    <h5 className="ai-heading-reset m-0">{item.label}</h5>
                   </Link>
                 ))}
               </div>
@@ -205,20 +231,11 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
               <a
                 href={`tel:${site.business.phone}`}
                 onClick={() => setOpen(false)}
-                className="border-t border-accent pt-5 text-[12px] font-normal uppercase tracking-[0.14em] text-ink"
+                className={`border-t border-accent pt-5 font-normal text-ink ${localeRoleClass(locale, 'meta')}`}
               >
                 {site.business.phone}
               </a>
-              {showHindi && (
-                <Link
-                  href={localeHref('/', alternateLocale)}
-                  hrefLang={alternateLocale}
-                  onClick={() => setOpen(false)}
-                  className={`pt-4 text-[12px] font-normal text-ink ${localeTextClass(locale, 'uppercase tracking-[0.14em]')}`}
-                >
-                  {alternateLabel}
-                </Link>
-              )}
+              {showHindi && <div className="pt-4">{languageSwitcher('light')}</div>}
             </motion.div>
           </motion.div>
         ) : null}

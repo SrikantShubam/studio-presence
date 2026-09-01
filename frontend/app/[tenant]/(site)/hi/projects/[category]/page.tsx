@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import { chromeCopy } from '@/lib/i18n-client'
 import { loadPublicClientConfigForLocale } from '@/lib/i18n'
 import { notFoundMeta, pageMeta } from '@/lib/page-meta'
-import { FILTERS } from '../../../projects/ProjectsBrowser'
 import { ProjectsCategory } from '../../../projects/ProjectsCategory'
 
 type Props = { params: Promise<{ tenant: string; category: string }> }
@@ -46,7 +45,7 @@ export default async function HindiProjectsCategoryPage({ params }: Props) {
   if (!portfolio.enabled || !portfolio.projects.length) notFound()
 
   const slug = category.toLowerCase()
-  const known = FILTERS.some((filter) => filter.id === slug)
+  const known = Object.keys(chromeCopy.en.portfolio.filters).includes(slug)
   if (!known) notFound()
 
   return <ProjectsCategory site={site} category={slug} />

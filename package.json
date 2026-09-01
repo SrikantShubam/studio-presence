@@ -8,6 +8,7 @@
     "frontend"
   ],
   "scripts": {
+    "test:demo-lifecycle": "node --env-file-if-exists=.env --import tsx scripts/test-demo-lifecycle.ts",
     "dev": "npm run dev --workspace frontend",
     "build": "npm run check:config && npm run gen:tenant-map && npm run build --workspace frontend",
     "typecheck": "tsc --noEmit -p backend && tsc --noEmit -p frontend",
@@ -15,15 +16,18 @@
     "gen:schema": "node --env-file-if-exists=.env --import tsx scripts/gen-schema.ts",
     "check:config": "node --env-file-if-exists=.env --import tsx scripts/check-config.ts",
     "check:hardcode": "node --env-file-if-exists=.env --import tsx scripts/check-hardcode.ts",
+    "check:public-content": "node --env-file-if-exists=.env --import tsx scripts/check-public-hardcoded-content.ts",
     "check:placeholder": "node --env-file-if-exists=.env --import tsx scripts/check-placeholder.ts",
     "check:tiers": "node --env-file-if-exists=.env --import tsx scripts/check-tiers.ts",
     "check:tenant-isolation": "node --env-file-if-exists=.env --import tsx scripts/check-tenant-isolation.ts",
-    "check:all": "npm run typecheck && npm run lint && npm run check:config && npm run check:tiers && npm run check:tenant-isolation && npm run check:hardcode && npm run check:placeholder",
+    "check:all": "npm run typecheck && npm run lint && npm run check:config && npm run check:tiers && npm run check:tenant-isolation && npm run check:hardcode && npm run check:public-content && npm run check:placeholder",
     "test:rls": "node --env-file-if-exists=.env --import tsx scripts/test-rls.ts",
     "test:analytics": "node --env-file-if-exists=.env --import tsx scripts/test-analytics.ts",
     "test:panel": "node --env-file-if-exists=.env --import tsx scripts/test-panel.ts",
+    "test:admin-redesign": "node --env-file-if-exists=.env --import tsx scripts/test-admin-redesign.ts",
     "gen:tenant-map": "node --env-file-if-exists=.env --import tsx scripts/gen-tenant-map.ts",
-    "sync:env": "node --import tsx scripts/sync-frontend-env.ts"
+    "sync:env": "node --import tsx scripts/sync-frontend-env.ts",
+    "images:variants": "node scripts/generate-image-variants.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

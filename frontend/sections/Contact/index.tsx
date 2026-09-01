@@ -53,10 +53,12 @@ export function Contact({ config, site }: SectionComponentProps<'contact'>) {
   const locale = publicLocaleFromSite(site)
   const copy = chromeCopy[locale].contact
   const address = formatAddress(business.address)
-  const details: ContactDetail[] = [
+  const contactDetails: ContactDetail[] = [
     { label: copy.detailLabels.phone, value: business.phone, icon: 'phone' as const, href: `tel:${business.phone}` },
     { label: copy.detailLabels.whatsapp, value: business.whatsapp, icon: 'message-circle' as const, href: whatsappHref(business.whatsapp) },
     { label: copy.detailLabels.email, value: business.email ?? '', icon: 'email' as const, href: business.email ? `mailto:${business.email}` : undefined },
+  ].filter((detail) => detail.value.length > 0)
+  const studioDetails: ContactDetail[] = [
     { label: copy.detailLabels.studio, value: address, icon: 'map-pin' as const },
     {
       label: copy.detailLabels.hours,
@@ -64,7 +66,7 @@ export function Contact({ config, site }: SectionComponentProps<'contact'>) {
     },
   ].filter((detail) => detail.value.length > 0)
 
-  if (!details.length) return null
+  if (!contactDetails.length && !studioDetails.length) return null
 
   const mapLabel = [business.address.locality, business.address.city]
     .filter(Boolean)
@@ -86,9 +88,11 @@ export function Contact({ config, site }: SectionComponentProps<'contact'>) {
             <ClipLine className="pl-[0.55em] text-accent" delay={0.08}>{copy.title.accent}</ClipLine>
           </h2>
 
-          <div className="mt-[clamp(32px,4.5vw,52px)] grid max-w-5xl gap-x-[clamp(24px,4vw,48px)] gap-y-[26px] sm:grid-cols-2 xl:grid-cols-3">
-            {details.map((detail) => (
-              <div key={detail.label} className="grid gap-2 border-b border-hairline pb-[22px] last:border-b-0">
+          <div className="mt-[clamp(28px,4vw,46px)] max-w-6xl">
+            {contactDetails.length ? (
+              <div className="grid gap-x-[clamp(24px,4vw,48px)] gap-y-6 md:grid-cols-3">
+                {contactDetails.map((detail) => (
+              <div key={detail.label} className="grid gap-2 pb-[22px]">
                 <span className={`inline-flex items-center gap-2 text-[10.5px] font-medium text-accent ${localeTextClass(locale, 'uppercase tracking-[0.22em]')}`}>
                   {detail.icon && <EditorialIcon name={detail.icon} className="h-3 w-3" />}
                   {detail.label}
@@ -106,7 +110,24 @@ export function Contact({ config, site }: SectionComponentProps<'contact'>) {
                   </span>
                 )}
               </div>
-            ))}
+                ))}
+              </div>
+            ) : null}
+            {studioDetails.length ? (
+              <div className="mt-7 grid gap-x-[clamp(32px,6vw,84px)] gap-y-7 border-t border-hairline pt-7 sm:grid-cols-2">
+                {studioDetails.map((detail) => (
+                  <div key={detail.label} className="grid min-w-0 gap-3">
+                    <span className={`inline-flex items-center gap-2 text-[10.5px] font-medium text-accent ${localeTextClass(locale, 'uppercase tracking-[0.22em]')}`}>
+                      {detail.icon && <EditorialIcon name={detail.icon} className="h-3 w-3" />}
+                      {detail.label}
+                    </span>
+                    <span className="whitespace-pre-line break-words text-[clamp(18px,1.55vw,23px)] leading-relaxed text-ink">
+                      {detail.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           <a

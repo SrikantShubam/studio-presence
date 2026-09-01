@@ -57,7 +57,7 @@ export function HeroFullBleed({ config, site }: { config: SectionConfig<'hero'>;
         </div>
 
         {corner && (
-          <h5 className="ai-type-corner-meta absolute bottom-[clamp(24px,4vw,44px)] left-[clamp(20px,5vw,64px)] m-0 font-normal text-surface md:right-[clamp(20px,5vw,64px)] md:left-auto md:text-right">
+          <h5 className="ai-type-corner-meta absolute top-[clamp(112px,14vw,176px)] left-[clamp(20px,5vw,64px)] m-0 font-normal text-left text-surface">
             {corner}
           </h5>
         )}

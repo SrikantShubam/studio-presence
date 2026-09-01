@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import type { SectionConfig } from '@studio/backend'
-import { chromeCopy, localeHref, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localeRoleClass, localeTextClass, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 
 export type PortfolioConfig = SectionConfig<'portfolio'>
@@ -67,21 +67,22 @@ export function PortfolioHeader({
           : 'mb-[clamp(40px,6vw,76px)] flex flex-wrap items-end justify-between gap-6'
       }
     >
-      <h2 className="m-0 font-display text-[clamp(46px,9vw,112px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-        {copy.titleLead}
-        <br />
-        <span className="ml-[0.5em] block text-accent">{copy.titleAccent}</span>
-      </h2>
+      <div>
+        <h2 className="ai-type-portfolio-heading m-0 font-display font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
+          {copy.titleLead}
+        </h2>
+        <h2 className="ai-type-portfolio-heading m-0 ml-[0.5em] font-display font-light uppercase leading-[0.88] tracking-[-0.03em] text-accent">
+          {copy.titleAccent}
+        </h2>
+      </div>
 
       {detailPages && (
         <a
           href={localeHref('/portfolio', locale)}
-          className={`text-[11.5px] font-medium text-ink transition-colors hover:text-accent ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}
+          className={`inline-flex items-center gap-2 font-medium text-ink transition-colors hover:text-accent ${localeRoleClass(locale, 'label')} ${localeTextClass(locale, 'uppercase tracking-[0.2em]')}`}
         >
-          <span className="inline-flex items-center gap-2">
-            {copy.viewAll}
-            <EditorialIcon name="arrow-right" className="h-3 w-3" />
-          </span>
+          {copy.viewAll}
+          <EditorialIcon name="arrow-right" className="h-3 w-3" />
         </a>
       )}
     </div>
@@ -109,13 +110,13 @@ export function ProjectImage({
   )
 }
 
-export function ProjectLocation({ project, className = '' }: { project: PortfolioProject; className?: string }) {
+export function ProjectLocation({ project, className = '', locale = 'en' }: { project: PortfolioProject; className?: string; locale?: PublicLocale }) {
   if (!project.location) return null
 
-  return <span className={className}>LOCATION: {project.location}</span>
+  return <h6 className={`m-0 ${className}`}>{locale === 'hi' ? 'स्थान' : 'LOCATION'}: {project.location}</h6>
 }
 
-export function ProjectMeta({ project }: { project: PortfolioProject }) {
+export function ProjectMeta({ project, locale = 'en' }: { project: PortfolioProject; locale?: PublicLocale }) {
   const entries = [
     project.location ? ['location', project.location] : null,
     project.duration ? ['terms of execution', project.duration] : null,
@@ -128,10 +129,18 @@ export function ProjectMeta({ project }: { project: PortfolioProject }) {
     <div className="grid gap-5 border-accent pt-1 md:border-l md:pl-7">
       {entries.slice(0, 2).map(([label, value]) => (
         <div key={label} className="grid gap-1">
-          <span className="text-[11px] lowercase tracking-[0.16em] text-muted">{label}</span>
-          <span className="break-words text-[clamp(18px,2.2vw,28px)] font-normal uppercase tracking-wide text-ink">
+          <h6 className={`m-0 font-normal text-muted ${locale === 'hi' ? localeRoleClass(locale, 'label') : 'ai-type-label lowercase'}`}>
+            {locale === 'hi'
+              ? label === 'location'
+                ? 'स्थान'
+                : label === 'terms of execution'
+                  ? 'काम की अवधि'
+                  : 'क्षेत्रफल'
+              : label}
+          </h6>
+          <h3 className="m-0 break-words font-normal uppercase tracking-wide text-ink ai-type-project-meta-value">
             {value}
-          </span>
+          </h3>
         </div>
       ))}
     </div>

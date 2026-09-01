@@ -21,7 +21,7 @@ export function TestimonialPhoto({
     <span
       className={`relative block shrink-0 overflow-hidden bg-hairline ${
         size === 'large'
-          ? 'h-[clamp(38px,4vw,46px)] w-[clamp(38px,4vw,46px)] rounded-full'
+          ? 'h-[clamp(38px,4vw,46px)] w-[clamp(38px,4vw,46px)]'
           : 'h-9 w-9'
       }`}
     >

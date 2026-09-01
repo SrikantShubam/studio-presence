@@ -1,0 +1,18 @@
+
+Config warnings for "ashish-interiors":
+
+  warning  sections.inquiryForm.accessKeyEnv
+           names env var "WEB3FORMS_ASHISH", which is not set. The form would render and silently post nowhere — a lost enquiry looks exactly like no enquiry.
+
+
+Config warnings for "ashish-interiors":
+
+  warning  sections.inquiryForm.accessKeyEnv
+           names env var "WEB3FORMS_ASHISH", which is not set. The form would render and silently post nowhere — a lost enquiry looks exactly like no enquiry.
+
+
+Config warnings for "ashish-interiors":
+
+  warning  sections.inquiryForm.accessKeyEnv
+           names env var "WEB3FORMS_ASHISH", which is not set. The form would render and silently post nowhere — a lost enquiry looks exactly like no enquiry.
+

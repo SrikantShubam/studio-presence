@@ -36,7 +36,8 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * has to stay off the rewrite path or Next's static file handler never sees the
  * request: `/clients/ashish-interiors/p1.jpg` becomes
  * `/ashish-interiors/clients/ashish-interiors/p1.jpg`, which matches no route
- * and 404s. Caught by hitting a real asset URL against a running server —
+ * and 404s. Same for `/fonts/...` — those are global static files, not a
+ * tenant slug. Caught by hitting a real asset URL against a running server —
  * `check:config` proves the path is *referenced* correctly, nothing catches
  * whether it's *servable*.
  *
@@ -52,16 +53,35 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * and a browser's automatic favicon request 500s the page. `robots.txt` was in
  * this list against the paragraph above and had the identical bug.
  */
-const PASSTHROUGH = /^\/(?:_next|api\/|clients\/)/
+const PASSTHROUGH = /^\/(?:_next|api\/|clients\/|fonts\/)/
+
+function primaryDevTenant(): TenantEntry | undefined {
+  const sub = Object.keys(TENANT_MAP.bySubdomain)[0]
+  return sub ? TENANT_MAP.bySubdomain[sub] : undefined
+}
 
 function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
   const hostname = host.split(':')[0]?.toLowerCase() ?? ''
 
   // Local development: ashish.localhost:3000
-  if (hostname.endsWith('.localhost') || hostname === 'localhost') {
+  if (hostname.endsWith('.localhost') || hostname === 'localhost' || hostname === '127.0.0.1') {
     const sub = hostname.replace(/\.?localhost$/, '')
     const entry = sub ? TENANT_MAP.bySubdomain[sub] : undefined
-    return entry ? { entry, viaCustomDomain: false } : null
+    if (entry) return { entry, viaCustomDomain: false }
+
+    // Bare localhost (no subdomain). Supabase "Confirm your email" uses the
+    // project Site URL, which is almost always http://localhost:3000 — that
+    // host is not a tenant, so the click used to die here. In development,
+    // treat it as the primary local site so the auth callback can run.
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      (hostname === 'localhost' || hostname === '127.0.0.1')
+    ) {
+      const primary = primaryDevTenant()
+      return primary ? { entry: primary, viaCustomDomain: false } : null
+    }
+
+    return null
   }
 
   if (hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}`) return null
@@ -79,6 +99,11 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  // Keep every Next development and production asset out of tenant routing.
+  // The matcher is the first filter, but an explicit guard prevents a hot-update
+  // request from ever falling through to the dynamic `[tenant]` route.
+  if (pathname === '/_next' || pathname.startsWith('/_next/')) return NextResponse.next()
+
   if (PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const host = request.headers.get('host') ?? ''
@@ -88,18 +113,17 @@ export function middleware(request: NextRequest) {
   //
   // In development this is almost always someone opening `localhost:3000`
   // straight after `npm run dev`, which resolves to no tenant because every
-  // site is a subdomain. A bare refusal is a dead end, so list the tenants that
-  // do work. In production the message stays opaque on purpose: an unknown host
-  // is a stranger, and the client roster is not theirs to enumerate.
+  // site is a subdomain. A bare refusal is a dead end, so point to the primary
+  // local site. In production the message stays opaque on purpose: an unknown
+  // host is a stranger, and the client roster is not theirs to enumerate.
   if (!resolved) {
+    const primarySubdomain = Object.keys(TENANT_MAP.bySubdomain)[0]
     const body =
       process.env.NODE_ENV === 'production'
         ? 'No site is configured for this address.'
         : 'No site is configured for this address.\n\n' +
-          'Every site is a tenant, resolved by subdomain. Try one of:\n' +
-          Object.keys(TENANT_MAP.bySubdomain)
-            .map((sub) => `  http://${sub}.localhost:${request.nextUrl.port || '3000'}/`)
-            .join('\n') +
+          'Every site is a tenant, resolved by subdomain. Try:\n' +
+          `  http://${primarySubdomain}.localhost:${request.nextUrl.port || '3000'}/` +
           '\n'
 
     return new NextResponse(body, {
@@ -109,6 +133,19 @@ export function middleware(request: NextRequest) {
   }
 
   const { entry, viaCustomDomain } = resolved
+
+  // Auth emails sometimes land on `/` or `/admin` with `?code=` / `token_hash`
+  // instead of `/auth/callback`. Send them through the callback so the session
+  // is exchanged instead of dropping the user on the public site unsigned-in.
+  const authToken =
+    request.nextUrl.searchParams.get('code') ||
+    request.nextUrl.searchParams.get('token_hash') ||
+    request.nextUrl.searchParams.get('token')
+  if (authToken && !pathname.includes('/auth/callback') && !pathname.includes('/auth/confirm')) {
+    const dest = request.nextUrl.clone()
+    dest.pathname = '/auth/callback'
+    return NextResponse.redirect(dest)
+  }
 
   // THE PAYMENT GATE.
   //
@@ -130,10 +167,25 @@ export function middleware(request: NextRequest) {
     })
   }
 
-  const url = request.nextUrl.clone()
-  url.pathname = `/${entry.slug}${pathname}`
+  // File-based metadata lives under `app/[tenant]/...`, so Next emits
+  // `/<slug>/opengraph-image` (and hashed `/<slug>/opengraph-image-<id>`).
+  // Prefixing again would send those to `/<slug>/<slug>/...` and the
+  // catch-all 404s them — WhatsApp/iMessage then show no share card.
+  const alreadyTenantPrefixed =
+    pathname === `/${entry.slug}` || pathname.startsWith(`/${entry.slug}/`)
 
-  const response = NextResponse.rewrite(url)
+  const url = request.nextUrl.clone()
+  if (!alreadyTenantPrefixed) {
+    url.pathname = `/${entry.slug}${pathname}`
+  }
+
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-site-host', host)
+  requestHeaders.set('x-forwarded-host', host)
+
+  const response = alreadyTenantPrefixed
+    ? NextResponse.next({ request: { headers: requestHeaders } })
+    : NextResponse.rewrite(url, { request: { headers: requestHeaders } })
   response.headers.set('x-tenant', entry.slug)
 
   // Belt and braces with `seo.noindex` in the config. A demo indexed under the
@@ -147,5 +199,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image).*)'],
+  matcher: ['/((?!_next/).*)'],
 }

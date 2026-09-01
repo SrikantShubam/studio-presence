@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
-import { chromeCopy, localeHref, localeTextClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localePageClass, localeRoleClass, localeTextClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
 import { ClipLine, FadeUp, HomeSection } from '@/lib/motion'
 import { HeroNav } from '@/sections/Hero/HeroNav'
@@ -18,19 +18,19 @@ function ListingCta({ estimateEnabled, locale }: { estimateEnabled: boolean; loc
     >
       <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
         <div className="min-w-0">
-          <div className={`mb-[clamp(18px,3vw,30px)] grid gap-1.5 text-[10.5px] font-normal leading-relaxed text-accent ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
+          <div className={`mb-[clamp(18px,3vw,30px)] grid gap-1.5 font-normal leading-relaxed text-accent ${localeRoleClass(locale, 'eyebrow')}`}>
             {copy.eyebrow.map((line) => (
               <span key={line}>{line}</span>
             ))}
           </div>
-          <h2 className="m-0 font-display text-[clamp(34px,5.5vw,72px)] font-light uppercase leading-[0.9] tracking-[-0.03em] text-ink">
+          <h2 className={`m-0 font-display text-[clamp(34px,5.5vw,72px)] font-light leading-[0.95] text-ink ${localeRoleClass(locale, 'sectionTitle')}`}>
             {copy.titleLead}
             <span className="ml-[0.55em] block text-accent">{copy.titleAccent}</span>
           </h2>
         </div>
         <Link
           href={href}
-          className={`inline-flex min-h-11 items-center gap-3.5 bg-cta px-[34px] py-5 text-[clamp(10.5px,1.1vw,12px)] font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta ${localeTextClass(locale, 'uppercase tracking-[0.18em]')}`}
+          className={`inline-flex min-h-11 items-center gap-3.5 bg-cta px-[34px] py-5 font-medium text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-20px)_100%,0_100%)] hover:bg-ink hover:text-cta ${localeRoleClass(locale, 'button')}`}
         >
           {copy.action}
           <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
@@ -54,7 +54,7 @@ export function ProjectsCategory({
   const copy = chromeCopy[locale].portfolio
 
   return (
-    <article lang={locale} className="overflow-x-clip bg-surface text-ink">
+    <article lang={locale} data-public-locale={locale} className={`overflow-x-clip bg-surface text-ink ${localePageClass(locale)}`}>
       <HeroNav
         businessName={site.business.name}
         phone={site.business.phone}
@@ -63,6 +63,7 @@ export function ProjectsCategory({
         services={site.sections.services?.items}
         locale={locale}
         locales={site.i18n.locales}
+        stickyOnScroll
       />
 
       <HomeSection first>
@@ -72,7 +73,7 @@ export function ProjectsCategory({
       >
         <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
           <div className="min-w-0">
-            <div className={`mb-[clamp(20px,3vw,34px)] grid gap-1.5 text-[10.5px] font-normal leading-relaxed text-accent ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
+            <div className={`mb-[clamp(20px,3vw,34px)] grid gap-1.5 text-[10.5px] font-normal leading-relaxed text-accent lg:text-[15px] lg:leading-[1.7] ${localeTextClass(locale, 'uppercase tracking-[0.24em]')}`}>
               <ClipLine>{portfolio.projects.length}</ClipLine>
               <ClipLine delay={0.05}>{copy.eyebrowLabel}</ClipLine>
               {yearFounded && portfolio.rangeEnd ? (

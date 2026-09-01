@@ -6,21 +6,10 @@ import { ClipLine, DrawFrame, FadeUp, HomeSection, RevealImage, Stagger, Stagger
 import { HeroNav } from '@/sections/Hero/HeroNav'
 import { renderableSections } from '@/sections/registry'
 import { CopyAddress, OpenBadge } from './LocationChrome'
+import { chromeCopy, localePageClass, publicLocaleFromSite, type PublicLocale } from '@/lib/i18n-client'
 
 type Office = NonNullable<ClientConfig['sections']['locations']>['offices'][number]
-
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const copy = {
-  title: { lead: 'Our', accent: 'Studio' },
-  contact: { title: 'Find us & call us', address: 'Address', phone: 'Phone', whatsapp: 'WhatsApp', email: 'Email', hours: 'Opening hours', openMaps: 'Open in maps' },
-  aboutIndex: '01',
-  whoTitle: { lead: "Who's", accent: 'Here' },
-  whoProfile: 'Profile',
-  projectsTitle: { lead: 'From this', accent: 'Studio' },
-  projectsAll: 'All projects',
-  otherLabel: 'Other locations',
-  visit: { eyebrow: ['Second floor,', 'Above the crossing'], title: { lead: 'Visit', accent: 'Us' }, action: 'Book an appointment on WhatsApp' },
-}
+type LocationCopy = (typeof chromeCopy)[PublicLocale]['locations']
 const pagePad = 'px-[clamp(20px,5vw,64px)]'
 
 function addressLines(address: Office['address']): string[] {
@@ -49,7 +38,7 @@ function projectHref(slug: string, projects: ClientConfig['sections']['portfolio
   return projects.some((p) => p.slug === slug) ? `/portfolio/${slug}` : '/portfolio'
 }
 
-function Heading({ office }: { office: Office }) {
+function Heading({ office, copy }: { office: Office; copy: LocationCopy }) {
   return (
     <section className={`${pagePad} pb-[clamp(28px,4vw,48px)] pt-[clamp(48px,7vw,96px)]`}>
       <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
@@ -97,7 +86,7 @@ function StudioPhoto({ photo }: { photo: Office['photo'] }) {
   )
 }
 
-function ContactBlock({ site, office }: { site: ClientConfig; office: Office }) {
+function ContactBlock({ site, office, copy }: { site: ClientConfig; office: Office; copy: LocationCopy }) {
   const maps = mapOpenHref(office.address)
   const address = addressText(office.address)
   const wa = whatsappHref(site.business.whatsapp)
@@ -184,7 +173,7 @@ function ContactBlock({ site, office }: { site: ClientConfig; office: Office }) 
   )
 }
 
-function AboutOffice({ about }: { about: Office['about'] }) {
+function AboutOffice({ about, copy }: { about: Office['about']; copy: LocationCopy }) {
   if (!about) return null
 
   return (
@@ -224,7 +213,7 @@ function AboutOffice({ about }: { about: Office['about'] }) {
   )
 }
 
-function WhoIsHere({ team, members }: { team: Office['team']; members: ClientConfig['sections']['team'] }) {
+function WhoIsHere({ team, members, copy }: { team: Office['team']; members: ClientConfig['sections']['team']; copy: LocationCopy }) {
   if (!team.length) return null
 
   return (
@@ -285,7 +274,7 @@ function WhoIsHere({ team, members }: { team: Office['team']; members: ClientCon
   )
 }
 
-function Projects({ site, office }: { site: ClientConfig; office: Office }) {
+function Projects({ site, office, copy }: { site: ClientConfig; office: Office; copy: LocationCopy }) {
   const projects = site.sections.portfolio.projects.filter((p) => office.projectSlugs.includes(p.slug))
   if (!projects.length) return null
 
@@ -335,7 +324,7 @@ function Projects({ site, office }: { site: ClientConfig; office: Office }) {
   )
 }
 
-function OtherLocationsNote({ note }: { note?: string }) {
+function OtherLocationsNote({ note, copy }: { note?: string; copy: LocationCopy }) {
   if (!note) return null
 
   return (
@@ -346,7 +335,7 @@ function OtherLocationsNote({ note }: { note?: string }) {
   )
 }
 
-function VisitCta({ site }: { site: ClientConfig }) {
+function VisitCta({ site, copy }: { site: ClientConfig; copy: LocationCopy }) {
   const wa = whatsappHref(site.business.whatsapp)
 
   return (
@@ -383,39 +372,43 @@ function VisitCta({ site }: { site: ClientConfig }) {
 
 export function LocationOffice({ site, office }: { site: ClientConfig; office: Office }) {
   const closing = renderableSections(site, ['footer'])
+  const locale = publicLocaleFromSite(site)
+  const labels = chromeCopy[locale].locations
 
   return (
-    <article className="overflow-x-clip bg-surface text-ink">
+    <article lang={locale} data-public-locale={locale} className={`overflow-x-clip bg-surface text-ink ${localePageClass(locale)}`}>
       <HeroNav
         businessName={site.business.name}
         phone={site.business.phone}
         tone="on-surface"
         inner
         services={site.sections.services?.items}
+        locale={locale}
+        locales={site.i18n.locales}
       />
       <HomeSection first>
-        <Heading office={office} />
+        <Heading office={office} copy={labels} />
       </HomeSection>
       <HomeSection>
         <StudioPhoto photo={office.photo} />
       </HomeSection>
       <HomeSection>
-        <ContactBlock site={site} office={office} />
+        <ContactBlock site={site} office={office} copy={labels} />
       </HomeSection>
       <HomeSection>
-        <AboutOffice about={office.about} />
+        <AboutOffice about={office.about} copy={labels} />
       </HomeSection>
       <HomeSection>
-        <WhoIsHere team={office.team} members={site.sections.team} />
+        <WhoIsHere team={office.team} members={site.sections.team} copy={labels} />
       </HomeSection>
       <HomeSection>
-        <Projects site={site} office={office} />
+        <Projects site={site} office={office} copy={labels} />
       </HomeSection>
       <HomeSection>
-        <OtherLocationsNote note={site.sections.locations?.otherLocationsNote} />
+        <OtherLocationsNote note={site.sections.locations?.otherLocationsNote} copy={labels} />
       </HomeSection>
       <HomeSection>
-        <VisitCta site={site} />
+        <VisitCta site={site} copy={labels} />
       </HomeSection>
       {closing.map(({ key, Component, config, variant }) => (
         <HomeSection key={key}>

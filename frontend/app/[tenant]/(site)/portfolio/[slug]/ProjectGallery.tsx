@@ -2,10 +2,8 @@
 
 import Image from 'next/image'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { chromeCopy, localeRoleClass, type PublicLocale } from '@/lib/i18n-client'
 import { EditorialIcon } from '@/lib/icons'
-
-/** Fixed UI framing, identical for every client — not content, so not config. */
-const copy = { of: 'of', close: 'Close', prev: 'Previous', next: 'Next' }
 
 export type GalleryItem = {
   src: string
@@ -23,8 +21,9 @@ function useGallery() {
   return value
 }
 
-export function ProjectGallery({ items, children }: { items: GalleryItem[]; children: ReactNode }) {
+export function ProjectGallery({ items, children, locale = 'en' }: { items: GalleryItem[]; children: ReactNode; locale?: PublicLocale }) {
   const [index, setIndex] = useState<number | null>(null)
+  const copy = chromeCopy[locale].gallery
 
   const openAt = useCallback(
     (src: string) => {
@@ -75,13 +74,13 @@ export function ProjectGallery({ items, children }: { items: GalleryItem[]; chil
           aria-label={active.caption}
         >
           <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-8">
-            <span className="text-[10.5px] font-medium uppercase tracking-[0.2em] text-cta">
+            <span className={`font-medium text-cta ${localeRoleClass(locale, 'meta')}`}>
               {String(index + 1).padStart(2, '0')} {copy.of} {String(items.length).padStart(2, '0')}
             </span>
             <button
               type="button"
               onClick={close}
-              className="inline-flex min-h-11 items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-surface hover:text-cta"
+              className={`inline-flex min-h-11 items-center gap-2 font-medium text-surface hover:text-cta ${localeRoleClass(locale, 'button')}`}
             >
               {copy.close}
               <EditorialIcon name="close" className="h-3.5 w-3.5" />
@@ -116,7 +115,7 @@ export function ProjectGallery({ items, children }: { items: GalleryItem[]; chil
             </button>
           </div>
 
-          <p className="px-5 pb-6 text-center text-[10.5px] uppercase tracking-[0.2em] text-muted sm:px-8">
+          <p className={`px-5 pb-6 text-center text-muted sm:px-8 ${localeRoleClass(locale, 'meta')}`}>
             {active.caption}
           </p>
         </div>

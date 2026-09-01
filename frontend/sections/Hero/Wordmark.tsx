@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 /**
  * Splits a business name into stacked lines for the nav/hero wordmark — "Ashish
  * Interiors" becomes two lines, one per word. Not hardcoded: the reference
@@ -11,14 +13,25 @@ export function wordmarkLines(businessName: string): string[] {
   return words.length > 0 ? words : [businessName]
 }
 
-export function Wordmark({ businessName, className }: { businessName: string; className?: string }) {
+type WordmarkTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+
+export function Wordmark({
+  businessName,
+  className,
+  as: Tag = 'h2',
+}: {
+  businessName: string
+  className?: string
+  as?: WordmarkTag
+}) {
   return (
-    <span className={className}>
+    <Tag className={className}>
       {wordmarkLines(businessName).map((line, i) => (
-        <span key={i} className="block">
+        <Fragment key={i}>
+          {i > 0 ? <br /> : null}
           {line.toUpperCase()}
-        </span>
+        </Fragment>
       ))}
-    </span>
+    </Tag>
   )
 }

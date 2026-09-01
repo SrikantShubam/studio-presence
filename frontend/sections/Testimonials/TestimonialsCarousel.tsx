@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import type { ClientConfig } from '@studio/backend'
+import { chromeCopy, publicLocaleFromSite } from '@/lib/i18n-client'
 import type { TestimonialsConfig } from './shared'
 import { TestimonialByline, TestimonialPhoto } from './shared'
 
@@ -8,8 +10,10 @@ function counter(current: number, total: number): string {
   return `${String(current + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`
 }
 
-export function TestimonialsCarousel({ config }: { config: TestimonialsConfig }) {
+export function TestimonialsCarousel({ config, site }: { config: TestimonialsConfig; site: ClientConfig }) {
   const [index, setIndex] = useState(0)
+  const locale = publicLocaleFromSite(site)
+  const heading = chromeCopy[locale].testimonials.title
 
   if (!config.enabled || !config.items.length) return null
 
@@ -35,9 +39,9 @@ export function TestimonialsCarousel({ config }: { config: TestimonialsConfig })
        * the reasoning: fabricated copy for a field the schema doesn't have.
        */}
       <div className="relative mb-14 grid gap-6 md:mb-24">
-        <h2 className="m-0 font-display text-[clamp(42px,10vw,100px)] font-extralight uppercase leading-[0.86] tracking-tight">
-          What
-          <span className="block pl-[0.5em] text-accent">Clients Say</span>
+        <h2 className="ai-type-testimonial-heading m-0 font-display font-extralight uppercase leading-[0.86] tracking-tight">
+          {heading.lead}
+          <span className="block pl-[0.5em] text-accent">{heading.accent}</span>
         </h2>
       </div>
 
