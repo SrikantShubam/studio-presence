@@ -382,3 +382,123 @@
   color: var(--ink);
   display: block;
 }
+
+/* ==========================================================================
+   Editorial Button System (Chamfered Primary & Secondary)
+   ========================================================================== */
+.btn-editorial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 16px 28px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+.btn-primary {
+  background: var(--gold);
+  color: var(--ink);
+}
+.btn-primary:hover {
+  background: var(--ink);
+  color: var(--gold);
+}
+.btn-primary svg {
+  fill: currentColor;
+  width: 16px;
+  height: 16px;
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  position: relative;
+  border: 1px solid var(--ink);
+}
+.btn-secondary:hover {
+  background: var(--ink);
+  color: #fff;
+}
+.btn-submit {
+  width: 100%;
+  background: var(--gold);
+  color: var(--ink);
+  min-height: 52px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+}
+.btn-submit:hover {
+  background: var(--ink);
+  color: var(--gold);
+}
+
+/* Social Channels Strip */
+.social-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+.social-link:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.social-link svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* Gravitas Architectural Seals */
+.architectural-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 24px;
+  background: var(--wash);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brown);
+  margin-top: 28px;
+}
+.architectural-callout svg {
+  color: var(--brown);
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+.callout-meta strong {
+  display: block;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.callout-meta p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
