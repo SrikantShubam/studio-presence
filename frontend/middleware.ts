@@ -28,7 +28,9 @@ import { TENANT_MAP, type TenantEntry } from './lib/tenant-map'
 const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
 
 /**
- * Paths that are never tenant-scoped — served as-is, not rewritten.
+ * Platform paths that are never tenant-scoped — served as-is, not rewritten.
+ * Client assets are also served as-is, but only after host and status
+ * resolution below so an archived or non-live custom domain cannot fetch them.
  *
  * `clients/` is where every uploaded client asset lives (logos, portfolio
  * photos, company-profile PDFs — see the `assetPath` convention in
@@ -52,7 +54,8 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * and a browser's automatic favicon request 500s the page. `robots.txt` was in
  * this list against the paragraph above and had the identical bug.
  */
-const PASSTHROUGH = /^\/(?:_next|api\/|clients\/)/
+const PLATFORM_PASSTHROUGH = /^\/(?:_next|api\/)/
+const CLIENT_ASSET_PASSTHROUGH = /^\/clients\//
 
 function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
   const hostname = host.split(':')[0]?.toLowerCase() ?? ''
@@ -79,7 +82,7 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  if (PASSTHROUGH.test(pathname)) return NextResponse.next()
+  if (PLATFORM_PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const host = request.headers.get('host') ?? ''
   const resolved = resolveTenant(host)
@@ -129,6 +132,8 @@ export function middleware(request: NextRequest) {
       headers: { 'x-robots-tag': 'noindex, nofollow' },
     })
   }
+
+  if (CLIENT_ASSET_PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const url = request.nextUrl.clone()
   url.pathname = `/${entry.slug}${pathname}`
