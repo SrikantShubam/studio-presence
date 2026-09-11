@@ -35,8 +35,10 @@ const hexColor = z
   .string()
   .regex(/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, 'must be a hex colour, e.g. #141414')
 
-/** A path under `public/`. Existence on disk is checked separately, at build. */
-const assetPath = z.string().regex(/^\//, 'must be an absolute path under public/, starting with /')
+/** A client asset path under `public/clients/`. Existence is checked at build. */
+const assetPath = z
+  .string()
+  .regex(/^\/clients\//, 'must be an absolute path under public/clients/, starting with /clients/')
 
 const url = z.string().url()
 

@@ -23,6 +23,10 @@ Location: `clients/<slug>.json`. The slug is the demo subdomain: `ashish.vectorv
    page on a client's subdomain.
 5. **Never put secrets here.** API keys live in environment variables. This file is committed.
 
+Asset fields use root-relative paths under `/clients/<slug>/...`. Middleware passes that prefix
+through unchanged so client assets are served from `public/` instead of being rewritten as tenant
+routes.
+
 ---
 
 ## Schema

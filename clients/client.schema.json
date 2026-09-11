@@ -128,15 +128,15 @@
       "properties": {
         "logo": {
           "type": "string",
-          "pattern": "^\\/"
+          "pattern": "^\\/clients\\/"
         },
         "favicon": {
           "type": "string",
-          "pattern": "^\\/"
+          "pattern": "^\\/clients\\/"
         },
         "ogImage": {
           "type": "string",
-          "pattern": "^\\/"
+          "pattern": "^\\/clients\\/"
         },
         "palette": {
           "type": "object",
@@ -235,7 +235,7 @@
             },
             "image": {
               "type": "string",
-              "pattern": "^\\/"
+              "pattern": "^\\/clients\\/"
             },
             "videoUrl": {
               "type": "string",
@@ -332,7 +332,7 @@
                   },
                   "image": {
                     "type": "string",
-                    "pattern": "^\\/"
+                    "pattern": "^\\/clients\\/"
                   },
                   "slug": {
                     "type": "string",
@@ -380,14 +380,14 @@
                   },
                   "cover": {
                     "type": "string",
-                    "pattern": "^\\/"
+                    "pattern": "^\\/clients\\/"
                   },
                   "images": {
                     "default": [],
                     "type": "array",
                     "items": {
                       "type": "string",
-                      "pattern": "^\\/"
+                      "pattern": "^\\/clients\\/"
                     }
                   },
                   "blurb": {
@@ -440,7 +440,7 @@
             },
             "image": {
               "type": "string",
-              "pattern": "^\\/"
+              "pattern": "^\\/clients\\/"
             }
           }
         },
@@ -507,7 +507,7 @@
                   },
                   "image": {
                     "type": "string",
-                    "pattern": "^\\/"
+                    "pattern": "^\\/clients\\/"
                   }
                 },
                 "required": [
@@ -690,7 +690,7 @@
                   },
                   "image": {
                     "type": "string",
-                    "pattern": "^\\/"
+                    "pattern": "^\\/clients\\/"
                   },
                   "bio": {
                     "type": "string"
@@ -719,11 +719,11 @@
                 "properties": {
                   "before": {
                     "type": "string",
-                    "pattern": "^\\/"
+                    "pattern": "^\\/clients\\/"
                   },
                   "after": {
                     "type": "string",
-                    "pattern": "^\\/"
+                    "pattern": "^\\/clients\\/"
                   },
                   "caption": {
                     "type": "string"
@@ -884,7 +884,7 @@
                     "type": "array",
                     "items": {
                       "type": "string",
-                      "pattern": "^\\/"
+                      "pattern": "^\\/clients\\/"
                     }
                   }
                 },
@@ -985,7 +985,7 @@
             },
             "pdf": {
               "type": "string",
-              "pattern": "^\\/"
+              "pattern": "^\\/clients\\/"
             }
           }
         },
@@ -1017,7 +1017,7 @@
                   },
                   "cover": {
                     "type": "string",
-                    "pattern": "^\\/"
+                    "pattern": "^\\/clients\\/"
                   }
                 },
                 "required": [
