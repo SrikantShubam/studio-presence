@@ -124,7 +124,6 @@ Realistic shipped T3: **23–27 layouts.**
 |---|---|---|
 | 4.1 | WhatsApp deep link | `wa.me` with contextual prefilled message. No API, no cost |
 | 4.2 | Google Places reviews | Build-time fetch, 5-review cap, 10k free req/mo |
-| 4.3 | Web3Forms | 250/mo per client key |
 | 4.4 | Umami | Per-client flag for dashboard access |
 | 4.5 | `next-seo` LocalBusiness JSON-LD | |
 | 4.6 | Instagram oEmbed | ⚠️ Hand-picked only. Basic Display API dead since Dec 2024 |

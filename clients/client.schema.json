@@ -798,14 +798,6 @@
               "default": false,
               "type": "boolean"
             },
-            "provider": {
-              "default": "web3forms",
-              "type": "string",
-              "const": "web3forms"
-            },
-            "accessKeyEnv": {
-              "type": "string"
-            },
             "fields": {
               "default": [
                 "name",

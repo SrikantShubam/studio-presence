@@ -32,7 +32,7 @@ The RLS policies themselves are frozen. If your ticket seems to need a policy ch
 so — that is an Opus decision, not a workaround.
 
 ALSO NON-NEGOTIABLE
-- No secrets in code or in clients/*.json. Env vars only, named in config as accessKeyEnv
+- No secrets in code or in clients/*.json. Keep secrets in environment variables only
 - A failed lead write is never silent. Losing an enquiry costs the client a project and costs us the
   account. Log it, surface it, retry it — never swallow it
 - Every API route validates its input with Zod before touching the database

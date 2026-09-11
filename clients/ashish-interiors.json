@@ -262,15 +262,13 @@
       ]
     },
     "inquiryForm": {
-      "provider": "web3forms",
       "fields": [
         "name",
         "phone",
         "roomType",
         "budget",
         "timeline"
-      ],
-      "accessKeyEnv": "WEB3FORMS_ASHISH"
+      ]
     },
     "estimate": {
       "ratePerSqft": {
