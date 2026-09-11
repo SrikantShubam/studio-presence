@@ -307,3 +307,78 @@
     gap: 36px;
   }
 }
+
+/* ==========================================================================
+   Form Typography Refinement & Button Hierarchy
+   ========================================================================== */
+.under-form label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+.under-form input,
+.under-form select,
+.under-form textarea {
+  font-size: 16px;
+  padding: 10px 0;
+  line-height: 1.5;
+}
+.under-form input::placeholder,
+.under-form textarea::placeholder {
+  font-size: 15px;
+  color: #a39c93;
+}
+
+/* Secondary button */
+.button.secondary {
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+}
+.button.secondary:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+/* Architectural Seal & Measurement SVGs */
+.hero-editorial-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--brown);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.hero-editorial-badge svg {
+  flex-shrink: 0;
+  color: var(--gold);
+}
+.brief-seal-mark {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--wash);
+  border-left: 3px solid var(--brown);
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-top: 26px;
+}
+.brief-seal-mark svg {
+  color: var(--brown);
+  flex-shrink: 0;
+}
+.brief-seal-mark p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.brief-seal-mark strong {
+  color: var(--ink);
+  display: block;
+}
