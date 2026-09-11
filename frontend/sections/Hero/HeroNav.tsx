@@ -40,7 +40,7 @@ function activePathname(pathname: string): string {
   const parts = pathname.split('/').filter(Boolean)
   if (parts[0] === 'hi') parts.shift()
   if (parts.length > 1) parts.shift()
-  return `/${parts.join('/')}` || '/'
+  return parts.length ? `/${parts.join('/')}` : '/'
 }
 
 function isActiveLink(key: (typeof LINKS)[number]['key'], pathname: string): boolean {
@@ -49,6 +49,7 @@ function isActiveLink(key: (typeof LINKS)[number]['key'], pathname: string): boo
   if (key === 'portfolio') return path === '/portfolio' || path.startsWith('/portfolio/') || path.startsWith('/projects/')
   if (key === 'services') return path.startsWith('/services/')
   if (key === 'about') return path === '/about'
+  if (key === 'contact') return path === '/contact'
   return false
 }
 
@@ -115,6 +116,27 @@ function ServicesDropdown({
 }) {
   const [open, setOpen] = useState(false)
   const root = useRef<HTMLDivElement>(null)
+  const closeTimeout = useRef<NodeJS.Timeout | null>(null)
+
+  const handleMouseEnter = () => {
+    if (closeTimeout.current) {
+      clearTimeout(closeTimeout.current)
+      closeTimeout.current = null
+    }
+    setOpen(true)
+  }
+
+  const handleMouseLeave = () => {
+    closeTimeout.current = setTimeout(() => {
+      setOpen(false)
+    }, 250)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (closeTimeout.current) clearTimeout(closeTimeout.current)
+    }
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -141,8 +163,19 @@ function ServicesDropdown({
   }
 
   return (
-    <div ref={root} className="relative inline-flex items-center gap-1" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-      <button type="button" className={`bg-transparent transition-colors ${open ? 'text-cta' : textColor}`} onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-haspopup="true">
+    <div
+      ref={root}
+      className="relative inline-flex items-center gap-1"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <button
+        type="button"
+        className={`bg-transparent transition-colors ${open ? 'text-cta' : textColor}`}
+        onClick={() => setOpen((value) => !value)}
+        aria-expanded={open}
+        aria-haspopup="true"
+      >
         <h5 className="ai-type-menu-item m-0 font-normal">{label}</h5>
       </button>
       <button
@@ -153,23 +186,29 @@ function ServicesDropdown({
         onClick={() => setOpen((value) => !value)}
         className={`inline-flex h-8 w-5 items-center justify-center bg-transparent transition-colors ${open ? 'text-cta' : textColor}`}
       >
-        <EditorialIcon name="chevron-down" className={`h-2.5 w-2.5 ${open ? 'rotate-180' : ''}`} />
+        <EditorialIcon name="chevron-down" className={`h-2.5 w-2.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
       {open ? (
-        <div className="absolute left-0 top-full z-50 mt-1 min-w-[16rem] border border-accent bg-surface text-ink">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => {
-                setOpen(false)
-                onNavigate?.()
-              }}
-              className={`block px-4 py-3 font-normal text-ink hover:bg-panel hover:text-accent ${localeRoleClass(locale, 'label')}`}
-            >
-              <h6 className="ai-heading-reset m-0">{item.title}</h6>
-            </Link>
-          ))}
+        <div
+          className="absolute left-0 top-full z-50 pt-1.5 min-w-[17rem]"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="border border-accent bg-surface text-ink py-1">
+            {items.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => {
+                  setOpen(false)
+                  onNavigate?.()
+                }}
+                className={`block px-5 py-3 font-normal text-ink transition-colors hover:bg-panel hover:text-accent ${localeRoleClass(locale, 'label')}`}
+              >
+                <h6 className="ai-heading-reset m-0 text-[13px]">{item.title}</h6>
+              </Link>
+            ))}
+          </div>
         </div>
       ) : null}
     </div>
@@ -335,8 +374,12 @@ export function HeroNav({
         </div>
 
         <div className={`hidden items-center gap-4 lg:flex ${localeRoleClass(activeLocale, 'label')}`}>
-          {showHindi && <LanguageSwitcher activeLocale={activeLocale} pathname={pathname} tone={resolvedTone} />}
-          <span className={`h-4 w-px ${dividerColor}`} />
+          {showHindi && (
+            <>
+              <LanguageSwitcher activeLocale={activeLocale} pathname={pathname} tone={resolvedTone} />
+              <span className={`h-4 w-px ${dividerColor}`} />
+            </>
+          )}
           <a href={`tel:${phone}`} className={textColor}>
             {phone}
           </a>
