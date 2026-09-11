@@ -26,8 +26,13 @@
     "provision:qa-owner": "node --env-file-if-exists=.env --import tsx scripts/provision-qa-owner.ts",
     "sync:env": "node --import tsx scripts/sync-frontend-env.ts"
   },
+  "overrides": {
+    "js-yaml": "^4.3.2",
+    "postcss": "^8.5.28",
+    "sharp": "^0.35.4"
+  },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "^9.17.0",
     "@types/node": "^22.10.0",
     "eslint": "^9.17.0",
     "tsx": "^4.19.2",
