@@ -316,7 +316,7 @@
               "body": "Quantity checks and dealer conversations so the client is not buying from a mood board."
             }
           ],
-          "linkedProjectSlug": "portfolio-detail",
+          "linkedProjectSlug": "3bhk-anisabad",
           "faq": [
             {
               "q": "Can you help if another contractor is doing the work?",
@@ -464,12 +464,16 @@
       ],
       "projects": [
         {
-          "title": "Rajendra Nagar 3BHK",
+          "title": "3 BHK Boring Road",
           "slug": "3bhk-boring-road",
-          "cover": "/clients/ashish-interiors/editorial/portfolio-04.jpg",
+          "cover": "/clients/ashish-interiors/editorial/case-study/hero.jpg",
           "images": [
-            "/clients/ashish-interiors/editorial/portfolio-02.jpg",
-            "/clients/ashish-interiors/editorial/instagram-01.jpg"
+            "/clients/ashish-interiors/editorial/case-study/living-01.jpg",
+            "/clients/ashish-interiors/editorial/case-study/living-02.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-01.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-02.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-04.jpg",
+            "/clients/ashish-interiors/editorial/case-study/room-05.jpg"
           ],
           "blurb": "A family of four moving into their first owned flat. We opened up the kitchen wall, built storage into every corridor and kept the palette to oak, off-white and one deep brown.",
           "location": "Patna",
@@ -482,28 +486,33 @@
         {
           "title": "Boring Road Kitchen",
           "slug": "boring-road-kitchen",
-          "cover": "/clients/ashish-interiors/editorial/service-02.jpg",
+          "cover": "/clients/ashish-interiors/editorial/boring-road-kitchen/cover.webp",
           "images": [
-            "/clients/ashish-interiors/editorial/portfolio-04.jpg",
-            "/clients/ashish-interiors/editorial/instagram-02.jpg"
+            "/clients/ashish-interiors/editorial/boring-road-kitchen/passthrough.webp",
+            "/clients/ashish-interiors/editorial/boring-road-kitchen/tile-01.webp",
+            "/clients/ashish-interiors/editorial/boring-road-kitchen/tile-02.webp",
+            "/clients/ashish-interiors/editorial/boring-road-kitchen/tile-03.webp"
           ],
-          "blurb": "Full-home interiors across two floors.",
+          "blurb": "A clean open kitchen layout with black granite countertop, warm oak joinery and breakfast pass-through.",
           "location": "Kankarbagh, Patna",
-          "duration": "90 days",
+          "duration": "40 days",
           "projectType": "residential",
-          "area": "2600 sq ft",
+          "area": "280 sq ft",
           "category": "residential",
-          "budget": "₹14–18 lakh"
+          "budget": "₹3.5–5 lakh"
         },
         {
           "title": "Kankarbagh Flat",
           "slug": "kankarbagh-flat",
-          "cover": "/clients/ashish-interiors/editorial/testimonial-01.jpg",
+          "cover": "/clients/ashish-interiors/editorial/kankarbagh/cover.webp",
           "images": [
-            "/clients/ashish-interiors/editorial/instagram-04.jpg",
-            "/clients/ashish-interiors/editorial/testimonial-01.jpg"
+            "/clients/ashish-interiors/editorial/kankarbagh/hallway-living.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/built-in-desk.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/oak-detail.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/site-carpentry.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/joinery-detail.webp"
           ],
-          "blurb": "Workspace for a 20-person practice.",
+          "blurb": "An 1,800 sq ft flat with custom built-in joinery, window-seat desk, and open living space.",
           "location": "Kankarbagh, Patna",
           "duration": "60 days",
           "projectType": "residential",
@@ -514,9 +523,12 @@
         {
           "title": "Study Nook",
           "slug": "study-nook",
-          "cover": "/clients/ashish-interiors/editorial/portfolio-03.jpg",
+          "cover": "/clients/ashish-interiors/editorial/study-nook/cover.webp",
           "images": [
-            "/clients/ashish-interiors/editorial/instagram-03.jpg"
+            "/clients/ashish-interiors/editorial/study-nook/shelf-detail.webp",
+            "/clients/ashish-interiors/editorial/study-nook/window-seat.webp",
+            "/clients/ashish-interiors/editorial/study-nook/bookshelf-joinery.webp",
+            "/clients/ashish-interiors/editorial/study-nook/desk-surface.webp"
           ],
           "blurb": "A quiet room designed around books, daylight and work that needs concentration.",
           "location": "Patna",
@@ -529,9 +541,12 @@
         {
           "title": "Patliputra Duplex",
           "slug": "patliputra-duplex",
-          "cover": "/clients/ashish-interiors/editorial/instagram-04.jpg",
+          "cover": "/clients/ashish-interiors/editorial/patliputra-duplex/cover.webp",
           "images": [
-            "/clients/ashish-interiors/editorial/testimonial-01.jpg"
+            "/clients/ashish-interiors/editorial/patliputra-duplex/staircase-detail.webp",
+            "/clients/ashish-interiors/editorial/patliputra-duplex/upper-gallery.webp",
+            "/clients/ashish-interiors/editorial/patliputra-duplex/master-bedroom.webp",
+            "/clients/ashish-interiors/editorial/patliputra-duplex/dining-view.webp"
           ],
           "blurb": "A full-home interior planned for daily life across two floors.",
           "location": "Patliputra, Patna",
@@ -542,14 +557,17 @@
           "budget": "₹14–18 lakh"
         },
         {
-          "title": "Portfolio",
-          "slug": "portfolio-detail",
-          "cover": "/clients/ashish-interiors/editorial/trust-03.jpg",
+          "title": "3 BHK Anisabad",
+          "slug": "3bhk-anisabad",
+          "cover": "/clients/ashish-interiors/editorial/anisabad-3bhk/cover.webp",
           "images": [
-            "/clients/ashish-interiors/editorial/instagram-01.jpg"
+            "/clients/ashish-interiors/editorial/anisabad-3bhk/living.webp",
+            "/clients/ashish-interiors/editorial/anisabad-3bhk/dining.webp",
+            "/clients/ashish-interiors/editorial/anisabad-3bhk/bedroom.webp",
+            "/clients/ashish-interiors/editorial/portfolio-02.jpg"
           ],
-          "blurb": "A considered interior shaped around the way a family lives every day.",
-          "location": "Patna",
+          "blurb": "A 1,900 sq ft family flat in Anisabad with bespoke wood joinery, custom dining pass, and corridor storage.",
+          "location": "Anisabad, Patna",
           "duration": "75 days",
           "projectType": "residential",
           "area": "1900 sq ft",
@@ -951,29 +969,78 @@
         "default": 1320
       },
       "homeTypes": [
-        { "id": "1bhk", "label": "1 BHK", "factor": 0.94 },
-        { "id": "2bhk", "label": "2 BHK", "factor": 1 },
-        { "id": "3bhk", "label": "3 BHK", "factor": 1.06 },
-        { "id": "4bhk", "label": "4 BHK", "factor": 1.12 }
+        {
+          "id": "1bhk",
+          "label": "1 BHK",
+          "factor": 0.94
+        },
+        {
+          "id": "2bhk",
+          "label": "2 BHK",
+          "factor": 1
+        },
+        {
+          "id": "3bhk",
+          "label": "3 BHK",
+          "factor": 1.06
+        },
+        {
+          "id": "4bhk",
+          "label": "4 BHK",
+          "factor": 1.12
+        }
       ],
       "finishLevels": [
-        { "id": "basic", "label": "Essential", "note": "Commercial ply, laminate finishes, standard fittings.", "weeks": "6–8 weeks", "low": 0.95, "high": 1.2 },
-        { "id": "standard", "label": "Premium", "note": "Branded ply, veneer accents, better hardware and lighting.", "weeks": "8–11 weeks", "low": 0.92, "high": 1.14 },
-        { "id": "premium", "label": "Luxe", "note": "Solid wood detailing, stone, imported hardware, custom joinery.", "weeks": "12–16 weeks", "low": 0.92, "high": 1.19 }
+        {
+          "id": "basic",
+          "label": "Essential",
+          "note": "Commercial ply, laminate finishes, standard fittings.",
+          "weeks": "6–8 weeks",
+          "low": 0.95,
+          "high": 1.2
+        },
+        {
+          "id": "standard",
+          "label": "Premium",
+          "note": "Branded ply, veneer accents, better hardware and lighting.",
+          "weeks": "8–11 weeks",
+          "low": 0.92,
+          "high": 1.14
+        },
+        {
+          "id": "premium",
+          "label": "Luxe",
+          "note": "Solid wood detailing, stone, imported hardware, custom joinery.",
+          "weeks": "12–16 weeks",
+          "low": 0.92,
+          "high": 1.19
+        }
       ],
       "resultNote": "This is an indicative range only, not a quotation. Final cost depends on the site, the extent of civil work and your material choices — we put a firm number in writing after one site visit.",
       "included": [
-        { "title": "Design & drawings", "body": "Layouts, joinery details and a finish board, revised until you sign them off." },
-        { "title": "Carpentry & storage", "body": "Wardrobes, kitchen, beds and units built in our own workshop from commercial ply." },
-        { "title": "Paint, light & points", "body": "Wall finishes, light fittings and electrical points where the drawings call for them." },
-        { "title": "Not in the range", "body": "Loose furniture, appliances, heavy civil work and statutory society charges are quoted separately." }
+        {
+          "title": "Design & drawings",
+          "body": "Layouts, joinery details and a finish board, revised until you sign them off."
+        },
+        {
+          "title": "Carpentry & storage",
+          "body": "Wardrobes, kitchen, beds and units built in our own workshop from commercial ply."
+        },
+        {
+          "title": "Paint, light & points",
+          "body": "Wall finishes, light fittings and electrical points where the drawings call for them."
+        },
+        {
+          "title": "Not in the range",
+          "body": "Loose furniture, appliances, heavy civil work and statutory society charges are quoted separately."
+        }
       ]
     },
     "caseStudy": {
       "items": [
         {
           "slug": "3bhk-boring-road",
-          "title": "3BHK, BORING ROAD",
+          "title": "3 BHK, BORING ROAD",
           "problem": [
             "A family of four had just taken possession of a 1,320 sq ft flat off Boring Road. Two working parents, two school-going children, one grandmother visiting for months at a time — and a builder shell with a dark corridor and a kitchen closed off behind a wall.",
             "The brief was practical rather than aspirational. They wanted storage that could absorb a decade of accumulation, a kitchen where two people could cook together during festivals, and a home that would still look right when the furniture inevitably got moved around. The budget was fixed at ten lakh, and they were honest that it could not stretch.",
@@ -1027,7 +1094,6 @@
             "/clients/ashish-interiors/editorial/case-study/living-02.jpg",
             "/clients/ashish-interiors/editorial/case-study/room-01.jpg",
             "/clients/ashish-interiors/editorial/case-study/room-02.jpg",
-            "/clients/ashish-interiors/editorial/case-study/room-03.jpg",
             "/clients/ashish-interiors/editorial/case-study/room-04.jpg",
             "/clients/ashish-interiors/editorial/case-study/room-05.jpg",
             "/clients/ashish-interiors/editorial/case-study/room-06.jpg",
@@ -1078,7 +1144,12 @@
               "label": "DAYS ON SITE"
             }
           ],
-          "images": []
+          "images": [
+            "/clients/ashish-interiors/editorial/boring-road-kitchen/cover.webp",
+            "/clients/ashish-interiors/editorial/boring-road-kitchen/passthrough.webp",
+            "/clients/ashish-interiors/editorial/boring-road-kitchen/tile-01.webp",
+            "/clients/ashish-interiors/editorial/boring-road-kitchen/tile-02.webp"
+          ]
         },
         {
           "slug": "kankarbagh-flat",
@@ -1124,7 +1195,14 @@
               "label": "NEIGHBOUR REFERRED"
             }
           ],
-          "images": []
+          "images": [
+            "/clients/ashish-interiors/editorial/kankarbagh/cover.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/hallway-living.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/built-in-desk.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/oak-detail.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/site-carpentry.webp",
+            "/clients/ashish-interiors/editorial/kankarbagh/joinery-detail.webp"
+          ]
         },
         {
           "slug": "study-nook",
@@ -1170,7 +1248,13 @@
               "label": "WALL OF SHELVING"
             }
           ],
-          "images": []
+          "images": [
+            "/clients/ashish-interiors/editorial/study-nook/cover.webp",
+            "/clients/ashish-interiors/editorial/study-nook/shelf-detail.webp",
+            "/clients/ashish-interiors/editorial/study-nook/window-seat.webp",
+            "/clients/ashish-interiors/editorial/study-nook/bookshelf-joinery.webp",
+            "/clients/ashish-interiors/editorial/study-nook/desk-surface.webp"
+          ]
         },
         {
           "slug": "patliputra-duplex",
@@ -1216,17 +1300,23 @@
               "label": "DAYS ON SITE"
             }
           ],
-          "images": []
+          "images": [
+            "/clients/ashish-interiors/editorial/patliputra-duplex/cover.webp",
+            "/clients/ashish-interiors/editorial/patliputra-duplex/staircase-detail.webp",
+            "/clients/ashish-interiors/editorial/patliputra-duplex/upper-gallery.webp",
+            "/clients/ashish-interiors/editorial/patliputra-duplex/master-bedroom.webp",
+            "/clients/ashish-interiors/editorial/patliputra-duplex/dining-view.webp"
+          ]
         },
         {
-          "slug": "portfolio-detail",
-          "title": "HOME PATNA",
+          "slug": "3bhk-anisabad",
+          "title": "3 BHK, ANISABAD",
           "problem": [
-            "A 1,900 sq ft interior shaped around the way a family lives every day — not around a photograph.",
-            "They asked for storage, a kitchen two people could share, and rooms that would survive furniture being rearranged. The budget was named on the first visit.",
-            "We measured, photographed and listened for two sittings before any drawing left the studio."
+            "A 1,900 sq ft flat in Anisabad shaped around daily family life — parents, two children and a shared dining space.",
+            "They asked for extensive storage, a kitchen two people could cook in together, and bedrooms with built-in study desks.",
+            "We measured and listened over two sittings to design around how they live every day."
           ],
-          "approachIntro": "Three decisions took the money. The rest of the house is white walls, one laminate, and ceilings left alone unless a wire demanded otherwise.",
+          "approachIntro": "Three key design decisions defined the project: an open breakfast kitchen, concealed corridor storage, and durable oak finishes.",
           "decisions": [
             {
               "letter": "A",
@@ -1241,12 +1331,12 @@
             {
               "letter": "C",
               "title": "ONE MATERIAL",
-              "body": "A single oak laminate through every room, so a damaged shutter can be matched years later from the same family."
+              "body": "Commercial ply with teak and oak laminate throughout, hardware that can be replaced without taking a door off, and zero trim where plaster meets wood."
             }
           ],
           "outcome": [
-            "Seventy-five days on site. The bill landed inside the range they set, with invoices in a folder at handover.",
-            "The sofa has moved twice. The room still holds, which was the brief they actually gave us."
+            "Seventy-five days from keys to handover on dated schedule.",
+            "Two families from the same residential block have since engaged the studio for their own turnkey handovers."
           ],
           "stats": [
             {
@@ -1258,11 +1348,17 @@
               "label": "DAYS ON SITE"
             },
             {
-              "value": "1",
-              "label": "FINISH FAMILY"
+              "value": "2",
+              "label": "NEIGHBOURS ENGAGED"
             }
           ],
-          "images": []
+          "images": [
+            "/clients/ashish-interiors/editorial/anisabad-3bhk/cover.webp",
+            "/clients/ashish-interiors/editorial/anisabad-3bhk/living.webp",
+            "/clients/ashish-interiors/editorial/anisabad-3bhk/dining.webp",
+            "/clients/ashish-interiors/editorial/anisabad-3bhk/bedroom.webp",
+            "/clients/ashish-interiors/editorial/portfolio-02.jpg"
+          ]
         }
       ],
       "enabled": true
@@ -1463,7 +1559,7 @@
             {
               "slug": "boring-road-kitchen",
               "title": "KITCHEN REFIT, RAJAPUR PUL",
-              "image": "/clients/ashish-interiors/editorial/service-01.jpg"
+              "image": "/clients/ashish-interiors/editorial/boring-road-kitchen/cover.jpg"
             }
           ]
         },
@@ -1485,7 +1581,7 @@
             "image": "/clients/ashish-interiors/editorial/team/principal-02.jpg",
             "line": "Runs the drawing office — layouts, joinery sections and every kitchen detail that leaves the studio."
           },
-          "cover": "/clients/ashish-interiors/editorial/service-01.jpg",
+          "cover": "/clients/ashish-interiors/editorial/boring-road-kitchen/cover.jpg",
           "body": [
             {
               "type": "p",
@@ -1570,7 +1666,7 @@
             {
               "slug": "boring-road-kitchen",
               "title": "KITCHEN REFIT, RAJAPUR PUL",
-              "image": "/clients/ashish-interiors/editorial/service-01.jpg"
+              "image": "/clients/ashish-interiors/editorial/boring-road-kitchen/cover.jpg"
             },
             {
               "slug": "3bhk-boring-road",
@@ -1981,7 +2077,7 @@
           "year": "2025",
           "category": "STUDIO",
           "summary": "A talk at the Institute of Indian Interior Designers' Patna chapter, drawn from eleven kitchen refits in buildings drawn before modular existed.",
-          "photo": "/clients/ashish-interiors/editorial/service-01.jpg",
+          "photo": "/clients/ashish-interiors/editorial/boring-road-kitchen/cover.jpg",
           "standfirst": "STUDIO NEWS · IIID PATNA CHAPTER · SUNITA RAJ",
           "lead": "Sunita Raj gave the Patna chapter talk this month on fitting a modular kitchen into a flat drawn thirty years before modular kitchens existed.",
           "body": [
@@ -1999,7 +2095,7 @@
           "related": {
             "slug": "boring-road-kitchen",
             "title": "KITCHEN REFIT, RAJAPUR PUL SIDE",
-            "image": "/clients/ashish-interiors/editorial/service-01.jpg"
+            "image": "/clients/ashish-interiors/editorial/boring-road-kitchen/cover.jpg"
           }
         },
         {
@@ -2377,10 +2473,11 @@
     }
   },
   "i18n": {
-    "enabled": false,
+    "enabled": true,
     "defaultLocale": "en",
     "locales": [
-      "en"
+      "en",
+      "hi"
     ]
   },
   "legal": {

@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Locality Navigator — Contact Us — Ashish Interiors Patna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #141414;
+      --accent: #51372A;
+      --cta: #D9BC72;
+      --surface: #FFFFFF;
+      --body: #4A4A4A;
+      --muted: #8B8377;
+      --hairline: #DCD7CE;
+      --panel: #FAF8F5;
+      --wa-evergreen: #285A43;
+      --wa-deep: #1E4A36;
+      --font-display: 'Archivo', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-hindi: 'Poppins', 'Tiro Devanagari Hindi', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--surface);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body.lang-hindi {
+      font-family: var(--font-hindi);
+    }
+
+    body.lang-hindi h1,
+    body.lang-hindi h2,
+    body.lang-hindi h3,
+    body.lang-hindi h4,
+    body.lang-hindi .font-display {
+      font-family: var(--font-hindi);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select {
+      font-family: inherit;
+      font-size: inherit;
+      border-radius: 0 !important;
+    }
+
+    /* Sticky Prototype Bar */
+    .proto-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #141414;
+      color: #FAF8F5;
+      border-bottom: 1px solid #333333;
+      padding: 8px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .proto-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .proto-brand {
+      font-weight: 600;
+      color: var(--cta);
+      font-family: var(--font-display);
+    }
+
+    .proto-sep {
+      color: #666666;
+    }
+
+    .proto-title {
+      color: #DCD7CE;
+    }
+
+    .proto-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      border: 1px solid #444444;
+      background: #1e1e1e;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: #AAAAAA;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 28px;
+    }
+
+    .lang-btn.active {
+      background: var(--cta);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .proto-pills-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      max-width: 580px;
+      padding-bottom: 2px;
+      scrollbar-width: thin;
+    }
+
+    .proto-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 6px;
+      border: 1px solid #333333;
+      background: #1a1a1a;
+      color: #8B8377;
+      font-size: 10.5px;
+      font-family: var(--font-display);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .proto-pill:hover {
+      border-color: var(--cta);
+      color: #FFFFFF;
+    }
+
+    .proto-pill.active {
+      background: var(--cta);
+      border-color: var(--cta);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* Site Navigation */
+    .site-header {
+      border-bottom: 1px solid var(--hairline);
+      background: var(--surface);
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--accent);
+      background: var(--panel);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 28px;
+    }
+
+    @media (min-width: 840px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-link.active {
+      border-bottom-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-direct {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-header-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--wa-evergreen);
+      color: #FFFFFF;
+      padding: 10px 16px;
+      font-size: 12.5px;
+      font-weight: 600;
+      min-height: 44px;
+      border: 1px solid var(--wa-deep);
+    }
+
+    .btn-header-wa:hover {
+      background: var(--wa-deep);
+    }
+
+    /* Hero Strip */
+    .hero-strip {
+      background: var(--panel);
+      border-bottom: 1px solid var(--hairline);
+      padding: clamp(40px, 6vw, 72px) 24px;
+    }
+
+    .content-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .kicker {
+      font-size: 11.5px;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .kicker-line {
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5.5vw, 56px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .hero-lead {
+      max-width: 720px;
+      font-size: clamp(15px, 1.8vw, 17px);
+      line-height: 1.7;
+      color: var(--body);
+    }
+
+    /* Locality Filter Section */
+    .filter-strip {
+      background: var(--surface);
+      border-bottom: 1px solid var(--hairline);
+      padding: 16px 24px;
+      position: sticky;
+      top: 43px;
+      z-index: 90;
+    }
+
+    .filter-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: 4px;
+    }
+
+    .filter-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+      margin-right: 4px;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      background: var(--panel);
+      border: 1px solid var(--hairline);
+      color: var(--body);
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    /* Main Grid Layout: Localities + Central Studio Hub */
+    .navigator-section {
+      padding: clamp(48px, 6vw, 84px) 24px;
+      background: var(--surface);
+    }
+
+    .navigator-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(36px, 5vw, 60px);
+    }
+
+    @media (min-width: 1024px) {
+      .navigator-layout {
+        grid-template-columns: 1.4fr 0.8fr;
+      }
+    }
+
+    .locality-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .locality-card {
+      border: 1px solid var(--hairline);
+      background: var(--panel);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.15s;
+    }
+
+    .locality-card:hover {
+      border-color: var(--accent);
+    }
+
+    .locality-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .locality-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .locality-zone {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .transit-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      background: #FFFFFF;
+      border: 1px solid var(--hairline);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .locality-body {
+      margin-top: 14px;
+      margin-bottom: 20px;
+    }
+
+    .meta-row {
+      display: grid;
+      gap: 4px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .meta-title {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .meta-content {
+      color: var(--body);
+      line-height: 1.5;
+    }
+
+    .meta-content.strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .btn-locality-wa {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--wa-evergreen);
+      color: #FFFFFF;
+      border: 1px solid var(--wa-deep);
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-locality-wa:hover {
+      background: var(--wa-deep);
+    }
+
+    /* Central Hub Sidebar */
+    .hub-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .hub-anchor-card {
+      border: 1px solid var(--ink);
+      background: #FFFFFF;
+      padding: clamp(24px, 4vw, 36px);
+    }
+
+    .hub-kicker {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .hub-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hub-coord-block {
+      border-top: 1px solid var(--hairline);
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+
+    .hub-coord-block:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .coord-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .coord-val {
+      font-size: 15px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .coord-val.num {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .transit-guide-box {
+      border: 1px solid var(--hairline);
+      background: var(--panel);
+      padding: 24px;
+    }
+
+    .transit-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .transit-list {
+      display: grid;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .transit-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--hairline);
+    }
+
+    .transit-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .transit-place {
+      color: var(--body);
+    }
+
+    .transit-min {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--ink);
+      color: #DCD7CE;
+      padding: 48px 24px 32px;
+      border-top: 1px solid #333333;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid #333333;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+
+    .footer-col p {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #AAAAAA;
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 24px auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 12px;
+      color: #888888;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Prototype Bar -->
+  <aside class="proto-bar" aria-label="Prototype switcher">
+    <div class="proto-meta">
+      <span class="proto-brand">Ashish Interiors</span>
+      <span class="proto-sep">/</span>
+      <span class="proto-title" data-en="Contact — Concept 12: The Locality Navigator" data-hi="संपर्क — कॉन्सेप्ट 12: इलाका मार्गदर्शक">Contact — Concept 12: The Locality Navigator</span>
+    </div>
+    <div class="proto-actions">
+      <div class="lang-switcher" role="group" aria-label="Language selection">
+        <button type="button" class="lang-btn active" data-lang-target="en" onclick="setLanguage('en')">English</button>
+        <button type="button" class="lang-btn" data-lang-target="hi" onclick="setLanguage('hi')">हिंदी</button>
+      </div>
+      <nav class="proto-pills-wrap" aria-label="Contact iteration pages">
+        <a href="contact-iteration-1.html" class="proto-pill">01</a>
+        <a href="contact-iteration-2.html" class="proto-pill">02</a>
+        <a href="contact-iteration-3.html" class="proto-pill">03</a>
+        <a href="contact-iteration-4.html" class="proto-pill">04</a>
+        <a href="contact-iteration-5.html" class="proto-pill">05</a>
+        <a href="contact-iteration-6.html" class="proto-pill">06</a>
+        <a href="contact-iteration-7.html" class="proto-pill">07</a>
+        <a href="contact-iteration-8.html" class="proto-pill">08</a>
+        <a href="contact-iteration-9.html" class="proto-pill">09</a>
+        <a href="contact-iteration-10.html" class="proto-pill">10</a>
+        <a href="contact-iteration-11.html" class="proto-pill">11</a>
+        <a href="contact-iteration-12.html" class="proto-pill active" aria-current="page">12</a>
+        <a href="contact-iteration-13.html" class="proto-pill">13</a>
+        <a href="contact-iteration-14.html" class="proto-pill">14</a>
+        <a href="contact-iteration-15.html" class="proto-pill">15</a>
+        <a href="contact-iteration-16.html" class="proto-pill">16</a>
+        <a href="contact-iteration-17.html" class="proto-pill">17</a>
+        <a href="contact-iteration-18.html" class="proto-pill">18</a>
+        <a href="contact-iteration-19.html" class="proto-pill">19</a>
+        <a href="contact-iteration-20.html" class="proto-pill">20</a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Site Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <div class="brand-mark">
+        <div class="brand-badge" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18"/>
+            <line x1="3" y1="9" x2="21" y2="9"/>
+            <line x1="9" y1="21" x2="9" y2="9"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Ashish Interiors</span>
+          <span class="brand-sub" data-en="Boring Road Crossing, Patna" data-hi="बोरिंग रोड चौराहा, पटना">Boring Road Crossing, Patna</span>
+        </div>
+      </div>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="/" class="nav-link" data-en="Home" data-hi="होम">Home</a>
+        <a href="/#services" class="nav-link" data-en="Services" data-hi="सेवाएं">Services</a>
+        <a href="/about" class="nav-link" data-en="About" data-hi="हमारे बारे में">About</a>
+        <a href="/portfolio" class="nav-link" data-en="Portfolio" data-hi="पोर्टफोलियो">Portfolio</a>
+        <a href="/#contact" class="nav-link active" data-en="Contact" data-hi="संपर्क">Contact</a>
+      </nav>
+
+      <div class="nav-direct">
+        <a href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors%2C%20I%20would%20like%20to%20inquire%20about%20interior%20services%20in%20my%20Patna%20locality." class="btn-header-wa" target="_blank" rel="noopener">
+          <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+          </svg>
+          <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Strip -->
+  <section class="hero-strip">
+    <div class="content-wrap">
+      <div class="kicker">
+        <span class="kicker-line"></span>
+        <span data-en="Patna coverage grid" data-hi="पटना कवरेज ग्रिड">Patna coverage grid</span>
+      </div>
+      <h1 class="page-title" data-en="The locality navigator" data-hi="इलाका मार्गदर्शक">The locality navigator</h1>
+      <p class="hero-lead" data-en="Explore service accessibility across Patna key residential neighborhoods. View transit times to our Boring Road Crossing workshop and initiate immediate WhatsApp survey consultations for your area." data-hi="पटना के प्रमुख आवासीय इलाकों में हमारी सेवा उपलब्धता देखें। हमारे बोरिंग रोड कार्यशाला की दूरी और अपने क्षेत्र के लिए तुरंत व्हाट्सएप सर्वेक्षण संपर्क शुरू करें।">
+        Explore service accessibility across Patna key residential neighborhoods. View transit times to our Boring Road Crossing workshop and initiate immediate WhatsApp survey consultations for your area.
+      </p>
+    </div>
+  </section>
+
+  <!-- Locality Filter Strip -->
+  <nav class="filter-strip" aria-label="Locality zones">
+    <div class="filter-inner">
+      <span class="filter-label" data-en="Zone filter:" data-hi="क्षेत्र फ़िल्टर:">Zone filter:</span>
+      <button type="button" class="filter-btn active" onclick="filterLocalities('all', this)" data-en="All Patna areas" data-hi="सभी पटना क्षेत्र">All Patna areas</button>
+      <button type="button" class="filter-btn" onclick="filterLocalities('central', this)" data-en="Central Patna" data-hi="मध्य पटना">Central Patna</button>
+      <button type="button" class="filter-btn" onclick="filterLocalities('north', this)" data-en="North Patna" data-hi="उत्तरी पटना">North Patna</button>
+      <button type="button" class="filter-btn" onclick="filterLocalities('west', this)" data-en="West Patna corridor" data-hi="पश्चिमी पटना कॉरिडोर">West Patna corridor</button>
+      <button type="button" class="filter-btn" onclick="filterLocalities('southeast', this)" data-en="South-East Patna" data-hi="दक्षिण-पूर्व पटना">South-East Patna</button>
+    </div>
+  </nav>
+
+  <!-- Main Navigator Section -->
+  <section class="navigator-section">
+    <div class="content-wrap">
+      <div class="navigator-layout">
+
+        <!-- Left: Locality Cards Grid -->
+        <div class="locality-grid" id="localityGrid">
+
+          <!-- 1. Boring Road -->
+          <div class="locality-card" data-zone="central">
+            <div>
+              <div class="locality-card-header">
+                <div>
+                  <h3 class="locality-name" data-en="Boring Road Crossing" data-hi="बोरिंग रोड चौराहा">Boring Road Crossing</h3>
+                  <div class="locality-zone" data-en="Central Studio Hub" data-hi="केंद्रीय स्टूडियो केंद्र">Central Studio Hub</div>
+                </div>
+                <span class="transit-badge" data-en="2 mins transit" data-hi="2 मिनट यात्रा">2 mins transit</span>
+              </div>
+              <div class="locality-body">
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Typical homes" data-hi="विशिष्ट घर">Typical homes</span>
+                  <span class="meta-content" data-en="Apartments, penthouses, canal road duplexes" data-hi="अपार्टमेंट, पेंटहाउस, नहर रोड डुप्लेक्स">Apartments, penthouses, canal road duplexes</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Recent project" data-hi="हालिया कार्य">Recent project</span>
+                  <span class="meta-content strong" data-en="Boring Road Kitchen & Wardrobe Joinery" data-hi="बोरिंग रोड किचन एवं वॉर्डरोब कार्य">Boring Road Kitchen & Wardrobe Joinery</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Survey turnaround" data-hi="सर्वेक्षण समय">Survey turnaround</span>
+                  <span class="meta-content" data-en="Immediate / same day laser measurement" data-hi="तत्काल / उसी दिन लेजर माप">Immediate / same day laser measurement</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-locality-wa" onclick="inquireLocality('Boring Road Crossing')">
+              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              <span data-en="Inquire for Boring Road" data-hi="बोरिंग रोड के लिए संपर्क करें">Inquire for Boring Road</span>
+            </button>
+          </div>
+
+          <!-- 2. Patliputra Colony -->
+          <div class="locality-card" data-zone="north">
+            <div>
+              <div class="locality-card-header">
+                <div>
+                  <h3 class="locality-name" data-en="Patliputra Colony" data-hi="पाटलिपुत्र कॉलोनी">Patliputra Colony</h3>
+                  <div class="locality-zone" data-en="North Patna" data-hi="उत्तरी पटना">North Patna</div>
+                </div>
+                <span class="transit-badge" data-en="6–8 mins transit" data-hi="6–8 मिनट यात्रा">6–8 mins transit</span>
+              </div>
+              <div class="locality-body">
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Typical homes" data-hi="विशिष्ट घर">Typical homes</span>
+                  <span class="meta-content" data-en="Private bungalows, 4 BHK duplex residences" data-hi="निजी बंगले, 4 बीएचके डुप्लेक्स आवास">Private bungalows, 4 BHK duplex residences</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Recent project" data-hi="हालिया कार्य">Recent project</span>
+                  <span class="meta-content strong" data-en="Patliputra Duplex (Full Interior Handover)" data-hi="पाटलिपुत्र डुप्लेक्स (पूर्ण इंटीरियर हैंडओवर)">Patliputra Duplex (Full Interior Handover)</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Survey turnaround" data-hi="सर्वेक्षण समय">Survey turnaround</span>
+                  <span class="meta-content" data-en="Same-day appointment slots" data-hi="उसी दिन अपॉइंटमेंट स्लॉट उपलब्ध">Same-day appointment slots</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-locality-wa" onclick="inquireLocality('Patliputra Colony')">
+              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              <span data-en="Inquire for Patliputra" data-hi="पाटलिपुत्र के लिए संपर्क करें">Inquire for Patliputra</span>
+            </button>
+          </div>
+
+          <!-- 3. Bailey Road / RPS More -->
+          <div class="locality-card" data-zone="west">
+            <div>
+              <div class="locality-card-header">
+                <div>
+                  <h3 class="locality-name" data-en="Bailey Road / RPS More" data-hi="बेली रोड / आरपीएस मोड़">Bailey Road / RPS More</h3>
+                  <div class="locality-zone" data-en="West Patna Corridor" data-hi="पश्चिमी पटना कॉरिडोर">West Patna Corridor</div>
+                </div>
+                <span class="transit-badge" data-en="12–15 mins transit" data-hi="12–15 मिनट यात्रा">12–15 mins transit</span>
+              </div>
+              <div class="locality-body">
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Typical homes" data-hi="विशिष्ट घर">Typical homes</span>
+                  <span class="meta-content" data-en="High-rise apartments, gated township flats" data-hi="हाई-राइज अपार्टमेंट, टाउनशिप फ्लैट">High-rise apartments, gated township flats</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Recent project" data-hi="हालिया कार्य">Recent project</span>
+                  <span class="meta-content strong" data-en="RPS More 3 BHK Modular Joinery" data-hi="आरपीएस मोड़ 3 बीएचके मॉड्युलर कार्य">RPS More 3 BHK Modular Joinery</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Survey turnaround" data-hi="सर्वेक्षण समय">Survey turnaround</span>
+                  <span class="meta-content" data-en="Daily morning and afternoon schedules" data-hi="दैनिक सुबह और दोपहर के स्लॉट">Daily morning and afternoon schedules</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-locality-wa" onclick="inquireLocality('Bailey Road / RPS More')">
+              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              <span data-en="Inquire for Bailey Road" data-hi="बेली रोड के लिए संपर्क करें">Inquire for Bailey Road</span>
+            </button>
+          </div>
+
+          <!-- 4. Kankarbagh -->
+          <div class="locality-card" data-zone="southeast">
+            <div>
+              <div class="locality-card-header">
+                <div>
+                  <h3 class="locality-name" data-en="Kankarbagh" data-hi="कंकड़बाग">Kankarbagh</h3>
+                  <div class="locality-zone" data-en="South-East Patna" data-hi="दक्षिण-पूर्व पटना">South-East Patna</div>
+                </div>
+                <span class="transit-badge" data-en="18–22 mins transit" data-hi="18–22 मिनट यात्रा">18–22 mins transit</span>
+              </div>
+              <div class="locality-body">
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Typical homes" data-hi="विशिष्ट घर">Typical homes</span>
+                  <span class="meta-content" data-en="Family residences, clinic suites, builder floors" data-hi="पारिवारिक घर, क्लीनिक सूट, बिल्डर फ्लोर">Family residences, clinic suites, builder floors</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Recent project" data-hi="हालिया कार्य">Recent project</span>
+                  <span class="meta-content strong" data-en="Doctor's Residence Master Suite & Joinery" data-hi="डॉक्टर निवास मास्टर सुइट एवं बढ़ईगीरी">Doctor's Residence Master Suite & Joinery</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Survey turnaround" data-hi="सर्वेक्षण समय">Survey turnaround</span>
+                  <span class="meta-content" data-en="Next-day scheduled laser survey" data-hi="अगले दिन निर्धारित लेजर सर्वेक्षण">Next-day scheduled laser survey</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-locality-wa" onclick="inquireLocality('Kankarbagh')">
+              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              <span data-en="Inquire for Kankarbagh" data-hi="कंकड़बाग के लिए संपर्क करें">Inquire for Kankarbagh</span>
+            </button>
+          </div>
+
+          <!-- 5. Danapur Cantonment & Khagaul -->
+          <div class="locality-card" data-zone="west">
+            <div>
+              <div class="locality-card-header">
+                <div>
+                  <h3 class="locality-name" data-en="Danapur / Khagaul" data-hi="दानापुर / खगौल">Danapur / Khagaul</h3>
+                  <div class="locality-zone" data-en="Greater West Patna" data-hi="वृहत पश्चिमी पटना">Greater West Patna</div>
+                </div>
+                <span class="transit-badge" data-en="25–30 mins transit" data-hi="25–30 मिनट यात्रा">25–30 mins transit</span>
+              </div>
+              <div class="locality-body">
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Typical homes" data-hi="विशिष्ट घर">Typical homes</span>
+                  <span class="meta-content" data-en="Gated community villas, new multistory units" data-hi="गेटेड विला, नए बहुमंजिला फ्लैट">Gated community villas, new multistory units</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Recent project" data-hi="हालिया कार्य">Recent project</span>
+                  <span class="meta-content strong" data-en="Saguna More 3 BHK Full Execution" data-hi="सगुना मोड़ 3 बीएचके पूर्ण निर्माण">Saguna More 3 BHK Full Execution</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Survey turnaround" data-hi="सर्वेक्षण समय">Survey turnaround</span>
+                  <span class="meta-content" data-en="Scheduled slots (Tue, Thu, Sat)" data-hi="निर्धारित दिन (मंगल, गुरु, शनि)">Scheduled slots (Tue, Thu, Sat)</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-locality-wa" onclick="inquireLocality('Danapur / Khagaul')">
+              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              <span data-en="Inquire for Danapur" data-hi="दानापुर के लिए संपर्क करें">Inquire for Danapur</span>
+            </button>
+          </div>
+
+          <!-- 6. Ashiana-Digha Road -->
+          <div class="locality-card" data-zone="north">
+            <div>
+              <div class="locality-card-header">
+                <div>
+                  <h3 class="locality-name" data-en="Ashiana-Digha Road" data-hi="आशियाना-दीघा रोड">Ashiana-Digha Road</h3>
+                  <div class="locality-zone" data-en="North-West Corridor" data-hi="उत्तर-पश्चिम कॉरिडोर">North-West Corridor</div>
+                </div>
+                <span class="transit-badge" data-en="10–12 mins transit" data-hi="10–12 मिनट यात्रा">10–12 mins transit</span>
+              </div>
+              <div class="locality-body">
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Typical homes" data-hi="विशिष्ट घर">Typical homes</span>
+                  <span class="meta-content" data-en="Modern apartments, residential duplex floors" data-hi="आधुनिक अपार्टमेंट, डुप्लेक्स फ्लोर">Modern apartments, residential duplex floors</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Recent project" data-hi="हालिया कार्य">Recent project</span>
+                  <span class="meta-content strong" data-en="Ashiana 4 BHK Cabinetry & Panelling" data-hi="आशियाना 4 बीएचके कैबिनेटरी कार्य">Ashiana 4 BHK Cabinetry & Panelling</span>
+                </div>
+                <div class="meta-row">
+                  <span class="meta-title" data-en="Survey turnaround" data-hi="सर्वेक्षण समय">Survey turnaround</span>
+                  <span class="meta-content" data-en="Within 24 hours of enquiry" data-hi="संपर्क के 24 घंटे के भीतर">Within 24 hours of enquiry</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-locality-wa" onclick="inquireLocality('Ashiana-Digha Road')">
+              <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              <span data-en="Inquire for Ashiana" data-hi="आशियाना के लिए संपर्क करें">Inquire for Ashiana</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Right: Studio Hub & Transit Overview -->
+        <aside class="hub-sidebar">
+          <div class="hub-anchor-card">
+            <div class="hub-kicker" data-en="Studio coordinates" data-hi="स्टूडियो विवरण">Studio coordinates</div>
+            <h3 class="hub-title" data-en="Come see us" data-hi="यहाँ मिलते हैं">Come see us</h3>
+
+            <div class="hub-coord-block">
+              <div class="coord-label" data-en="Studio" data-hi="स्टूडियो">Studio</div>
+              <div class="coord-val">
+                2nd Floor, Boring Road Crossing,<br>
+                Patna, Bihar 800001
+              </div>
+            </div>
+
+            <div class="hub-coord-block">
+              <div class="coord-label" data-en="Hours" data-hi="समय">Hours</div>
+              <div class="coord-val">
+                Mon–Sat, 10:00 – 19:00<br>
+                <span style="color: var(--muted); font-size: 13px;" data-en="Sunday by appointment" data-hi="रविवार केवल अपॉइंटमेंट से">Sunday by appointment</span>
+              </div>
+            </div>
+
+            <div class="hub-coord-block">
+              <div class="coord-label" data-en="Phone" data-hi="फोन">Phone</div>
+              <a href="tel:5550123" class="coord-val num">(555) 0123</a>
+            </div>
+
+            <div class="hub-coord-block">
+              <div class="coord-label" data-en="WhatsApp" data-hi="व्हाट्सएप">WhatsApp</div>
+              <a href="https://wa.me/919876543210" class="coord-val num" style="color: var(--wa-evergreen);">(555) 0123</a>
+            </div>
+
+            <div style="margin-top: 20px; display: grid; gap: 10px;">
+              <a href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors%2C%20I%20would%20like%20to%20chat%20on%20WhatsApp." class="btn-locality-wa" target="_blank" rel="noopener">
+                <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+                  <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                </svg>
+                <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
+              </a>
+              <button type="button" class="btn-locality-wa" style="background: var(--panel); color: var(--ink); border-color: var(--accent);" onclick="window.open('https://wa.me/919876543210?text=Hello%20Ashish%20Interiors%2C%20I%20would%20like%20to%20calculate%20an%20estimate%20for%20my%20locality.')">
+                <span data-en="Calculate estimate" data-hi="अनुमान लें">Calculate estimate</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="transit-guide-box">
+            <h4 class="transit-title" data-en="Radial transit index" data-hi="दूरी एवं यात्रा समय">Radial transit index</h4>
+            <div class="transit-list">
+              <div class="transit-item">
+                <span class="transit-place">Boring Road Crossing</span>
+                <span class="transit-min" data-en="Hub (0 min)" data-hi="केंद्र (0 मिनट)">Hub (0 min)</span>
+              </div>
+              <div class="transit-item">
+                <span class="transit-place">Patliputra Colony</span>
+                <span class="transit-min" data-en="6–8 mins" data-hi="6–8 मिनट">6–8 mins</span>
+              </div>
+              <div class="transit-item">
+                <span class="transit-place">Ashiana Digha Road</span>
+                <span class="transit-min" data-en="10–12 mins" data-hi="10–12 मिनट">10–12 mins</span>
+              </div>
+              <div class="transit-item">
+                <span class="transit-place">Bailey Road / RPS More</span>
+                <span class="transit-min" data-en="12–15 mins" data-hi="12–15 मिनट">12–15 mins</span>
+              </div>
+              <div class="transit-item">
+                <span class="transit-place">Fraser Road / Exhibition</span>
+                <span class="transit-min" data-en="14–16 mins" data-hi="14–16 मिनट">14–16 mins</span>
+              </div>
+              <div class="transit-item">
+                <span class="transit-place">Kankarbagh</span>
+                <span class="transit-min" data-en="18–22 mins" data-hi="18–22 मिनट">18–22 mins</span>
+              </div>
+              <div class="transit-item">
+                <span class="transit-place">Danapur Cantonment</span>
+                <span class="transit-min" data-en="25–30 mins" data-hi="25–30 मिनट">25–30 mins</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4 data-en="Ashish Interiors" data-hi="आशीष इंटीरियर्स">Ashish Interiors</h4>
+        <p data-en="Bespoke architectural joinery and interior contracting founded in Boring Road Crossing, Patna in 2013." data-hi="2013 में बोरिंग रोड चौराहा, पटना में स्थापित वास्तुशिल्प बढ़ईगीरी और इंटीरियर अनुबंध स्टूडियो।">
+          Bespoke architectural joinery and interior contracting founded in Boring Road Crossing, Patna in 2013.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Material standard" data-hi="सामग्री मानक">Material standard</h4>
+        <p data-en="Every wardrobe, cabinet, and wall panelling is built in our workshop with BWR marine-grade plywood (IS 710 certified)." data-hi="प्रत्येक वॉर्डरोब, कैबिनेट और वॉल पैनलिंग हमारी कार्यशाला में बीडब्ल्यूआर मरीन प्लाईवुड (IS 710 प्रमाणित) से निर्मित होती है।">
+          Every wardrobe, cabinet, and wall panelling is built in our workshop with BWR marine-grade plywood (IS 710 certified).
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Studio visit" data-hi="स्टूडियो विज़िट">Studio visit</h4>
+        <p>
+          2nd Floor, Boring Road Crossing, Patna 800001<br>
+          Phone: (555) 0123<br>
+          Mon–Sat: 10:00 – 19:00
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ashish Interiors. All rights reserved.</span>
+      <span data-en="Concept 12: The Locality Navigator" data-hi="कॉन्सेप्ट 12: इलाका मार्गदर्शक">Concept 12: The Locality Navigator</span>
+    </div>
+  </footer>
+
+  <script>
+    function filterLocalities(zone, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.locality-card');
+      cards.forEach(card => {
+        if (zone === 'all' || card.getAttribute('data-zone') === zone) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function inquireLocality(localityName) {
+      const currentLang = document.documentElement.lang || 'en';
+      let text = "";
+      if (currentLang === 'hi') {
+        text = `नमस्ते आशीष इंटीरियर्स, मैं पटना के ${localityName} इलाके से हूँ। मुझे अपने घर के इंटीरियर कार्य एवं ऑन-साइट लेजर सर्वेक्षण के बारे में जानकारी चाहिए।`;
+      } else {
+        text = `Hello Ashish Interiors, I live in ${localityName}, Patna. I would like to check site survey availability and discuss bespoke interior joinery for my home.`;
+      }
+      const encoded = encodeURIComponent(text);
+      window.open(`https://wa.me/919876543210?text=${encoded}`, '_blank');
+    }
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      localStorage.setItem('ashish_lang', lang);
+
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang-target') === lang);
+      });
+
+      if (lang === 'hi') {
+        document.body.classList.add('lang-hindi');
+      } else {
+        document.body.classList.remove('lang-hindi');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('ashish_lang') || 'en';
+      setLanguage(saved);
+    });
+  </script>
+</body>
+</html>

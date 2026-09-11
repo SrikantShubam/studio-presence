@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashish Interiors — 20 Contact Us Page Variations (Bilingual EN/HI)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #141414;
+      --accent: #51372A;
+      --cta: #D9BC72;
+      --surface: #FFFFFF;
+      --body: #4A4A4A;
+      --muted: #8B8377;
+      --hairline: #DCD7CE;
+      --panel: #FAF8F5;
+      --wa-evergreen: #285A43;
+      --wa-deep: #1E4A36;
+      --font-display: 'Archivo', "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-hi-display: 'Tiro Devanagari Hindi', Georgia, serif;
+      --font-hi-body: 'Poppins', -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #100f0e;
+      color: #e2ded5;
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── Top Bar ────────────────────────────────────────── */
+    .showcase-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #171513;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 12px clamp(16px, 3vw, 48px);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #f7f5f0;
+    }
+
+    .nav-brand-mark {
+      background: var(--cta);
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 11px;
+      padding: 2px 6px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .nav-link-pill {
+      color: #a89f92;
+      text-decoration: none;
+      padding: 5px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 11.5px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+    .nav-link-pill:hover { color: #ffffff; border-color: var(--cta); }
+    .nav-link-pill.active { background: var(--cta); color: var(--ink); border-color: var(--cta); font-weight: 600; }
+
+    /* ── Master Control Deck ────────────────────────────── */
+    .control-deck {
+      background: #191715;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px clamp(16px, 3vw, 48px);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ctrl-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ctrl-label {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-right: 4px;
+    }
+
+    .deck-btn {
+      background: #24211e;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #d2cbc0;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .deck-btn:hover { color: #ffffff; border-color: var(--cta); }
+    .deck-btn.active { background: var(--cta); color: var(--ink); border-color: var(--cta); font-weight: 600; }
+
+    .lang-toggle {
+      background: #24211e;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: flex;
+      overflow: hidden;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: #a89f92;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .lang-btn.active { background: var(--wa-evergreen); color: #ffffff; }
+
+    .var-grid-selector {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .var-btn {
+      width: 33px;
+      height: 33px;
+      background: #24211e;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #b0a79a;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-display);
+      transition: all 0.15s ease;
+    }
+    .var-btn:hover { color: #ffffff; border-color: var(--cta); }
+    .var-btn.active { background: #ffffff; color: var(--ink); border-color: #ffffff; }
+
+    /* ── Main Stage ─────────────────────────────────────── */
+    .stage-wrapper {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 30px clamp(16px, 3vw, 48px) 80px;
+    }
+
+    .stage-header {
+      margin-bottom: 28px;
+    }
+    .stage-kicker {
+      font-size: 12px;
+      color: var(--cta);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .stage-title {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: #f7f5f0;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .stage-desc {
+      font-size: 14.5px;
+      color: #aaa194;
+      max-width: 960px;
+      line-height: 1.6;
+    }
+
+    /* ── Cards Display ──────────────────────────────────── */
+    .variations-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .variation-card {
+      background: #171513;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .v-card-meta {
+      padding: 16px 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      background: #1b1917;
+    }
+    .v-tag { font-size: 11px; font-weight: 700; color: var(--cta); letter-spacing: 0.08em; text-transform: uppercase; }
+    .v-name { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: #f7f5f0; }
+    .v-desc { font-size: 13px; color: #a49a8d; width: 100%; margin-top: 2px; }
+
+    /* ── Viewport Frame Simulation ──────────────────────── */
+    .viewport-frame {
+      width: 100%;
+      margin: 0 auto;
+      transition: max-width 0.25s ease;
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    /* Viewport modes */
+    .mode-desktop .viewport-frame { max-width: 100%; }
+    .mode-tablet .viewport-frame { max-width: 768px; border-left: 1px dashed var(--accent); border-right: 1px dashed var(--accent); }
+    .mode-mobile .viewport-frame { max-width: 375px; border-left: 2px solid var(--ink); border-right: 2px solid var(--ink); }
+
+    /* ── Core Contact Component Styles ──────────────────── */
+    .contact-variation {
+      padding: clamp(36px, 5vw, 72px) clamp(20px, 4vw, 56px);
+      border-top: 1px solid var(--accent);
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .c-head {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .c-kicker {
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    .c-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5.5vw, 68px);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .c-title span {
+      color: var(--accent);
+      margin-left: 0.4em;
+    }
+    .c-lead {
+      font-size: 14px;
+      color: var(--body);
+      max-width: 680px;
+      line-height: 1.6;
+      margin-top: 6px;
+    }
+
+    /* WhatsApp Sovereign Hero Conduit */
+    .wa-hero-conduit {
+      width: 100%;
+    }
+    .wa-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--wa-evergreen);
+      color: #ffffff;
+      padding: 16px 20px;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      min-height: 58px;
+    }
+    .wa-action-bar:hover {
+      background: var(--wa-deep);
+    }
+    .wa-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .wa-icon-box {
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.14);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .wa-bar-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .wa-bar-sub {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.82);
+    }
+    .wa-bar-badge {
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.28);
+      padding: 6px 12px;
+      white-space: nowrap;
+    }
+
+    /* Coordinates Grid */
+    .coords-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      padding-top: 12px;
+      border-top: 1px solid var(--hairline);
+    }
+    .coord-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .coord-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+    .coord-val {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      font-family: var(--font-display);
+    }
+    .coord-val:hover { color: var(--wa-evergreen); }
+    .coord-val-text {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+    .coord-sub {
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    .coord-map-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .coord-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .coord-chips span {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      font-size: 11px;
+      padding: 3px 8px;
+      color: var(--body);
+    }
+
+    /* Bottom Deck */
+    .c-bottom-deck {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 8px;
+    }
+    .estimate-btn {
+      background: var(--cta);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 14px 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      clip-path: polygon(0 0, 100% 0, 100% 68%, calc(100% - 12px) 100%, 0 100%);
+      transition: background 0.15s ease;
+    }
+    .estimate-btn:hover { background: var(--ink); color: var(--cta); }
+    .c-policy-note {
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    /* ── Distinct Variation Nuances ──────────────────────── */
+    /* V2: Blueprint Specification */
+    .v-2-wrap {
+      background: #fdfcfa;
+      position: relative;
+    }
+    .v-2-wrap::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: repeating-linear-gradient(90deg, var(--accent) 0 10px, transparent 10px 14px);
+    }
+
+    /* V3: Direct Dialogue */
+    .v-3-wrap .wa-action-bar {
+      padding: 22px 24px;
+      border-left: 6px solid var(--cta);
+    }
+
+    /* V4: Boring Road Studio Dossier */
+    .v-4-wrap .c-title { font-weight: 400; }
+    .v-4-wrap { background: var(--surface); border-left: 6px solid var(--accent); }
+
+    /* V6: Split Monolith */
+    .v-6-wrap {
+      background: var(--ink);
+      color: #f7f5f0;
+    }
+    .v-6-wrap .c-title { color: #ffffff; }
+    .v-6-wrap .c-title span { color: var(--cta); }
+    .v-6-wrap .c-lead { color: #b5ac9f; }
+    .v-6-wrap .coord-val { color: #ffffff; }
+    .v-6-wrap .coord-val-text { color: #e5e0d8; }
+    .v-6-wrap .coord-label { color: var(--cta); }
+    .v-6-wrap .coord-item { border-bottom-color: rgba(255,255,255,0.12); }
+    .v-6-wrap .coords-grid { border-top-color: rgba(255,255,255,0.12); }
+
+    /* V7: Chai & Floor Plan */
+    .v-7-wrap {
+      background: #FAF6F0;
+      border: 2px solid var(--accent);
+    }
+
+    /* V8: Three Conduits */
+    .v-8-wrap .coords-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* V10: Founder's Desk */
+    .v-10-wrap .c-title span { color: var(--wa-evergreen); }
+
+    /* V13: Minimalist Architectural Card */
+    .v-13-wrap {
+      background: #ffffff;
+      padding: 40px;
+      border: 1px solid var(--ink);
+    }
+
+    /* V16: Architectural Studio Pass */
+    .v-16-wrap {
+      border: 1px dashed var(--accent);
+      background: #fff;
+    }
+
+    /* V19: Bilingual Parallel */
+    .v-19-wrap .c-title {
+      font-size: clamp(28px, 4vw, 50px);
+    }
+
+    /* ── Hindi Typography Support ───────────────────────── */
+    body.lang-hi {
+      font-family: var(--font-hi-body);
+    }
+    body.lang-hi .c-title,
+    body.lang-hi .stage-title,
+    body.lang-hi .v-name {
+      font-family: var(--font-hi-display);
+      font-weight: 500;
+      letter-spacing: 0;
+      line-height: 1.15;
+    }
+    body.lang-hi .c-title span {
+      margin-left: 0.2em;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .wa-action-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .wa-bar-badge { align-self: flex-start; }
+      .coords-grid { grid-template-columns: 1fr; }
+      .c-bottom-deck { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body class="mode-desktop lang-en">
+
+  <!-- Top Bar -->
+  <aside class="showcase-nav" aria-label="Showcase Nav">
+    <div class="nav-brand">
+      <span class="nav-brand-mark">AI</span>
+      <span>Ashish Interiors: 20 Contact Us Variations</span>
+    </div>
+    <nav class="nav-links">
+      <a href="about-iteration-1.html" class="nav-link-pill">About 1-6</a>
+      <a href="about-iteration-quickactions.html" class="nav-link-pill">QuickActions</a>
+      <a href="contact-iteration-showcase.html" class="nav-link-pill active">Contact 20 Variations</a>
+    </nav>
+  </aside>
+
+  <!-- Master Control Deck -->
+  <section class="control-deck" aria-label="Showcase Controls">
+    <div class="ctrl-row">
+      <!-- Language Switcher -->
+      <div class="ctrl-group">
+        <span class="ctrl-label">Language:</span>
+        <div class="lang-toggle">
+          <button class="lang-btn active" id="btnEn" onclick="setLang('en')">English</button>
+          <button class="lang-btn" id="btnHi" onclick="setLang('hi')">हिन्दी</button>
+        </div>
+      </div>
+
+      <!-- Viewport Switcher -->
+      <div class="ctrl-group">
+        <span class="ctrl-label">Viewport:</span>
+        <button class="deck-btn active" id="vpDesk" onclick="setViewport('desktop')">
+          Desktop (Full)
+        </button>
+        <button class="deck-btn" id="vpTab" onclick="setViewport('tablet')">
+          Tablet (768px)
+        </button>
+        <button class="deck-btn" id="vpMob" onclick="setViewport('mobile')">
+          Mobile (375px)
+        </button>
+      </div>
+
+      <!-- Mode Switcher -->
+      <div class="ctrl-group">
+        <span class="ctrl-label">View:</span>
+        <button class="deck-btn active" id="viewAllBtn" onclick="setViewMode('all')">Compare All (20)</button>
+        <button class="deck-btn" id="viewSingleBtn" onclick="setViewMode('single')">Focused (1:1)</button>
+      </div>
+    </div>
+
+    <!-- Variation Quick Jump -->
+    <div class="ctrl-row" id="varJumpRow">
+      <div class="ctrl-group">
+        <span class="ctrl-label">Jump to Variation:</span>
+        <div class="var-grid-selector">
+          <button class="var-btn active" onclick="selectVar(1)">1</button>
+<button class="var-btn" onclick="selectVar(2)">2</button>
+<button class="var-btn" onclick="selectVar(3)">3</button>
+<button class="var-btn" onclick="selectVar(4)">4</button>
+<button class="var-btn" onclick="selectVar(5)">5</button>
+<button class="var-btn" onclick="selectVar(6)">6</button>
+<button class="var-btn" onclick="selectVar(7)">7</button>
+<button class="var-btn" onclick="selectVar(8)">8</button>
+<button class="var-btn" onclick="selectVar(9)">9</button>
+<button class="var-btn" onclick="selectVar(10)">10</button>
+<button class="var-btn" onclick="selectVar(11)">11</button>
+<button class="var-btn" onclick="selectVar(12)">12</button>
+<button class="var-btn" onclick="selectVar(13)">13</button>
+<button class="var-btn" onclick="selectVar(14)">14</button>
+<button class="var-btn" onclick="selectVar(15)">15</button>
+<button class="var-btn" onclick="selectVar(16)">16</button>
+<button class="var-btn" onclick="selectVar(17)">17</button>
+<button class="var-btn" onclick="selectVar(18)">18</button>
+<button class="var-btn" onclick="selectVar(19)">19</button>
+<button class="var-btn" onclick="selectVar(20)">20</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stage Content -->
+  <main class="stage-wrapper">
+    <header class="stage-header">
+      <div class="stage-kicker" data-en="Ashish Interiors · Boring Road Crossing, Patna · Established 2013" data-hi="आशीष इंटीरियर्स · बोरिंग रोड क्रॉसिंग, पटना · स्थापना 2013">Ashish Interiors · Boring Road Crossing, Patna · Established 2013</div>
+      <h1 class="stage-title" data-en="Twenty distinct architectural contact variations" data-hi="बीस विशिष्ट वास्तुशिल्प संपर्क अवधारणाएं">Twenty distinct architectural contact variations</h1>
+      <p class="stage-desc" data-en="Every variation is grounded in the reality of Ashish Interiors in Patna: WhatsApp as the primary conversion conduit, verified Boring Road studio coordinates, bilingual English/Hindi capability, square corners, and zero arbitrary styling tells." data-hi="प्रत्येक डिज़ाइन पटना के आशीष इंटीरियर्स की वास्तविकता पर आधारित है: मुख्य संपर्क माध्यम के रूप में व्हाट्सएप, बोरिंग रोड स्टूडियो का प्रामाणिक पता, द्विभाषी क्षमता और त्रुटिहीन शिल्प।">
+        Every variation is grounded in the reality of Ashish Interiors in Patna: WhatsApp as the primary conversion conduit, verified Boring Road studio coordinates, bilingual English/Hindi capability, square corners, and zero arbitrary styling tells.
+      </p>
+    </header>
+
+    <div class="variations-container" id="variationsContainer">
+      
+        <article class="variation-card" id="var-card-1" data-var-num="1">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 01 of 20</div>
+            <h3 class="v-name" data-en="The Workshop Ledger" data-hi="The Workshop Ledger">The Workshop Ledger</h3>
+            <p class="v-desc" data-en="Structured tabular ledger rules with distinct contact columns, prominent WhatsApp direct conduit, and studio visit coordinates." data-hi="लेजर रेखाओं वाला अनुभाग, स्पष्ट संपर्क विवरण, व्हाट्सएप डायरेक्ट चैट और कार्यशाला के समय।">Structured tabular ledger rules with distinct contact columns, prominent WhatsApp direct conduit, and studio visit coordinates.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-1">
+            
+        <div class="contact-variation v-1-wrap">
+          <!-- Variation 1 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Structured tabular ledger rules with distinct contact columns, prominent WhatsApp direct conduit, and studio visit coordinates." data-hi="लेजर रेखाओं वाला अनुभाग, स्पष्ट संपर्क विवरण, व्हाट्सएप डायरेक्ट चैट और कार्यशाला के समय।">Structured tabular ledger rules with distinct contact columns, prominent WhatsApp direct conduit, and studio visit coordinates.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-2" data-var-num="2">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 02 of 20</div>
+            <h3 class="v-name" data-en="The Blueprint Specification" data-hi="The Blueprint Specification">The Blueprint Specification</h3>
+            <p class="v-desc" data-en="Architectural drafting aesthetic with dimension guidelines, survey coordinates block, and precision site booking." data-hi="वास्तुशिल्प ड्राइंग शैली, माप रेखाएं और बोरिंग रोड स्टूडियो का तकनीकी विवरण।">Architectural drafting aesthetic with dimension guidelines, survey coordinates block, and precision site booking.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-2">
+            
+        <div class="contact-variation v-2-wrap">
+          <!-- Variation 2 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Architectural drafting aesthetic with dimension guidelines, survey coordinates block, and precision site booking." data-hi="वास्तुशिल्प ड्राइंग शैली, माप रेखाएं और बोरिंग रोड स्टूडियो का तकनीकी विवरण।">Architectural drafting aesthetic with dimension guidelines, survey coordinates block, and precision site booking.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-3" data-var-num="3">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 03 of 20</div>
+            <h3 class="v-name" data-en="The Direct Dialogue" data-hi="The Direct Dialogue">The Direct Dialogue</h3>
+            <p class="v-desc" data-en="WhatsApp-first conversation launcher with pre-filled inquiry chips (3 BHK Full Interiors, Kitchen Joinery, Laser Survey)." data-hi="व्हाट्सएप-प्रथम संवाद शैली, 3 बीएचके और किचन के लिए त्वरित पूछताछ विकल्प।">WhatsApp-first conversation launcher with pre-filled inquiry chips (3 BHK Full Interiors, Kitchen Joinery, Laser Survey).</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-3">
+            
+        <div class="contact-variation v-3-wrap">
+          <!-- Variation 3 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="WhatsApp-first conversation launcher with pre-filled inquiry chips (3 BHK Full Interiors, Kitchen Joinery, Laser Survey)." data-hi="व्हाट्सएप-प्रथम संवाद शैली, 3 बीएचके और किचन के लिए त्वरित पूछताछ विकल्प।">WhatsApp-first conversation launcher with pre-filled inquiry chips (3 BHK Full Interiors, Kitchen Joinery, Laser Survey).</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-4" data-var-num="4">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 04 of 20</div>
+            <h3 class="v-name" data-en="The Boring Road Studio Dossier" data-hi="The Boring Road Studio Dossier">The Boring Road Studio Dossier</h3>
+            <p class="v-desc" data-en="Editorial studio visit invitation: meet Ashish Kumar, touch genuine BWP marine ply samples, and review drawings over chai." data-hi="स्टूडियो मुलाक़ात का निमंत्रण: असली समुद्री प्लाईवुड नमूने देखें और नक्शों पर चर्चा करें।">Editorial studio visit invitation: meet Ashish Kumar, touch genuine BWP marine ply samples, and review drawings over chai.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-4">
+            
+        <div class="contact-variation v-4-wrap">
+          <!-- Variation 4 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Editorial studio visit invitation: meet Ashish Kumar, touch genuine BWP marine ply samples, and review drawings over chai." data-hi="स्टूडियो मुलाक़ात का निमंत्रण: असली समुद्री प्लाईवुड नमूने देखें और नक्शों पर चर्चा करें।">Editorial studio visit invitation: meet Ashish Kumar, touch genuine BWP marine ply samples, and review drawings over chai.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-5" data-var-num="5">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 05 of 20</div>
+            <h3 class="v-name" data-en="The Site Estimate Gateway" data-hi="The Site Estimate Gateway">The Site Estimate Gateway</h3>
+            <p class="v-desc" data-en="Integrated interactive estimate range selector routing directly to personalized WhatsApp inquiry and site survey slot." data-hi="त्वरित बजट अनुमान कैलकुलेटर, जो सीधे व्हाट्सएप पर सटीक जानकारी भेजता है।">Integrated interactive estimate range selector routing directly to personalized WhatsApp inquiry and site survey slot.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-5">
+            
+        <div class="contact-variation v-5-wrap">
+          <!-- Variation 5 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Integrated interactive estimate range selector routing directly to personalized WhatsApp inquiry and site survey slot." data-hi="त्वरित बजट अनुमान कैलकुलेटर, जो सीधे व्हाट्सएप पर सटीक जानकारी भेजता है।">Integrated interactive estimate range selector routing directly to personalized WhatsApp inquiry and site survey slot.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-6" data-var-num="6">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 06 of 20</div>
+            <h3 class="v-name" data-en="The Split Monolith" data-hi="The Split Monolith">The Split Monolith</h3>
+            <p class="v-desc" data-en="High-contrast architectural split: ink panel with WhatsApp/Phone/Hours, balanced against warm panel map and visit guide." data-hi="उच्च-कंट्रास्ट विभाजन: गहरा संपर्क पैनल और साथ में विस्तृत पता एवं समय।">High-contrast architectural split: ink panel with WhatsApp/Phone/Hours, balanced against warm panel map and visit guide.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-6">
+            
+        <div class="contact-variation v-6-wrap">
+          <!-- Variation 6 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="High-contrast architectural split: ink panel with WhatsApp/Phone/Hours, balanced against warm panel map and visit guide." data-hi="उच्च-कंट्रास्ट विभाजन: गहरा संपर्क पैनल और साथ में विस्तृत पता एवं समय।">High-contrast architectural split: ink panel with WhatsApp/Phone/Hours, balanced against warm panel map and visit guide.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-7" data-var-num="7">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 07 of 20</div>
+            <h3 class="v-name" data-en="Chai & Floor Plan (बैठक)" data-hi="Chai & Floor Plan (बैठक)">Chai & Floor Plan (बैठक)</h3>
+            <p class="v-desc" data-en="Warm Patna hospitality motif: 'चाय पर मिलिए / Bring your floor plan over chai', studio consultation protocol." data-hi="पारंपरिक पटना बैठक: चाय पर अपने फ्लैट के नक्शे के साथ आशीष से सीधी मुलाक़ात।">Warm Patna hospitality motif: 'चाय पर मिलिए / Bring your floor plan over chai', studio consultation protocol.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-7">
+            
+        <div class="contact-variation v-7-wrap">
+          <!-- Variation 7 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Warm Patna hospitality motif: 'चाय पर मिलिए / Bring your floor plan over chai', studio consultation protocol." data-hi="पारंपरिक पटना बैठक: चाय पर अपने फ्लैट के नक्शे के साथ आशीष से सीधी मुलाक़ात।">Warm Patna hospitality motif: 'चाय पर मिलिए / Bring your floor plan over chai', studio consultation protocol.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-8" data-var-num="8">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 08 of 20</div>
+            <h3 class="v-name" data-en="The Three Conduits" data-hi="The Three Conduits">The Three Conduits</h3>
+            <p class="v-desc" data-en="Three equal structural pillars: WhatsApp for fast estimates, Direct Phone Line to Ashish, and Boring Road Studio Walk-in." data-hi="तीन स्पष्ट माध्यम: तुरंत व्हाट्सएप अनुमान, आशीष को सीधी कॉल, या स्टूडियो आगमन।">Three equal structural pillars: WhatsApp for fast estimates, Direct Phone Line to Ashish, and Boring Road Studio Walk-in.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-8">
+            
+        <div class="contact-variation v-8-wrap">
+          <!-- Variation 8 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Three equal structural pillars: WhatsApp for fast estimates, Direct Phone Line to Ashish, and Boring Road Studio Walk-in." data-hi="तीन स्पष्ट माध्यम: तुरंत व्हाट्सएप अनुमान, आशीष को सीधी कॉल, या स्टूडियो आगमन।">Three equal structural pillars: WhatsApp for fast estimates, Direct Phone Line to Ashish, and Boring Road Studio Walk-in.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-9" data-var-num="9">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 09 of 20</div>
+            <h3 class="v-name" data-en="The Material Archive & Sample Room" data-hi="The Material Archive & Sample Room">The Material Archive & Sample Room</h3>
+            <p class="v-desc" data-en="Studio sample room focus: inspect BWR plywood cuts, Hafele hardware, and laminate swatches before paying an advance." data-hi="मटेरियल आर्काइव: अग्रिम भुगतान से पहले असली प्लाईवुड और हार्डवेयर की जाँच करें।">Studio sample room focus: inspect BWR plywood cuts, Hafele hardware, and laminate swatches before paying an advance.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-9">
+            
+        <div class="contact-variation v-9-wrap">
+          <!-- Variation 9 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Studio sample room focus: inspect BWR plywood cuts, Hafele hardware, and laminate swatches before paying an advance." data-hi="मटेरियल आर्काइव: अग्रिम भुगतान से पहले असली प्लाईवुड और हार्डवेयर की जाँच करें।">Studio sample room focus: inspect BWR plywood cuts, Hafele hardware, and laminate swatches before paying an advance.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-10" data-var-num="10">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 10 of 20</div>
+            <h3 class="v-name" data-en="The Founder's Desk" data-hi="The Founder's Desk">The Founder's Desk</h3>
+            <p class="v-desc" data-en="Direct founder accountability: Ashish Kumar's direct phone & WhatsApp line, zero sales middlemen, verified supervisor dispatch." data-hi="संस्थापक की सीधी जवाबदेही: आशीष कुमार का सीधा नंबर, बिना किसी बिचौलिए के।">Direct founder accountability: Ashish Kumar's direct phone & WhatsApp line, zero sales middlemen, verified supervisor dispatch.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-10">
+            
+        <div class="contact-variation v-10-wrap">
+          <!-- Variation 10 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Direct founder accountability: Ashish Kumar's direct phone & WhatsApp line, zero sales middlemen, verified supervisor dispatch." data-hi="संस्थापक की सीधी जवाबदेही: आशीष कुमार का सीधा नंबर, बिना किसी बिचौलिए के।">Direct founder accountability: Ashish Kumar's direct phone & WhatsApp line, zero sales middlemen, verified supervisor dispatch.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-11" data-var-num="11">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 11 of 20</div>
+            <h3 class="v-name" data-en="Survey Booking Protocol" data-hi="Survey Booking Protocol">Survey Booking Protocol</h3>
+            <p class="v-desc" data-en="Step-by-step room measurement survey booking: 1. Send layout on WA, 2. Schedule laser survey, 3. Locked price quote." data-hi="नाप-जोख बुकिंग प्रोटोकॉल: लेजर सर्वे और बिना किसी बदलाव के तय बजट कोटेशन।">Step-by-step room measurement survey booking: 1. Send layout on WA, 2. Schedule laser survey, 3. Locked price quote.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-11">
+            
+        <div class="contact-variation v-11-wrap">
+          <!-- Variation 11 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Step-by-step room measurement survey booking: 1. Send layout on WA, 2. Schedule laser survey, 3. Locked price quote." data-hi="नाप-जोख बुकिंग प्रोटोकॉल: लेजर सर्वे और बिना किसी बदलाव के तय बजट कोटेशन।">Step-by-step room measurement survey booking: 1. Send layout on WA, 2. Schedule laser survey, 3. Locked price quote.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-12" data-var-num="12">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 12 of 20</div>
+            <h3 class="v-name" data-en="The Locality Navigator" data-hi="The Locality Navigator">The Locality Navigator</h3>
+            <p class="v-desc" data-en="Patna residential coverage map (Patliputra, Boring Road, Kankarbagh, Danapur, Bailey Road) with travel times and WA area dispatch." data-hi="पटना लोकैलिटी नेविगेटर: पाटलिपुत्र, बोरिंग रोड, कंकड़बाग और दानापुर के लिए त्वरित सेवा।">Patna residential coverage map (Patliputra, Boring Road, Kankarbagh, Danapur, Bailey Road) with travel times and WA area dispatch.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-12">
+            
+        <div class="contact-variation v-12-wrap">
+          <!-- Variation 12 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Patna residential coverage map (Patliputra, Boring Road, Kankarbagh, Danapur, Bailey Road) with travel times and WA area dispatch." data-hi="पटना लोकैलिटी नेविगेटर: पाटलिपुत्र, बोरिंग रोड, कंकड़बाग और दानापुर के लिए त्वरित सेवा।">Patna residential coverage map (Patliputra, Boring Road, Kankarbagh, Danapur, Bailey Road) with travel times and WA area dispatch.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-13" data-var-num="13">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 13 of 20</div>
+            <h3 class="v-name" data-en="The Minimalist Architectural Card" data-hi="The Minimalist Architectural Card">The Minimalist Architectural Card</h3>
+            <p class="v-desc" data-en="Stark typographic discipline, large Archivo headers, zero extraneous chrome, high-contrast evergreen WhatsApp action." data-hi="न्यूनतम वास्तुशिल्प कार्ड: शुद्ध टाइपोग्राफी और स्पष्ट व्हाट्सएप एक्शन।">Stark typographic discipline, large Archivo headers, zero extraneous chrome, high-contrast evergreen WhatsApp action.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-13">
+            
+        <div class="contact-variation v-13-wrap">
+          <!-- Variation 13 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Stark typographic discipline, large Archivo headers, zero extraneous chrome, high-contrast evergreen WhatsApp action." data-hi="न्यूनतम वास्तुशिल्प कार्ड: शुद्ध टाइपोग्राफी और स्पष्ट व्हाट्सएप एक्शन।">Stark typographic discipline, large Archivo headers, zero extraneous chrome, high-contrast evergreen WhatsApp action.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-14" data-var-num="14">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 14 of 20</div>
+            <h3 class="v-name" data-en="Verified Handover Proof & Contact" data-hi="Verified Handover Proof & Contact">Verified Handover Proof & Contact</h3>
+            <p class="v-desc" data-en="Contact gateway anchored alongside real photo proof of the recently delivered Patliputra Duplex residence." data-hi="हाल ही में पूरे हुए पाटलिपुत्र डुप्लेक्स के प्रामाणिक फोटो के साथ सीधा संपर्क।">Contact gateway anchored alongside real photo proof of the recently delivered Patliputra Duplex residence.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-14">
+            
+        <div class="contact-variation v-14-wrap">
+          <!-- Variation 14 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Contact gateway anchored alongside real photo proof of the recently delivered Patliputra Duplex residence." data-hi="हाल ही में पूरे हुए पाटलिपुत्र डुप्लेक्स के प्रामाणिक फोटो के साथ सीधा संपर्क।">Contact gateway anchored alongside real photo proof of the recently delivered Patliputra Duplex residence.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-15" data-var-num="15">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 15 of 20</div>
+            <h3 class="v-name" data-en="Dual Channel Decision Tree" data-hi="Dual Channel Decision Tree">Dual Channel Decision Tree</h3>
+            <p class="v-desc" data-en="Clear binary choice: 'Need a fast estimate? -> WhatsApp' vs 'Want to touch joinery & ply? -> Visit Studio'." data-hi="दो स्पष्ट विकल्प: तुरंत बजट चाहिए तो व्हाट्सएप, कारीगरी देखनी है तो स्टूडियो आएं।">Clear binary choice: 'Need a fast estimate? -> WhatsApp' vs 'Want to touch joinery & ply? -> Visit Studio'.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-15">
+            
+        <div class="contact-variation v-15-wrap">
+          <!-- Variation 15 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Clear binary choice: 'Need a fast estimate? -> WhatsApp' vs 'Want to touch joinery & ply? -> Visit Studio'." data-hi="दो स्पष्ट विकल्प: तुरंत बजट चाहिए तो व्हाट्सएप, कारीगरी देखनी है तो स्टूडियो आएं।">Clear binary choice: 'Need a fast estimate? -> WhatsApp' vs 'Want to touch joinery & ply? -> Visit Studio'.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-16" data-var-num="16">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 16 of 20</div>
+            <h3 class="v-name" data-en="The Architectural Studio Pass" data-hi="The Architectural Studio Pass">The Architectural Studio Pass</h3>
+            <p class="v-desc" data-en="Designed as an authentic studio visitor pass with tear-off WhatsApp inquiry tab and Boring Road transit guide." data-hi="स्टूडियो विजिटर पास: बोरिंग रोड आने के लिए प्रोजेक्ट पास और व्हाट्सएप स्लिप।">Designed as an authentic studio visitor pass with tear-off WhatsApp inquiry tab and Boring Road transit guide.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-16">
+            
+        <div class="contact-variation v-16-wrap">
+          <!-- Variation 16 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Designed as an authentic studio visitor pass with tear-off WhatsApp inquiry tab and Boring Road transit guide." data-hi="स्टूडियो विजिटर पास: बोरिंग रोड आने के लिए प्रोजेक्ट पास और व्हाट्सएप स्लिप।">Designed as an authentic studio visitor pass with tear-off WhatsApp inquiry tab and Boring Road transit guide.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-17" data-var-num="17">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 17 of 20</div>
+            <h3 class="v-name" data-en="Site Supervisor Dispatch" data-hi="Site Supervisor Dispatch">Site Supervisor Dispatch</h3>
+            <p class="v-desc" data-en="Site reality focus: direct line for in-person flat inspection, Friday photo update protocol, and transparent supervision." data-hi="साइट सुपरवाइजर संपर्क: हर शुक्रवार फोटो अपडेट और पारदर्शी निगरानी की गारंटी।">Site reality focus: direct line for in-person flat inspection, Friday photo update protocol, and transparent supervision.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-17">
+            
+        <div class="contact-variation v-17-wrap">
+          <!-- Variation 17 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Site reality focus: direct line for in-person flat inspection, Friday photo update protocol, and transparent supervision." data-hi="साइट सुपरवाइजर संपर्क: हर शुक्रवार फोटो अपडेट और पारदर्शी निगरानी की गारंटी।">Site reality focus: direct line for in-person flat inspection, Friday photo update protocol, and transparent supervision.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-18" data-var-num="18">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 18 of 20</div>
+            <h3 class="v-name" data-en="The Evening Studio Salon" data-hi="The Evening Studio Salon">The Evening Studio Salon</h3>
+            <p class="v-desc" data-en="Dedicated after-work consultation focus (17:00-19:00 hours), easy parking at Boring Road Crossing, evening appointment booking." data-hi="शाम का स्टूडियो समय: शाम 5 से 7 बजे के बीच आसान पार्किंग और शांत वातावरण में चर्चा।">Dedicated after-work consultation focus (17:00-19:00 hours), easy parking at Boring Road Crossing, evening appointment booking.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-18">
+            
+        <div class="contact-variation v-18-wrap">
+          <!-- Variation 18 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Dedicated after-work consultation focus (17:00-19:00 hours), easy parking at Boring Road Crossing, evening appointment booking." data-hi="शाम का स्टूडियो समय: शाम 5 से 7 बजे के बीच आसान पार्किंग और शांत वातावरण में चर्चा।">Dedicated after-work consultation focus (17:00-19:00 hours), easy parking at Boring Road Crossing, evening appointment booking.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-19" data-var-num="19">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 19 of 20</div>
+            <h3 class="v-name" data-en="The Bilingual Ledger Strip" data-hi="The Bilingual Ledger Strip">The Bilingual Ledger Strip</h3>
+            <p class="v-desc" data-en="Symmetrical parallel Hindi & English typography ('यहाँ मिलते हैं / Come see us'), celebrating Patna bilingual homeowners." data-hi="द्विभाषी लेजर: हिंदी और अंग्रेजी का संतुलित और सुरुचिपूर्ण समागम।">Symmetrical parallel Hindi & English typography ('यहाँ मिलते हैं / Come see us'), celebrating Patna bilingual homeowners.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-19">
+            
+        <div class="contact-variation v-19-wrap">
+          <!-- Variation 19 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Symmetrical parallel Hindi & English typography ('यहाँ मिलते हैं / Come see us'), celebrating Patna bilingual homeowners." data-hi="द्विभाषी लेजर: हिंदी और अंग्रेजी का संतुलित और सुरुचिपूर्ण समागम।">Symmetrical parallel Hindi & English typography ('यहाँ मिलते हैं / Come see us'), celebrating Patna bilingual homeowners.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+
+        <article class="variation-card" id="var-card-20" data-var-num="20">
+          <header class="v-card-meta">
+            <div class="v-tag">Variation 20 of 20</div>
+            <h3 class="v-name" data-en="Turnkey Consultation Gateway" data-hi="Turnkey Consultation Gateway">Turnkey Consultation Gateway</h3>
+            <p class="v-desc" data-en="Comprehensive consultation portal integrating one-touch WhatsApp message presets for 3BHK, Kitchen, and Joinery." data-hi="पूर्ण टर्नकी गेटवे: 3 बीएचके, किचन और मॉड्यूलर वार्डरोब के लिए पूर्व-निर्धारित संदेश।">Comprehensive consultation portal integrating one-touch WhatsApp message presets for 3BHK, Kitchen, and Joinery.</p>
+          </header>
+
+          <div class="viewport-frame" id="frame-20">
+            
+        <div class="contact-variation v-20-wrap">
+          <!-- Variation 20 Header -->
+          <div class="c-head">
+            <span class="c-kicker" data-en="Contact The Studio · Boring Road Crossing" data-hi="स्टूडियो से संपर्क करें · बोरिंग रोड क्रॉसिंग">Contact The Studio · Boring Road Crossing</span>
+            <h2 class="c-title" data-en="Come<br><span>See Us</span>" data-hi="यहाँ<br><span>मिलते हैं</span>">Come<br><span>See Us</span></h2>
+            <p class="c-lead" data-en="Comprehensive consultation portal integrating one-touch WhatsApp message presets for 3BHK, Kitchen, and Joinery." data-hi="पूर्ण टर्नकी गेटवे: 3 बीएचके, किचन और मॉड्यूलर वार्डरोब के लिए पूर्व-निर्धारित संदेश।">Comprehensive consultation portal integrating one-touch WhatsApp message presets for 3BHK, Kitchen, and Joinery.</p>
+          </div>
+
+          <!-- Master WhatsApp Primary Action -->
+          <div class="wa-hero-conduit">
+            <a href="https://wa.me/919876543210?text=Hi%20Ashish%20Interiors,%20I%20would%20like%20to%20discuss%20my%20flat%20interiors" class="wa-action-bar" target="_blank" rel="noopener">
+              <div class="wa-bar-left">
+                <span class="wa-icon-box"><svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.4 17.7 68.9 27 106.1 27l.1 0c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6zM325.1 300.5c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6z"/></svg></span>
+                <div>
+                  <div class="wa-bar-title" data-en="Chat on WhatsApp with Ashish" data-hi="आशीष से व्हाट्सएप पर सीधे चैट करें">Chat on WhatsApp with Ashish</div>
+                  <div class="wa-bar-sub" data-en="Fastest reply · Share floor plans, photos or questions" data-hi="सबसे तेज़ उत्तर · नक्शा, तस्वीरें या सवाल साझा करें">Fastest reply · Share floor plans, photos or questions</div>
+                </div>
+              </div>
+              <div class="wa-bar-badge" data-en="Replies in ~15 mins" data-hi="~15 मिनट में उत्तर">Replies in ~15 mins</div>
+            </a>
+          </div>
+
+          <!-- Detail Coordinates Grid -->
+          <div class="coords-grid">
+            <div class="coord-item">
+              <span class="coord-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <a href="tel:+919876543210" class="coord-val">(555) 0123</a>
+              <span class="coord-sub" data-en="Direct studio line" data-hi="सीधा स्टूडियो नंबर">Direct studio line</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Studio Location" data-hi="स्टूडियो का पता">Studio Location</span>
+              <div class="coord-val-text" data-en="2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001" data-hi="दूसरी मंजिल, बोरिंग रोड क्रॉसिंग<br>पटना, बिहार 800001">2nd Floor, Boring Road Crossing<br>Patna, Bihar 800001</div>
+              <a href="https://maps.google.com" target="_blank" class="coord-map-link" data-en="Open Google Maps" data-hi="गूगल मैप खोलें">Open Google Maps</a>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Hours" data-hi="समय">Hours</span>
+              <div class="coord-val-text" data-en="Mon–Sat: 10:00 – 19:00<br>Sunday by appointment" data-hi="सोम–शनि: 10:00 – 19:00<br>रविवार अपॉइंटमेंट पर">Mon–Sat: 10:00 – 19:00<br>Sunday by appointment</div>
+              <span class="coord-sub" data-en="Workshop active during hours" data-hi="कार्यशाला इसी समय खुली रहती है">Workshop active during hours</span>
+            </div>
+
+            <div class="coord-item">
+              <span class="coord-label" data-en="Patna Service Coverage" data-hi="सेवा क्षेत्र (पटना)">Patna Service Coverage</span>
+              <div class="coord-chips">
+                <span>Patliputra</span>
+                <span>Boring Road</span>
+                <span>Kankarbagh</span>
+                <span>Bailey Road</span>
+                <span>Danapur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck -->
+          <div class="c-bottom-deck">
+            <a href="#estimate" class="estimate-btn" data-en="Calculate The Estimate" data-hi="अनुमान लगाएं">Calculate The Estimate</a>
+            <div class="c-policy-note" data-en="Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands." data-hi="सख्त नियम: सभी कोटेशन भौतिक नाप-जोख के बाद ही तय होते हैं। व्हाट्सएप पर कोई अग्रिम मांग नहीं।">Strict studio policy: All estimates locked to physical survey. Zero WhatsApp advance demands.</div>
+          </div>
+        </div>
+        
+          </div>
+        </article>
+        
+    </div>
+  </main>
+
+  <script>
+    let currentLang = 'en';
+    let currentVp = 'desktop';
+    let currentMode = 'all';
+    let currentVar = 1;
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.body.classList.toggle('lang-hi', lang === 'hi');
+      document.body.classList.toggle('lang-en', lang === 'en');
+      document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+      document.getElementById('btnHi').classList.toggle('active', lang === 'hi');
+
+      // Update all data-en / data-hi elements
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text) {
+          if (text.includes('<br>') || text.includes('<span>')) {
+            el.innerHTML = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+    }
+
+    function setViewport(vp) {
+      currentVp = vp;
+      document.body.classList.remove('mode-desktop', 'mode-tablet', 'mode-mobile');
+      document.body.classList.add('mode-' + vp);
+
+      document.getElementById('vpDesk').classList.toggle('active', vp === 'desktop');
+      document.getElementById('vpTab').classList.toggle('active', vp === 'tablet');
+      document.getElementById('vpMob').classList.toggle('active', vp === 'mobile');
+    }
+
+    function setViewMode(mode) {
+      currentMode = mode;
+      document.getElementById('viewAllBtn').classList.toggle('active', mode === 'all');
+      document.getElementById('viewSingleBtn').classList.toggle('active', mode === 'single');
+
+      for (let i = 1; i <= 20; i++) {
+        const card = document.getElementById('var-card-' + i);
+        if (card) {
+          card.style.display = (mode === 'all' || i === currentVar) ? 'flex' : 'none';
+        }
+      }
+    }
+
+    function selectVar(num) {
+      currentVar = num;
+      document.querySelectorAll('.var-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === num - 1);
+      });
+
+      if (currentMode === 'single') {
+        for (let i = 1; i <= 20; i++) {
+          const card = document.getElementById('var-card-' + i);
+          if (card) card.style.display = (i === num) ? 'flex' : 'none';
+        }
+      } else {
+        const target = document.getElementById('var-card-' + num);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Arrow navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        const next = currentVar >= 20 ? 1 : currentVar + 1;
+        selectVar(next);
+      } else if (e.key === 'ArrowLeft') {
+        const prev = currentVar <= 1 ? 20 : currentVar - 1;
+        selectVar(prev);
+      }
+    });
+  </script>
+</body>
+</html>

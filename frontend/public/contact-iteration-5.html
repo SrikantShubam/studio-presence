@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Contact Us — Version 5: The Site Estimate Gateway | Ashish Interiors Patna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #141414;
+        --accent: #51372a;
+        --cta: #d9bc72;
+        --surface: #ffffff;
+        --body: #4a4a4a;
+        --muted: #8b8377;
+        --hairline: #dcd7ce;
+        --panel: #faf8f5;
+        --wa-green: #285a43;
+        --wa-green-dark: #1e4a36;
+        --font-display: 'Archivo', Helvetica, Arial, sans-serif;
+        --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      [lang="hi"] {
+        --font-display: 'Tiro Devanagari Hindi', Georgia, serif;
+        --font-body: 'Poppins', -apple-system, sans-serif;
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        scroll-behavior: smooth;
+        background: var(--surface);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        width: 100%;
+      }
+
+      h1, h2, h3, h4, .font-display {
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+
+      [lang="hi"] h1, [lang="hi"] h2, [lang="hi"] h3, [lang="hi"] h4, [lang="hi"] .font-display {
+        letter-spacing: 0;
+        font-weight: 500;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Sticky Prototype Switcher Bar */
+      .proto-bar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #181614;
+        color: #f5f2ed;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 8px clamp(16px, 4vw, 48px);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+      }
+
+      .proto-bar-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .proto-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11.5px;
+      }
+
+      .proto-tag {
+        color: var(--cta);
+        font-weight: 600;
+      }
+
+      .proto-sep {
+        opacity: 0.35;
+      }
+
+      .proto-pills-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        padding-block: 2px;
+        max-width: 100%;
+        scrollbar-width: thin;
+      }
+
+      .proto-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 30px;
+        padding: 4px 10px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #dedede;
+        font-size: 11px;
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .proto-pill:hover, .proto-pill.active {
+        background: var(--cta);
+        border-color: var(--cta);
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      .proto-lang-switch {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      .proto-lang-btn {
+        min-height: 32px;
+        padding: 4px 12px;
+        background: transparent;
+        border: none;
+        color: #dedede;
+        font-size: 11px;
+        cursor: pointer;
+        font-family: inherit;
+      }
+
+      .proto-lang-btn.active {
+        background: var(--cta);
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      /* Site Header */
+      .site-header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .site-nav {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 18px clamp(16px, 4vw, 48px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-box {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--ink);
+        display: grid;
+        place-items: center;
+        padding: 6px;
+      }
+
+      .brand-box svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        color: var(--ink);
+      }
+
+      .brand-name {
+        display: grid;
+        font-family: 'Archivo', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        line-height: 1.15;
+        color: var(--ink);
+      }
+
+      .nav-links {
+        display: none;
+        align-items: center;
+        gap: 32px;
+      }
+
+      @media (min-width: 900px) {
+        .nav-links {
+          display: flex;
+        }
+      }
+
+      .nav-link {
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        color: var(--body);
+        padding-bottom: 2px;
+      }
+
+      .nav-link:hover, .nav-link.active {
+        color: var(--accent);
+        border-bottom: 1px solid var(--accent);
+      }
+
+      .nav-tel {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 8px 16px;
+        border: 1px solid var(--hairline);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink);
+      }
+
+      /* Container */
+      .page-container {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: clamp(32px, 5vw, 64px) clamp(16px, 4vw, 48px);
+      }
+
+      /* Gateway Masthead */
+      .gateway-masthead {
+        border-bottom: 1px solid var(--hairline);
+        padding-bottom: 32px;
+        margin-bottom: 40px;
+      }
+
+      .gateway-kicker {
+        font-size: 11.5px;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      .gateway-hero-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      @media (min-width: 860px) {
+        .gateway-hero-grid {
+          grid-template-columns: 1.3fr 1fr;
+          align-items: end;
+        }
+      }
+
+      .gateway-title {
+        font-size: clamp(38px, 6vw, 76px);
+        line-height: 0.92;
+        color: var(--ink);
+      }
+
+      .gateway-title-accent {
+        color: var(--accent);
+        display: block;
+        margin-top: 4px;
+      }
+
+      .gateway-lead {
+        font-size: 15.5px;
+        line-height: 1.7;
+        color: var(--body);
+        max-width: 48ch;
+      }
+
+      /* Estimator Gateway Layout */
+      .estimator-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin-bottom: 56px;
+      }
+
+      @media (min-width: 920px) {
+        .estimator-layout {
+          grid-template-columns: 1.25fr 0.95fr;
+        }
+      }
+
+      /* Interactive Estimator Form (Left) */
+      .estimator-card {
+        border: 1px solid var(--ink);
+        background: var(--surface);
+        padding: clamp(24px, 3.5vw, 36px);
+      }
+
+      .estimator-card-header {
+        border-bottom: 1px solid var(--hairline);
+        padding-bottom: 16px;
+        margin-bottom: 24px;
+      }
+
+      .estimator-step-tag {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .estimator-card-title {
+        font-size: 24px;
+        color: var(--ink);
+        margin-top: 4px;
+      }
+
+      .calc-group {
+        margin-bottom: 24px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .calc-label {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+      }
+
+      .calc-options-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      @media (min-width: 580px) {
+        .calc-options-grid.grid-3 {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      .calc-option-btn {
+        min-height: 48px;
+        padding: 10px 14px;
+        background: var(--panel);
+        border: 1px solid var(--hairline);
+        color: var(--ink);
+        font-size: 13px;
+        text-align: left;
+        cursor: pointer;
+        font-family: inherit;
+        display: grid;
+        gap: 2px;
+        transition: all 0.15s ease;
+      }
+
+      .calc-option-btn:hover {
+        border-color: var(--accent);
+      }
+
+      .calc-option-btn.active {
+        background: var(--ink);
+        color: #ffffff;
+        border-color: var(--ink);
+      }
+
+      .calc-option-btn.active .opt-sub {
+        color: var(--cta);
+      }
+
+      .opt-title {
+        font-weight: 600;
+      }
+
+      .opt-sub {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      /* Live Result Output Panel (Right) */
+      .output-card {
+        border: 1px solid var(--accent);
+        background: var(--panel);
+        padding: clamp(24px, 3.5vw, 36px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .output-kicker {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .output-price-display {
+        font-family: 'Archivo', sans-serif;
+        font-size: clamp(34px, 4.5vw, 52px);
+        font-weight: 500;
+        color: var(--ink);
+        line-height: 1.1;
+        margin-top: 8px;
+      }
+
+      .output-price-sub {
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      .output-details-list {
+        margin: 24px 0;
+        border-top: 1px solid var(--hairline);
+        border-bottom: 1px solid var(--hairline);
+        padding-block: 16px;
+        display: grid;
+        gap: 10px;
+        font-size: 13.5px;
+      }
+
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .detail-name {
+        color: var(--body);
+      }
+
+      .detail-val {
+        font-weight: 600;
+        color: var(--ink);
+        text-align: right;
+      }
+
+      /* Primary WhatsApp Conversion Button */
+      .btn-wa-primary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: var(--wa-green);
+        color: #ffffff;
+        min-height: 52px;
+        padding: 14px 24px;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        cursor: pointer;
+        width: 100%;
+        border: none;
+      }
+
+      .btn-wa-primary:hover {
+        background: var(--wa-green-dark);
+      }
+
+      .btn-wa-primary svg {
+        flex-shrink: 0;
+      }
+
+      /* Secondary Contact & Studio Desk Below */
+      .studio-coords-sec {
+        border-top: 1px solid var(--hairline);
+        padding-top: 48px;
+        margin-bottom: 48px;
+      }
+
+      .coords-title {
+        font-size: 24px;
+        color: var(--ink);
+        margin-bottom: 24px;
+      }
+
+      .coords-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      @media (min-width: 780px) {
+        .coords-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      .coord-card {
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        padding: 24px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .coord-tag {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--accent);
+        letter-spacing: 0.08em;
+      }
+
+      .coord-val {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--ink);
+      }
+
+      .coord-sub {
+        font-size: 13.5px;
+        color: var(--body);
+        line-height: 1.6;
+      }
+
+      .btn-neutral {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 8px 16px;
+        border: 1px solid var(--ink);
+        background: transparent;
+        color: var(--ink);
+        font-size: 12.5px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        cursor: pointer;
+        margin-top: 6px;
+      }
+
+      .btn-neutral:hover {
+        background: var(--panel);
+        border-color: var(--accent);
+      }
+
+      /* Site Footer */
+      .site-footer {
+        background: var(--panel);
+        border-top: 1px solid var(--accent);
+        padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 48px);
+      }
+
+      .footer-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      @media (min-width: 860px) {
+        .footer-inner {
+          grid-template-columns: 1.2fr 1fr 1fr;
+        }
+      }
+
+      .footer-col h4 {
+        font-size: 18px;
+        margin-bottom: 12px;
+        color: var(--ink);
+      }
+
+      .footer-col p {
+        font-size: 14px;
+        color: var(--body);
+        line-height: 1.6;
+      }
+
+      .footer-bottom {
+        max-width: 1360px;
+        margin: 32px auto 0;
+        padding-top: 20px;
+        border-top: 1px solid var(--hairline);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sticky Prototype Navigation Bar -->
+    <aside class="proto-bar" aria-label="Prototype Version Switcher">
+      <div class="proto-bar-inner">
+        <div class="proto-meta">
+          <span class="proto-tag" data-en="Contact prototype" data-hi="संपर्क प्रोटोटाइप">Contact prototype</span>
+          <span class="proto-sep">/</span>
+          <span class="proto-current" data-en="Iteration 05: The site estimate gateway" data-hi="संस्करण ०५: साइट अनुमान गेटवे">Iteration 05: The site estimate gateway</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <nav class="proto-pills-wrap" aria-label="Iterations 1 to 20">
+            <a href="contact-iteration-1.html" class="proto-pill" title="Iteration 1">1: Ledger</a>
+            <a href="contact-iteration-2.html" class="proto-pill" title="Iteration 2">2: Blueprint</a>
+            <a href="contact-iteration-3.html" class="proto-pill" title="Iteration 3">3: Dialogue</a>
+            <a href="contact-iteration-4.html" class="proto-pill" title="Iteration 4">4: Dossier</a>
+            <a href="contact-iteration-5.html" class="proto-pill active" title="Iteration 5">5: Estimator</a>
+            <a href="contact-iteration-6.html" class="proto-pill" title="Iteration 6">06</a>
+            <a href="contact-iteration-7.html" class="proto-pill" title="Iteration 7">07</a>
+            <a href="contact-iteration-8.html" class="proto-pill" title="Iteration 8">08</a>
+            <a href="contact-iteration-9.html" class="proto-pill" title="Iteration 9">09</a>
+            <a href="contact-iteration-10.html" class="proto-pill" title="Iteration 10">10</a>
+            <a href="contact-iteration-11.html" class="proto-pill" title="Iteration 11">11</a>
+            <a href="contact-iteration-12.html" class="proto-pill" title="Iteration 12">12</a>
+            <a href="contact-iteration-13.html" class="proto-pill" title="Iteration 13">13</a>
+            <a href="contact-iteration-14.html" class="proto-pill" title="Iteration 14">14</a>
+            <a href="contact-iteration-15.html" class="proto-pill" title="Iteration 15">15</a>
+            <a href="contact-iteration-16.html" class="proto-pill" title="Iteration 16">16</a>
+            <a href="contact-iteration-17.html" class="proto-pill" title="Iteration 17">17</a>
+            <a href="contact-iteration-18.html" class="proto-pill" title="Iteration 18">18</a>
+            <a href="contact-iteration-19.html" class="proto-pill" title="Iteration 19">19</a>
+            <a href="contact-iteration-20.html" class="proto-pill" title="Iteration 20">20</a>
+          </nav>
+          <div class="proto-lang-switch">
+            <button type="button" class="proto-lang-btn active" data-lang-target="en" onclick="setLanguage('en')">EN</button>
+            <button type="button" class="proto-lang-btn" data-lang-target="hi" onclick="setLanguage('hi')">हिन्दी</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Site Header -->
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="/" class="brand-group" aria-label="Ashish Interiors Home">
+          <span class="brand-box" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M6 6 H42 V42 H6 Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round" />
+              <line x1="6" y1="26" x2="26" y2="26" stroke="currentColor" stroke-width="2.5" />
+              <line x1="26" y1="6" x2="26" y2="18" stroke="currentColor" stroke-width="2.5" />
+              <circle cx="32" cy="11" r="3" fill="#D9BC72" />
+              <line x1="16" y1="38" x2="48" y2="38" stroke="#D9BC72" stroke-width="3.5" />
+            </svg>
+          </span>
+          <span class="brand-name">
+            <span>ASHISH</span>
+            <span>INTERIORS</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a href="/" class="nav-link" data-en="Home" data-hi="होम">Home</a>
+          <a href="/#services" class="nav-link" data-en="Services" data-hi="सेवाएं">Services</a>
+          <a href="about-iteration-5.html" class="nav-link" data-en="About" data-hi="हमारे बारे में">About</a>
+          <a href="/portfolio" class="nav-link" data-en="Portfolio" data-hi="पोर्टफोलियो">Portfolio</a>
+          <a href="contact-iteration-5.html" class="nav-link active" data-en="Contact" data-hi="संपर्क">Contact</a>
+        </div>
+        <a href="tel:5550123" class="nav-tel">
+          <span data-en="Phone: (555) 0123" data-hi="फोन: (555) 0123">Phone: (555) 0123</span>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="page-container">
+      <!-- Gateway Masthead -->
+      <section class="gateway-masthead">
+        <div class="gateway-kicker" data-en="Transparent joinery budget estimator" data-hi="पारदर्शी बढ़ईगीरी बजट अनुमानक">Transparent joinery budget estimator</div>
+        <div class="gateway-hero-grid">
+          <div>
+            <h1 class="gateway-title">
+              <span data-en="Come see us" data-hi="यहाँ मिलते हैं">Come see us</span>
+              <span class="gateway-title-accent" data-en="With an exact estimate" data-hi="सटीक अनुमान के साथ">With an exact estimate</span>
+            </h1>
+          </div>
+          <div>
+            <p class="gateway-lead" data-en="Calculate realistic joinery costs based on 100% genuine BWR and BWP marine plywood in 3 simple clicks. Your selection links straight into an itemized WhatsApp brief with Ashish Kumar." data-hi="३ सरल क्लिक में १००% असली बीडब्लूआर एवं बीब्ल्यूपी मरीन प्लाईवुड की लागत का पारदर्शी अनुमान लगाएं। आपका चयन सीधे आशीष कुमार के साथ व्हाट्सएप पर जुड़ जाता है।">
+              Calculate realistic joinery costs based on 100% genuine BWR and BWP marine plywood in 3 simple clicks. Your selection links straight into an itemized WhatsApp brief with Ashish Kumar.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Estimator Section -->
+      <section class="estimator-layout" aria-label="Joinery Cost Calculator">
+        <!-- Interactive Controls (Left) -->
+        <div class="estimator-card">
+          <div class="estimator-card-header">
+            <span class="estimator-step-tag" data-en="Step 01 to 03 — Define your scope" data-hi="चरण ०१ से ०३ — अपनी आवश्यकताएं तय करें">Step 01 to 03 — Define your scope</span>
+            <h2 class="estimator-card-title" data-en="Configure your Patna apartment" data-hi="अपने पटना फ़्लैट का विन्यास चुनें">Configure your Patna apartment</h2>
+          </div>
+
+          <!-- Control 1: Property Layout -->
+          <div class="calc-group">
+            <label class="calc-label" data-en="01. Flat layout & carpet area" data-hi="०१. फ़्लैट का प्रकार एवं कारपेट क्षेत्र">01. Flat layout & carpet area</label>
+            <div class="calc-options-grid grid-3">
+              <button type="button" class="calc-option-btn" data-flat="2bhk" onclick="setFlatType('2bhk')">
+                <span class="opt-title" data-en="2BHK Flat" data-hi="२बीएचके फ़्लैट">2BHK Flat</span>
+                <span class="opt-sub" data-en="950 sq ft" data-hi="९५० वर्ग फुट">950 sq ft</span>
+              </button>
+              <button type="button" class="calc-option-btn active" data-flat="3bhk" onclick="setFlatType('3bhk')">
+                <span class="opt-title" data-en="3BHK Flat" data-hi="३बीएचके फ़्लैट">3BHK Flat</span>
+                <span class="opt-sub" data-en="1,450 sq ft" data-hi="१,४५० वर्ग फुट">1,450 sq ft</span>
+              </button>
+              <button type="button" class="calc-option-btn" data-flat="4bhk" onclick="setFlatType('4bhk')">
+                <span class="opt-title" data-en="4BHK / Duplex" data-hi="४बीएचके / डुप्लेक्स">4BHK / Duplex</span>
+                <span class="opt-sub" data-en="2,100 sq ft" data-hi="२,१०० वर्ग फुट">2,100 sq ft</span>
+              </button>
+            </div>
+            <div class="calc-options-grid" style="grid-template-columns: 1fr 1fr; margin-top: 4px;">
+              <button type="button" class="calc-option-btn" data-flat="kitchen" onclick="setFlatType('kitchen')">
+                <span class="opt-title" data-en="Kitchen Only" data-hi="केवल किचन">Kitchen Only</span>
+                <span class="opt-sub" data-en="120 sq ft modular" data-hi="१२० वर्ग फुट मॉड्यूलर">120 sq ft modular</span>
+              </button>
+              <button type="button" class="calc-option-btn" data-flat="villa" onclick="setFlatType('villa')">
+                <span class="opt-title" data-en="Villa / Full Remodel" data-hi="विला / नवीनीकरण">Villa / Full Remodel</span>
+                <span class="opt-sub" data-en="2,800+ sq ft" data-hi="२,८००+ वर्ग फुट">2,800+ sq ft</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Control 2: Plywood & Hardware Tier -->
+          <div class="calc-group">
+            <label class="calc-label" data-en="02. Plywood core & hardware specification" data-hi="०२. प्लाईवुड कोर एवं हार्डवेयर स्तर">02. Plywood core & hardware specification</label>
+            <div class="calc-options-grid">
+              <button type="button" class="calc-option-btn" data-tier="bwr" onclick="setTier('bwr')">
+                <span class="opt-title" data-en="Essential BWR Joinery" data-hi="आवश्यक बीडब्लूआर बढ़ईगीरी">Essential BWR Joinery</span>
+                <span class="opt-sub" data-en="100% BWR Plywood, 1mm matte laminate, Ebco/Hafele hardware" data-hi="१००% बीडब्लूआर प्लाई, १ मिमी मैट लैमिनेट, एब्को/हेफेले">100% BWR Plywood, 1mm matte laminate, Ebco/Hafele hardware</span>
+              </button>
+              <button type="button" class="calc-option-btn active" data-tier="marine" onclick="setTier('marine')">
+                <span class="opt-title" data-en="Premium Marine Grade Joinery (Recommended)" data-hi="प्रीमियम मरीन ग्रेड बढ़ईगीरी (अनुशंसित)">Premium Marine Grade Joinery (Recommended)</span>
+                <span class="opt-sub" data-en="IS:710 BWP Marine ply for all wet zones, BWR dry zones, Hafele soft-close" data-hi="गीले क्षेत्रों हेतु आईएस:७१० मरीन प्लाई, हेफेले सॉफ्ट-क्लोज़">IS:710 BWP Marine ply for all wet zones, BWR dry zones, Hafele soft-close</span>
+              </button>
+              <button type="button" class="calc-option-btn" data-tier="luxury" onclick="setTier('luxury')">
+                <span class="opt-title" data-en="Bespoke Architectural Grade" data-hi="बेस्पोक आर्किटेक्चरल ग्रेड">Bespoke Architectural Grade</span>
+                <span class="opt-sub" data-en="100% Calibrated BWP ply throughout, fluted accents, Hettich concealed systems" data-hi="संपूर्ण कैलिब्रेटेड बीब्ल्यूपी प्लाई, हेतिच कंसील्ड सिस्टम">100% Calibrated BWP ply throughout, fluted accents, Hettich concealed systems</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Control 3: Site Handover Stage -->
+          <div class="calc-group">
+            <label class="calc-label" data-en="03. Current site condition in Patna" data-hi="०३. पटना में साइट की वर्तमान स्थिति">03. Current site condition in Patna</label>
+            <div class="calc-options-grid grid-3">
+              <button type="button" class="calc-option-btn active" data-stage="raw" onclick="setStage('raw')">
+                <span class="opt-title" data-en="Raw Bare Shell" data-hi="रॉ बेयर शेल">Raw Bare Shell</span>
+                <span class="opt-sub" data-en="Ready for woodwork" data-hi="बढ़ईगीरी हेतु तैयार">Ready for woodwork</span>
+              </button>
+              <button type="button" class="calc-option-btn" data-stage="civil" onclick="setStage('civil')">
+                <span class="opt-title" data-en="Finishing Civil Work" data-hi="सिविल कार्य प्रगति पर">Finishing Civil Work</span>
+                <span class="opt-sub" data-en="1-2 months out" data-hi="१-२ माह में तैयार">1-2 months out</span>
+              </button>
+              <button type="button" class="calc-option-btn" data-stage="remodel" onclick="setStage('remodel')">
+                <span class="opt-title" data-en="Occupied Remodel" data-hi="मौजूदा मकान नवीनीकरण">Occupied Remodel</span>
+                <span class="opt-sub" data-en="Live renovation" data-hi="चलते घर में काम">Live renovation</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculated Output Display (Right) -->
+        <div class="output-card">
+          <div>
+            <span class="output-kicker" data-en="Estimated investment range" data-hi="अनुमानित निवेश सीमा">Estimated investment range</span>
+            <div class="output-price-display" id="displayRange">₹6.8L – ₹8.4L</div>
+            <div class="output-price-sub" data-en="Including genuine plywood, Hafele hardware, laminates & carpentry" data-hi="असली प्लाईवुड, हेफेले हार्डवेयर, लैमिनेट्स एवं कारीगरी सहित">Including genuine plywood, Hafele hardware, laminates & carpentry</div>
+
+            <!-- Material & Production Details -->
+            <div class="output-details-list">
+              <div class="detail-row">
+                <span class="detail-name" data-en="Estimated workshop time:" data-hi="अनुमानित निर्माण समय:">Estimated workshop time:</span>
+                <span class="detail-val" id="displayTimeline">45 – 55 working days</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-name" data-en="Core joinery substrate:" data-hi="मुख्य प्लाईवुड प्रकार:">Core joinery substrate:</span>
+                <span class="detail-val" id="displaySubstrate">IS:710 BWP + BWR Grade</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-name" data-en="Hardware standard:" data-hi="हार्डवेयर मानक:">Hardware standard:</span>
+                <span class="detail-val" id="displayHardware">Hafele soft-close runners</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-name" data-en="Carpentry team:" data-hi="बढ़ईगीरी टीम:">Carpentry team:</span>
+                <span class="detail-val" data-en="In-house Patna workshop crew" data-hi="इन-हाउस पटना वर्कशॉप टीम">In-house Patna workshop crew</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-name" data-en="Inspection facility:" data-hi="निरीक्षण स्थान:">Inspection facility:</span>
+                <span class="detail-val" data-en="Boring Road Crossing studio" data-hi="बोरिंग रोड क्रॉसिंग स्टूडियो">Boring Road Crossing studio</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WhatsApp Conduit Button -->
+          <div>
+            <a href="#" id="estimatorWaBtn" target="_blank" rel="noopener noreferrer" class="btn-wa-primary">
+              <svg viewBox="0 0 448 512" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <path d="M380.9 97.1c-41.9-42-97.7-65.1-157-65.1-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480 117.7 449.1c32.3 17.7 68.6 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              <span data-en="Send specification to Ashish on WhatsApp" data-hi="यह विवरण आशीष को व्हाट्सएप पर भेजें">Send specification to Ashish on WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Physical Studio Desk & Coordinates -->
+      <section class="studio-coords-sec">
+        <h2 class="coords-title" data-en="Studio verification coordinates" data-hi="स्टूडियो सत्यापन निर्देश">Studio verification coordinates</h2>
+        <div class="coords-grid">
+          <!-- Card 1: Phone -->
+          <div class="coord-card">
+            <span class="coord-tag" data-en="Voice phone" data-hi="टेलीफोन">Voice phone</span>
+            <div class="coord-val">(555) 0123</div>
+            <p class="coord-sub" data-en="Speak directly with our studio desk at Boring Road. Monday through Saturday from 10:00 to 19:00." data-hi="बोरिंग रोड स्थित स्टूडियो डेस्क से सीधे बात करें। सोमवार से शनिवार प्रातः १०:०० से सायं १९:००।">
+              Speak directly with our studio desk at Boring Road. Monday through Saturday from 10:00 to 19:00.
+            </p>
+            <a href="tel:5550123" class="btn-neutral">
+              <span data-en="Call studio desk" data-hi="स्टूडियो डेस्क को कॉल करें">Call studio desk</span>
+            </a>
+          </div>
+
+          <!-- Card 2: Physical Address -->
+          <div class="coord-card">
+            <span class="coord-tag" data-en="Studio address" data-hi="स्टूडियो का पता">Studio address</span>
+            <div class="coord-val" data-en="Boring Road Crossing" data-hi="बोरिंग रोड क्रॉसिंग">Boring Road Crossing</div>
+            <p class="coord-sub" data-en="2nd Floor, Boring Road Crossing, Patna, Bihar 800001. Near AN College. Inspect sample joints in person." data-hi="द्वितीय तल, बोरिंग रोड क्रॉसिंग, पटना, बिहार ८००००१। ए.एन. कॉलेज के निकट। वास्तविक जोड़ों का स्वयं निरीक्षण करें।">
+              2nd Floor, Boring Road Crossing, Patna, Bihar 800001. Near AN College. Inspect sample joints in person.
+            </p>
+            <a href="contact-iteration-4.html" class="btn-neutral">
+              <span data-en="Studio directions" data-hi="रास्ते का विवरण">Studio directions</span>
+            </a>
+          </div>
+
+          <!-- Card 3: Operating Hours -->
+          <div class="coord-card">
+            <span class="coord-tag" data-en="Workshop schedule" data-hi="कार्य समय">Workshop schedule</span>
+            <div class="coord-val" data-en="10:00 – 19:00" data-hi="१०:०० – १९:००">10:00 – 19:00</div>
+            <p class="coord-sub" data-en="Monday to Saturday. Sunday reserved for on-site flat surveys across Bailey Road, Danapur, and Patliputra." data-hi="सोमवार से शनिवार। रविवार पटना में ऑन-साइट फ्लैट मापों के लिए आरक्षित है।">
+              Monday to Saturday. Sunday reserved for on-site flat surveys across Bailey Road, Danapur, and Patliputra.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-col">
+          <h4 data-en="Ashish Interiors" data-hi="आशीष इंटीरियर्स">Ashish Interiors</h4>
+          <p data-en="Residential joinery workshop founded in 2013 at Boring Road Crossing, Patna. We construct interiors with zero particle board, in-house master craftsmen, and marine-grade plywood." data-hi="२०१३ से बोरिंग रोड क्रॉसिंग, पटना में स्थापित। हम शून्य पार्टिकल बोर्ड, इन-हाउस कारीगरों और मरीन-ग्रेड प्लाईवुड से घरों का निर्माण करते हैं।">
+            Residential joinery workshop founded in 2013 at Boring Road Crossing, Patna. We construct interiors with zero particle board, in-house master craftsmen, and marine-grade plywood.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 data-en="Direct studio desk" data-hi="स्टूडियो डेस्क">Direct studio desk</h4>
+          <p>
+            <strong data-en="Phone:" data-hi="फोन:">Phone:</strong> (555) 0123<br />
+            <strong data-en="WhatsApp:" data-hi="व्हाट्सएप:">WhatsApp:</strong> (555) 0123<br />
+            <span data-en="Mon–Sat: 10:00 to 19:00" data-hi="सोम–शनि: १०:०० से १९:००">Mon–Sat: 10:00 to 19:00</span>
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 data-en="Boring Road studio" data-hi="बोरिंग रोड स्टूडियो">Boring Road studio</h4>
+          <p>
+            <span data-en="2nd Floor, Boring Road Crossing," data-hi="द्वितीय तल, बोरिंग रोड क्रॉसिंग,">2nd Floor, Boring Road Crossing,</span><br />
+            <span data-en="Patna, Bihar 800001" data-hi="पटना, बिहार ८००००१">Patna, Bihar 800001</span><br />
+            <span data-en="Near AN College & Crossing Circle" data-hi="ए.एन. कॉलेज एवं क्रॉसिंग गोलंबर के निकट">Near AN College & Crossing Circle</span>
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>2026 Ashish Interiors. Boring Road Crossing, Patna.</div>
+        <div>Editorial design system prototype. Radius 0px.</div>
+      </div>
+    </footer>
+
+    <script>
+      var currentFlat = '3bhk';
+      var currentTier = 'marine';
+      var currentStage = 'raw';
+      var currentLang = 'en';
+
+      var flatNames = {
+        '2bhk': { en: '2BHK Flat (950 sq ft)', hi: '२बीएचके फ़्लैट (९५० वर्ग फुट)' },
+        '3bhk': { en: '3BHK Flat (1,450 sq ft)', hi: '३बीएचके फ़्लैट (१,४५० वर्ग फुट)' },
+        '4bhk': { en: '4BHK / Duplex (2,100 sq ft)', hi: '४बीएचके / डुप्लेक्स (२,१०० वर्ग फुट)' },
+        'kitchen': { en: 'Modular Kitchen (120 sq ft)', hi: 'मॉड्यूलर किचन (१२० वर्ग फुट)' },
+        'villa': { en: 'Villa / Full Remodel (2,800 sq ft)', hi: 'विला / नवीनीकरण (२,८०० वर्ग फुट)' }
+      };
+
+      var tierNames = {
+        'bwr': { en: 'Essential BWR Joinery', hi: 'आवश्यक बीडब्लूआर बढ़ईगीरी' },
+        'marine': { en: 'Premium Marine Grade (BWP+BWR)', hi: 'प्रीमियम मरीन ग्रेड (बीब्ल्यूपी+बीडब्लूआर)' },
+        'luxury': { en: 'Bespoke Architectural Luxury', hi: 'बेस्पोक आर्किटेक्चरल लक्ज़री' }
+      };
+
+      var rates = {
+        '2bhk': { 'bwr': '₹4.2L – ₹5.2L', 'marine': '₹5.2L – ₹6.4L', 'luxury': '₹6.8L – ₹8.5L' },
+        '3bhk': { 'bwr': '₹5.6L – ₹6.8L', 'marine': '₹6.8L – ₹8.4L', 'luxury': '₹9.2L – ₹11.5L' },
+        '4bhk': { 'bwr': '₹7.8L – ₹9.5L', 'marine': '₹9.5L – ₹11.8L', 'luxury': '₹13.0L – ₹16.5L' },
+        'kitchen': { 'bwr': '₹1.8L – ₹2.3L', 'marine': '₹2.4L – ₹3.1L', 'luxury': '₹3.4L – ₹4.5L' },
+        'villa': { 'bwr': '₹11.0L – ₹13.5L', 'marine': '₹13.5L – ₹16.8L', 'luxury': '₹18.0L – ₹24.0L' }
+      };
+
+      var timelines = {
+        '2bhk': '35 – 45 working days',
+        '3bhk': '45 – 55 working days',
+        '4bhk': '55 – 65 working days',
+        'kitchen': '20 – 25 working days',
+        'villa': '65 – 80 working days'
+      };
+
+      var substrates = {
+        'bwr': '100% BWR Grade Plywood',
+        'marine': 'IS:710 BWP Wet Zones + BWR Dry',
+        'luxury': '100% Calibrated BWP Marine Ply'
+      };
+
+      var hardware = {
+        'bwr': 'Ebco / Hafele standard fittings',
+        'marine': 'Hafele soft-close runners',
+        'luxury': 'Hettich concealed luxury systems'
+      };
+
+      function updateCalculation() {
+        var range = rates[currentFlat][currentTier];
+        var timeline = timelines[currentFlat];
+        var substrate = substrates[currentTier];
+        var hw = hardware[currentTier];
+
+        document.getElementById('displayRange').textContent = range;
+        document.getElementById('displayTimeline').textContent = timeline;
+        document.getElementById('displaySubstrate').textContent = substrate;
+        document.getElementById('displayHardware').textContent = hw;
+
+        var fName = flatNames[currentFlat][currentLang];
+        var tName = tierNames[currentTier][currentLang];
+
+        var msg = (currentLang === 'hi' ?
+          "नमस्ते आशीष इंटीरियर्स, मैंने वेबसाइट एस्टिमेटर पर गणना की है:%0A" +
+          "*फ़्लैट:* " + encodeURIComponent(fName) + "%0A" +
+          "*स्तर:* " + encodeURIComponent(tName) + "%0A" +
+          "*साइट स्थिति:* " + encodeURIComponent(currentStage) + "%0A" +
+          "*अनुमानित बजट:* " + encodeURIComponent(range) + "%0A" +
+          "मैं इस विनिर्देश पर चर्चा करने के लिए आपके बोरिंग रोड स्टूडियो आना चाहता हूँ।"
+          :
+          "Hello Ashish Interiors, I calculated a joinery estimate on your website:%0A" +
+          "*Flat Type:* " + encodeURIComponent(fName) + "%0A" +
+          "*Joinery Tier:* " + encodeURIComponent(tName) + "%0A" +
+          "*Site Stage:* " + encodeURIComponent(currentStage) + "%0A" +
+          "*Estimate Range:* " + encodeURIComponent(range) + "%0A" +
+          "I would like to review this joinery specification and visit your Boring Road workshop."
+        );
+
+        document.getElementById('estimatorWaBtn').href = "https://wa.me/915550123?text=" + msg;
+      }
+
+      function setFlatType(type) {
+        currentFlat = type;
+        document.querySelectorAll('[data-flat]').forEach(function(btn) {
+          if (btn.getAttribute('data-flat') === type) btn.classList.add('active');
+          else btn.classList.remove('active');
+        });
+        updateCalculation();
+      }
+
+      function setTier(tier) {
+        currentTier = tier;
+        document.querySelectorAll('[data-tier]').forEach(function(btn) {
+          if (btn.getAttribute('data-tier') === tier) btn.classList.add('active');
+          else btn.classList.remove('active');
+        });
+        updateCalculation();
+      }
+
+      function setStage(stage) {
+        currentStage = stage;
+        document.querySelectorAll('[data-stage]').forEach(function(btn) {
+          if (btn.getAttribute('data-stage') === stage) btn.classList.add('active');
+          else btn.classList.remove('active');
+        });
+        updateCalculation();
+      }
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+        try {
+          localStorage.setItem('ashish_site_lang', lang);
+        } catch (e) {}
+
+        document.querySelectorAll('[data-en]').forEach(function(el) {
+          var val = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+          if (val) el.textContent = val;
+        });
+
+        document.querySelectorAll('.proto-lang-btn').forEach(function(btn) {
+          if (btn.getAttribute('data-lang-target') === lang) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        updateCalculation();
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          var saved = localStorage.getItem('ashish_site_lang');
+          if (saved === 'hi') currentLang = 'hi';
+        } catch (e) {}
+        setLanguage(currentLang);
+      });
+    </script>
+  </body>
+</html>

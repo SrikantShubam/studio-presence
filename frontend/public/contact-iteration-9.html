@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashish Interiors | The Material Archive & Sample Room — Concept 9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #141414;
+      --accent: #51372A;
+      --cta: #D9BC72;
+      --surface: #FFFFFF;
+      --body: #4A4A4A;
+      --muted: #8B8377;
+      --hairline: #DCD7CE;
+      --panel: #FAF8F5;
+      --wa-evergreen: #285A43;
+      --wa-deep: #1E4A36;
+      --font-display: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-hindi: 'Tiro Devanagari Hindi', 'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--panel);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    html[lang="hi"] body {
+      font-family: var(--font-hindi);
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: var(--font-display);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    html[lang="hi"] h1,
+    html[lang="hi"] h2,
+    html[lang="hi"] h3,
+    html[lang="hi"] h4,
+    html[lang="hi"] .font-display {
+      font-family: var(--font-hindi);
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+      border-radius: 0 !important;
+    }
+
+    /* ── Sticky Prototype Navigation Bar ── */
+    .proto-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #11100F;
+      color: #E8E3DC;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11.5px;
+    }
+
+    .proto-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      letter-spacing: 0.04em;
+    }
+
+    .proto-label {
+      color: var(--cta);
+      font-weight: 600;
+    }
+
+    .proto-sep {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .proto-links {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      overflow-x: auto;
+      padding-block: 2px;
+      max-width: 100%;
+      scrollbar-width: thin;
+    }
+
+    .proto-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 5px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #C7BEB0;
+      font-size: 10.5px;
+      font-family: var(--font-display);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .proto-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .proto-link.active {
+      background: var(--cta);
+      color: var(--ink);
+      border-color: var(--cta);
+      font-weight: 600;
+    }
+
+    .proto-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: #1B1917;
+    }
+
+    .lang-btn {
+      min-height: 28px;
+      padding: 0 10px;
+      background: transparent;
+      border: none;
+      color: #C7BEB0;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .lang-btn.active {
+      background: var(--cta);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ── Main Site Header ── */
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .site-header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 16px clamp(16px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--ink);
+      display: grid;
+      place-items: center;
+      padding: 6px;
+      background: transparent;
+      flex-shrink: 0;
+    }
+
+    .brand-mark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .brand-title {
+      display: grid;
+      gap: 1px;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .header-quick {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 2.5vw, 24px);
+    }
+
+    .header-tel {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      display: none;
+    }
+
+    @media (min-width: 680px) {
+      .header-tel {
+        display: block;
+      }
+    }
+
+    .btn-wa-header {
+      min-height: 44px;
+      padding: 0 16px;
+      background: var(--wa-evergreen);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--wa-evergreen);
+      transition: background 0.15s ease;
+    }
+
+    .btn-wa-header:hover {
+      background: var(--wa-deep);
+    }
+
+    .btn-wa-header svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      fill: currentColor;
+    }
+
+    /* ── Main Layout Container ── */
+    .content-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: clamp(36px, 6vw, 84px) clamp(16px, 4vw, 48px);
+    }
+
+    /* ── Header Introduction ── */
+    .archive-intro-box {
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      padding: clamp(32px, 5vw, 64px);
+      margin-bottom: clamp(36px, 5vw, 64px);
+    }
+
+    .eyebrow-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      background: var(--panel);
+      border: 1px solid var(--hairline);
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .archive-title {
+      font-size: clamp(32px, 5.2vw, 60px);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    .archive-lead {
+      font-size: clamp(15px, 1.4vw, 18px);
+      line-height: 1.75;
+      color: var(--body);
+      max-width: 62ch;
+      margin-bottom: 24px;
+    }
+
+    .archive-truth-strip {
+      border-top: 1px solid var(--hairline);
+      padding-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px clamp(16px, 3vw, 40px);
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── Two Column Architecture: Material Archive & Visit Scheduler ── */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(28px, 4vw, 56px);
+    }
+
+    @media (min-width: 1040px) {
+      .archive-grid {
+        grid-template-columns: 1.25fr 0.85fr;
+      }
+    }
+
+    /* ── Left Column: Physical Material Exhibits ── */
+    .materials-stack {
+      display: grid;
+      gap: 24px;
+    }
+
+    .material-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      padding: clamp(22px, 3vw, 32px);
+      display: grid;
+      gap: 16px;
+      transition: border-color 0.15s ease;
+    }
+
+    .material-card:hover {
+      border-color: var(--accent);
+    }
+
+    .mat-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 12px;
+    }
+
+    .mat-spec-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+
+    .mat-grade-badge {
+      font-size: 11.5px;
+      padding: 3px 8px;
+      background: var(--panel);
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .mat-title {
+      font-size: clamp(20px, 2.4vw, 24px);
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .mat-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--body);
+    }
+
+    .mat-inspection-points {
+      background: var(--panel);
+      border: 1px solid var(--hairline);
+      padding: 16px;
+      display: grid;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--body);
+    }
+
+    .point-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .point-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cta);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* ── Right Column: Interactive Sample Room Scheduler ── */
+    .scheduler-card {
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      padding: clamp(24px, 4vw, 40px);
+      display: grid;
+      gap: 22px;
+      align-self: start;
+      position: sticky;
+      top: 60px;
+    }
+
+    .scheduler-head {
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 16px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .scheduler-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .scheduler-sub {
+      font-size: 12.5px;
+      color: var(--body);
+      line-height: 1.5;
+    }
+
+    .check-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .check-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--panel);
+      border: 1px solid var(--hairline);
+      font-size: 12.5px;
+      color: var(--ink);
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .check-label input {
+      margin-top: 3px;
+      accent-color: var(--accent);
+    }
+
+    .form-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid var(--hairline);
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--ink);
+      background: #FFFFFF;
+    }
+
+    .btn-schedule-wa {
+      min-height: 50px;
+      padding: 14px 24px;
+      background: var(--wa-evergreen);
+      color: #FFFFFF;
+      font-size: 13.5px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--wa-evergreen);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      width: 100%;
+    }
+
+    .btn-schedule-wa:hover {
+      background: var(--wa-deep);
+    }
+
+    .btn-schedule-wa svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .scheduler-footer-meta {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      border-top: 1px solid var(--hairline);
+      padding-top: 14px;
+    }
+
+    /* ── Studio Information Matrix ── */
+    .studio-matrix {
+      margin-top: clamp(40px, 6vw, 72px);
+      border-top: 1px solid var(--hairline);
+      padding-top: clamp(32px, 5vw, 56px);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 640px) {
+      .studio-matrix {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .studio-matrix {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .matrix-item {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      padding: 20px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .matrix-lbl {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+
+    .matrix-val {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .matrix-sub {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.5;
+    }
+
+    /* ── Sub-Footer Strip ── */
+    .site-footer-strip {
+      background: var(--ink);
+      color: #C7BEB0;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 24px clamp(16px, 4vw, 48px);
+      font-size: 12.5px;
+    }
+
+    .footer-flex {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-sep {
+      color: rgba(255, 255, 255, 0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Prototype Bar -->
+  <aside class="proto-bar" aria-label="Prototype Version Switcher">
+    <div class="proto-meta">
+      <span class="proto-label">Contact iteration 9</span>
+      <span class="proto-sep">/</span>
+      <span data-en="Concept 9: The Material Archive & Sample Room" data-hi="अवधारणा 9: सामग्री अभिलेखागार एवं सैंपल रूम">Concept 9: The Material Archive & Sample Room</span>
+    </div>
+
+    <nav class="proto-links" aria-label="Iterations 1 to 20">
+      <a href="contact-iteration-1.html" class="proto-link">01</a>
+      <a href="contact-iteration-2.html" class="proto-link">02</a>
+      <a href="contact-iteration-3.html" class="proto-link">03</a>
+      <a href="contact-iteration-4.html" class="proto-link">04</a>
+      <a href="contact-iteration-5.html" class="proto-link">05</a>
+      <a href="contact-iteration-6.html" class="proto-link">06</a>
+      <a href="contact-iteration-7.html" class="proto-link">07</a>
+      <a href="contact-iteration-8.html" class="proto-link">08</a>
+      <a href="contact-iteration-9.html" class="proto-link active">09</a>
+      <a href="contact-iteration-10.html" class="proto-link">10</a>
+      <a href="contact-iteration-11.html" class="proto-link">11</a>
+      <a href="contact-iteration-12.html" class="proto-link">12</a>
+      <a href="contact-iteration-13.html" class="proto-link">13</a>
+      <a href="contact-iteration-14.html" class="proto-link">14</a>
+      <a href="contact-iteration-15.html" class="proto-link">15</a>
+      <a href="contact-iteration-16.html" class="proto-link">16</a>
+      <a href="contact-iteration-17.html" class="proto-link">17</a>
+      <a href="contact-iteration-18.html" class="proto-link">18</a>
+      <a href="contact-iteration-19.html" class="proto-link">19</a>
+      <a href="contact-iteration-20.html" class="proto-link">20</a>
+    </nav>
+
+    <div class="proto-controls">
+      <div class="lang-switcher" role="group" aria-label="Language selection">
+        <button type="button" class="lang-btn active" id="btn-en" onclick="setLanguage('en')">EN</button>
+        <button type="button" class="lang-btn" id="btn-hi" onclick="setLanguage('hi')">हिंदी</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand-group">
+        <a href="/" class="brand-mark" aria-label="Ashish Interiors">
+          <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M6 6 H42 V42 H6 Z" stroke="#141414" stroke-width="3" stroke-linejoin="miter" />
+            <line x1="6" y1="26" x2="26" y2="26" stroke="#141414" stroke-width="2.5" />
+            <line x1="26" y1="6" x2="26" y2="18" stroke="#141414" stroke-width="2.5" />
+            <circle cx="32" cy="11" r="3" fill="#D9BC72" />
+            <line x1="16" y1="38" x2="48" y2="38" stroke="#D9BC72" stroke-width="3.5" />
+          </svg>
+        </a>
+        <div class="brand-title">
+          <span class="brand-name">ASHISH INTERIORS</span>
+          <span class="brand-sub" data-en="Boring Road Crossing, Patna, Estd 2013" data-hi="बोरिंग रोड क्रॉसिंग, पटना, स्थापना 2013">Boring Road Crossing, Patna, Estd 2013</span>
+        </div>
+      </div>
+
+      <div class="header-quick">
+        <a href="tel:+915550123" class="header-tel">(555) 0123</a>
+        <a href="https://wa.me/915550123" class="btn-wa-header" target="_blank" rel="noopener">
+          <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+          <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="content-wrap">
+
+    <!-- Header Introduction -->
+    <section class="archive-intro-box">
+      <div class="eyebrow-tag" data-en="Physical Sample Room - 2nd Floor Boring Road Crossing" data-hi="भौतिक सैंपल रूम - दूसरी मंजिल बोरिंग रोड क्रॉसिंग">
+        Physical Sample Room - 2nd Floor Boring Road Crossing
+      </div>
+
+      <h1 class="archive-title" data-en="Do not sign a contract until you touch the timber." data-hi="जब तक लकड़ी को हाथ से न परखें, अनुबंध पर हस्ताक्षर न करें।">
+        Do not sign a contract until you touch the timber.
+      </h1>
+
+      <p class="archive-lead" data-en="In Patna, deceptive commercial boards and fake marine stamps are widespread. At our Boring Road sample room, we keep raw plywood cuts, heavy German drawer rigs, and 1.0mm laminate swatches out on the table for you to physically test and verify." data-hi="पटना के बाजार में नकली मरीन मुहर और खोखले पार्टिकल बोर्ड का चलन बहुत अधिक है। हमारे बोरिंग रोड सैंपल रूम में बीडब्ल्यूआर प्लाई के कटे हुए टुकड़े, भारी वजन सहने वाले जर्मन ड्रावर और 1.0 मिमी लैमिनेट हमेशा टेबल पर जांच के लिए उपलब्ध रहते हैं।">
+        In Patna, deceptive commercial boards and fake marine stamps are widespread. At our Boring Road sample room, we keep raw plywood cuts, heavy German drawer rigs, and 1.0mm laminate swatches out on the table for you to physically test and verify.
+      </p>
+
+      <div class="archive-truth-strip">
+        <span data-en="BWR 710 marine plywood cuts" data-hi="बीडब्ल्यूआर 710 मरीन प्लाईवुड टुकड़े">BWR 710 marine plywood cuts</span>
+        <span data-en="Hafele 50,000 cycle soft-close hinges" data-hi="हेफेले 50,000 साइकिल सॉफ्ट-क्लोज हिंज">Hafele 50,000 cycle soft-close hinges</span>
+        <span data-en="Zero hollow particle board policy" data-hi="पार्टिकल बोर्ड का शून्य उपयोग">Zero hollow particle board policy</span>
+        <span data-en="Teakwood edge beadings" data-hi="सागवान लकड़ी की मजबूत बीडिंग">Teakwood edge beadings</span>
+      </div>
+    </section>
+
+    <!-- 2 Column: Left Material Showcase, Right Appointment Form -->
+    <div class="archive-grid">
+
+      <!-- Left: Physical Materials In The Archive -->
+      <section class="materials-stack">
+
+        <!-- Exhibit 01: BWR 710 Marine Ply -->
+        <article class="material-card">
+          <div class="mat-header">
+            <span class="mat-spec-num" data-en="Exhibit 01 - Structural core" data-hi="प्रदर्श 01 - संरचनात्मक कोर">Exhibit 01 - Structural core</span>
+            <span class="mat-grade-badge" data-en="IS:710 Marine Certified" data-hi="आईएस:710 मरीन प्रमाणित">IS:710 Marine Certified</span>
+          </div>
+          <h2 class="mat-title" data-en="BWR 710 marine-grade plywood cross-cut" data-hi="बीडब्ल्यूआर 710 मरीन-ग्रेड प्लाईवुड का अनुप्रस्थ काट">BWR 710 marine-grade plywood cross-cut</h2>
+          <p class="mat-desc" data-en="We provide freshly sawn 19mm and 16mm ply cuts. Inspect the dense eucalyptus hardwood veneers bonded under high pressure with unextended phenol formaldehyde resin. Count the solid core layers with zero interior air gaps." data-hi="हम 19 मिमी और 16 मिमी के कटे हुए नमूने प्रस्तुत करते हैं। उच्च दबाव में फिनोल फॉर्मलडिहाइड रेजिन से चिपके नीलगिरी की ठोस परतों को देखें। आंतरिक रूप से बिना किसी खाली जगह के सघन परतों की गिनती करें।">
+            We provide freshly sawn 19mm and 16mm ply cuts. Inspect the dense eucalyptus hardwood veneers bonded under high pressure with unextended phenol formaldehyde resin. Count the solid core layers with zero interior air gaps.
+          </p>
+          <div class="mat-inspection-points">
+            <div class="point-row">
+              <span class="point-dot"></span>
+              <span data-en="Tested for 72 hours boiling water resistance without delamination" data-hi="बिना परत उखड़े 72 घंटे उबलते पानी में परीक्षण योग्य">Tested for 72 hours boiling water resistance without delamination</span>
+            </div>
+            <div class="point-row">
+              <span class="point-dot"></span>
+              <span data-en="Vacuum pressure anti-termite and borer chemical saturation" data-hi="वैक्यूम प्रेशर आधारित दीमक और घुन रोधी रासायनिक उपचार">Vacuum pressure anti-termite and borer chemical saturation</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Exhibit 02: German Hardware Testing Rig -->
+        <article class="material-card">
+          <div class="mat-header">
+            <span class="mat-spec-num" data-en="Exhibit 02 - Functional motion" data-hi="प्रदर्श 02 - गति एवं कार्यप्रणाली">Exhibit 02 - Functional motion</span>
+            <span class="mat-grade-badge" data-en="Hafele & Hettich Precision" data-hi="हेफेले एवं हेर्टिच प्रिसिजन">Hafele & Hettich Precision</span>
+          </div>
+          <h2 class="mat-title" data-en="Full-scale soft-close drawer & hinge test rig" data-hi="फुल-साइज सॉफ्ट-क्लोज ड्रावर एवं हिंज टेस्टिंग रिग">Full-scale soft-close drawer & hinge test rig</h2>
+          <p class="mat-desc" data-en="Operate our demonstration cabinetry weighted with 35 kilograms of cast iron plates. Feel the silent hydraulic braking of concealed German tandem runners and observe how our carpenters mount hinges with steel reinforcement plates." data-hi="35 किलोग्राम वजन रखे हमारे डेमो कैबिनेट को चलाकर देखें। जर्मन टेंडेम रनर के मूक हाइड्रोलिक ब्रेक का अनुभव करें और देखें कि हमारे कारीगर स्टील रीइन्फोर्समेंट प्लेट के साथ हिंज कैसे लगाते हैं।">
+            Operate our demonstration cabinetry weighted with 35 kilograms of cast iron plates. Feel the silent hydraulic braking of concealed German tandem runners and observe how our carpenters mount hinges with steel reinforcement plates.
+          </p>
+          <div class="mat-inspection-points">
+            <div class="point-row">
+              <span class="point-dot"></span>
+              <span data-en="Tested for 50,000 continuous opening and closing cycles" data-hi="50,000 बार लगातार खोलने-बंद करने के चक्र पर प्रमाणित">Tested for 50,000 continuous opening and closing cycles</span>
+            </div>
+            <div class="point-row">
+              <span class="point-dot"></span>
+              <span data-en="Clip-on 3D adjustment mechanism preventing shutter sagging" data-hi="पल्लों को झुकने से रोकने वाला 3डी एडजस्टमेंट तंत्र">Clip-on 3D adjustment mechanism preventing shutter sagging</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Exhibit 03: 1.0mm Virgin Laminates & Veneers -->
+        <article class="material-card">
+          <div class="mat-header">
+            <span class="mat-spec-num" data-en="Exhibit 03 - Surface finishes" data-hi="प्रदर्श 03 - सतह फिनिश">Exhibit 03 - Surface finishes</span>
+            <span class="mat-grade-badge" data-en="1.0mm High Pressure" data-hi="1.0 मिमी हाई प्रेशर">1.0mm High Pressure</span>
+          </div>
+          <h2 class="mat-title" data-en="1.0mm virgin laminate swatches & natural teak veneers" data-hi="1.0 मिमी वर्जिन लैमिनेट एवं प्राकृतिक सागवान विनियर">1.0mm virgin laminate swatches & natural teak veneers</h2>
+          <p class="mat-desc" data-en="Compare flimsy 0.6mm builder sheets with our true 1.0mm scratch-resistant laminates (Merino, Royal Touch, Greenlam). Test marker resistance, heat tolerance, and view open-grain Burma teak and smoked oak veneers under true-color 4000K studio lights." data-hi="सस्ते 0.6 मिमी के बिल्डर लैमिनेट की तुलना हमारे मजबूत 1.0 मिमी खरोंच-रोधी लैमिनेट से करें। 4000K ट्रू-कलर लाइट में मार्कर प्रतिरोध, गर्मी सहनशीलता और बर्मा टीक विनियर के रेशे देखें।">
+            Compare flimsy 0.6mm builder sheets with our true 1.0mm scratch-resistant laminates (Merino, Royal Touch, Greenlam). Test marker resistance, heat tolerance, and view open-grain Burma teak and smoked oak veneers under true-color 4000K studio lights.
+          </p>
+          <div class="mat-inspection-points">
+            <div class="point-row">
+              <span class="point-dot"></span>
+              <span data-en="Anti-fingerprint ultra-matte and synchronized deep woodgrain textures" data-hi="एंटी-फिंगरप्रिंट अल्ट्रा-मैट और वास्तविक लकड़ी जैसी नक्काशी">Anti-fingerprint ultra-matte and synchronized deep woodgrain textures</span>
+            </div>
+            <div class="point-row">
+              <span class="point-dot"></span>
+              <span data-en="Edge-banding sample showing seamless 2mm machine EVA bond" data-hi="2 मिमी मशीन-ग्लू से जुड़ी निर्बाध एज-बैंडिंग का नमूना">Edge-banding sample showing seamless 2mm machine EVA bond</span>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Right: Schedule Sample Room Appointment -->
+      <section class="scheduler-card">
+        <div class="scheduler-head">
+          <h2 class="scheduler-title" data-en="Book sample room walkthrough" data-hi="सैंपल रूम निरीक्षण बुक करें">Book sample room walkthrough</h2>
+          <p class="scheduler-sub" data-en="Select the materials you wish to examine. We will arrange the physical cutaways and have our master carpenter present." data-hi="वे सामग्रियां चुनें जिन्हें आप देखना चाहते हैं। हम नमूने तैयार रखेंगे और मुख्य कारीगर उपस्थित रहेगा।">
+            Select the materials you wish to examine. We will arrange the physical cutaways and have our master carpenter present.
+          </p>
+        </div>
+
+        <form id="material-appointment-form" onsubmit="handleMaterialBooking(event)">
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" data-en="Select exhibits to prepare on table" data-hi="टेबल पर सजाने के लिए नमूने चुनें">Select exhibits to prepare on table</label>
+            <div class="check-group">
+              <label class="check-label">
+                <input type="checkbox" name="mat-choice" value="BWR 710 Marine Ply Cutaways" checked />
+                <span data-en="BWR 710 marine plywood core samples" data-hi="बीडब्ल्यूआर 710 मरीन प्लाईवुड के कोर नमूने">BWR 710 marine plywood core samples</span>
+              </label>
+              <label class="check-label">
+                <input type="checkbox" name="mat-choice" value="Hafele German Hardware Rigs" checked />
+                <span data-en="Hafele soft-close hinge & drawer testing rig" data-hi="हेफेले सॉफ्ट-क्लोज हिंज एवं ड्रावर टेस्टिंग रिग">Hafele soft-close hinge & drawer testing rig</span>
+              </label>
+              <label class="check-label">
+                <input type="checkbox" name="mat-choice" value="1.0mm Laminate Catalogs & Textures" checked />
+                <span data-en="1.0mm laminate catalogs & fluted panelling" data-hi="1.0 मिमी लैमिनेट कैटलॉग एवं पैनलिंग">1.0mm laminate catalogs & fluted panelling</span>
+              </label>
+              <label class="check-label">
+                <input type="checkbox" name="mat-choice" value="Quartz Countertop Slab Samples" />
+                <span data-en="Stain-resistant kitchen quartz & granite slabs" data-hi="दाग-रोधी किचन क्वार्ट्ज और ग्रेनाइट स्लैब">Stain-resistant kitchen quartz & granite slabs</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" for="mat-client-name" data-en="Your name" data-hi="आपका नाम">Your name</label>
+            <input type="text" id="mat-client-name" class="form-input" placeholder="e.g. Alok Verma" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" for="mat-client-phone" data-en="WhatsApp phone number" data-hi="व्हाट्सएप फोन नंबर">WhatsApp phone number</label>
+            <input type="tel" id="mat-client-phone" class="form-input" placeholder="e.g. 9876543210" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" for="mat-client-time" data-en="Preferred day & slot" data-hi="आगमन का दिन एवं समय">Preferred day & slot</label>
+            <select id="mat-client-time" class="form-select" required>
+              <option value="" disabled selected data-en="Select visit timing" data-hi="समय का चयन करें">Select visit timing</option>
+              <option value="Tomorrow Morning 11:00 AM">Tomorrow Morning 11:00 AM</option>
+              <option value="Tomorrow Afternoon 3:30 PM">Tomorrow Afternoon 3:30 PM</option>
+              <option value="Tomorrow Evening 6:00 PM">Tomorrow Evening 6:00 PM</option>
+              <option value="Saturday 11:30 AM">Saturday 11:30 AM</option>
+              <option value="Saturday 5:00 PM">Saturday 5:00 PM</option>
+              <option value="Sunday by Special Appointment">Sunday by Special Appointment</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-schedule-wa">
+            <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+            <span data-en="Confirm walkthrough on WhatsApp" data-hi="व्हाट्सएप पर अपॉइंटमेंट पक्का करें">Confirm walkthrough on WhatsApp</span>
+          </button>
+        </form>
+
+        <div class="scheduler-footer-meta" data-en="Complimentary studio visit. We provide you with a material take-home kit including BWR ply cross-cuts to compare with any other contractor." data-hi="निःशुल्क स्टूडियो विजिट। हम आपको बीडब्ल्यूआर प्लाई का नमूना किट भी साथ ले जाने के लिए देते हैं ताकि आप किसी भी ठेकेदार से इसकी तुलना कर सकें।">
+          Complimentary studio visit. We provide you with a material take-home kit including BWR ply cross-cuts to compare with any other contractor.
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Studio Information Matrix -->
+    <section class="studio-matrix">
+      <div class="matrix-item">
+        <span class="matrix-lbl" data-en="Phone" data-hi="फोन">Phone</span>
+        <a href="tel:+915550123" class="matrix-val">(555) 0123</a>
+        <span class="matrix-sub" data-en="Mon–Sat 10:00 to 19:00" data-hi="सोम–शनि 10:00 से 19:00">Mon–Sat 10:00 to 19:00</span>
+      </div>
+
+      <div class="matrix-item">
+        <span class="matrix-lbl" data-en="WhatsApp" data-hi="व्हाट्सएप">WhatsApp</span>
+        <a href="https://wa.me/915550123" class="matrix-val" target="_blank" rel="noopener">(555) 0123</a>
+        <span class="matrix-sub" data-en="Direct conduit to founder" data-hi="सीधा संस्थापक संपर्क">Direct conduit to founder</span>
+      </div>
+
+      <div class="matrix-item">
+        <span class="matrix-lbl" data-en="Studio" data-hi="स्टूडियो">Studio</span>
+        <div class="matrix-val" data-en="2nd Floor, Shivam Complex" data-hi="दूसरी मंजिल, शिवम कॉम्प्लेक्स">2nd Floor, Shivam Complex</div>
+        <span class="matrix-sub" data-en="Boring Road Crossing, Patna 800001" data-hi="बोरिंग रोड क्रॉसिंग, पटना 800001">Boring Road Crossing, Patna 800001</span>
+      </div>
+
+      <div class="matrix-item">
+        <span class="matrix-lbl" data-en="Hours" data-hi="समय">Hours</span>
+        <div class="matrix-val">10:00 – 19:00</div>
+        <span class="matrix-sub" data-en="Sunday by appointment" data-hi="रविवार केवल पूर्व समय पर">Sunday by appointment</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sub-footer strip -->
+  <footer class="site-footer-strip">
+    <div class="footer-flex">
+      <div class="footer-left">
+        <span>© 2013–2026 Ashish Interiors</span>
+        <span class="footer-sep">|</span>
+        <span data-en="Boring Road Crossing, Patna, Bihar 800001" data-hi="बोरिंग रोड क्रॉसिंग, पटना, बिहार 800001">Boring Road Crossing, Patna, Bihar 800001</span>
+        <span class="footer-sep">|</span>
+        <span data-en="BWR 710 marine plywood joinery" data-hi="बीडब्ल्यूआर 710 मरीन प्लाईवुड निर्माण">BWR 710 marine plywood joinery</span>
+      </div>
+      <div>
+        <a href="tel:+915550123" style="color:var(--cta); font-weight:500;">(555) 0123</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = lang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+        if (text) el.textContent = text;
+      });
+
+      document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+        const ph = lang === 'hi' ? el.getAttribute('data-hi-placeholder') : el.getAttribute('data-en-placeholder');
+        if (ph) el.placeholder = ph;
+      });
+
+      const btnEn = document.getElementById('btn-en');
+      const btnHi = document.getElementById('btn-hi');
+      if (btnEn && btnHi) {
+        if (lang === 'hi') {
+          btnEn.classList.remove('active');
+          btnHi.classList.add('active');
+        } else {
+          btnHi.classList.remove('active');
+          btnEn.classList.add('active');
+        }
+      }
+
+      try {
+        localStorage.setItem('ashish_interiors_lang', lang);
+      } catch (e) {}
+    }
+
+    function handleMaterialBooking(e) {
+      e.preventDefault();
+      const name = document.getElementById('mat-client-name').value.trim();
+      const phone = document.getElementById('mat-client-phone').value.trim();
+      const slot = document.getElementById('mat-client-time').value;
+
+      const checkedMaterials = [];
+      document.querySelectorAll('input[name="mat-choice"]:checked').forEach(cb => {
+        checkedMaterials.push(cb.value);
+      });
+
+      const message = `Namaste Ashish ji,\n\nI would like to book a material walkthrough at your Boring Road sample room:\n- Name: ${name}\n- WhatsApp: ${phone}\n- Preferred Slot: ${slot}\n- Materials requested:\n  * ${checkedMaterials.join('\n  * ')}\n\nPlease prepare the cutaways and confirm availability.`;
+
+      const waUrl = 'https://wa.me/915550123?text=' + encodeURIComponent(message);
+      window.open(waUrl, '_blank');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let saved = 'en';
+      try {
+        saved = localStorage.getItem('ashish_interiors_lang') || 'en';
+      } catch (e) {}
+      setLanguage(saved);
+    });
+  </script>
+</body>
+</html>

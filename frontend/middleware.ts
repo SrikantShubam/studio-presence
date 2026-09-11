@@ -53,7 +53,7 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * and a browser's automatic favicon request 500s the page. `robots.txt` was in
  * this list against the paragraph above and had the identical bug.
  */
-const PASSTHROUGH = /^\/(?:_next|api\/|clients\/|fonts\/)/
+const PASSTHROUGH = /^\/(?:_next|api\/|clients\/|fonts\/|about-iteration-|contact-iteration-|contact-concepts\/|brand\/|favicon\.(?:ico|svg)|icon\.svg|apple-icon\.svg)/
 
 function primaryDevTenant(): TenantEntry | undefined {
   const sub = Object.keys(TENANT_MAP.bySubdomain)[0]
@@ -107,6 +107,20 @@ export function middleware(request: NextRequest) {
   if (PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const host = request.headers.get('host') ?? ''
+  const hostname = host.split(':')[0]?.toLowerCase() ?? ''
+  const isRootHost =
+    hostname === ROOT_DOMAIN ||
+    hostname === `www.${ROOT_DOMAIN}` ||
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1'
+
+  // Platform pages live on the root domain and must never be rewritten to a
+  // tenant. Keep this allowlist narrow so an unknown root-domain path still
+  // fails closed instead of exposing tenant routing.
+  if (isRootHost && (pathname === '/studio-presence' || pathname.startsWith('/studio-presence/'))) {
+    return NextResponse.next()
+  }
+
   const resolved = resolveTenant(host)
 
   // Unknown host. Not a 404 page — there is no tenant whose 404 this would be.

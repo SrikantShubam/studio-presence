@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Minimalist Architectural Card — Contact Us — Ashish Interiors Patna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #141414;
+      --accent: #51372A;
+      --cta: #D9BC72;
+      --surface: #FFFFFF;
+      --body: #4A4A4A;
+      --muted: #8B8377;
+      --hairline: #DCD7CE;
+      --panel: #FAF8F5;
+      --wa-evergreen: #285A43;
+      --wa-deep: #1E4A36;
+      --font-display: 'Archivo', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-hindi: 'Poppins', 'Tiro Devanagari Hindi', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--surface);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body.lang-hindi {
+      font-family: var(--font-hindi);
+    }
+
+    body.lang-hindi h1,
+    body.lang-hindi h2,
+    body.lang-hindi h3,
+    body.lang-hindi h4,
+    body.lang-hindi .font-display {
+      font-family: var(--font-hindi);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select {
+      font-family: inherit;
+      font-size: inherit;
+      border-radius: 0 !important;
+    }
+
+    /* Sticky Prototype Bar */
+    .proto-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #141414;
+      color: #FAF8F5;
+      border-bottom: 1px solid #333333;
+      padding: 8px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .proto-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .proto-brand {
+      font-weight: 600;
+      color: var(--cta);
+      font-family: var(--font-display);
+    }
+
+    .proto-sep {
+      color: #666666;
+    }
+
+    .proto-title {
+      color: #DCD7CE;
+    }
+
+    .proto-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      border: 1px solid #444444;
+      background: #1e1e1e;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: #AAAAAA;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 28px;
+    }
+
+    .lang-btn.active {
+      background: var(--cta);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .proto-pills-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      max-width: 580px;
+      padding-bottom: 2px;
+      scrollbar-width: thin;
+    }
+
+    .proto-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 6px;
+      border: 1px solid #333333;
+      background: #1a1a1a;
+      color: #8B8377;
+      font-size: 10.5px;
+      font-family: var(--font-display);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .proto-pill:hover {
+      border-color: var(--cta);
+      color: #FFFFFF;
+    }
+
+    .proto-pill.active {
+      background: var(--cta);
+      border-color: var(--cta);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* Site Navigation */
+    .site-header {
+      border-bottom: 1px solid var(--hairline);
+      background: var(--surface);
+    }
+
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--accent);
+      background: var(--panel);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 28px;
+    }
+
+    @media (min-width: 840px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-link.active {
+      border-bottom-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-direct {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-header-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--wa-evergreen);
+      color: #FFFFFF;
+      padding: 10px 16px;
+      font-size: 12.5px;
+      font-weight: 600;
+      min-height: 44px;
+      border: 1px solid var(--wa-deep);
+    }
+
+    .btn-header-wa:hover {
+      background: var(--wa-deep);
+    }
+
+    /* Minimalist Architectural Plate Section */
+    .plate-section {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: clamp(48px, 7vw, 96px) 24px;
+    }
+
+    .plate-header {
+      margin-bottom: clamp(40px, 6vw, 68px);
+      max-width: 820px;
+    }
+
+    .plate-meta-lead {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .plate-meta-line {
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .plate-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6.5vw, 76px);
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .plate-title .emphasis {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .plate-subhead {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--body);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    /* Architectural Contact Matrix */
+    .arch-matrix {
+      border: 1px solid var(--ink);
+      display: grid;
+      grid-template-columns: 1fr;
+      background: var(--surface);
+    }
+
+    @media (min-width: 768px) {
+      .arch-matrix {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .arch-matrix {
+        grid-template-columns: 1.1fr 0.9fr 1fr;
+      }
+    }
+
+    .matrix-cell {
+      padding: clamp(24px, 3.5vw, 40px);
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px;
+    }
+
+    @media (min-width: 768px) {
+      .matrix-cell:nth-child(odd) {
+        border-right: 1px solid var(--hairline);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .matrix-cell:nth-child(odd) {
+        border-right: 1px solid var(--hairline);
+      }
+      .matrix-cell:nth-child(3n-1) {
+        border-right: 1px solid var(--hairline);
+      }
+      .matrix-cell:nth-child(3n) {
+        border-right: none;
+      }
+    }
+
+    .matrix-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .matrix-content {
+      font-size: clamp(16px, 1.9vw, 20px);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.45;
+    }
+
+    .matrix-content.large-num {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 2.6vw, 32px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .matrix-detail {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    /* High-Contrast Conversion Cell */
+    .matrix-cell.cell-highlight {
+      background: var(--panel);
+    }
+
+    .matrix-cell.cell-cta {
+      background: var(--ink);
+      color: #FFFFFF;
+      border-color: var(--ink);
+    }
+
+    .matrix-cell.cell-cta .matrix-label {
+      color: var(--cta);
+    }
+
+    .matrix-cell.cell-cta .matrix-content {
+      color: #FFFFFF;
+    }
+
+    .matrix-cell.cell-cta .matrix-detail {
+      color: #AAAAAA;
+    }
+
+    /* High-Contrast Action Bar */
+    .action-strip {
+      margin-top: clamp(40px, 5vw, 64px);
+      padding: clamp(28px, 4vw, 44px);
+      background: var(--panel);
+      border: 1px solid var(--accent);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .action-text-block {
+      max-width: 580px;
+    }
+
+    .action-title {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .action-desc {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.6;
+    }
+
+    .action-btns {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-wa-stark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 28px;
+      background: var(--wa-evergreen);
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid var(--wa-deep);
+      min-height: 50px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-wa-stark:hover {
+      background: var(--wa-deep);
+    }
+
+    .btn-estimate-stark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 28px;
+      background: var(--cta);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid #BFA35C;
+      min-height: 50px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-estimate-stark:hover {
+      background: #C9AB62;
+    }
+
+    /* Minimalist Interactive Topic Selector */
+    .selector-block {
+      margin-top: clamp(32px, 4vw, 48px);
+      border: 1px solid var(--hairline);
+      padding: 24px;
+      background: #FFFFFF;
+    }
+
+    .selector-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .topic-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .topic-chip {
+      padding: 8px 16px;
+      border: 1px solid var(--hairline);
+      background: var(--panel);
+      font-size: 12.5px;
+      color: var(--body);
+      cursor: pointer;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .topic-chip.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--ink);
+      color: #DCD7CE;
+      padding: 48px 24px 32px;
+      border-top: 1px solid #333333;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid #333333;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+
+    .footer-col p {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #AAAAAA;
+    }
+
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 24px auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 12px;
+      color: #888888;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Prototype Bar -->
+  <aside class="proto-bar" aria-label="Prototype switcher">
+    <div class="proto-meta">
+      <span class="proto-brand">Ashish Interiors</span>
+      <span class="proto-sep">/</span>
+      <span class="proto-title" data-en="Contact — Concept 13: The Minimalist Architectural Card" data-hi="संपर्क — कॉन्सेप्ट 13: मिनिमलिस्ट आर्किटेक्चरल कार्ड">Contact — Concept 13: The Minimalist Architectural Card</span>
+    </div>
+    <div class="proto-actions">
+      <div class="lang-switcher" role="group" aria-label="Language selection">
+        <button type="button" class="lang-btn active" data-lang-target="en" onclick="setLanguage('en')">English</button>
+        <button type="button" class="lang-btn" data-lang-target="hi" onclick="setLanguage('hi')">हिंदी</button>
+      </div>
+      <nav class="proto-pills-wrap" aria-label="Contact iteration pages">
+        <a href="contact-iteration-1.html" class="proto-pill">01</a>
+        <a href="contact-iteration-2.html" class="proto-pill">02</a>
+        <a href="contact-iteration-3.html" class="proto-pill">03</a>
+        <a href="contact-iteration-4.html" class="proto-pill">04</a>
+        <a href="contact-iteration-5.html" class="proto-pill">05</a>
+        <a href="contact-iteration-6.html" class="proto-pill">06</a>
+        <a href="contact-iteration-7.html" class="proto-pill">07</a>
+        <a href="contact-iteration-8.html" class="proto-pill">08</a>
+        <a href="contact-iteration-9.html" class="proto-pill">09</a>
+        <a href="contact-iteration-10.html" class="proto-pill">10</a>
+        <a href="contact-iteration-11.html" class="proto-pill">11</a>
+        <a href="contact-iteration-12.html" class="proto-pill">12</a>
+        <a href="contact-iteration-13.html" class="proto-pill active" aria-current="page">13</a>
+        <a href="contact-iteration-14.html" class="proto-pill">14</a>
+        <a href="contact-iteration-15.html" class="proto-pill">15</a>
+        <a href="contact-iteration-16.html" class="proto-pill">16</a>
+        <a href="contact-iteration-17.html" class="proto-pill">17</a>
+        <a href="contact-iteration-18.html" class="proto-pill">18</a>
+        <a href="contact-iteration-19.html" class="proto-pill">19</a>
+        <a href="contact-iteration-20.html" class="proto-pill">20</a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <div class="brand-mark">
+        <div class="brand-badge" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18"/>
+            <line x1="3" y1="9" x2="21" y2="9"/>
+            <line x1="9" y1="21" x2="9" y2="9"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Ashish Interiors</span>
+          <span class="brand-sub" data-en="Boring Road Crossing, Patna" data-hi="बोरिंग रोड चौराहा, पटना">Boring Road Crossing, Patna</span>
+        </div>
+      </div>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="/" class="nav-link" data-en="Home" data-hi="होम">Home</a>
+        <a href="/#services" class="nav-link" data-en="Services" data-hi="सेवाएं">Services</a>
+        <a href="/about" class="nav-link" data-en="About" data-hi="हमारे बारे में">About</a>
+        <a href="/portfolio" class="nav-link" data-en="Portfolio" data-hi="पोर्टफोलियो">Portfolio</a>
+        <a href="/#contact" class="nav-link active" data-en="Contact" data-hi="संपर्क">Contact</a>
+      </nav>
+
+      <div class="nav-direct">
+        <a href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors%2C%20I%20would%20like%20to%20discuss%20an%20interior%20project." class="btn-header-wa" target="_blank" rel="noopener">
+          <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+          </svg>
+          <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Architectural Plate Section -->
+  <main class="plate-section">
+    <header class="plate-header">
+      <div class="plate-meta-lead">
+        <span class="plate-meta-line"></span>
+        <span data-en="Direct architectural communication" data-hi="वास्तुशिल्प सीधा संवाद">Direct architectural communication</span>
+      </div>
+      <h1 class="plate-title">
+        <span data-en="Come" data-hi="यहाँ">Come</span> <br>
+        <span class="emphasis" data-en="see us" data-hi="मिलते हैं">see us</span>
+      </h1>
+      <p class="plate-subhead" data-en="We do not employ sales agents or commissioned intermediaries. When you contact Ashish Interiors, you consult directly with our Patna joinery team and site engineers." data-hi="हम किसी कमीशन एजेंट या बिचौलिए को नहीं रखते। जब आप आशीष इंटीरियर्स से संपर्क करते हैं, तो आप सीधे हमारे बढ़ईगीरी विशेषज्ञों और इंजीनियरों से बात करते हैं।">
+        We do not employ sales agents or commissioned intermediaries. When you contact Ashish Interiors, you consult directly with our Patna joinery team and site engineers.
+      </p>
+    </header>
+
+    <!-- The 6-Cell Minimalist Matrix -->
+    <div class="arch-matrix">
+
+      <!-- Cell 1: Studio Location -->
+      <div class="matrix-cell">
+        <div>
+          <div class="matrix-label" data-en="Studio" data-hi="स्टूडियो">Studio</div>
+          <div class="matrix-content">
+            2nd Floor, Boring Road Crossing,<br>
+            Patna, Bihar 800001
+          </div>
+        </div>
+        <div class="matrix-detail" data-en="Above commercial arcade. Elevator access available. Dedicated client parking adjacent to junction." data-hi="कमर्शियल आर्केड, दूसरी मंजिल। लिफ्ट सुविधा और पार्किंग उपलब्ध।">
+          Above commercial arcade. Elevator access available. Dedicated client parking adjacent to junction.
+        </div>
+      </div>
+
+      <!-- Cell 2: Consultation Hours -->
+      <div class="matrix-cell">
+        <div>
+          <div class="matrix-label" data-en="Hours" data-hi="समय">Hours</div>
+          <div class="matrix-content">
+            Mon–Sat, 10:00 – 19:00<br>
+            <span style="color: var(--accent); font-size: 15px;" data-en="Sunday by appointment" data-hi="रविवार केवल अपॉइंटमेंट से">Sunday by appointment</span>
+          </div>
+        </div>
+        <div class="matrix-detail" data-en="Material samples library and joinery workshop open during studio hours." data-hi="सामग्री का नमूना कक्ष एवं कार्यशाला कार्य समय में खुली रहती है।">
+          Material samples library and joinery workshop open during studio hours.
+        </div>
+      </div>
+
+      <!-- Cell 3: Voice Phone Line -->
+      <div class="matrix-cell">
+        <div>
+          <div class="matrix-label" data-en="Phone" data-hi="फोन">Phone</div>
+          <a href="tel:5550123" class="matrix-content large-num" style="color: var(--ink); display: inline-block;">
+            (555) 0123
+          </a>
+        </div>
+        <div class="matrix-detail" data-en="Direct landline to Patna studio reception desk and survey scheduling." data-hi="पटना स्टूडियो स्वागत कक्ष और सर्वेक्षण बुकिंग हेतु सीधी लाइन।">
+          Direct landline to Patna studio reception desk and survey scheduling.
+        </div>
+      </div>
+
+      <!-- Cell 4: Primary WhatsApp Conduit -->
+      <div class="matrix-cell cell-highlight">
+        <div>
+          <div class="matrix-label" data-en="WhatsApp" data-hi="व्हाट्सएप">WhatsApp</div>
+          <a href="https://wa.me/919876543210" class="matrix-content large-num" style="color: var(--wa-evergreen); display: inline-block;">
+            (555) 0123
+          </a>
+        </div>
+        <div class="matrix-detail" data-en="Fastest response channel. Send floor plans, site photos, or budget notes. Response within 20 minutes." data-hi="सर्वाधिक तीव्र माध्यम। नक्शे, फोटो या बजट नोट भेजें। 20 मिनट में उत्तर।">
+          Fastest response channel. Send floor plans, site photos, or budget notes. Response within 20 minutes.
+        </div>
+      </div>
+
+      <!-- Cell 5: Joinery Plywood Standard -->
+      <div class="matrix-cell">
+        <div>
+          <div class="matrix-label" data-en="Carpentry standard" data-hi="बढ़ईगीरी मानक">Carpentry standard</div>
+          <div class="matrix-content">
+            100% BWR Marine Plywood<br>
+            <span style="font-size: 14px; color: var(--muted);" data-en="IS 710 specification joinery" data-hi="IS 710 प्रमाणित प्लाईवुड">IS 710 specification joinery</span>
+          </div>
+        </div>
+        <div class="matrix-detail" data-en="Patna joinery active since 2013. Zero hollow cores, zero subcontracting." data-hi="2013 से पटना में सक्रिय कार्यशाला। कोई सब-कॉन्ट्रैक्टिंग नहीं।">
+          Patna joinery active since 2013. Zero hollow cores, zero subcontracting.
+        </div>
+      </div>
+
+      <!-- Cell 6: Survey & Estimate Dispatch -->
+      <div class="matrix-cell cell-cta">
+        <div>
+          <div class="matrix-label" data-en="Measurement dispatch" data-hi="माप प्रेषण">Measurement dispatch</div>
+          <div class="matrix-content" data-en="Leica laser site audit" data-hi="लाइका लेजर साइट जांच">
+            Leica laser site audit
+          </div>
+        </div>
+        <div class="matrix-detail" data-en="Covering Boring Road, Patliputra, Bailey Road, Kankarbagh, and Danapur." data-hi="बोरिंग रोड, पाटलिपुत्र, बेली रोड, कंकड़बाग एवं दानापुर में उपलब्ध।">
+          Covering Boring Road, Patliputra, Bailey Road, Kankarbagh, and Danapur.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Interactive Topic Filter -->
+    <div class="selector-block">
+      <div class="selector-title" data-en="Select your inquiry focus before messaging:" data-hi="संदेश भेजने से पहले अपना विषय चुनें:">Select your inquiry focus before messaging:</div>
+      <div class="topic-chips">
+        <button type="button" class="topic-chip active" onclick="selectTopic(this, 'Complete Residential Joinery')" data-en="Complete residential joinery" data-hi="संपूर्ण आवासीय बढ़ईगीरी">Complete residential joinery</button>
+        <button type="button" class="topic-chip" onclick="selectTopic(this, 'Modular Kitchen Overhaul')" data-en="Modular kitchen overhaul" data-hi="मॉड्यूलर किचन नवीनीकरण">Modular kitchen overhaul</button>
+        <button type="button" class="topic-chip" onclick="selectTopic(this, 'Site Laser Survey Booking')" data-en="Site laser survey booking" data-hi="साइट लेजर सर्वेक्षण बुकिंग">Site laser survey booking</button>
+        <button type="button" class="topic-chip" onclick="selectTopic(this, 'Patna Studio Visit')" data-en="Patna studio visit" data-hi="पटना स्टूडियो विज़िट">Patna studio visit</button>
+      </div>
+    </div>
+
+    <!-- High Contrast Action Strip -->
+    <div class="action-strip">
+      <div class="action-text-block">
+        <h2 class="action-title" data-en="Ready to discuss your Patna property?" data-hi="क्या आप अपने पटना स्थित घर पर चर्चा करने के लिए तैयार हैं?">Ready to discuss your Patna property?</h2>
+        <p class="action-desc" data-en="Send your blueprint or message directly to our Boring Road Crossing workshop desk. We examine carpet area and provide transparent itemized pricing." data-hi="अपना नक्शा या संदेश सीधे हमारे बोरिंग रोड वर्कशॉप डेस्क पर भेजें। हम पारदर्शी और मदवार मूल्य निर्धारण प्रदान करते हैं।">
+          Send your blueprint or message directly to our Boring Road Crossing workshop desk. We examine carpet area and provide transparent itemized pricing.
+        </p>
+      </div>
+      <div class="action-btns">
+        <button type="button" class="btn-wa-stark" onclick="triggerWhatsAppChat()">
+          <svg viewBox="0 0 448 512" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+          </svg>
+          <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
+        </button>
+
+        <button type="button" class="btn-estimate-stark" onclick="triggerEstimateChat()">
+          <span data-en="Calculate estimate" data-hi="अनुमान लें">Calculate estimate</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4 data-en="Ashish Interiors" data-hi="आशीष इंटीरियर्स">Ashish Interiors</h4>
+        <p data-en="Established 2013 at Boring Road Crossing, Patna. Custom cabinetry, architectural carpentry, and turnkey residential interiors." data-hi="2013 से बोरिंग रोड चौराहा, पटना में स्थापित। कस्टम कैबिनेटरी और आवासीय इंटीरियर कार्य।">
+          Established 2013 at Boring Road Crossing, Patna. Custom cabinetry, architectural carpentry, and turnkey residential interiors.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Direct studio access" data-hi="सीधा स्टूडियो संपर्क">Direct studio access</h4>
+        <p>
+          2nd Floor, Boring Road Crossing, Patna 800001<br>
+          Phone: (555) 0123<br>
+          Mon–Sat: 10:00 – 19:00
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Quality mandate" data-hi="गुणवत्ता प्रतिज्ञा">Quality mandate</h4>
+        <p data-en="Exclusively BWR marine-grade plywood joinery with anti-termite and boiling waterproof certification." data-hi="दीमक-रोधी और वाटरप्रूफ प्रमाणन के साथ विशेष रूप से बीडब्ल्यूआर मरीन-ग्रेड प्लाईवुड।">
+          Exclusively BWR marine-grade plywood joinery with anti-termite and boiling waterproof certification.
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ashish Interiors. All rights reserved.</span>
+      <span data-en="Concept 13: The Minimalist Architectural Card" data-hi="कॉन्सेप्ट 13: मिनिमलिस्ट आर्किटेक्चरल कार्ड">Concept 13: The Minimalist Architectural Card</span>
+    </div>
+  </footer>
+
+  <script>
+    let activeTopic = 'Complete Residential Joinery';
+
+    function selectTopic(btn, topic) {
+      document.querySelectorAll('.topic-chips .topic-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      activeTopic = topic;
+    }
+
+    function triggerWhatsAppChat() {
+      const currentLang = document.documentElement.lang || 'en';
+      let text = "";
+      if (currentLang === 'hi') {
+        text = `नमस्ते आशीष इंटीरियर्स, मैं ${activeTopic} के संबंध में संपर्क कर रहा हूँ। कृपया विस्तार से बताएं।`;
+      } else {
+        text = `Hello Ashish Interiors, I am contacting you regarding: ${activeTopic}. I would like to discuss my project.`;
+      }
+      const encoded = encodeURIComponent(text);
+      window.open(`https://wa.me/919876543210?text=${encoded}`, '_blank');
+    }
+
+    function triggerEstimateChat() {
+      const currentLang = document.documentElement.lang || 'en';
+      let text = "";
+      if (currentLang === 'hi') {
+        text = `नमस्ते आशीष इंटीरियर्स, मुझे अपने पटना स्थित घर के लिए ${activeTopic} हेतु प्रारंभिक अनुमान एवं कोटेशन चाहिए।`;
+      } else {
+        text = `Hello Ashish Interiors, I would like to calculate an estimate for ${activeTopic} for my home in Patna.`;
+      }
+      const encoded = encodeURIComponent(text);
+      window.open(`https://wa.me/919876543210?text=${encoded}`, '_blank');
+    }
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      localStorage.setItem('ashish_lang', lang);
+
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang-target') === lang);
+      });
+
+      if (lang === 'hi') {
+        document.body.classList.add('lang-hindi');
+      } else {
+        document.body.classList.remove('lang-hindi');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('ashish_lang') || 'en';
+      setLanguage(saved);
+    });
+  </script>
+</body>
+</html>

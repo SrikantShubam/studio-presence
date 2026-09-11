@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Contact Us — Concept 16: The Architectural Studio Pass | Ashish Interiors Patna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #141414;
+      --accent: #51372A;
+      --cta: #D9BC72;
+      --surface: #FFFFFF;
+      --body: #4A4A4A;
+      --muted: #8B8377;
+      --hairline: #DCD7CE;
+      --panel: #FAF8F5;
+      --wa-evergreen: #285A43;
+      --wa-hover: #1E4A36;
+      --font-display: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-hi-display: 'Tiro Devanagari Hindi', Georgia, serif;
+      --font-hi-body: 'Poppins', -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      scroll-behavior: smooth;
+      background: var(--surface);
+    }
+
+    body {
+      background: var(--surface);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    body.lang-hindi {
+      font-family: var(--font-hi-body);
+    }
+
+    body.lang-hindi h1, 
+    body.lang-hindi h2, 
+    body.lang-hindi h3, 
+    body.lang-hindi h4, 
+    body.lang-hindi .display-title {
+      font-family: var(--font-hi-display);
+    }
+
+    h1, h2, h3, h4, .display-title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Sticky Prototype Switcher Bar */
+    .proto-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #141414;
+      color: #FAF8F5;
+      border-bottom: 1px solid #333333;
+      padding: 8px clamp(12px, 3vw, 32px);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11.5px;
+    }
+
+    .proto-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .proto-brand {
+      font-weight: 600;
+      color: var(--cta);
+      font-family: var(--font-display);
+    }
+
+    .proto-sep {
+      color: #666666;
+    }
+
+    .proto-title {
+      color: #DCD7CE;
+    }
+
+    .proto-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      border: 1px solid #444444;
+      background: #1E1E1E;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: #AAAAAA;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 28px;
+      transition: all 0.15s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--cta);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .proto-pills-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      max-width: 580px;
+      padding-bottom: 2px;
+      scrollbar-width: thin;
+    }
+
+    .proto-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 5px;
+      border: 1px solid #333333;
+      background: #1A1A1A;
+      color: #8B8377;
+      font-size: 11px;
+      font-family: var(--font-display);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .proto-pill:hover {
+      border-color: var(--cta);
+      color: #FFFFFF;
+    }
+
+    .proto-pill.active {
+      background: var(--cta);
+      border-color: var(--cta);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* Site Header */
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px clamp(16px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .brand-sub {
+      font-size: 11.5px;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      color: var(--body);
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover, .nav-link.current {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .nav-direct-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--wa-evergreen);
+      color: #FFFFFF;
+      padding: 10px 18px;
+      font-size: 13.5px;
+      font-weight: 500;
+      min-height: 44px;
+      transition: background 0.15s ease;
+    }
+
+    .nav-direct-wa:hover {
+      background: var(--wa-hover);
+    }
+
+    /* Main Container */
+    .main-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(32px, 5vw, 64px) clamp(16px, 4vw, 48px);
+    }
+
+    /* Intro Block */
+    .intro-block {
+      margin-bottom: clamp(32px, 4vw, 48px);
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 24px;
+    }
+
+    .concept-tag {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .page-title {
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.05;
+      margin-bottom: 12px;
+      letter-spacing: -0.03em;
+    }
+
+    .page-subtitle {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: var(--body);
+      max-width: 820px;
+    }
+
+    /* The Architectural Pass Container */
+    .studio-pass-container {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      display: grid;
+      grid-template-columns: 1.75fr 1.25fr;
+      margin-bottom: 48px;
+    }
+
+    /* Left Side: Physical Pass Body */
+    .pass-body {
+      padding: clamp(24px, 4vw, 44px);
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pass-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 20px;
+      margin-bottom: 28px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .pass-id-block {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .pass-serial {
+      font-family: monospace;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .pass-status-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #EFECE6;
+      border: 1px solid var(--hairline);
+      font-size: 11.5px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .pass-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px clamp(16px, 3vw, 36px);
+      margin-bottom: 32px;
+    }
+
+    .pass-info-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 16px;
+    }
+
+    .info-label {
+      font-size: 11.5px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .info-value {
+      font-size: 16px;
+      color: var(--ink);
+      font-weight: 400;
+      line-height: 1.45;
+    }
+
+    .info-meta {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .spec-matrix {
+      background: var(--panel);
+      border: 1px solid var(--hairline);
+      padding: 20px;
+      margin-top: 12px;
+    }
+
+    .spec-matrix-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .spec-matrix-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 20px;
+      font-size: 13px;
+      color: var(--body);
+    }
+
+    .spec-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .spec-bullet {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Tear-off divider */
+    .tear-divider {
+      position: relative;
+      border-left: 2px dashed #8B8377;
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tear-slip {
+      padding: clamp(24px, 3vw, 36px);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: #FAF8F5;
+    }
+
+    .slip-header {
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .slip-badge {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .slip-title {
+      font-size: 22px;
+      color: var(--ink);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .slip-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      flex-grow: 1;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .form-select, .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      min-height: 44px;
+    }
+
+    .form-select:focus, .form-input:focus {
+      border-color: var(--accent);
+    }
+
+    .scope-chips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .chip-btn {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      padding: 10px 8px;
+      font-size: 12px;
+      color: var(--body);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chip-btn.active {
+      background: var(--accent);
+      color: #FFFFFF;
+      border-color: var(--accent);
+      font-weight: 500;
+    }
+
+    .slip-preview-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      padding: 14px;
+      font-size: 12px;
+      color: var(--body);
+      line-height: 1.5;
+      font-family: monospace;
+    }
+
+    .slip-preview-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .cta-wa-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--wa-evergreen);
+      color: #FFFFFF;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      min-height: 48px;
+      transition: background 0.15s ease;
+      width: 100%;
+      text-align: center;
+    }
+
+    .cta-wa-primary:hover {
+      background: var(--wa-hover);
+    }
+
+    .cta-estimate-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--cta);
+      color: var(--ink);
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      min-height: 44px;
+      transition: background 0.15s ease;
+      width: 100%;
+    }
+
+    .cta-estimate-secondary:hover {
+      background: #CBB067;
+    }
+
+    /* Studio Locator & Landmarks */
+    .locator-section {
+      margin-top: 56px;
+      border-top: 1px solid var(--hairline);
+      padding-top: 40px;
+    }
+
+    .locator-title {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: var(--ink);
+    }
+
+    .locator-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .landmark-card {
+      background: var(--panel);
+      border: 1px solid var(--hairline);
+      padding: 24px;
+    }
+
+    .landmark-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .landmark-desc {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.55;
+    }
+
+    /* Editorial Footer */
+    .site-footer {
+      background: #141414;
+      color: #E8E3DC;
+      padding: 48px clamp(16px, 4vw, 48px) 32px;
+      margin-top: 80px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 36px;
+      margin-bottom: 36px;
+    }
+
+    .footer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #9C9488;
+      max-width: 380px;
+      line-height: 1.6;
+    }
+
+    .footer-col-title {
+      font-size: 13px;
+      color: var(--cta);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .footer-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+      color: #CCC6BD;
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: #8B8377;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .studio-pass-container {
+        grid-template-columns: 1fr;
+      }
+      .tear-divider {
+        border-left: none;
+        border-top: 2px dashed #8B8377;
+      }
+      .locator-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .pass-grid {
+        grid-template-columns: 1fr;
+      }
+      .spec-matrix-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Prototype Switcher Bar -->
+  <aside class="proto-bar" aria-label="Prototype switcher">
+    <div class="proto-meta">
+      <span class="proto-brand">Ashish Interiors</span>
+      <span class="proto-sep">/</span>
+      <span class="proto-title" data-en="Contact — Concept 16: The Architectural Studio Pass" data-hi="संपर्क — संस्करण 16: आर्किटेक्चरल स्टूडियो पास">Contact — Concept 16: The Architectural Studio Pass</span>
+    </div>
+    <div class="proto-actions">
+      <div class="lang-switcher" role="group" aria-label="Language selection">
+        <button type="button" class="lang-btn active" data-lang-target="en" onclick="setLanguage('en')">English</button>
+        <button type="button" class="lang-btn" data-lang-target="hi" onclick="setLanguage('hi')">हिन्दी</button>
+      </div>
+      <nav class="proto-pills-wrap" aria-label="Contact iteration pages">
+        <a href="contact-iteration-1.html" class="proto-pill">01</a>
+        <a href="contact-iteration-2.html" class="proto-pill">02</a>
+        <a href="contact-iteration-3.html" class="proto-pill">03</a>
+        <a href="contact-iteration-4.html" class="proto-pill">04</a>
+        <a href="contact-iteration-5.html" class="proto-pill">05</a>
+        <a href="contact-iteration-6.html" class="proto-pill">06</a>
+        <a href="contact-iteration-7.html" class="proto-pill">07</a>
+        <a href="contact-iteration-8.html" class="proto-pill">08</a>
+        <a href="contact-iteration-9.html" class="proto-pill">09</a>
+        <a href="contact-iteration-10.html" class="proto-pill">10</a>
+        <a href="contact-iteration-11.html" class="proto-pill">11</a>
+        <a href="contact-iteration-12.html" class="proto-pill">12</a>
+        <a href="contact-iteration-13.html" class="proto-pill">13</a>
+        <a href="contact-iteration-14.html" class="proto-pill">14</a>
+        <a href="contact-iteration-15.html" class="proto-pill">15</a>
+        <a href="contact-iteration-16.html" class="proto-pill active" aria-current="page">16</a>
+        <a href="contact-iteration-17.html" class="proto-pill">17</a>
+        <a href="contact-iteration-18.html" class="proto-pill">18</a>
+        <a href="contact-iteration-19.html" class="proto-pill">19</a>
+        <a href="contact-iteration-20.html" class="proto-pill">20</a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-group">
+        <a href="contact-iteration-16.html" class="brand-title">Ashish Interiors</a>
+        <span class="brand-sub" data-en="Boring Road Crossing, Patna — Established 2013" data-hi="बोरिंग रोड क्रॉसिंग, पटना — 2013 से स्थापित">Boring Road Crossing, Patna — Established 2013</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#studio" class="nav-link" data-en="Studio" data-hi="स्टूडियो">Studio</a></li>
+        <li><a href="#services" class="nav-link" data-en="Joinery" data-hi="जॉइनरी">Joinery</a></li>
+        <li><a href="#landmarks" class="nav-link" data-en="Location" data-hi="स्थान">Location</a></li>
+        <li><a href="contact-iteration-16.html" class="nav-link current" data-en="Contact" data-hi="संपर्क">Contact</a></li>
+      </ul>
+      <a id="navWaLink" href="https://wa.me/919431000123?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20consult%20on%20my%20interior%20project%20in%20Patna." class="nav-direct-wa" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 448 512" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+        <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-wrap">
+    
+    <div class="intro-block">
+      <span class="concept-tag" data-en="Studio consultation onboarding card" data-hi="स्टूडियो परामर्श ऑनबोर्डिंग कार्ड">Studio consultation onboarding card</span>
+      <h1 class="page-title" data-en="Come see us" data-hi="यहाँ मिलते हैं">Come see us</h1>
+      <p class="page-subtitle" data-en="Bring your floor plans to our Patna studio or send a tear-off WhatsApp inquiry slip directly to our principal designer desk." data-hi="अपने फ्लैट का नक्शा हमारे बोरिंग रोड स्टूडियो लेकर आएं, या सीधे हमारे मुख्य डिजाइनर को व्हाट्सएप पर्ची भेजें।">Bring your floor plans to our Patna studio or send a tear-off WhatsApp inquiry slip directly to our principal designer desk.</p>
+    </div>
+
+    <!-- The Architectural Studio Pass Card -->
+    <section class="studio-pass-container" aria-label="Studio Onboarding Pass">
+      
+      <!-- Left side: Physical Studio Pass -->
+      <article class="pass-body" id="studio">
+        <div>
+          <div class="pass-topbar">
+            <div class="pass-id-block">
+              <span class="pass-serial">Pass PAT-2013/8841</span>
+              <span class="info-meta" data-en="Ashish Interiors studio entry pass" data-hi="आशीष इंटीरियर्स स्टूडियो प्रवेश पत्र">Ashish Interiors studio entry pass</span>
+            </div>
+            <span class="pass-status-pill" data-en="Open for physical intake" data-hi="स्टूडियो परामर्श खुला है">Open for physical intake</span>
+          </div>
+
+          <div class="pass-grid">
+            <div class="pass-info-cell">
+              <span class="info-label" data-en="Studio" data-hi="स्टूडियो">Studio</span>
+              <span class="info-value">2nd Floor, Boring Road Crossing</span>
+              <span class="info-meta" data-en="Patna, Bihar 800001 (Above Raymond Showroom)" data-hi="पटना, बिहार 800001 (रेमंड शोरूम के ऊपर)">Patna, Bihar 800001 (Above Raymond Showroom)</span>
+            </div>
+
+            <div class="pass-info-cell">
+              <span class="info-label" data-en="Hours" data-hi="समय">Hours</span>
+              <span class="info-value" data-en="Mon–Sat, 10:00 – 19:00" data-hi="सोम–शनि, 10:00 – 19:00">Mon–Sat, 10:00 – 19:00</span>
+              <span class="info-meta" data-en="Sunday by prior appointment" data-hi="रविवार केवल पूर्व अनुमति से">Sunday by prior appointment</span>
+            </div>
+
+            <div class="pass-info-cell">
+              <span class="info-label" data-en="Phone" data-hi="फोन">Phone</span>
+              <span class="info-value">(555) 0123</span>
+              <span class="info-meta" data-en="Direct studio desk reception" data-hi="सीधा स्टूडियो रिसेप्शन">Direct studio desk reception</span>
+            </div>
+
+            <div class="pass-info-cell">
+              <span class="info-label" data-en="WhatsApp" data-hi="व्हाट्सएप">WhatsApp</span>
+              <span class="info-value">(555) 0123</span>
+              <span class="info-meta" data-en="Instant response from design team" data-hi="डिजाइन टीम द्वारा त्वरित जवाब">Instant response from design team</span>
+            </div>
+          </div>
+
+          <!-- Studio joinery matrix -->
+          <div class="spec-matrix" id="services">
+            <h2 class="spec-matrix-title" data-en="Studio specifications & material inspection" data-hi="स्टूडियो सामग्री एवं जॉइनरी विशेषताएं">Studio specifications & material inspection</h2>
+            <ul class="spec-matrix-list">
+              <li class="spec-item">
+                <span class="spec-bullet">—</span>
+                <span data-en="100% in-house carpentry workshop" data-hi="100% इन-हाउस बढ़ईगीरी वर्कशॉप">100% in-house carpentry workshop</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-bullet">—</span>
+                <span data-en="BWR marine-grade plywood joinery" data-hi="बीडब्ल्यूआर मरीन-ग्रेड प्लाईवुड जॉइनरी">BWR marine-grade plywood joinery</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-bullet">—</span>
+                <span data-en="Live laminate & acrylic finish panels" data-hi="लाइव लैमिनेट एवं ऐक्रेलिक फिनिश पैनल">Live laminate & acrylic finish panels</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-bullet">—</span>
+                <span data-en="Free initial site measurement in Patna" data-hi="पटना में निःशुल्क प्रारंभिक साइट माप">Free initial site measurement in Patna</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <span style="font-size: 12px; color: var(--muted);" data-en="Principal designer on site: Ashish Kumar" data-hi="मुख्य डिजाइनर: आशीष कुमार">Principal designer on site: Ashish Kumar</span>
+          <span style="font-size: 12px; color: var(--accent); font-weight: 500;" data-en="Established 2013 in Patna" data-hi="2013 से पटना में स्थापित">Established 2013 in Patna</span>
+        </div>
+      </article>
+
+      <!-- Right side: Tear-off WhatsApp Inquiry Slip -->
+      <aside class="tear-divider" aria-label="Tear-off slip">
+        <div class="tear-slip">
+          <div class="slip-header">
+            <span class="slip-badge" data-en="Tear-off consultation slip" data-hi="कट-ऑफ पूछताछ पर्ची">Tear-off consultation slip</span>
+            <h2 class="slip-title" data-en="WhatsApp inquiry slip" data-hi="व्हाट्सएप पूछताछ पर्ची">WhatsApp inquiry slip</h2>
+          </div>
+
+          <form class="slip-form" onsubmit="event.preventDefault();">
+            <div class="form-group">
+              <label class="form-label" data-en="Select project requirement" data-hi="प्रोजेक्ट की आवश्यकता चुनें">Select project requirement</label>
+              <div class="scope-chips" id="scopeChips">
+                <button type="button" class="chip-btn active" onclick="selectScope(this, '3 BHK Full Interiors', '3 बीएचके संपूर्ण इंटीरियर')">3 BHK Full Home</button>
+                <button type="button" class="chip-btn" onclick="selectScope(this, 'Modular Kitchen', 'मॉड्यूलर किचन')">Modular Kitchen</button>
+                <button type="button" class="chip-btn" onclick="selectScope(this, 'Wardrobe Joinery', 'वार्डरोब जॉइनरी')">Wardrobes</button>
+                <button type="button" class="chip-btn" onclick="selectScope(this, 'Turnkey Renovation', 'टर्नकी रेनोवेशन')">Renovation</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="localitySelect" data-en="Site locality in Patna" data-hi="पटना में साइट का क्षेत्र">Site locality in Patna</label>
+              <select class="form-select" id="localitySelect" onchange="updatePreview()">
+                <option value="Boring Road / Boring Canal Road">Boring Road / Canal Road</option>
+                <option value="Patliputra Colony">Patliputra Colony</option>
+                <option value="Kankarbagh">Kankarbagh</option>
+                <option value="Danapur / Saguna More">Danapur / Saguna More</option>
+                <option value="Bailey Road / Jagdeo Path">Bailey Road / Jagdeo Path</option>
+                <option value="Rajendra Nagar">Rajendra Nagar</option>
+                <option value="Other Patna Location">Other Patna Location</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <span class="slip-preview-label" data-en="Message dispatched to studio desk:" data-hi="स्टूडियो डेस्क पर भेजा जाने वाला संदेश:">Message dispatched to studio desk:</span>
+              <div class="slip-preview-card" id="slipPreviewText">
+                Hello Ashish Interiors, I am holding Studio Pass PAT-2013/8841. I would like to book a studio consultation for 3 BHK Full Interiors in Boring Road, Patna.
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: auto;">
+              <a id="submitSlipBtn" href="#" target="_blank" rel="noopener noreferrer" class="cta-wa-primary">
+                <svg viewBox="0 0 448 512" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
+              </a>
+
+              <a href="https://wa.me/919431000123?text=Hello%20Ashish%20Interiors,%20please%20calculate%20an%20interior%20estimate%20for%20my%20flat%20in%20Patna." target="_blank" rel="noopener noreferrer" class="cta-estimate-secondary">
+                <span data-en="Calculate estimate" data-hi="अनुमान लें">Calculate estimate</span>
+              </a>
+            </div>
+          </form>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Transit Directions & Physical Studio Access -->
+    <section class="locator-section" id="landmarks">
+      <h2 class="locator-title" data-en="Arriving at Boring Road Crossing" data-hi="बोरिंग रोड क्रॉसिंग कैसे पहुंचें">Arriving at Boring Road Crossing</h2>
+      <div class="locator-grid">
+        <div class="landmark-card">
+          <h3 class="landmark-title" data-en="Landmark marker" data-hi="पहचान स्थल">Landmark marker</h3>
+          <p class="landmark-desc" data-en="Located on the 2nd Floor above the Raymond Showroom, directly opposite Alankar Jewellers at the main Boring Road Crossing." data-hi="बोरिंग रोड क्रॉसिंग पर रेमंड शोरूम के ऊपर द्वितीय तल पर स्थित, अलंकार ज्वेलर्स के ठीक सामने।">Located on the 2nd Floor above the Raymond Showroom, directly opposite Alankar Jewellers at the main Boring Road Crossing.</p>
+        </div>
+
+        <div class="landmark-card">
+          <h3 class="landmark-title" data-en="Dedicated client parking" data-hi="सुरक्षित वाहन पार्किंग">Dedicated client parking</h3>
+          <p class="landmark-desc" data-en="Basement vehicle parking is reserved for clients visiting for design consultations. Street-level guard will assist with parking slot." data-hi="परामर्श के लिए आने वाले ग्राहकों के लिए बेसमेंट में पार्किंग आरक्षित है। गार्ड आपके वाहन को पार्क कराने में सहायता करेंगे।">Basement vehicle parking is reserved for clients visiting for design consultations. Street-level guard will assist with parking slot.</p>
+        </div>
+
+        <div class="landmark-card">
+          <h3 class="landmark-title" data-en="Patna transit time" data-hi="पटना शहर से दूरी">Patna transit time</h3>
+          <p class="landmark-desc" data-en="15 minutes from Patna Junction via Bailey Road; 20 minutes from Patna Airport (Jayprakash Narayan Airport); 5 minutes from Patliputra Colony." data-hi="पटना जंक्शन से बेली रोड होकर 15 मिनट; पटना एयरपोर्ट से 20 मिनट; पाटलिपुत्र कॉलोनी से 5 मिनट की दूरी।">15 minutes from Patna Junction via Bailey Road; 20 minutes from Patna Airport (Jayprakash Narayan Airport); 5 minutes from Patliputra Colony.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Editorial Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Ashish Interiors</div>
+        <p class="footer-text" data-en="Complete interior design, in-house joinery workshop, and turnkey site execution in Patna since 2013. BWR marine plywood construction with zero subcontracting." data-hi="2013 से पटना में संपूर्ण इंटीरियर डिजाइन, इन-हाउस बढ़ईगीरी और टर्नकी निष्पादन। बीडब्ल्यूआर मरीन प्लाईवुड निर्माण।">Complete interior design, in-house joinery workshop, and turnkey site execution in Patna since 2013. BWR marine plywood construction with zero subcontracting.</p>
+      </div>
+      <div>
+        <div class="footer-col-title" data-en="Studio address" data-hi="स्टूडियो पता">Studio address</div>
+        <ul class="footer-list">
+          <li>2nd Floor, Boring Road Crossing</li>
+          <li>Patna, Bihar 800001</li>
+          <li>Mon–Sat: 10:00 – 19:00</li>
+          <li>Sunday by appointment</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-en="Direct lines" data-hi="सीधे संपर्क">Direct lines</div>
+        <ul class="footer-list">
+          <li>Phone: (555) 0123</li>
+          <li>WhatsApp: (555) 0123</li>
+          <li>workshop@ashishinteriors.com</li>
+          <li>Boring Canal Road workshop</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-en="Ashish Interiors Patna © 2013–2026. All rights reserved." data-hi="आशीष इंटीरियर्स पटना © 2013–2026. सर्वाधिकार सुरक्षित।">Ashish Interiors Patna © 2013–2026. All rights reserved.</span>
+      <span data-en="Square corners | In-house joinery | Patna" data-hi="वर्गाकार कोने | इन-हाउस जॉइनरी | पटना">Square corners | In-house joinery | Patna</span>
+    </div>
+  </footer>
+
+  <script>
+    let currentScopeEn = '3 BHK Full Interiors';
+    let currentScopeHi = '3 बीएचके संपूर्ण इंटीरियर';
+    let currentLang = 'en';
+
+    function selectScope(btn, scopeEn, scopeHi) {
+      document.querySelectorAll('#scopeChips .chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentScopeEn = scopeEn;
+      currentScopeHi = scopeHi;
+      updatePreview();
+    }
+
+    function updatePreview() {
+      const loc = document.getElementById('localitySelect').value;
+      const previewEl = document.getElementById('slipPreviewText');
+      const submitBtn = document.getElementById('submitSlipBtn');
+
+      let message = '';
+      if (currentLang === 'hi') {
+        message = `नमस्ते आशीष इंटीरियर्स, मेरे पास स्टूडियो पास PAT-2013/8841 है। मैं पटना के ${loc} में ${currentScopeHi} के लिए स्टूडियो परामर्श बुक करना चाहता/चाहती हूँ।`;
+      } else {
+        message = `Hello Ashish Interiors, I am holding Studio Pass PAT-2013/8841. I would like to book a studio consultation for ${currentScopeEn} in ${loc}, Patna.`;
+      }
+
+      previewEl.textContent = message;
+      submitBtn.href = `https://wa.me/919431000123?text=${encodeURIComponent(message)}`;
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      localStorage.setItem('ashish_lang', lang);
+
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang-target') === lang);
+      });
+
+      if (lang === 'hi') {
+        document.body.classList.add('lang-hindi');
+      } else {
+        document.body.classList.remove('lang-hindi');
+      }
+
+      const navWa = document.getElementById('navWaLink');
+      if (navWa) {
+        const text = lang === 'hi' 
+          ? 'नमस्ते आशीष इंटीरियर्स, मैं पटना में अपने इंटीरियर प्रोजेक्ट पर परामर्श करना चाहता/चाहती हूँ।' 
+          : 'Hello Ashish Interiors, I would like to consult on my interior project in Patna.';
+        navWa.href = `https://wa.me/919431000123?text=${encodeURIComponent(text)}`;
+      }
+
+      updatePreview();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('ashish_lang') || 'en';
+      setLanguage(saved);
+      updatePreview();
+    });
+  </script>
+</body>
+</html>

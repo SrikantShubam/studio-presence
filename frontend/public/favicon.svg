@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <style>
+      .divider-line { stroke: #141414; }
+      .divider-accent { fill: #d9bc72; stroke: #d9bc72; }
+      @media (prefers-color-scheme: dark) {
+        .divider-line { stroke: #f5f2eb; }
+        .divider-accent { fill: #d9bc72; stroke: #d9bc72; }
+      }
+    </style>
+  </defs>
+  <!-- Enlarged Caliper Top Pivot Ring -->
+  <circle cx="32" cy="11" r="7" fill="none" class="divider-line" stroke-width="3.5"/>
+  <circle cx="32" cy="11" r="3" class="divider-accent"/>
+  <!-- Bold Left & Right Tapered Legs forming Chevron 'A' -->
+  <path d="M29 16 L10 58" class="divider-line" stroke-width="5.5" stroke-linecap="square"/>
+  <path d="M35 16 L54 58" class="divider-line" stroke-width="5.5" stroke-linecap="square"/>
+  <!-- Threaded Spindle Bar (Crossbar) -->
+  <line x1="16" y1="38" x2="48" y2="38" stroke="#d9bc72" stroke-width="3.5"/>
+  <!-- Knurled Adjustment Thumbnut -->
+  <rect x="27.5" y="33.5" width="9" height="9" fill="#d9bc72"/>
+  <line x1="32" y1="33.5" x2="32" y2="42.5" class="divider-line" stroke-width="1.2"/>
+</svg>
