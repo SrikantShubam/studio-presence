@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   try {
     const site = await loadPublicClientConfigForLocale(tenant)
-    if (!site || !site.sections.contact?.enabled) return notFoundMeta()
+    if (!site || site.sections.contact?.enabled === false) return notFoundMeta()
     const title = `Contact ${site.business.name}`
     const description = `Start an interiors conversation with ${site.business.name} in ${site.business.address.city}.`
     const meta = pageMeta(site, title, description)
@@ -43,7 +43,7 @@ export default async function ContactRoute({ params }: Props) {
   } catch {
     notFound()
   }
-  if (!site || !site.sections.contact?.enabled) notFound()
+  if (!site || site.sections.contact?.enabled === false) notFound()
 
   return <ContactPage site={site} />
 }

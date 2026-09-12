@@ -60,23 +60,50 @@ function primaryDevTenant(): TenantEntry | undefined {
   return sub ? TENANT_MAP.bySubdomain[sub] : undefined
 }
 
-function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
-  const hostname = host.split(':')[0]?.toLowerCase() ?? ''
+function parseHostname(host: string): string {
+  const trimmed = host.trim().toLowerCase()
+  if (trimmed.startsWith('[')) {
+    const closeIdx = trimmed.indexOf(']')
+    if (closeIdx !== -1) return trimmed.slice(1, closeIdx)
+  }
+  return trimmed.split(':')[0] ?? ''
+}
 
-  // Local development: ashish.localhost:3000
-  if (hostname.endsWith('.localhost') || hostname === 'localhost' || hostname === '127.0.0.1') {
-    const sub = hostname.replace(/\.?localhost$/, '')
+function isDevLoopbackOrLan(hostname: string): boolean {
+  if (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '::1' ||
+    hostname === '[::1]' ||
+    hostname.endsWith('.localhost')
+  ) {
+    return true
+  }
+  // Private IPv4 LAN ranges (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
+  if (
+    /^192\.168\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+    /^10\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+    /^172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}$/.test(hostname)
+  ) {
+    return true
+  }
+  return false
+}
+
+function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
+  const hostname = parseHostname(host)
+
+  // Local development: ashish.localhost:3000, 127.0.0.1, [::1], or local LAN IP
+  if (isDevLoopbackOrLan(hostname)) {
+    const sub = hostname.endsWith('.localhost') ? hostname.slice(0, -'.localhost'.length) : ''
     const entry = sub ? TENANT_MAP.bySubdomain[sub] : undefined
     if (entry) return { entry, viaCustomDomain: false }
 
-    // Bare localhost (no subdomain). Supabase "Confirm your email" uses the
+    // Bare localhost, loopback, or LAN IP (no subdomain). Supabase "Confirm your email" uses the
     // project Site URL, which is almost always http://localhost:3000 — that
     // host is not a tenant, so the click used to die here. In development,
     // treat it as the primary local site so the auth callback can run.
-    if (
-      process.env.NODE_ENV !== 'production' &&
-      (hostname === 'localhost' || hostname === '127.0.0.1')
-    ) {
+    if (process.env.NODE_ENV !== 'production') {
       const primary = primaryDevTenant()
       return primary ? { entry: primary, viaCustomDomain: false } : null
     }
@@ -107,12 +134,11 @@ export function middleware(request: NextRequest) {
   if (PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const host = request.headers.get('host') ?? ''
-  const hostname = host.split(':')[0]?.toLowerCase() ?? ''
+  const hostname = parseHostname(host)
   const isRootHost =
     hostname === ROOT_DOMAIN ||
     hostname === `www.${ROOT_DOMAIN}` ||
-    hostname === 'localhost' ||
-    hostname === '127.0.0.1'
+    (process.env.NODE_ENV !== 'production' && isDevLoopbackOrLan(hostname))
 
   // Platform pages live on the root domain and must never be rewritten to a
   // tenant. Keep this allowlist narrow so an unknown root-domain path still

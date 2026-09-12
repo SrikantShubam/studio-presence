@@ -40,7 +40,7 @@ function footerGroups(site: ClientConfig, locale: PublicLocale): { title: string
     { href: '/', label: labels.home },
     { href: '/about', label: labels.about },
   ]
-  if (site.sections.contact?.enabled) {
+  if (site.sections.contact?.enabled !== false) {
     studio.push({ href: '/contact', label: labels.contact })
   }
   if (site.sections.team?.enabled || site.sections.team?.detailPages) {
