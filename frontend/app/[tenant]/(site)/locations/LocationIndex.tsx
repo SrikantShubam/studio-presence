@@ -7,7 +7,7 @@ import { HeroNav } from '@/sections/Hero/HeroNav'
 import { renderableSections } from '@/sections/registry'
 import { OpenBadge } from './LocationChrome'
 import { chromeCopy, localeHref, localePageClass, publicLocaleFromSite } from '@/lib/i18n-client'
-import { MULTI_CITY_LOCATIONS, MULTI_CITY_LOCATIONS_HI, TERRITORY_DIRECTORY } from '@/lib/locations-data'
+import { HI_TRANSLATIONS, resolveTerritoryDirectory } from '@/lib/locations-data'
 
 type Office = NonNullable<ClientConfig['sections']['locations']>['offices'][number]
 const pagePad = 'px-[clamp(20px,5vw,64px)]'
@@ -61,22 +61,21 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
   const labels = chromeCopy[locale].locations
 
   const configuredOffices = site.sections.locations?.offices ?? []
-  const baseOffices =
-    configuredOffices.length > 1
-      ? configuredOffices
-      : locale === 'hi'
-        ? MULTI_CITY_LOCATIONS_HI
-        : MULTI_CITY_LOCATIONS
-
   const officesList: Office[] =
-    baseOffices.length > 0
-      ? baseOffices.map((office) => ({
-          ...office,
-          phone: office.phone || site.business.phone,
-        }))
+    configuredOffices.length > 0
+      ? configuredOffices.map((office) => {
+          const isHi = locale === 'hi'
+          const t = isHi ? HI_TRANSLATIONS[office.slug] : undefined
+          return {
+            ...office,
+            name: t?.name || office.name,
+            findNote: t?.findNote || office.findNote,
+            phone: office.phone || site.business.phone,
+          }
+        })
       : [fallbackOffice(site)]
 
-  const hasWorkshopNote = Boolean(site.sections.locations?.otherLocationsNote)
+  const territoryList = resolveTerritoryDirectory(site)
 
   return (
     <article lang={locale} data-public-locale={locale} className={`overflow-x-clip bg-surface text-ink ${localePageClass(locale)}`}>
@@ -104,11 +103,13 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
             </h1>
             <FadeUp className="mt-[clamp(20px,3vw,32px)] text-[clamp(16px,1.8vw,20px)] leading-[1.65] text-body" delay={0.1}>
               <p className="m-0 max-w-[42em]">
-                {site.sections.locations?.otherLocationsNote
-                  ? site.sections.locations.otherLocationsNote
-                  : officesList[0]?.address
-                    ? addressText(officesList[0].address)
-                    : ''}
+                {officesList[0]?.about?.lead
+                  ? officesList[0].about.lead
+                  : site.sections.locations?.otherLocationsNote
+                    ? site.sections.locations.otherLocationsNote
+                    : officesList[0]?.address
+                      ? addressText(officesList[0].address)
+                      : ''}
               </p>
             </FadeUp>
           </div>
@@ -192,6 +193,21 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                           )}
                         </div>
 
+                        {/* Phone Number */}
+                        {office.phone && (
+                          <div className="flex items-center gap-3 border-t border-hairline pt-3 text-[15px]">
+                            <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-accent">
+                              {labels.contact.phone}:
+                            </span>
+                            <a
+                              href={`tel:${office.phone.replace(/\s+/g, '')}`}
+                              className="font-medium text-ink transition-colors hover:text-accent"
+                            >
+                              {office.phone}
+                            </a>
+                          </div>
+                        )}
+
                         {/* Hours */}
                         {office.hours && (
                           <div className="grid gap-1.5 border-t border-hairline pt-3 text-[14px]">
@@ -211,7 +227,7 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                         )}
                       </div>
 
-                      {/* Action Buttons: Primary, Secondary, WhatsApp */}
+                      {/* Action Buttons: Primary, Secondary, Call, WhatsApp */}
                       <div className="mt-2 flex flex-wrap items-center gap-3 pt-4">
                         <Link
                           href={detailHref}
@@ -233,6 +249,16 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                           </a>
                         ) : null}
 
+                        {office.phone ? (
+                          <a
+                            href={`tel:${office.phone.replace(/\s+/g, '')}`}
+                            className="inline-flex min-h-11 items-center gap-2 border border-ink bg-transparent px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-surface"
+                          >
+                            <EditorialIcon name="phone" className="h-3.5 w-3.5" />
+                            <span>{office.phone}</span>
+                          </a>
+                        ) : null}
+
                         {wa ? (
                           <a
                             href={wa}
@@ -250,37 +276,6 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                 </StaggerItem>
               )
             })}
-
-            {/* Optional Facility 02 / Workshop Entry if highlighted in notes */}
-            {hasWorkshopNote && officesList.length === 1 && (
-              <StaggerItem className="border-t border-accent bg-panel p-[clamp(24px,4vw,48px)]">
-                <div className="grid grid-cols-1 items-start justify-between gap-6 min-[800px]:grid-cols-[auto_1fr_auto]">
-                  <span className="font-display text-[clamp(28px,3.5vw,44px)] font-light text-accent">
-                    02
-                  </span>
-                  <div className="grid gap-2">
-                    <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-accent">
-                      {labels.otherLabel}
-                    </span>
-                    <h3 className="m-0 font-display text-[clamp(20px,2.4vw,28px)] font-normal uppercase text-ink">
-                      Cabinet Workshop & Fabrication Unit
-                    </h3>
-                    <p className="m-0 max-w-[46em] text-sm leading-[1.7] text-body">
-                      {site.sections.locations?.otherLocationsNote}
-                    </p>
-                  </div>
-                  <div className="pt-2">
-                    <a
-                      href={whatsappHref(site.business.whatsapp) || '#'}
-                      className="inline-flex min-h-11 items-center gap-2 border border-ink px-5 py-3 text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-surface"
-                    >
-                      {labels.visit.action}
-                      <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
-                    </a>
-                  </div>
-                </div>
-              </StaggerItem>
-            )}
           </Stagger>
         </section>
       </HomeSection>
@@ -290,55 +285,59 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
         <section className={`${pagePad} border-t-2 border-ink py-[clamp(48px,6vw,84px)]`}>
           <div className="mb-8">
             <span className="mb-2 block text-[10.5px] font-medium uppercase tracking-[0.22em] text-accent">
-              {locale === 'hi' ? 'क्षेत्रीय कवरेज एवं डिस्पैच' : 'Regional Coverage & Dispatch'}
+              {labels.regionalCoverageEyebrow}
             </span>
             <h2 className="m-0 font-display text-[clamp(26px,4vw,44px)] font-light uppercase tracking-[-0.02em] text-ink">
-              {locale === 'hi' ? 'लोकेशन एवं प्रादेशिक डायरेक्टरी' : 'Location & Territory Directory'}
+              {labels.regionalCoverageTitle.lead} <span className="text-accent">{labels.regionalCoverageTitle.accent}</span>
             </h2>
             <p className="mt-3 max-w-[48em] text-[15px] leading-[1.65] text-body">
-              {locale === 'hi'
-                ? 'हमारे भौतिक स्टूडियो एवं रेजिडेंट साइट इंजीनियर सभी प्रमुख क्षेत्रों में त्वरित रूम लेजर माप एवं दैनिक साइट पर्यवेक्षण सुनिश्चित करते हैं:'
-                : 'Our dedicated regional ateliers and site offices ensure same-day room measurements and direct site supervision across each designated zone:'}
+              {labels.regionalCoverageDesc}
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {TERRITORY_DIRECTORY.map((terr) => {
+            {territoryList.map((terr) => {
               const detailHref = localeHref(`/locations/${terr.officeSlug}`, locale)
               const isHi = locale === 'hi'
-              const regionTitle = isHi && terr.regionNameHi ? terr.regionNameHi : terr.regionName
-              const stateTitle = isHi && terr.provinceStateHi ? terr.provinceStateHi : terr.provinceState
+              const studioName = isHi && terr.officeNameHi ? terr.officeNameHi : terr.officeName
+              const regionEyebrow = isHi && terr.regionNameHi ? terr.regionNameHi : terr.regionName
+              const locationSubtitle = isHi && terr.provinceStateHi ? terr.provinceStateHi : terr.provinceState
               const surveyText = isHi && terr.surveyResponseHi ? terr.surveyResponseHi : terr.surveyResponse
 
               return (
                 <Link
-                  key={terr.regionName}
+                  key={terr.officeSlug}
                   href={detailHref}
                   className="group relative flex flex-col justify-between gap-5 border border-hairline bg-panel p-6 transition-all duration-200 hover:-translate-y-1 hover:border-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <div>
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="m-0 text-[14px] font-semibold uppercase tracking-[0.08em] text-ink transition-colors duration-200 group-hover:text-accent">
-                        {regionTitle}
-                      </h3>
-                      <span
-                        className="inline-flex h-7 w-7 shrink-0 items-center justify-center border border-hairline bg-surface text-ink transition-all duration-200 group-hover:border-ink group-hover:bg-ink group-hover:text-surface"
-                        aria-hidden="true"
-                      >
-                        <EditorialIcon
-                          name="arrow-up-right"
-                          className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        />
-                      </span>
-                    </div>
+                    <span className="mb-1 block text-[10.5px] font-medium uppercase tracking-[0.16em] text-accent">
+                      {regionEyebrow}
+                    </span>
 
-                    <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.14em] text-accent">
-                      {isHi ? `राज्य: ${stateTitle}` : `State: ${stateTitle}`}
+                    <h3 className="m-0 text-[16px] font-semibold uppercase tracking-[0.04em] text-ink transition-colors duration-200 group-hover:text-accent">
+                      {studioName}
+                    </h3>
+
+                    <span className="mt-1 block text-[12px] font-normal text-muted">
+                      {locationSubtitle}
                     </span>
 
                     <p className="mt-3 text-[13px] leading-[1.6] text-body">
                       {terr.keyCities.join(', ')}
                     </p>
+
+                    {terr.phone && (
+                      <div className="mt-3 flex items-center gap-2 text-[13px]">
+                        <EditorialIcon name="phone" className="h-3.5 w-3.5 text-accent" />
+                        <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
+                          {labels.contact.phone}:
+                        </span>
+                        <span className="font-medium text-ink">
+                          {terr.phone}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="border-t border-hairline/80 pt-4">
@@ -358,37 +357,6 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
           </div>
         </section>
       </HomeSection>
-
-      {/* Service Areas Band */}
-      {site.business.serviceAreas && site.business.serviceAreas.length > 0 && (
-        <HomeSection>
-          <section className={`${pagePad} border-t border-accent bg-panel py-[clamp(40px,5vw,64px)]`}>
-            <div className="flex flex-wrap items-center justify-between gap-6">
-              <div>
-                <span className="mb-2 block text-[10.5px] font-medium uppercase tracking-[0.22em] text-accent">
-                  {labels.serviceAreasLabel}
-                </span>
-                <div className="flex flex-wrap gap-2.5">
-                  {site.business.serviceAreas.map((area) => (
-                    <span
-                      key={area}
-                      className="border border-hairline bg-surface px-3 py-1.5 text-[12px] font-normal tracking-wide text-ink"
-                    >
-                      {area}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <Link
-                href="/contact"
-                className="text-[11px] font-medium uppercase tracking-[0.2em] text-ink hover:text-accent"
-              >
-                {labels.contact.title} →
-              </Link>
-            </div>
-          </section>
-        </HomeSection>
-      )}
 
       {/* Render Closing Sections (Footer) */}
       {closing.map(({ key, Component, config, variant }) => (

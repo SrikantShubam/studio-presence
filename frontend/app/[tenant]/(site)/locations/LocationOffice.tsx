@@ -62,6 +62,15 @@ function Heading({ office, copy, locale }: { office: Office; copy: LocationCopy;
           {office.hours?.weekday && (
             <span className="text-[clamp(20px,2.4vw,28px)] font-normal tracking-[-0.01em]">{office.hours.weekday}</span>
           )}
+          {office.phone && (
+            <a
+              href={`tel:${office.phone.replace(/\s+/g, '')}`}
+              className="inline-flex items-center gap-2 text-[15px] font-medium text-ink transition-colors hover:text-accent"
+            >
+              <EditorialIcon name="phone" className="h-3.5 w-3.5 text-accent" />
+              <span>{office.phone}</span>
+            </a>
+          )}
           {office.hours?.sunday && <span className="text-[13px] text-muted">{office.hours.sunday}</span>}
         </div>
       </div>

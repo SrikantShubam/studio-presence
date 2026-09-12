@@ -747,25 +747,22 @@
         width: 13px;
         height: 13px;
         transition: transform 0.2s ease;
-      }
-
-      .territory-card:hover .territory-card-arrow {
-        border-color: var(--ink);
-        background: var(--ink);
-        color: var(--surface);
-      }
-
-      .territory-card:hover .territory-card-arrow svg {
-        transform: translate(1px, -1px);
+      .territory-card-eyebrow {
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 3px;
       }
 
       .territory-card-title {
-        font-size: 13.5px;
+        font-size: 16px;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.04em;
         color: var(--ink);
-        margin-bottom: 4px;
+        margin-bottom: 3px;
         transition: color 0.2s ease;
       }
 
@@ -956,11 +953,19 @@
                 <div class="detail-box-label" data-i18n="lblLead">Studio Lead</div>
                 <div class="detail-box-val">Ashish Kumar</div>
               </div>
+              <div>
+                <div class="detail-box-label" data-i18n="lblPhone">Studio Phone</div>
+                <div class="detail-box-val"><a href="tel:+919876543210" style="color: inherit; text-decoration: none;">(555) 0123</a></div>
+              </div>
             </div>
             <div class="entry-actions">
               <a href="/locations/patna-studio" class="btn-primary">
                 <span data-i18n="btnView">View studio details</span>
                 <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+              </a>
+              <a href="tel:+919876543210" class="btn-secondary">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                <span>(555) 0123</span>
               </a>
               <a href="https://maps.google.com/?q=Shivam+Complex+Boring+Road+Patna" target="_blank" rel="noopener" class="btn-secondary">
                 <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -1240,122 +1245,25 @@
           </p>
         </div>
 
-        <div class="territory-grid">
+        <div class="territory-grid" style="grid-template-columns: minmax(0, 520px);">
           <a href="#patna-studio" class="territory-card">
             <div>
+              <div class="territory-card-eyebrow" data-i18n="t1Eyebrow">Bihar & Central Plains</div>
               <div class="territory-card-header">
-                <div class="territory-card-title">Bihar & Central Plains</div>
-                <div class="territory-card-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
-                </div>
+                <div class="territory-card-title" data-i18n="t1Title">Patna Studio</div>
               </div>
-              <div class="territory-card-state">State: Bihar · Boring Road Atelier</div>
-              <div class="territory-cities">Patna, Danapur, Hajipur, Muzaffarpur, Gaya, Bihar Sharif</div>
+              <div class="territory-card-state" data-i18n="t1State">Boring Road · Patna, Bihar</div>
+              <div class="territory-cities">Patna, Danapur, Hajipur, Muzaffarpur, Bihta (150 km Working Radius)</div>
+              <div class="territory-phone" style="display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13.5px; font-weight: 500; color: var(--ink);">
+                <svg viewBox="0 0 24 24" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                <span data-i18n="lblPhone">Phone:</span>
+                <span>(555) 0123</span>
+              </div>
             </div>
             <div class="territory-card-bottom">
-              <span class="territory-badge">Same-day survey dispatch (2–4 hrs)</span>
+              <span class="territory-badge" data-i18n="t1Badge">Same-day survey dispatch (2–4 hrs)</span>
               <span class="territory-card-cta">
-                <span>View studio</span>
-                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-              </span>
-            </div>
-          </a>
-
-          <a href="#ranchi-studio" class="territory-card">
-            <div>
-              <div class="territory-card-header">
-                <div class="territory-card-title">Jharkhand & Chota Nagpur</div>
-                <div class="territory-card-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
-                </div>
-              </div>
-              <div class="territory-card-state">State: Jharkhand · Ashok Nagar Suite</div>
-              <div class="territory-cities">Ranchi, Jamshedpur, Dhanbad, Bokaro, Hazaribagh</div>
-            </div>
-            <div class="territory-card-bottom">
-              <span class="territory-badge">Survey dispatch within 24–48 hrs</span>
-              <span class="territory-card-cta">
-                <span>View studio</span>
-                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-              </span>
-            </div>
-          </a>
-
-          <a href="#varanasi-studio" class="territory-card">
-            <div>
-              <div class="territory-card-header">
-                <div class="territory-card-title">Purvanchal & Heritage Belt</div>
-                <div class="territory-card-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
-                </div>
-              </div>
-              <div class="territory-card-state">State: Uttar Pradesh · Sigra Atelier</div>
-              <div class="territory-cities">Varanasi, Prayagraj, Mirzapur, Gorakhpur</div>
-            </div>
-            <div class="territory-card-bottom">
-              <span class="territory-badge">Scheduled site architect (48 hrs)</span>
-              <span class="territory-card-cta">
-                <span>View studio</span>
-                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-              </span>
-            </div>
-          </a>
-
-          <a href="#lucknow-studio" class="territory-card">
-            <div>
-              <div class="territory-card-header">
-                <div class="territory-card-title">Awadh & Central UP Hub</div>
-                <div class="territory-card-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
-                </div>
-              </div>
-              <div class="territory-card-state">State: Uttar Pradesh · Gomti Nagar Hub</div>
-              <div class="territory-cities">Lucknow, Kanpur, Ayodhya, Barabanki</div>
-            </div>
-            <div class="territory-card-bottom">
-              <span class="territory-badge">Consultation within 24–48 hrs</span>
-              <span class="territory-card-cta">
-                <span>View studio</span>
-                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-              </span>
-            </div>
-          </a>
-
-          <a href="#kolkata-studio" class="territory-card">
-            <div>
-              <div class="territory-card-header">
-                <div class="territory-card-title">Eastern Metropolitan Area</div>
-                <div class="territory-card-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
-                </div>
-              </div>
-              <div class="territory-card-state">State: West Bengal · Sector V Archive</div>
-              <div class="territory-cities">Kolkata, Salt Lake, Action Area New Town, Howrah</div>
-            </div>
-            <div class="territory-card-bottom">
-              <span class="territory-badge">Next-day laser measurement</span>
-              <span class="territory-card-cta">
-                <span>View studio</span>
-                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-              </span>
-            </div>
-          </a>
-
-          <a href="#digha-ghat" class="territory-card">
-            <div>
-              <div class="territory-card-header">
-                <div class="territory-card-title">Central Fabrication Facility</div>
-                <div class="territory-card-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
-                </div>
-              </div>
-              <div class="territory-card-state">State: Bihar · Digha Ghat Industrial Unit</div>
-              <div class="territory-cities">Digha Ghat, Ganga Path Industrial Run, Pre-Fit Yard</div>
-            </div>
-            <div class="territory-card-bottom">
-              <span class="territory-badge">Joinery inspection by appointment</span>
-              <span class="territory-card-cta">
-                <span>View workshop</span>
+                <span data-i18n="btnViewStudio">View studio</span>
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
               </span>
             </div>
@@ -1392,6 +1300,7 @@
           lblHours: "Studio Hours",
           lblFocus: "Primary Focus",
           lblLead: "Studio Lead",
+          lblPhone: "Phone:",
           btnView: "View studio details",
           btnWorkshop: "View workshop details",
           btnMaps: "Open in Maps",
@@ -1434,7 +1343,33 @@
           wFocus: "Dust-Free Machine Carpentry",
           terrEyebrow: "Regional Coverage & Dispatch",
           terrTitle: "Location & Territory Directory",
-          terrDesc: "Our physical studios and resident site engineers ensure rapid room survey response and uncompromised daily on-site oversight across designated regional territories:"
+          terrDesc: "Our physical studios and resident site engineers ensure rapid room survey response and uncompromised daily on-site oversight across designated regional territories:",
+          t1Eyebrow: "Bihar & Central Plains",
+          t1Title: "Patna Studio",
+          t1State: "Boring Road · Patna, Bihar",
+          t1Badge: "Same-day survey dispatch (2–4 hrs)",
+          t2Eyebrow: "Jharkhand & Chota Nagpur",
+          t2Title: "Ranchi Studio",
+          t2State: "Ashok Nagar · Ranchi, Jharkhand",
+          t2Badge: "Survey dispatch within 24–48 hrs",
+          t3Eyebrow: "Purvanchal & Heritage Belt",
+          t3Title: "Varanasi Studio",
+          t3State: "Sigra · Varanasi, Uttar Pradesh",
+          t3Badge: "Scheduled site architect (48 hrs)",
+          t4Eyebrow: "Awadh & Central UP Hub",
+          t4Title: "Lucknow Studio",
+          t4State: "Vibhuti Khand · Lucknow, Uttar Pradesh",
+          t4Badge: "Consultation within 24–48 hrs",
+          t5Eyebrow: "Eastern Metropolitan Area",
+          t5Title: "Kolkata Studio",
+          t5State: "Salt Lake Sector V · Kolkata, West Bengal",
+          t5Badge: "Next-day laser measurement",
+          t6Eyebrow: "Central Fabrication Facility",
+          t6Title: "Central Joinery Facility",
+          t6State: "Digha Ghat · Patna, Bihar",
+          t6Badge: "Joinery inspection by appointment",
+          btnViewStudio: "View studio",
+          btnViewWorkshop: "View workshop"
         },
         hi: {
           navPortfolio: "पोर्टफोलियो",
@@ -1449,6 +1384,7 @@
           lblHours: "स्टूडियो का समय",
           lblFocus: "मुख्य विशेषता",
           lblLead: "स्टूडियो इंचार्ज",
+          lblPhone: "फोन:",
           btnView: "स्टूडियो विवरण देखें",
           btnWorkshop: "वर्कशॉप विवरण देखें",
           btnMaps: "गूगल मैप पर देखें",
@@ -1491,7 +1427,33 @@
           wFocus: "धूल-मुक्त फैक्ट्री कारपेंट्री",
           terrEyebrow: "क्षेत्रीय कवरेज एवं डिस्पैच",
           terrTitle: "लोकेशन एवं प्रादेशिक डायरेक्टरी",
-          terrDesc: "हमारे भौतिक स्टूडियो एवं रेजिडेंट साइट इंजीनियर सभी प्रमुख क्षेत्रों में त्वरित रूम लेजर माप एवं दैनिक साइट पर्यवेक्षण सुनिश्चित करते हैं:"
+          terrDesc: "हमारे भौतिक स्टूडियो एवं रेजिडेंट साइट इंजीनियर सभी प्रमुख क्षेत्रों में त्वरित रूम लेजर माप एवं दैनिक साइट पर्यवेक्षण सुनिश्चित करते हैं:",
+          t1Eyebrow: "बिहार एवं मध्य मैदानी क्षेत्र",
+          t1Title: "पटना स्टूडियो",
+          t1State: "बोरिंग रोड · पटना, बिहार",
+          t1Badge: "उसी दिन रूम सर्वे (2–4 घंटे)",
+          t2Eyebrow: "झारखंड एवं छोटानागपुर क्षेत्र",
+          t2Title: "रांची स्टूडियो",
+          t2State: "अशोक नगर · रांची, झारखंड",
+          t2Badge: "24–48 घंटे में सर्वे टीम प्रेषण",
+          t3Eyebrow: "पूर्वांचल एवं हेरिटेज बेल्ट",
+          t3Title: "वाराणसी स्टूडियो",
+          t3State: "सिगरा · वाराणसी, उत्तर प्रदेश",
+          t3Badge: "निर्धारित साइट आर्किटेक्ट (48 घंटे)",
+          t4Eyebrow: "अवध एवं मध्य यूपी हब",
+          t4Title: "लखनऊ स्टूडियो",
+          t4State: "विभूति खंड · लखनऊ, उत्तर प्रदेश",
+          t4Badge: "24–48 घंटे में परामर्श",
+          t5Eyebrow: "पूर्वी महानगर क्षेत्र",
+          t5Title: "कोलकाता स्टूडियो",
+          t5State: "सॉल्ट लेक सेक्टर 5 · कोलकाता, प. बंगाल",
+          t5Badge: "अगले दिन लेजर माप सेवा",
+          t6Eyebrow: "सेंट्रल फैब्रिकेशन फैसिलिटी",
+          t6Title: "सेंट्रल जॉइनरी फैसिलिटी",
+          t6State: "दीघा घाट · पटना, बिहार",
+          t6Badge: "नियुक्ति द्वारा जॉइनरी निरीक्षण",
+          btnViewStudio: "स्टूडियो देखें",
+          btnViewWorkshop: "वर्कशॉप देखें"
         }
       };
 

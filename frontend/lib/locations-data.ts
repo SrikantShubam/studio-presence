@@ -18,6 +18,8 @@ export interface TerritoryZone {
   supervisionModel: string
   officeSlug: string
   officeName: string
+  phone?: string
+  officeNameHi?: string
   regionNameHi?: string
   provinceStateHi?: string
   surveyResponseHi?: string
@@ -291,7 +293,7 @@ export const MULTI_CITY_LOCATIONS: Office[] = [
 
 export const FIVE_LOCATIONS = MULTI_CITY_LOCATIONS.slice(0, 5)
 
-const HI_TRANSLATIONS: Record<string, { name: string; findNote: string }> = {
+export const HI_TRANSLATIONS: Record<string, { name: string; findNote: string }> = {
   'patna-studio': {
     name: 'बोरिंग रोड डिज़ाइन स्टूडियो एवं मटीरियल लाइब्रेरी',
     findNote: 'रेमंड शोरूम के ऊपर, एसबीआई एटीएम के बगल में सीढ़ी। पीछे सर्विस लेन में पार्किंग की सुविधा।',
@@ -328,77 +330,124 @@ export const FIVE_LOCATIONS_HI = MULTI_CITY_LOCATIONS_HI.slice(0, 5)
 export const TERRITORY_DIRECTORY: TerritoryZone[] = [
   {
     regionName: 'Bihar & Central Plains',
-    provinceState: 'Bihar',
-    keyCities: ['Patna', 'Danapur', 'Hajipur', 'Muzaffarpur', 'Gaya'],
-    surveyResponse: 'Same-day survey dispatch (2–4 hrs)',
+    provinceState: 'Boring Road · Patna, Bihar',
+    keyCities: ['Patna', 'Danapur', 'Hajipur', 'Muzaffarpur', 'Bihta (150 km Radius)'],
+    surveyResponse: 'Primary Studio · Same-day survey (2–4 hrs)',
     supervisionModel: 'Daily resident site supervisor',
     officeSlug: 'patna-studio',
-    officeName: 'Boring Road Atelier & Material Library',
+    officeName: 'Patna Studio',
+    officeNameHi: 'पटना स्टूडियो',
     regionNameHi: 'बिहार एवं मध्य मैदानी क्षेत्र',
-    provinceStateHi: 'बिहार',
-    surveyResponseHi: 'समान-दिन सर्वे डिस्पैच (2–4 घंटे)',
+    provinceStateHi: 'बोरिंग रोड · पटना, बिहार',
+    surveyResponseHi: 'मुख्य स्टूडियो · समान-दिन सर्वे (2–4 घंटे)',
   },
   {
     regionName: 'Jharkhand & Chota Nagpur',
-    provinceState: 'Jharkhand',
+    provinceState: 'Ashok Nagar · Ranchi, Jharkhand',
     keyCities: ['Ranchi', 'Jamshedpur', 'Dhanbad', 'Bokaro'],
-    surveyResponse: 'Within 24–48 hours',
+    surveyResponse: 'Consultation Suite · Survey within 24–48 hrs',
     supervisionModel: 'Dedicated territory supervisor',
     officeSlug: 'ranchi-studio',
-    officeName: 'Ashok Nagar Studio & Consultation Suite',
+    officeName: 'Ranchi Studio',
+    officeNameHi: 'रांची स्टूडियो',
     regionNameHi: 'झारखंड एवं छोटा नागपुर पठार',
-    provinceStateHi: 'झारखंड',
-    surveyResponseHi: '24–48 घंटे के भीतर सर्वे',
+    provinceStateHi: 'अशोक नगर · रांची, झारखंड',
+    surveyResponseHi: 'कंसल्टेशन सुइट · 24–48 घंटे में सर्वे',
   },
   {
     regionName: 'Purvanchal & Heritage Belt',
-    provinceState: 'Uttar Pradesh',
+    provinceState: 'Sigra · Varanasi, UP',
     keyCities: ['Varanasi', 'Prayagraj', 'Mirzapur', 'Gorakhpur'],
-    surveyResponse: 'Scheduled site architect (48 hrs)',
+    surveyResponse: 'Heritage Desk · Architect visit (48 hrs)',
     supervisionModel: 'Architectural team oversight',
     officeSlug: 'varanasi-studio',
-    officeName: 'Sigra Atelier & Heritage Renovation Desk',
+    officeName: 'Varanasi Studio',
+    officeNameHi: 'वाराणसी स्टूडियो',
     regionNameHi: 'पूर्वांचल एवं हेरिटेज बेल्ट',
-    provinceStateHi: 'उत्तर प्रदेश',
-    surveyResponseHi: 'आर्किटेक्ट साइट विजिट (48 घंटे)',
+    provinceStateHi: 'सिगरा · वाराणसी, उत्तर प्रदेश',
+    surveyResponseHi: 'हेरिटेज डेस्क · आर्किटेक्ट विजिट (48 घंटे)',
   },
   {
     regionName: 'Awadh & Central UP Hub',
-    provinceState: 'Uttar Pradesh',
+    provinceState: 'Gomti Nagar · Lucknow, UP',
     keyCities: ['Lucknow', 'Kanpur', 'Ayodhya', 'Barabanki'],
-    surveyResponse: 'Within 24–48 hours',
+    surveyResponse: 'Design Atelier · Within 24–48 hrs',
     supervisionModel: 'Awadh residential atelier team',
     officeSlug: 'lucknow-studio',
-    officeName: 'Gomti Nagar Atelier & Design Hub',
+    officeName: 'Lucknow Studio',
+    officeNameHi: 'लखनऊ स्टूडियो',
     regionNameHi: 'अवध एवं मध्य उत्तर प्रदेश हब',
-    provinceStateHi: 'उत्तर प्रदेश',
-    surveyResponseHi: '24–48 घंटे में परामर्श',
+    provinceStateHi: 'गोमती नगर · लखनऊ, उत्तर प्रदेश',
+    surveyResponseHi: 'डिज़ाइन एटेलियर · 24–48 घंटे में परामर्श',
   },
   {
     regionName: 'Eastern Metropolitan Area',
-    provinceState: 'West Bengal',
+    provinceState: 'Sector V · Salt Lake, Kolkata',
     keyCities: ['Kolkata', 'Salt Lake', 'New Town', 'Howrah'],
-    surveyResponse: 'Next-day laser measurement',
+    surveyResponse: 'Metro Office · Next-day laser survey',
     supervisionModel: 'Turnkey site engineering crew',
     officeSlug: 'kolkata-studio',
-    officeName: 'Salt Lake Sector V Studio & Archive',
+    officeName: 'Kolkata Studio',
+    officeNameHi: 'कोलकाता स्टूडियो',
     regionNameHi: 'पूर्वी महानगर एवं साल्ट लेक रीजन',
-    provinceStateHi: 'पश्चिम बंगाल',
-    surveyResponseHi: 'अगले दिन लेजर मापन',
+    provinceStateHi: 'सेक्टर 5 · सॉल्ट लेक, कोलकाता',
+    surveyResponseHi: 'मेट्रो ऑफिस · अगले दिन लेजर मापन',
   },
   {
-    regionName: 'Central Fabrication Facility',
-    provinceState: 'Bihar',
+    regionName: 'Pre-Fit & Machine Fabrication',
+    provinceState: 'Industrial Run · Digha Ghat, Patna',
     keyCities: ['Digha Ghat', 'Ganga Path Industrial Run', 'Pre-Fit Yard'],
     surveyResponse: 'Workshop walkthrough by appointment',
     supervisionModel: 'Precision CNC & edge-banding facility',
     officeSlug: 'digha-ghat',
-    officeName: 'Central Joinery & Machine Facility',
-    regionNameHi: 'केंद्रीय जॉइनरी एवं फैब्रिकेशन यूनिट',
-    provinceStateHi: 'बिहार',
+    officeName: 'Central Joinery Facility',
+    officeNameHi: 'केंद्रीय जॉइनरी फैब्रिकेशन यूनिट',
+    regionNameHi: 'मशीन फैब्रिकेशन एवं प्री-फिट यार्ड',
+    provinceStateHi: 'दीघा घाट · पटना, बिहार',
     surveyResponseHi: 'अपॉइंटमेंट द्वारा वर्कशॉप वॉकथ्रू',
   },
 ]
+
+export function resolveTerritoryDirectory(site: ClientConfig): TerritoryZone[] {
+  const configured = site.sections.locations?.offices ?? []
+
+  if (configured.length === 0) {
+    const defaultZone = TERRITORY_DIRECTORY[0]
+    if (!defaultZone) return []
+    return [
+      {
+        ...defaultZone,
+        officeName: site.business.name ? `${site.business.name} Studio` : defaultZone.officeName,
+        phone: site.business.phone,
+      },
+    ]
+  }
+
+  // Filter territory directory specifically to the client's configured offices
+  return configured.map((office) => {
+    const matched = TERRITORY_DIRECTORY.find((t) => t.officeSlug === office.slug)
+    const phone = office.phone || site.business.phone
+
+    if (matched) {
+      return {
+        ...matched,
+        officeName: office.name,
+        phone,
+      }
+    }
+
+    return {
+      regionName: office.address.state ? `${office.address.state} Territory` : 'Regional Territory',
+      provinceState: [office.address.locality, office.address.city, office.address.state].filter(Boolean).join(' · '),
+      keyCities: [office.address.city, office.address.locality].filter(Boolean) as string[],
+      surveyResponse: 'Same-day survey dispatch (2–4 hrs)',
+      supervisionModel: 'Direct resident site team oversight',
+      officeSlug: office.slug,
+      officeName: office.name,
+      phone,
+    }
+  })
+}
 
 export const SEO_DATA: Record<string, LocationSeoMeta> = {
   'patna-studio': {
@@ -526,40 +575,52 @@ export function resolveOffice(
   slug: string,
   locale: 'en' | 'hi' = 'en',
 ): Office | undefined {
-  const offices = locale === 'hi' ? MULTI_CITY_LOCATIONS_HI : MULTI_CITY_LOCATIONS
+  const configured = site.sections.locations?.offices ?? []
 
-  // Check direct slug
-  let target = offices.find((o) => o.slug === slug)
+  // 1. Prioritize configured offices from the client's actual config:
+  let target = configured.find((o) => o.slug === slug)
 
-  // Check aliases
-  if (!target && (slug === 'boring-road' || slug === 'studio')) {
-    target = offices[0]
-  }
-  if (!target && slug === 'workshop') {
-    target = offices.find((o) => o.slug === 'digha-ghat')
-  }
-  if (!target && (slug === 'ranchi' || slug === 'ashok-nagar')) {
-    target = offices.find((o) => o.slug === 'ranchi-studio')
-  }
-  if (!target && (slug === 'varanasi' || slug === 'sigra' || slug === 'banaras')) {
-    target = offices.find((o) => o.slug === 'varanasi-studio')
-  }
-  if (!target && (slug === 'kolkata' || slug === 'salt-lake' || slug === 'calcutta')) {
-    target = offices.find((o) => o.slug === 'kolkata-studio')
-  }
-  if (!target && (slug === 'lucknow' || slug === 'gomti-nagar')) {
-    target = offices.find((o) => o.slug === 'lucknow-studio')
-  }
-  if (!target && (slug === 'bailey-road' || slug === 'danapur' || slug === 'saguna-more')) {
-    target = offices[0] // fallback to primary or closest
-  }
-  if (!target && (slug === 'kankarbagh' || slug === 'hajipur')) {
-    target = offices[0]
+  // Check aliases for configured single office
+  if (!target && configured.length > 0) {
+    if (slug === 'boring-road' || slug === 'studio' || slug === 'patna') {
+      target = configured.find((o) => o.slug === 'patna-studio') || configured[0]
+    }
   }
 
-  // Check site config
+  // If found in configured offices and locale is Hindi, apply Hindi name/notes if available
+  if (target && locale === 'hi') {
+    const t = HI_TRANSLATIONS[target.slug]
+    if (t) {
+      target = { ...target, name: t.name, findNote: t.findNote || target.findNote }
+    }
+  }
+
+  // 2. Fallback to multi-city directory if not found in configured offices
   if (!target) {
-    target = site.sections.locations?.offices.find((o) => o.slug === slug) || offices[0]
+    const offices = locale === 'hi' ? MULTI_CITY_LOCATIONS_HI : MULTI_CITY_LOCATIONS
+    target = offices.find((o) => o.slug === slug)
+
+    if (!target && (slug === 'boring-road' || slug === 'studio')) {
+      target = offices[0]
+    }
+    if (!target && slug === 'workshop') {
+      target = offices.find((o) => o.slug === 'digha-ghat')
+    }
+    if (!target && (slug === 'ranchi' || slug === 'ashok-nagar')) {
+      target = offices.find((o) => o.slug === 'ranchi-studio')
+    }
+    if (!target && (slug === 'varanasi' || slug === 'sigra' || slug === 'banaras')) {
+      target = offices.find((o) => o.slug === 'varanasi-studio')
+    }
+    if (!target && (slug === 'kolkata' || slug === 'salt-lake' || slug === 'calcutta')) {
+      target = offices.find((o) => o.slug === 'kolkata-studio')
+    }
+    if (!target && (slug === 'lucknow' || slug === 'gomti-nagar')) {
+      target = offices.find((o) => o.slug === 'lucknow-studio')
+    }
+    if (!target && (slug === 'bailey-road' || slug === 'danapur' || slug === 'saguna-more' || slug === 'kankarbagh' || slug === 'hajipur')) {
+      target = offices[0]
+    }
   }
 
   if (!target) return undefined
