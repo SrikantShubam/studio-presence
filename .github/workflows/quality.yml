@@ -62,7 +62,4 @@ jobs:
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://ci.invalid
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-anon-key
-          WEB3FORMS_ASHISH: ci-placeholder
-          WEB3FORMS_QA_OWNER: ci-placeholder
-          WEB3FORMS_STRESS: ci-placeholder
         run: npm run build

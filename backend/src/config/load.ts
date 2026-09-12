@@ -133,9 +133,8 @@ export function listClientSlugs(clientsDir = defaultClientsDir()): string[] {
 /**
  * Read and resolve one client from disk.
  *
- * Asset-path and env checks are on by default here, because this is the path the
- * build gate uses and those are exactly the failures worth catching before a
- * deploy rather than after.
+ * Asset-path checks are on by default here, because this is the path the build
+ * gate uses and those are exactly the failures worth catching before a deploy.
  */
 export function loadClientConfig(slug: string, opts: ResolveOptions = {}): ClientConfig {
   const clientsDir = defaultClientsDir()
@@ -162,7 +161,6 @@ export function loadClientConfig(slug: string, opts: ResolveOptions = {}): Clien
 
   return resolveClientConfig(slug, raw, {
     publicDir: defaultPublicDir(),
-    env: process.env,
     fileExists: existsSync,
     ...opts,
   })

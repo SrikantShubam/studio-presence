@@ -95,8 +95,6 @@
       "googlePlaceId": "ChIJQaOwnerTestPlaceId00"
     },
     "inquiryForm": {
-      "provider": "web3forms",
-      "accessKeyEnv": "WEB3FORMS_QA_OWNER",
       "fields": ["name", "phone", "roomType", "budget", "timeline"]
     },
     "estimate": {

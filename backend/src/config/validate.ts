@@ -8,8 +8,8 @@ import type { ClientConfig } from './types'
  * Zod handles shape — is this field a string, is that phone number E.164. This
  * file handles the rules that span fields, which is where the rules that actually
  * matter live: a demo site indexed by Google under a client's name, a custom
- * domain attached before the balance cleared, an inquiry form posting to an env
- * var nobody set.
+ * domain attached before the balance cleared, or configuration that cannot
+ * deliver what it promises.
  *
  * Every message here names the field and says what to do. An error a non-author
  * cannot act on is a bug in the error, and these get read by whoever is deploying
@@ -34,8 +34,6 @@ export type ValidateOptions = {
    * a filesystem, so it runs at build and in scripts, never at request time.
    */
   publicDir?: string
-  /** Env vars available. Omit to skip the `accessKeyEnv` existence check. */
-  env?: Record<string, string | undefined>
   /** `fs.existsSync`, injected so this module stays importable in edge runtimes. */
   fileExists?: (absPath: string) => boolean
 }
@@ -100,23 +98,6 @@ function crossFieldIssues(c: ClientConfig, opts: ValidateOptions): Issue[] {
       'sections.reviews.googlePlaceId',
       'is required when reviews are enabled — without a Place ID there is nothing to fetch. Find it via the Google Places ID finder, or set reviews.enabled to false.',
     )
-  }
-
-  if (s.inquiryForm?.enabled) {
-    const key = s.inquiryForm.accessKeyEnv
-    if (!key) {
-      err(
-        'sections.inquiryForm.accessKeyEnv',
-        'is required when the inquiry form is enabled. Name the env var holding this client\'s Web3Forms key, e.g. "WEB3FORMS_ASHISH" — never the key itself.',
-      )
-    } else if (opts.env && !opts.env[key]) {
-      // An error only once the site is live. Nobody has every client's form key
-      // in their local environment, and failing a whole demo build over that
-      // trains people to ignore the check — which is worse than the gap.
-      const msg = `names env var "${key}", which is not set. The form would render and silently post nowhere — a lost enquiry looks exactly like no enquiry.`
-      if (isPublic) err('sections.inquiryForm.accessKeyEnv', msg)
-      else warn('sections.inquiryForm.accessKeyEnv', msg)
-    }
   }
 
   if (s.instagram?.enabled && s.instagram.embedPostUrls.length === 0) {

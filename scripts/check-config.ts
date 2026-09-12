@@ -31,7 +31,6 @@ for (const slug of slugs) {
     const config = loadClientConfig(slug, {
       publicDir: defaultPublicDir(),
       fileExists: existsSync,
-      env: process.env,
     })
 
     // The slug in the file must match its filename, or the deploy script targets

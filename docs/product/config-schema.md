@@ -131,8 +131,6 @@ Location: `clients/<slug>.json`. The slug is the demo subdomain: `ashish.vectorv
     },
     "inquiryForm": {
       "enabled": false,
-      "provider": "web3forms",
-      "accessKeyEnv": "WEB3FORMS_ASHISH",
       "fields": ["name", "phone", "roomType", "budget", "timeline"]
     },
     "blog": { "enabled": false, "posts": [] },
@@ -225,7 +223,6 @@ Setting `tier` enables this section set. Explicit blocks in the file always win.
 - `seo.noindex` is `true` whenever `status` is `demo` or `sold`. Fail the build otherwise —
   a demo indexed by Google under the client's name is a real problem.
 - `reviews.enabled` requires `googlePlaceId`.
-- `inquiryForm.enabled` requires the env var named in `accessKeyEnv` to exist.
 - If `domain.customDomain` is set, `status` must be `live`.
 
 ### Template variables
