@@ -33,7 +33,7 @@ const LINKS = [
   { href: '/#services', key: 'services' },
   { href: '/about', key: 'about' },
   { href: '/portfolio', key: 'portfolio' },
-  { href: '/#contact', key: 'contact' },
+  { href: '/contact', key: 'contact' },
 ] as const
 
 function activePathname(pathname: string): string {

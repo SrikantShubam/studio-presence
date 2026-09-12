@@ -113,7 +113,7 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
           {config.ctaLabel && (
             <Link
               href={ctaHref}
-              className="ai-type-hero-cta mt-8 inline-flex min-h-11 items-center gap-2.5 whitespace-nowrap bg-cta px-6 py-4 font-medium text-ink sm:mt-10 sm:gap-3 sm:px-7 sm:py-5"
+              className="ai-type-hero-cta mt-8 inline-flex min-h-11 items-center gap-2.5 whitespace-nowrap bg-cta px-6 py-4 font-semibold text-ink sm:mt-10 sm:gap-3 sm:px-7 sm:py-5"
             >
               {config.ctaLabel} <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
             </Link>
@@ -150,7 +150,7 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
           <div className={`hidden items-center gap-6 font-normal text-ink md:flex ${localeRoleClass(locale, 'nav')}`}>
             <Link href={localeHref('/about', locale)}><h5 className="ai-type-menu-item m-0 font-normal">{copy.about}</h5></Link>
             <Link href={localeHref('/portfolio', locale)}><h5 className="ai-type-menu-item m-0 font-normal">{copy.portfolio}</h5></Link>
-            <Link href={localeHref('/#contact', locale)}><h5 className="ai-type-menu-item m-0 font-normal">{copy.contact}</h5></Link>
+            <Link href={localeHref('/contact', locale)}><h5 className="ai-type-menu-item m-0 font-normal">{copy.contact}</h5></Link>
           </div>
           <div className={`ml-auto hidden items-center gap-3 whitespace-nowrap text-ink md:flex ${localeRoleClass(locale, 'label')}`}>
             {showHindi && languageSwitcher('light')}
@@ -215,7 +215,7 @@ export function HeroSplit({ config, site }: { config: SectionConfig<'hero'>; sit
                   { href: localeHref('/', locale), label: copy.home },
                   { href: localeHref('/about', locale), label: copy.about },
                   { href: localeHref('/portfolio', locale), label: copy.portfolio },
-                  { href: localeHref('/#contact', locale), label: copy.contact },
+                  { href: localeHref('/contact', locale), label: copy.contact },
                 ].map((item) => (
                   <Link
                     key={item.href}

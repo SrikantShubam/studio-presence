@@ -346,6 +346,7 @@ export const chromeCopy = {
       links: {
         home: 'Home',
         about: 'About',
+        contact: 'Contact',
         team: 'Team',
         careers: 'Careers',
         locations: 'Locations',
@@ -728,6 +729,7 @@ export const chromeCopy = {
       links: {
         home: 'होम',
         about: 'परिचय',
+        contact: 'संपर्क',
         team: 'टीम',
         careers: 'करियर',
         locations: 'लोकेशन',
