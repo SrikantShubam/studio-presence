@@ -10,10 +10,18 @@ export interface LocationSeoMeta {
   neighborhoodsServed: string[]
 }
 
-export const FIVE_LOCATIONS: Office[] = [
+export interface TerritoryZone {
+  regionName: string
+  provinceState: string
+  keyCities: string[]
+  surveyResponse: string
+  supervisionModel: string
+}
+
+export const MULTI_CITY_LOCATIONS: Office[] = [
   {
     slug: 'patna-studio',
-    name: 'Boring Road Atelier & Studio',
+    name: 'Boring Road Atelier & Material Library',
     address: {
       line1: '2nd Floor, Shivam Complex, Boring Road Crossing',
       locality: 'Boring Road',
@@ -60,8 +68,180 @@ export const FIVE_LOCATIONS: Office[] = [
     projectSlugs: ['boring-road-kitchen', 'patliputra-duplex'],
   },
   {
+    slug: 'ranchi-studio',
+    name: 'Ashok Nagar Studio & Consultation Suite',
+    address: {
+      line1: '1st Floor, Radhe Complex, Main Road, Ashok Nagar',
+      locality: 'Ashok Nagar',
+      city: 'Ranchi',
+      state: 'Jharkhand',
+      pincode: '834002',
+      mapsEmbedUrl: 'https://www.google.com/maps/embed?pb=sample',
+    },
+    hours: {
+      weekday: '10:00 – 19:00',
+      saturday: '10:00 – 18:30',
+      sunday: '11:00 – 16:00',
+      note: 'Dedicated regional consultation hub for executive bungalows and duplex residences across Jharkhand.',
+    },
+    photo: {
+      image: '/clients/ashish-interiors/editorial/patliputra-duplex/cover.jpg',
+      caption: 'RANCHI REGIONAL RESIDENCE CONSULTATION SUITE',
+    },
+    findNote: 'Directly on Main Road Ashok Nagar, 5 minutes from Birsa Munda Airport connector.',
+    about: {
+      lead: 'Our dedicated Jharkhand regional studio delivering turnkey residential interiors and architectural renovations in Ranchi, Jamshedpur, and Dhanbad.',
+      body: [
+        'Specializing in spacious 4BHK apartments, standalone villas, and executive company quarters with heavy focus on moisture-resilient BWP cabinetry.',
+        'Resident architectural leads coordinate directly with local masons and electrical teams while all custom joinery arrives factory-cut from our central workshop.',
+      ],
+      stats: [
+        { value: '65+', label: 'HOMES DELIVERED' },
+        { value: '48 HRS', label: 'SITE SURVEY RESPONSE' },
+        { value: '10 YR', label: 'HARDWARE WARRANTY' },
+      ],
+    },
+    team: [
+      {
+        name: 'RAKESH SEN',
+        role: 'REGIONAL DESIGN DIRECTOR',
+        image: '/clients/ashish-interiors/editorial/team/design-01.jpg',
+      },
+    ],
+    projectSlugs: ['patliputra-duplex'],
+  },
+  {
+    slug: 'varanasi-studio',
+    name: 'Sigra Atelier & Heritage Renovation Desk',
+    address: {
+      line1: '2nd Floor, Kuber Plaza, Sigra - Maldahiya Road',
+      locality: 'Sigra',
+      city: 'Varanasi',
+      state: 'Uttar Pradesh',
+      pincode: '221002',
+      mapsEmbedUrl: 'https://www.google.com/maps/embed?pb=sample',
+    },
+    hours: {
+      weekday: '10:30 – 19:30',
+      saturday: '10:30 – 19:00',
+      sunday: 'By appointment',
+      note: 'Walk-ins welcome for heritage residence structural remodeling and modern apartment conversions.',
+    },
+    photo: {
+      image: '/clients/ashish-interiors/editorial/kankarbagh/cover.jpg',
+      caption: 'PURVANCHAL RESIDENTIAL & HERITAGE DESIGN DESK',
+    },
+    findNote: 'Near Kuber Plaza crossing, 10 minutes from Varanasi Cantt Railway Station.',
+    about: {
+      lead: 'Our Purvanchal regional hub catering to residential clients in Varanasi, Prayagraj, and Mirzapur requiring architectural honesty in historical urban fabrics.',
+      body: [
+        'Bridging the gap between historic masonry structures and modern climate-proof modular interiors.',
+        'We engineer deep custom storage, concealed ducting, and water-sealed utility spaces that fit older townhouses and new multi-storey complexes alike.',
+      ],
+      stats: [
+        { value: '40+', label: 'COMPLETED RESIDENCES' },
+        { value: '100%', label: 'DIRECT SITE OVERSIGHT' },
+        { value: 'ZERO', label: 'SUB-CONTRACTED CARPENTRY' },
+      ],
+    },
+    team: [
+      {
+        name: 'ANANYA MISHRA',
+        role: 'ARCHITECTURAL CONSERVATOR & LEAD',
+        image: '/clients/ashish-interiors/editorial/team/principal-02.jpg',
+      },
+    ],
+    projectSlugs: ['kankarbagh'],
+  },
+  {
+    slug: 'kolkata-studio',
+    name: 'Salt Lake Sector V Studio & Archive',
+    address: {
+      line1: '4th Floor, Technopolis Hub, Sector V, Salt Lake',
+      locality: 'Salt Lake',
+      city: 'Kolkata',
+      state: 'West Bengal',
+      pincode: '700091',
+      mapsEmbedUrl: 'https://www.google.com/maps/embed?pb=sample',
+    },
+    hours: {
+      weekday: '10:00 – 19:00',
+      saturday: '10:00 – 18:00',
+      sunday: 'Closed',
+      note: 'Studio consultations scheduled in advance for floor plan analysis and finishes walkthroughs.',
+    },
+    photo: {
+      image: '/clients/ashish-interiors/editorial/hero.jpg',
+      caption: 'EASTERN METROPOLITAN RESIDENTIAL ATELIER',
+    },
+    findNote: 'Near Technopolis intersection, adjacent to Ring Road with underground parking.',
+    about: {
+      lead: 'Our Eastern metropolitan atelier coordinating turnkey high-rise flats, penthouses, and architectural joinery in Kolkata and New Town.',
+      body: [
+        'Engineered specifically for high-humidity coastal climates with zero-expansion marine ply cores, anti-fungal laminate sealing, and Blum hardware.',
+        'Equipped with 1:1 joinery details so homeowners can examine drawer runners, fluted acoustic panels, and concealed LED profiles.',
+      ],
+      stats: [
+        { value: '50+', label: 'METRO FLATS HANDED OVER' },
+        { value: '45 DAYS', label: 'PROJECT DURATION' },
+        { value: 'IS:710', label: 'MARINE GRADE ASSURANCE' },
+      ],
+    },
+    team: [
+      {
+        name: 'SUBHASHIS BOSE',
+        role: 'SENIOR PROJECT ARCHITECT',
+        image: '/clients/ashish-interiors/editorial/team/design-01.jpg',
+      },
+    ],
+    projectSlugs: ['boring-road-kitchen'],
+  },
+  {
+    slug: 'lucknow-studio',
+    name: 'Gomti Nagar Atelier & Design Hub',
+    address: {
+      line1: '3rd Floor, Vibhuti Khand, Gomti Nagar',
+      locality: 'Gomti Nagar',
+      city: 'Lucknow',
+      state: 'Uttar Pradesh',
+      pincode: '226010',
+      mapsEmbedUrl: 'https://www.google.com/maps/embed?pb=sample',
+    },
+    hours: {
+      weekday: '10:00 – 19:00',
+      saturday: '10:00 – 19:00',
+      sunday: '11:00 – 16:00',
+      note: 'Full materials sample lounge open for homeowner appointments and site drawing discussions.',
+    },
+    photo: {
+      image: '/clients/ashish-interiors/editorial/locations/studio.jpg',
+      caption: 'LUCKNOW AWADH RESIDENTIAL ATELIER',
+    },
+    findNote: 'Near Vibhuti Khand commercial plaza, convenient road access and lift.',
+    about: {
+      lead: 'Our Central Uttar Pradesh studio serving luxury kothis, builder floors, and high-rise apartments across Lucknow and Kanpur.',
+      body: [
+        'Dedicated to calm, durable interiors designed around real family routines, eliminating superficial decorative gimmicks.',
+        'On-site supervisors manage daily mason, tile, and plumbing sequences, keeping the construction schedule transparent from day one.',
+      ],
+      stats: [
+        { value: '55+', label: 'HOMES COMPLETED' },
+        { value: 'WEEKLY', label: 'SITE PHOTO REVIEWS' },
+        { value: 'FIXED', label: 'PRICE GUARANTEE' },
+      ],
+    },
+    team: [
+      {
+        name: 'TARIQ KHAN',
+        role: 'PRINCIPAL ARCHITECT, AWADH',
+        image: '/clients/ashish-interiors/editorial/team/site-01.jpg',
+      },
+    ],
+    projectSlugs: ['patliputra-duplex'],
+  },
+  {
     slug: 'digha-ghat',
-    name: 'Digha Ghat Cabinet Workshop',
+    name: 'Central Joinery & Machine Fabrication Facility',
     address: {
       line1: 'Plot 14, Industrial Run, Near Ganga Path',
       locality: 'Digha Ghat',
@@ -78,14 +258,14 @@ export const FIVE_LOCATIONS: Office[] = [
     },
     photo: {
       image: '/clients/ashish-interiors/editorial/team/workshop-01.jpg',
-      caption: 'PANEL SAWS & EDGE BANDING LINE — DIGHA GHAT WORKSHOP',
+      caption: 'PRECISION SLIDING TABLE SAWS & EDGE BANDING LINE',
     },
     findNote: '5 minutes from JP Ganga Path connector, adjacent to the industrial lumber storage yard.',
     about: {
-      lead: 'Our dedicated 3,200 sq ft joinery and pre-fit facility where raw BWR/BWP plywood is machined, edge-banded, and dry-assembled prior to apartment delivery.',
+      lead: 'Our dedicated 3,200 sq ft joinery and pre-fit facility where raw BWR/BWP plywood is machined, edge-banded, and dry-assembled prior to apartment dispatch across all regional territories.',
       body: [
-        'To prevent noise, saw dust, and delays inside client homes, all carcass cutting is executed on precision sliding table saws at Digha Ghat.',
-        'Every edge cut is sealed with moisture-resistant hot-melt PUR edge banding specifically calibrated for Patna monsoon humidity.',
+        'To eliminate saw dust, noise, and delays inside client homes, all cabinet carcass cutting is executed on computerized sliding table saws.',
+        'Every edge cut is sealed with moisture-resistant hot-melt PUR edge banding specifically calibrated for Indian monsoon humidity.',
       ],
       stats: [
         { value: '3,200 SQ FT', label: 'FACILITY SIZE' },
@@ -102,170 +282,87 @@ export const FIVE_LOCATIONS: Office[] = [
     ],
     projectSlugs: ['boring-road-kitchen'],
   },
-  {
-    slug: 'kankarbagh',
-    name: 'Kankarbagh Consultation Desk',
-    address: {
-      line1: '1st Floor, Near Tiwari Bechar, Old Bypass Road',
-      locality: 'Kankarbagh',
-      city: 'Patna',
-      state: 'Bihar',
-      pincode: '800020',
-      mapsEmbedUrl: 'https://www.google.com/maps/embed?pb=sample',
-    },
-    hours: {
-      weekday: '10:30 – 19:30',
-      saturday: '10:30 – 19:30',
-      sunday: 'By appointment',
-      note: 'Evening consultation slots available for doctors and busy working families in South Patna.',
-    },
-    photo: {
-      image: '/clients/ashish-interiors/editorial/kankarbagh/cover.jpg',
-      caption: 'KANKARBAGH RESIDENTIAL CONSULTATION DESK',
-    },
-    findNote: 'Right across Tiwari Bechar sweets on Old Bypass Road, 3 minutes from Kumhrar park.',
-    about: {
-      lead: 'Established to directly serve South Patna residential hubs including Kankarbagh Colony, Rajendra Nagar, Hanuman Nagar, and Kumhrar.',
-      body: [
-        'Dedicated to complete renovation of older duplex homes and government quarters, converting traditional layouts into modern open-plan living and modular storage.',
-        'Features physical swatches for laminate palettes, hardware pulls, and moisture-resistant false ceiling sections.',
-      ],
-      stats: [
-        { value: '85+', label: 'SOUTH PATNA HOMES' },
-        { value: '24 HRS', label: 'SURVEY DISPATCH' },
-        { value: '10 YR', label: 'HARDWARE WARRANTY' },
-      ],
-    },
-    team: [
-      {
-        name: 'VIKRAM VERMA',
-        role: 'SITE SUPERVISOR, SOUTH PATNA',
-        image: '/clients/ashish-interiors/editorial/team/site-01.jpg',
-      },
-    ],
-    projectSlugs: ['kankarbagh'],
-  },
-  {
-    slug: 'danapur',
-    name: 'Bailey Road & Danapur Hub',
-    address: {
-      line1: '3rd Floor, Corporate Plaza, Near Saguna More, Bailey Road',
-      locality: 'Danapur',
-      city: 'Patna',
-      state: 'Bihar',
-      pincode: '801503',
-      mapsEmbedUrl: 'https://www.google.com/maps/embed?pb=sample',
-    },
-    hours: {
-      weekday: '10:00 – 19:00',
-      saturday: '10:00 – 19:00',
-      sunday: '11:00 – 16:00',
-      note: 'Weekend walk-ins welcome for new apartment owners along the Bailey Road expansion corridor.',
-    },
-    photo: {
-      image: '/clients/ashish-interiors/editorial/patliputra-duplex/cover.jpg',
-      caption: 'WEST PATNA APARTMENT INTERIORS SUITE',
-    },
-    findNote: 'Near Saguna More flyover junction, easy parking and lift access from ground floor.',
-    about: {
-      lead: 'Strategically positioned at Saguna More to manage turnkey interior handovers in high-rise residential towers across West Patna.',
-      body: [
-        'Specializing in 3BHK and 4BHK society flats in RPS More, Saguna More, Gola Road, and Danapur Cantt.',
-        'Full acoustic wall paneling, modular sliding wardrobes, and built-in appliance cabinetry designed specifically for modern builder floor plates.',
-      ],
-      stats: [
-        { value: '120+', label: 'APARTMENTS HANDED OVER' },
-        { value: '45 DAYS', label: 'SPEED EXECUTION' },
-        { value: 'IS:710', label: 'CERTIFIED MARINE PLY' },
-      ],
-    },
-    team: [
-      {
-        name: 'PRIYA SAHAY',
-        role: 'APARTMENT ARCHITECTURAL LEAD',
-        image: '/clients/ashish-interiors/editorial/team/design-01.jpg',
-      },
-    ],
-    projectSlugs: ['patliputra-duplex'],
-  },
-  {
-    slug: 'hajipur',
-    name: 'Hajipur Regional Site Office',
-    address: {
-      line1: 'Station Road, Near Ramashis Chowk',
-      locality: 'Hajipur',
-      city: 'Hajipur',
-      state: 'Bihar',
-      pincode: '844101',
-      mapsEmbedUrl: 'https://www.google.com/maps/embed?pb=sample',
-    },
-    hours: {
-      weekday: '10:00 – 18:00',
-      saturday: '10:00 – 18:00',
-      sunday: '10:00 – 15:00',
-      note: 'Regional site supervisor present on Tuesdays, Thursdays, and Saturdays.',
-    },
-    photo: {
-      image: '/clients/ashish-interiors/editorial/hero.jpg',
-      caption: 'HAJIPUR & VAISHALI REGIONAL RESIDENCE PROJECT',
-    },
-    findNote: 'Close to Ramashis Chowk intersection, on the main connecting road toward Vaishali.',
-    about: {
-      lead: 'Our North Bihar coordination office handling standalone bungalow commissions, ancestral home renovations, and commercial estates across Hajipur and Sonpur.',
-      body: [
-        'Maintains dedicated site supervisors who reside in Hajipur, guaranteeing daily attendance and mason coordination without transit delay across the Ganga bridge.',
-        'All custom cabinetry continues to be fabricated at our Digha workshop and transported via scheduled container trucks.',
-      ],
-      stats: [
-        { value: '150 KM', label: 'CORE WORKING RADIUS' },
-        { value: 'DAILY', label: 'SITE SUPERVISION' },
-        { value: '35+', label: 'VILLAS DELIVERED' },
-      ],
-    },
-    team: [
-      {
-        name: 'AMIT KUMAR',
-        role: 'REGIONAL SITE ENGINEER',
-        image: '/clients/ashish-interiors/editorial/team/site-02.jpg',
-      },
-    ],
-    projectSlugs: ['patliputra-duplex'],
-  },
 ]
+
+export const FIVE_LOCATIONS = MULTI_CITY_LOCATIONS.slice(0, 5)
 
 const HI_TRANSLATIONS: Record<string, { name: string; findNote: string }> = {
   'patna-studio': {
-    name: 'बोरिंग रोड डिज़ाइन स्टूडियो',
+    name: 'बोरिंग रोड डिज़ाइन स्टूडियो एवं मटीरियल लाइब्रेरी',
     findNote: 'रेमंड शोरूम के ऊपर, एसबीआई एटीएम के बगल में सीढ़ी। पीछे सर्विस लेन में पार्किंग की सुविधा।',
   },
+  'ranchi-studio': {
+    name: 'अशोक नगर स्टूडियो एवं कंसल्टेशन सुइट (रांची)',
+    findNote: 'मेन रोड अशोक नगर पर, बिरसा मुंडा एयरपोर्ट कनेक्टर से 5 मिनट की दूरी पर।',
+  },
+  'varanasi-studio': {
+    name: 'सिगरा एटेलियर एवं हेरिटेज रेनोवेशन डेस्क (वाराणसी)',
+    findNote: 'कुबेर प्लाजा क्रॉसिंग के पास, वाराणसी कैंट स्टेशन से 10 मिनट।',
+  },
+  'kolkata-studio': {
+    name: 'सॉल्ट लेक सेक्टर 5 स्टूडियो एवं आर्काइव (कोलकाता)',
+    findNote: 'टेक्नोपोलिस चौराहे के पास, अंडरग्राउंड पार्किंग सुविधा उपलब्ध।',
+  },
+  'lucknow-studio': {
+    name: 'गोमती नगर एटेलियर एवं डिज़ाइन हब (लखनऊ)',
+    findNote: 'विभूति खंड कमर्शियल प्लाजा के पास, सुविधाजनक सड़क एवं लिफ्ट सुविधा।',
+  },
   'digha-ghat': {
-    name: 'दीघा घाट कैबिनेट वर्कशॉप',
+    name: 'सेंट्रल जॉइनरी एवं मशीन फैब्रिकेशन यूनिट',
     findNote: 'जेपी गंगा पथ से 5 मिनट की दूरी पर, इंडस्ट्रियल टिंबर यार्ड के पास।',
-  },
-  kankarbagh: {
-    name: 'कंकड़बाग कंसल्टेशन डेस्क',
-    findNote: 'ओल्ड बाईपास रोड पर तिवारी बेचार स्वीट्स के ठीक सामने, कुम्हरार पार्क से 3 मिनट।',
-  },
-  danapur: {
-    name: 'बेली रोड एवं दानापुर स्टूडियो',
-    findNote: 'सगुना मोड़ फ्लाईओवर के पास, लिफ्ट और सुगम पार्किंग उपलब्ध।',
-  },
-  hajipur: {
-    name: 'हाजीपुर रीजनल साइट ऑफिस',
-    findNote: 'रामाशीष चौक के पास, वैशाली मुख्य मार्ग पर।',
   },
 }
 
-export const FIVE_LOCATIONS_HI: Office[] = FIVE_LOCATIONS.map((loc) => {
+export const MULTI_CITY_LOCATIONS_HI: Office[] = MULTI_CITY_LOCATIONS.map((loc) => {
   const t = HI_TRANSLATIONS[loc.slug]
   return t ? { ...loc, name: t.name, findNote: t.findNote } : loc
 })
+
+export const FIVE_LOCATIONS_HI = MULTI_CITY_LOCATIONS_HI.slice(0, 5)
+
+export const TERRITORY_DIRECTORY: TerritoryZone[] = [
+  {
+    regionName: 'Bihar & Central Plains',
+    provinceState: 'Bihar',
+    keyCities: ['Patna', 'Danapur', 'Hajipur', 'Muzaffarpur', 'Gaya'],
+    surveyResponse: 'Same-day survey dispatch (2–4 hrs)',
+    supervisionModel: 'Daily resident site supervisor',
+  },
+  {
+    regionName: 'Jharkhand & Chota Nagpur',
+    provinceState: 'Jharkhand',
+    keyCities: ['Ranchi', 'Jamshedpur', 'Dhanbad', 'Bokaro'],
+    surveyResponse: 'Within 24–48 hours',
+    supervisionModel: 'Dedicated territory supervisor',
+  },
+  {
+    regionName: 'Purvanchal & Awadh Belt',
+    provinceState: 'Uttar Pradesh',
+    keyCities: ['Varanasi', 'Lucknow', 'Prayagraj', 'Gorakhpur'],
+    surveyResponse: 'Scheduled site architect (48 hrs)',
+    supervisionModel: 'Architectural team oversight',
+  },
+  {
+    regionName: 'Eastern Metropolitan Area',
+    provinceState: 'West Bengal',
+    keyCities: ['Kolkata', 'Salt Lake', 'New Town', 'Howrah'],
+    surveyResponse: 'Next-day laser measurement',
+    supervisionModel: 'Turnkey site engineering crew',
+  },
+  {
+    regionName: 'Capital Corridor Desk',
+    provinceState: 'Delhi NCR',
+    keyCities: ['Gurgaon', 'South Delhi', 'Noida', 'Faridabad'],
+    surveyResponse: 'By appointment consultation',
+    supervisionModel: 'Turnkey specification liaison',
+  },
+]
 
 export const SEO_DATA: Record<string, LocationSeoMeta> = {
   'patna-studio': {
     metaTitle: 'Interior Designer in Boring Road Patna | Ashish Interiors Studio',
     metaDescription:
-      'Visit Ashish Interiors Boring Road Studio at Shivam Complex. Best interior designer in Patna for luxury residential flats, modular kitchens, and architectural floor planning.',
+      'Visit Ashish Interiors Boring Road Studio at Shivam Complex. Best interior designer in Patna for luxury residential flats, modular kitchens, and architectural space planning.',
     targetKeywords: [
       'Interior designer in Boring Road Patna',
       'Best interior designer in Patna',
@@ -276,10 +373,66 @@ export const SEO_DATA: Record<string, LocationSeoMeta> = {
     geoCoordinates: { latitude: 25.6178, longitude: 85.1234 },
     neighborhoodsServed: ['Boring Road', 'Boring Canal Road', 'Patliputra Colony', 'Sri Krishna Puri', 'Kidwaipuri'],
   },
+  'ranchi-studio': {
+    metaTitle: 'Interior Designers in Ranchi Jharkhand | Turnkey Bungalow & Flat Design',
+    metaDescription:
+      'Ashish Interiors Ashok Nagar studio in Ranchi. Turnkey residential architectural interiors, modular wardrobes, and moisture-sealed kitchen cabinets across Jharkhand.',
+    targetKeywords: [
+      'Interior designer in Ranchi Jharkhand',
+      'Home interior designers Ashok Nagar Ranchi',
+      'Modular kitchen in Ranchi',
+      'Turnkey residential interior Ranchi',
+      'Duplex bungalow interior designer Ranchi',
+    ],
+    geoCoordinates: { latitude: 23.3441, longitude: 85.3096 },
+    neighborhoodsServed: ['Ashok Nagar', 'Main Road', 'Harmu Housing Colony', 'Morabadi', 'Kanke Road'],
+  },
+  'varanasi-studio': {
+    metaTitle: 'Interior Designers in Varanasi UP | Heritage & Modern Home Renovation',
+    metaDescription:
+      'Consult our Sigra Varanasi studio for turnkey home remodeling, luxury modular joinery, and architectural restoration in Purvanchal and Eastern Uttar Pradesh.',
+    targetKeywords: [
+      'Interior designer in Varanasi',
+      'Best interior designers Sigra Varanasi',
+      'Home renovation contractors Varanasi',
+      'Modular kitchen showroom Varanasi',
+      'Turnkey residence design UP East',
+    ],
+    geoCoordinates: { latitude: 25.3176, longitude: 82.9739 },
+    neighborhoodsServed: ['Sigra', 'Maldahiya', 'Mahmoorganj', 'Bhelupur', 'Varanasi Cantt'],
+  },
+  'kolkata-studio': {
+    metaTitle: 'Interior Designers Salt Lake Kolkata | Turnkey High-Rise Apartment Interiors',
+    metaDescription:
+      'Visit Ashish Interiors Sector V Salt Lake studio. Premium turnkey flat interiors, zero-expansion marine ply cabinetry, and modern interior architecture in Kolkata.',
+    targetKeywords: [
+      'Interior designers Salt Lake Kolkata',
+      'Turnkey apartment interior design Sector V',
+      'Modular kitchen manufacturer Kolkata',
+      'New Town home interior contractors',
+      'Bespoke luxury flats Kolkata',
+    ],
+    geoCoordinates: { latitude: 22.5804, longitude: 88.4378 },
+    neighborhoodsServed: ['Salt Lake Sector V', 'Action Area New Town', 'Rajarhat', 'EM Bypass', 'Lake Town'],
+  },
+  'lucknow-studio': {
+    metaTitle: 'Interior Designers in Gomti Nagar Lucknow | Turnkey Kothi & Flat Interiors',
+    metaDescription:
+      'Ashish Interiors Gomti Nagar studio in Lucknow. Bespoke turnkey residential interior design, custom woodwork, and transparent site execution across Uttar Pradesh.',
+    targetKeywords: [
+      'Interior designers Gomti Nagar Lucknow',
+      'Luxury home interiors Lucknow',
+      'Turnkey flat interior decorator Vibhuti Khand',
+      'Modular kitchen designers Lucknow',
+      'Bungalow interior architects Lucknow',
+    ],
+    geoCoordinates: { latitude: 26.8532, longitude: 80.9992 },
+    neighborhoodsServed: ['Gomti Nagar', 'Vibhuti Khand', 'Indira Nagar', 'Hazratganj', 'Sushant Golf City'],
+  },
   'digha-ghat': {
     metaTitle: 'Modular Furniture & Cabinet Workshop Digha Ghat Patna | In-House Carpentry',
     metaDescription:
-      'Inspect genuine IS:710 Marine Grade BWP plywood cutting, hot-melt PUR edge banding, and pre-fit modular assembly at Ashish Interiors Digha Ghat joinery workshop.',
+      'Inspect genuine IS:710 Marine Grade BWP plywood cutting, hot-melt PUR edge banding, and pre-fit modular assembly at Ashish Interiors central joinery facility.',
     targetKeywords: [
       'Modular kitchen manufacturer Patna',
       'Cabinet carpentry workshop Digha Patna',
@@ -290,6 +443,7 @@ export const SEO_DATA: Record<string, LocationSeoMeta> = {
     geoCoordinates: { latitude: 25.6512, longitude: 85.0982 },
     neighborhoodsServed: ['Digha', 'Kurji', 'Digha Ghat', 'Ganga Path Corridor', 'Patna City Industrial'],
   },
+  // Backward compatibility aliases
   kankarbagh: {
     metaTitle: 'Interior Designers in Kankarbagh Patna | Home Renovation & Joinery',
     metaDescription:
@@ -297,12 +451,9 @@ export const SEO_DATA: Record<string, LocationSeoMeta> = {
     targetKeywords: [
       'Interior designers in Kankarbagh Patna',
       'Home interior designers Old Bypass Kankarbagh',
-      'House renovation Kankarbagh Rajendra Nagar',
-      'Modular kitchen Kankarbagh Patna',
-      'False ceiling contractors Kankarbagh',
     ],
     geoCoordinates: { latitude: 25.5941, longitude: 85.1582 },
-    neighborhoodsServed: ['Kankarbagh', 'Rajendra Nagar', 'Hanuman Nagar', 'Kumhrar', 'Lohia Nagar'],
+    neighborhoodsServed: ['Kankarbagh', 'Rajendra Nagar', 'Hanuman Nagar'],
   },
   danapur: {
     metaTitle: 'Apartment Interior Designers Bailey Road & Saguna More Danapur Patna',
@@ -311,12 +462,9 @@ export const SEO_DATA: Record<string, LocationSeoMeta> = {
     targetKeywords: [
       'Interior designers Bailey Road Patna',
       'Apartment interior designers Saguna More',
-      'Flat interior design Danapur Patna',
-      '3BHK interiors RPS More Bailey Road',
-      'Turnkey home interiors Danapur Cantt',
     ],
     geoCoordinates: { latitude: 25.6128, longitude: 85.0475 },
-    neighborhoodsServed: ['Saguna More', 'Bailey Road', 'RPS More', 'Gola Road', 'Danapur Cantt', 'Khagaul'],
+    neighborhoodsServed: ['Saguna More', 'Bailey Road', 'RPS More'],
   },
   hajipur: {
     metaTitle: 'Interior Designer in Hajipur Vaishali | Turnkey Villa & Home Interiors',
@@ -324,13 +472,10 @@ export const SEO_DATA: Record<string, LocationSeoMeta> = {
       'Local site office at Ramashis Chowk, Hajipur. Residential bungalow renovations, villa interior design, and dedicated daily site supervision across North Bihar.',
     targetKeywords: [
       'Interior designer Hajipur Vaishali',
-      'Best interior designer in Hajipur',
       'Bungalow interior design North Bihar',
-      'Home interior contractor Hajipur Sonpur',
-      'Turnkey residence design Vaishali',
     ],
     geoCoordinates: { latitude: 25.6881, longitude: 85.2144 },
-    neighborhoodsServed: ['Hajipur', 'Ramashis Chowk', 'Sonpur', 'Vaishali', 'Lalganj Corridor'],
+    neighborhoodsServed: ['Hajipur', 'Ramashis Chowk', 'Sonpur'],
   },
 }
 
@@ -339,7 +484,7 @@ export function resolveOffice(
   slug: string,
   locale: 'en' | 'hi' = 'en',
 ): Office | undefined {
-  const offices = locale === 'hi' ? FIVE_LOCATIONS_HI : FIVE_LOCATIONS
+  const offices = locale === 'hi' ? MULTI_CITY_LOCATIONS_HI : MULTI_CITY_LOCATIONS
 
   // Check direct slug
   let target = offices.find((o) => o.slug === slug)
@@ -349,10 +494,25 @@ export function resolveOffice(
     target = offices[0]
   }
   if (!target && slug === 'workshop') {
-    target = offices[1]
+    target = offices.find((o) => o.slug === 'digha-ghat')
   }
-  if (!target && (slug === 'bailey-road' || slug === 'saguna-more')) {
-    target = offices[3]
+  if (!target && (slug === 'ranchi' || slug === 'ashok-nagar')) {
+    target = offices.find((o) => o.slug === 'ranchi-studio')
+  }
+  if (!target && (slug === 'varanasi' || slug === 'sigra' || slug === 'banaras')) {
+    target = offices.find((o) => o.slug === 'varanasi-studio')
+  }
+  if (!target && (slug === 'kolkata' || slug === 'salt-lake' || slug === 'calcutta')) {
+    target = offices.find((o) => o.slug === 'kolkata-studio')
+  }
+  if (!target && (slug === 'lucknow' || slug === 'gomti-nagar')) {
+    target = offices.find((o) => o.slug === 'lucknow-studio')
+  }
+  if (!target && (slug === 'bailey-road' || slug === 'danapur' || slug === 'saguna-more')) {
+    target = offices[0] // fallback to primary or closest
+  }
+  if (!target && (slug === 'kankarbagh' || slug === 'hajipur')) {
+    target = offices[0]
   }
 
   // Check site config
@@ -390,9 +550,9 @@ export function generateLocationsJsonLd(offices: Office[], fallbackPhone?: strin
           address: {
             '@type': 'PostalAddress',
             streetAddress: office.address.line1,
-            addressLocality: office.address.locality || 'Patna',
-            addressRegion: office.address.state || 'Bihar',
-            postalCode: office.address.pincode || '800001',
+            addressLocality: office.address.locality || office.address.city,
+            addressRegion: office.address.state,
+            postalCode: office.address.pincode || '',
             addressCountry: 'IN',
           },
           geo: {

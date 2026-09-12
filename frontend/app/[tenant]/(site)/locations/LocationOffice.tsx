@@ -50,10 +50,11 @@ function Heading({ office, copy, locale }: { office: Office; copy: LocationCopy;
       </Link>
       <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
         <div className="min-w-0">
-          <h1 className="m-0 font-display text-[clamp(46px,9vw,112px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-            <ClipLine>
-              {copy.title.lead} <span className="text-accent">{copy.title.accent}</span>
-            </ClipLine>
+          <span className="mb-2 block text-[11px] font-medium uppercase tracking-[0.24em] text-accent">
+            {office.address.locality ? `${office.address.locality} · ${office.address.city}` : office.address.city}
+          </span>
+          <h1 className="m-0 font-display text-[clamp(36px,6.5vw,88px)] font-light uppercase leading-[0.95] tracking-[-0.03em] text-ink">
+            <ClipLine>{office.name}</ClipLine>
           </h1>
         </div>
         <div className="grid gap-3.5 pb-2">

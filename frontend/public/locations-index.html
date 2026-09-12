@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locations Prototypes — Ashish Interiors Patna</title>
+  <title>Locations Architecture — Ashish Interiors Multi-City</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
@@ -17,7 +17,6 @@
       --muted: #8B8377;
       --hairline: #DCD7CE;
       --panel: #FAF8F5;
-      --wa-green: #285A43;
       --font-display: 'Archivo', Helvetica, Arial, sans-serif;
       --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -42,7 +41,7 @@
       overflow-x: hidden;
     }
 
-    /* Sticky Top Control Bar */
+    /* Top Navigation Bar */
     .master-bar {
       position: sticky;
       top: 0;
@@ -89,7 +88,7 @@
     .proto-controls {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
@@ -97,13 +96,14 @@
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #f5f2ed;
-      padding: 5px 12px;
+      padding: 6px 14px;
       font-size: 11.5px;
       font-weight: 500;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
+      text-decoration: none;
       transition: all 0.15s ease;
     }
 
@@ -113,542 +113,146 @@
       border-color: var(--cta);
     }
 
-    .pills-scroll {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .pill-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: #c4beb5;
-      padding: 5px 12px;
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.15s ease;
-      text-decoration: none;
-    }
-
-    .pill-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-    }
-
-    .pill-btn.active {
+    .nav-btn.primary {
       background: var(--cta);
       color: var(--ink);
       border-color: var(--cta);
       font-weight: 600;
     }
 
-    .meta-actions {
+    /* Sub-bar / Viewport Switcher */
+    .sub-bar {
+      background: #1e1b19;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px clamp(14px, 2.5vw, 36px);
       display: flex;
-      align-items: center;
-      gap: 10px;
       flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
 
-    .viewport-controls {
+    .viewport-pills {
       display: flex;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .view-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: none;
-      border-right: 1px solid rgba(255, 255, 255, 0.12);
-      color: #a89f92;
-      padding: 5px 10px;
-      font-size: 11px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .view-btn:last-child {
-      border-right: none;
-    }
-
-    .view-btn.active, .view-btn:hover {
-      background: #ffffff;
-      color: var(--ink);
-    }
-
-    .action-link {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #dcd7ce;
-      padding: 5px 12px;
-      font-size: 11.5px;
-      text-decoration: none;
-      display: inline-flex;
       align-items: center;
       gap: 4px;
     }
 
-    .action-link:hover {
-      background: #ffffff;
-      color: var(--ink);
+    .vp-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #c2bcb2;
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
-    /* Concept Description Sub-bar */
-    .active-info-bar {
-      background: #1c1a18;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 8px clamp(14px, 2.5vw, 36px);
-      font-size: 12px;
-      color: #a89f92;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .vp-btn:hover, .vp-btn.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
-    .info-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badge-num {
-      background: var(--cta);
-      color: var(--ink);
-      font-weight: 700;
-      font-size: 10.5px;
-      padding: 2px 6px;
-    }
-
-    .info-title {
-      color: #f7f5f0;
-      font-weight: 500;
-    }
-
-    .info-device {
-      color: #D9BC72;
+    .status-summary {
       font-size: 11.5px;
+      color: #b8b1a4;
     }
 
-    /* Interactive Frame Stage */
-    .stage-container {
+    .status-summary strong {
+      color: var(--cta);
+    }
+
+    /* Main Stage */
+    .stage {
       flex: 1;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
+      align-items: flex-start;
       padding: 16px;
       background: #0d0c0b;
-      min-height: calc(100vh - 120px);
+      min-height: calc(100vh - 100px);
     }
 
-    .frame-wrapper {
+    .frame-container {
       width: 100%;
-      height: 840px;
+      height: calc(100vh - 130px);
+      min-height: 800px;
       background: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: width 0.3s ease;
-      position: relative;
     }
 
-    .frame-wrapper.desktop {
-      max-width: 1320px;
+    .frame-container.desktop {
+      width: 100%;
+      max-width: 1340px;
     }
 
-    .frame-wrapper.tablet {
-      max-width: 768px;
+    .frame-container.tablet {
+      width: 768px;
     }
 
-    .frame-wrapper.mobile {
-      max-width: 375px;
-      height: 740px;
+    .frame-container.mobile {
+      width: 375px;
     }
 
-    iframe#previewFrame {
+    iframe {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
-    }
-
-    /* Catalog Section */
-    .catalog-section {
-      background: #141312;
-      border-top: 1px solid var(--accent);
-      padding: clamp(36px, 5vw, 64px) clamp(16px, 4vw, 48px);
-    }
-
-    .catalog-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .catalog-header {
-      margin-bottom: 28px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 16px;
-    }
-
-    .catalog-title {
-      font-family: var(--font-display);
-      font-size: clamp(24px, 3.5vw, 36px);
-      font-weight: 400;
-      color: #f7f5f0;
-      margin-bottom: 6px;
-    }
-
-    .catalog-subtitle {
-      font-size: 13.5px;
-      color: #8b8377;
-    }
-
-    .grid-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-    }
-
-    .variant-card {
-      background: #1a1816;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 16px;
-      cursor: pointer;
-      transition: border-color 0.15s ease;
-    }
-
-    .variant-card:hover {
-      border-color: var(--cta);
-      background: #1f1d1a;
-    }
-
-    .card-top {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    .card-num {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--cta);
-    }
-
-    .card-title {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 500;
-      color: #f7f5f0;
-      line-height: 1.3;
-    }
-
-    .card-desc {
-      font-size: 13.5px;
-      color: #a89f92;
-      line-height: 1.6;
-    }
-
-    .card-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 14px;
-    }
-
-    .btn-load {
-      background: var(--cta);
-      color: var(--ink);
-      border: none;
-      padding: 7px 14px;
-      font-size: 11.5px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .btn-load:hover {
       background: #ffffff;
-    }
-
-    .btn-direct {
-      color: #dcd7ce;
-      font-size: 11.5px;
-      text-decoration: none;
-    }
-
-    .btn-direct:hover {
-      color: #ffffff;
-      text-decoration: underline;
-    }
-
-    /* Footer */
-    .master-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 24px clamp(16px, 4vw, 48px);
-      font-size: 12px;
-      color: #8b8377;
-      background: #100f0e;
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .hub-links {
-      display: flex;
-      gap: 16px;
-    }
-
-    .hub-links a {
-      color: #c4beb5;
-      text-decoration: none;
-    }
-
-    .hub-links a:hover {
-      color: var(--cta);
     }
   </style>
 </head>
 <body>
-
-  <!-- Sticky Top Master Bar -->
-  <header class="master-bar" role="banner">
+  <!-- Top Bar -->
+  <header class="master-bar">
     <div class="brand-section">
-      <a href="/" class="brand-mark">AI</a>
+      <a href="/locations" class="brand-mark">AI</a>
       <div>
-        <div class="brand-title">Locations Prototypes</div>
-        <div class="brand-subtitle">Ashish Interiors · 3 Minimal Concepts</div>
+        <div class="brand-title">Locations Architectural Ledger</div>
+        <div class="brand-subtitle">Multi-City & Regional Territories Design</div>
       </div>
     </div>
 
-    <!-- Paging & Iteration Pills (3 Variants Only) -->
     <div class="proto-controls">
-      <button type="button" class="nav-btn" onclick="prevVariant()" title="Previous (Left Arrow)">← Prev</button>
-      <div class="pills-scroll" id="pillsContainer">
-        <!-- Injected via JavaScript -->
-      </div>
-      <button type="button" class="nav-btn" onclick="nextVariant()" title="Next (Right Arrow)">Next →</button>
-    </div>
-
-    <!-- Viewport Devices & Actions -->
-    <div class="meta-actions">
-      <div class="viewport-controls">
-        <button type="button" class="view-btn active" id="viewDesktop" onclick="setViewport('desktop')" title="Desktop View">Desktop</button>
-        <button type="button" class="view-btn" id="viewTablet" onclick="setViewport('tablet')" title="Tablet View">Tablet</button>
-        <button type="button" class="view-btn" id="viewMobile" onclick="setViewport('mobile')" title="Mobile View">Mobile</button>
-      </div>
-      <button type="button" class="nav-btn" onclick="toggleIframeLang()" title="Toggle Language inside prototype">EN / HI</button>
-      <a href="locations-iteration-1.html" target="_blank" rel="noopener" class="action-link" id="openExternalBtn">
-        <span>Open Tab</span>
+      <a href="locations-iteration-1.html" target="_blank" class="nav-btn">
+        <span>Open Standalone Tab ↗</span>
       </a>
-      <a href="#catalog" class="nav-btn">Catalog ↓</a>
+      <a href="/locations" class="nav-btn primary">
+        <span>Live Next.js Route ↗</span>
+      </a>
     </div>
   </header>
 
-  <!-- Subheader with Active Concept Metadata -->
-  <aside class="active-info-bar">
-    <div class="info-left">
-      <span class="badge-num" id="infoBadge">VARIANT 1</span>
-      <span class="info-title" id="infoTitle">The 5-Studio Architectural Ledger</span>
-      <span class="info-device" id="infoDevice">Structured ledger of 5 facilities with LocalBusiness JSON-LD</span>
+  <!-- Sub Bar: Viewport controls -->
+  <div class="sub-bar">
+    <div class="viewport-pills">
+      <button class="vp-btn active" onclick="setViewport('desktop', this)">Desktop (1340px)</button>
+      <button class="vp-btn" onclick="setViewport('tablet', this)">Tablet (768px)</button>
+      <button class="vp-btn" onclick="setViewport('mobile', this)">Mobile (375px)</button>
     </div>
-    <div>
-      <span>3 Five-Location Variants</span>
-    </div>
-  </aside>
 
-  <!-- Interactive Stage & Live Iframe -->
-  <main class="stage-container">
-    <div class="frame-wrapper desktop" id="frameWrapper">
-      <iframe id="previewFrame" src="locations-iteration-1.html" title="Ashish Interiors Location Prototype Preview"></iframe>
+    <div class="status-summary">
+      Selected: <strong>The Architectural Ledger</strong> · 6 Multi-City Locations & Territory Directory
+    </div>
+  </div>
+
+  <!-- Stage -->
+  <main class="stage">
+    <div class="frame-container desktop" id="frameWrapper">
+      <iframe id="protoFrame" src="locations-iteration-1.html" title="Locations Architectural Ledger"></iframe>
     </div>
   </main>
 
-  <!-- Catalog Grid of All 3 Variants -->
-  <section class="catalog-section" id="catalog">
-    <div class="catalog-inner">
-      <div class="catalog-header">
-        <h2 class="catalog-title">All 3 Minimal Location Variants</h2>
-        <p class="catalog-subtitle">
-          Clean, focused prototypes showing studio locations and serviced neighborhoods without excess decoration.
-        </p>
-      </div>
-
-      <div class="grid-cards" id="catalogCards">
-        <!-- Injected via JavaScript -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="master-footer">
-    <div class="footer-content">
-      <div>
-        <strong>Ashish Interiors</strong> · Locations Prototyping
-      </div>
-      <nav class="hub-links">
-        <a href="/locations" target="_blank">Next.js /locations (Live)</a>
-        <a href="/about-iteration-1.html">About Prototypes (1–6)</a>
-        <a href="/contact-iteration-1.html">Contact Prototypes (1–20)</a>
-        <a href="/contact" target="_blank">Next.js /contact</a>
-      </nav>
-    </div>
-  </footer>
-
   <script>
-    const VARIANTS = [
-      {
-        id: 1,
-        title: "The 5-Studio Architectural Ledger",
-        device: "Structured ledger of 5 facilities with LocalBusiness JSON-LD",
-        desc: "A clean, rhythmic editorial directory detailing all 5 physical branches: Boring Road Atelier, Digha Ghat Workshop, Kankarbagh Desk, Bailey Road Hub, and Hajipur Site Office with verified hours, addresses, and Schema.org markup.",
-        url: "locations-iteration-1.html"
-      },
-      {
-        id: 2,
-        title: "The Regional Network Grid (Categorized)",
-        device: "Interactive 3-tier categorization: Consultation (3), Joinery (1), Regional (1)",
-        desc: "Categorizes the 5 locations by operational purpose with interactive filter pills, clear facility comparison cards, and a targeted Local SEO FAQ addressing Google search intent.",
-        url: "locations-iteration-2.html"
-      },
-      {
-        id: 3,
-        title: "The Locality Proximity & Survey Guide",
-        device: "Neighbourhood response matrix + Proximity hub cards",
-        desc: "A proximity-first guide connecting 12 Patna and Bihar localities with their nearest branch for same-day laser survey dispatch, along with dedicated booking cards.",
-        url: "locations-iteration-3.html"
-      }
-    ];
-
-    let currentIndex = 0;
-    let currentViewport = 'desktop';
-
-    function init() {
-      const pillsContainer = document.getElementById('pillsContainer');
-      const catalogCards = document.getElementById('catalogCards');
-
-      pillsContainer.innerHTML = '';
-      catalogCards.innerHTML = '';
-
-      VARIANTS.forEach((v, idx) => {
-        // Pill button
-        const pill = document.createElement('button');
-        pill.className = `pill-btn ${idx === currentIndex ? 'active' : ''}`;
-        pill.textContent = `${v.id}: ${v.title.split(':')[0].replace('The ', '')}`;
-        pill.title = v.title;
-        pill.onclick = () => loadVariant(idx);
-        pillsContainer.appendChild(pill);
-
-        // Catalog card
-        const card = document.createElement('div');
-        card.className = 'variant-card';
-        card.innerHTML = `
-          <div class="card-top">
-            <div class="card-header">
-              <span class="card-num">VARIANT 0${v.id}</span>
-            </div>
-            <h3 class="card-title">${v.title}</h3>
-            <p class="card-desc">${v.desc}</p>
-          </div>
-          <div class="card-actions">
-            <button class="btn-load" onclick="loadVariant(${idx}); window.scrollTo({top: 0, behavior: 'smooth'});">Load in Viewer</button>
-            <a href="${v.url}" target="_blank" rel="noopener" class="btn-direct">Open in New Tab</a>
-          </div>
-        `;
-        catalogCards.appendChild(card);
-      });
-
-      updateUI();
+    function setViewport(size, btn) {
+      document.querySelectorAll('.vp-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const wrap = document.getElementById('frameWrapper');
+      wrap.className = 'frame-container ' + size;
     }
-
-    function loadVariant(index) {
-      if (index < 0 || index >= VARIANTS.length) return;
-      currentIndex = index;
-      const v = VARIANTS[currentIndex];
-
-      const iframe = document.getElementById('previewFrame');
-      iframe.src = v.url;
-
-      updateUI();
-    }
-
-    function updateUI() {
-      const v = VARIANTS[currentIndex];
-
-      document.getElementById('infoBadge').textContent = `VARIANT ${v.id}`;
-      document.getElementById('infoTitle').textContent = v.title;
-      document.getElementById('infoDevice').textContent = v.device;
-      document.getElementById('openExternalBtn').href = v.url;
-
-      const pills = document.querySelectorAll('.pill-btn');
-      pills.forEach((p, idx) => {
-        if (idx === currentIndex) {
-          p.classList.add('active');
-        } else {
-          p.classList.remove('active');
-        }
-      });
-    }
-
-    function prevVariant() {
-      const newIdx = currentIndex > 0 ? currentIndex - 1 : VARIANTS.length - 1;
-      loadVariant(newIdx);
-    }
-
-    function nextVariant() {
-      const newIdx = currentIndex < VARIANTS.length - 1 ? currentIndex + 1 : 0;
-      loadVariant(newIdx);
-    }
-
-    function setViewport(device) {
-      currentViewport = device;
-      const wrapper = document.getElementById('frameWrapper');
-      wrapper.className = `frame-wrapper ${device}`;
-
-      document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-      if (device === 'desktop') document.getElementById('viewDesktop').classList.add('active');
-      if (device === 'tablet') document.getElementById('viewTablet').classList.add('active');
-      if (device === 'mobile') document.getElementById('viewMobile').classList.add('active');
-    }
-
-    function toggleIframeLang() {
-      const iframe = document.getElementById('previewFrame');
-      try {
-        if (iframe.contentWindow && typeof iframe.contentWindow.toggleLanguage === 'function') {
-          iframe.contentWindow.toggleLanguage();
-        }
-      } catch (e) {
-        console.warn('Could not toggle iframe language', e);
-      }
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      if (e.key === 'ArrowLeft') prevVariant();
-      if (e.key === 'ArrowRight') nextVariant();
-    });
-
-    // Initialize on load
-    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>

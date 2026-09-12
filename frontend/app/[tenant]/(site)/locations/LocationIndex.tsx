@@ -7,6 +7,7 @@ import { HeroNav } from '@/sections/Hero/HeroNav'
 import { renderableSections } from '@/sections/registry'
 import { OpenBadge } from './LocationChrome'
 import { chromeCopy, localePageClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { MULTI_CITY_LOCATIONS, MULTI_CITY_LOCATIONS_HI, TERRITORY_DIRECTORY } from '@/lib/locations-data'
 
 type Office = NonNullable<ClientConfig['sections']['locations']>['offices'][number]
 const pagePad = 'px-[clamp(20px,5vw,64px)]'
@@ -59,9 +60,21 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
   const locale = publicLocaleFromSite(site)
   const labels = chromeCopy[locale].locations
 
-  const officesList: Office[] = site.sections.locations?.offices?.length
-    ? site.sections.locations.offices
-    : [fallbackOffice(site)]
+  const configuredOffices = site.sections.locations?.offices ?? []
+  const baseOffices =
+    configuredOffices.length > 1
+      ? configuredOffices
+      : locale === 'hi'
+        ? MULTI_CITY_LOCATIONS_HI
+        : MULTI_CITY_LOCATIONS
+
+  const officesList: Office[] =
+    baseOffices.length > 0
+      ? baseOffices.map((office) => ({
+          ...office,
+          phone: office.phone || site.business.phone,
+        }))
+      : [fallbackOffice(site)]
 
   const hasWorkshopNote = Boolean(site.sections.locations?.otherLocationsNote)
 
@@ -198,14 +211,14 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                         )}
                       </div>
 
-                      {/* Action Buttons */}
+                      {/* Action Buttons: Primary, Secondary, WhatsApp */}
                       <div className="mt-2 flex flex-wrap items-center gap-3 pt-4">
                         <Link
                           href={detailHref}
-                          className="inline-flex min-h-12 items-center gap-2.5 bg-cta px-6 py-3.5 text-[11px] font-medium uppercase tracking-[0.2em] text-ink transition-colors hover:bg-ink hover:text-surface"
+                          className="group inline-flex min-h-11 items-center gap-2.5 [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)] bg-cta px-6 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-all duration-200 hover:bg-ink hover:text-cta"
                         >
-                          {labels.viewDetails}
-                          <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5" />
+                          <span>{labels.viewDetails}</span>
+                          <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         </Link>
 
                         {maps ? (
@@ -213,7 +226,7 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                             href={maps}
                             target="_blank"
                             rel="noopener"
-                            className="inline-flex min-h-12 items-center gap-2 border border-hairline px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:border-accent hover:text-accent"
+                            className="inline-flex min-h-11 items-center gap-2 border border-ink bg-transparent px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-surface"
                           >
                             {labels.contact.openMaps}
                             <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
@@ -223,8 +236,11 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                         {wa ? (
                           <a
                             href={wa}
-                            className="inline-flex min-h-12 items-center gap-2 border border-hairline px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:border-accent hover:text-accent"
+                            target="_blank"
+                            rel="noopener"
+                            className="inline-flex min-h-11 items-center gap-2 bg-wa-evergreen px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-surface transition-colors hover:bg-wa-deep"
                           >
+                            <EditorialIcon name="message-circle" className="h-3.5 w-3.5" />
                             {labels.contact.whatsapp}
                           </a>
                         ) : null}
@@ -266,6 +282,48 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
               </StaggerItem>
             )}
           </Stagger>
+        </section>
+      </HomeSection>
+
+      {/* Location & Territory Directory (Location-neutral regional matrix) */}
+      <HomeSection>
+        <section className={`${pagePad} border-t-2 border-ink py-[clamp(48px,6vw,84px)]`}>
+          <div className="mb-8">
+            <span className="mb-2 block text-[10.5px] font-medium uppercase tracking-[0.22em] text-accent">
+              {locale === 'hi' ? 'क्षेत्रीय कवरेज एवं डिस्पैच' : 'Regional Coverage & Dispatch'}
+            </span>
+            <h2 className="m-0 font-display text-[clamp(26px,4vw,44px)] font-light uppercase tracking-[-0.02em] text-ink">
+              {locale === 'hi' ? 'लोकेशन एवं प्रादेशिक डायरेक्टरी' : 'Location & Territory Directory'}
+            </h2>
+            <p className="mt-3 max-w-[48em] text-[15px] leading-[1.65] text-body">
+              {locale === 'hi'
+                ? 'हमारे भौतिक स्टूडियो एवं रेजिडेंट साइट इंजीनियर सभी प्रमुख क्षेत्रों में त्वरित रूम लेजर माप एवं दैनिक साइट पर्यवेक्षण सुनिश्चित करते हैं:'
+                : 'Our dedicated regional ateliers and site offices ensure same-day room measurements and direct site supervision across each designated zone:'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {TERRITORY_DIRECTORY.map((terr) => (
+              <div key={terr.regionName} className="flex flex-col justify-between gap-4 border border-hairline bg-panel p-6">
+                <div>
+                  <h3 className="m-0 text-[13.5px] font-semibold uppercase tracking-[0.08em] text-ink">
+                    {terr.regionName}
+                  </h3>
+                  <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-accent">
+                    {locale === 'hi' ? `राज्य: ${terr.provinceState}` : `State: ${terr.provinceState}`}
+                  </span>
+                  <p className="mt-3 text-[13px] leading-[1.55] text-body">
+                    {terr.keyCities.join(', ')}
+                  </p>
+                </div>
+                <div>
+                  <span className="inline-block bg-wa-evergreen/10 px-2.5 py-1 text-[11px] font-semibold text-wa-evergreen">
+                    {terr.surveyResponse}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
       </HomeSection>
 
