@@ -22,6 +22,7 @@
     "test:rls": "node --env-file-if-exists=.env --import tsx scripts/test-rls.ts",
     "test:analytics": "node --env-file-if-exists=.env --import tsx scripts/test-analytics.ts",
     "test:panel": "node --env-file-if-exists=.env --import tsx scripts/test-panel.ts",
+    "test:middleware": "npm run gen:tenant-map && node --import tsx scripts/test-middleware.ts",
     "gen:tenant-map": "node --env-file-if-exists=.env --import tsx scripts/gen-tenant-map.ts",
     "provision:qa-owner": "node --env-file-if-exists=.env --import tsx scripts/provision-qa-owner.ts",
     "sync:env": "node --import tsx scripts/sync-frontend-env.ts"

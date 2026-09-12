@@ -28,7 +28,9 @@ import { TENANT_MAP, type TenantEntry } from './lib/tenant-map'
 const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
 
 /**
- * Paths that are never tenant-scoped — served as-is, not rewritten.
+ * Platform paths that are never tenant-scoped — served as-is, not rewritten.
+ * Client assets are also served as-is, but only after host and status
+ * resolution below so an archived or non-live custom domain cannot fetch them.
  *
  * `clients/` is where every uploaded client asset lives (logos, portfolio
  * photos, company-profile PDFs — see the `assetPath` convention in
@@ -38,14 +40,23 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * `/ashish-interiors/clients/ashish-interiors/p1.jpg`, which matches no route
  * and 404s. Caught by hitting a real asset URL against a running server —
  * `check:config` proves the path is *referenced* correctly, nothing catches
- * whether it's *servable*.
+ * whether it's *servable*. `/assets/` is the supported non-client public asset
+ * prefix for shared static files. It follows the same host/status gate below.
  *
- * `sitemap.xml`, `robots.txt`, `manifest.webmanifest` and `opengraph-image`
- * stay OUT of this list on purpose — SPEC.md §5 has them as dynamic,
- * per-tenant routes (`app/[tenant]/sitemap.ts` etc.), so they need the rewrite
- * like any other page.
+ * `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, `opengraph-image` and
+ * `favicon.ico` stay OUT of this list on purpose — SPEC.md §5 has them as
+ * dynamic, per-tenant routes (`app/[tenant]/sitemap.ts` etc.), so they need the
+ * rewrite like any other page.
+ *
+ * Passing one of them through is not harmless: `NextResponse.next()` means "keep
+ * routing without a rewrite", and with no static file behind it the request
+ * falls through to the only top-level dynamic segment, `/[tenant]`. The slug
+ * then resolves to the literal string `favicon.ico`, the config loader throws,
+ * and a browser's automatic favicon request 500s the page. `robots.txt` was in
+ * this list against the paragraph above and had the identical bug.
  */
-const PASSTHROUGH = /^\/(?:_next|api\/|favicon\.ico|robots\.txt$|clients\/)/
+const PLATFORM_PASSTHROUGH = /^\/(?:_next|api\/)/
+const PUBLIC_ASSET_PASSTHROUGH = /^\/(?:clients\/|assets\/)/
 
 function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
   const hostname = host.split(':')[0]?.toLowerCase() ?? ''
@@ -72,14 +83,30 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  if (PASSTHROUGH.test(pathname)) return NextResponse.next()
+  if (PLATFORM_PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const host = request.headers.get('host') ?? ''
   const resolved = resolveTenant(host)
 
   // Unknown host. Not a 404 page — there is no tenant whose 404 this would be.
+  //
+  // In development this is almost always someone opening `localhost:3000`
+  // straight after `npm run dev`, which resolves to no tenant because every
+  // site is a subdomain. A bare refusal is a dead end, so list the tenants that
+  // do work. In production the message stays opaque on purpose: an unknown host
+  // is a stranger, and the client roster is not theirs to enumerate.
   if (!resolved) {
-    return new NextResponse('No site is configured for this address.', {
+    const body =
+      process.env.NODE_ENV === 'production'
+        ? 'No site is configured for this address.'
+        : 'No site is configured for this address.\n\n' +
+          'Every site is a tenant, resolved by subdomain. Try one of:\n' +
+          Object.keys(TENANT_MAP.bySubdomain)
+            .map((sub) => `  http://${sub}.localhost:${request.nextUrl.port || '3000'}/`)
+            .join('\n') +
+          '\n'
+
+    return new NextResponse(body, {
       status: 404,
       headers: { 'x-robots-tag': 'noindex, nofollow' },
     })
@@ -106,6 +133,8 @@ export function middleware(request: NextRequest) {
       headers: { 'x-robots-tag': 'noindex, nofollow' },
     })
   }
+
+  if (PUBLIC_ASSET_PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const url = request.nextUrl.clone()
   url.pathname = `/${entry.slug}${pathname}`
