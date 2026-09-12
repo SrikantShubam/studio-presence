@@ -17,6 +17,12 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  transpilePackages: [
+    '@fortawesome/fontawesome-svg-core',
+    '@fortawesome/react-fontawesome',
+    '@fortawesome/free-brands-svg-icons',
+    '@fortawesome/free-solid-svg-icons',
+  ],
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920],

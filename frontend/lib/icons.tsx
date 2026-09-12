@@ -1,7 +1,4 @@
-'use client'
-
-import { config, type IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import {
   faArrowDown,
@@ -12,21 +9,20 @@ import {
   faChevronDown,
   faChevronLeft,
   faChevronRight,
+  faClock,
   faEnvelope,
   faLocationDot,
   faLanguage,
   faPhone,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-
-config.autoAddCss = false
 
 export type EditorialIconName =
   | 'message-circle'
   | 'phone'
   | 'map-pin'
   | 'email'
+  | 'clock'
   | 'instagram'
   | 'facebook'
   | 'language'
@@ -45,6 +41,7 @@ const icons: Record<EditorialIconName, IconDefinition> = {
   phone: faPhone,
   'map-pin': faLocationDot,
   email: faEnvelope,
+  clock: faClock,
   instagram: faInstagram,
   facebook: faFacebookF,
   language: faLanguage,
@@ -66,5 +63,20 @@ export function EditorialIcon({
   name: EditorialIconName
   className?: string
 }) {
-  return <FontAwesomeIcon icon={icons[name]} className={className} aria-hidden />
+  const iconDef = icons[name]
+  if (!iconDef) return null
+
+  const [width, height, , , svgPathData] = iconDef.icon
+  const path = typeof svgPathData === 'string' ? svgPathData : svgPathData[0]
+
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox={`0 0 ${width} ${height}`}
+      className={className}
+      fill="currentColor"
+    >
+      <path d={path} />
+    </svg>
+  )
 }
