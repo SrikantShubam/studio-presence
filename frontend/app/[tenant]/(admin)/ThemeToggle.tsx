@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * Light/dark switch for the admin screens.
@@ -23,6 +23,7 @@ export const THEME_STORAGE_KEY = 'admin-theme'
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme | null>(null)
+  const systemThemeCleanup = useRef<(() => void) | null>(null)
 
   useEffect(() => {
     let stored: string | null = null
@@ -37,11 +38,27 @@ export function ThemeToggle() {
       return
     }
 
-    setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+    const syncSystemTheme = () => {
+      const next = systemTheme.matches ? 'dark' : 'light'
+      setTheme(next)
+      document.documentElement.dataset.adminTheme = next
+    }
+
+    syncSystemTheme()
+    systemTheme.addEventListener('change', syncSystemTheme)
+    systemThemeCleanup.current = () => systemTheme.removeEventListener('change', syncSystemTheme)
+
+    return () => {
+      systemThemeCleanup.current?.()
+      systemThemeCleanup.current = null
+    }
   }, [])
 
   function toggle() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
+    systemThemeCleanup.current?.()
+    systemThemeCleanup.current = null
     setTheme(next)
     document.documentElement.dataset.adminTheme = next
 

@@ -84,14 +84,14 @@ export default async function PanelLayout({
 
   return (
     <div className="min-h-screen bg-admin-bg">
-      <header className="flex items-center justify-between border-b border-admin-border bg-admin-surface px-4 py-3">
-        <div className="flex items-center gap-2">
+      <header className="flex items-center justify-between gap-3 border-b border-admin-border bg-admin-surface px-4 py-3">
+        <div className="flex min-w-0 items-center gap-2">
           {branding.brand.logo && (
             <Image src={branding.brand.logo} alt="" width={24} height={24} className="rounded" />
           )}
-          <span className="text-sm font-medium text-admin-ink">{branding.business.name}</span>
+          <span className="truncate text-sm font-medium text-admin-ink">{branding.business.name}</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
           <ThemeToggle />
           <form action={signOut}>
             <button type="submit" className="min-h-11 rounded-lg px-2 text-sm font-medium text-admin-muted">
