@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Locations — Version 1: The Boring Road Monograph | Ashish Interiors Patna</title>
+    <title>Studio Locations | Ashish Interiors Patna</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -16,9 +16,9 @@
         --accent: #51372a;
         --cta: #d9bc72;
         --surface: #ffffff;
-        --body: #4a4a4a;
-        --muted: #8b8377;
-        --hairline: #dcd7ce;
+        --body: #3c3c3c;
+        --muted: #78716c;
+        --hairline: #e2ded5;
         --panel: #faf8f5;
         --wa-green: #285a43;
         --wa-green-dark: #1e4a36;
@@ -56,15 +56,16 @@
         width: 100%;
       }
 
-      h1, h2, h3, h4, .font-display {
+      h1, h2, h3, h4 {
         font-family: var(--font-display);
         font-weight: 400;
         letter-spacing: -0.02em;
+        line-height: 1.15;
       }
 
-      [lang="hi"] h1, [lang="hi"] h2, [lang="hi"] h3, [lang="hi"] h4, [lang="hi"] .font-display {
+      [lang="hi"] h1, [lang="hi"] h2, [lang="hi"] h3, [lang="hi"] h4 {
         letter-spacing: 0;
-        font-weight: 500;
+        line-height: 1.3;
       }
 
       a {
@@ -72,67 +73,49 @@
         text-decoration: none;
       }
 
-      /* Sticky Prototype Switcher Bar */
+      /* Minimal Sticky Prototype Switcher */
       .proto-bar {
         position: sticky;
         top: 0;
         z-index: 1000;
         background: #181614;
-        color: #f5f2ed;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        color: #e8e3dc;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         padding: 8px clamp(16px, 4vw, 48px);
         font-size: 11px;
-        letter-spacing: 0.08em;
       }
 
       .proto-bar-inner {
-        max-width: 1360px;
+        max-width: 1200px;
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: 10px;
       }
 
       .proto-meta {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 11.5px;
+        font-size: 11px;
+        color: #a89f92;
+        font-weight: 500;
       }
 
-      .proto-tag {
-        color: var(--cta);
-        font-weight: 600;
-      }
-
-      .proto-sep {
-        opacity: 0.35;
-      }
-
-      .proto-pills-wrap {
+      .proto-pills {
         display: flex;
         align-items: center;
         gap: 6px;
-        overflow-x: auto;
-        padding-block: 2px;
-        max-width: 100%;
+        flex-wrap: wrap;
       }
 
       .proto-pill {
-        padding: 5px 10px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #e0ded8;
+        color: #dcd7ce;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        padding: 4px 10px;
         font-size: 11px;
-        white-space: nowrap;
-        background: transparent;
+        font-weight: 500;
         transition: all 0.15s ease;
-      }
-
-      .proto-pill:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.4);
       }
 
       .proto-pill.active {
@@ -142,577 +125,617 @@
         font-weight: 600;
       }
 
-      .lang-toggle-btn {
-        background: transparent;
-        border: 1px solid var(--cta);
-        color: var(--cta);
-        padding: 4px 10px;
-        font-size: 10.5px;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
+      .proto-pill:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.18);
+        color: #ffffff;
       }
 
-      .lang-toggle-btn:hover {
-        background: var(--cta);
+      .lang-btn {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #f7f5f0;
+        padding: 4px 10px;
+        font-size: 11px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .lang-btn:hover {
+        background: #ffffff;
         color: var(--ink);
       }
 
-      /* Editorial Site Nav */
+      /* Site Header */
       .site-header {
-        border-bottom: 1px solid var(--accent);
-        padding: clamp(16px, 2.5vw, 24px) clamp(20px, 5vw, 64px);
-        background: var(--surface);
+        border-bottom: 1px solid var(--hairline);
+        padding: 20px clamp(16px, 4vw, 48px);
       }
 
-      .site-nav {
-        max-width: 1360px;
+      .header-inner {
+        max-width: 1200px;
         margin: 0 auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 24px;
       }
 
       .brand {
-        display: grid;
-        gap: 2px;
-        font-family: var(--font-display);
-        font-size: clamp(13px, 1.3vw, 16px);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .brand-mark {
+        background: var(--ink);
+        color: #ffffff;
         font-weight: 600;
-        letter-spacing: 0.22em;
-        line-height: 1;
-        text-transform: uppercase;
-      }
-
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: clamp(16px, 2.5vw, 36px);
         font-size: 12px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
+        padding: 4px 8px;
+        letter-spacing: 0.08em;
       }
 
-      .nav-links a {
-        color: var(--ink);
-        transition: color 0.15s;
+      .brand-name {
+        font-family: var(--font-display);
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: -0.01em;
       }
 
-      .nav-links a:hover, .nav-links a.active {
-        color: var(--accent);
-      }
-
-      .nav-tel {
-        font-size: 13px;
-        letter-spacing: 0.1em;
+      .header-links {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 20px;
+        font-size: 13px;
+        color: var(--muted);
       }
 
-      .nav-tel-line {
-        width: 1px;
-        height: 16px;
-        background: var(--accent);
+      .header-links a:hover {
+        color: var(--ink);
       }
 
-      /* Layout Containers */
-      .page-wrap {
-        max-width: 1360px;
+      /* Container */
+      .wrap {
+        max-width: 1200px;
         margin: 0 auto;
-        padding: clamp(40px, 6vw, 88px) clamp(20px, 5vw, 64px);
+        padding: 0 clamp(16px, 4vw, 48px);
       }
 
-      .hero-eyebrow {
-        font-size: 11px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
+      /* Page Intro */
+      .intro-section {
+        padding: clamp(40px, 6vw, 72px) 0 clamp(32px, 5vw, 56px);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .intro-eyebrow {
+        font-size: 12px;
         color: var(--accent);
-        margin-bottom: 16px;
-        display: block;
+        font-weight: 500;
+        margin-bottom: 12px;
       }
 
-      .hero-title {
-        font-size: clamp(40px, 7.5vw, 92px);
+      .intro-title {
+        font-size: clamp(34px, 5vw, 56px);
         font-weight: 300;
-        line-height: 0.95;
-        letter-spacing: -0.03em;
-        text-transform: uppercase;
-        margin-bottom: clamp(24px, 4vw, 40px);
+        color: var(--ink);
+        max-width: 16ch;
+        margin-bottom: 20px;
       }
 
-      .hero-title .accent-span {
-        color: var(--accent);
-        display: block;
-        margin-left: 0.4em;
+      .intro-desc {
+        font-size: clamp(15px, 1.4vw, 18px);
+        color: var(--body);
+        max-width: 60ch;
+        line-height: 1.65;
       }
 
-      /* Dossier Grid */
-      .dossier-grid {
+      /* Locations Cards Grid */
+      .locations-grid {
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: clamp(32px, 5vw, 64px);
-        border-top: 1px solid var(--accent);
-        padding-top: clamp(36px, 5vw, 64px);
-        margin-top: clamp(20px, 3vw, 40px);
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: clamp(24px, 4vw, 40px);
+        padding: clamp(40px, 6vw, 64px) 0;
+        border-bottom: 1px solid var(--hairline);
       }
 
-      @media (max-width: 900px) {
-        .dossier-grid {
-          grid-template-columns: 1fr;
-        }
-        .nav-links {
-          display: none;
-        }
-      }
-
-      /* Cartographic Map Container */
-      .carto-card {
-        border: 1px solid var(--accent);
+      .location-card {
         background: var(--panel);
-        padding: clamp(20px, 3vw, 36px);
+        border: 1px solid var(--hairline);
         display: flex;
         flex-direction: column;
-        gap: 20px;
-      }
-
-      .carto-header {
-        display: flex;
         justify-content: space-between;
-        align-items: flex-start;
-        border-bottom: 1px solid var(--hairline);
-        padding-bottom: 16px;
       }
 
-      .coord-badge {
-        font-family: ui-monospace, Menlo, Consolas, monospace;
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        color: var(--accent);
-      }
-
-      .map-svg-wrap {
+      .card-image-wrap {
         position: relative;
         width: 100%;
-        background: #f4f0e8;
-        border: 1px solid var(--hairline);
+        aspect-ratio: 16 / 10;
+        background: #e2ded5;
         overflow: hidden;
       }
 
-      .map-svg-wrap svg {
-        display: block;
+      .card-image-wrap img {
         width: 100%;
-        height: auto;
-      }
-
-      /* Direction steps */
-      .step-list {
-        display: grid;
-        gap: 16px;
-        margin-top: 12px;
-      }
-
-      .step-item {
-        display: grid;
-        grid-template-columns: 32px 1fr;
-        gap: 12px;
-        align-items: baseline;
-        font-size: 14px;
-        line-height: 1.5;
-        border-bottom: 1px solid var(--hairline);
-        padding-bottom: 12px;
-      }
-
-      .step-num {
-        font-family: var(--font-display);
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--accent);
-      }
-
-      /* Information ledger */
-      .ledger-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .ledger-table tr {
-        border-bottom: 1px solid var(--accent);
-      }
-
-      .ledger-table th {
-        text-align: left;
-        padding: 16px 0 8px 0;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--accent);
-      }
-
-      .ledger-table td {
-        padding: 0 0 16px 0;
-        font-size: clamp(16px, 1.8vw, 22px);
-        color: var(--ink);
-        vertical-align: top;
-      }
-
-      .ledger-sub {
+        height: 100%;
+        object-fit: cover;
         display: block;
-        font-size: 13.5px;
-        color: var(--body);
-        margin-top: 4px;
-        line-height: 1.5;
       }
 
-      /* Action Buttons */
-      .btn-row {
+      .card-body {
+        padding: clamp(20px, 3vw, 32px);
         display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 24px;
+        flex-direction: column;
+        gap: 16px;
+        flex: 1;
+      }
+
+      .card-tag {
+        font-size: 11.5px;
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      .card-title {
+        font-size: clamp(20px, 2.4vw, 26px);
+        font-weight: 500;
+        color: var(--ink);
+      }
+
+      .card-address {
+        font-size: 14px;
+        color: var(--body);
+        line-height: 1.6;
+      }
+
+      .card-meta {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding-top: 14px;
+        border-top: 1px solid var(--hairline);
+        font-size: 13px;
+        color: var(--body);
+      }
+
+      .card-meta-item {
+        display: flex;
+        gap: 8px;
+      }
+
+      .card-meta-label {
+        color: var(--muted);
+        min-width: 68px;
+      }
+
+      .card-actions {
+        padding: 0 clamp(20px, 3vw, 32px) clamp(20px, 3vw, 32px);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
 
       .btn-primary {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        background: var(--cta);
-        color: var(--ink);
-        padding: 14px 28px;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        min-height: 48px;
-        transition: background 0.15s;
+        justify-content: center;
+        background: var(--ink);
+        color: #ffffff;
+        padding: 13px 20px;
+        font-size: 13px;
+        font-weight: 500;
+        min-height: 46px;
+        transition: background 0.15s ease;
+        text-align: center;
       }
 
       .btn-primary:hover {
-        background: var(--ink);
-        color: var(--surface);
+        background: var(--accent);
+      }
+
+      .btn-wa {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: var(--wa-green);
+        color: #ffffff;
+        padding: 12px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        min-height: 46px;
+        transition: background 0.15s ease;
+        text-align: center;
+      }
+
+      .btn-wa:hover {
+        background: var(--wa-green-dark);
       }
 
       .btn-secondary {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        border: 1px solid var(--accent);
+        justify-content: center;
+        background: transparent;
+        border: 1px solid var(--hairline);
         color: var(--ink);
-        padding: 14px 24px;
-        font-size: 12px;
+        padding: 12px 18px;
+        font-size: 13px;
         font-weight: 500;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        min-height: 48px;
-        transition: all 0.15s;
+        min-height: 46px;
+        transition: all 0.15s ease;
+        text-align: center;
       }
 
       .btn-secondary:hover {
-        background: var(--panel);
         border-color: var(--ink);
       }
 
-      /* Studio Photo Section */
-      .studio-photo-section {
-        border-top: 1px solid var(--accent);
-        padding-top: clamp(40px, 6vw, 80px);
-        margin-top: clamp(48px, 6vw, 96px);
+      /* Neighborhood Coverage Section */
+      .coverage-section {
+        padding: clamp(40px, 6vw, 64px) 0 clamp(56px, 8vw, 88px);
       }
 
-      .photo-frame {
-        position: relative;
-        margin-right: clamp(16px, 3vw, 32px);
+      .coverage-header {
+        margin-bottom: 28px;
       }
 
-      .photo-frame::after {
-        content: '';
-        position: absolute;
-        top: -16px;
-        right: -16px;
-        bottom: 16px;
-        left: 16px;
-        border: 1px solid var(--accent);
-        pointer-events: none;
+      .coverage-title {
+        font-size: clamp(22px, 3vw, 32px);
+        font-weight: 400;
+        margin-bottom: 8px;
       }
 
-      .photo-frame img {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        display: block;
-      }
-
-      .photo-caption {
-        margin-top: 28px;
-        font-size: 11px;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
+      .coverage-subtitle {
+        font-size: 14px;
         color: var(--muted);
       }
 
-      /* Footer */
-      .site-footer {
-        border-top: 1px solid var(--accent);
+      .coverage-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+      }
+
+      .coverage-item {
         background: var(--panel);
-        padding: clamp(40px, 6vw, 64px) clamp(20px, 5vw, 64px);
-        margin-top: clamp(60px, 8vw, 120px);
+        border: 1px solid var(--hairline);
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .coverage-name {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--ink);
+      }
+
+      .coverage-timing {
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+
+      .coverage-note {
+        margin-top: 24px;
+        padding: 16px 20px;
+        background: #f4efe6;
+        border-left: 2px solid var(--accent);
+        font-size: 13.5px;
+        color: var(--body);
+      }
+
+      /* Minimal Footer */
+      .site-footer {
+        border-top: 1px solid var(--hairline);
+        padding: 32px clamp(16px, 4vw, 48px);
+        font-size: 12px;
+        color: var(--muted);
+        background: var(--panel);
       }
 
       .footer-inner {
-        max-width: 1360px;
+        max-width: 1200px;
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
-        gap: 20px;
-        font-size: 12px;
-        color: var(--body);
+        gap: 16px;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 18px;
+      }
+
+      .footer-links a:hover {
+        color: var(--ink);
+      }
+
+      .wa-icon {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+        flex-shrink: 0;
       }
     </style>
   </head>
   <body>
-    <!-- Prototype Version Switcher Bar -->
-    <aside class="proto-bar" aria-label="Prototype Version Switcher">
+    <!-- Minimal Switcher Bar -->
+    <aside class="proto-bar" aria-label="Prototype Switcher">
       <div class="proto-bar-inner">
         <div class="proto-meta">
-          <span class="proto-tag">LOCATIONS PROTOTYPE</span>
-          <span class="proto-sep">/</span>
-          <span>ITERATION 1 OF 10: THE BORING ROAD MONOGRAPH</span>
+          <span>Locations prototype · Variant 1 of 3</span>
         </div>
-        <nav class="proto-pills-wrap" aria-label="Location Iterations">
-          <a href="locations-iteration-1.html" class="proto-pill active">1: Monograph</a>
-          <a href="locations-iteration-2.html" class="proto-pill">2: Transit Matrix</a>
-          <a href="locations-iteration-3.html" class="proto-pill">3: Atelier & Workshop</a>
-          <a href="locations-iteration-4.html" class="proto-pill">4: Radial Radar</a>
-          <a href="locations-iteration-5.html" class="proto-pill">5: Blueprint</a>
-          <a href="locations-iteration-6.html" class="proto-pill">6: Material Archive</a>
-          <a href="locations-iteration-7.html" class="proto-pill">7: Transit Ledger</a>
-          <a href="locations-iteration-8.html" class="proto-pill">8: Evening Salon</a>
-          <a href="locations-iteration-9.html" class="proto-pill">9: Vernacular Strip</a>
-          <a href="locations-iteration-10.html" class="proto-pill">10: Dispatch Hub</a>
+        <nav class="proto-pills" aria-label="Variants">
+          <a href="locations-iteration-1.html" class="proto-pill active">1: Studio directory</a>
+          <a href="locations-iteration-2.html" class="proto-pill">2: Two facilities</a>
+          <a href="locations-iteration-3.html" class="proto-pill">3: Locality guide</a>
+          <a href="locations-index.html" class="proto-pill">Switcher index</a>
+          <a href="/locations" class="proto-pill">Next.js live</a>
         </nav>
-        <button type="button" class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLang()">
-          <span>EN / हिंदी</span>
-        </button>
+        <div>
+          <button type="button" class="lang-btn" id="langToggle" onclick="toggleLanguage()">
+            हिन्दी में देखें
+          </button>
+        </div>
       </div>
     </aside>
 
-    <!-- Site Nav -->
+    <!-- Header -->
     <header class="site-header">
-      <div class="site-nav">
+      <div class="header-inner">
         <a href="/" class="brand">
-          <span>Ashish</span>
-          <span>Interiors</span>
+          <span class="brand-mark">AI</span>
+          <span class="brand-name">Ashish Interiors</span>
         </a>
-        <nav class="nav-links">
+        <nav class="header-links">
           <a href="/#portfolio" data-en="Portfolio" data-hi="पोर्टफोलियो">Portfolio</a>
           <a href="/#services" data-en="Services" data-hi="सेवाएं">Services</a>
-          <a href="/about-iteration-1.html" data-en="About" data-hi="हमारे बारे में">About</a>
-          <a href="locations-iteration-1.html" class="active" data-en="Locations" data-hi="लोकेशन">Locations</a>
-          <a href="/contact-iteration-1.html" data-en="Contact" data-hi="संपर्क">Contact</a>
+          <a href="/about" data-en="About" data-hi="परिचय">About</a>
+          <a href="/contact" data-en="Contact" data-hi="संपर्क">Contact</a>
         </nav>
-        <div class="nav-tel">
-          <span class="nav-tel-line"></span>
-          <a href="tel:+919876543210">+91 98765 43210</a>
-        </div>
       </div>
     </header>
 
     <!-- Main Content -->
-    <main class="page-wrap">
-      <span class="hero-eyebrow" data-en="Our Only Studio in Bihar · Established 2013" data-hi="बिहार में हमारा एकमात्र स्टूडियो · 2013 से स्थापित">Our Only Studio in Bihar · Established 2013</span>
-      <h1 class="hero-title">
-        <span data-en="Boring Road" data-hi="बोरिंग रोड">Boring Road</span>
-        <span class="accent-span" data-en="Studio" data-hi="स्टूडियो">Studio</span>
-      </h1>
+    <main>
+      <!-- Page Intro -->
+      <section class="intro-section">
+        <div class="wrap">
+          <div class="intro-eyebrow" data-en="Studio presence in Patna" data-hi="पटना में स्टूडियो उपस्थिति">
+            Studio presence in Patna
+          </div>
+          <h1 class="intro-title" data-en="Our locations in Patna" data-hi="पटना में हमारे स्टूडियो">
+            Our locations in Patna
+          </h1>
+          <p
+            class="intro-desc"
+            data-en="We consult with clients at our Boring Road design studio and fabricate all custom joinery at our Digha Ghat workshop. We execute residential interior projects across Patna."
+            data-hi="हम बोरिंग रोड स्थित अपने स्टूडियो में ग्राहकों से मिलते हैं और दीघा घाट कार्यशाला में फर्नीचर तैयार करते हैं। हम पूरे पटना में आवासीय प्रोजेक्ट करते हैं।"
+          >
+            We consult with clients at our Boring Road design studio and fabricate all custom joinery at our Digha Ghat workshop. We execute residential interior projects across Patna.
+          </p>
+        </div>
+      </section>
 
-      <div class="dossier-grid">
-        <!-- Left: Cartographic Dossier Map & Arrival Guide -->
-        <div>
-          <div class="carto-card">
-            <div class="carto-header">
-              <div>
-                <span class="hero-eyebrow" style="margin-bottom: 4px;" data-en="Cartographic Waypoint" data-hi="भौगोलिक स्थिति">Cartographic Waypoint</span>
-                <strong style="font-size: 16px;" data-en="Shivam Complex · Boring Road Crossing" data-hi="शिवम कॉम्प्लेक्स · बोरिंग रोड चौराहा">Shivam Complex · Boring Road Crossing</strong>
-              </div>
-              <span class="coord-badge">25.6134° N, 85.1189° E</span>
-            </div>
-
-            <!-- Custom Architectural Vector Map -->
-            <div class="map-svg-wrap">
-              <svg viewBox="0 0 600 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Boring Road Crossing Map">
-                <!-- Background Grid -->
-                <defs>
-                  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e6e1d8" stroke-width="1" />
-                  </pattern>
-                </defs>
-                <rect width="600" height="380" fill="url(#grid)" />
-
-                <!-- Road Network -->
-                <!-- Boring Canal Road (Diagonal) -->
-                <path d="M-20 400 L420 -20" stroke="#dcd7ce" stroke-width="36" stroke-linecap="square" />
-                <path d="M-20 400 L420 -20" stroke="#ffffff" stroke-width="28" stroke-linecap="square" />
-
-                <!-- Boring Road Main Arterial -->
-                <path d="M300 -20 L300 400" stroke="#dcd7ce" stroke-width="48" stroke-linecap="square" />
-                <path d="M300 -20 L300 400" stroke="#ffffff" stroke-width="38" stroke-linecap="square" />
-                <line x1="300" y1="-20" x2="300" y2="400" stroke="#51372a" stroke-dasharray="8 8" stroke-width="1.5" />
-
-                <!-- Crossing Roundabout Circle -->
-                <circle cx="300" cy="180" r="32" fill="#FAF8F5" stroke="#51372a" stroke-width="2" />
-                <text x="300" y="184" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="9" font-weight="600" fill="#51372a" letter-spacing="1">ROUNDABOUT</text>
-
-                <!-- Shivam Complex Footprint -->
-                <rect x="330" y="100" width="110" height="60" fill="#141414" stroke="#51372a" stroke-width="2" />
-                <text x="385" y="132" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="10" font-weight="600" fill="#D9BC72" letter-spacing="0.5">ASHISH INTERIORS</text>
-                <text x="385" y="146" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="8.5" fill="#FAF8F5">2nd Floor · Shivam Cmplx</text>
-
-                <!-- Rear Parking Lane -->
-                <rect x="450" y="90" width="30" height="80" fill="#FAF8F5" stroke="#8B8377" stroke-width="1" stroke-dasharray="3 3" />
-                <text x="465" y="135" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="7.5" fill="#8B8377" transform="rotate(90 465 135)">REAR PARKING</text>
-
-                <!-- Landmark: ATM & Stationery -->
-                <rect x="330" y="165" width="45" height="25" fill="#E8E4DD" stroke="#8B8377" stroke-width="1" />
-                <text x="352" y="181" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="7.5" fill="#141414">SBI ATM</text>
-
-                <!-- Pedestrian Path with Arrow -->
-                <path d="M 280 230 L 325 230 L 325 145 L 330 145" fill="none" stroke="#285A43" stroke-width="2" stroke-dasharray="4 4" />
-                <circle cx="280" cy="230" r="4" fill="#285A43" />
-                <polygon points="330,141 338,145 330,149" fill="#285A43" />
-
-                <!-- Road Labels -->
-                <text x="312" y="30" font-family="'Archivo', sans-serif" font-size="9" font-weight="600" fill="#8B8377" letter-spacing="1">TO PATLIPUTRA →</text>
-                <text x="312" y="360" font-family="'Archivo', sans-serif" font-size="9" font-weight="600" fill="#8B8377" letter-spacing="1">↓ TO DAK BUNGLOW</text>
-                <text x="80" y="320" font-family="'Archivo', sans-serif" font-size="9" font-weight="600" fill="#8B8377" letter-spacing="1" transform="rotate(-45 80 320)">BORING CANAL ROAD</text>
-
-                <!-- Compass Rose -->
-                <g transform="translate(540, 50)">
-                  <circle cx="0" cy="0" r="18" fill="#ffffff" stroke="#dcd7ce" />
-                  <path d="M 0 -14 L 4 0 L 0 14 L -4 0 Z" fill="#51372a" />
-                  <text x="0" y="-18" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="9" font-weight="700" fill="#51372a">N</text>
-                </g>
-              </svg>
-            </div>
-
-            <!-- On-Foot Arrival Waypoints -->
+      <!-- Locations Directory Grid -->
+      <section class="wrap">
+        <div class="locations-grid">
+          <!-- Card 1: Boring Road Studio -->
+          <article class="location-card">
             <div>
-              <span class="hero-eyebrow" data-en="Pedestrian Navigation" data-hi="आगमन निर्देश">Pedestrian Navigation</span>
-              <div class="step-list">
-                <div class="step-item">
-                  <span class="step-num">01</span>
-                  <span data-en="Arrive at Boring Road Crossing roundabout. Locate Shivam Complex immediately on the north-east corner." data-hi="बोरिंग रोड चौराहे पर पहुंचे। उत्तर-पूर्वी कोने पर स्थित शिवम कॉम्प्लेक्स देखें।">Arrive at Boring Road Crossing roundabout. Locate Shivam Complex immediately on the north-east corner.</span>
+              <div class="card-image-wrap">
+                <img
+                  src="/clients/ashish-interiors/editorial/locations/studio.webp"
+                  alt="Ashish Interiors Boring Road Studio"
+                  loading="lazy"
+                />
+              </div>
+              <div class="card-body">
+                <div class="card-tag" data-en="Design Atelier & Materials Room" data-hi="डिज़ाइन स्टूडियो और सामग्री कक्ष">
+                  Design Atelier & Materials Room
                 </div>
-                <div class="step-item">
-                  <span class="step-num">02</span>
-                  <span data-en="Look for the staircase beside the ground-floor State Bank ATM, directly behind the stationery shop." data-hi="एसबीआई एटीएम के बगल वाली सीढ़ी से ऊपर आएं, जो स्टेशनरी दुकान के ठीक पीछे है।">Look for the staircase beside the ground-floor State Bank ATM, directly behind the stationery shop.</span>
-                </div>
-                <div class="step-item">
-                  <span class="step-num">03</span>
-                  <span data-en="Take the stairs to the 2nd Floor. Ashish Interiors door opens directly into our drawing studio and sample racks." data-hi="दूसरी मंजिल पर आएं। दरवाजा सीधे ड्रॉइंग स्टूडियो और सैंपल रैक में खुलता है।">Take the stairs to the 2nd Floor. Ashish Interiors door opens directly into our drawing studio and sample racks.</span>
+                <h2 class="card-title" data-en="Boring Road Studio" data-hi="बोरिंग रोड स्टूडियो">
+                  Boring Road Studio
+                </h2>
+                <p
+                  class="card-address"
+                  data-en="2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001"
+                  data-hi="दूसरी मंजिल, शिवम कॉम्प्लेक्स, बोरिंग रोड चौराहा, पटना, बिहार 800001"
+                >
+                  2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001
+                </p>
+                <div class="card-meta">
+                  <div class="card-meta-item">
+                    <span class="card-meta-label" data-en="Landmark:" data-hi="लैंडमार्क:">Landmark:</span>
+                    <span data-en="Above Raymond showroom, next to SBI ATM" data-hi="रेमंड शोरूम के ऊपर, एसबीआई एटीएम के पास">Above Raymond showroom, next to SBI ATM</span>
+                  </div>
+                  <div class="card-meta-item">
+                    <span class="card-meta-label" data-en="Hours:" data-hi="समय:">Hours:</span>
+                    <span data-en="Mon – Sat, 10:00 to 19:00" data-hi="सोमवार से शनिवार, 10:00 से 19:00">Mon – Sat, 10:00 to 19:00</span>
+                  </div>
+                  <div class="card-meta-item">
+                    <span class="card-meta-label" data-en="Phone:" data-hi="फोन:">Phone:</span>
+                    <span>(555) 0123</span>
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="card-actions">
+              <a
+                href="/locations/boring-road"
+                class="btn-primary"
+                data-en="View studio details"
+                data-hi="स्टूडियो का विवरण देखें"
+              >
+                View studio details
+              </a>
+              <a
+                href="https://wa.me/915550123?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20visit%20the%20Boring%20Road%20studio"
+                target="_blank"
+                rel="noopener"
+                class="btn-wa"
+              >
+                <svg class="wa-icon" viewBox="0 0 448 512" aria-hidden="true">
+                  <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                </svg>
+                <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 2: Digha Ghat Workshop -->
+          <article class="location-card">
+            <div>
+              <div class="card-image-wrap">
+                <img
+                  src="/clients/ashish-interiors/editorial/team/workshop-01.jpg"
+                  alt="Ashish Interiors Cabinet Workshop"
+                  loading="lazy"
+                />
+              </div>
+              <div class="card-body">
+                <div class="card-tag" data-en="Cabinet Joinery & Prefit Facility" data-hi="फर्नीचर निर्माण एवं असेंबली कार्यशाला">
+                  Cabinet Joinery & Prefit Facility
+                </div>
+                <h2 class="card-title" data-en="Digha Ghat Workshop" data-hi="दीघा घाट वर्कशॉप">
+                  Digha Ghat Workshop
+                </h2>
+                <p
+                  class="card-address"
+                  data-en="Plot 14, Industrial Run, Digha Ghat, Patna, Bihar 800011"
+                  data-hi="प्लॉट 14, इंडस्ट्रियल एरिया, दीघा घाट, पटना, बिहार 800011"
+                >
+                  Plot 14, Industrial Run, Digha Ghat, Patna, Bihar 800011
+                </p>
+                <div class="card-meta">
+                  <div class="card-meta-item">
+                    <span class="card-meta-label" data-en="Purpose:" data-hi="उद्देश्य:">Purpose:</span>
+                    <span data-en="Machine sizing, edge banding, and pre-fit assembly" data-hi="मशीन कटिंग, एज-बैंडिंग और प्री-फिट असेंबली">Machine sizing, edge banding, and pre-fit assembly</span>
+                  </div>
+                  <div class="card-meta-item">
+                    <span class="card-meta-label" data-en="Hours:" data-hi="समय:">Hours:</span>
+                    <span data-en="Mon – Fri, 09:00 to 18:00 (Visits by appointment)" data-hi="सोमवार से शुक्रवार, 09:00 से 18:00 (अपॉइंटमेंट द्वारा)">Mon – Fri, 09:00 to 18:00 (Visits by appointment)</span>
+                  </div>
+                  <div class="card-meta-item">
+                    <span class="card-meta-label" data-en="Phone:" data-hi="फोन:">Phone:</span>
+                    <span>(555) 0123</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <a
+                href="/locations/digha-ghat"
+                class="btn-primary"
+                data-en="View workshop details"
+                data-hi="कार्यशाला का विवरण देखें"
+              >
+                View workshop details
+              </a>
+              <a
+                href="tel:5550123"
+                class="btn-secondary"
+                data-en="Call to schedule visit"
+                data-hi="विजिट के लिए कॉल करें"
+              >
+                Call to schedule visit
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Neighborhoods We Serve -->
+      <section class="coverage-section">
+        <div class="wrap">
+          <div class="coverage-header">
+            <h2 class="coverage-title" data-en="Neighborhoods we serve in Patna" data-hi="पटना के क्षेत्र जहां हम सेवा देते हैं">
+              Neighborhoods we serve in Patna
+            </h2>
+            <p
+              class="coverage-subtitle"
+              data-en="We provide regular site supervision and interior installation across these localities:"
+              data-hi="हम इन प्रमुख कॉलोनियों में नियमित साइट पर्यवेक्षण और काम करते हैं:"
+            >
+              We provide regular site supervision and interior installation across these localities:
+            </p>
+          </div>
+
+          <div class="coverage-grid">
+            <div class="coverage-item">
+              <div class="coverage-name">Boring Road & Canal Road</div>
+              <div class="coverage-timing" data-en="5–10 min from studio" data-hi="स्टूडियो से 5–10 मिनट">5–10 min from studio</div>
+            </div>
+            <div class="coverage-item">
+              <div class="coverage-name">Patliputra Colony</div>
+              <div class="coverage-timing" data-en="7–12 min from studio" data-hi="स्टूडियो से 7–12 मिनट">7–12 min from studio</div>
+            </div>
+            <div class="coverage-item">
+              <div class="coverage-name">Bailey Road & RPS More</div>
+              <div class="coverage-timing" data-en="12–18 min from studio" data-hi="स्टूडियो से 12–18 मिनट">12–18 min from studio</div>
+            </div>
+            <div class="coverage-item">
+              <div class="coverage-name">Kankarbagh & Rajendra Nagar</div>
+              <div class="coverage-timing" data-en="20–25 min from studio" data-hi="स्टूडियो से 20–25 मिनट">20–25 min from studio</div>
+            </div>
+            <div class="coverage-item">
+              <div class="coverage-name">Danapur & Saguna More</div>
+              <div class="coverage-timing" data-en="25–30 min from studio" data-hi="स्टूडियो से 25–30 मिनट">25–30 min from studio</div>
+            </div>
+            <div class="coverage-item">
+              <div class="coverage-name">Exhibition Road & Gandhi Maidan</div>
+              <div class="coverage-timing" data-en="15–20 min from studio" data-hi="स्टूडियो से 15–20 मिनट">15–20 min from studio</div>
+            </div>
+          </div>
+
+          <div class="coverage-note">
+            <strong data-en="Site survey guarantee:" data-hi="साइट सर्वे गारंटी:">Site survey guarantee:</strong>
+            <span
+              data-en="For Patna apartments and individual homes, we schedule initial room measurements within 24 hours of your inquiry."
+              data-hi="पटना के अपार्टमेंट और निजी मकानों के लिए हम संपर्क के 24 घंटे के भीतर प्रारंभिक कमरा माप का समय तय करते हैं।"
+            >
+              For Patna apartments and individual homes, we schedule initial room measurements within 24 hours of your inquiry.
+            </span>
           </div>
         </div>
-
-        <!-- Right: Studio Dossier Ledger -->
-        <div>
-          <table class="ledger-table">
-            <tr>
-              <th><span data-en="Physical Address" data-hi="पता">Physical Address</span></th>
-            </tr>
-            <tr>
-              <td>
-                <span data-en="2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001" data-hi="दूसरी मंजिल, शिवम कॉम्प्लेक्स, बोरिंग रोड चौराहा, पटना, बिहार 800001">2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001</span>
-                <span class="ledger-sub" data-en="Dedicated four-wheeler parking available along the rear service lane." data-hi="भवन के पीछे सर्विस लेन में चार पहिया वाहन पार्किंग उपलब्ध है।">Dedicated four-wheeler parking available along the rear service lane.</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th><span data-en="Visiting Hours" data-hi="खुलने का समय">Visiting Hours</span></th>
-            </tr>
-            <tr>
-              <td>
-                <strong data-en="Monday – Saturday: 10:00 – 19:00" data-hi="सोमवार – शनिवार: 10:00 – 19:00">Monday – Saturday: 10:00 – 19:00</strong>
-                <span class="ledger-sub" data-en="Sunday by prior appointment. Saturday mornings feature walk-in material consultations with our principal designers." data-hi="रविवार केवल पूर्व अपॉइंटमेंट पर। शनिवार सुबह मुख्य डिजाइनरों के साथ वॉक-इन मटेरियल परामर्श।">Sunday by prior appointment. Saturday mornings feature walk-in material consultations with our principal designers.</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th><span data-en="Direct Communication" data-hi="सीधा संपर्क">Direct Communication</span></th>
-            </tr>
-            <tr>
-              <td>
-                <div><a href="tel:+919876543210" style="color: var(--ink); font-weight: 500;">+91 98765 43210</a></div>
-                <span class="ledger-sub" data-en="Calls answered directly by our studio coordinator and site leads." data-hi="कॉल सीधे हमारे स्टूडियो समन्वयक या साइट लीड द्वारा उठाए जाते हैं।">Calls answered directly by our studio coordinator and site leads.</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th><span data-en="Who Is At The Table" data-hi="स्टूडियो में कौन उपस्थित रहता है">Who Is At The Table</span></th>
-            </tr>
-            <tr>
-              <td>
-                <span style="font-size: 16px; line-height: 1.6;" data-en="Ashish Kumar (Principal Designer), Sunita Raj (Design Lead), and Vikram Singh (Site Supervisor). No advertising reps — you speak with the team actually executing the carpentry." data-hi="आशीष कुमार (मुख्य डिजाइनर), सुनीता राज (डिजाइन लीड) और विक्रम सिंह (साइट सुपरवाइजर)। कोई बिचौलिया नहीं — आप सीधे काम करने वाली टीम से मिलते हैं।">Ashish Kumar (Principal Designer), Sunita Raj (Design Lead), and Vikram Singh (Site Supervisor). No advertising reps — you speak with the team actually executing the carpentry.</span>
-              </td>
-            </tr>
-          </table>
-
-          <div class="btn-row">
-            <a href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20visit%20your%20Boring%20Road%20studio" class="btn-primary" data-en="Book Studio Sitting on WhatsApp" data-hi="व्हाट्सएप पर स्टूडियो विजिट बुक करें">
-              <span>Book Studio Sitting on WhatsApp</span>
-            </a>
-            <a href="https://maps.google.com/?q=Boring+Road+Crossing+Patna" target="_blank" rel="noopener" class="btn-secondary" data-en="Open in Google Maps" data-hi="गूगल मैप्स में खोलें">
-              <span>Open in Google Maps</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Studio Interior Photo Record -->
-      <section class="studio-photo-section">
-        <span class="hero-eyebrow" data-en="Visual Evidence · Inside Boring Road" data-hi="स्टूडियो की आंतरिक झलक">Visual Evidence · Inside Boring Road</span>
-        <figure class="photo-frame">
-          <img src="/clients/ashish-interiors/editorial/locations/studio.jpg" alt="Ashish Interiors Boring Road Studio Sample Racks and Drawing Table" />
-        </figure>
-        <figcaption class="photo-caption" data-en="The Material Sample Racks, Second Floor — Where Every Patna Project Specification Is Finalised" data-hi="सामग्री सैंपल रैक, दूसरी मंजिल — जहां हर पटना प्रोजेक्ट का विवरण तय होता है">
-          The Material Sample Racks, Second Floor — Where Every Patna Project Specification Is Finalised
-        </figcaption>
       </section>
     </main>
 
     <!-- Footer -->
     <footer class="site-footer">
       <div class="footer-inner">
-        <div>© 2026 Ashish Interiors · Boring Road, Patna, Bihar 800001</div>
         <div>
-          <a href="/contact-iteration-1.html" style="text-decoration: underline;" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a>
-          <span style="margin: 0 8px; opacity: 0.4;">|</span>
-          <a href="tel:+919876543210">+91 98765 43210</a>
+          <span>Ashish Interiors · 2nd Floor, Boring Road Crossing, Patna · (555) 0123</span>
         </div>
+        <nav class="footer-links">
+          <a href="/locations">Next.js Locations</a>
+          <a href="/contact">Contact</a>
+          <a href="/about">About</a>
+        </nav>
       </div>
     </footer>
 
-    <!-- Bilingual Toggle Script -->
     <script>
       let currentLang = 'en';
-      function toggleLang() {
+      function toggleLanguage() {
         currentLang = currentLang === 'en' ? 'hi' : 'en';
         document.documentElement.lang = currentLang;
-        document.querySelectorAll('[data-en]').forEach(el => {
-          el.textContent = currentLang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
-        });
-        const btn = document.getElementById('langToggleBtn');
-        if (btn) {
-          btn.querySelector('span').textContent = currentLang === 'en' ? 'EN / हिंदी' : 'हिंदी / EN';
+        
+        const btn = document.getElementById('langToggle');
+        if (currentLang === 'hi') {
+          btn.textContent = 'View in English';
+        } else {
+          btn.textContent = 'हिन्दी में देखें';
         }
+
+        document.querySelectorAll('[data-en]').forEach(el => {
+          const text = el.getAttribute('data-' + currentLang);
+          if (text) {
+            el.textContent = text;
+          }
+        });
       }
     </script>
   </body>

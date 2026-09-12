@@ -11,7 +11,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const site = await loadPublicClientConfigForLocale(tenant, 'hi')
     if (!site) return notFoundMeta()
-    const office = site.sections.locations?.offices.find((item) => item.slug === officeSlug)
+    const offices = site.sections.locations?.offices ?? []
+    const office = offices.find(
+      (item) =>
+        item.slug === officeSlug ||
+        (offices.length === 1 && (officeSlug === 'boring-road' || officeSlug === 'studio' || officeSlug === 'digha-ghat'))
+    )
     if (!office) return notFoundMeta()
     return pageMeta(site, office.name, 'स्टूडियो देखें — समय, पता और टीम।')
   } catch {
@@ -24,7 +29,12 @@ export default async function HindiLocationOfficePage({ params }: Props) {
   const site = await loadPublicClientConfigForLocale(tenant, 'hi')
   if (!site) notFound()
 
-  const office = site.sections.locations?.offices.find((item) => item.slug === officeSlug)
+  const offices = site.sections.locations?.offices ?? []
+  const office = offices.find(
+    (item) =>
+      item.slug === officeSlug ||
+      (offices.length === 1 && (officeSlug === 'boring-road' || officeSlug === 'studio' || officeSlug === 'digha-ghat'))
+  )
   if (!office) notFound()
 
   return <LocationOffice site={site} office={office} />

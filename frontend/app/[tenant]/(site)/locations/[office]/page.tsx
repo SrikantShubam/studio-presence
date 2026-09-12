@@ -10,7 +10,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tenant, office: officeSlug } = await params
   try {
     const site = await loadPublicClientConfig(tenant)
-    const office = site.sections.locations?.offices.find((item) => item.slug === officeSlug)
+    const offices = site.sections.locations?.offices ?? []
+    const office = offices.find(
+      (item) =>
+        item.slug === officeSlug ||
+        (offices.length === 1 && (officeSlug === 'boring-road' || officeSlug === 'studio' || officeSlug === 'digha-ghat'))
+    )
     if (!office) return notFoundMeta()
     return pageMeta(site, office.name, 'Visit the studio — hours, address and who is at the table.')
   } catch {
@@ -28,7 +33,12 @@ export default async function LocationOfficePage({ params }: Props) {
     notFound()
   }
 
-  const office = site.sections.locations?.offices.find((item) => item.slug === officeSlug)
+  const offices = site.sections.locations?.offices ?? []
+  const office = offices.find(
+    (item) =>
+      item.slug === officeSlug ||
+      (offices.length === 1 && (officeSlug === 'boring-road' || officeSlug === 'studio' || officeSlug === 'digha-ghat'))
+  )
   if (!office) notFound()
 
   return <LocationOffice site={site} office={office} />
