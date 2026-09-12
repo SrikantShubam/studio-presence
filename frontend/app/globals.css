@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo/archivo-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo/archivo-latin-ext.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
 /*
   TOKEN LAYER — read this before adding a colour or a size anywhere.
 
@@ -28,8 +44,8 @@
   --t-muted: #6b6b6b;
   --t-hairline: #e5e5e5;
 
-  --t-font-display: ui-sans-serif, system-ui, sans-serif;
-  --t-font-body: ui-sans-serif, system-ui, sans-serif;
+  --t-font-display: Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --t-font-body: Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --t-radius: 0px;
 
@@ -42,14 +58,62 @@
     overwritten at request time — there is no per-client admin theme to inject.
     They exist as variables (not literals in components) purely so
     check:hardcode's rule holds everywhere, admin included, with no exemption.
+
+    Light and dark are BOTH first-class here. Three states, and all three have to
+    be handled or the toggle only works one way:
+      1. no choice made      → follow prefers-color-scheme
+      2. explicit "dark"     → dark, even on a light OS
+      3. explicit "light"    → light, even on a dark OS
+    Hence the palette is defined on bare :root, re-declared under the media query
+    guarded by :not([data-admin-theme="light"]), and again under the explicit
+    [data-admin-theme="dark"]. Never give one of these colours its only
+    definition inside a media query.
+
+    --a-on-primary exists because components put text on a --a-primary fill.
+    Reusing --a-surface for that (as the first cut did) silently breaks in dark
+    mode: --a-surface goes near-black, and you get black text on a green button.
   */
   --a-surface: #ffffff;
-  --a-bg: #f6f6f5;
-  --a-border: #e4e4e2;
-  --a-ink: #1c1c1b;
+  --a-bg: #f4f4f2;
+  --a-raised: #edeeeb;
+  --a-border: #e5e5e2;
+  --a-ink: #1a1a19;
   --a-muted: #6b6b68;
   --a-primary: #2f6f4e;
+  --a-on-primary: #ffffff;
+  --a-primary-soft: #e7f0ea;
   --a-alert: #b4462f;
+  --a-alert-soft: #f9e9e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-admin-theme="light"]) {
+    --a-surface: #1a1d1f;
+    --a-bg: #121415;
+    --a-raised: #23272a;
+    --a-border: #2f3437;
+    --a-ink: #e8eaea;
+    --a-muted: #979d9f;
+    --a-primary: #52a67a;
+    --a-on-primary: #0a1710;
+    --a-primary-soft: #1d3a2b;
+    --a-alert: #e07a63;
+    --a-alert-soft: #3a211b;
+  }
+}
+
+:root[data-admin-theme="dark"] {
+  --a-surface: #1a1d1f;
+  --a-bg: #121415;
+  --a-raised: #23272a;
+  --a-border: #2f3437;
+  --a-ink: #e8eaea;
+  --a-muted: #979d9f;
+  --a-primary: #52a67a;
+  --a-on-primary: #0a1710;
+  --a-primary-soft: #1d3a2b;
+  --a-alert: #e07a63;
+  --a-alert-soft: #3a211b;
 }
 
 @theme inline {
@@ -72,6 +136,10 @@
   --color-admin-muted: var(--a-muted);
   --color-admin-primary: var(--a-primary);
   --color-admin-alert: var(--a-alert);
+  --color-admin-raised: var(--a-raised);
+  --color-admin-on-primary: var(--a-on-primary);
+  --color-admin-primary-soft: var(--a-primary-soft);
+  --color-admin-alert-soft: var(--a-alert-soft);
 }
 
 html {
