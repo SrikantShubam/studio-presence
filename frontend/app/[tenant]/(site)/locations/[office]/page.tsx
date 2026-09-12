@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { loadPublicClientConfig } from '@studio/backend'
 import { notFoundMeta, pageMeta } from '@/lib/page-meta'
 import { LocationOffice } from '../LocationOffice'
+import { resolveOffice, SEO_DATA } from '@/lib/locations-data'
 
 type Props = { params: Promise<{ tenant: string; office: string }> }
 
@@ -10,14 +11,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tenant, office: officeSlug } = await params
   try {
     const site = await loadPublicClientConfig(tenant)
-    const offices = site.sections.locations?.offices ?? []
-    const office = offices.find(
-      (item) =>
-        item.slug === officeSlug ||
-        (offices.length === 1 && (officeSlug === 'boring-road' || officeSlug === 'studio' || officeSlug === 'digha-ghat'))
-    )
+    const office = resolveOffice(site, officeSlug, 'en')
     if (!office) return notFoundMeta()
-    return pageMeta(site, office.name, 'Visit the studio — hours, address and who is at the table.')
+
+    const seo = SEO_DATA[office.slug]
+    const title = seo?.metaTitle || `${office.name} | ${site.business.name}`
+    const description = seo?.metaDescription || `Visit ${office.name} in ${office.address.locality || office.address.city}. Address, hours, and consultation appointments.`
+
+    return pageMeta(site, title, description)
   } catch {
     return notFoundMeta()
   }
@@ -33,12 +34,7 @@ export default async function LocationOfficePage({ params }: Props) {
     notFound()
   }
 
-  const offices = site.sections.locations?.offices ?? []
-  const office = offices.find(
-    (item) =>
-      item.slug === officeSlug ||
-      (offices.length === 1 && (officeSlug === 'boring-road' || officeSlug === 'studio' || officeSlug === 'digha-ghat'))
-  )
+  const office = resolveOffice(site, officeSlug, 'en')
   if (!office) notFound()
 
   return <LocationOffice site={site} office={office} />

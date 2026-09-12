@@ -3,7 +3,42 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Studio & Neighborhood Guide | Ashish Interiors Patna</title>
+    <title>Proximity & Survey Guide (5 Locations) | Ashish Interiors Patna</title>
+    <meta
+      name="description"
+      content="Find the nearest Ashish Interiors location across our 5 Patna & Bihar hubs. Check room measurement turnaround times and schedule site visits within 24 hours."
+    />
+    <meta
+      name="keywords"
+      content="Interior designer near me Patna, best interior designer Bailey Road, home renovation Kankarbagh Patna, carpenter workshop Digha Ghat, turnkey villa design Hajipur"
+    />
+    <link rel="canonical" href="https://ashishinteriors.in/locations" />
+
+    <!-- Schema.org JSON-LD Local Proximity -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HomeAndConstructionBusiness",
+      "name": "Ashish Interiors",
+      "telephone": "+919876543210",
+      "url": "https://ashishinteriors.in",
+      "areaServed": [
+        { "@type": "City", "name": "Patna" },
+        { "@type": "City", "name": "Danapur" },
+        { "@type": "City", "name": "Hajipur" }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Turnkey Interior Design Services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Residential 3BHK Full Interiors" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Modular Kitchen Fabrication (Digha Workshop)" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Older Home Civil & Interior Renovation" } }
+        ]
+      }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -86,7 +121,7 @@
       }
 
       .proto-bar-inner {
-        max-width: 1200px;
+        max-width: 1240px;
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
@@ -145,14 +180,14 @@
         color: var(--ink);
       }
 
-      /* Site Header */
+      /* Header */
       .site-header {
         border-bottom: 1px solid var(--hairline);
         padding: 20px clamp(16px, 4vw, 48px);
       }
 
       .header-inner {
-        max-width: 1200px;
+        max-width: 1240px;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -194,14 +229,14 @@
       }
 
       .wrap {
-        max-width: 1200px;
+        max-width: 1240px;
         margin: 0 auto;
         padding: 0 clamp(16px, 4vw, 48px);
       }
 
       /* Hero Section */
       .hero-section {
-        padding: clamp(48px, 7vw, 84px) 0 clamp(36px, 5vw, 56px);
+        padding: clamp(48px, 6vw, 76px) 0 clamp(32px, 4vw, 48px);
         border-bottom: 1px solid var(--hairline);
       }
 
@@ -213,141 +248,60 @@
       }
 
       .hero-title {
-        font-size: clamp(34px, 5.5vw, 60px);
+        font-size: clamp(34px, 5vw, 56px);
         font-weight: 300;
         color: var(--ink);
         max-width: 18ch;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
       }
 
       .hero-desc {
         font-size: clamp(15px, 1.4vw, 18px);
         color: var(--body);
-        max-width: 60ch;
+        max-width: 62ch;
         line-height: 1.65;
       }
 
-      /* Studio & Workshop Dual Section */
-      .places-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: clamp(24px, 4vw, 40px);
-        padding: clamp(40px, 6vw, 64px) 0;
+      /* Proximity Table Section */
+      .proximity-section {
+        padding: clamp(36px, 5vw, 60px) 0;
         border-bottom: 1px solid var(--hairline);
       }
 
-      .place-card {
-        border: 1px solid var(--hairline);
-        padding: clamp(24px, 4vw, 40px);
-        background: #ffffff;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-
-      .place-header {
-        margin-bottom: 20px;
-      }
-
-      .place-tag {
-        font-size: 11.5px;
-        color: var(--accent);
-        font-weight: 500;
-        margin-bottom: 6px;
-      }
-
-      .place-title {
-        font-size: clamp(22px, 2.5vw, 28px);
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 12px;
-      }
-
-      .place-desc {
-        font-size: 14.5px;
-        color: var(--body);
-        line-height: 1.6;
-      }
-
-      .place-details {
-        margin: 20px 0;
-        padding: 16px 0;
-        border-top: 1px solid var(--hairline);
-        border-bottom: 1px solid var(--hairline);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        font-size: 13.5px;
-      }
-
-      .detail-row {
-        display: flex;
-        gap: 8px;
-      }
-
-      .detail-label {
-        color: var(--muted);
-        min-width: 76px;
-      }
-
-      .btn-place {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--ink);
-        color: #ffffff;
-        padding: 13px 20px;
-        font-size: 13px;
-        font-weight: 500;
-        min-height: 46px;
-        transition: background 0.15s ease;
-        text-align: center;
-      }
-
-      .btn-place:hover {
-        background: var(--accent);
-      }
-
-      /* Coverage Table */
-      .coverage-section {
-        padding: clamp(48px, 6vw, 72px) 0 clamp(64px, 8vw, 96px);
-      }
-
-      .coverage-title {
-        font-size: clamp(24px, 3vw, 36px);
+      .section-heading {
+        font-size: clamp(22px, 2.6vw, 30px);
         font-weight: 400;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
       }
 
-      .coverage-desc {
-        font-size: 15px;
-        color: var(--body);
-        max-width: 54ch;
-        margin-bottom: 32px;
-      }
-
-      .locality-table {
-        width: 100%;
-        border-collapse: collapse;
+      .section-sub {
         font-size: 14px;
+        color: var(--muted);
         margin-bottom: 24px;
       }
 
-      .locality-table th,
-      .locality-table td {
-        padding: 14px 18px;
+      .turnaround-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13.5px;
+        margin-bottom: 32px;
+      }
+
+      .turnaround-table th,
+      .turnaround-table td {
+        padding: 14px 16px;
         text-align: left;
         border-bottom: 1px solid var(--hairline);
       }
 
-      .locality-table th {
+      .turnaround-table th {
         background: var(--panel);
-        font-weight: 500;
         color: var(--ink);
-        font-size: 12.5px;
+        font-weight: 500;
+        font-size: 12px;
       }
 
-      .locality-table tr:hover td {
+      .turnaround-table tr:hover td {
         background: #faf8f5;
       }
 
@@ -360,7 +314,7 @@
         padding: 2px 8px;
       }
 
-      .badge-scheduled {
+      .badge-plan {
         display: inline-block;
         background: #f4efe6;
         color: var(--accent);
@@ -369,10 +323,98 @@
         padding: 2px 8px;
       }
 
-      .cta-card {
+      /* 5 Location Cards Grid */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 24px;
+        padding: clamp(40px, 5vw, 64px) 0;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .hub-card {
+        background: #ffffff;
+        border: 1px solid var(--hairline);
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+        transition: border-color 0.15s ease;
+      }
+
+      .hub-card:hover {
+        border-color: var(--accent);
+      }
+
+      .hub-header {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .hub-badge {
+        font-size: 11px;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .hub-name {
+        font-size: 21px;
+        font-weight: 500;
+        color: var(--ink);
+      }
+
+      .hub-specialty {
+        font-size: 13.5px;
+        color: var(--body);
+        line-height: 1.55;
+      }
+
+      .hub-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 16px 0;
+        border-top: 1px solid var(--hairline);
+        border-bottom: 1px solid var(--hairline);
+        font-size: 13px;
+      }
+
+      .meta-row {
+        display: flex;
+        gap: 6px;
+      }
+
+      .meta-lbl {
+        color: var(--muted);
+        min-width: 60px;
+      }
+
+      .hub-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--ink);
+        color: #ffffff;
+        padding: 12px 18px;
+        font-size: 12.5px;
+        font-weight: 500;
+        min-height: 44px;
+        text-align: center;
+        transition: background 0.15s ease;
+      }
+
+      .hub-btn:hover {
+        background: var(--accent);
+      }
+
+      /* Booking Banner */
+      .booking-banner {
+        margin: clamp(40px, 5vw, 64px) 0;
         background: var(--panel);
         border: 1px solid var(--hairline);
-        padding: clamp(24px, 4vw, 40px);
+        padding: clamp(24px, 4vw, 44px);
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -380,30 +422,31 @@
         gap: 20px;
       }
 
-      .cta-text h3 {
-        font-size: 20px;
+      .booking-text h3 {
+        font-size: 22px;
         font-weight: 500;
         margin-bottom: 6px;
       }
 
-      .cta-text p {
+      .booking-text p {
         font-size: 14px;
         color: var(--muted);
+        max-width: 50ch;
       }
 
-      .btn-wa {
+      .btn-wa-lg {
         display: inline-flex;
         align-items: center;
         gap: 8px;
         background: var(--wa-green);
         color: #ffffff;
-        padding: 13px 22px;
+        padding: 14px 24px;
         font-size: 13px;
         font-weight: 500;
         min-height: 46px;
       }
 
-      .btn-wa:hover {
+      .btn-wa-lg:hover {
         background: var(--wa-green-dark);
       }
 
@@ -415,14 +458,13 @@
 
       /* Footer */
       .site-footer {
-        border-top: 1px solid var(--hairline);
         padding: 32px clamp(16px, 4vw, 48px);
         font-size: 12px;
         color: var(--muted);
       }
 
       .footer-inner {
-        max-width: 1200px;
+        max-width: 1240px;
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
@@ -442,16 +484,16 @@
     </style>
   </head>
   <body>
-    <!-- Minimal Switcher Bar -->
+    <!-- Sticky Switcher Bar -->
     <aside class="proto-bar" aria-label="Prototype Switcher">
       <div class="proto-bar-inner">
         <div class="proto-meta">
-          <span>Locations prototype · Variant 3 of 3</span>
+          <span>Locations prototype · Variant 3 of 3 (Proximity Guide)</span>
         </div>
         <nav class="proto-pills" aria-label="Variants">
-          <a href="locations-iteration-1.html" class="proto-pill">1: Studio directory</a>
-          <a href="locations-iteration-2.html" class="proto-pill">2: Two facilities</a>
-          <a href="locations-iteration-3.html" class="proto-pill active">3: Locality guide</a>
+          <a href="locations-iteration-1.html" class="proto-pill">1: Architectural ledger</a>
+          <a href="locations-iteration-2.html" class="proto-pill">2: Regional network grid</a>
+          <a href="locations-iteration-3.html" class="proto-pill active">3: Locality proximity guide</a>
           <a href="locations-index.html" class="proto-pill">Switcher index</a>
           <a href="/locations" class="proto-pill">Next.js live</a>
         </nav>
@@ -479,211 +521,184 @@
       </div>
     </header>
 
-    <!-- Main Content -->
     <main>
       <!-- Hero -->
       <section class="hero-section">
         <div class="wrap">
-          <div class="hero-tag" data-en="Patna coverage & studio locations" data-hi="पटना कार्यक्षेत्र एवं स्टूडियो">
-            Patna coverage & studio locations
+          <div class="hero-tag" data-en="Neighbourhood Survey & Proximity Index" data-hi="नजदीकी स्टूडियो एवं साइट सर्वे गाइड">
+            Neighbourhood Survey & Proximity Index
           </div>
-          <h1 class="hero-title" data-en="Our locations and serviced neighborhoods" data-hi="हमारे स्थान और सेवा क्षेत्र">
-            Our locations and serviced neighborhoods
+          <h1 class="hero-title" data-en="Where is your home located?" data-hi="आपका घर या फ्लैट कहाँ स्थित है?">
+            Where is your home located?
           </h1>
           <p
             class="hero-desc"
-            data-en="Visit our studio to inspect materials, or schedule an in-person room measurement anywhere in Patna."
-            data-hi="सामग्री के सैंपल देखने के लिए हमारे स्टूडियो आएं, या पटना में अपने घर पर कमरा माप के लिए अपॉइंटमेंट बुक करें।"
+            data-en="We pair each Patna neighbourhood with its closest dedicated Ashish Interiors branch to ensure same-day laser measurements and uncompromised daily site supervision."
+            data-hi="हमने पटना और बिहार के हर इलाके को उसके नजदीकी केंद्र से जोड़ा है ताकि उसी दिन कमरा माप और बिना देरी के कार्य हो सके।"
           >
-            Visit our studio to inspect materials, or schedule an in-person room measurement anywhere in Patna.
+            We pair each Patna neighbourhood with its closest dedicated Ashish Interiors branch to ensure same-day laser measurements and uncompromised daily site supervision.
           </p>
         </div>
       </section>
 
-      <!-- Locations Cards -->
-      <section class="wrap">
-        <div class="places-grid">
-          <!-- Boring Road Card -->
-          <article class="place-card">
-            <div>
-              <div class="place-header">
-                <div class="place-tag" data-en="Primary Studio" data-hi="मुख्य स्टूडियो">
-                  Primary Studio
-                </div>
-                <h2 class="place-title" data-en="Boring Road Atelier" data-hi="बोरिंग रोड स्टूडियो">
-                  Boring Road Atelier
-                </h2>
-                <p
-                  class="place-desc"
-                  data-en="Our primary consultation room for 2D floor plans, material selection, and project contract meetings."
-                  data-hi="हमारा मुख्य परामर्श केंद्र जहाँ 2D ड्राइंग, सामग्री चयन और प्रोजेक्ट बैठकें होती हैं।"
-                >
-                  Our primary consultation room for 2D floor plans, material selection, and project contract meetings.
-                </p>
-              </div>
-
-              <div class="place-details">
-                <div class="detail-row">
-                  <span class="detail-label" data-en="Address:" data-hi="पता:">Address:</span>
-                  <span>2nd Floor, Shivam Complex, Boring Road Crossing, Patna 800001</span>
-                </div>
-                <div class="detail-row">
-                  <span class="detail-label" data-en="Parking:" data-hi="पार्किंग:">Parking:</span>
-                  <span data-en="Dedicated parking in lane behind complex" data-hi="कॉम्प्लेक्स के पीछे वाली गली में पार्किंग">Dedicated parking in lane behind complex</span>
-                </div>
-                <div class="detail-row">
-                  <span class="detail-label" data-en="Hours:" data-hi="समय:">Hours:</span>
-                  <span>Mon – Sat, 10:00 to 19:00</span>
-                </div>
-                <div class="detail-row">
-                  <span class="detail-label" data-en="Phone:" data-hi="फोन:">Phone:</span>
-                  <span>(555) 0123</span>
-                </div>
-              </div>
-            </div>
-
-            <a
-              href="/locations/boring-road"
-              class="btn-place"
-              data-en="View studio details"
-              data-hi="स्टूडियो का विवरण देखें"
-            >
-              View studio details
-            </a>
-          </article>
-
-          <!-- Digha Ghat Card -->
-          <article class="place-card">
-            <div>
-              <div class="place-header">
-                <div class="place-tag" data-en="Carpentry Workshop" data-hi="बढ़ई कार्यशाला">
-                  Carpentry Workshop
-                </div>
-                <h2 class="place-title" data-en="Digha Ghat Workshop" data-hi="दीघा घाट वर्कशॉप">
-                  Digha Ghat Workshop
-                </h2>
-                <p
-                  class="place-desc"
-                  data-en="Where raw marine-grade sheets are sized, edged, and pre-assembled prior to apartment delivery."
-                  data-hi="जहाँ मरीन ग्रेड प्लाईवुड की मशीन कटिंग, एज-बैंडिंग और साइट पर भेजने से पहले फिटिंग होती है।"
-                >
-                  Where raw marine-grade sheets are sized, edged, and pre-assembled prior to apartment delivery.
-                </p>
-              </div>
-
-              <div class="place-details">
-                <div class="detail-row">
-                  <span class="detail-label" data-en="Address:" data-hi="पता:">Address:</span>
-                  <span>Plot 14, Industrial Run, Digha Ghat, Patna 800011</span>
-                </div>
-                <div class="detail-row">
-                  <span class="detail-label" data-en="Visits:" data-hi="विजिट:">Visits:</span>
-                  <span data-en="By appointment for material inspection" data-hi="सामग्री जांचने हेतु अपॉइंटमेंट द्वारा">By appointment for material inspection</span>
-                </div>
-                <div class="detail-row">
-                  <span class="detail-label" data-en="Hours:" data-hi="समय:">Hours:</span>
-                  <span>Mon – Fri, 09:00 to 18:00</span>
-                </div>
-                <div class="detail-row">
-                  <span class="detail-label" data-en="Phone:" data-hi="फोन:">Phone:</span>
-                  <span>(555) 0123</span>
-                </div>
-              </div>
-            </div>
-
-            <a
-              href="/locations/digha-ghat"
-              class="btn-place"
-              data-en="View workshop details"
-              data-hi="कार्यशाला का विवरण देखें"
-            >
-              View workshop details
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <!-- Patna Locality Response Times -->
-      <section class="coverage-section">
+      <!-- Proximity Table -->
+      <section class="proximity-section">
         <div class="wrap">
-          <h2 class="coverage-title" data-en="Service response across Patna" data-hi="पटना में सेवा व रिस्पांस समय">
-            Service response across Patna
+          <h2 class="section-heading" data-en="Neighbourhood response matrix" data-hi="इलाकावार रिस्पांस समय">
+            Neighbourhood response matrix
           </h2>
-          <p
-            class="coverage-desc"
-            data-en="Because our studio and workshop are locally based in Patna, we handle room measurements and site supervision without travel delays."
-            data-hi="हमारा स्टूडियो और कार्यशाला पटना में ही स्थित होने के कारण, हम बिना किसी देरी के साइट माप और नियमित पर्यवेक्षण करते हैं।"
-          >
-            Because our studio and workshop are locally based in Patna, we handle room measurements and site supervision without travel delays.
+          <p class="section-sub" data-en="Typical arrival times for room measurement and laser survey across 5 designated zones:" data-hi="5 क्षेत्रों में लेजर माप और साइट विजिट का समय:">
+            Typical arrival times for room measurement and laser survey across 5 designated zones:
           </p>
 
-          <table class="locality-table" aria-label="Patna Neighborhood Response Times">
+          <table class="turnaround-table" aria-label="Turnaround Times Table">
             <thead>
               <tr>
-                <th scope="col" data-en="Neighborhood" data-hi="इलाका / कॉलोनी">Neighborhood</th>
-                <th scope="col" data-en="Travel from studio" data-hi="स्टूडियो से दूरी">Travel from studio</th>
-                <th scope="col" data-en="Measurement timing" data-hi="कमरा माप का समय">Measurement timing</th>
-                <th scope="col" data-en="Site supervision" data-hi="पर्यवेक्षण">Site supervision</th>
+                <th scope="col" data-en="Your Locality" data-hi="आपका इलाका">Your Locality</th>
+                <th scope="col" data-en="Assigned Facility" data-hi="संबद्ध स्टूडियो">Assigned Facility</th>
+                <th scope="col" data-en="Survey Response" data-hi="साइट विजिट">Survey Response</th>
+                <th scope="col" data-en="Site Supervision" data-hi="पर्यवेक्षण">Site Supervision</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Boring Road & Boring Canal Road</strong></td>
-                <td>5–10 min</td>
-                <td><span class="badge-quick" data-en="Same day" data-hi="उसी दिन">Same day</span></td>
-                <td data-en="Daily site checks" data-hi="दैनिक साइट जांच">Daily site checks</td>
+                <td><strong>Boring Road, Patliputra, SK Puri</strong></td>
+                <td>Boring Road Central Atelier</td>
+                <td><span class="badge-quick" data-en="Same Day (2–4 hrs)" data-hi="उसी दिन (2–4 घंटे)">Same Day (2–4 hrs)</span></td>
+                <td>Daily attendance</td>
               </tr>
               <tr>
-                <td><strong>Patliputra Colony</strong></td>
-                <td>7–12 min</td>
-                <td><span class="badge-quick" data-en="Same day" data-hi="उसी दिन">Same day</span></td>
-                <td data-en="Daily site checks" data-hi="दैनिक साइट जांच">Daily site checks</td>
+                <td><strong>Bailey Road, Saguna More, RPS More, Danapur</strong></td>
+                <td>Bailey Road & Danapur Hub</td>
+                <td><span class="badge-quick" data-en="Same Day (2–4 hrs)" data-hi="उसी दिन (2–4 घंटे)">Same Day (2–4 hrs)</span></td>
+                <td>Daily attendance</td>
               </tr>
               <tr>
-                <td><strong>Bailey Road & RPS More</strong></td>
-                <td>12–18 min</td>
-                <td><span class="badge-quick" data-en="Same day" data-hi="उसी दिन">Same day</span></td>
-                <td data-en="Daily site checks" data-hi="दैनिक साइट जांच">Daily site checks</td>
+                <td><strong>Kankarbagh, Rajendra Nagar, Kumhrar</strong></td>
+                <td>Kankarbagh Consultation Desk</td>
+                <td><span class="badge-quick" data-en="Same Day / 24 hrs" data-hi="उसी दिन / 24 घंटे">Same Day / 24 hrs</span></td>
+                <td>Alternate day check</td>
               </tr>
               <tr>
-                <td><strong>Kankarbagh & Rajendra Nagar</strong></td>
-                <td>20–25 min</td>
-                <td><span class="badge-scheduled" data-en="Within 24 hours" data-hi="24 घंटे के भीतर">Within 24 hours</span></td>
-                <td data-en="Alternate days" data-hi="एक दिन छोड़कर">Alternate days</td>
+                <td><strong>Digha Ghat, Kurji, Ganga Path Industrial</strong></td>
+                <td>Digha Ghat Joinery Workshop</td>
+                <td><span class="badge-plan" data-en="Weekdays by Appt" data-hi="कार्यदिवसों में">Weekdays by Appt</span></td>
+                <td>In-house workshop</td>
               </tr>
               <tr>
-                <td><strong>Danapur & Saguna More</strong></td>
-                <td>25–30 min</td>
-                <td><span class="badge-scheduled" data-en="Within 24 hours" data-hi="24 घंटे के भीतर">Within 24 hours</span></td>
-                <td data-en="Weekly scheduled check" data-hi="नियमित शेड्यूल चेक">Weekly scheduled check</td>
+                <td><strong>Hajipur, Sonpur, Ramashis Chowk, Vaishali</strong></td>
+                <td>Hajipur Regional Site Office</td>
+                <td><span class="badge-plan" data-en="Within 24–48 hrs" data-hi="24–48 घंटे में">Within 24–48 hrs</span></td>
+                <td>Resident engineer</td>
               </tr>
             </tbody>
           </table>
+        </div>
+      </section>
 
-          <div class="cta-card">
-            <div class="cta-text">
-              <h3 data-en="Need room measurements for your flat?" data-hi="अपने फ्लैट के लिए कमरा माप चाहिए?">
-                Need room measurements for your flat?
-              </h3>
-              <p
-                data-en="Send your apartment floor plan or location on WhatsApp to book a site visit."
-                data-hi="साइट विजिट बुक करने के लिए व्हाट्सएप पर अपने फ्लैट का नक्शा या लोकेशन भेजें।"
-              >
-                Send your apartment floor plan or location on WhatsApp to book a site visit.
-              </p>
+      <!-- 5 Hub Cards -->
+      <section class="wrap">
+        <div class="cards-grid">
+          <!-- Hub 1 -->
+          <article class="hub-card">
+            <div>
+              <div class="hub-header">
+                <span class="hub-badge">HUB 01 · CENTRAL PATNA</span>
+                <h3 class="hub-name">Boring Road Atelier</h3>
+                <p class="hub-specialty">Shivam Complex 2nd Floor. Layout drawings and material selection library.</p>
+              </div>
+              <div class="hub-meta">
+                <div class="meta-row"><span class="meta-lbl">Address:</span><span>Boring Road Crossing, Patna 800001</span></div>
+                <div class="meta-row"><span class="meta-lbl">Hours:</span><span>Mon–Sat, 10:00 to 19:00</span></div>
+                <div class="meta-row"><span class="meta-lbl">Phone:</span><span>(555) 0123</span></div>
+              </div>
             </div>
-            <a
-              href="https://wa.me/915550123?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20schedule%20a%20site%20measurement"
-              target="_blank"
-              rel="noopener"
-              class="btn-wa"
-            >
-              <svg class="wa-icon" viewBox="0 0 448 512" aria-hidden="true">
-                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-              </svg>
-              <span data-en="Chat on WhatsApp" data-hi="व्हाट्सएप पर चैट करें">Chat on WhatsApp</span>
-            </a>
+            <a href="/locations/patna-studio" class="hub-btn">View Boring Road details</a>
+          </article>
+
+          <!-- Hub 2 -->
+          <article class="hub-card">
+            <div>
+              <div class="hub-header">
+                <span class="hub-badge">HUB 02 · PRODUCTION UNIT</span>
+                <h3 class="hub-name">Digha Ghat Workshop</h3>
+                <p class="hub-specialty">Industrial Run near Ganga Path. Sliding beam saw sizing and hot-melt edge banding.</p>
+              </div>
+              <div class="hub-meta">
+                <div class="meta-row"><span class="meta-lbl">Address:</span><span>Plot 14, Digha Ghat, Patna 800011</span></div>
+                <div class="meta-row"><span class="meta-lbl">Hours:</span><span>Mon–Fri, 09:00 to 18:00</span></div>
+                <div class="meta-row"><span class="meta-lbl">Contact:</span><span>Manoj Sharma (Workshop Lead)</span></div>
+              </div>
+            </div>
+            <a href="/locations/digha-ghat" class="hub-btn">View Workshop details</a>
+          </article>
+
+          <!-- Hub 3 -->
+          <article class="hub-card">
+            <div>
+              <div class="hub-header">
+                <span class="hub-badge">HUB 03 · SOUTH PATNA</span>
+                <h3 class="hub-name">Kankarbagh Desk</h3>
+                <p class="hub-specialty">Old Bypass Road. Renovation planning and storage design for South Patna residences.</p>
+              </div>
+              <div class="hub-meta">
+                <div class="meta-row"><span class="meta-lbl">Address:</span><span>Old Bypass Road, Kankarbagh 800020</span></div>
+                <div class="meta-row"><span class="meta-lbl">Hours:</span><span>Mon–Sat, 10:30 to 19:30</span></div>
+                <div class="meta-row"><span class="meta-lbl">Contact:</span><span>Vikram Verma (Site Lead)</span></div>
+              </div>
+            </div>
+            <a href="/locations/kankarbagh" class="hub-btn">View Kankarbagh details</a>
+          </article>
+
+          <!-- Hub 4 -->
+          <article class="hub-card">
+            <div>
+              <div class="hub-header">
+                <span class="hub-badge">HUB 04 · WEST PATNA</span>
+                <h3 class="hub-name">Bailey Road & Danapur</h3>
+                <p class="hub-specialty">Corporate Plaza near Saguna More. Full 3BHK/4BHK interior suites for society apartments.</p>
+              </div>
+              <div class="hub-meta">
+                <div class="meta-row"><span class="meta-lbl">Address:</span><span>Saguna More, Bailey Road, Patna 801503</span></div>
+                <div class="meta-row"><span class="meta-lbl">Hours:</span><span>Mon–Sat, 10:00 to 19:00</span></div>
+                <div class="meta-row"><span class="meta-lbl">Contact:</span><span>Priya Sahay (Architectural Lead)</span></div>
+              </div>
+            </div>
+            <a href="/locations/danapur" class="hub-btn">View Danapur details</a>
+          </article>
+
+          <!-- Hub 5 -->
+          <article class="hub-card">
+            <div>
+              <div class="hub-header">
+                <span class="hub-badge">HUB 05 · NORTH BIHAR</span>
+                <h3 class="hub-name">Hajipur Site Office</h3>
+                <p class="hub-specialty">Station Road near Ramashis Chowk. Turnkey bungalow villas across Vaishali & Sonpur.</p>
+              </div>
+              <div class="hub-meta">
+                <div class="meta-row"><span class="meta-lbl">Address:</span><span>Station Road, Hajipur 844101</span></div>
+                <div class="meta-row"><span class="meta-lbl">Hours:</span><span>Tue–Sun, 10:00 to 18:00</span></div>
+                <div class="meta-row"><span class="meta-lbl">Contact:</span><span>Amit Kumar (Site Engineer)</span></div>
+              </div>
+            </div>
+            <a href="/locations/hajipur" class="hub-btn">View Hajipur details</a>
+          </article>
+        </div>
+
+        <!-- WhatsApp Booking Banner -->
+        <div class="booking-banner">
+          <div class="booking-text">
+            <h3 data-en="Schedule a laser measurement at your flat" data-hi="अपने फ्लैट के लिए लेजर माप का समय तय करें">
+              Schedule a laser measurement at your flat
+            </h3>
+            <p data-en="Send your apartment floor plan or location on WhatsApp. Our site supervisor from the nearest hub will confirm your survey slot within 2 hours." data-hi="व्हाट्सएप पर अपने फ्लैट का नक्शा या लोकेशन भेजें। नजदीकी केंद्र से सुपरवाइजर 2 घंटे में समय तय करेंगे।">
+              Send your apartment floor plan or location on WhatsApp. Our site supervisor from the nearest hub will confirm your survey slot within 2 hours.
+            </p>
           </div>
+          <a href="https://wa.me/915550123?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20schedule%20a%20site%20measurement" target="_blank" rel="noopener" class="btn-wa-lg">
+            <svg class="wa-icon" viewBox="0 0 448 512" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+            <span data-en="Book Site Survey on WhatsApp" data-hi="व्हाट्सएप पर सर्वे बुक करें">Book Site Survey on WhatsApp</span>
+          </a>
         </div>
       </section>
     </main>
@@ -692,10 +707,10 @@
     <footer class="site-footer">
       <div class="footer-inner">
         <div>
-          <span>Ashish Interiors · Boring Road, Patna · (555) 0123</span>
+          <span>Ashish Interiors · 5 Regional Hubs Serving Bihar · (555) 0123</span>
         </div>
         <nav class="footer-links">
-          <a href="/locations">Next.js Locations</a>
+          <a href="/locations">Next.js Live Index</a>
           <a href="/contact">Contact</a>
           <a href="/about">About</a>
         </nav>
