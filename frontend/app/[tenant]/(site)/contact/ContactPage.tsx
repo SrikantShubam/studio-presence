@@ -43,7 +43,7 @@ export function ContactPage({ site }: { site: ClientConfig }) {
   const city = localePlaceName(site.business.address.city, locale)
   const isHi = locale === 'hi'
 
-  const heroPhoto = site.sections.about?.image || '/clients/ashish-interiors/editorial/hero.webp'
+  const heroPhoto = site.sections.hero?.image || '/clients/ashish-interiors/editorial/hero.webp'
   const waLink = whatsappUrl(site.business.whatsapp || site.business.phone, `Hello ${site.business.name}, I would like to discuss an interiors project in ${site.business.address.city}.`)
   const directWa = whatsappUrl(site.business.whatsapp || site.business.phone)
 
@@ -97,12 +97,6 @@ export function ContactPage({ site }: { site: ClientConfig }) {
             </svg>
 
             <div className="relative z-10">
-              {/* Badge */}
-              <div className="mb-6 inline-flex items-center gap-2 border border-hairline bg-panel px-3.5 py-1.5 text-xs text-accent">
-                <EditorialIcon name="clock" className="h-3 w-3 shrink-0 text-accent" />
-                <span className={localeRoleClass(locale, 'meta')}>{pageCopy.hero.badge}</span>
-              </div>
-
               {/* Two-Tone Heading */}
               <h1 className={`m-0 break-words font-display text-[clamp(38px,6.5vw,84px)] font-light text-ink ${isHi ? 'leading-[1.26] tracking-normal' : 'uppercase leading-[0.92] tracking-[-0.035em]'}`}>
                 <span>{pageCopy.hero.titleLead}</span>
@@ -124,7 +118,7 @@ export function ContactPage({ site }: { site: ClientConfig }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`inline-flex min-h-12 items-center gap-3 bg-cta px-7 py-3.5 font-semibold text-ink transition-all hover:bg-ink hover:text-cta [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-14px)_100%,0_100%)] ${
-                      isHi ? 'text-sm tracking-normal' : 'text-xs uppercase tracking-[0.16em]'
+                      isHi ? 'text-base tracking-normal' : 'text-sm uppercase tracking-[0.16em]'
                     } ${localeRoleClass(locale, 'button')}`}
                   >
                     <EditorialIcon name="message-circle" className="h-4 w-4 shrink-0" />
@@ -132,10 +126,24 @@ export function ContactPage({ site }: { site: ClientConfig }) {
                   </a>
                 )}
 
+                {instagramUrl && (
+                  <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex min-h-12 items-center gap-3 border border-accent bg-panel px-7 py-3.5 font-semibold text-ink transition-all hover:bg-accent hover:text-surface [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-14px)_100%,0_100%)] ${
+                      isHi ? 'text-base tracking-normal' : 'text-sm uppercase tracking-[0.16em]'
+                    } ${localeRoleClass(locale, 'button')}`}
+                  >
+                    <EditorialIcon name="instagram" className="h-4 w-4 shrink-0" />
+                    <span>{pageCopy.hero.followStudio}</span>
+                  </a>
+                )}
+
                 <a
                   href="#form"
                   className={`group/btn relative inline-flex min-h-12 items-center justify-center bg-accent px-7 py-3.5 font-semibold text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-14px)_100%,0_100%)] ${
-                    isHi ? 'text-sm tracking-normal' : 'text-xs uppercase tracking-[0.16em]'
+                    isHi ? 'text-base tracking-normal' : 'text-sm uppercase tracking-[0.16em]'
                   } ${localeRoleClass(locale, 'button')}`}
                 >
                   <span
@@ -237,17 +245,19 @@ export function ContactPage({ site }: { site: ClientConfig }) {
                   <p className="m-0 text-muted">{cityRegionLine} · {hoursLine}</p>
                 </div>
 
-                {/* Social Channels directly below Studio Address */}
-                <div className="mt-5 flex items-center gap-5">
+                {/* Direct Connect & Social Buttons */}
+                <div className="mt-6 flex flex-wrap items-center gap-3.5">
                   {directWa && (
                     <a
                       href={directWa}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="WhatsApp"
-                      className="text-muted transition-colors hover:text-accent"
+                      className={`inline-flex min-h-11 items-center gap-2.5 bg-cta px-6 py-3 font-semibold text-ink transition-all hover:bg-ink hover:text-cta [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-12px)_100%,0_100%)] ${
+                        isHi ? 'text-sm tracking-normal' : 'text-xs sm:text-sm uppercase tracking-[0.14em]'
+                      } ${localeRoleClass(locale, 'button')}`}
                     >
-                      <EditorialIcon name="message-circle" className="h-5 w-5" />
+                      <EditorialIcon name="message-circle" className="h-4 w-4 shrink-0" />
+                      <span>{pageCopy.studio.whatsappLabel}</span>
                     </a>
                   )}
 
@@ -256,10 +266,12 @@ export function ContactPage({ site }: { site: ClientConfig }) {
                       href={instagramUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="Instagram"
-                      className="text-muted transition-colors hover:text-accent"
+                      className={`inline-flex min-h-11 items-center gap-2.5 border border-accent bg-panel px-6 py-3 font-semibold text-ink transition-all hover:bg-accent hover:text-surface [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-12px)_100%,0_100%)] ${
+                        isHi ? 'text-sm tracking-normal' : 'text-xs sm:text-sm uppercase tracking-[0.14em]'
+                      } ${localeRoleClass(locale, 'button')}`}
                     >
-                      <EditorialIcon name="instagram" className="h-5 w-5" />
+                      <EditorialIcon name="instagram" className="h-4 w-4 shrink-0" />
+                      <span>{pageCopy.studio.followStudio}</span>
                     </a>
                   )}
 
@@ -269,9 +281,9 @@ export function ContactPage({ site }: { site: ClientConfig }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="LinkedIn"
-                      className="text-muted transition-colors hover:text-accent"
+                      className="inline-flex min-h-11 items-center justify-center border border-hairline bg-surface px-4 py-3 text-muted transition-colors hover:border-accent hover:text-ink [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-12px)_100%,0_100%)]"
                     >
-                      <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true" className="h-5 w-5">
+                      <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true" className="h-4 w-4">
                         <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
                       </svg>
                     </a>

@@ -26,10 +26,10 @@ declare global {
 }
 
 const contactFormSchema = z.object({
-  name: z.string().trim().min(1),
-  phone: z.string().trim().min(5),
+  name: z.string().trim().min(2),
+  phone: z.string().trim().min(7),
   email: z.string().trim().email().optional().or(z.literal('')),
-  message: z.string().trim().optional(),
+  message: z.string().trim().max(2000).optional(),
 })
 
 const DEFAULT_TEST_SITE_KEY = '10000000-ffff-ffff-ffff-000000000001'
@@ -48,6 +48,7 @@ export function ContactForm({
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [captchaToken, setCaptchaToken] = useState<string>('')
 
   const captchaContainer = useRef<HTMLDivElement>(null)
@@ -82,6 +83,7 @@ export function ContactForm({
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setErrorMessage(null)
+    setFieldErrors({})
 
     const form = new FormData(event.currentTarget)
     const rawValues = {
@@ -93,7 +95,20 @@ export function ContactForm({
 
     const validation = contactFormSchema.safeParse(rawValues)
     if (!validation.success) {
-      setErrorMessage(formCopy.error)
+      const fieldMsgMap: Record<string, string> = {
+        name: formCopy.nameRequired,
+        phone: formCopy.phoneRequired,
+        email: formCopy.emailInvalid,
+      }
+      const newErrors: Record<string, string> = {}
+      for (const issue of validation.error.issues) {
+        const field = String(issue.path[0])
+        if (fieldMsgMap[field] && !newErrors[field]) {
+          newErrors[field] = fieldMsgMap[field]
+        }
+      }
+      setFieldErrors(newErrors)
+      setErrorMessage(newErrors.phone || newErrors.name || newErrors.email || formCopy.error)
       return
     }
 
@@ -151,8 +166,16 @@ export function ContactForm({
             name="name"
             required
             placeholder={formCopy.fields.name.placeholder}
-            className="ai-type-form-control border-0 border-b border-ink bg-transparent px-0 py-2.5 text-ink outline-none placeholder:text-muted focus:border-accent"
+            onChange={() => setFieldErrors((prev) => ({ ...prev, name: '' }))}
+            className={`ai-type-form-control border-0 border-b bg-transparent px-0 py-2.5 text-ink outline-none placeholder:text-muted focus:border-accent ${
+              fieldErrors.name ? 'border-accent' : 'border-ink'
+            }`}
           />
+          {fieldErrors.name && (
+            <span className={`text-xs text-accent ${localeRoleClass(locale, 'meta')}`}>
+              {fieldErrors.name}
+            </span>
+          )}
         </label>
 
         <label className="grid gap-2">
@@ -165,8 +188,16 @@ export function ContactForm({
             inputMode="tel"
             required
             placeholder={formCopy.fields.phone.placeholder}
-            className="ai-type-form-control border-0 border-b border-ink bg-transparent px-0 py-2.5 text-ink outline-none placeholder:text-muted focus:border-accent"
+            onChange={() => setFieldErrors((prev) => ({ ...prev, phone: '' }))}
+            className={`ai-type-form-control border-0 border-b bg-transparent px-0 py-2.5 text-ink outline-none placeholder:text-muted focus:border-accent ${
+              fieldErrors.phone ? 'border-accent' : 'border-ink'
+            }`}
           />
+          {fieldErrors.phone && (
+            <span className={`text-xs text-accent ${localeRoleClass(locale, 'meta')}`}>
+              {fieldErrors.phone}
+            </span>
+          )}
         </label>
 
         <label className="grid gap-2">
@@ -177,8 +208,16 @@ export function ContactForm({
             name="email"
             type="email"
             placeholder={formCopy.fields.email.placeholder}
-            className="ai-type-form-control border-0 border-b border-ink bg-transparent px-0 py-2.5 text-ink outline-none placeholder:text-muted focus:border-accent"
+            onChange={() => setFieldErrors((prev) => ({ ...prev, email: '' }))}
+            className={`ai-type-form-control border-0 border-b bg-transparent px-0 py-2.5 text-ink outline-none placeholder:text-muted focus:border-accent ${
+              fieldErrors.email ? 'border-accent' : 'border-ink'
+            }`}
           />
+          {fieldErrors.email && (
+            <span className={`text-xs text-accent ${localeRoleClass(locale, 'meta')}`}>
+              {fieldErrors.email}
+            </span>
+          )}
         </label>
 
         <label className="grid gap-2">
