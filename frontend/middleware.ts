@@ -40,7 +40,8 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * `/ashish-interiors/clients/ashish-interiors/p1.jpg`, which matches no route
  * and 404s. Caught by hitting a real asset URL against a running server —
  * `check:config` proves the path is *referenced* correctly, nothing catches
- * whether it's *servable*.
+ * whether it's *servable*. `/assets/` is the supported non-client public asset
+ * prefix for shared static files. It follows the same host/status gate below.
  *
  * `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, `opengraph-image` and
  * `favicon.ico` stay OUT of this list on purpose — SPEC.md §5 has them as
@@ -55,7 +56,7 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * this list against the paragraph above and had the identical bug.
  */
 const PLATFORM_PASSTHROUGH = /^\/(?:_next|api\/)/
-const CLIENT_ASSET_PASSTHROUGH = /^\/clients\//
+const PUBLIC_ASSET_PASSTHROUGH = /^\/(?:clients\/|assets\/)/
 
 function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
   const hostname = host.split(':')[0]?.toLowerCase() ?? ''
@@ -133,7 +134,7 @@ export function middleware(request: NextRequest) {
     })
   }
 
-  if (CLIENT_ASSET_PASSTHROUGH.test(pathname)) return NextResponse.next()
+  if (PUBLIC_ASSET_PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const url = request.nextUrl.clone()
   url.pathname = `/${entry.slug}${pathname}`
