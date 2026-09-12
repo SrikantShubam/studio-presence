@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Locations Prototypes Master Index — Ashish Interiors Patna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #141414;
+      --accent: #51372A;
+      --cta: #D9BC72;
+      --surface: #FFFFFF;
+      --body: #4A4A4A;
+      --muted: #8B8377;
+      --hairline: #DCD7CE;
+      --panel: #FAF8F5;
+      --wa-evergreen: #285A43;
+      --font-display: 'Archivo', "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    body {
+      background: #100f0e;
+      color: #e2ded5;
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ── Sticky Top Master Bar ──────────────────────────────── */
+    .master-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #171513;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 10px clamp(14px, 2.5vw, 36px);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      background: var(--cta);
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 11px;
+      padding: 3px 7px;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #f7f5f0;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: #8b8377;
+      letter-spacing: 0.05em;
+    }
+
+    .proto-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #f5f2ed;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--cta);
+      color: var(--ink);
+      border-color: var(--cta);
+    }
+
+    .pills-scroll {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      max-width: 520px;
+      padding: 2px 0;
+    }
+
+    .num-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #c5bfb4;
+      padding: 5px 9px;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .num-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .num-pill.active {
+      background: var(--cta);
+      color: var(--ink);
+      border-color: var(--cta);
+      font-weight: 700;
+    }
+
+    .viewport-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+      padding-left: 10px;
+    }
+
+    .view-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #a89f92;
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .view-btn:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .view-btn.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .meta-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-link {
+      color: var(--cta);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid rgba(217, 188, 114, 0.4);
+      padding: 4px 10px;
+      transition: all 0.15s ease;
+    }
+
+    .action-link:hover {
+      background: var(--cta);
+      color: var(--ink);
+    }
+
+    /* ── Subheader / Active Info ────────────────────────── */
+    .active-info-bar {
+      background: #121110;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px clamp(16px, 3vw, 48px);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    .info-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-num {
+      background: rgba(81, 55, 42, 0.6);
+      color: #f5eedf;
+      border: 1px solid var(--accent);
+      padding: 2px 7px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+
+    .info-title {
+      font-weight: 600;
+      color: #f7f5f0;
+      font-size: 13.5px;
+    }
+
+    .info-device {
+      color: #8b8377;
+      font-size: 11.5px;
+    }
+
+    .info-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
+      color: #8b8377;
+    }
+
+    .keyboard-hint {
+      font-family: ui-monospace, Menlo, monospace;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 5px;
+      color: #dcd7ce;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* ── Main Frame Stage ───────────────────────────────── */
+    .stage-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      background: #090807;
+      padding: 0;
+      position: relative;
+      min-height: calc(100vh - 120px);
+    }
+
+    .frame-wrapper {
+      width: 100%;
+      transition: width 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+    }
+
+    .frame-wrapper.desktop {
+      width: 100%;
+    }
+
+    .frame-wrapper.tablet {
+      width: 768px;
+      margin: 16px auto;
+      border: 1px solid #333;
+      height: calc(100vh - 150px);
+    }
+
+    .frame-wrapper.mobile {
+      width: 375px;
+      margin: 16px auto;
+      border: 1px solid #333;
+      height: 812px;
+    }
+
+    iframe#previewFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      flex: 1;
+      background: #ffffff;
+      display: block;
+    }
+
+    /* ── Catalog Section (Exposed Grid) ─────────────────── */
+    .catalog-section {
+      background: #141312;
+      border-top: 2px solid var(--accent);
+      padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 48px);
+    }
+
+    .catalog-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .catalog-header {
+      margin-bottom: clamp(24px, 4vw, 48px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    .catalog-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--cta);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .catalog-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: #f7f5f0;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .variant-card {
+      background: #1a1816;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .variant-card:hover {
+      border-color: var(--cta);
+      background: #201e1b;
+      transform: translateY(-2px);
+    }
+
+    .card-top {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .card-num {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cta);
+      letter-spacing: 0.15em;
+    }
+
+    .card-device-badge {
+      font-size: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 2px 6px;
+      color: #a89f92;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 500;
+      color: #f7f5f0;
+      line-height: 1.3;
+    }
+
+    .card-device {
+      font-size: 12.5px;
+      color: #D9BC72;
+      line-height: 1.5;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: #a89f92;
+      line-height: 1.6;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+    }
+
+    .btn-load {
+      background: var(--cta);
+      color: var(--ink);
+      border: none;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-load:hover {
+      background: #ffffff;
+    }
+
+    .btn-direct {
+      color: #dcd7ce;
+      text-decoration: none;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 7px 12px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-direct:hover {
+      border-color: var(--cta);
+      color: var(--cta);
+    }
+
+    /* ── Studio Navigation Directory Footer ─────────────── */
+    .master-footer {
+      background: #0d0c0b;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px clamp(16px, 4vw, 48px);
+      font-size: 12px;
+      color: #8b8377;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .hub-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hub-links a {
+      color: #dcd7ce;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .hub-links a:hover {
+      color: var(--cta);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Top Master Bar -->
+  <header class="master-bar" role="banner">
+    <div class="brand-section">
+      <a href="/" class="brand-mark">AI</a>
+      <div>
+        <div class="brand-title">Locations Prototypes Index</div>
+        <div class="brand-subtitle">Ashish Interiors · Boring Road, Patna</div>
+      </div>
+    </div>
+
+    <!-- Paging & Iteration Pills -->
+    <div class="proto-controls">
+      <button type="button" class="nav-btn" onclick="prevVariant()" title="Previous (Left Arrow)">← Prev</button>
+      <div class="pills-scroll" id="pillsContainer">
+        <!-- Injected via JavaScript -->
+      </div>
+      <button type="button" class="nav-btn" onclick="nextVariant()" title="Next (Right Arrow)">Next →</button>
+    </div>
+
+    <!-- Viewport Devices & Actions -->
+    <div class="meta-actions">
+      <div class="viewport-controls">
+        <button type="button" class="view-btn active" id="viewDesktop" onclick="setViewport('desktop')" title="Desktop View (100%)">Desktop</button>
+        <button type="button" class="view-btn" id="viewTablet" onclick="setViewport('tablet')" title="Tablet View (768px)">Tablet</button>
+        <button type="button" class="view-btn" id="viewMobile" onclick="setViewport('mobile')" title="Mobile View (375px)">Mobile</button>
+      </div>
+      <button type="button" class="nav-btn" onclick="toggleIframeLang()" title="Toggle Language inside prototype">EN / HI</button>
+      <a href="locations-iteration-1.html" target="_blank" rel="noopener" class="action-link" id="openExternalBtn">
+        <span>Open Tab</span> ↗
+      </a>
+      <a href="#catalog" class="nav-btn" title="View all 10 in catalog grid">Catalog ↓</a>
+    </div>
+  </header>
+
+  <!-- Subheader with Active Concept Metadata -->
+  <aside class="active-info-bar">
+    <div class="info-left">
+      <span class="badge-num" id="infoBadge">ITERATION 1</span>
+      <span class="info-title" id="infoTitle">The Boring Road Monograph & Cartographic Dossier</span>
+      <span class="info-device" id="infoDevice">· Core Device: Vector Map of Boring Road Crossing & Pedestrian Waypoints</span>
+    </div>
+    <div class="info-right">
+      <span>Shortcut: Press <span class="keyboard-hint">←</span> and <span class="keyboard-hint">→</span> keys to navigate</span>
+      <span style="opacity: 0.3;">|</span>
+      <span>10 Variants Ready</span>
+    </div>
+  </aside>
+
+  <!-- Interactive Stage & Live Iframe -->
+  <main class="stage-container">
+    <div class="frame-wrapper desktop" id="frameWrapper">
+      <iframe id="previewFrame" src="locations-iteration-1.html" title="Ashish Interiors Location Prototype Live Preview"></iframe>
+    </div>
+  </main>
+
+  <!-- Exposed Catalog Grid of All 10 Variants -->
+  <section class="catalog-section" id="catalog">
+    <div class="catalog-inner">
+      <div class="catalog-header">
+        <div>
+          <span class="catalog-eyebrow">Studio Presence · Locations Concept Suite</span>
+          <h2 class="catalog-title">All 10 Prototype Variants</h2>
+        </div>
+        <div style="font-size: 13px; color: #8b8377;">
+          Click "Load in Viewer" to test interactively above, or "Open Direct" to inspect full-screen.
+        </div>
+      </div>
+
+      <div class="grid-cards" id="catalogCards">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Master Studio Directory Footer -->
+  <footer class="master-footer">
+    <div class="footer-content">
+      <div>
+        <strong>Ashish Interiors</strong> · Multi-Tenant Architecture & Visual Prototyping System
+      </div>
+      <nav class="hub-links">
+        <a href="/locations" target="_blank">Next.js /locations (Production)</a>
+        <a href="/contact-iteration-showcase.html">Contact Prototypes (1–20)</a>
+        <a href="/about-iteration-1.html">About Prototypes (1–6)</a>
+        <a href="/contact" target="_blank">Next.js /contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Script for Navigation, Viewport, and Iframe Switching -->
+  <script>
+    const VARIANTS = [
+      {
+        id: 1,
+        title: "The Boring Road Monograph & Cartographic Dossier",
+        device: "Vector Map of Boring Road Crossing & Arrival Guide",
+        desc: "High-contrast cartographic coordinate dossier detailing the roundabout, Shivam Complex footprint, rear parking lane, and pedestrian steps from the SBI ATM to the 2nd-floor drawing tables.",
+        url: "locations-iteration-1.html"
+      },
+      {
+        id: 2,
+        title: "The Patna Locality & Travel-Time Matrix",
+        device: "Comparative Transit Velocity & Distance Bar Graph",
+        desc: "Interactive benchmark matrix connecting Boring Road to Patliputra (7 min), Bailey Road (12 min), Kankarbagh (22 min), Danapur (28 min), Phulwari Sharif (31 min), and Hajipur (45 min) with peak-traffic indicators.",
+        url: "locations-iteration-2.html"
+      },
+      {
+        id: 3,
+        title: "The Atelier & Workshop Twin-Coordinate Split",
+        device: "Dual Facility Coordinate Blueprint (Atelier vs Joinery)",
+        desc: "Splits client drawing consultations at Boring Road (Shivam Complex 2nd Floor) from heavy carpentry at the Digha Ghat Industrial Workshop (5 mins away, automated beam saw line headed by Manoj Sharma).",
+        url: "locations-iteration-3.html"
+      },
+      {
+        id: 4,
+        title: "The 150 KM Radial Survey Radar",
+        device: "Concentric Geographical Radar & Dispatch Zones",
+        desc: "Concentric radial radar chart establishing why commissions are capped at 150 km: Zone 1 Core Patna (same-day laser survey), Zone 2 Satellite (24h dispatch), and Zone 3 Regional (scheduled turnkey execution).",
+        url: "locations-iteration-4.html"
+      },
+      {
+        id: 5,
+        title: "The Architectural Floor Plan & Studio Blueprint",
+        device: "1:50 Exposed Architectural Studio Blueprint (1,450 sq ft)",
+        desc: "Technical floor plan showing the exact physical layout: Sample Rack A (BWP Ply & Veneer), Sample Rack B (Laminates & Hardware), the 12-ft Teak Discussion Table, and Ashish Kumar's drawing bay.",
+        url: "locations-iteration-5.html"
+      },
+      {
+        id: 6,
+        title: "The Material Archive & Sample Touch Room",
+        device: "Tactile Material Inspection & Gangetic Basin Climatology Graph",
+        desc: "Empirical moisture analysis comparing IS:710 Marine Grade BWP board vs commercial MR ply under Patna's 89% peak monsoon relative humidity, demonstrating why physical sample handling prevents rot.",
+        url: "locations-iteration-6.html"
+      },
+      {
+        id: 7,
+        title: "The Project Delivery Transit Ledger",
+        device: "Linear Transit Corridor Node Map & Verified Handover Pins",
+        desc: "Chronological delivery corridor linking 240+ completed apartments across Ashok Rajpath, Bailey Road, and Boring Canal Road back to the studio, complete with handover case study photo proofs.",
+        url: "locations-iteration-7.html"
+      },
+      {
+        id: 8,
+        title: "The Evening Studio Salon & Parking Deck Pass",
+        device: "After-Hours Parking Capacity & Traffic Curve (10:00–20:00)",
+        desc: "Dedicated accessibility protocol for Patna working couples visiting between 17:00 and 19:30, featuring rear service lane parking validation, quiet evening tea, and uninterrupted drawing reviews.",
+        url: "locations-iteration-8.html"
+      },
+      {
+        id: 9,
+        title: "The Vernacular Civic Landmark Strip (Bilingual)",
+        device: "Vernacular Patna Landmark Elevation Diagram",
+        desc: "Honors local civic wayfinding (Women's College → Hartali Mor → Boring Road Roundabout → AN College) with parallel Hindi and English vernacular navigation columns of equal typographic weight.",
+        url: "locations-iteration-9.html"
+      },
+      {
+        id: 10,
+        title: "The Site Supervisor Dispatch Hub",
+        device: "Dual-Pathway Decision Matrix: Studio Sitting vs Flat Dispatch",
+        desc: "Interactive decision workflow comparing Track A (tactile material review at Boring Road) vs Track B (immediate 24-hour laser measurement and dampness inspection at the client's flat with Vikram Singh).",
+        url: "locations-iteration-10.html"
+      }
+    ];
+
+    let currentIndex = 0;
+
+    // Render Pills
+    const pillsContainer = document.getElementById('pillsContainer');
+    VARIANTS.forEach((v, idx) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `num-pill ${idx === 0 ? 'active' : ''}`;
+      btn.textContent = `${v.id}: ${v.title.split(' ')[1] || v.id}`;
+      btn.onclick = () => loadVariant(idx);
+      pillsContainer.appendChild(btn);
+    });
+
+    // Render Catalog Cards
+    const catalogCards = document.getElementById('catalogCards');
+    VARIANTS.forEach((v, idx) => {
+      const card = document.createElement('div');
+      card.className = 'variant-card';
+      card.innerHTML = `
+        <div class="card-top">
+          <div class="card-header">
+            <span class="card-num">ITERATION ${v.id < 10 ? '0' + v.id : v.id}</span>
+            <span class="card-device-badge">PROTOTYPE</span>
+          </div>
+          <h3 class="card-title">${v.title}</h3>
+          <div class="card-device">${v.device}</div>
+          <p class="card-desc">${v.desc}</p>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn-load" onclick="event.stopPropagation(); loadVariant(${idx}); window.scrollTo({top: 0, behavior: 'smooth'});">
+            Load in Viewer ↑
+          </button>
+          <a href="${v.url}" target="_blank" rel="noopener" class="btn-direct" onclick="event.stopPropagation();">
+            Open Direct ↗
+          </a>
+        </div>
+      `;
+      card.onclick = () => {
+        loadVariant(idx);
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      };
+      catalogCards.appendChild(card);
+    });
+
+    function loadVariant(index) {
+      currentIndex = index;
+      const v = VARIANTS[index];
+      
+      // Update iframe
+      const frame = document.getElementById('previewFrame');
+      frame.src = v.url;
+
+      // Update pills
+      document.querySelectorAll('.num-pill').forEach((p, idx) => {
+        p.classList.toggle('active', idx === index);
+      });
+
+      // Update metadata bar
+      document.getElementById('infoBadge').textContent = `ITERATION ${v.id}`;
+      document.getElementById('infoTitle').textContent = v.title;
+      document.getElementById('infoDevice').textContent = `· Core Device: ${v.device}`;
+      document.getElementById('openExternalBtn').href = v.url;
+
+      // Ensure pill is scrolled into view
+      const activePill = document.querySelectorAll('.num-pill')[index];
+      if (activePill) {
+        activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+
+    function prevVariant() {
+      const newIdx = (currentIndex - 1 + VARIANTS.length) % VARIANTS.length;
+      loadVariant(newIdx);
+    }
+
+    function nextVariant() {
+      const newIdx = (currentIndex + 1) % VARIANTS.length;
+      loadVariant(newIdx);
+    }
+
+    function setViewport(mode) {
+      const wrapper = document.getElementById('frameWrapper');
+      wrapper.className = `frame-wrapper ${mode}`;
+
+      document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+      if (mode === 'desktop') document.getElementById('viewDesktop').classList.add('active');
+      if (mode === 'tablet') document.getElementById('viewTablet').classList.add('active');
+      if (mode === 'mobile') document.getElementById('viewMobile').classList.add('active');
+    }
+
+    function toggleIframeLang() {
+      const frame = document.getElementById('previewFrame');
+      try {
+        if (frame.contentWindow && typeof frame.contentWindow.toggleLang === 'function') {
+          frame.contentWindow.toggleLang();
+        } else if (frame.contentDocument) {
+          const btn = frame.contentDocument.getElementById('langToggleBtn');
+          if (btn) btn.click();
+        }
+      } catch (e) {
+        console.log("Could not trigger iframe toggle:", e);
+      }
+    }
+
+    // Keyboard Shortcuts (Arrow Left / Arrow Right)
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowLeft') {
+        prevVariant();
+      } else if (e.key === 'ArrowRight') {
+        nextVariant();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -53,7 +53,7 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * and a browser's automatic favicon request 500s the page. `robots.txt` was in
  * this list against the paragraph above and had the identical bug.
  */
-const PASSTHROUGH = /^\/(?:_next|api\/|clients\/|fonts\/|about-iteration-|contact-iteration-|locations-iteration-|contact-concepts\/|brand\/|favicon\.(?:ico|svg)|icon\.svg|apple-icon\.svg)/
+const PASSTHROUGH = /^\/(?:_next|api\/|clients\/|fonts\/|about-iteration-|contact-iteration-|locations-iteration-|locations-index|locations-showcase|contact-concepts\/|brand\/|favicon\.(?:ico|svg)|icon\.svg|apple-icon\.svg)/
 
 function primaryDevTenant(): TenantEntry | undefined {
   const sub = Object.keys(TENANT_MAP.bySubdomain)[0]
