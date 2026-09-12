@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { ClientConfig } from '@studio/backend'
 import { EditorialIcon } from '@/lib/icons'
-import { ClipLine, DrawFrame, FadeUp, HomeSection, RevealImage, Stagger, StaggerItem } from '@/lib/motion'
+import { ClipLine, DrawFrame, HomeSection, RevealImage, Stagger, StaggerItem } from '@/lib/motion'
 import { HeroNav } from '@/sections/Hero/HeroNav'
 import { renderableSections } from '@/sections/registry'
 import { CopyAddress, OpenBadge } from './LocationChrome'
@@ -38,15 +38,21 @@ function projectHref(slug: string, projects: ClientConfig['sections']['portfolio
   return projects.some((p) => p.slug === slug) ? `/portfolio/${slug}` : '/portfolio'
 }
 
-function Heading({ office, copy }: { office: Office; copy: LocationCopy }) {
+function Heading({ office, copy, locale }: { office: Office; copy: LocationCopy; locale: PublicLocale }) {
   return (
     <section className={`${pagePad} pb-[clamp(28px,4vw,48px)] pt-[clamp(48px,7vw,96px)]`}>
+      <Link
+        href={locale === 'hi' ? '/hi/locations' : '/locations'}
+        className="mb-6 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em] text-muted transition-colors hover:text-accent"
+      >
+        <EditorialIcon name="arrow-left" className="h-3 w-3" />
+        {copy.allLocations}
+      </Link>
       <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
         <div className="min-w-0">
           <h1 className="m-0 font-display text-[clamp(46px,9vw,112px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-            <ClipLine>{copy.title.lead}</ClipLine>
-            <ClipLine className="ml-[0.55em] block text-accent" delay={0.08}>
-              {copy.title.accent}
+            <ClipLine>
+              {copy.title.lead} <span className="text-accent">{copy.title.accent}</span>
             </ClipLine>
           </h1>
         </div>
@@ -66,18 +72,18 @@ function StudioPhoto({ photo }: { photo: Office['photo'] }) {
   if (!photo) return null
 
   return (
-    <section className={`${pagePad} pb-[clamp(56px,8vw,100px)]`}>
-      <figure className="m-0 grid">
-        <div className="relative mr-[clamp(20px,3vw,32px)] mt-[clamp(20px,3vw,32px)]">
-          <DrawFrame className="pointer-events-none absolute -top-[clamp(20px,3vw,32px)] bottom-[clamp(20px,3vw,32px)] left-[clamp(20px,3vw,32px)] right-[calc(clamp(20px,3vw,32px)*-1)] border border-accent" />
-          <div className="relative aspect-[4/3] overflow-hidden bg-hairline min-[720px]:aspect-video">
+    <section className={`${pagePad} pb-[clamp(44px,6vw,76px)] pt-[clamp(20px,2.6vw,36px)]`}>
+      <figure className="mx-auto m-0 max-w-[56em]">
+        <div className="relative block sm:mr-[clamp(16px,2vw,24px)] sm:mt-[clamp(16px,2vw,24px)]">
+          <DrawFrame className="pointer-events-none absolute hidden border border-accent sm:block sm:-top-[clamp(16px,2vw,24px)] sm:bottom-[clamp(16px,2vw,24px)] sm:left-[clamp(16px,2vw,24px)] sm:-right-[clamp(16px,2vw,24px)]" />
+          <div className="relative aspect-[16/9] overflow-hidden bg-hairline">
             <RevealImage>
-              <Image src={photo.image} alt="" fill sizes="100vw" quality={90} className="object-cover" />
+              <Image src={photo.image} alt="" fill sizes="(min-width:1080px) 900px, 100vw" quality={90} priority className="object-cover" />
             </RevealImage>
           </div>
         </div>
         {photo.caption && (
-          <figcaption className="mt-[clamp(30px,4vw,46px)] text-[10.5px] uppercase tracking-[0.2em] text-muted">
+          <figcaption className="mt-[clamp(20px,2.6vw,32px)] text-[10.5px] uppercase tracking-[0.2em] text-muted">
             {photo.caption}
           </figcaption>
         )}
@@ -173,46 +179,6 @@ function ContactBlock({ site, office, copy }: { site: ClientConfig; office: Offi
   )
 }
 
-function AboutOffice({ about, copy }: { about: Office['about']; copy: LocationCopy }) {
-  if (!about) return null
-
-  return (
-    <section className={`${pagePad} border-t border-accent py-[clamp(56px,8vw,100px)]`}>
-      <div className="grid grid-cols-1 items-start gap-[clamp(32px,6vw,88px)] min-[1080px]:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)]">
-        <div>
-          <span className="block font-display text-[clamp(80px,10vw,150px)] font-light leading-[0.82] text-transparent [-webkit-text-stroke:1px_var(--color-hairline)]">
-            {copy.aboutIndex}
-          </span>
-        </div>
-        <div className="grid max-w-[40em] gap-5">
-          {about.lead && (
-            <FadeUp>
-              <p className="m-0 text-pretty text-[clamp(16px,1.8vw,20px)] leading-[1.6] text-ink">{about.lead}</p>
-            </FadeUp>
-          )}
-          {about.body.map((part) => (
-            <FadeUp key={part.slice(0, 28)}>
-              <p className="m-0 text-pretty text-justify text-base leading-[1.75] text-body">{part}</p>
-            </FadeUp>
-          ))}
-          {about.stats.length > 0 && (
-            <Stagger className="mt-[clamp(14px,2vw,22px)] grid grid-cols-2 gap-[clamp(20px,3vw,40px)] min-[720px]:grid-cols-3">
-              {about.stats.map((stat) => (
-                <StaggerItem key={stat.label}>
-                  <div className="grid gap-2 border-t border-accent pt-5">
-                    <span className="text-[clamp(28px,3.2vw,42px)] font-normal leading-none tracking-[-0.02em]">{stat.value}</span>
-                    <span className="text-[10.5px] font-medium uppercase tracking-[0.2em] text-accent">{stat.label}</span>
-                  </div>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          )}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function WhoIsHere({ team, members, copy }: { team: Office['team']; members: ClientConfig['sections']['team']; copy: LocationCopy }) {
   if (!team.length) return null
 
@@ -220,9 +186,8 @@ function WhoIsHere({ team, members, copy }: { team: Office['team']; members: Cli
     <section className={`${pagePad} border-t border-accent bg-panel py-[clamp(56px,8vw,100px)]`}>
       <div className="mb-[clamp(32px,4.5vw,52px)] flex flex-wrap items-end justify-between gap-5">
         <h2 className="m-0 font-display text-[clamp(34px,6vw,80px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-          <ClipLine>{copy.whoTitle.lead}</ClipLine>
-          <ClipLine className="ml-[0.55em] block text-accent" delay={0.08}>
-            {copy.whoTitle.accent}
+          <ClipLine>
+            {copy.whoTitle.lead} <span className="text-accent">{copy.whoTitle.accent}</span>
           </ClipLine>
         </h2>
       </div>
@@ -282,9 +247,8 @@ function Projects({ site, office, copy }: { site: ClientConfig; office: Office; 
     <section className={`${pagePad} border-t border-accent py-[clamp(56px,8vw,100px)]`}>
       <div className="mb-[clamp(32px,4.5vw,52px)] flex flex-wrap items-end justify-between gap-5">
         <h2 className="m-0 font-display text-[clamp(34px,6vw,80px)] font-light uppercase leading-[0.88] tracking-[-0.03em] text-ink">
-          <ClipLine>{copy.projectsTitle.lead}</ClipLine>
-          <ClipLine className="ml-[0.55em] block text-accent" delay={0.08}>
-            {copy.projectsTitle.accent}
+          <ClipLine>
+            {copy.projectsTitle.lead} <span className="text-accent">{copy.projectsTitle.accent}</span>
           </ClipLine>
         </h2>
         <Link href="/portfolio" className="text-[11.5px] font-medium uppercase tracking-[0.2em] text-ink hover:text-accent">
@@ -342,17 +306,12 @@ function VisitCta({ site, copy }: { site: ClientConfig; copy: LocationCopy }) {
     <section className={`${pagePad} border-t border-accent py-[clamp(56px,8vw,100px)]`}>
       <div className="flex flex-wrap items-end justify-between gap-[clamp(24px,4vw,56px)]">
         <div>
-          <div className="mb-[clamp(18px,3vw,30px)] grid gap-1.5 text-[10.5px] font-normal uppercase leading-[1.6] tracking-[0.24em] text-accent">
-            {copy.visit.eyebrow.map((line, index) => (
-              <ClipLine key={line} delay={index * 0.05}>
-                {line}
-              </ClipLine>
-            ))}
+          <div className="mb-[clamp(18px,3vw,30px)] text-[10.5px] font-normal uppercase leading-[1.6] tracking-[0.24em] text-accent">
+            <ClipLine>{copy.visit.eyebrow.join(' ')}</ClipLine>
           </div>
           <h2 className="m-0 font-display text-[clamp(32px,5.2vw,68px)] font-light uppercase leading-[0.9] tracking-[-0.03em] text-ink">
-            <ClipLine>{copy.visit.title.lead}</ClipLine>
-            <ClipLine className="ml-[0.55em] block text-accent" delay={0.08}>
-              {copy.visit.title.accent}
+            <ClipLine>
+              {copy.visit.title.lead} <span className="text-accent">{copy.visit.title.accent}</span>
             </ClipLine>
           </h2>
         </div>
@@ -387,16 +346,13 @@ export function LocationOffice({ site, office }: { site: ClientConfig; office: O
         locales={site.i18n.locales}
       />
       <HomeSection first>
-        <Heading office={office} copy={labels} />
+        <Heading office={office} copy={labels} locale={locale} />
       </HomeSection>
       <HomeSection>
         <StudioPhoto photo={office.photo} />
       </HomeSection>
       <HomeSection>
         <ContactBlock site={site} office={office} copy={labels} />
-      </HomeSection>
-      <HomeSection>
-        <AboutOffice about={office.about} copy={labels} />
       </HomeSection>
       <HomeSection>
         <WhoIsHere team={office.team} members={site.sections.team} copy={labels} />
