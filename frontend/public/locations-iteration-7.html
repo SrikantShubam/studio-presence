@@ -1,0 +1,1143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Locations — Version 7: The Project Delivery Transit Ledger | Ashish Interiors Patna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #141414;
+        --accent: #51372a;
+        --cta: #d9bc72;
+        --surface: #ffffff;
+        --body: #4a4a4a;
+        --muted: #8b8377;
+        --hairline: #dcd7ce;
+        --panel: #faf8f5;
+        --wa-green: #285a43;
+        --wa-green-dark: #1e4a36;
+        --font-display: 'Archivo', Helvetica, Arial, sans-serif;
+        --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      [lang="hi"] {
+        --font-display: 'Tiro Devanagari Hindi', Georgia, serif;
+        --font-body: 'Poppins', -apple-system, sans-serif;
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        scroll-behavior: smooth;
+        background: var(--surface);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        width: 100%;
+      }
+
+      h1, h2, h3, h4, .font-display {
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+
+      [lang="hi"] h1, [lang="hi"] h2, [lang="hi"] h3, [lang="hi"] h4, [lang="hi"] .font-display {
+        letter-spacing: 0;
+        font-weight: 500;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Sticky Prototype Switcher Bar */
+      .proto-bar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #181614;
+        color: #f5f2ed;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 8px clamp(16px, 4vw, 48px);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+      }
+
+      .proto-bar-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .proto-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11.5px;
+      }
+
+      .proto-tag {
+        color: var(--cta);
+        font-weight: 600;
+      }
+
+      .proto-sep {
+        opacity: 0.35;
+      }
+
+      .proto-pills-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        padding-block: 2px;
+        max-width: 100%;
+        scrollbar-width: thin;
+      }
+
+      .proto-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 28px;
+        padding: 4px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #e0ded8;
+        font-size: 11px;
+        white-space: nowrap;
+        background: transparent;
+        transition: all 0.15s ease;
+      }
+
+      .proto-pill:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+
+      .proto-pill.active {
+        background: var(--cta);
+        color: var(--ink);
+        border-color: var(--cta);
+        font-weight: 600;
+      }
+
+      .lang-toggle-btn {
+        background: transparent;
+        border: 1px solid var(--cta);
+        color: var(--cta);
+        padding: 4px 10px;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .lang-toggle-btn:hover {
+        background: var(--cta);
+        color: var(--ink);
+      }
+
+      /* Editorial Site Nav */
+      .site-header {
+        border-bottom: 1px solid var(--accent);
+        padding: clamp(16px, 2.5vw, 24px) clamp(20px, 5vw, 64px);
+        background: var(--surface);
+      }
+
+      .site-nav {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: grid;
+        gap: 2px;
+        font-family: var(--font-display);
+        font-size: clamp(13px, 1.3vw, 16px);
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: clamp(16px, 2.5vw, 36px);
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .nav-links a {
+        color: var(--ink);
+        transition: color 0.15s;
+      }
+
+      .nav-links a:hover, .nav-links a.active {
+        color: var(--accent);
+      }
+
+      .nav-tel {
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-tel-line {
+        width: 1px;
+        height: 16px;
+        background: var(--accent);
+      }
+
+      /* Layout Containers */
+      .page-wrap {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: clamp(36px, 5vw, 80px) clamp(20px, 5vw, 64px);
+      }
+
+      .hero-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 14px;
+        display: block;
+        font-weight: 600;
+      }
+
+      .hero-title {
+        font-size: clamp(36px, 6.5vw, 84px);
+        font-weight: 300;
+        line-height: 0.96;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        margin-bottom: clamp(20px, 3vw, 36px);
+      }
+
+      .hero-title .accent-span {
+        color: var(--accent);
+        display: block;
+        margin-left: 0.25em;
+      }
+
+      .transit-lead {
+        font-size: clamp(16px, 1.8vw, 20px);
+        line-height: 1.6;
+        color: var(--body);
+        max-width: 980px;
+        margin-bottom: clamp(32px, 4vw, 56px);
+        border-left: 2px solid var(--accent);
+        padding-left: 20px;
+      }
+
+      /* Transit Corridor Map Card */
+      .transit-map-card {
+        border: 1px solid var(--accent);
+        background: var(--panel);
+        padding: clamp(16px, 3vw, 36px);
+        margin-bottom: clamp(48px, 6vw, 80px);
+      }
+
+      .transit-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 16px;
+        border-bottom: 1px solid var(--hairline);
+        padding-bottom: 16px;
+        margin-bottom: 24px;
+      }
+
+      .transit-meta-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(16px, 3vw, 32px);
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        color: var(--accent);
+      }
+
+      .transit-meta-strip strong {
+        color: var(--ink);
+        display: block;
+        font-family: var(--font-display);
+        font-size: 14px;
+      }
+
+      /* SVG Node Map Canvas */
+      .transit-canvas-wrap {
+        position: relative;
+        background: #ffffff;
+        border: 1px solid var(--hairline);
+        overflow: hidden;
+      }
+
+      .transit-canvas-wrap svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* Corridor Summary Cards */
+      .corridor-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      @media (max-width: 1024px) {
+        .corridor-cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .corridor-cards-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .corridor-card {
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 8px;
+        position: relative;
+      }
+
+      .corridor-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+      }
+
+      .corridor-card.c-north::before { background: var(--cta); }
+      .corridor-card.c-east::before { background: var(--ink); }
+      .corridor-card.c-south::before { background: var(--wa-green); }
+      .corridor-card.c-west::before { background: var(--accent); }
+
+      .corridor-tag {
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+        font-size: 10.5px;
+        color: var(--accent);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+
+      .corridor-name {
+        font-family: var(--font-display);
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .corridor-details {
+        font-size: 12.5px;
+        color: var(--body);
+        line-height: 1.5;
+      }
+
+      .corridor-stat {
+        font-family: var(--font-display);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink);
+        border-top: 1px solid var(--hairline);
+        padding-top: 8px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* Featured Residential Project Cards */
+      .projects-section {
+        border-top: 1px solid var(--accent);
+        padding-top: clamp(40px, 6vw, 72px);
+        margin-bottom: clamp(48px, 6vw, 88px);
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-top: 32px;
+      }
+
+      @media (max-width: 860px) {
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .project-card {
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+      }
+
+      .project-card figure {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project-card figure img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        display: block;
+      }
+
+      .project-card-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: var(--ink);
+        color: var(--cta);
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+        font-size: 10.5px;
+        padding: 4px 8px;
+        letter-spacing: 0.1em;
+      }
+
+      .project-card-content {
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .project-title {
+        font-family: var(--font-display);
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .project-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 12px;
+        color: var(--accent);
+        font-weight: 500;
+        border-bottom: 1px solid var(--hairline);
+        padding-bottom: 10px;
+      }
+
+      .project-desc {
+        font-size: 13.5px;
+        color: var(--body);
+        line-height: 1.55;
+      }
+
+      /* Site Dispatch & Daily Protocol Ledger */
+      .dispatch-protocol-section {
+        border: 1px solid var(--accent);
+        background: var(--panel);
+        padding: clamp(24px, 4vw, 40px);
+        margin-bottom: clamp(48px, 6vw, 88px);
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 32px;
+      }
+
+      @media (max-width: 900px) {
+        .dispatch-protocol-section {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .dispatch-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 16px;
+      }
+
+      .dispatch-table th {
+        text-align: left;
+        font-size: 10.5px;
+        font-family: var(--font-display);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        border-bottom: 1px solid var(--accent);
+        padding-bottom: 8px;
+      }
+
+      .dispatch-table td {
+        font-size: 13px;
+        color: var(--body);
+        border-bottom: 1px solid var(--hairline);
+        padding: 10px 0;
+      }
+
+      .dispatch-table td strong {
+        color: var(--ink);
+        display: block;
+      }
+
+      /* Two Column Ledger */
+      .dossier-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(32px, 5vw, 64px);
+        border-top: 1px solid var(--accent);
+        padding-top: clamp(36px, 5vw, 64px);
+        margin-bottom: clamp(48px, 6vw, 88px);
+      }
+
+      @media (max-width: 900px) {
+        .dossier-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .ledger-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .ledger-table tr {
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .ledger-table th {
+        text-align: left;
+        padding: 16px 0 8px 0;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .ledger-table td {
+        padding: 0 0 16px 0;
+        font-size: clamp(15px, 1.4vw, 18px);
+        color: var(--ink);
+        vertical-align: top;
+      }
+
+      .ledger-sub {
+        display: block;
+        font-size: 13px;
+        color: var(--body);
+        margin-top: 4px;
+        line-height: 1.5;
+      }
+
+      /* Action Buttons */
+      .btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--cta);
+        color: var(--ink);
+        padding: 14px 28px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        min-height: 48px;
+        transition: background 0.15s;
+      }
+
+      .btn-primary:hover {
+        background: var(--ink);
+        color: var(--surface);
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid var(--accent);
+        color: var(--ink);
+        padding: 14px 24px;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        min-height: 48px;
+        transition: all 0.15s;
+      }
+
+      .btn-secondary:hover {
+        background: var(--panel);
+        border-color: var(--ink);
+      }
+
+      /* Studio Photo Section */
+      .studio-photo-section {
+        border-top: 1px solid var(--accent);
+        padding-top: clamp(40px, 6vw, 80px);
+      }
+
+      .photo-frame {
+        position: relative;
+        margin-right: clamp(16px, 3vw, 32px);
+      }
+
+      .photo-frame::after {
+        content: '';
+        position: absolute;
+        top: -16px;
+        right: -16px;
+        bottom: 16px;
+        left: 16px;
+        border: 1px solid var(--accent);
+        pointer-events: none;
+      }
+
+      .photo-frame img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        display: block;
+      }
+
+      .photo-caption {
+        margin-top: 28px;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--accent);
+        background: var(--panel);
+        padding: clamp(40px, 6vw, 64px) clamp(20px, 5vw, 64px);
+        margin-top: clamp(60px, 8vw, 120px);
+      }
+
+      .footer-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        font-size: 12px;
+        color: var(--body);
+      }
+
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Prototype Version Switcher Bar -->
+    <aside class="proto-bar" aria-label="Prototype Version Switcher">
+      <div class="proto-bar-inner">
+        <div class="proto-meta">
+          <span class="proto-tag">LOCATIONS PROTOTYPE</span>
+          <span class="proto-sep">/</span>
+          <span>ITERATION 7 OF 10: THE PROJECT DELIVERY TRANSIT LEDGER</span>
+        </div>
+        <nav class="proto-pills-wrap" aria-label="Location Iterations">
+          <a href="locations-iteration-1.html" class="proto-pill">1: Monograph</a>
+          <a href="locations-iteration-2.html" class="proto-pill">2: Transit Matrix</a>
+          <a href="locations-iteration-3.html" class="proto-pill">3: Atelier & Workshop</a>
+          <a href="locations-iteration-4.html" class="proto-pill">4: Radial Radar</a>
+          <a href="locations-iteration-5.html" class="proto-pill">5: Blueprint</a>
+          <a href="locations-iteration-6.html" class="proto-pill">6: Material Archive</a>
+          <a href="locations-iteration-7.html" class="proto-pill active">7: Transit Ledger</a>
+          <a href="locations-iteration-8.html" class="proto-pill">8: Evening Salon</a>
+          <a href="locations-iteration-9.html" class="proto-pill">9: Vernacular Strip</a>
+          <a href="locations-iteration-10.html" class="proto-pill">10: Dispatch Hub</a>
+        </nav>
+        <button type="button" class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLang()">
+          <span>EN / हिंदी</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Site Nav -->
+    <header class="site-header">
+      <div class="site-nav">
+        <a href="/" class="brand">
+          <span>Ashish</span>
+          <span>Interiors</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/#portfolio" data-en="Portfolio" data-hi="पोर्टफोलियो">Portfolio</a>
+          <a href="/#services" data-en="Services" data-hi="सेवाएं">Services</a>
+          <a href="/about-iteration-1.html" data-en="About" data-hi="हमारे बारे में">About</a>
+          <a href="locations-iteration-7.html" class="active" data-en="Locations" data-hi="लोकेशन">Locations</a>
+          <a href="/contact-iteration-1.html" data-en="Contact" data-hi="संपर्क">Contact</a>
+        </nav>
+        <div class="nav-tel">
+          <span class="nav-tel-line"></span>
+          <a href="tel:+919876543210">+91 98765 43210</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="page-wrap">
+      <span class="hero-eyebrow" data-en="Central Logistics & Site Supervision · 240+ Handovers Since 2013" data-hi="केंद्रीय लॉजिस्टिक्स एवं साइट सुपरविजन · 2013 से 240+ प्रोजेक्ट्स">Central Logistics & Site Supervision · 240+ Handovers Since 2013</span>
+      
+      <h1 class="hero-title">
+        <span data-en="The Project Delivery" data-hi="प्रोजेक्ट डिलीवरी">The Project Delivery</span>
+        <span class="accent-span" data-en="Transit Ledger" data-hi="ट्रांजिट लेजर">Transit Ledger</span>
+      </h1>
+
+      <p class="transit-lead" data-en="Our Boring Road Crossing studio is not an isolated showroom — it is the geographic nerve center of our daily joinery dispatch and site inspections. From this intersection, our site leads reach Patliputra Colony in 8 minutes, Bailey Road in 12 minutes, Kankarbagh in 22 minutes, and Danapur in 28 minutes. Here is the verifiable transit node network connecting over 240 handed-over residences across Patna." data-hi="हमारा बोरिंग रोड चौराहा स्टूडियो केवल एक शो-रूम नहीं है — यह हमारे दैनिक बढ़ईगीरी और साइट निरीक्षण का भौगोलिक केंद्र है। इस चौराहे से हमारे साइट लीड 8 मिनट में पाटलिपुत्र कॉलोनी, 12 मिनट में बेली रोड, 22 मिनट में कंकड़बाग और 28 मिनट में दानापुर पहुंच जाते हैं। यह पटना भर में 240 से अधिक पूर्ण घरों को जोड़ने वाला प्रमाणित ट्रांजिट नेटवर्क है।">
+        Our Boring Road Crossing studio is not an isolated showroom — it is the geographic nerve center of our daily joinery dispatch and site inspections. From this intersection, our site leads reach Patliputra Colony in 8 minutes, Bailey Road in 12 minutes, Kankarbagh in 22 minutes, and Danapur in 28 minutes. Here is the verifiable transit node network connecting over 240 handed-over residences across Patna.
+      </p>
+
+      <!-- Transit Corridor SVG Node Map -->
+      <section class="transit-map-card" aria-label="Patna Residential Delivery Transit Network">
+        <div class="transit-header">
+          <div>
+            <span class="hero-eyebrow" style="margin-bottom: 4px;" data-en="Arterial Node Network · Metric Corridor Plan" data-hi="प्रमुख नोड नेटवर्क · दूरी एवं समय योजना">Arterial Node Network · Metric Corridor Plan</span>
+            <strong style="font-size: 18px; font-family: var(--font-display);" data-en="Boring Road Central Hub to Patna Residential Corridors" data-hi="बोरिंग रोड मुख्य केंद्र से पटना के आवासीय कॉरिडोर">Boring Road Central Hub to Patna Residential Corridors</strong>
+          </div>
+          <div class="transit-meta-strip">
+            <div>
+              <span data-en="CENTRAL HUB" data-hi="मुख्य केंद्र">CENTRAL HUB</span>
+              <strong>Shivam Cmplx 2nd Fl</strong>
+            </div>
+            <div>
+              <span data-en="ACTIVE SITES RADIUS" data-hi="सक्रिय दायरा">ACTIVE SITES RADIUS</span>
+              <strong>8.6 km Max Corridor</strong>
+            </div>
+            <div>
+              <span data-en="EMERGENCY SITE SLA" data-hi="साइट रिस्पांस">EMERGENCY SITE SLA</span>
+              <strong>Under 30 Minutes</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom SVG Transit Network Diagram -->
+        <div class="transit-canvas-wrap">
+          <svg viewBox="0 0 1120 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architectural transit corridor diagram of Ashish Interiors connecting Boring Road to Patliputra, Bailey Road, Kankarbagh, and Danapur">
+            <!-- Background Matrix Grid -->
+            <defs>
+              <pattern id="transitGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f2ede4" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect width="1120" height="560" fill="#ffffff" />
+            <rect width="1120" height="560" fill="url(#transitGrid)" />
+
+            <!-- Concentric Radial Isochrone Range Rings (5 min, 15 min, 25 min) -->
+            <circle cx="560" cy="280" r="110" fill="none" stroke="#e8e2d5" stroke-dasharray="3 3" stroke-width="1" />
+            <circle cx="560" cy="280" r="220" fill="none" stroke="#e8e2d5" stroke-dasharray="3 3" stroke-width="1" />
+            <circle cx="560" cy="280" r="330" fill="none" stroke="#e8e2d5" stroke-dasharray="3 3" stroke-width="1" />
+            <text x="675" y="275" font-family="monospace" font-size="8.5" fill="#8b8377">10 MIN</text>
+            <text x="785" y="275" font-family="monospace" font-size="8.5" fill="#8b8377">20 MIN</text>
+            <text x="895" y="275" font-family="monospace" font-size="8.5" fill="#8b8377">30 MIN</text>
+
+            <!-- CORRIDOR 1 (NORTH): BORING ROAD → PATLIPUTRA COLONY (Solid Gold Line) -->
+            <!-- From (560, 280) to (560, 60) -->
+            <line x1="560" y1="280" x2="560" y2="70" stroke="#d9bc72" stroke-width="7" stroke-linecap="square" />
+            <!-- Corridor 1 Intermediate Nodes -->
+            <!-- Node 1.1: Alpana Market -->
+            <circle cx="560" cy="210" r="5" fill="#ffffff" stroke="#51372a" stroke-width="2" />
+            <text x="545" y="214" text-anchor="end" font-family="'DM Sans', sans-serif" font-size="10" fill="#141414">Alpana Market (0.9 km · 4m)</text>
+            <!-- Node 1.2: Sahdeo Mahto Marg -->
+            <circle cx="560" cy="140" r="5" fill="#ffffff" stroke="#51372a" stroke-width="2" />
+            <text x="545" y="144" text-anchor="end" font-family="'DM Sans', sans-serif" font-size="10" fill="#141414">Sahdeo Mahto Marg (1.4 km · 6m)</text>
+            <!-- Terminal Node 1.3: Patliputra Colony Duplex -->
+            <rect x="546" y="56" width="28" height="28" fill="#d9bc72" stroke="#141414" stroke-width="2" />
+            <rect x="585" y="45" width="260" height="52" fill="#faf8f5" stroke="#d9bc72" stroke-width="1.5" />
+            <text x="595" y="65" font-family="'Archivo', sans-serif" font-size="12" font-weight="700" fill="#141414">CORRIDOR 01: PATLIPUTRA COLONY</text>
+            <text x="595" y="80" font-family="'DM Sans', sans-serif" font-size="10" fill="#51372a">1.8 km · 8 mins · 68 Completed Homes</text>
+            <text x="595" y="92" font-family="monospace" font-size="8.5" fill="#8b8377">Duplex Handovers: 2021, 2023, 2024</text>
+
+            <!-- CORRIDOR 2 (EAST): BORING ROAD → BAILEY ROAD → RAJVANSHI NAGAR (Solid Ink Line) -->
+            <!-- From (560, 280) to (980, 280) -->
+            <line x1="560" y1="280" x2="970" y2="280" stroke="#141414" stroke-width="7" stroke-linecap="square" />
+            <!-- Node 2.1: High Court Arterial -->
+            <circle cx="680" cy="280" r="5" fill="#ffffff" stroke="#141414" stroke-width="2" />
+            <text x="680" y="305" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="#141414">High Court (1.2 km)</text>
+            <!-- Node 2.2: Bailey Road Crossing -->
+            <circle cx="790" cy="280" r="5" fill="#ffffff" stroke="#141414" stroke-width="2" />
+            <text x="790" y="305" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="#141414">Bailey Rd Jn (1.8 km)</text>
+            <!-- Terminal Node 2.3: Rajvanshi Nagar -->
+            <rect x="956" y="266" width="28" height="28" fill="#141414" stroke="#d9bc72" stroke-width="2" />
+            <rect x="850" y="330" width="250" height="52" fill="#faf8f5" stroke="#141414" stroke-width="1.5" />
+            <text x="860" y="350" font-family="'Archivo', sans-serif" font-size="12" font-weight="700" fill="#141414">CORRIDOR 02: RAJVANSHI NAGAR</text>
+            <text x="860" y="365" font-family="'DM Sans', sans-serif" font-size="10" fill="#51372a">2.4 km · 12 mins · 82 Delivered Flats</text>
+            <text x="860" y="377" font-family="monospace" font-size="8.5" fill="#8b8377">Turnkey Apartment Handovers: 2020–2025</text>
+
+            <!-- CORRIDOR 3 (SOUTH): BORING ROAD → DAK BUNGLOW → KANKARBAGH (Solid Forest Green Line) -->
+            <!-- From (560, 280) to (560, 490) -->
+            <line x1="560" y1="280" x2="560" y2="490" stroke="#285a43" stroke-width="7" stroke-linecap="square" />
+            <!-- Node 3.1: Dak Bunglow Crossing -->
+            <circle cx="560" cy="350" r="5" fill="#ffffff" stroke="#285a43" stroke-width="2" />
+            <text x="575" y="354" font-family="'DM Sans', sans-serif" font-size="10" fill="#141414">Dak Bunglow (2.6 km · 12m)</text>
+            <!-- Node 3.2: Chiraiyatand Flyover -->
+            <circle cx="560" cy="420" r="5" fill="#ffffff" stroke="#285a43" stroke-width="2" />
+            <text x="575" y="424" font-family="'DM Sans', sans-serif" font-size="10" fill="#141414">Chiraiyatand (4.2 km · 18m)</text>
+            <!-- Terminal Node 3.3: Kankarbagh 3BHK Residences -->
+            <rect x="546" y="476" width="28" height="28" fill="#285a43" stroke="#141414" stroke-width="2" />
+            <rect x="585" y="465" width="260" height="52" fill="#faf8f5" stroke="#285a43" stroke-width="1.5" />
+            <text x="595" y="485" font-family="'Archivo', sans-serif" font-size="12" font-weight="700" fill="#141414">CORRIDOR 03: KANKARBAGH</text>
+            <text x="595" y="500" font-family="'DM Sans', sans-serif" font-size="10" fill="#285a43">5.2 km · 22 mins · 54 3BHK Residences</text>
+            <text x="595" y="512" font-family="monospace" font-size="8.5" fill="#8b8377">Colony Residences: 2022, 2023, 2025</text>
+
+            <!-- CORRIDOR 4 (WEST): BORING ROAD → SAGUNA MORE → DANAPUR (Solid Accent Brown Line) -->
+            <!-- From (560, 280) to (140, 280) -->
+            <line x1="560" y1="280" x2="150" y2="280" stroke="#51372a" stroke-width="7" stroke-linecap="square" />
+            <!-- Node 4.1: RPS More / Gola Road -->
+            <circle cx="430" cy="280" r="5" fill="#ffffff" stroke="#51372a" stroke-width="2" />
+            <text x="430" y="305" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="#141414">Gola Rd (4.5 km)</text>
+            <!-- Node 4.2: Saguna More -->
+            <circle cx="300" cy="280" r="5" fill="#ffffff" stroke="#51372a" stroke-width="2" />
+            <text x="300" y="305" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="#141414">Saguna More (6.8 km)</text>
+            <!-- Terminal Node 4.3: Danapur Cantonment Villas -->
+            <rect x="136" y="266" width="28" height="28" fill="#51372a" stroke="#d9bc72" stroke-width="2" />
+            <rect x="25" y="330" width="250" height="52" fill="#faf8f5" stroke="#51372a" stroke-width="1.5" />
+            <text x="35" y="350" font-family="'Archivo', sans-serif" font-size="12" font-weight="700" fill="#141414">CORRIDOR 04: DANAPUR CANTT</text>
+            <text x="35" y="365" font-family="'DM Sans', sans-serif" font-size="10" fill="#51372a">8.6 km · 28 mins · 36 Luxury Villas</text>
+            <text x="35" y="377" font-family="monospace" font-size="8.5" fill="#8b8377">Villa Joinery Handovers: 2021–2024</text>
+
+            <!-- CENTRAL HUB 00: BORING ROAD CROSSING (SHIVAM COMPLEX 2ND FLOOR) -->
+            <g id="hub-00">
+              <rect x="520" y="240" width="80" height="80" fill="#141414" stroke="#d9bc72" stroke-width="3" />
+              <text x="560" y="270" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="11" font-weight="700" fill="#d9bc72">HUB 00</text>
+              <text x="560" y="285" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="#faf8f5">BORING RD</text>
+              <text x="560" y="298" text-anchor="middle" font-family="monospace" font-size="8" fill="#dcd7ce">2ND FLOOR</text>
+
+              <!-- Pulsing indicator rings -->
+              <rect x="512" y="232" width="96" height="96" fill="none" stroke="#51372a" stroke-width="1" stroke-dasharray="4 4" />
+            </g>
+
+            <!-- Compass Rose (Top Right) -->
+            <g transform="translate(1050, 60)">
+              <circle cx="0" cy="0" r="18" fill="#ffffff" stroke="#dcd7ce" />
+              <path d="M 0 -14 L 4 0 L 0 14 L -4 0 Z" fill="#51372a" />
+              <text x="0" y="-18" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="9" font-weight="700" fill="#51372a">N</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- 4 Corridor Details Row -->
+        <div class="corridor-cards-grid">
+          <div class="corridor-card c-north">
+            <span class="corridor-tag">CORRIDOR 01 · NORTH</span>
+            <h3 class="corridor-name" data-en="Patliputra Colony" data-hi="पाटलिपुत्र कॉलोनी">Patliputra Colony</h3>
+            <p class="corridor-details" data-en="Direct straight route along Boring Road North. Standalone duplexes, high-end bungalows, and modular kitchen replacements." data-hi="बोरिंग रोड उत्तर की ओर सीधा मार्ग। स्वतंत्र डुप्लेक्स, कोठियां और मॉड्युलर किचन रिनोवेशन।">
+              Direct straight route along Boring Road North. Standalone duplexes, high-end bungalows, and modular kitchen replacements.
+            </p>
+            <div class="corridor-stat">
+              <span data-en="1.8 km · 8 mins" data-hi="1.8 किमी · 8 मिनट">1.8 km · 8 mins</span>
+              <strong data-en="68 Handovers" data-hi="68 पूर्ण प्रोजेक्ट्स">68 Handovers</strong>
+            </div>
+          </div>
+
+          <div class="corridor-card c-east">
+            <span class="corridor-tag">CORRIDOR 02 · EAST</span>
+            <h3 class="corridor-name" data-en="Bailey Rd & Rajvanshi" data-hi="बेली रोड एवं राजवंशी नगर">Bailey Rd & Rajvanshi</h3>
+            <p class="corridor-details" data-en="Patna high-court legal and civil service arterial. Premium 3BHK/4BHK apartment interiors with full false ceiling and veneer paneling." data-hi="पटना हाईकोर्ट और प्रशासनिक अधिकारी क्षेत्र। प्रीमियम 3बीएचके/4बीएचके फ्लैट इंटीरियर्स।">
+              Patna high-court legal and civil service arterial. Premium 3BHK/4BHK apartment interiors with full false ceiling and veneer paneling.
+            </p>
+            <div class="corridor-stat">
+              <span data-en="2.4 km · 12 mins" data-hi="2.4 किमी · 12 मिनट">2.4 km · 12 mins</span>
+              <strong data-en="82 Handovers" data-hi="82 पूर्ण प्रोजेक्ट्स">82 Handovers</strong>
+            </div>
+          </div>
+
+          <div class="corridor-card c-south">
+            <span class="corridor-tag">CORRIDOR 03 · SOUTH</span>
+            <h3 class="corridor-name" data-en="Dak Bunglow & Kankarbagh" data-hi="डाक बंगला एवं कंकड़बाग">Dak Bunglow & Kankarbagh</h3>
+            <p class="corridor-details" data-en="Via Fraser Road and Chiraiyatand flyover. Large family multi-generational flats requiring heavy-duty storage and BWP wardrobes." data-hi="फ्रेजर रोड और चिरैयाटांड़ फ्लाईओवर होकर। बड़े पारिवारिक आवास जहां भारी भंडारण और बीडब्ल्यूपी अलमारियों की आवश्यकता होती है।">
+              Via Fraser Road and Chiraiyatand flyover. Large family multi-generational flats requiring heavy-duty storage and BWP wardrobes.
+            </p>
+            <div class="corridor-stat">
+              <span data-en="5.2 km · 22 mins" data-hi="5.2 किमी · 22 मिनट">5.2 km · 22 mins</span>
+              <strong data-en="54 Handovers" data-hi="54 पूर्ण प्रोजेक्ट्स">54 Handovers</strong>
+            </div>
+          </div>
+
+          <div class="corridor-card c-west">
+            <span class="corridor-tag">CORRIDOR 04 · WEST</span>
+            <h3 class="corridor-name" data-en="Gola Rd & Danapur Cantt" data-hi="गोला रोड एवं दानापुर कैंट">Gola Rd & Danapur Cantt</h3>
+            <p class="corridor-details" data-en="Expansive western residential expansion. Gated villas and newly constructed high-rise luxury societies requiring turnkey architectural execution." data-hi="पश्चिमी पटना का नया विस्तार। गेटेड विला और आधुनिक सोसाइटी जहां संपूर्ण आर्किटेक्चरल कार्य किया गया।">
+              Expansive western residential expansion. Gated villas and newly constructed high-rise luxury societies requiring turnkey architectural execution.
+            </p>
+            <div class="corridor-stat">
+              <span data-en="8.6 km · 28 mins" data-hi="8.6 किमी · 28 मिनट">8.6 km · 28 mins</span>
+              <strong data-en="36 Handovers" data-hi="36 पूर्ण प्रोजेक्ट्स">36 Handovers</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Real Residential Project Cards with Real Images -->
+      <section class="projects-section" aria-label="Completed Residential Handovers Along Corridors">
+        <span class="hero-eyebrow" data-en="Delivered Residential Portfolios" data-hi="पूर्ण आवासीय परियोजनाएं">Delivered Residential Portfolios</span>
+        <h2 style="font-size: clamp(28px, 4vw, 44px); text-transform: uppercase;" data-en="Completed Along These Corridors" data-hi="इन कॉरिडोरों पर पूरी की गई परियोजनाएं">Completed Along These Corridors</h2>
+
+        <div class="projects-grid">
+          <!-- Project 1: Patliputra Duplex -->
+          <article class="project-card">
+            <figure>
+              <img src="/clients/ashish-interiors/editorial/patliputra-duplex/hero.jpg" alt="Ashish Interiors Patliputra Colony Duplex Living Room Handover" />
+              <div class="project-card-badge">CORRIDOR 01 · 8 MIN TRANSIT</div>
+            </figure>
+            <div class="project-card-content">
+              <div class="project-meta-row">
+                <span data-en="PATLIPUTRA COLONY" data-hi="पाटलिपुत्र कॉलोनी">PATLIPUTRA COLONY</span>
+                <span>·</span>
+                <span data-en="3,400 SQ FT DUPLEX" data-hi="3,400 वर्ग फीट डुप्लेक्स">3,400 SQ FT DUPLEX</span>
+                <span>·</span>
+                <span data-en="HANDOVER 2024" data-hi="पूर्ण 2024">HANDOVER 2024</span>
+              </div>
+              <h3 class="project-title" data-en="The Patliputra Teak Duplex" data-hi="पाटलिपुत्र टीक डुप्लेक्स">The Patliputra Teak Duplex</h3>
+              <p class="project-desc" data-en="Located 1.8 km north of our studio. Complete turnkey joinery featuring full-height Burma Teak fluted wall panels, seamless concealed doorways, and an open-plan living-dining partition executed with calibrated IS:710 Marine Plywood." data-hi="स्टूडियो से मात्र 1.8 किमी उत्तर में स्थित। बर्मा सागौन की पूरी ऊंचाई वाली दीवार पैनलिंग, गुप्त दरवाजे और कैलिब्रेटेड आईएस:710 मरीन प्लाइवुड से निर्मित डाइनिंग पार्टिशन।">
+                Located 1.8 km north of our studio. Complete turnkey joinery featuring full-height Burma Teak fluted wall panels, seamless concealed doorways, and an open-plan living-dining partition executed with calibrated IS:710 Marine Plywood.
+              </p>
+              <div style="font-size: 12px; color: var(--accent); font-family: ui-monospace, monospace; border-top: 1px solid var(--hairline); padding-top: 10px;">
+                SUPERVISOR TRANSIT TIME: 8 MINS FROM BORING ROAD DESK
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: Kankarbagh 3BHK Residence -->
+          <article class="project-card">
+            <figure>
+              <img src="/clients/ashish-interiors/editorial/kankarbagh/hallway-living.jpg" alt="Ashish Interiors Kankarbagh 3BHK Residence Hallway and Living Handover" />
+              <div class="project-card-badge">CORRIDOR 03 · 22 MIN TRANSIT</div>
+            </figure>
+            <div class="project-card-content">
+              <div class="project-meta-row">
+                <span data-en="KANKARBAGH COLONY" data-hi="कंकड़बाग कॉलोनी">KANKARBAGH COLONY</span>
+                <span>·</span>
+                <span data-en="1,850 SQ FT RESIDENCE" data-hi="1,850 वर्ग फीट आवास">1,850 SQ FT RESIDENCE</span>
+                <span>·</span>
+                <span data-en="HANDOVER 2023" data-hi="पूर्ण 2023">HANDOVER 2023</span>
+              </div>
+              <h3 class="project-title" data-en="The Kankarbagh Family Residence" data-hi="कंकड़बाग फैमिली आवास">The Kankarbagh Family Residence</h3>
+              <p class="project-desc" data-en="Located 5.2 km south across the Chiraiyatand flyover. Engineered for a three-generation joint family: heavy-duty 1.0mm Merino suede laminates, anti-corrosion Häfele soft-close kitchen hardware, and moisture-sealed balcony utility cabinetry." data-hi="चिरैयाटांड़ फ्लाईओवर पार 5.2 किमी दक्षिण में स्थित। तीन पीढ़ियों के संयुक्त परिवार हेतु निर्मित: टिकाऊ 1.0 मिमी मेरिनो लैमिनेट्स, हेफेले सॉफ्ट-क्लोज किचन और सीलन-मुक्त बालकनी कैबिनेट।">
+                Located 5.2 km south across the Chiraiyatand flyover. Engineered for a three-generation joint family: heavy-duty 1.0mm Merino suede laminates, anti-corrosion Häfele soft-close kitchen hardware, and moisture-sealed balcony utility cabinetry.
+              </p>
+              <div style="font-size: 12px; color: var(--accent); font-family: ui-monospace, monospace; border-top: 1px solid var(--hairline); padding-top: 10px;">
+                SUPERVISOR TRANSIT TIME: 22 MINS FROM BORING ROAD DESK
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Site Dispatch & Daily Protocol Ledger -->
+      <section class="dispatch-protocol-section" aria-label="Site Dispatch Routine">
+        <div>
+          <span class="hero-eyebrow" data-en="Operational Rhythm" data-hi="दैनिक कार्यप्रणाली">Operational Rhythm</span>
+          <h3 style="font-size: clamp(22px, 2.5vw, 32px); text-transform: uppercase; margin-bottom: 12px;" data-en="Daily Site Lead Dispatch Schedule" data-hi="दैनिक साइट लीड डिस्पेच शेड्यूल">Daily Site Lead Dispatch Schedule</h3>
+          <p style="font-size: 14px; color: var(--body); line-height: 1.6;" data-en="Because our studio is right at Boring Road Crossing, our lead site supervisor Vikram Singh conducts two physical inspection rounds daily across all active Patna sites. Any architectural query raised by carpenters on WhatsApp is addressed in person within 45 minutes." data-hi="चूंकि हमारा स्टूडियो सीधे बोरिंग रोड चौराहे पर है, हमारे मुख्य साइट सुपरवाइजर विक्रम सिंह सभी सक्रिय साइटों पर प्रतिदिन दो बार भौतिक निरीक्षण करते हैं। बढ़ई द्वारा पूछी गई किसी भी शंका का समाधान 45 मिनट में मौके पर पहुंचकर किया जाता है।">
+            Because our studio is right at Boring Road Crossing, our lead site supervisor Vikram Singh conducts two physical inspection rounds daily across all active Patna sites. Any architectural query raised by carpenters on WhatsApp is addressed in person within 45 minutes.
+          </p>
+
+          <table class="dispatch-table">
+            <thead>
+              <tr>
+                <th data-en="TIME" data-hi="समय">TIME</th>
+                <th data-en="STATION / CORRIDOR" data-hi="स्टेशन / मार्ग">STATION / CORRIDOR</th>
+                <th data-en="PURPOSE" data-hi="उद्देश्य">PURPOSE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>09:30 AM</strong></td>
+                <td>Boring Road Studio Hub</td>
+                <td data-en="Carpentry drawing signoff with Ashish Kumar and dispatch of daily hardware sets." data-hi="आशीष कुमार के साथ ड्रॉइंग साइन-ऑफ और हार्डवेयर सेट का डिस्पेच।">Carpentry drawing signoff with Ashish Kumar and dispatch of daily hardware sets.</td>
+              </tr>
+              <tr>
+                <td><strong>11:00 AM</strong></td>
+                <td>Patliputra & Bailey Road</td>
+                <td data-en="First morning masonry plumb check and plywood thickness gauge verification." data-hi="दीवारों की सीधी जांच और प्लाइवुड की मोटाई का सत्यापन।">First morning masonry plumb check and plywood thickness gauge verification.</td>
+              </tr>
+              <tr>
+                <td><strong>03:30 PM</strong></td>
+                <td>Kankarbagh & Danapur</td>
+                <td data-en="Afternoon laminate pasting inspection and edge-banding heat gun test." data-hi="लैमिनेट पेस्टिंग और एज-बैंडिंग की गुणवत्ता जांच।">Afternoon laminate pasting inspection and edge-banding heat gun test.</td>
+              </tr>
+              <tr>
+                <td><strong>06:30 PM</strong></td>
+                <td>Boring Road 12-ft Table</td>
+                <td data-en="Evening debriefing at studio, updating digital photo logs for homeowners." data-hi="स्टूडियो में शाम की बैठक, गृहस्वामियों के लिए फोटो लॉग अपडेट।">Evening debriefing at studio, updating digital photo logs for homeowners.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="border: 1px solid var(--accent); background: var(--surface); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <span class="hero-eyebrow" data-en="On-Site Accountability" data-hi="जवाबदेही">On-Site Accountability</span>
+            <h4 style="font-family: var(--font-display); font-size: 16px; margin-bottom: 8px;" data-en="Direct Site Supervisor Line" data-hi="सीधा साइट सुपरवाइजर संपर्क">Direct Site Supervisor Line</h4>
+            <p style="font-size: 13px; color: var(--body); line-height: 1.55; margin-bottom: 16px;" data-en="Every client is given Vikram Singh’s direct mobile number. No centralized call centers, no automated ticket queues." data-hi="प्रत्येक ग्राहक को विक्रम सिंह का सीधा मोबाइल नंबर दिया जाता है। कोई कॉल सेंटर नहीं, कोई ऑटोमेटेड संदेश नहीं।">
+              Every client is given Vikram Singh’s direct mobile number. No centralized call centers, no automated ticket queues.
+            </p>
+          </div>
+          <div style="border-top: 1px solid var(--hairline); padding-top: 16px; display: flex; align-items: center; gap: 14px;">
+            <img src="/clients/ashish-interiors/editorial/team/site-01.jpg" alt="Vikram Singh Senior Site Lead" style="width: 56px; height: 56px; object-fit: cover; border: 1px solid var(--accent);" />
+            <div>
+              <strong style="font-size: 14px; color: var(--ink);">Vikram Singh</strong>
+              <span style="font-size: 12px; color: var(--muted); display: block;" data-en="Senior Site Lead · 10+ yrs with Ashish Interiors" data-hi="वरिष्ठ साइट लीड · आशीष इंटीरियर्स के साथ 10+ वर्ष">Senior Site Lead · 10+ yrs with Ashish Interiors</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Two Column Dossier: Visiting Guidelines & Location Ledger -->
+      <div class="dossier-grid">
+        <!-- Left: Visiting Guidelines -->
+        <div>
+          <span class="hero-eyebrow" data-en="Studio Transit Waypoints" data-hi="स्टूडियो पहुंचने का मार्ग">Studio Transit Waypoints</span>
+          <table class="ledger-table">
+            <tr>
+              <th><span data-en="Physical Address" data-hi="पता">Physical Address</span></th>
+            </tr>
+            <tr>
+              <td>
+                <span data-en="2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001" data-hi="दूसरी मंजिल, शिवम कॉम्प्लेक्स, बोरिंग रोड चौराहा, पटना, बिहार 800001">2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001</span>
+                <span class="ledger-sub" data-en="Right at the heart of Boring Road Crossing roundabout. Dedicated parking behind building in rear service lane." data-hi="बोरिंग रोड चौराहे के मुख्य मोड़ पर। भवन के पीछे सर्विस लेन में कार पार्किंग उपलब्ध।">Right at the heart of Boring Road Crossing roundabout. Dedicated parking behind building in rear service lane.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th><span data-en="Visiting Hours" data-hi="खुलने का समय">Visiting Hours</span></th>
+            </tr>
+            <tr>
+              <td>
+                <strong data-en="Monday – Saturday: 10:00 – 19:00" data-hi="सोमवार – शनिवार: 10:00 – 19:00">Monday – Saturday: 10:00 – 19:00</strong>
+                <span class="ledger-sub" data-en="Sunday site visits by prior booking. Evening sit-downs available until 20:00 for working families." data-hi="रविवार साइट विजिट केवल पूर्व बुकिंग पर। कामकाजी परिवारों के लिए शाम 8 बजे तक परामर्श की सुविधा।">Sunday site visits by prior booking. Evening sit-downs available until 20:00 for working families.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th><span data-en="Direct Communication" data-hi="फोन एवं व्हाट्सएप">Direct Communication</span></th>
+            </tr>
+            <tr>
+              <td>
+                <div><a href="tel:+919876543210" style="color: var(--ink); font-weight: 600;">+91 98765 43210</a></div>
+                <span class="ledger-sub" data-en="Call to request an on-site visit to an active handover in Patliputra or Kankarbagh." data-hi="पाटलिपुत्र या कंकड़बाग में किसी चल रहे प्रोजेक्ट को देखने के लिए कॉल करें।">Call to request an on-site visit to an active handover in Patliputra or Kankarbagh.</span>
+              </td>
+            </tr>
+          </table>
+
+          <div class="btn-row">
+            <a href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20visit%20an%20active%20site%20or%20book%20a%20consultation%20at%20Boring%20Road." class="btn-primary" data-en="Request Site Walkthrough on WhatsApp" data-hi="व्हाट्सएप पर साइट वॉकथ्रू बुक करें">
+              <span>Request Site Walkthrough on WhatsApp</span>
+            </a>
+            <a href="https://maps.google.com/?q=Boring+Road+Crossing+Patna" target="_blank" rel="noopener" class="btn-secondary" data-en="Open Hub in Google Maps" data-hi="गूगल मैप्स में खोलें">
+              <span>Open Hub in Google Maps</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Why Delivery Location Matters in Patna -->
+        <div style="background: var(--panel); border: 1px solid var(--accent); padding: clamp(20px, 3vw, 32px);">
+          <span class="hero-eyebrow" data-en="Architectural Delivery Advantage" data-hi="स्थान का लाभ">Architectural Delivery Advantage</span>
+          <h3 style="font-size: 18px; margin-bottom: 12px; font-weight: 600; text-transform: uppercase;" data-en="Why Boring Road Is Patna's Optimal Hub" data-hi="बोरिंग रोड ही पटना का सर्वोत्तम केंद्र क्यों है">Why Boring Road Is Patna's Optimal Hub</h3>
+          <ul style="padding-left: 18px; font-size: 13.5px; color: var(--body); line-height: 1.6; display: grid; gap: 10px;">
+            <li data-en="Bypasses Patna junction traffic congestion, enabling rapid transit to both northern bungalows and southern apartment belts." data-hi="पटना जंक्शन के जाम से मुक्त, जिससे उत्तर और दक्षिण दोनों ओर तेजी से पहुंचा जा सकता है।">Bypasses Patna junction traffic congestion, enabling rapid transit to both northern bungalows and southern apartment belts.</li>
+            <li data-en="Immediate access to the city's premier hardware and veneer wholesalers along Boring Canal Road for zero-delay hardware dispatch." data-hi="बोरिंग कैनाल रोड के प्रमुख हार्डवेयर और विनियर डिस्ट्रीब्यूटरों के पास होने से काम कभी नहीं रुकता।">Immediate access to the city's premier hardware and veneer wholesalers along Boring Canal Road for zero-delay hardware dispatch.</li>
+            <li data-en="Central meeting point for families coming from Kankarbagh, Danapur, and Patliputra to review drawings under one roof." data-hi="कंकड़बाग, दानापुर और पाटलिपुत्र के परिवारों के लिए नक्शों की समीक्षा का सबसे सुविधाजनक केंद्र।">Central meeting point for families coming from Kankarbagh, Danapur, and Patliputra to review drawings under one roof.</li>
+          </ul>
+          <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--hairline); font-size: 12.5px; color: var(--accent); font-weight: 600;" data-en="Over 240 Patna homeowners have signed contracts at this exact table." data-hi="पटना के 240 से अधिक गृहस्वामियों ने इसी टेबल पर अनुबंध पर हस्ताक्षर किए हैं।">
+            Over 240 Patna homeowners have signed contracts at this exact table.
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Interior Photo Record -->
+      <section class="studio-photo-section">
+        <span class="hero-eyebrow" data-en="The Nerve Center · Second Floor Boring Road" data-hi="स्टूडियो की आंतरिक झलक">The Nerve Center · Second Floor Boring Road</span>
+        <figure class="photo-frame">
+          <img src="/clients/ashish-interiors/editorial/locations/studio.jpg" alt="Ashish Interiors Boring Road Studio Consultation Space" />
+        </figure>
+        <figcaption class="photo-caption" data-en="Second Floor, Shivam Complex — Where Every Patna Transit Route and Carpentry Dispatch Originates" data-hi="दूसरी मंजिल, शिवम कॉम्प्लेक्स — जहां से हर पटना साइट का प्रबंधन और बढ़ईगीरी का संचालन होता है">
+          Second Floor, Shivam Complex — Where Every Patna Transit Route and Carpentry Dispatch Originates
+        </figcaption>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>© 2026 Ashish Interiors · Boring Road, Patna, Bihar 800001</div>
+        <div>
+          <a href="/contact-iteration-1.html" style="text-decoration: underline;" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a>
+          <span style="margin: 0 8px; opacity: 0.4;">|</span>
+          <a href="tel:+919876543210">+91 98765 43210</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bilingual Toggle Script -->
+    <script>
+      let currentLang = 'en';
+      function toggleLang() {
+        currentLang = currentLang === 'en' ? 'hi' : 'en';
+        document.documentElement.lang = currentLang;
+        document.querySelectorAll('[data-en]').forEach(el => {
+          el.textContent = currentLang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+        });
+        const btn = document.getElementById('langToggleBtn');
+        if (btn) {
+          btn.querySelector('span').textContent = currentLang === 'en' ? 'EN / हिंदी' : 'हिंदी / EN';
+        }
+      }
+    </script>
+  </body>
+</html>

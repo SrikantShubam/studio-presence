@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Locations — Version 3: The Atelier & Workshop Twin-Coordinate Split | Ashish Interiors Patna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #141414;
+        --accent: #51372a;
+        --cta: #d9bc72;
+        --surface: #ffffff;
+        --body: #4a4a4a;
+        --muted: #8b8377;
+        --hairline: #dcd7ce;
+        --panel: #faf8f5;
+        --wa-green: #285a43;
+        --wa-green-dark: #1e4a36;
+        --font-display: 'Archivo', Helvetica, Arial, sans-serif;
+        --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      [lang="hi"] {
+        --font-display: 'Tiro Devanagari Hindi', Georgia, serif;
+        --font-body: 'Poppins', -apple-system, sans-serif;
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        scroll-behavior: smooth;
+        background: var(--surface);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        width: 100%;
+      }
+
+      h1, h2, h3, h4, .font-display {
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+
+      [lang="hi"] h1, [lang="hi"] h2, [lang="hi"] h3, [lang="hi"] h4, [lang="hi"] .font-display {
+        letter-spacing: 0;
+        font-weight: 500;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Sticky Prototype Switcher Bar */
+      .proto-bar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #181614;
+        color: #f5f2ed;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 8px clamp(16px, 4vw, 48px);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+      }
+
+      .proto-bar-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .proto-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11.5px;
+      }
+
+      .proto-tag {
+        color: var(--cta);
+        font-weight: 600;
+      }
+
+      .proto-sep {
+        opacity: 0.35;
+      }
+
+      .proto-pills-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        padding-block: 2px;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .proto-pill {
+        padding: 5px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #e0ded8;
+        font-size: 11px;
+        white-space: nowrap;
+        background: transparent;
+        transition: all 0.15s ease;
+      }
+
+      .proto-pill:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+
+      .proto-pill.active {
+        background: var(--cta);
+        color: var(--ink);
+        border-color: var(--cta);
+        font-weight: 600;
+      }
+
+      .lang-toggle-btn {
+        background: transparent;
+        border: 1px solid var(--cta);
+        color: var(--cta);
+        padding: 4px 10px;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .lang-toggle-btn:hover {
+        background: var(--cta);
+        color: var(--ink);
+      }
+
+      /* Editorial Site Nav */
+      .site-header {
+        border-bottom: 1px solid var(--accent);
+        padding: clamp(16px, 2.5vw, 24px) clamp(20px, 5vw, 64px);
+        background: var(--surface);
+      }
+
+      .site-nav {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: grid;
+        gap: 2px;
+        font-family: var(--font-display);
+        font-size: clamp(13px, 1.3vw, 16px);
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: clamp(16px, 2.5vw, 36px);
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .nav-links a {
+        color: var(--ink);
+        transition: color 0.15s;
+      }
+
+      .nav-links a:hover, .nav-links a.active {
+        color: var(--accent);
+      }
+
+      .nav-tel {
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-tel-line {
+        width: 1px;
+        height: 16px;
+        background: var(--accent);
+      }
+
+      /* Page Wrap */
+      .page-wrap {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: clamp(40px, 6vw, 88px) clamp(20px, 5vw, 64px);
+      }
+
+      .hero-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+        display: block;
+      }
+
+      .hero-title {
+        font-size: clamp(36px, 6.8vw, 84px);
+        font-weight: 300;
+        line-height: 0.96;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+
+      .hero-title .accent-span {
+        color: var(--accent);
+        display: block;
+        margin-left: 0.2em;
+      }
+
+      .hero-intro {
+        max-width: 860px;
+        font-size: clamp(15px, 1.4vw, 18px);
+        color: var(--body);
+        line-height: 1.65;
+        margin-bottom: clamp(36px, 5vw, 64px);
+      }
+
+      /* Split Screen Twin Layout */
+      .twin-split-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(24px, 4vw, 48px);
+        margin-bottom: clamp(48px, 6vw, 80px);
+      }
+
+      .facility-card {
+        border: 1px solid var(--accent);
+        background: var(--panel);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .facility-card-header {
+        padding: 20px clamp(16px, 3vw, 28px);
+        border-bottom: 1px solid var(--accent);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 10px;
+        background: var(--surface);
+      }
+
+      .facility-badge {
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .facility-coord {
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .facility-img-frame {
+        position: relative;
+        width: 100%;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .facility-img-frame img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        display: block;
+      }
+
+      .facility-img-overlay-stat {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: #181614;
+        color: var(--cta);
+        padding: 6px 14px;
+        font-family: var(--font-display);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .facility-body {
+        padding: clamp(20px, 3vw, 32px);
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        gap: 20px;
+      }
+
+      .facility-title {
+        font-size: clamp(22px, 2.4vw, 32px);
+        line-height: 1.1;
+      }
+
+      .facility-address {
+        font-size: 13.5px;
+        color: var(--body);
+        line-height: 1.5;
+        border-bottom: 1px solid var(--hairline);
+        padding-bottom: 16px;
+      }
+
+      .facility-specs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        padding: 14px;
+      }
+
+      .spec-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .spec-item-k {
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .spec-item-v {
+        font-family: var(--font-display);
+        font-size: 14.5px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .feature-points-list {
+        display: grid;
+        gap: 10px;
+        font-size: 13px;
+        color: var(--body);
+        line-height: 1.5;
+      }
+
+      .feature-point {
+        display: grid;
+        grid-template-columns: 16px 1fr;
+        gap: 8px;
+        align-items: baseline;
+      }
+
+      .feature-bullet {
+        color: var(--accent);
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      /* Personnel Card inside facility */
+      .personnel-strip {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border-top: 1px solid var(--hairline);
+        padding-top: 16px;
+      }
+
+      .personnel-thumb {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 1px solid var(--accent);
+      }
+
+      .personnel-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .personnel-name {
+        font-family: var(--font-display);
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .personnel-role {
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+
+      /* Protocol Alert Box */
+      .protocol-box {
+        background: #f1ede5;
+        border-left: 3px solid var(--accent);
+        padding: 12px 14px;
+        font-size: 12px;
+        line-height: 1.5;
+        color: var(--ink);
+      }
+
+      .protocol-label {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 10.5px;
+        display: block;
+        margin-bottom: 3px;
+        color: var(--accent);
+      }
+
+      /* Action Buttons */
+      .btn-row {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: auto;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: var(--cta);
+        color: var(--ink);
+        padding: 14px 20px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        min-height: 48px;
+        transition: background 0.15s;
+        text-align: center;
+      }
+
+      .btn-primary:hover {
+        background: var(--ink);
+        color: var(--surface);
+      }
+
+      .btn-whatsapp {
+        background: var(--wa-green);
+        color: #ffffff;
+      }
+
+      .btn-whatsapp:hover {
+        background: var(--wa-green-dark);
+        color: #ffffff;
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid var(--accent);
+        color: var(--ink);
+        padding: 12px 20px;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        min-height: 44px;
+        transition: all 0.15s;
+      }
+
+      .btn-secondary:hover {
+        background: var(--surface);
+        border-color: var(--ink);
+      }
+
+      /* Workflow Corridor Section (Memorable Device / Schematic) */
+      .schematic-section {
+        border: 1px solid var(--accent);
+        background: var(--panel);
+        padding: clamp(24px, 4vw, 48px);
+        margin-bottom: clamp(48px, 6vw, 80px);
+      }
+
+      .schematic-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 16px;
+        border-bottom: 1px solid var(--hairline);
+        padding-bottom: 16px;
+        margin-bottom: 28px;
+      }
+
+      .schematic-svg-wrap {
+        width: 100%;
+        background: #f4f0e8;
+        border: 1px solid var(--hairline);
+        overflow: hidden;
+      }
+
+      .schematic-svg-wrap svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* Production Pipeline 5-Step Strip */
+      .pipeline-steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 28px;
+      }
+
+      .pipeline-step-card {
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .pipeline-step-num {
+        font-family: var(--font-display);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: 0.1em;
+      }
+
+      .pipeline-step-title {
+        font-family: var(--font-display);
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .pipeline-step-desc {
+        font-size: 12px;
+        color: var(--body);
+        line-height: 1.5;
+      }
+
+      /* Comparative Ledger Table */
+      .comparative-section {
+        border-top: 1px solid var(--accent);
+        padding-top: clamp(40px, 6vw, 64px);
+        margin-bottom: clamp(48px, 6vw, 80px);
+      }
+
+      .comp-table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--accent);
+        background: var(--surface);
+      }
+
+      .comp-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 650px;
+      }
+
+      .comp-table th, .comp-table td {
+        padding: 14px 20px;
+        text-align: left;
+        border-bottom: 1px solid var(--hairline);
+        font-size: 13px;
+      }
+
+      .comp-table th {
+        background: var(--panel);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .comp-table tr:hover {
+        background: #faf8f5;
+      }
+
+      .comp-table-k {
+        font-weight: 600;
+        color: var(--ink);
+        width: 25%;
+      }
+
+      .comp-table-a {
+        width: 37.5%;
+        border-right: 1px solid var(--hairline);
+      }
+
+      .comp-table-b {
+        width: 37.5%;
+      }
+
+      /* Mobile Sticky Bar */
+      .mobile-sticky-action {
+        display: none;
+      }
+
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+        .twin-split-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .facility-specs-grid {
+          grid-template-columns: 1fr;
+        }
+        .mobile-sticky-action {
+          display: block;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: #181614;
+          padding: 10px 16px;
+          border-top: 1px solid var(--accent);
+          z-index: 998;
+        }
+        .mobile-sticky-inner {
+          display: flex;
+          gap: 10px;
+        }
+        .mobile-sticky-btn {
+          flex: 1;
+          padding: 12px 10px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          text-align: center;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        body {
+          padding-bottom: 64px;
+        }
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--accent);
+        background: var(--panel);
+        padding: clamp(40px, 6vw, 64px) clamp(20px, 5vw, 64px);
+        margin-top: clamp(60px, 8vw, 120px);
+      }
+
+      .footer-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        font-size: 12px;
+        color: var(--body);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Prototype Version Switcher Bar -->
+    <aside class="proto-bar" aria-label="Prototype Version Switcher">
+      <div class="proto-bar-inner">
+        <div class="proto-meta">
+          <span class="proto-tag">LOCATIONS PROTOTYPE</span>
+          <span class="proto-sep">/</span>
+          <span>ITERATION 3 OF 10: THE ATELIER & WORKSHOP TWIN-COORDINATE SPLIT</span>
+        </div>
+        <nav class="proto-pills-wrap" aria-label="Location Iterations">
+          <a href="locations-iteration-1.html" class="proto-pill">1: Monograph</a>
+          <a href="locations-iteration-2.html" class="proto-pill">2: Transit Matrix</a>
+          <a href="locations-iteration-3.html" class="proto-pill active">3: Atelier & Workshop</a>
+          <a href="locations-iteration-4.html" class="proto-pill">4: Radial Radar</a>
+          <a href="locations-iteration-5.html" class="proto-pill">5: Blueprint</a>
+          <a href="locations-iteration-6.html" class="proto-pill">6: Material Archive</a>
+          <a href="locations-iteration-7.html" class="proto-pill">7: Transit Ledger</a>
+          <a href="locations-iteration-8.html" class="proto-pill">8: Evening Salon</a>
+          <a href="locations-iteration-9.html" class="proto-pill">9: Vernacular Strip</a>
+          <a href="locations-iteration-10.html" class="proto-pill">10: Dispatch Hub</a>
+        </nav>
+        <button type="button" class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLang()">
+          <span>EN / हिंदी</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Editorial Site Nav -->
+    <header class="site-header">
+      <div class="site-nav">
+        <a href="/" class="brand">
+          <span>Ashish</span>
+          <span>Interiors</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/#portfolio" data-en="Portfolio" data-hi="पोर्टफोलियो">Portfolio</a>
+          <a href="/#services" data-en="Services" data-hi="सेवाएं">Services</a>
+          <a href="/about-iteration-1.html" data-en="About" data-hi="हमारे बारे में">About</a>
+          <a href="locations-iteration-3.html" class="active" data-en="Locations" data-hi="लोकेशन">Locations</a>
+          <a href="/contact-iteration-1.html" data-en="Contact" data-hi="संपर्क">Contact</a>
+        </nav>
+        <div class="nav-tel">
+          <span class="nav-tel-line"></span>
+          <a href="tel:+919876543210">+91 98765 43210</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Page Wrap -->
+    <main class="page-wrap">
+      <span class="hero-eyebrow" data-en="Spatial Organization · Dual Facility Architecture · Patna" data-hi="स्थानिक संगठन · दोहरी सुविधा संरचना · पटना">Spatial Organization · Dual Facility Architecture · Patna</span>
+      <h1 class="hero-title">
+        <span data-en="The Atelier & Workshop" data-hi="एटेलियर एवं वर्कशॉप">The Atelier & Workshop</span>
+        <span class="accent-span" data-en="Twin-Coordinate Split" data-hi="दोहरी-समन्वय संरचना">Twin-Coordinate Split</span>
+      </h1>
+
+      <p class="hero-intro" data-en="Ashish Interiors separates client dialogue from heavy sawdust while keeping them within a 5-minute transit corridor. Our central Design Atelier on Boring Road houses our material library and drawing tables; our Digha Ghat Workshop houses computerized beam saws and edge-banding lines. Two dedicated spaces working as a single precision unit." data-hi="आशीष इंटीरियर्स क्लाइंट विमर्श और भारी निर्माण कार्य को अलग-अलग रखते हुए भी 5 मिनट के सीधे कॉरिडोर से जोड़ता है। बोरिंग रोड का हमारा डिजाइन एटेलियर ड्रॉइंग टेबल और मटेरियल लाइब्रेरी के लिए है; जबकि दीघा घाट की वर्कशॉप में कम्प्यूटरीकृत आरी और एज-बैंडिंग मशीनें हैं।">
+        Ashish Interiors separates client dialogue from heavy sawdust while keeping them within a 5-minute transit corridor. Our central Design Atelier on Boring Road houses our material library and drawing tables; our Digha Ghat Workshop houses computerized beam saws and edge-banding lines. Two dedicated spaces working as a single precision unit.
+      </p>
+
+      <!-- Twin Split Layout: Facility A vs Facility B -->
+      <div class="twin-split-grid">
+        <!-- FACILITY A: BORING ROAD DESIGN ATELIER -->
+        <article class="facility-card">
+          <div class="facility-card-header">
+            <span class="facility-badge" data-en="Facility A · Design Atelier" data-hi="सुविधा क · डिजाइन एटेलियर">Facility A · Design Atelier</span>
+            <span class="facility-coord">25.6134° N, 85.1189° E</span>
+          </div>
+
+          <div class="facility-img-frame">
+            <img src="/clients/ashish-interiors/editorial/locations/studio.jpg" alt="Boring Road Design Atelier Consultation Table and Sample Racks" />
+            <span class="facility-img-overlay-stat" data-en="1,400 SQ FT · 2ND FLOOR" data-hi="1,400 वर्ग फुट · दूसरी मंजिल">1,400 SQ FT · 2ND FLOOR</span>
+          </div>
+
+          <div class="facility-body">
+            <h2 class="facility-title" data-en="Boring Road Design Atelier" data-hi="बोरिंग रोड डिजाइन एटेलियर">Boring Road Design Atelier</h2>
+            <div class="facility-address">
+              <span data-en="2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001" data-hi="दूसरी मंजिल, शिवम कॉम्प्लेक्स, बोरिंग रोड चौराहा, पटना, बिहार 800001">2nd Floor, Shivam Complex, Boring Road Crossing, Patna, Bihar 800001</span>
+              <div style="font-size: 11.5px; color: var(--muted); margin-top: 4px;" data-en="Landmark: Above SBI ATM, north-east corner of roundabout" data-hi="पहचान: एसबीआई एटीएम के ऊपर, चौराहे का उत्तर-पूर्वी कोना">
+                Landmark: Above SBI ATM, north-east corner of roundabout
+              </div>
+            </div>
+
+            <!-- Specs Grid -->
+            <div class="facility-specs-grid">
+              <div class="spec-item">
+                <span class="spec-item-k" data-en="Primary Function" data-hi="मुख्य कार्य">Primary Function</span>
+                <span class="spec-item-v" data-en="Consultation & Drawings" data-hi="परामर्श व ड्रॉइंग">Consultation & Drawings</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-item-k" data-en="Material Library" data-hi="सामग्री लाइब्रेरी">Material Library</span>
+                <span class="spec-item-v" data-en="400+ Physical Swatches" data-hi="400+ भौतिक सैंपल">400+ Physical Swatches</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-item-k" data-en="Discussion Desk" data-hi="बैठक टेबल">Discussion Desk</span>
+                <span class="spec-item-v" data-en="12-ft Reclaimed Sal Table" data-hi="12-फीट साल-लकड़ी टेबल">12-ft Reclaimed Sal Table</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-item-k" data-en="Operating Hours" data-hi="समय">Operating Hours</span>
+                <span class="spec-item-v">10:00 – 19:00 (Mon–Sat)</span>
+              </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="feature-points-list">
+              <div class="feature-point">
+                <span class="feature-bullet">·</span>
+                <span data-en="1:1 scale tactile selection of certified Burmese teak, European veneer flitches, and calibrated quartz." data-hi="बर्मी टीक, यूरोपीय विनियर और कैलिब्रेटेड क्वार्ट्ज का 1:1 भौतिक चयन।">1:1 scale tactile selection of certified Burmese teak, European veneer flitches, and calibrated quartz.</span>
+              </div>
+              <div class="feature-point">
+                <span class="feature-bullet">·</span>
+                <span data-en="Color-calibrated daylight viewing booths eliminating Patna electrical lighting distortion." data-hi="डे-लाइट कलर टेस्टिंग बूथ, जिससे कृत्रिम लाइट का भ्रम नहीं होता।">Color-calibrated daylight viewing booths eliminating Patna electrical lighting distortion.</span>
+              </div>
+              <div class="feature-point">
+                <span class="feature-bullet">·</span>
+                <span data-en="CAD detailing terminals connected live via encrypted link to the Digha workshop saws." data-hi="दीघा आरी मशीनों से सीधे लिंक किए गए सीएडी ड्रॉइंग कंप्यूटर।">CAD detailing terminals connected live via encrypted link to the Digha workshop saws.</span>
+              </div>
+            </div>
+
+            <!-- Lead Personnel -->
+            <div class="personnel-strip">
+              <img src="/clients/ashish-interiors/editorial/team/principal-01.jpg" alt="Ashish Kumar Principal Designer" class="personnel-thumb" />
+              <div class="personnel-info">
+                <span class="personnel-name" data-en="Ashish Kumar & Sunita Raj" data-hi="आशीष कुमार एवं सुनीता राज">Ashish Kumar & Sunita Raj</span>
+                <span class="personnel-role" data-en="Principal Designer & Lead Interior Architect · Daily at Atelier" data-hi="मुख्य डिजाइनर व लीड इंटीरियर आर्किटेक्ट · एटेलियर पर उपस्थित">Principal Designer & Lead Interior Architect · Daily at Atelier</span>
+              </div>
+            </div>
+
+            <!-- Visiting Protocol Box -->
+            <div class="protocol-box">
+              <span class="protocol-label" data-en="Visiting Protocol · Walk-In Welcome" data-hi="विजिट प्रोटोकॉल · वॉक-इन खुला">Visiting Protocol · Walk-In Welcome</span>
+              <span data-en="Open to homeowners without appointment Monday through Saturday. Sunday visits available by prior appointment. Dedicated four-wheeler parking at rear lane." data-hi="सोमवार से शनिवार तक बिना अपॉइंटमेंट खुला है। रविवार केवल पूर्व अनुमति पर। पीछे की लेन में चार पहिया पार्किंग।">
+                Open to homeowners without appointment Monday through Saturday. Sunday visits available by prior appointment. Dedicated four-wheeler parking at rear lane.
+              </span>
+            </div>
+
+            <!-- CTA -->
+            <div class="btn-row">
+              <a href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20visit%20the%20Boring%20Road%20Design%20Atelier" class="btn-primary btn-whatsapp" data-en="Book Atelier Consultation on WhatsApp" data-hi="व्हाट्सएप पर एटेलियर परामर्श बुक करें">
+                <span>Book Atelier Consultation on WhatsApp</span>
+              </a>
+              <a href="https://maps.google.com/?q=Shivam+Complex+Boring+Road+Crossing+Patna" target="_blank" rel="noopener" class="btn-secondary" data-en="Directions to Atelier" data-hi="एटेलियर का रास्ता देखें">
+                <span>Directions to Atelier</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- FACILITY B: DIGHA CABINET WORKSHOP -->
+        <article class="facility-card">
+          <div class="facility-card-header">
+            <span class="facility-badge" data-en="Facility B · Cabinet Workshop" data-hi="सुविधा ख · कैबिनेट वर्कशॉप">Facility B · Cabinet Workshop</span>
+            <span class="facility-coord">25.6310° N, 85.1050° E</span>
+          </div>
+
+          <div class="facility-img-frame">
+            <img src="/clients/ashish-interiors/editorial/team/workshop-01.jpg" alt="Digha Cabinet Workshop Heavy Joinery Saw and Bench Area" />
+            <span class="facility-img-overlay-stat" data-en="4,200 SQ FT · HEAVY JOINERY" data-hi="4,200 वर्ग फुट · भारी निर्माण">4,200 SQ FT · HEAVY JOINERY</span>
+          </div>
+
+          <div class="facility-body">
+            <h2 class="facility-title" data-en="Digha Cabinet Workshop" data-hi="दीघा कैबिनेट वर्कशॉप">Digha Cabinet Workshop</h2>
+            <div class="facility-address">
+              <span data-en="Industrial Cluster, Digha Ghat Industrial Area, Patna, Bihar 800011" data-hi="इंडस्ट्रियल क्लस्टर, दीघा घाट औद्योगिक क्षेत्र, पटना, बिहार 800011">Industrial Cluster, Digha Ghat Industrial Area, Patna, Bihar 800011</span>
+              <div style="font-size: 11.5px; color: var(--muted); margin-top: 4px;" data-en="Transit: Exactly 1.8 km / 5 minutes north of Boring Road Atelier" data-hi="दूरी: बोरिंग रोड एटेलियर से ठीक 1.8 किमी / 5 मिनट उत्तर">
+                Transit: Exactly 1.8 km / 5 minutes north of Boring Road Atelier
+              </div>
+            </div>
+
+            <!-- Specs Grid -->
+            <div class="facility-specs-grid">
+              <div class="spec-item">
+                <span class="spec-item-k" data-en="Primary Function" data-hi="मुख्य कार्य">Primary Function</span>
+                <span class="spec-item-v" data-en="CNC Milling & Joinery" data-hi="सीएनसी मिलिंग व काष्ठकला">CNC Milling & Joinery</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-item-k" data-en="Edge-Banding" data-hi="एज-बैंडिंग">Edge-Banding</span>
+                <span class="spec-item-v" data-en="PUR Hot-Melt Precision Line" data-hi="पीयूआर हॉट-मेल्ट प्रिसिजन">PUR Hot-Melt Precision Line</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-item-k" data-en="Pre-Assembly Deck" data-hi="प्री-असेंबली डेक">Pre-Assembly Deck</span>
+                <span class="spec-item-v" data-en="1:1 Full Dry-Fit Floor" data-hi="1:1 ड्राई-फिट फ्लोर">1:1 Full Dry-Fit Floor</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-item-k" data-en="Operating Hours" data-hi="समय">Operating Hours</span>
+                <span class="spec-item-v">08:00 – 18:00 (Mon–Sat)</span>
+              </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="feature-points-list">
+              <div class="feature-point">
+                <span class="feature-bullet">·</span>
+                <span data-en="Computerized beam saw ensures panel sizing within 0.2mm tolerance without chipping or ragged veneer teeth." data-hi="कम्प्यूटरीकृत आरी 0.2 मिमी की शुद्धता से कटाई करती है, जिससे विनियर कभी नहीं उखड़ता।">Computerized beam saw ensures panel sizing within 0.2mm tolerance without chipping or ragged veneer teeth.</span>
+              </div>
+              <div class="feature-point">
+                <span class="feature-bullet">·</span>
+                <span data-en="PUR water-resistant edge-banding eliminates swelling from Patna's humid monsoon moisture cycles." data-hi="पीयूआर वाटर-रेसिस्टेंट एज-बैंडिंग बिहार की मानसूनी नमी से लकड़ी को फूलने नहीं देती।">PUR water-resistant edge-banding eliminates swelling from Patna's humid monsoon moisture cycles.</span>
+              </div>
+              <div class="feature-point">
+                <span class="feature-bullet">·</span>
+                <span data-en="Solid hardwood seasoning bay ensures timber equilibrium before assembly." data-hi="सॉलिड वुड सीजनिंग बे, जहां काम शुरू होने से पहले लकड़ी की नमी स्थिर की जाती है।">Solid hardwood seasoning bay ensures timber equilibrium before assembly.</span>
+              </div>
+            </div>
+
+            <!-- Lead Personnel -->
+            <div class="personnel-strip">
+              <img src="/clients/ashish-interiors/editorial/team/site-01.jpg" alt="Manoj Sharma Workshop Head" class="personnel-thumb" />
+              <div class="personnel-info">
+                <span class="personnel-name" data-en="Manoj Sharma & Vikram Singh" data-hi="मनोज शर्मा एवं विक्रम सिंह">Manoj Sharma & Vikram Singh</span>
+                <span class="personnel-role" data-en="Master Joiner & Site Assembly Lead · Stationed at Digha" data-hi="मास्टर जॉइनर व साइट असेंबली लीड · दीघा वर्कशॉप पर कार्यरत">Master Joiner & Site Assembly Lead · Stationed at Digha</span>
+              </div>
+            </div>
+
+            <!-- Visiting Protocol Box -->
+            <div class="protocol-box">
+              <span class="protocol-label" data-en="Visiting Protocol · Escorted Visits Only" data-hi="विजिट प्रोटोकॉल · केवल विशेष अनुमति पर">Visiting Protocol · Escorted Visits Only</span>
+              <span data-en="For safety reasons, workshop visits are by prior appointment only on Tuesdays and Thursdays, accompanied by your principal designer. Closed-toe shoes mandatory." data-hi="सुरक्षा कारणों से, वर्कशॉप का दौरा केवल मंगलवार और गुरुवार को मुख्य डिजाइनर की उपस्थिति में ही संभव है। बंद जूते अनिवार्य हैं।">
+                For safety reasons, workshop visits are by prior appointment only on Tuesdays and Thursdays, accompanied by your principal designer. Closed-toe shoes mandatory.
+              </span>
+            </div>
+
+            <!-- CTA -->
+            <div class="btn-row">
+              <a href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20request%20an%20escorted%20visit%20to%20the%20Digha%20Cabinet%20Workshop" class="btn-primary btn-whatsapp" data-en="Request Workshop Tour on WhatsApp" data-hi="व्हाट्सएप पर वर्कशॉप विजिट का अनुरोध करें">
+                <span>Request Workshop Tour on WhatsApp</span>
+              </a>
+              <a href="tel:+919876543210" class="btn-secondary" data-en="Call Principal Designer" data-hi="मुख्य डिजाइनर को कॉल करें">
+                <span>Call Principal Designer</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Memorable Device: 1.8 KM / 5-Minute Transit Corridor Schematic -->
+      <section class="schematic-section">
+        <div class="schematic-header">
+          <div>
+            <span class="hero-eyebrow" style="margin-bottom: 4px;" data-en="Workflow Pipeline Schematic · Direct Arterial Transit" data-hi="कार्यप्रणाली रेखाचित्र · सीधा पारगमन कॉरिडोर">Workflow Pipeline Schematic · Direct Arterial Transit</span>
+            <h2 style="font-size: clamp(20px, 2.5vw, 30px); text-transform: uppercase;" data-en="The 1.8 KM Production Conduit" data-hi="1.8 किमी उत्पादन गलियारा">The 1.8 KM Production Conduit</h2>
+          </div>
+          <span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--accent); font-weight: 600;" data-en="Transit: 5 Mins via Kurji Main Road" data-hi="पारगमन: कुर्जी मुख्य मार्ग से 5 मिनट">Transit: 5 Mins via Kurji Main Road</span>
+        </div>
+
+        <!-- Custom SVG Schematic Diagram -->
+        <div class="schematic-svg-wrap">
+          <svg viewBox="0 0 1000 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="1.8 km Transit Corridor from Boring Road Atelier to Digha Workshop">
+            <!-- Background Subtle Blueprint Grid -->
+            <defs>
+              <pattern id="schedGrid" width="25" height="25" patternUnits="userSpaceOnUse">
+                <path d="M 25 0 L 0 0 0 25" fill="none" stroke="#e8e3d8" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect width="1000" height="360" fill="url(#schedGrid)" />
+
+            <!-- Left Facility Node: Boring Road Atelier -->
+            <g transform="translate(40, 50)">
+              <rect width="260" height="260" fill="#ffffff" stroke="#51372a" stroke-width="2" />
+              <rect x="0" y="0" width="260" height="34" fill="#141414" />
+              <text x="130" y="22" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="11" font-weight="700" fill="#d9bc72" letter-spacing="1.5">FACILITY A: DESIGN ATELIER</text>
+              
+              <text x="20" y="65" font-family="'Archivo', sans-serif" font-size="14" font-weight="600" fill="#141414">Boring Road Crossing</text>
+              <text x="20" y="85" font-family="ui-monospace, monospace" font-size="9.5" fill="#8b8377">25.6134° N, 85.1189° E</text>
+              <text x="20" y="105" font-family="'DM Sans', sans-serif" font-size="11" fill="#51372a">2nd Floor · 1,400 sq ft</text>
+
+              <line x1="20" y1="120" x2="240" y2="120" stroke="#dcd7ce" stroke-width="1" />
+
+              <text x="20" y="145" font-family="'DM Sans', sans-serif" font-size="11" fill="#4a4a4a">· Architectural Drafting Tables</text>
+              <text x="20" y="168" font-family="'DM Sans', sans-serif" font-size="11" fill="#4a4a4a">· 400+ Physical Material Library</text>
+              <text x="20" y="191" font-family="'DM Sans', sans-serif" font-size="11" fill="#4a4a4a">· 12ft Client Conference Table</text>
+              <text x="20" y="214" font-family="'DM Sans', sans-serif" font-size="11" fill="#4a4a4a">· Daylight Tone Testing Bay</text>
+
+              <rect x="20" y="232" width="220" height="22" fill="#faf8f5" stroke="#dcd7ce" />
+              <text x="130" y="247" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="9" font-weight="600" fill="#285a43" letter-spacing="1">WALK-IN WELCOME (MON–SAT)</text>
+            </g>
+
+            <!-- Transit Corridor Channel (Center) -->
+            <g transform="translate(300, 150)">
+              <!-- Main Road Line -->
+              <line x1="0" y1="30" x2="400" y2="30" stroke="#dcd7ce" stroke-width="40" stroke-linecap="square" />
+              <line x1="0" y1="30" x2="400" y2="30" stroke="#ffffff" stroke-width="32" stroke-linecap="square" />
+              <line x1="0" y1="30" x2="400" y2="30" stroke="#51372a" stroke-width="2" stroke-dasharray="8 6" />
+
+              <!-- Highway Flow Arrows -->
+              <polygon points="180,24 195,30 180,36" fill="#51372a" />
+              <polygon points="220,24 235,30 220,36" fill="#51372a" />
+
+              <!-- Distance & Time Badge (Top) -->
+              <rect x="110" y="-30" width="180" height="42" fill="#141414" stroke="#51372a" stroke-width="1.5" />
+              <text x="200" y="-12" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="11" font-weight="700" fill="#d9bc72" letter-spacing="1.5">1.8 KM / 5-MIN TRANSIT</text>
+              <text x="200" y="3" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#faf8f5">Via Kurji - Digha Main Road</text>
+
+              <!-- Data Link Pulse (Bottom) -->
+              <rect x="125" y="65" width="150" height="26" fill="#faf8f5" stroke="#285a43" stroke-width="1" />
+              <text x="200" y="82" text-anchor="middle" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#285a43">DIGITAL CAD SHOP LINK</text>
+            </g>
+
+            <!-- Right Facility Node: Digha Cabinet Workshop -->
+            <g transform="translate(700, 50)">
+              <rect width="260" height="260" fill="#ffffff" stroke="#51372a" stroke-width="2" />
+              <rect x="0" y="0" width="260" height="34" fill="#141414" />
+              <text x="130" y="22" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="11" font-weight="700" fill="#d9bc72" letter-spacing="1.5">FACILITY B: JOINERY WORKSHOP</text>
+              
+              <text x="20" y="65" font-family="'Archivo', sans-serif" font-size="14" font-weight="600" fill="#141414">Digha Ghat Industrial Cluster</text>
+              <text x="20" y="85" font-family="ui-monospace, monospace" font-size="9.5" fill="#8b8377">25.6310° N, 85.1050° E</text>
+              <text x="20" y="105" font-family="'DM Sans', sans-serif" font-size="11" fill="#51372a">Ground Level · 4,200 sq ft</text>
+
+              <line x1="20" y1="120" x2="240" y2="120" stroke="#dcd7ce" stroke-width="1" />
+
+              <text x="20" y="145" font-family="'DM Sans', sans-serif" font-size="11" fill="#4a4a4a">· Computerized Beam Panel Saw</text>
+              <text x="20" y="168" font-family="'DM Sans', sans-serif" font-size="11" fill="#4a4a4a">· PUR Hot-Melt Edge-Bander</text>
+              <text x="20" y="191" font-family="'DM Sans', sans-serif" font-size="11" fill="#4a4a4a">· Multi-Spindle Line Boring Drill</text>
+              <text x="20" y="214" font-family="'DM Sans', sans-serif" font-size="11" fill="#4a4a4a">· 1:1 Dry Pre-Assembly Test Deck</text>
+
+              <rect x="20" y="232" width="220" height="22" fill="#faf8f5" stroke="#51372a" />
+              <text x="130" y="247" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="9" font-weight="600" fill="#51372a" letter-spacing="1">ESCORTED VISITS (TUE / THU)</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- 5-Stage Production Flow Breakdown -->
+        <div class="pipeline-steps-grid">
+          <div class="pipeline-step-card">
+            <span class="pipeline-step-num">STAGE 01 · ATELIER</span>
+            <h3 class="pipeline-step-title" data-en="Design & Material Accord" data-hi="डिजाइन एवं सामग्री चयन">Design & Material Accord</h3>
+            <p class="pipeline-step-desc" data-en="Homeowners review full-scale veneer leaves and hardware samples on the 12ft table with Ashish Kumar." data-hi="ग्राहक 12-फीट टेबल पर आशीष कुमार के साथ विनियर सैंपल और हार्डवेयर की जांच करते हैं।">Homeowners review full-scale veneer leaves and hardware samples on the 12ft table with Ashish Kumar.</p>
+          </div>
+
+          <div class="pipeline-step-card">
+            <span class="pipeline-step-num">STAGE 02 · DIGITAL LINK</span>
+            <h3 class="pipeline-step-title" data-en="CAD Cut-List Encoding" data-hi="सीएडी कट-लिस्ट एन्कोडिंग">CAD Cut-List Encoding</h3>
+            <p class="pipeline-step-desc" data-en="Architectural drawings are converted into CNC cut-lists and beamed over the encrypted data bridge directly to Digha." data-hi="आर्किटेक्चरल ड्रॉइंग को सीधे सीएनसी कट-लिस्ट में बदलकर दीघा टर्मिनल पर भेजा जाता है।">Architectural drawings are converted into CNC cut-lists and beamed over the encrypted data bridge directly to Digha.</p>
+          </div>
+
+          <div class="pipeline-step-card">
+            <span class="pipeline-step-num">STAGE 03 · WORKSHOP</span>
+            <h3 class="pipeline-step-title" data-en="Precision Machine Milling" data-hi="मशीन द्वारा कटाई">Precision Machine Milling</h3>
+            <p class="pipeline-step-desc" data-en="Computerized beam saws cut calibrated marine ply to 0.2mm tolerances; PUR edge-banders seal moisture seams." data-hi="कम्प्यूटरीकृत आरी 0.2 मिमी की शुद्धता से कटाई करती है और पीयूआर किनारों को सील करता है।">Computerized beam saws cut calibrated marine ply to 0.2mm tolerances; PUR edge-banders seal moisture seams.</p>
+          </div>
+
+          <div class="pipeline-step-card">
+            <span class="pipeline-step-num">STAGE 04 · WORKSHOP</span>
+            <h3 class="pipeline-step-title" data-en="1:1 Full Dry Assembly" data-hi="1:1 ड्राई असेंबली">1:1 Full Dry Assembly</h3>
+            <p class="pipeline-step-desc" data-en="Every wardrobe and kitchen cabinet is erected on the factory floor before transport to guarantee zero site-level recutting." data-hi="हर अलमारी को भेजने से पहले फैक्ट्री में खड़ा करके जांचा जाता है ताकि साइट पर तोड़-फोड़ न हो।">Every wardrobe and kitchen cabinet is erected on the factory floor before transport to guarantee zero site-level recutting.</p>
+          </div>
+
+          <div class="pipeline-step-card">
+            <span class="pipeline-step-num">STAGE 05 · SITE DISPATCH</span>
+            <h3 class="pipeline-step-title" data-en="Protective Transit to Site" data-hi="साइट पर सुरक्षित प्रेषण">Protective Transit to Site</h3>
+            <p class="pipeline-step-desc" data-en="Modules are wrapped in shock foam and loaded into our dedicated truck, arriving at the client's home ready for fast fitment." data-hi="कैबिनेट को सुरक्षित फोम में पैक कर हमारी गाड़ी से सीधे घर पहुंचाया जाता है जहां तुरंत फिटिंग होती है।">Modules are wrapped in shock foam and loaded into our dedicated truck, arriving at the client's home ready for fast fitment.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comparative Specification Ledger -->
+      <section class="comparative-section">
+        <span class="hero-eyebrow" data-en="Side-By-Side Technical Comparison" data-hi="तकनीकी तुलनात्मक तालिका">Side-By-Side Technical Comparison</span>
+        <h2 style="font-size: clamp(22px, 2.8vw, 34px); text-transform: uppercase; margin-bottom: 24px;" data-en="Facility Operations Ledger" data-hi="सुविधा संचालन बहीखाता">Facility Operations Ledger</h2>
+
+        <div class="comp-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th data-en="OPERATIONAL METRIC" data-hi="मापदंड">OPERATIONAL METRIC</th>
+                <th data-en="FACILITY A: BORING ROAD ATELIER" data-hi="सुविधा क: बोरिंग रोड एटेलियर">FACILITY A: BORING ROAD ATELIER</th>
+                <th data-en="FACILITY B: DIGHA WORKSHOP" data-hi="सुविधा ख: दीघा वर्कशॉप">FACILITY B: DIGHA WORKSHOP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="comp-table-k" data-en="Total Footprint" data-hi="कुल क्षेत्रफल">Total Footprint</td>
+                <td class="comp-table-a">1,400 sq ft (Air-conditioned studio)</td>
+                <td class="comp-table-b">4,200 sq ft (Industrial joinery floor)</td>
+              </tr>
+              <tr>
+                <td class="comp-table-k" data-en="Primary Core Role" data-hi="मुख्य भूमिका">Primary Core Role</td>
+                <td class="comp-table-a" data-en="Client discussions, material tactile vetting, drafting" data-hi="ग्राहक बैठक, मटेरियल चयन, नक्शा डिजाइन">Client discussions, material tactile vetting, drafting</td>
+                <td class="comp-table-b" data-en="Machine milling, edge-banding, dry assembly" data-hi="मशीन से कटाई, एज-बैंडिंग, ड्राई असेंबली">Machine milling, edge-banding, dry assembly</td>
+              </tr>
+              <tr>
+                <td class="comp-table-k" data-en="Key Leadership" data-hi="जिम्मेदार नेतृत्व">Key Leadership</td>
+                <td class="comp-table-a">Ashish Kumar (Principal Designer) & Sunita Raj</td>
+                <td class="comp-table-b">Manoj Sharma (Head Joiner) & Vikram Singh</td>
+              </tr>
+              <tr>
+                <td class="comp-table-k" data-en="Machinery & Tooling" data-hi="उपकरण व मशीनें">Machinery & Tooling</td>
+                <td class="comp-table-a" data-en="Plotters, lux-balanced daylight booth, 3D CAD stations" data-hi="प्लॉटर, डे-लाइट बूथ, 3D सीएडी स्टेशन">Plotters, lux-balanced daylight booth, 3D CAD stations</td>
+                <td class="comp-table-b" data-en="Computerized beam saw, multi-spindle drill, PUR bander" data-hi="कम्प्यूटरीकृत बीम सॉ, मल्टी-स्पिंडल ड्रिल, पीयूआर बैंडर">Computerized beam saw, multi-spindle drill, PUR bander</td>
+              </tr>
+              <tr>
+                <td class="comp-table-k" data-en="Client Accessibility" data-hi="ग्राहकों के लिए प्रवेश">Client Accessibility</td>
+                <td class="comp-table-a" data-en="Walk-ins welcome Mon–Sat (10:00–19:00)" data-hi="सोम–शनि वॉक-इन खुला (10:00–19:00)">Walk-ins welcome Mon–Sat (10:00–19:00)</td>
+                <td class="comp-table-b" data-en="Escorted visits only (Tue / Thu, prior appointment)" data-hi="केवल विशेष अनुमति पर (मंगल / गुरु)">Escorted visits only (Tue / Thu, prior appointment)</td>
+              </tr>
+              <tr>
+                <td class="comp-table-k" data-en="Parking Infrastructure" data-hi="पार्किंग सुविधा">Parking Infrastructure</td>
+                <td class="comp-table-a" data-en="Four-wheelers in rear service lane; 2-wheelers at front" data-hi="पीछे सर्विस लेन में 4-पहिया; आगे 2-पहिया">Four-wheelers in rear service lane; 2-wheelers at front</td>
+                <td class="comp-table-b" data-en="Dedicated industrial loading yard for trucks & cars" data-hi="ट्रक और कारों के लिए औद्योगिक लोडिंग यार्ड">Dedicated industrial loading yard for trucks & cars</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mobile Sticky CTA Bar -->
+    <aside class="mobile-sticky-action" aria-label="Mobile Quick Action">
+      <div class="mobile-sticky-inner">
+        <a href="tel:+919876543210" class="mobile-sticky-btn btn-secondary" data-en="Call Atelier" data-hi="कॉल करें">Call Atelier</a>
+        <a href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20visit%20the%20Boring%20Road%20Atelier" class="mobile-sticky-btn btn-primary btn-whatsapp" data-en="WhatsApp Studio" data-hi="व्हाट्सएप करें">WhatsApp Studio</a>
+      </div>
+    </aside>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>© 2026 Ashish Interiors · Atelier: Boring Road Crossing · Workshop: Digha Ghat, Patna</div>
+        <div>
+          <a href="/contact-iteration-1.html" style="text-decoration: underline;" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a>
+          <span style="margin: 0 8px; opacity: 0.4;">|</span>
+          <a href="tel:+919876543210">+91 98765 43210</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bilingual Toggle Script -->
+    <script>
+      let currentLang = 'en';
+      function toggleLang() {
+        currentLang = currentLang === 'en' ? 'hi' : 'en';
+        document.documentElement.lang = currentLang;
+        document.querySelectorAll('[data-en]').forEach(el => {
+          el.textContent = currentLang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+        });
+        const btn = document.getElementById('langToggleBtn');
+        if (btn) {
+          btn.querySelector('span').textContent = currentLang === 'en' ? 'EN / हिंदी' : 'हिंदी / EN';
+        }
+      }
+    </script>
+  </body>
+</html>

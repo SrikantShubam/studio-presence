@@ -1,0 +1,1122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Locations — Version 8: The Evening Studio Salon & Parking Deck Pass | Ashish Interiors Patna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #141414;
+        --accent: #51372a;
+        --cta: #d9bc72;
+        --surface: #ffffff;
+        --body: #4a4a4a;
+        --muted: #8b8377;
+        --hairline: #dcd7ce;
+        --panel: #faf8f5;
+        --wa-green: #285a43;
+        --wa-green-dark: #1e4a36;
+        --font-display: 'Archivo', Helvetica, Arial, sans-serif;
+        --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      [lang="hi"] {
+        --font-display: 'Tiro Devanagari Hindi', Georgia, serif;
+        --font-body: 'Poppins', -apple-system, sans-serif;
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        scroll-behavior: smooth;
+        background: var(--surface);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        width: 100%;
+      }
+
+      h1, h2, h3, h4, .font-display {
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+
+      [lang="hi"] h1, [lang="hi"] h2, [lang="hi"] h3, [lang="hi"] h4, [lang="hi"] .font-display {
+        letter-spacing: 0;
+        font-weight: 500;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Sticky Prototype Switcher Bar */
+      .proto-bar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #181614;
+        color: #f5f2ed;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 8px clamp(16px, 4vw, 48px);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+      }
+
+      .proto-bar-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .proto-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11.5px;
+      }
+
+      .proto-tag {
+        color: var(--cta);
+        font-weight: 600;
+      }
+
+      .proto-sep {
+        opacity: 0.35;
+      }
+
+      .proto-pills-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        padding-block: 2px;
+        max-width: 100%;
+      }
+
+      .proto-pill {
+        padding: 5px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #e0ded8;
+        font-size: 11px;
+        white-space: nowrap;
+        background: transparent;
+        transition: all 0.15s ease;
+      }
+
+      .proto-pill:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+
+      .proto-pill.active {
+        background: var(--cta);
+        color: var(--ink);
+        border-color: var(--cta);
+        font-weight: 600;
+      }
+
+      .lang-toggle-btn {
+        background: transparent;
+        border: 1px solid var(--cta);
+        color: var(--cta);
+        padding: 4px 10px;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .lang-toggle-btn:hover {
+        background: var(--cta);
+        color: var(--ink);
+      }
+
+      /* Editorial Site Nav */
+      .site-header {
+        border-bottom: 1px solid var(--accent);
+        padding: clamp(16px, 2.5vw, 24px) clamp(20px, 5vw, 64px);
+        background: var(--surface);
+      }
+
+      .site-nav {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: grid;
+        gap: 2px;
+        font-family: var(--font-display);
+        font-size: clamp(13px, 1.3vw, 16px);
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: clamp(16px, 2.5vw, 36px);
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .nav-links a {
+        color: var(--ink);
+        transition: color 0.15s;
+      }
+
+      .nav-links a:hover, .nav-links a.active {
+        color: var(--accent);
+      }
+
+      .nav-tel {
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-tel-line {
+        width: 1px;
+        height: 16px;
+        background: var(--accent);
+      }
+
+      /* Layout Containers */
+      .page-wrap {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: clamp(40px, 6vw, 88px) clamp(20px, 5vw, 64px);
+      }
+
+      .hero-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+        display: block;
+      }
+
+      .hero-title {
+        font-size: clamp(38px, 6.5vw, 84px);
+        font-weight: 300;
+        line-height: 0.96;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+
+      .hero-title .accent-span {
+        color: var(--accent);
+        display: block;
+        margin-left: 0.35em;
+      }
+
+      .hero-intro {
+        max-width: 820px;
+        font-size: clamp(16px, 1.6vw, 20px);
+        color: var(--body);
+        line-height: 1.65;
+        margin-bottom: clamp(36px, 5vw, 64px);
+      }
+
+      /* Two-Column Dossier Grid */
+      .dossier-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: clamp(32px, 5vw, 64px);
+        border-top: 1px solid var(--accent);
+        padding-top: clamp(36px, 5vw, 64px);
+      }
+
+      @media (max-width: 960px) {
+        .dossier-grid {
+          grid-template-columns: 1fr;
+        }
+        .nav-links {
+          display: none;
+        }
+      }
+
+      /* Panel Cards */
+      .panel-card {
+        border: 1px solid var(--accent);
+        background: var(--panel);
+        padding: clamp(20px, 3.5vw, 36px);
+      }
+
+      .panel-card-dark {
+        background: #181513;
+        color: #f5f2ed;
+        border: 1px solid #3d332c;
+      }
+
+      /* Graph Section */
+      .graph-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        border-bottom: 1px solid var(--hairline);
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+      }
+
+      .graph-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 11.5px;
+        color: var(--body);
+      }
+
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+      }
+
+      .legend-dot.congested {
+        background: #8b3a2b;
+      }
+
+      .legend-dot.optimal {
+        background: var(--cta);
+      }
+
+      /* SVG Timeline Graph Container */
+      .timeline-svg-wrap {
+        width: 100%;
+        background: #fdfbf7;
+        border: 1px solid var(--hairline);
+        padding: 12px;
+        overflow: hidden;
+      }
+
+      .timeline-svg-wrap svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* Hour Selector Buttons */
+      .hour-scrubber {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--hairline);
+      }
+
+      .hour-btn {
+        padding: 7px 12px;
+        font-size: 11.5px;
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        color: var(--ink);
+        cursor: pointer;
+        transition: all 0.15s ease;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+
+      .hour-btn:hover {
+        border-color: var(--accent);
+        background: #f4efe6;
+      }
+
+      .hour-btn.active {
+        background: var(--ink);
+        color: var(--surface);
+        border-color: var(--ink);
+        font-weight: 600;
+      }
+
+      /* Status Callout Box */
+      .status-callout {
+        margin-top: 18px;
+        padding: 16px;
+        border-left: 3px solid var(--cta);
+        background: #f3ede2;
+        font-size: 13.5px;
+        line-height: 1.55;
+      }
+
+      .status-callout strong {
+        display: block;
+        font-size: 14px;
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+
+      /* Step-by-Step Parking & Arrival Sequence */
+      .sequence-steps {
+        display: grid;
+        gap: 20px;
+        margin-top: 36px;
+      }
+
+      .seq-step {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 16px;
+        align-items: start;
+        border-bottom: 1px solid var(--hairline);
+        padding-bottom: 20px;
+      }
+
+      .seq-badge {
+        font-family: var(--font-display);
+        font-size: 13px;
+        font-weight: 700;
+        background: var(--accent);
+        color: var(--surface);
+        padding: 8px 0;
+        text-align: center;
+        letter-spacing: 0.05em;
+      }
+
+      .seq-content h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+
+      .seq-content p {
+        font-size: 14px;
+        color: var(--body);
+        line-height: 1.55;
+      }
+
+      /* Parking Deck Pass Card (Right Column) */
+      .pass-card {
+        background: #191614;
+        color: #f5f2ed;
+        border: 1px solid var(--accent);
+        position: relative;
+        padding: clamp(24px, 4vw, 36px);
+      }
+
+      .pass-badge-strip {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dashed rgba(217, 188, 114, 0.35);
+        padding-bottom: 14px;
+        margin-bottom: 20px;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        color: var(--cta);
+        letter-spacing: 0.1em;
+      }
+
+      .pass-headline {
+        font-family: var(--font-display);
+        font-size: clamp(20px, 2.2vw, 26px);
+        font-weight: 500;
+        color: #ffffff;
+        line-height: 1.2;
+        margin-bottom: 12px;
+      }
+
+      .pass-meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+
+      .pass-meta-item small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+
+      .pass-meta-item span {
+        font-size: 13.5px;
+        color: #f5f2ed;
+        font-weight: 500;
+      }
+
+      .pass-perks {
+        list-style: none;
+        display: grid;
+        gap: 10px;
+        margin-bottom: 24px;
+        font-size: 13px;
+        color: #d8d3cc;
+      }
+
+      .pass-perks li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .pass-perks li::before {
+        content: "■";
+        color: var(--cta);
+        font-size: 8px;
+        margin-top: 5px;
+      }
+
+      /* Host Profile Snippet */
+      .salon-host-box {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 16px;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 14px;
+        margin-bottom: 24px;
+      }
+
+      .salon-host-box img {
+        width: 72px;
+        height: 72px;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(15%);
+      }
+
+      .salon-host-info strong {
+        display: block;
+        font-size: 14px;
+        color: #ffffff;
+      }
+
+      .salon-host-info span {
+        font-size: 12px;
+        color: var(--cta);
+        display: block;
+      }
+
+      .salon-host-info p {
+        font-size: 11.5px;
+        color: #b0aba2;
+        margin-top: 4px;
+        line-height: 1.4;
+      }
+
+      /* Action Buttons */
+      .btn-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: var(--cta);
+        color: var(--ink);
+        padding: 15px 24px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        min-height: 48px;
+        transition: background 0.15s;
+        text-align: center;
+      }
+
+      .btn-primary:hover {
+        background: #e6cb85;
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #f5f2ed;
+        padding: 13px 20px;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        min-height: 46px;
+        transition: all 0.15s;
+        text-align: center;
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--cta);
+      }
+
+      /* Barcode Strip in Pass */
+      .barcode-strip {
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.15);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        opacity: 0.65;
+      }
+
+      /* Studio Atmosphere Section */
+      .studio-photo-section {
+        border-top: 1px solid var(--accent);
+        padding-top: clamp(48px, 6vw, 88px);
+        margin-top: clamp(48px, 6vw, 96px);
+      }
+
+      .photo-grid-two {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: clamp(24px, 4vw, 48px);
+        margin-top: 24px;
+      }
+
+      @media (max-width: 840px) {
+        .photo-grid-two {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .photo-frame {
+        position: relative;
+      }
+
+      .photo-frame img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        display: block;
+      }
+
+      .photo-caption {
+        margin-top: 14px;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* Ledger Table */
+      .specs-ledger {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 24px;
+      }
+
+      .specs-ledger tr {
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .specs-ledger th {
+        text-align: left;
+        padding: 12px 0 6px 0;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        width: 35%;
+      }
+
+      .specs-ledger td {
+        padding: 12px 0;
+        font-size: 14px;
+        color: var(--ink);
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--accent);
+        background: var(--panel);
+        padding: clamp(40px, 6vw, 64px) clamp(20px, 5vw, 64px);
+        margin-top: clamp(60px, 8vw, 120px);
+      }
+
+      .footer-inner {
+        max-width: 1360px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        font-size: 12px;
+        color: var(--body);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Prototype Version Switcher Bar -->
+    <aside class="proto-bar" aria-label="Prototype Version Switcher">
+      <div class="proto-bar-inner">
+        <div class="proto-meta">
+          <span class="proto-tag">LOCATIONS PROTOTYPE</span>
+          <span class="proto-sep">/</span>
+          <span>ITERATION 8 OF 10: THE EVENING STUDIO SALON & PARKING DECK PASS</span>
+        </div>
+        <nav class="proto-pills-wrap" aria-label="Location Iterations">
+          <a href="locations-iteration-1.html" class="proto-pill">1: Monograph</a>
+          <a href="locations-iteration-2.html" class="proto-pill">2: Transit Matrix</a>
+          <a href="locations-iteration-3.html" class="proto-pill">3: Atelier & Workshop</a>
+          <a href="locations-iteration-4.html" class="proto-pill">4: Radial Radar</a>
+          <a href="locations-iteration-5.html" class="proto-pill">5: Blueprint</a>
+          <a href="locations-iteration-6.html" class="proto-pill">6: Material Archive</a>
+          <a href="locations-iteration-7.html" class="proto-pill">7: Transit Ledger</a>
+          <a href="locations-iteration-8.html" class="proto-pill active">8: Evening Salon</a>
+          <a href="locations-iteration-9.html" class="proto-pill">9: Vernacular Strip</a>
+          <a href="locations-iteration-10.html" class="proto-pill">10: Dispatch Hub</a>
+        </nav>
+        <button type="button" class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLang()">
+          <span>EN / हिंदी</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Site Nav -->
+    <header class="site-header">
+      <div class="site-nav">
+        <a href="/" class="brand">
+          <span>Ashish</span>
+          <span>Interiors</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/#portfolio" data-en="Portfolio" data-hi="पोर्टफोलियो">Portfolio</a>
+          <a href="/#services" data-en="Services" data-hi="सेवाएं">Services</a>
+          <a href="/about-iteration-1.html" data-en="About" data-hi="हमारे बारे में">About</a>
+          <a href="locations-iteration-8.html" class="active" data-en="Locations" data-hi="लोकेशन">Locations</a>
+          <a href="/contact-iteration-1.html" data-en="Contact" data-hi="संपर्क">Contact</a>
+        </nav>
+        <div class="nav-tel">
+          <span class="nav-tel-line"></span>
+          <a href="tel:+919876543210">+91 98765 43210</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="page-wrap">
+      <span class="hero-eyebrow" data-en="After-Hours Architectural Access · 17:00 – 19:30 IST" data-hi="शाम का समय · कार्यालय के बाद परामर्श (17:00 – 19:30)">After-Hours Architectural Access · 17:00 – 19:30 IST</span>
+      <h1 class="hero-title">
+        <span data-en="The Evening" data-hi="शाम का स्टूडियो">The Evening</span>
+        <span class="accent-span" data-en="Studio Salon" data-hi="सैलून व पार्किंग पास">Studio Salon</span>
+      </h1>
+      <p class="hero-intro" data-en="Patna working couples and busy families find daytime traffic at Boring Road Crossing daunting. Between 17:00 and 19:30, our studio switches to Evening Salon mode: reserved rear lane parking bays, calm drawing consultations, fresh masala tea, and uninterrupted reviews with Ashish Kumar." data-hi="पटना के कामकाजी परिवारों के लिए दिन में बोरिंग रोड चौराहे का ट्रैफिक असुविधाजनक हो सकता है। शाम 17:00 से 19:30 बजे तक हमारा स्टूडियो 'ईवनिंग सैलून' मोड में रहता है: पीछे की सुरक्षित पार्किंग, शांत वातावरण, गर्म चाय और मुख्य डिजाइनर आशीष कुमार के साथ प्रोजेक्ट समीक्षा।">
+        Patna working couples and busy families find daytime traffic at Boring Road Crossing daunting. Between 17:00 and 19:30, our studio switches to Evening Salon mode: reserved rear lane parking bays, calm drawing consultations, fresh masala tea, and uninterrupted reviews with Ashish Kumar.
+      </p>
+
+      <div class="dossier-grid">
+        <!-- Left: Traffic Timeline & Parking Sequence -->
+        <div>
+          <div class="panel-card">
+            <div class="graph-header">
+              <div>
+                <span class="hero-eyebrow" style="margin-bottom: 2px;" data-en="Civic Density & Access Model" data-hi="ट्रैफिक घनत्व एवं पार्किंग उपलब्धता मॉडल">Civic Density & Access Model</span>
+                <strong style="font-size: 16px;" data-en="Boring Road Congestion vs. Rear Bay Availability" data-hi="बोरिंग रोड ट्रैफिक बनाम रियर पार्किंग लेन">Boring Road Congestion vs. Rear Bay Availability</strong>
+              </div>
+              <div class="graph-legend">
+                <span class="legend-item"><span class="legend-dot congested"></span><span data-en="Street Gridlock (%)" data-hi="सड़क जाम (%)">Street Gridlock (%)</span></span>
+                <span class="legend-item"><span class="legend-dot optimal"></span><span data-en="Reserved Rear Bays Free" data-hi="सुरक्षित पार्किंग स्लॉट">Reserved Rear Bays Free</span></span>
+              </div>
+            </div>
+
+            <!-- SVG Parking & Traffic Density Graph (10:00 to 20:00) -->
+            <div class="timeline-svg-wrap">
+              <svg viewBox="0 0 620 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Boring Road Hourly Traffic and Parking Graph">
+                <!-- Grid lines -->
+                <line x1="60" y1="30" x2="590" y2="30" stroke="#ece7de" stroke-width="1" />
+                <line x1="60" y1="80" x2="590" y2="80" stroke="#ece7de" stroke-width="1" />
+                <line x1="60" y1="130" x2="590" y2="130" stroke="#ece7de" stroke-width="1" />
+                <line x1="60" y1="180" x2="590" y2="180" stroke="#ece7de" stroke-width="1" />
+                <line x1="60" y1="230" x2="590" y2="230" stroke="#141414" stroke-width="1.5" />
+
+                <!-- Y-Axis Labels -->
+                <text x="50" y="34" text-anchor="end" font-family="'Archivo', sans-serif" font-size="9.5" fill="#8b8377">100%</text>
+                <text x="50" y="84" text-anchor="end" font-family="'Archivo', sans-serif" font-size="9.5" fill="#8b8377">75%</text>
+                <text x="50" y="134" text-anchor="end" font-family="'Archivo', sans-serif" font-size="9.5" fill="#8b8377">50%</text>
+                <text x="50" y="184" text-anchor="end" font-family="'Archivo', sans-serif" font-size="9.5" fill="#8b8377">25%</text>
+                <text x="50" y="234" text-anchor="end" font-family="'Archivo', sans-serif" font-size="9.5" fill="#8b8377">0%</text>
+
+                <!-- Evening Salon Golden Window Band (17:00 to 19:30) -->
+                <!-- X coords: 10:00=80, 11:00=130, 12:00=180, 13:00=230, 14:00=280, 15:00=330, 16:00=380, 17:00=430, 17:30=455, 18:30=505, 19:30=555, 20:00=580 -->
+                <rect x="430" y="30" width="125" height="200" fill="#f6eedc" opacity="0.75" />
+                <line x1="430" y1="30" x2="430" y2="230" stroke="#d9bc72" stroke-width="1.5" stroke-dasharray="3 3" />
+                <line x1="555" y1="30" x2="555" y2="230" stroke="#d9bc72" stroke-width="1.5" stroke-dasharray="3 3" />
+                <text x="492" y="48" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="9" font-weight="700" fill="#51372a" letter-spacing="0.5">SALON WINDOW</text>
+                <text x="492" y="60" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="8" fill="#8b8377">17:00 - 19:30</text>
+
+                <!-- Curve A: Main Street Traffic Jam (High at 14:00) -->
+                <!-- Area Fill -->
+                <path d="M 80 230 L 80 155 Q 180 110 280 40 Q 380 90 430 160 Q 480 185 555 205 L 580 215 L 580 230 Z" fill="#8b3a2b" opacity="0.1" />
+                <!-- Curve Line -->
+                <path d="M 80 155 Q 180 110 280 40 Q 380 90 430 160 Q 480 185 555 205 L 580 215" stroke="#8b3a2b" stroke-width="2.5" fill="none" stroke-linecap="square" />
+
+                <!-- Curve B: Rear Lane Available Bays (Peak during Salon hours 17:00-19:30) -->
+                <path d="M 80 200 L 130 190 L 180 215 L 280 225 L 380 195 L 430 80 L 455 55 L 505 50 L 555 60 L 580 120" stroke="#285a43" stroke-width="3" fill="none" stroke-linecap="square" />
+
+                <!-- Peak Pin at 14:00 -->
+                <circle cx="280" cy="40" r="4" fill="#8b3a2b" />
+                <line x1="280" y1="40" x2="280" y2="85" stroke="#8b3a2b" stroke-width="1" stroke-dasharray="2 2" />
+                <rect x="220" y="85" width="120" height="24" fill="#141414" />
+                <text x="280" y="100" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="8" font-weight="600" fill="#ffffff">14:00 · 95% CONGESTION</text>
+
+                <!-- Optimal Pin at 18:00 (Rear Lane Open) -->
+                <circle cx="480" cy="52" r="5" fill="#d9bc72" stroke="#141414" stroke-width="1.5" />
+                <rect x="435" y="70" width="114" height="24" fill="#285a43" />
+                <text x="492" y="85" text-anchor="middle" font-family="'Archivo', sans-serif" font-size="8" font-weight="600" fill="#ffffff">REAR BAYS 100% OPEN</text>
+
+                <!-- X Axis Hour Labels -->
+                <text x="80" y="250" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#141414">10:00</text>
+                <text x="180" y="250" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#141414">12:00</text>
+                <text x="280" y="250" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#8b3a2b" font-weight="700">14:00</text>
+                <text x="380" y="250" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#141414">16:00</text>
+                <text x="455" y="250" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#285a43" font-weight="700">17:30</text>
+                <text x="505" y="250" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#285a43" font-weight="700">18:30</text>
+                <text x="555" y="250" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#285a43" font-weight="700">19:30</text>
+              </svg>
+            </div>
+
+            <!-- Hour Scrubber Buttons -->
+            <div class="hour-scrubber">
+              <button type="button" class="hour-btn" onclick="selectHour('10:00')">10:00 Day Open</button>
+              <button type="button" class="hour-btn" onclick="selectHour('14:00')">14:00 Peak Rush</button>
+              <button type="button" class="hour-btn active" onclick="selectHour('17:30')">17:30 Salon Prime</button>
+              <button type="button" class="hour-btn" onclick="selectHour('18:30')">18:30 Drawing Review</button>
+              <button type="button" class="hour-btn" onclick="selectHour('19:30')">19:30 Final Wrap</button>
+            </div>
+
+            <!-- Dynamic Status Callout -->
+            <div class="status-callout" id="statusCallout">
+              <strong id="statusTitle" data-en="17:30 — Evening Salon Prime Access Active" data-hi="17:30 — शाम का सैलून प्राइम एक्सेस सक्रिय">17:30 — Evening Salon Prime Access Active</strong>
+              <p id="statusDesc" data-en="Main carriage traffic at Boring Road Crossing drops significantly. 6 dedicated rear bays are cleared and held exclusively for Ashish Interiors clients. Security guard Ramakant validates entry pass at gate." data-hi="बोरिंग रोड चौराहे का मुख्य ट्रैफिक कम हो जाता है। आशीष इंटीरियर्स के ग्राहकों के लिए 6 आरक्षित रियर बे पूरी तरह खाली रहते हैं। सुरक्षा गार्ड रमाकांत गेट पर पास सत्यापित करते हैं।">
+                Main carriage traffic at Boring Road Crossing drops significantly. 6 dedicated rear bays are cleared and held exclusively for Ashish Interiors clients. Security guard Ramakant validates entry pass at gate.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step-by-Step Parking & Arrival Sequence -->
+          <div class="sequence-steps">
+            <h3 style="font-size: 20px; text-transform: uppercase; letter-spacing: 0.05em;" data-en="Four-Step Arrival & Parking Protocol" data-hi="चार-चरणीय आगमन एवं पार्किंग प्रक्रिया">Four-Step Arrival & Parking Protocol</h3>
+
+            <div class="seq-step">
+              <div class="seq-badge">01</div>
+              <div class="seq-content">
+                <h4 data-en="Enter Service Lane Behind Shivam Complex" data-hi="शिवम कॉम्प्लेक्स के पीछे सर्विस लेन में प्रवेश करें">Enter Service Lane Behind Shivam Complex</h4>
+                <p data-en="Do not attempt to park on Boring Road main road. Turn directly into the paved service lane on the north-east perimeter of Shivam Complex from Boring Canal Road or rear access lane." data-hi="बोरिंग रोड मुख्य मार्ग पर गाड़ी खड़ी न करें। बोरिंग कैनाल रोड से शिवम कॉम्प्लेक्स के पीछे स्थित पक्की सर्विस लेन में सीधा प्रवेश करें।">
+                  Do not attempt to park on Boring Road main road. Turn directly into the paved service lane on the north-east perimeter of Shivam Complex from Boring Canal Road or rear access lane.
+                </p>
+              </div>
+            </div>
+
+            <div class="seq-step">
+              <div class="seq-badge">02</div>
+              <div class="seq-content">
+                <h4 data-en="Security Attendant Bay Validation" data-hi="सुरक्षा गार्ड द्वारा बे सत्यापन">Security Attendant Bay Validation</h4>
+                <p data-en="Show your WhatsApp Salon Pass or mention 'Ashish Interiors Studio Visit' to guard Ramakant Singh. He will guide your vehicle into reserved private bays #03 through #06." data-hi="गेट पर उपस्थित गार्ड रमाकांत सिंह को अपना व्हाट्सएप सैलून पास दिखाएं। वे आपके वाहन को आरक्षित बे #03 से #06 में सुरक्षित पार्क करवाएंगे।">
+                  Show your WhatsApp Salon Pass or mention 'Ashish Interiors Studio Visit' to guard Ramakant Singh. He will guide your vehicle into reserved private bays #03 through #06.
+                </p>
+              </div>
+            </div>
+
+            <div class="seq-step">
+              <div class="seq-badge">03</div>
+              <div class="seq-content">
+                <h4 data-en="Direct Lit Rear Staircase & Elevator" data-hi="रोशन सीढ़ी एवं लिफ्ट से 2nd फ्लोर">Direct Lit Rear Staircase & Elevator</h4>
+                <p data-en="Bypass the street-level retail rush entirely. Enter via the brightly lit east corridor and take the elevator or private staircase straight to the 2nd Floor." data-hi="सड़क की दुकानों की भीड़ में जाने की आवश्यकता नहीं। पूर्वी कॉरिडोर की साफ-सुथरी सीढ़ी या लिफ्ट से सीधे दूसरी मंजिल पर आएं।">
+                  Bypass the street-level retail rush entirely. Enter via the brightly lit east corridor and take the elevator or private staircase straight to the 2nd Floor.
+                </p>
+              </div>
+            </div>
+
+            <div class="seq-step">
+              <div class="seq-badge">04</div>
+              <div class="seq-content">
+                <h4 data-en="Evening Tea & Full Drawing Review" data-hi="शाम की चाय और संपूर्ण ड्रॉइंग समीक्षा">Evening Tea & Full Drawing Review</h4>
+                <p data-en="Step into our 1,400 sq.ft quiet studio. Double-glazed acoustic windows seal out crossing noise. Sip fresh ginger masala tea while reviewing your flat floorplan under 3000K architectural lighting." data-hi="1,400 वर्गफुट के शांत स्टूडियो में प्रवेश करें। डबल-ग्लेज्ड खिड़कियां बाहर का शोर पूरी तरह रोकती हैं। गर्म अदरक चाय के साथ 3000K वॉर्म लाइट में अपने फ्लैट का प्लान देखें।">
+                  Step into our 1,400 sq.ft quiet studio. Double-glazed acoustic windows seal out crossing noise. Sip fresh ginger masala tea while reviewing your flat floorplan under 3000K architectural lighting.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: The Evening Salon Pass Credential -->
+        <div>
+          <div class="pass-card">
+            <div class="pass-badge-strip">
+              <span>BOARDING PROTOCOL · SALON ACCESS</span>
+              <span>PAT-SLN-2026-EVN</span>
+            </div>
+
+            <h3 class="pass-headline">
+              <span data-en="Evening Studio Salon Access Pass" data-hi="ईवनिंग स्टूडियो सैलून पास">Evening Studio Salon Access Pass</span>
+            </h3>
+
+            <p style="font-size: 13.5px; color: #b8b2a8; margin-bottom: 20px;" data-en="Guaranteed reserved four-wheeler parking and one-on-one architectural consultation for Patna working homeowners." data-hi="पटना के कामकाजी गृहस्वामियों के लिए सुरक्षित फोर-व्हीलर पार्किंग और व्यक्तिगत आर्किटेक्चरल परामर्श की गारंटी।">
+              Guaranteed reserved four-wheeler parking and one-on-one architectural consultation for Patna working homeowners.
+            </p>
+
+            <div class="pass-meta-grid">
+              <div class="pass-meta-item">
+                <small data-en="Location" data-hi="स्थान">Location</small>
+                <span>Shivam Cmplx 2F</span>
+              </div>
+              <div class="pass-meta-item">
+                <small data-en="Evening Window" data-hi="समय">Evening Window</small>
+                <span>17:00 – 19:30 IST</span>
+              </div>
+              <div class="pass-meta-item">
+                <small data-en="Parking Bay" data-hi="पार्किंग स्लॉट">Parking Bay</small>
+                <span style="color: var(--cta);">Reserved Rear Lane</span>
+              </div>
+              <div class="pass-meta-item">
+                <small data-en="Security Gate" data-hi="गेट सुरक्षा">Security Gate</small>
+                <span>Ramakant (Guard)</span>
+              </div>
+            </div>
+
+            <!-- Salon Host Box -->
+            <div class="salon-host-box">
+              <img src="/clients/ashish-interiors/editorial/team/principal-01.jpg" alt="Ashish Kumar Principal Designer" />
+              <div class="salon-host-info">
+                <strong data-en="Ashish Kumar" data-hi="आशीष कुमार">Ashish Kumar</strong>
+                <span data-en="Principal Designer & Founder" data-hi="मुख्य डिजाइनर व संस्थापक">Principal Designer & Founder</span>
+                <p data-en="At the table every evening with CAD drawings and material swatches." data-hi="प्रतिदिन शाम को सीएडी ड्रॉइंग और सैंपल के साथ स्वयं उपलब्ध।">At the table every evening with CAD drawings and material swatches.</p>
+              </div>
+            </div>
+
+            <ul class="pass-perks">
+              <li data-en="Reserved 4-wheeler slot held in rear lane for your car number" data-hi="आपकी गाड़ी के लिए पीछे की लेन में सुरक्षित पार्किंग स्लॉट">Reserved 4-wheeler slot held in rear lane for your car number</li>
+              <li data-en="No daytime hurry: 60 to 90 minutes dedicated family review" data-hi="दिन की कोई भागदौड़ नहीं: 60 से 90 मिनट का समर्पित परिवार परामर्श">No daytime hurry: 60 to 90 minutes dedicated family review</li>
+              <li data-en="Tactile touch-and-feel of actual veneer, quartz, and ply boards" data-hi="असली विनियर, क्वार्ट्ज और प्लाईवुड नमूनों की प्रत्यक्ष जांच">Tactile touch-and-feel of actual veneer, quartz, and ply boards</li>
+              <li data-en="Fresh Kulhad Masala Chai or espresso served on arrival" data-hi="आगमन पर गर्म कुल्हड़ मसाला चाय या एस्प्रेसो">Fresh Kulhad Masala Chai or espresso served on arrival</li>
+            </ul>
+
+            <div class="btn-row">
+              <a
+                href="https://wa.me/919876543210?text=Hello%20Ashish%20Interiors,%20I%20would%20like%20to%20reserve%20an%20Evening%20Salon%20Pass%20(17:00-19:30)%20and%20Rear%20Parking%20Bay%20for%20my%20flat%20review"
+                class="btn-primary"
+                data-en="Claim Evening Salon Pass on WhatsApp"
+                data-hi="व्हाट्सएप पर सैलून पास बुक करें"
+              >
+                <span>Claim Evening Salon Pass on WhatsApp</span>
+              </a>
+              <a href="tel:+919876543210" class="btn-secondary" data-en="Direct Call: +91 98765 43210" data-hi="सीधा फोन करें: +91 98765 43210">
+                <span>Direct Call: +91 98765 43210</span>
+              </a>
+            </div>
+
+            <!-- Barcode & Stamp -->
+            <div class="barcode-strip">
+              <svg width="180" height="24" viewBox="0 0 180 24" fill="#d9bc72" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" width="3" height="24" />
+                <rect x="6" width="2" height="24" />
+                <rect x="11" width="5" height="24" />
+                <rect x="20" width="2" height="24" />
+                <rect x="25" width="4" height="24" />
+                <rect x="33" width="1" height="24" />
+                <rect x="38" width="6" height="24" />
+                <rect x="48" width="2" height="24" />
+                <rect x="54" width="3" height="24" />
+                <rect x="61" width="5" height="24" />
+                <rect x="70" width="2" height="24" />
+                <rect x="76" width="3" height="24" />
+                <rect x="83" width="6" height="24" />
+                <rect x="93" width="2" height="24" />
+                <rect x="99" width="4" height="24" />
+                <rect x="107" width="2" height="24" />
+                <rect x="113" width="5" height="24" />
+                <rect x="122" width="2" height="24" />
+                <rect x="128" width="3" height="24" />
+                <rect x="135" width="6" height="24" />
+                <rect x="145" width="2" height="24" />
+                <rect x="151" width="4" height="24" />
+                <rect x="159" width="1" height="24" />
+                <rect x="164" width="5" height="24" />
+                <rect x="173" width="3" height="24" />
+              </svg>
+              <span style="font-size: 10px; letter-spacing: 0.15em;">VALID MON–SAT</span>
+            </div>
+          </div>
+
+          <!-- Studio Address & Specs Ledger -->
+          <div style="margin-top: 28px; border: 1px solid var(--accent); padding: 24px; background: var(--panel);">
+            <span class="hero-eyebrow" data-en="Studio Specifications" data-hi="स्टूडियो विवरण">Studio Specifications</span>
+            <table class="specs-ledger">
+              <tr>
+                <th data-en="Address" data-hi="पता">Address</th>
+                <td data-en="2nd Floor, Shivam Complex, Boring Road Crossing, Patna 800001" data-hi="दूसरी मंजिल, शिवम कॉम्प्लेक्स, बोरिंग रोड चौराहा, पटना 800001">2nd Floor, Shivam Complex, Boring Road Crossing, Patna 800001</td>
+              </tr>
+              <tr>
+                <th data-en="Coordinates" data-hi="जीपीएस">Coordinates</th>
+                <td>25.6134° N, 85.1189° E</td>
+              </tr>
+              <tr>
+                <th data-en="Acoustics" data-hi="ध्वनि नियंत्रण">Acoustics</th>
+                <td data-en="36 dB interior (vs 84 dB street traffic level)" data-hi="36 dB शांत इंटीरियर (सड़क पर 84 dB शोर)">36 dB interior (vs 84 dB street traffic level)</td>
+              </tr>
+              <tr>
+                <th data-en="Refreshments" data-hi="खान-पान">Refreshments</th>
+                <td data-en="Ginger Masala Tea, Green Tea, Espresso, Filtered Water" data-hi="अदरक मसाला चाय, ग्रीन टी, एस्प्रेसो, मिनरल वाटर">Ginger Masala Tea, Green Tea, Espresso, Filtered Water</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Interior Photo Record -->
+      <section class="studio-photo-section">
+        <span class="hero-eyebrow" data-en="Visual Evidence · Inside The Evening Salon" data-hi="स्टूडियो की आंतरिक झलक">Visual Evidence · Inside The Evening Salon</span>
+        <div class="photo-grid-two">
+          <figure class="photo-frame">
+            <img src="/clients/ashish-interiors/editorial/locations/studio.jpg" alt="Ashish Interiors Boring Road Studio Sample Racks" />
+            <figcaption class="photo-caption" data-en="The Material Sample Vault & Drawing Tables, Second Floor" data-hi="मटेरियल सैंपल वॉल्ट और ड्रॉइंग टेबल, दूसरी मंजिल">
+              The Material Sample Vault & Drawing Tables, Second Floor
+            </figcaption>
+          </figure>
+          <figure class="photo-frame">
+            <img src="/clients/ashish-interiors/editorial/patliputra-duplex/hero.jpg" alt="Patliputra Duplex Evening Living Area" />
+            <figcaption class="photo-caption" data-en="Patliputra Duplex — Designed in Evening Salon Consultations" data-hi="पाटलिपुत्र डुप्लेक्स — ईवनिंग सैलून परामर्श में डिजाइन किया गया">
+              Patliputra Duplex — Designed in Evening Salon Consultations
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>© 2026 Ashish Interiors · Boring Road, Patna, Bihar 800001</div>
+        <div>
+          <a href="/contact-iteration-1.html" style="text-decoration: underline;" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</a>
+          <span style="margin: 0 8px; opacity: 0.4;">|</span>
+          <a href="tel:+919876543210">+91 98765 43210</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Interactive Scripts: Hour Scrubber & Bilingual Toggle -->
+    <script>
+      const hourData = {
+        '10:00': {
+          titleEn: '10:00 — Studio Opening & Trade Logistics',
+          titleHi: '10:00 — स्टूडियो शुरुआत एवं लॉजिस्टिक्स',
+          descEn: 'Workshop deliveries and supervisor dispatches begin. Street traffic around Boring Road is moderate (45%). Rear lane parking is open for morning visitors.',
+          descHi: 'वर्कशॉप सामग्री और सुपरवाइजर का प्रस्थान शुरू होता है। बोरिंग रोड पर सामान्य ट्रैफिक (45%) रहता है। सुबह की विज़िट के लिए पार्किंग खुली है।'
+        },
+        '14:00': {
+          titleEn: '14:00 — Severe Crossing Congestion (Avoid Driving)',
+          titleHi: '14:00 — चौराहे पर भारी जाम (ड्राइविंग से बचें)',
+          descEn: 'Peak commercial and school traffic. Main Boring Road street parking is 95% full with frequent gridlock. If visiting now, use e-rickshaw or call ahead for rear gate clearance.',
+          descHi: 'स्कूल और व्यापारिक आवागमन का चरम समय। मुख्य सड़क पर 95% जाम की स्थिति। इस समय आ रहे हों तो ई-रिक्शा का प्रयोग करें या गेट खुलवाने के लिए पहले फोन करें।'
+        },
+        '17:30': {
+          titleEn: '17:30 — Evening Salon Prime Access Active',
+          titleHi: '17:30 — शाम का सैलून प्राइम एक्सेस सक्रिय',
+          descEn: 'Main carriage traffic drops significantly. 6 dedicated rear bays are cleared and held exclusively for Ashish Interiors clients. Security guard Ramakant validates entry pass at gate.',
+          descHi: 'बोरिंग रोड चौराहे का मुख्य ट्रैफिक कम हो जाता है। आशीष इंटीरियर्स के ग्राहकों के लिए 6 आरक्षित रियर बे पूरी तरह खाली रहते हैं। सुरक्षा गार्ड रमाकांत गेट पर पास सत्यापित करते हैं।'
+        },
+        '18:30': {
+          titleEn: '18:30 — Unhurried Drawing & Material Review',
+          titleHi: '18:30 — शांत ड्रॉइंग एवं मटेरियल रिव्यू',
+          descEn: 'Ideal hour for full family consultations. Studio ambient lights dimmed to 3000K to test lighting on veneers. Rear parking lane quiet and fully illuminated.',
+          descHi: 'पूरे परिवार के साथ बैठक का सबसे उत्तम समय। विनियर पर लाइटिंग जांचने के लिए स्टूडियो 3000K वॉर्म लाइट में रहता है। रियर लेन शांत और रोशन रहती है।'
+        },
+        '19:30': {
+          titleEn: '19:30 — Evening Final Wrap & Specification Signoff',
+          titleHi: '19:30 — अंतिम समीक्षा एवं स्पेसिफिकेशन हस्ताक्षर',
+          descEn: 'Final evening slot. Clients finalize laminate and hardware palettes. Guard assists vehicle exit onto cleared Boring Canal Road.',
+          descHi: 'शाम का अंतिम स्लॉट। ग्राहक सामग्री और हार्डवेयर पैलेट को अंतिम रूप देते हैं। गार्ड गाड़ी को कैनाल रोड की ओर सुगमता से निकालने में सहायता करते हैं।'
+        }
+      };
+
+      function selectHour(hour) {
+        document.querySelectorAll('.hour-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.textContent.includes(hour));
+        });
+
+        const data = hourData[hour];
+        if (!data) return;
+
+        const titleEl = document.getElementById('statusTitle');
+        const descEl = document.getElementById('statusDesc');
+
+        titleEl.setAttribute('data-en', data.titleEn);
+        titleEl.setAttribute('data-hi', data.titleHi);
+        titleEl.textContent = currentLang === 'hi' ? data.titleHi : data.titleEn;
+
+        descEl.setAttribute('data-en', data.descEn);
+        descEl.setAttribute('data-hi', data.descHi);
+        descEl.textContent = currentLang === 'hi' ? data.descHi : data.descEn;
+      }
+
+      let currentLang = 'en';
+      function toggleLang() {
+        currentLang = currentLang === 'en' ? 'hi' : 'en';
+        document.documentElement.lang = currentLang;
+        document.querySelectorAll('[data-en]').forEach(el => {
+          el.textContent = currentLang === 'hi' ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+        });
+        const btn = document.getElementById('langToggleBtn');
+        if (btn) {
+          btn.querySelector('span').textContent = currentLang === 'en' ? 'EN / हिंदी' : 'हिंदी / EN';
+        }
+      }
+    </script>
+  </body>
+</html>
