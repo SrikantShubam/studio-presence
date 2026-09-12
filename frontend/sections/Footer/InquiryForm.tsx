@@ -46,11 +46,13 @@ export function InquiryForm({ site }: { site: ClientConfig }) {
     event.preventDefault()
     setStatus('sending')
     const form = new FormData(event.currentTarget)
+    const requestId = crypto.randomUUID()
     try {
       const response = await fetch(`/api/${site.slug}/leads`, {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json', 'idempotency-key': requestId },
         body: JSON.stringify({
+          requestId,
           name: String(form.get('name') ?? ''),
           phone: String(form.get('phone') ?? ''),
           email: String(form.get('email') ?? ''),
@@ -63,7 +65,7 @@ export function InquiryForm({ site }: { site: ClientConfig }) {
       if (!response.ok) throw new Error('Request failed')
       event.currentTarget.reset()
       setStatus('sent')
-      router.push('/thank-you')
+      router.push(`/${site.slug}/thank-you`)
     } catch {
       setStatus('error')
     }
@@ -78,7 +80,7 @@ export function InquiryForm({ site }: { site: ClientConfig }) {
         <label className="grid gap-2"><h6 className={`m-0 font-medium text-accent ${localeRoleClass(locale, 'label')}`}>{copy.fields.projectType.label}</h6><select name="projectType" defaultValue={projectTypes[0]} className="ai-type-form-control border-0 border-b border-ink bg-transparent px-0 py-2 text-ink outline-none">{projectTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
       )}
       <label className="grid gap-2"><h6 className={`m-0 font-medium text-accent ${localeRoleClass(locale, 'label')}`}>{copy.fields.message.label}</h6><textarea name="message" rows={3} placeholder={copy.fields.message.placeholder} className="ai-type-form-control resize-y border-0 border-b border-ink bg-transparent px-0 py-2 text-ink outline-none placeholder:text-muted" /></label>
-      <button type="submit" disabled={status === 'sending'} className={`inline-flex min-h-11 items-center justify-self-start gap-3 bg-cta px-8 py-5 font-medium text-ink hover:bg-ink hover:text-cta disabled:opacity-60 ${localeRoleClass(locale, 'button')}`}>{status === 'sending' ? copy.sending : copy.submit} <EditorialIcon name="arrow-up-right" className="h-3 w-3" /></button>
+      <button type="submit" disabled={status === 'sending'} className={`inline-flex min-h-11 items-center justify-self-start gap-3 bg-cta px-8 py-5 font-semibold text-ink hover:bg-ink hover:text-cta disabled:opacity-60 ${localeRoleClass(locale, 'button')}`}>{status === 'sending' ? copy.sending : copy.submit} <EditorialIcon name="arrow-up-right" className="h-3 w-3" /></button>
       {status === 'sent' && <p className={`m-0 text-accent ${localeRoleClass(locale, 'body')}`}>{copy.sent}</p>}
       {status === 'error' && <p className={`m-0 text-accent ${localeRoleClass(locale, 'body')}`}>{copy.error}</p>}
     </form>

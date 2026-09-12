@@ -242,20 +242,16 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                             href={maps}
                             target="_blank"
                             rel="noopener"
-                            className="inline-flex min-h-11 items-center gap-2 border border-ink bg-transparent px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-surface"
+                            className="group/btn relative inline-flex min-h-11 items-center justify-center bg-ink px-6 py-3.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink transition-colors [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)]"
                           >
-                            {labels.contact.openMaps}
-                            <EditorialIcon name="arrow-up-right" className="h-3 w-3" />
-                          </a>
-                        ) : null}
-
-                        {office.phone ? (
-                          <a
-                            href={`tel:${office.phone.replace(/\s+/g, '')}`}
-                            className="inline-flex min-h-11 items-center gap-2 border border-ink bg-transparent px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-surface"
-                          >
-                            <EditorialIcon name="phone" className="h-3.5 w-3.5" />
-                            <span>{office.phone}</span>
+                            <span
+                              className="pointer-events-none absolute inset-px bg-surface transition-colors group-hover/btn:bg-ink [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-16px)_100%,0_100%)]"
+                              aria-hidden="true"
+                            />
+                            <span className="relative z-10 flex items-center gap-2 text-ink transition-colors group-hover/btn:text-surface">
+                              <span>{labels.contact.openMaps}</span>
+                              <EditorialIcon name="arrow-up-right" className="h-3.5 w-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                            </span>
                           </a>
                         ) : null}
 
@@ -264,10 +260,11 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                             href={wa}
                             target="_blank"
                             rel="noopener"
-                            className="inline-flex min-h-11 items-center gap-2 bg-wa-evergreen px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-surface transition-colors hover:bg-wa-deep"
+                            aria-label={labels.contact.whatsapp}
+                            title={labels.contact.whatsapp}
+                            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-wa-evergreen bg-surface text-wa-evergreen transition-colors hover:bg-wa-evergreen hover:text-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wa-evergreen"
                           >
-                            <EditorialIcon name="message-circle" className="h-3.5 w-3.5" />
-                            {labels.contact.whatsapp}
+                            <EditorialIcon name="message-circle" className="h-5 w-5" />
                           </a>
                         ) : null}
                       </div>
@@ -295,7 +292,15 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            className={`grid gap-5 ${
+              territoryList.length === 1
+                ? 'grid-cols-1 max-w-2xl'
+                : territoryList.length === 2
+                  ? 'grid-cols-1 sm:grid-cols-2 max-w-4xl'
+                  : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+            }`}
+          >
             {territoryList.map((terr) => {
               const detailHref = localeHref(`/locations/${terr.officeSlug}`, locale)
               const isHi = locale === 'hi'
@@ -305,10 +310,9 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
               const surveyText = isHi && terr.surveyResponseHi ? terr.surveyResponseHi : terr.surveyResponse
 
               return (
-                <Link
+                <div
                   key={terr.officeSlug}
-                  href={detailHref}
-                  className="group relative flex flex-col justify-between gap-5 border border-hairline bg-panel p-6 transition-all duration-200 hover:-translate-y-1 hover:border-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="group relative flex flex-col justify-between gap-5 border border-hairline bg-panel p-6 transition-all duration-200 hover:border-ink hover:bg-surface"
                 >
                   <div>
                     <span className="mb-1 block text-[10.5px] font-medium uppercase tracking-[0.16em] text-accent">
@@ -341,17 +345,23 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
                   </div>
 
                   <div className="border-t border-hairline/80 pt-4">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="inline-block bg-wa-evergreen/10 px-2.5 py-1 text-[11px] font-semibold text-wa-evergreen">
+                    <div className="flex flex-col gap-3 min-[540px]:flex-row min-[540px]:items-center min-[540px]:justify-between">
+                      {/* Left: Survey badge (not a primary button) */}
+                      <span className="inline-block self-start border border-hairline bg-surface px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.06em] text-ink min-[540px]:self-auto">
                         {surveyText}
                       </span>
-                      <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent transition-colors duration-200 group-hover:text-ink">
-                        <span>{isHi ? 'स्टूडियो देखें' : 'View studio'}</span>
-                        <EditorialIcon name="arrow-right" className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-1" />
-                      </span>
+
+                      {/* Right: View Studio Details (Primary button on the same line on desktop/tablet) */}
+                      <Link
+                        href={detailHref}
+                        className="group/btn inline-flex self-start shrink-0 min-h-9 items-center gap-1.5 [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-12px)_100%,0_100%)] bg-cta px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink transition-all duration-200 hover:bg-ink hover:text-cta min-[540px]:self-auto"
+                      >
+                        <span>{labels.viewDetails}</span>
+                        <EditorialIcon name="arrow-up-right" className="h-3 w-3 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                      </Link>
                     </div>
                   </div>
-                </Link>
+                </div>
               )
             })}
           </div>

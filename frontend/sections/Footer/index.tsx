@@ -47,7 +47,7 @@ function footerGroups(site: ClientConfig, locale: PublicLocale): { title: string
     studio.push({ href: '/team', label: labels.team })
   }
   if (site.sections.careers?.enabled) studio.push({ href: '/careers', label: labels.careers })
-  if (site.sections.locations?.enabled) studio.push({ href: '/locations', label: labels.locations })
+  if (site.sections.locations?.enabled !== false) studio.push({ href: '/locations', label: labels.locations })
 
   const work: FooterLink[] = []
   if (site.sections.portfolio?.enabled) work.push({ href: '/portfolio', label: labels.portfolio })
@@ -178,6 +178,7 @@ function ExpandedFooter({ config, site }: { config: FooterConfig; site: ClientCo
   const query = addressQuery(site)
   const showSeparator = site.legal.privacyPolicy && site.legal.terms
   const estimateHref = site.sections.estimate?.enabled ? localeHref('/estimate', locale) : null
+  const locationsHref = site.sections.locations?.enabled !== false ? localeHref('/locations', locale) : null
 
   return (
     <footer id="footer" className="overflow-hidden border-t border-accent bg-ink text-surface">
@@ -270,6 +271,21 @@ function ExpandedFooter({ config, site }: { config: FooterConfig; site: ClientCo
                   <EditorialIcon name="message-circle" className="h-3.5 w-3.5" />
                   {copy.whatsappCta} ↗
                 </a>
+              )}
+              {locationsHref && (
+                <Link
+                  href={locationsHref}
+                  className="group/btn relative inline-flex min-h-11 items-center gap-2.5 bg-surface px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-surface transition-colors hover:text-ink [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-14px)_100%,0_100%)]"
+                >
+                  <span
+                    className="pointer-events-none absolute inset-px bg-ink transition-colors group-hover/btn:bg-surface [clip-path:polygon(0_0,100%_0,100%_62%,calc(100%-14px)_100%,0_100%)]"
+                    aria-hidden
+                  />
+                  <span className="relative z-10 flex items-center gap-2 text-surface transition-colors group-hover/btn:text-ink">
+                    <EditorialIcon name="map-pin" className="h-3.5 w-3.5" />
+                    {copy.links.locations} ↗
+                  </span>
+                </Link>
               )}
               {estimateHref && (
                 <Link
