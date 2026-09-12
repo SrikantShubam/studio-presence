@@ -361,13 +361,6 @@ const awards = z.object({
 
 const inquiryForm = z.object({
   ...sectionBase,
-  provider: z.literal('web3forms').default('web3forms'),
-  /**
-   * Name of the env var holding the key. Never the key itself.
-   * Optional in the schema, required by validate.ts once `enabled` is true —
-   * a form that posts nowhere is worse than no form.
-   */
-  accessKeyEnv: z.string().optional(),
   fields: z
     .array(z.enum(['name', 'phone', 'email', 'roomType', 'budget', 'timeline', 'message']))
     .default(['name', 'phone', 'roomType', 'budget', 'timeline']),

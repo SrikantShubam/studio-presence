@@ -14,9 +14,11 @@
  * sidesteps the timing question entirely by using the loading path Next
  * actually supports.
  *
- * `NEXT_PUBLIC_*` keys are copied for the browser bundle. `WEB3FORMS_*` keys
- * are copied too — they stay server-only (no NEXT_PUBLIC_ prefix) but the
- * Next process must see them or the inquiry form warns and posts nowhere.
+ * `NEXT_PUBLIC_*` keys are copied for the browser bundle. `HCAPTCHA_SECRET_KEY`
+ * is copied too — it stays server-only (no
+ * NEXT_PUBLIC_ prefix) but the Next API process must see them. The hCaptcha
+ * browser widget receives only `NEXT_PUBLIC_HCAPTCHA_SITE_KEY`; the secret is
+ * used by `/api/studio-presence/demo` to verify tokens server-side.
  * `SUPABASE_SERVICE_ROLE_KEY` is still not copied.
  *
  *   npm run sync:env      — run manually, or via predev/prebuild
@@ -37,11 +39,11 @@ if (!existsSync(SOURCE)) {
 const lines = readFileSync(SOURCE, 'utf8').split('\n')
 const copied = lines.filter((l) => {
   const t = l.trim()
-  return t.startsWith('NEXT_PUBLIC_') || t.startsWith('WEB3FORMS_')
+  return t.startsWith('NEXT_PUBLIC_') || t.startsWith('HCAPTCHA_SECRET_KEY=')
 })
 
 if (copied.length === 0) {
-  console.log('No NEXT_PUBLIC_* or WEB3FORMS_* keys found in .env. Nothing to sync.')
+  console.log('No NEXT_PUBLIC_* or HCAPTCHA_SECRET_KEY entries found in .env. Nothing to sync.')
   process.exit(0)
 }
 

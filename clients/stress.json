@@ -574,8 +574,6 @@
       "items": []
     },
     "inquiryForm": {
-      "provider": "web3forms",
-      "accessKeyEnv": "WEB3FORMS_STRESS",
       "fields": [
         "name",
         "phone",

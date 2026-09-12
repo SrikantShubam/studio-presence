@@ -144,7 +144,8 @@ Base configs keep their git history; panel edits take effect on revalidation, in
 ## 5. Rules
 
 - **Every request-path query goes through the scoped client.** Enforced by `check:tenant-isolation`
-- **No secrets in code or in `clients/*.json`.** Env vars, named in config as `accessKeyEnv`
+- **No secrets in code or in `clients/*.json`.** Provider credentials live in server-only
+  platform environment variables, not tenant config.
 - **A failed lead write is never silent.** Losing an enquiry costs the client a project and costs us
   the account. Log it, surface it, retry it
 - **Every route handler validates input with Zod before touching the database**
@@ -163,7 +164,6 @@ Base configs keep their git history; panel edits take effect on revalidation, in
 | `SUPABASE_SERVICE_ROLE_KEY` | migrations, deploy script. **Never in a request path** | B9 |
 | `RESEND_API_KEY` | lead notification email | B11 |
 | `UMAMI_API_URL` · `UMAMI_USERNAME` · `UMAMI_PASSWORD` | analytics reads. Self-hosted Umami has no permanent API key — only session-token login | B12 |
-| `WEB3FORMS_<SLUG>` | one per client, form fallback | later |
 | `GOOGLE_PLACES_API_KEY` | build-time review fetch, t2+ | later |
 | `META_APP_ID` · `META_APP_SECRET` | Instagram oEmbed token | later |
 

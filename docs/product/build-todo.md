@@ -187,8 +187,7 @@ My side. Everything the site needs to run before any assembler exists.
 - [ ] `wa.me` helper — contextual prefilled message per page
 - [ ] Click-to-call
 - [ ] Google Places API — build-time review fetch, cached per revalidate
-- [ ] Web3Forms — per-client access key from env
-- [ ] Form → email + WhatsApp notification
+- [ ] Internal enquiry capture → Resend notification + WhatsApp follow-up
 - [ ] Umami embed, per-client dashboard flag
 - [ ] **Instagram oEmbed** — Meta app + token, profile and post embeds, no metadata persistence
 - [ ] Google Maps embed

@@ -34,8 +34,6 @@ export type ValidateOptions = {
    * a filesystem, so it runs at build and in scripts, never at request time.
    */
   publicDir?: string
-  /** Env vars available. Omit to skip the `accessKeyEnv` existence check. */
-  env?: Record<string, string | undefined>
   /** `fs.existsSync`, injected so this module stays importable in edge runtimes. */
   fileExists?: (absPath: string) => boolean
 }
@@ -100,23 +98,6 @@ function crossFieldIssues(c: ClientConfig, opts: ValidateOptions): Issue[] {
       'sections.reviews.googlePlaceId',
       'is required when reviews are enabled — without a Place ID there is nothing to fetch. Find it via the Google Places ID finder, or set reviews.enabled to false.',
     )
-  }
-
-  if (s.inquiryForm?.enabled) {
-    const key = s.inquiryForm.accessKeyEnv
-    if (!key) {
-      err(
-        'sections.inquiryForm.accessKeyEnv',
-        'is required when the inquiry form is enabled. Name the env var holding this client\'s Web3Forms key, e.g. "WEB3FORMS_ASHISH" — never the key itself.',
-      )
-    } else if (opts.env && !opts.env[key]) {
-      // An error only once the site is live. Nobody has every client's form key
-      // in their local environment, and failing a whole demo build over that
-      // trains people to ignore the check — which is worse than the gap.
-      const msg = `names env var "${key}", which is not set. The form would render and silently post nowhere — a lost enquiry looks exactly like no enquiry.`
-      if (isPublic) err('sections.inquiryForm.accessKeyEnv', msg)
-      else warn('sections.inquiryForm.accessKeyEnv', msg)
-    }
   }
 
   if (s.instagram?.enabled && s.instagram.embedPostUrls.length === 0) {

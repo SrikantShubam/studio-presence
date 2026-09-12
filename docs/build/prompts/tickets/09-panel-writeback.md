@@ -51,7 +51,7 @@ The RLS policies themselves are frozen. If your ticket seems to need a policy ch
 so — that is an Opus decision, not a workaround.
 
 ALSO NON-NEGOTIABLE
-- No secrets in code or in clients/*.json. Env vars only, named in config as accessKeyEnv
+- No secrets in code or in clients/*.json. Provider credentials stay in server-only platform env vars.
 - Every API route validates its input with Zod before touching the database — and every allowlisted
   field's value is validated against the *same* shape schema.ts uses for it, not a looser ad-hoc check
 - No PII in logs or in URL query strings

@@ -73,13 +73,13 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
         <SettingsCard title="Platform credentials" status="Operator managed">
           <p className="text-sm leading-6 text-admin-muted">
             No client API keys are collected in this dashboard. Meta oEmbed uses platform env vars `META_APP_ID` and `META_APP_SECRET`.
-            Umami uses `UMAMI_API_URL`, `UMAMI_USERNAME`, and `UMAMI_PASSWORD`. Web3Forms uses per-client `WEB3FORMS_&lt;SLUG&gt;`.
+            Umami uses `UMAMI_API_URL`, `UMAMI_USERNAME`, and `UMAMI_PASSWORD`. Lead delivery uses the internal enquiry pipeline and Resend.
           </p>
           <div className="mt-4 grid gap-2 text-sm">
             <CredentialRow label="Meta / Instagram oEmbed" value="Platform env" />
             <CredentialRow label="Umami analytics" value={umami?.enabled && umami.siteId ? 'Configured' : 'Not configured'} />
             <CredentialRow label="Google Places reviews" value="Platform env when enabled" />
-            <CredentialRow label="Form fallback" value="Per-client env" />
+            <CredentialRow label="Lead delivery" value="Platform managed" />
           </div>
         </SettingsCard>
       </div>

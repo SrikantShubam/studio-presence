@@ -169,8 +169,8 @@ Same login, the "Analytics" tab next to "Leads".
 - Google Places reviews: `GOOGLE_PLACES_API_KEY` isn't set yet — that section will be inactive
   wherever it's configured, this is expected
 - Instagram embed: `META_APP_ID`/`META_APP_SECRET` aren't set yet — same, expected
-- Only `ashish-interiors` has a `WEB3FORMS_<SLUG>` key configured — any other client relying on the
-  form-fallback path won't have it working yet
+- Public forms use the internal enquiry pipeline. Missing Resend or notification-worker setup should
+  be tracked as a platform delivery issue, not as a tenant config problem
 - The Supabase DB password that briefly appeared in plaintext during debugging still needs rotating —
   that's on you, not something to test
 - There's a harmless duplicate blank `UMAMI_API_URL=` line in `.env` (line 12) — cosmetic, not

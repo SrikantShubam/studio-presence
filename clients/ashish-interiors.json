@@ -938,7 +938,6 @@
       ]
     },
     "inquiryForm": {
-      "provider": "web3forms",
       "fields": [
         "name",
         "phone",
@@ -946,7 +945,6 @@
         "budget",
         "timeline"
       ],
-      "accessKeyEnv": "WEB3FORMS_ASHISH",
       "projectTypes": [
         "Interior design",
         "Turnkey renovation",

@@ -162,7 +162,6 @@ export function loadClientConfig(slug: string, opts: ResolveOptions = {}): Clien
 
   return resolveClientConfig(slug, raw, {
     publicDir: defaultPublicDir(),
-    env: process.env,
     fileExists: existsSync,
     ...opts,
   })
