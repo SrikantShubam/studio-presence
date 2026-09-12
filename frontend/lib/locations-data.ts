@@ -16,6 +16,11 @@ export interface TerritoryZone {
   keyCities: string[]
   surveyResponse: string
   supervisionModel: string
+  officeSlug: string
+  officeName: string
+  regionNameHi?: string
+  provinceStateHi?: string
+  surveyResponseHi?: string
 }
 
 export const MULTI_CITY_LOCATIONS: Office[] = [
@@ -327,6 +332,11 @@ export const TERRITORY_DIRECTORY: TerritoryZone[] = [
     keyCities: ['Patna', 'Danapur', 'Hajipur', 'Muzaffarpur', 'Gaya'],
     surveyResponse: 'Same-day survey dispatch (2–4 hrs)',
     supervisionModel: 'Daily resident site supervisor',
+    officeSlug: 'patna-studio',
+    officeName: 'Boring Road Atelier & Material Library',
+    regionNameHi: 'बिहार एवं मध्य मैदानी क्षेत्र',
+    provinceStateHi: 'बिहार',
+    surveyResponseHi: 'समान-दिन सर्वे डिस्पैच (2–4 घंटे)',
   },
   {
     regionName: 'Jharkhand & Chota Nagpur',
@@ -334,13 +344,35 @@ export const TERRITORY_DIRECTORY: TerritoryZone[] = [
     keyCities: ['Ranchi', 'Jamshedpur', 'Dhanbad', 'Bokaro'],
     surveyResponse: 'Within 24–48 hours',
     supervisionModel: 'Dedicated territory supervisor',
+    officeSlug: 'ranchi-studio',
+    officeName: 'Ashok Nagar Studio & Consultation Suite',
+    regionNameHi: 'झारखंड एवं छोटा नागपुर पठार',
+    provinceStateHi: 'झारखंड',
+    surveyResponseHi: '24–48 घंटे के भीतर सर्वे',
   },
   {
-    regionName: 'Purvanchal & Awadh Belt',
+    regionName: 'Purvanchal & Heritage Belt',
     provinceState: 'Uttar Pradesh',
-    keyCities: ['Varanasi', 'Lucknow', 'Prayagraj', 'Gorakhpur'],
+    keyCities: ['Varanasi', 'Prayagraj', 'Mirzapur', 'Gorakhpur'],
     surveyResponse: 'Scheduled site architect (48 hrs)',
     supervisionModel: 'Architectural team oversight',
+    officeSlug: 'varanasi-studio',
+    officeName: 'Sigra Atelier & Heritage Renovation Desk',
+    regionNameHi: 'पूर्वांचल एवं हेरिटेज बेल्ट',
+    provinceStateHi: 'उत्तर प्रदेश',
+    surveyResponseHi: 'आर्किटेक्ट साइट विजिट (48 घंटे)',
+  },
+  {
+    regionName: 'Awadh & Central UP Hub',
+    provinceState: 'Uttar Pradesh',
+    keyCities: ['Lucknow', 'Kanpur', 'Ayodhya', 'Barabanki'],
+    surveyResponse: 'Within 24–48 hours',
+    supervisionModel: 'Awadh residential atelier team',
+    officeSlug: 'lucknow-studio',
+    officeName: 'Gomti Nagar Atelier & Design Hub',
+    regionNameHi: 'अवध एवं मध्य उत्तर प्रदेश हब',
+    provinceStateHi: 'उत्तर प्रदेश',
+    surveyResponseHi: '24–48 घंटे में परामर्श',
   },
   {
     regionName: 'Eastern Metropolitan Area',
@@ -348,13 +380,23 @@ export const TERRITORY_DIRECTORY: TerritoryZone[] = [
     keyCities: ['Kolkata', 'Salt Lake', 'New Town', 'Howrah'],
     surveyResponse: 'Next-day laser measurement',
     supervisionModel: 'Turnkey site engineering crew',
+    officeSlug: 'kolkata-studio',
+    officeName: 'Salt Lake Sector V Studio & Archive',
+    regionNameHi: 'पूर्वी महानगर एवं साल्ट लेक रीजन',
+    provinceStateHi: 'पश्चिम बंगाल',
+    surveyResponseHi: 'अगले दिन लेजर मापन',
   },
   {
-    regionName: 'Capital Corridor Desk',
-    provinceState: 'Delhi NCR',
-    keyCities: ['Gurgaon', 'South Delhi', 'Noida', 'Faridabad'],
-    surveyResponse: 'By appointment consultation',
-    supervisionModel: 'Turnkey specification liaison',
+    regionName: 'Central Fabrication Facility',
+    provinceState: 'Bihar',
+    keyCities: ['Digha Ghat', 'Ganga Path Industrial Run', 'Pre-Fit Yard'],
+    surveyResponse: 'Workshop walkthrough by appointment',
+    supervisionModel: 'Precision CNC & edge-banding facility',
+    officeSlug: 'digha-ghat',
+    officeName: 'Central Joinery & Machine Facility',
+    regionNameHi: 'केंद्रीय जॉइनरी एवं फैब्रिकेशन यूनिट',
+    provinceStateHi: 'बिहार',
+    surveyResponseHi: 'अपॉइंटमेंट द्वारा वर्कशॉप वॉकथ्रू',
   },
 ]
 

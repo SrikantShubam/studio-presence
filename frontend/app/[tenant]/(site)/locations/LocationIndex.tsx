@@ -6,7 +6,7 @@ import { ClipLine, DrawFrame, FadeUp, HomeSection, RevealImage, Stagger, Stagger
 import { HeroNav } from '@/sections/Hero/HeroNav'
 import { renderableSections } from '@/sections/registry'
 import { OpenBadge } from './LocationChrome'
-import { chromeCopy, localePageClass, publicLocaleFromSite } from '@/lib/i18n-client'
+import { chromeCopy, localeHref, localePageClass, publicLocaleFromSite } from '@/lib/i18n-client'
 import { MULTI_CITY_LOCATIONS, MULTI_CITY_LOCATIONS_HI, TERRITORY_DIRECTORY } from '@/lib/locations-data'
 
 type Office = NonNullable<ClientConfig['sections']['locations']>['offices'][number]
@@ -303,26 +303,58 @@ export function LocationIndex({ site }: { site: ClientConfig }) {
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {TERRITORY_DIRECTORY.map((terr) => (
-              <div key={terr.regionName} className="flex flex-col justify-between gap-4 border border-hairline bg-panel p-6">
-                <div>
-                  <h3 className="m-0 text-[13.5px] font-semibold uppercase tracking-[0.08em] text-ink">
-                    {terr.regionName}
-                  </h3>
-                  <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-accent">
-                    {locale === 'hi' ? `राज्य: ${terr.provinceState}` : `State: ${terr.provinceState}`}
-                  </span>
-                  <p className="mt-3 text-[13px] leading-[1.55] text-body">
-                    {terr.keyCities.join(', ')}
-                  </p>
-                </div>
-                <div>
-                  <span className="inline-block bg-wa-evergreen/10 px-2.5 py-1 text-[11px] font-semibold text-wa-evergreen">
-                    {terr.surveyResponse}
-                  </span>
-                </div>
-              </div>
-            ))}
+            {TERRITORY_DIRECTORY.map((terr) => {
+              const detailHref = localeHref(`/locations/${terr.officeSlug}`, locale)
+              const isHi = locale === 'hi'
+              const regionTitle = isHi && terr.regionNameHi ? terr.regionNameHi : terr.regionName
+              const stateTitle = isHi && terr.provinceStateHi ? terr.provinceStateHi : terr.provinceState
+              const surveyText = isHi && terr.surveyResponseHi ? terr.surveyResponseHi : terr.surveyResponse
+
+              return (
+                <Link
+                  key={terr.regionName}
+                  href={detailHref}
+                  className="group relative flex flex-col justify-between gap-5 border border-hairline bg-panel p-6 transition-all duration-200 hover:-translate-y-1 hover:border-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                  <div>
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="m-0 text-[14px] font-semibold uppercase tracking-[0.08em] text-ink transition-colors duration-200 group-hover:text-accent">
+                        {regionTitle}
+                      </h3>
+                      <span
+                        className="inline-flex h-7 w-7 shrink-0 items-center justify-center border border-hairline bg-surface text-ink transition-all duration-200 group-hover:border-ink group-hover:bg-ink group-hover:text-surface"
+                        aria-hidden="true"
+                      >
+                        <EditorialIcon
+                          name="arrow-up-right"
+                          className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        />
+                      </span>
+                    </div>
+
+                    <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.14em] text-accent">
+                      {isHi ? `राज्य: ${stateTitle}` : `State: ${stateTitle}`}
+                    </span>
+
+                    <p className="mt-3 text-[13px] leading-[1.6] text-body">
+                      {terr.keyCities.join(', ')}
+                    </p>
+                  </div>
+
+                  <div className="border-t border-hairline/80 pt-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="inline-block bg-wa-evergreen/10 px-2.5 py-1 text-[11px] font-semibold text-wa-evergreen">
+                        {surveyText}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent transition-colors duration-200 group-hover:text-ink">
+                        <span>{isHi ? 'स्टूडियो देखें' : 'View studio'}</span>
+                        <EditorialIcon name="arrow-right" className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-1" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </section>
       </HomeSection>

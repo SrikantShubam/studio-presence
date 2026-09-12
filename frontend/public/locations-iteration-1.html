@@ -710,6 +710,53 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 16px;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+      }
+
+      .territory-card:hover,
+      .territory-card:focus-visible {
+        border-color: var(--ink);
+        background: var(--surface);
+        transform: translateY(-3px);
+      }
+
+      .territory-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .territory-card-arrow {
+        width: 26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        color: var(--ink);
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+      }
+
+      .territory-card-arrow svg {
+        width: 13px;
+        height: 13px;
+        transition: transform 0.2s ease;
+      }
+
+      .territory-card:hover .territory-card-arrow {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--surface);
+      }
+
+      .territory-card:hover .territory-card-arrow svg {
+        transform: translate(1px, -1px);
       }
 
       .territory-card-title {
@@ -719,6 +766,11 @@
         letter-spacing: 0.08em;
         color: var(--ink);
         margin-bottom: 4px;
+        transition: color 0.2s ease;
+      }
+
+      .territory-card:hover .territory-card-title {
+        color: var(--accent);
       }
 
       .territory-card-state {
@@ -737,6 +789,16 @@
         margin-bottom: 12px;
       }
 
+      .territory-card-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        padding-top: 14px;
+      }
+
       .territory-badge {
         font-size: 11px;
         color: #285a43;
@@ -744,6 +806,32 @@
         padding: 4px 8px;
         display: inline-block;
         font-weight: 600;
+      }
+
+      .territory-card-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-weight: 600;
+        color: var(--accent);
+        transition: color 0.2s ease;
+      }
+
+      .territory-card-cta svg {
+        width: 12px;
+        height: 12px;
+        transition: transform 0.2s ease;
+      }
+
+      .territory-card:hover .territory-card-cta {
+        color: var(--ink);
+      }
+
+      .territory-card:hover .territory-card-cta svg {
+        transform: translateX(3px);
       }
 
       /* Editorial Footer */
@@ -1153,60 +1241,125 @@
         </div>
 
         <div class="territory-grid">
-          <div class="territory-card">
+          <a href="#patna-studio" class="territory-card">
             <div>
-              <div class="territory-card-title">Bihar & Central Plains</div>
-              <div class="territory-card-state">State: Bihar</div>
+              <div class="territory-card-header">
+                <div class="territory-card-title">Bihar & Central Plains</div>
+                <div class="territory-card-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+                </div>
+              </div>
+              <div class="territory-card-state">State: Bihar · Boring Road Atelier</div>
               <div class="territory-cities">Patna, Danapur, Hajipur, Muzaffarpur, Gaya, Bihar Sharif</div>
             </div>
-            <div>
+            <div class="territory-card-bottom">
               <span class="territory-badge">Same-day survey dispatch (2–4 hrs)</span>
+              <span class="territory-card-cta">
+                <span>View studio</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+              </span>
             </div>
-          </div>
+          </a>
 
-          <div class="territory-card">
+          <a href="#ranchi-studio" class="territory-card">
             <div>
-              <div class="territory-card-title">Jharkhand & Chota Nagpur</div>
-              <div class="territory-card-state">State: Jharkhand</div>
+              <div class="territory-card-header">
+                <div class="territory-card-title">Jharkhand & Chota Nagpur</div>
+                <div class="territory-card-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+                </div>
+              </div>
+              <div class="territory-card-state">State: Jharkhand · Ashok Nagar Suite</div>
               <div class="territory-cities">Ranchi, Jamshedpur, Dhanbad, Bokaro, Hazaribagh</div>
             </div>
-            <div>
+            <div class="territory-card-bottom">
               <span class="territory-badge">Survey dispatch within 24–48 hrs</span>
+              <span class="territory-card-cta">
+                <span>View studio</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+              </span>
             </div>
-          </div>
+          </a>
 
-          <div class="territory-card">
+          <a href="#varanasi-studio" class="territory-card">
             <div>
-              <div class="territory-card-title">Purvanchal & Awadh Belt</div>
-              <div class="territory-card-state">State: Uttar Pradesh</div>
-              <div class="territory-cities">Varanasi, Lucknow, Prayagraj, Gorakhpur, Kanpur</div>
+              <div class="territory-card-header">
+                <div class="territory-card-title">Purvanchal & Heritage Belt</div>
+                <div class="territory-card-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+                </div>
+              </div>
+              <div class="territory-card-state">State: Uttar Pradesh · Sigra Atelier</div>
+              <div class="territory-cities">Varanasi, Prayagraj, Mirzapur, Gorakhpur</div>
             </div>
-            <div>
+            <div class="territory-card-bottom">
               <span class="territory-badge">Scheduled site architect (48 hrs)</span>
+              <span class="territory-card-cta">
+                <span>View studio</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+              </span>
             </div>
-          </div>
+          </a>
 
-          <div class="territory-card">
+          <a href="#lucknow-studio" class="territory-card">
             <div>
-              <div class="territory-card-title">Eastern Metropolitan Area</div>
-              <div class="territory-card-state">State: West Bengal</div>
+              <div class="territory-card-header">
+                <div class="territory-card-title">Awadh & Central UP Hub</div>
+                <div class="territory-card-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+                </div>
+              </div>
+              <div class="territory-card-state">State: Uttar Pradesh · Gomti Nagar Hub</div>
+              <div class="territory-cities">Lucknow, Kanpur, Ayodhya, Barabanki</div>
+            </div>
+            <div class="territory-card-bottom">
+              <span class="territory-badge">Consultation within 24–48 hrs</span>
+              <span class="territory-card-cta">
+                <span>View studio</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a href="#kolkata-studio" class="territory-card">
+            <div>
+              <div class="territory-card-header">
+                <div class="territory-card-title">Eastern Metropolitan Area</div>
+                <div class="territory-card-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+                </div>
+              </div>
+              <div class="territory-card-state">State: West Bengal · Sector V Archive</div>
               <div class="territory-cities">Kolkata, Salt Lake, Action Area New Town, Howrah</div>
             </div>
-            <div>
+            <div class="territory-card-bottom">
               <span class="territory-badge">Next-day laser measurement</span>
+              <span class="territory-card-cta">
+                <span>View studio</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+              </span>
             </div>
-          </div>
+          </a>
 
-          <div class="territory-card">
+          <a href="#digha-ghat" class="territory-card">
             <div>
-              <div class="territory-card-title">Capital Corridor Desk</div>
-              <div class="territory-card-state">State: Delhi NCR</div>
-              <div class="territory-cities">Gurgaon, South Delhi, Noida, Greater Noida, Faridabad</div>
+              <div class="territory-card-header">
+                <div class="territory-card-title">Central Fabrication Facility</div>
+                <div class="territory-card-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+                </div>
+              </div>
+              <div class="territory-card-state">State: Bihar · Digha Ghat Industrial Unit</div>
+              <div class="territory-cities">Digha Ghat, Ganga Path Industrial Run, Pre-Fit Yard</div>
             </div>
-            <div>
-              <span class="territory-badge">Consultation by appointment</span>
+            <div class="territory-card-bottom">
+              <span class="territory-badge">Joinery inspection by appointment</span>
+              <span class="territory-card-cta">
+                <span>View workshop</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+              </span>
             </div>
-          </div>
+          </a>
         </div>
       </section>
     </main>
