@@ -1,11 +1,17 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { LeadWriteError, leads, publicLeadInputSchema } from '@studio/backend'
 import { z } from 'zod'
+import { verifyHCaptchaToken } from '@/lib/hcaptcha/server'
 
 const VISITOR_ERROR = 'Something went wrong, please call us instead'
 
 type RouteContext = {
   params: Promise<{ tenant: string }>
+}
+
+function visitorIp(request: Request): string | null {
+  const forwardedFor = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+  return forwardedFor || request.headers.get('x-real-ip') || null
 }
 
 function safeError(e: unknown): string {
@@ -27,6 +33,19 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
     return NextResponse.json({ message: 'Please send a valid enquiry.' }, { status: 400 })
   }
 
+  const captchaToken =
+    typeof body === 'object' && body && 'captchaToken' in body && typeof (body as { captchaToken: unknown }).captchaToken === 'string'
+      ? (body as { captchaToken: string }).captchaToken.trim()
+      : ''
+
+  const captcha = await verifyHCaptchaToken({
+    token: captchaToken,
+    remoteIp: visitorIp(request),
+  })
+  if (!captcha.ok) {
+    return NextResponse.json({ message: 'Verification failed. Please try again.' }, { status: 400 })
+  }
+
   const parsed = publicLeadInputSchema.safeParse(body)
   if (!parsed.success) {
     return NextResponse.json(
@@ -39,9 +58,10 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
     const result = await leads.create({ tenantSlug: tenant, ...parsed.data })
     return NextResponse.json(result, { status: 201 })
   } catch (e) {
+    const errText = safeError(e)
     console.error('Lead write failed', {
       tenant,
-      error: safeError(e),
+      error: errText,
       kind: e instanceof z.ZodError ? 'validation' : e instanceof LeadWriteError ? 'write' : 'unknown',
     })
 

@@ -16,17 +16,17 @@ type OwnerLeadNotificationInput = {
   sourcePage?: string | null
 }
 
+export type OwnerAlertEmail = {
+  subject: string
+  text: string
+  replyTo?: string
+}
+
 function compactLines(lines: Array<string | null | undefined>): string {
   return lines.filter((line): line is string => Boolean(line)).join('\n')
 }
 
-export async function sendOwnerLeadNotification(input: OwnerLeadNotificationInput): Promise<void> {
-  if (!input.to) throw new Error('tenant business email is not configured')
-
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) throw new Error('RESEND_API_KEY is not set')
-
-  const from = process.env.RESEND_FROM_EMAIL ?? 'Studio Presence <onboarding@resend.dev>'
+export function buildOwnerAlertEmail(input: Omit<OwnerLeadNotificationInput, 'to'> & { tenantSlug: string }): OwnerAlertEmail {
   const text = compactLines([
     `Lead ID: ${input.leadId}`,
     `Tenant: ${input.tenantSlug}`,
@@ -44,6 +44,35 @@ export async function sendOwnerLeadNotification(input: OwnerLeadNotificationInpu
     input.sourcePage ? `Source page: ${input.sourcePage}` : null,
   ])
 
+  return {
+    subject: `New website enquiry: ${input.leadId}`,
+    text,
+    ...(input.email ? { replyTo: input.email } : {}),
+  }
+}
+
+export function classifyDeliveryResult(result: { ok: boolean; status?: number }): {
+  status: 'sent' | 'pending' | 'failed'
+  retryable: boolean
+  error: string | null
+} {
+  if (result.ok) return { status: 'sent', retryable: false, error: null }
+  const status = result.status ?? 0
+  const retryable = status === 408 || status === 429 || status >= 500 || status === 0
+  return {
+    status: retryable ? 'pending' : 'failed',
+    retryable,
+    error: `provider returned ${status}`,
+  }
+}
+
+export async function sendOwnerLeadNotification(input: OwnerLeadNotificationInput): Promise<void> {
+  if (!input.to) throw new Error('tenant business email is not configured')
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) throw new Error('RESEND_API_KEY is not set')
+  const from = process.env.RESEND_FROM_EMAIL
+  if (!from) throw new Error('RESEND_FROM_EMAIL is not set')
+  const email = buildOwnerAlertEmail(input)
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -53,12 +82,34 @@ export async function sendOwnerLeadNotification(input: OwnerLeadNotificationInpu
     body: JSON.stringify({
       from,
       to: input.to,
-      subject: `New website enquiry: ${input.leadId}`,
-      text,
+      subject: email.subject,
+      text: email.text,
+      ...(email.replyTo ? { reply_to: email.replyTo } : {}),
     }),
   })
 
   if (!response.ok) {
+    const errorBody = (await response.json().catch(() => ({}))) as { message?: string }
+    if (response.status === 403 && errorBody.message?.includes('testing emails')) {
+      const fallbackTo = process.env.RESEND_TEST_RECIPIENT
+      if (fallbackTo) {
+        const retryResponse = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from,
+            to: fallbackTo,
+            subject: `[Sandbox Preview for ${input.to}] ${email.subject}`,
+            text: `[Note: Sent to configured test recipient because the sending domain is in Resend sandbox mode. Intended recipient: ${input.to}]\n\n${email.text}`,
+            ...(email.replyTo ? { reply_to: email.replyTo } : {}),
+          }),
+        })
+        if (retryResponse.ok) return
+      }
+    }
     throw new Error(`Resend returned ${response.status}`)
   }
 }
