@@ -80,12 +80,19 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
   return entry ? { entry, viaCustomDomain: true } : null
 }
 
+function isRootHost(host: string): boolean {
+  const hostname = host.split(':')[0]?.toLowerCase() ?? ''
+  return hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}`
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (PLATFORM_PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const host = request.headers.get('host') ?? ''
+  if (isRootHost(host)) return NextResponse.next()
+
   const resolved = resolveTenant(host)
 
   // Unknown host. Not a 404 page — there is no tenant whose 404 this would be.

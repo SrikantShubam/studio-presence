@@ -29,8 +29,12 @@ function originFrom(request: NextRequest): string {
   return `${proto}://${host}`
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ tenant: string }> },
+) {
   const origin = originFrom(request)
+  const { tenant: requestedTenant } = await params
   const { searchParams } = request.nextUrl
   const code = searchParams.get('code')
 
@@ -60,6 +64,9 @@ export async function GET(request: NextRequest) {
       email: user.email,
       accessToken: access_token,
     })
+    if (tenant.slug !== requestedTenant) {
+      return NextResponse.redirect(`${origin}/login?error=wrong-tenant`)
+    }
     return NextResponse.redirect(`${origin}${destinationForTenant(tenant)}`)
   } catch (e) {
     if (e instanceof AuthError) {
