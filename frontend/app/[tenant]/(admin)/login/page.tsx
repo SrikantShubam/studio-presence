@@ -56,7 +56,7 @@ export default async function LoginPage({
       <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-lg border border-admin-border bg-admin-surface lg:min-h-[40rem] lg:grid-cols-[1.05fr_0.95fr]">
         <section className="relative flex min-h-[32rem] flex-col justify-between overflow-hidden border-b border-admin-border p-5 sm:p-7 lg:border-b-0 lg:border-r">
           <Image
-            src="/clients/ashish-interiors/editorial/hero.jpg"
+            src="/clients/ashish-interiors/editorial/variants/lg/hero.webp"
             alt=""
             fill
             priority
