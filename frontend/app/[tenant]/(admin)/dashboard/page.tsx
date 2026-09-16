@@ -21,12 +21,15 @@ const STATUS_LABELS: Record<LeadStatus, string> = {
 }
 
 export default async function DashboardPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ tenant: string }>
   searchParams?: Promise<{ filter?: string }>
 }) {
+  const { tenant: tenantSlug } = await params
   const activeFilter = filterFrom((await searchParams)?.filter)
-  const allLeads = await loadLeads()
+  const allLeads = await loadLeads(tenantSlug)
   const visibleLeads = filterLeads(allLeads, activeFilter)
   const notContacted = allLeads.filter(isNotContacted).length
   const newThisWeek = allLeads.filter((lead) => isAfter(lead.created_at, daysAgo(7))).length
@@ -68,7 +71,7 @@ export default async function DashboardPage({
   )
 }
 
-async function loadLeads(): Promise<Lead[]> {
+async function loadLeads(tenantSlug: string): Promise<Lead[]> {
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -85,7 +88,7 @@ async function loadLeads(): Promise<Lead[]> {
     id: user.id,
     email: user.email,
     accessToken: session.access_token,
-  })
+  }, tenantSlug)
 
   if (!canAccessDashboard(tenant)) {
     redirect('/panel')

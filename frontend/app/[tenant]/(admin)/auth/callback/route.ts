@@ -63,7 +63,7 @@ export async function GET(
       id: user.id,
       email: user.email,
       accessToken: access_token,
-    })
+    }, requestedTenant)
     if (tenant.slug !== requestedTenant) {
       return NextResponse.redirect(`${origin}/login?error=wrong-tenant`)
     }
@@ -73,6 +73,7 @@ export async function GET(
     return NextResponse.redirect(`${origin}${pathPrefix}${destinationForTenant(tenant)}`)
   } catch (e) {
     if (e instanceof AuthError) {
+      await supabase.auth.signOut()
       // Signed in successfully but no tenant_members row exists yet — a real
       // and expected state right after we provision an owner and before we've
       // linked them. Surfacing "no-tenant" beats a generic failure because it

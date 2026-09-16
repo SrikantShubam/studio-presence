@@ -50,7 +50,7 @@ export async function GET(
       id: user.id,
       email: user.email,
       accessToken: session.access_token,
-    })
+    }, parsed.data.tenant)
 
     if (tenantContext.tenant.slug !== parsed.data.tenant) {
       return NextResponse.json({ error: 'forbidden' }, { status: 403 })

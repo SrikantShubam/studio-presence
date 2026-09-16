@@ -32,7 +32,7 @@ async function authenticate(tenantSlug: string) {
     id: user.id,
     email: user.email,
     accessToken: session.access_token,
-  })
+  }, tenantSlug)
 
   if (tenantContext.tenant.slug !== tenantSlug) {
     return { error: NextResponse.json({ error: 'forbidden' }, { status: 403 }) }

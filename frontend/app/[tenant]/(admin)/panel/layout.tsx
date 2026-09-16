@@ -58,7 +58,7 @@ export default async function PanelLayout({
       id: user.id,
       email: user.email,
       accessToken: session.access_token,
-    })
+    }, tenantSlug)
   } catch (e) {
     if (e instanceof AuthError) {
       return <ProvisioningGap message={e.message} />

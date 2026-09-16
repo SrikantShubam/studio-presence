@@ -188,7 +188,7 @@ async function requireDashboardContext(expectedTenantSlug?: string) {
     id: user.id,
     email: user.email,
     accessToken: session.access_token,
-  })
+  }, expectedTenantSlug)
 
   if (expectedTenantSlug && tenantContext.tenant.slug !== expectedTenantSlug) {
     redirect('/login')

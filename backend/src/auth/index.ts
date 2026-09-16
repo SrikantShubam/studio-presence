@@ -43,12 +43,14 @@ export class AuthError extends Error {
  * so even a downstream query that forgets to filter by tenant cannot cross the
  * boundary — which is the point of doing isolation in the database.
  */
-export async function requireTenant(user: SessionUser): Promise<TenantContext> {
+export async function requireTenant(user: SessionUser, tenantSlug?: string): Promise<TenantContext> {
   const db = createScopedClient(user.accessToken)
 
   // RLS on `tenants` already restricts this to the user's own tenants, so there
   // is no filter to forget here.
-  const { data, error } = await db.from('tenants').select('*').limit(2)
+  let query = db.from('tenants').select('*')
+  if (tenantSlug) query = query.eq('slug', tenantSlug)
+  const { data, error } = await query.limit(2)
 
   if (error) throw new AuthError(`Could not resolve tenant: ${error.message}`, 'no-tenant')
 

@@ -38,6 +38,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(tenantUrlFor(tenant, destinationForTenant(tenant)))
   } catch (e) {
     if (e instanceof AuthError) {
+      await supabase.auth.signOut()
       return NextResponse.redirect(`${origin}/login?error=${e.code}`)
     }
     throw e
