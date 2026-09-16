@@ -1,13 +1,6 @@
 import Link from 'next/link'
-import { loadClientConfig } from '@studio/backend'
-import { rootDomain } from '@/lib/platform-domain'
 
 export default function PlatformHomePage() {
-  const ashishConfig = loadClientConfig('ashish-interiors')
-  const ashishLoginUrl = rootDomain().endsWith('.vercel.app')
-    ? '/ashish-interiors/login'
-    : `https://${ashishConfig.domain.demoSubdomain}.${rootDomain()}/login`
-
   return (
     <main className="min-h-screen bg-admin-bg px-4 py-10 text-admin-ink">
       <section className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-4xl flex-col justify-center gap-8">
@@ -30,12 +23,6 @@ export default function PlatformHomePage() {
           >
             Sign in
           </Link>
-          <a
-            href={ashishLoginUrl}
-            className="inline-flex min-h-12 items-center justify-center rounded-lg border border-admin-border bg-admin-surface px-5 text-base font-semibold text-admin-ink"
-          >
-            Open Ashish login
-          </a>
         </div>
       </section>
     </main>

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { loadClientConfig, ConfigError } from '@studio/backend'
 import { ThemeToggle } from '../ThemeToggle'
 import { LoginForm } from './LoginForm'
+import { PLATFORM_BRAND } from '@/lib/platform-brand'
 
 /**
  * `/login`, serving both the panel and the dashboard.
@@ -12,13 +13,16 @@ import { LoginForm } from './LoginForm'
  * tenant's WhatsApp number) is tenant-specific. Where the user lands AFTER
  * signing in depends on tier, decided in auth/callback/route.ts, not here.
  *
- * A centred single card is the one place in the product where that layout is
- * correct — per the brief, "there is genuinely nothing else on the page."
+ * The screen uses platform branding for authentication, while the left preview
+ * can still remind the visitor which tenant site they are trying to access.
  */
 
 const ERROR_MESSAGES: Record<string, string> = {
   'missing-code': 'That link looks incomplete. Request a new one below.',
-  'link-expired': 'That link has expired or was already used. Request a new one below.',
+  'link-expired': 'That link has expired or was already used. Request a fresh link below.',
+  'auth-pkce': 'This link was opened in a different browser or device. Request a new link and open it in the same browser where you entered your email.',
+  'auth-invalid': 'That sign-in link was invalid or incomplete. Request a new link below.',
+  'auth-unreachable': 'The sign-in service is temporarily unavailable. Wait a moment and request a new link.',
   'no-email': 'Something went wrong on our side. Request a new link below.',
   'no-tenant': "This email isn't linked to a site yet. Message us on WhatsApp and we'll sort it out.",
   'wrong-tenant': 'This email is linked to more than one site. Message us on WhatsApp and we’ll sort it out.',
@@ -29,10 +33,10 @@ export default async function LoginPage({
   searchParams,
 }: {
   params: Promise<{ tenant: string }>
-  searchParams: Promise<{ error?: string }>
+  searchParams: Promise<{ error?: string; next?: string }>
 }) {
   const { tenant } = await params
-  const { error: errorCode } = await searchParams
+  const { error: errorCode, next } = await searchParams
 
   let config
   try {
@@ -48,31 +52,86 @@ export default async function LoginPage({
     : null
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-admin-bg px-4">
-      <div className="w-full max-w-sm rounded-lg border border-admin-border bg-admin-surface p-6">
-        <div className="mb-6 flex items-center justify-between gap-2">
-          <div className="flex min-w-0 items-center gap-2">
-            {config.brand.logo && (
-              <Image
-                src={config.brand.logo}
-                alt=""
-                width={28}
-                height={28}
-                className="rounded"
-              />
-            )}
-            <span className="truncate text-sm font-medium text-admin-ink">{config.business.name}</span>
+    <main className="min-h-screen bg-admin-bg px-4 py-5 text-admin-ink lg:flex lg:items-center lg:justify-center">
+      <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-lg border border-admin-border bg-admin-surface lg:min-h-[40rem] lg:grid-cols-[1.05fr_0.95fr]">
+        <section className="relative flex min-h-[32rem] flex-col justify-between overflow-hidden border-b border-admin-border p-5 sm:p-7 lg:border-b-0 lg:border-r">
+          <Image
+            src="/clients/ashish-interiors/editorial/hero.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1024px) 52vw, 100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-admin-bg/70" />
+          <div className="absolute inset-0 bg-admin-bg/30" />
+
+          <div className="relative z-10 flex items-start justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-admin-ink">{PLATFORM_BRAND}</p>
+              <p className="mt-1 text-xs font-medium uppercase tracking-wide text-admin-muted">Customer access</p>
+            </div>
+            <ThemeToggle />
           </div>
-          <ThemeToggle />
-        </div>
 
-        <h1 className="mb-6 text-xl font-semibold text-admin-ink">Sign in to your site</h1>
+          <div className="relative z-10 my-10 flex flex-1 items-center">
+            <div className="max-w-xl">
+              <div className="mb-5 flex items-center gap-3">
+                {config.brand.logo && <Image src={config.brand.logo} alt="" width={44} height={44} className="rounded-lg" />}
+                <div>
+                  <p className="text-sm font-semibold text-admin-ink">{config.business.name}</p>
+                  <p className="text-xs text-admin-muted">Preview workspace</p>
+                </div>
+              </div>
 
-        {errorCode && ERROR_MESSAGES[errorCode] && (
-          <p className="mb-4 text-sm text-admin-alert">{ERROR_MESSAGES[errorCode]}</p>
-        )}
+              <h2 className="max-w-lg text-5xl font-semibold leading-tight text-admin-ink">Step inside the site before it goes live.</h2>
+              <p className="mt-5 max-w-md text-base leading-7 text-admin-muted">
+                Try the customer experience, capture the lead, then unlock paid publishing only after operator approval.
+              </p>
 
-        <LoginForm whatsappHref={whatsappHref} />
+              <div className="mt-8 grid max-w-md grid-cols-3 gap-2 text-xs">
+                <div className="rounded border border-admin-border bg-admin-bg/70 p-3">
+                  <p className="font-semibold text-admin-ink">Preview</p>
+                  <p className="mt-1 text-admin-muted">local edits</p>
+                </div>
+                <div className="rounded border border-admin-border bg-admin-bg/70 p-3">
+                  <p className="font-semibold text-admin-ink">Grant</p>
+                  <p className="mt-1 text-admin-muted">by email</p>
+                </div>
+                <div className="rounded border border-admin-border bg-admin-bg/70 p-3">
+                  <p className="font-semibold text-admin-ink">Publish</p>
+                  <p className="mt-1 text-admin-muted">paid only</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 text-xs font-medium text-admin-muted">
+            <span>Product Designer</span>
+            <span>2026</span>
+            <span>Vector Veda</span>
+          </div>
+        </section>
+
+        <section className="flex items-center justify-center p-5 sm:p-8">
+          <div className="w-full max-w-md">
+            <div className="mb-7">
+              <p className="text-xs font-semibold uppercase tracking-wide text-admin-muted">Login and sign up</p>
+              <h1 className="mt-2 text-3xl font-semibold leading-tight text-admin-ink">Access Studio Presence.</h1>
+              <p className="mt-3 text-sm leading-6 text-admin-muted">
+                Google is fastest. Email links stay available for personal, work, or temporary addresses.
+              </p>
+            </div>
+
+            {errorCode && ERROR_MESSAGES[errorCode] && (
+              <p className="mb-4 rounded-lg border border-admin-alert bg-admin-alert-soft px-3 py-2 text-sm font-medium text-admin-alert">
+                {ERROR_MESSAGES[errorCode]}
+              </p>
+            )}
+
+            <LoginForm whatsappHref={whatsappHref} tenant={tenant} nextPath={next} />
+          </div>
+        </section>
       </div>
     </main>
   )
