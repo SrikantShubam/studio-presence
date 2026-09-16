@@ -1,8 +1,12 @@
 import Link from 'next/link'
+import { loadClientConfig } from '@studio/backend'
 import { rootDomain } from '@/lib/platform-domain'
 
 export default function PlatformHomePage() {
-  const ashishLoginUrl = `https://ashish.${rootDomain()}/login`
+  const ashishConfig = loadClientConfig('ashish-interiors')
+  const ashishLoginUrl = rootDomain().endsWith('.vercel.app')
+    ? '/ashish-interiors/login'
+    : `https://${ashishConfig.domain.demoSubdomain}.${rootDomain()}/login`
 
   return (
     <main className="min-h-screen bg-admin-bg px-4 py-10 text-admin-ink">

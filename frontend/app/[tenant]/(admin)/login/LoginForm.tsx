@@ -18,6 +18,7 @@ import { createSupabaseBrowserClient } from '@/lib/supabase/client'
  */
 
 const RESEND_SECONDS = 30
+const ADMIN_PATHS = new Set(['login', 'dashboard', 'panel', 'auth'])
 
 type Props = {
   whatsappHref: string | null
@@ -39,10 +40,12 @@ export function LoginForm({ whatsappHref }: Props) {
   async function sendLink(targetEmail: string) {
     setStatus('sending')
     setError(null)
+    const firstPathSegment = window.location.pathname.split('/').filter(Boolean)[0]
+    const tenantPrefix = firstPathSegment && !ADMIN_PATHS.has(firstPathSegment) ? `/${firstPathSegment}` : ''
 
     const { error: sendError } = await supabase.auth.signInWithOtp({
       email: targetEmail,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      options: { emailRedirectTo: `${window.location.origin}${tenantPrefix}/auth/callback` },
     })
 
     if (sendError) {

@@ -57,6 +57,12 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  */
 const PLATFORM_PASSTHROUGH = /^\/(?:_next|api\/)/
 const PUBLIC_ASSET_PASSTHROUGH = /^\/(?:clients\/|assets\/)/
+const ROOT_TENANT_PATHS = new Set(['auth', 'dashboard', 'login', 'panel'])
+const TENANT_COOKIE = 'sp_validation_tenant'
+
+function usesPathTenants(): boolean {
+  return ROOT_DOMAIN.endsWith('.vercel.app')
+}
 
 function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boolean } | null {
   const hostname = host.split(':')[0]?.toLowerCase() ?? ''
@@ -85,13 +91,57 @@ function isRootHost(host: string): boolean {
   return hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}`
 }
 
+function rootPathResponse(request: NextRequest): NextResponse {
+  const pathname = request.nextUrl.pathname
+  const segments = pathname.split('/').filter(Boolean)
+  const first = segments[0]
+
+  if (usesPathTenants() && first && TENANT_MAP.bySubdomain[first]) {
+    const url = request.nextUrl.clone()
+    url.pathname = `/${TENANT_MAP.bySubdomain[first].slug}/${segments.slice(1).join('/')}`
+    const response = NextResponse.redirect(url)
+    response.cookies.set(TENANT_COOKIE, TENANT_MAP.bySubdomain[first].slug, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: true,
+      path: '/',
+    })
+    return response
+  }
+
+  if (usesPathTenants() && first && TENANT_MAP.bySubdomain[first] === undefined) {
+    const entry = Object.values(TENANT_MAP.bySubdomain).find((tenant) => tenant.slug === first)
+    if (entry) {
+      const response = NextResponse.next()
+      response.cookies.set(TENANT_COOKIE, entry.slug, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: true,
+        path: '/',
+      })
+      return response
+    }
+  }
+
+  if (usesPathTenants() && first && ROOT_TENANT_PATHS.has(first)) {
+    const tenant = request.cookies.get(TENANT_COOKIE)?.value
+    if (tenant && Object.values(TENANT_MAP.bySubdomain).some((entry) => entry.slug === tenant)) {
+      const url = request.nextUrl.clone()
+      url.pathname = `/${tenant}${pathname}`
+      return NextResponse.redirect(url)
+    }
+  }
+
+  return NextResponse.next()
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (PLATFORM_PASSTHROUGH.test(pathname)) return NextResponse.next()
 
   const host = request.headers.get('host') ?? ''
-  if (isRootHost(host)) return NextResponse.next()
+  if (isRootHost(host)) return rootPathResponse(request)
 
   const resolved = resolveTenant(host)
 

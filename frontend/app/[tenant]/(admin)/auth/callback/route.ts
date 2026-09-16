@@ -67,7 +67,10 @@ export async function GET(
     if (tenant.slug !== requestedTenant) {
       return NextResponse.redirect(`${origin}/login?error=wrong-tenant`)
     }
-    return NextResponse.redirect(`${origin}${destinationForTenant(tenant)}`)
+    const pathPrefix = request.nextUrl.pathname.startsWith(`/${requestedTenant}/`)
+      ? `/${requestedTenant}`
+      : ''
+    return NextResponse.redirect(`${origin}${pathPrefix}${destinationForTenant(tenant)}`)
   } catch (e) {
     if (e instanceof AuthError) {
       // Signed in successfully but no tenant_members row exists yet — a real

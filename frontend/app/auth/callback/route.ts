@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { AuthError, destinationForTenant, requireTenant } from '@studio/backend'
-import { tenantOriginFor } from '@/lib/platform-domain'
+import { tenantUrlFor } from '@/lib/platform-domain'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 
 function originFrom(request: NextRequest): string {
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
       email: user.email,
       accessToken: access_token,
     })
-    return NextResponse.redirect(`${tenantOriginFor(tenant)}${destinationForTenant(tenant)}`)
+    return NextResponse.redirect(tenantUrlFor(tenant, destinationForTenant(tenant)))
   } catch (e) {
     if (e instanceof AuthError) {
       return NextResponse.redirect(`${origin}/login?error=${e.code}`)
