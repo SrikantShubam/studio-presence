@@ -1,3 +1,4 @@
+import path from 'node:path'
 import type { NextConfig } from 'next'
 
 /**
@@ -17,6 +18,10 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  outputFileTracingRoot: path.join(__dirname, '..'),
+  outputFileTracingIncludes: {
+    '/*': ['../clients/**/*', '../backend/**/*'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
   },
