@@ -1,11 +1,9 @@
-import type { EmailOtpType } from '@supabase/supabase-js'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { authOriginFromRequest, routeAuthenticatedSession } from '@/lib/auth-callback'
+import { confirmationRequest } from '@/lib/auth-confirmation'
 import { safeAuthNextPath } from '@/lib/auth-policy'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
-
-const CONFIRMATION_TYPES = new Set<EmailOtpType>(['signup', 'email', 'email_change'])
 
 function routingFromEnv(): 'host' | 'path' {
   return process.env.NEXT_PUBLIC_TENANT_ROUTING === 'host' ? 'host' : 'path'
@@ -16,21 +14,34 @@ export async function GET(request: NextRequest) {
   if (!origin) return NextResponse.json({ error: 'invalid-origin' }, { status: 400 })
 
   const params = request.nextUrl.searchParams
-  const tokenHash = params.get('token_hash')
-  const type = params.get('type') as EmailOtpType | null
-  if (!tokenHash || !type || !CONFIRMATION_TYPES.has(type)) {
-    return NextResponse.redirect(`${origin}/login?error=auth-invalid`)
+  const supabase = await createSupabaseServerClient()
+  const confirmation = confirmationRequest(params)
+  let session = (await supabase.auth.getSession()).data.session ?? null
+
+  if (confirmation.kind === 'code') {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(confirmation.code)
+    if (error || !data.session) {
+      return NextResponse.redirect(`${origin}/login?error=${error ? 'link-expired' : 'auth-invalid'}`)
+    }
+    session = data.session
+  } else if (confirmation.kind === 'token_hash') {
+    const { data, error } = await supabase.auth.verifyOtp({
+      type: confirmation.type,
+      token_hash: confirmation.tokenHash,
+    })
+    if (error || !data.session) {
+      return NextResponse.redirect(`${origin}/login?error=${error ? 'link-expired' : 'auth-invalid'}`)
+    }
+    session = data.session
   }
 
-  const supabase = await createSupabaseServerClient()
-  const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash })
-  if (error || !data.session) {
-    return NextResponse.redirect(`${origin}/login?error=${error ? 'link-expired' : 'auth-invalid'}`)
+  if (!session) {
+    return NextResponse.redirect(`${origin}/login?error=auth-invalid`)
   }
 
   return routeAuthenticatedSession(
     origin,
-    data.session,
+    session,
     params.get('tenant') ?? undefined,
     safeAuthNextPath(params.get('next') ?? undefined),
     routingFromEnv(),
