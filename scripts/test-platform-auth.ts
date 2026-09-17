@@ -13,6 +13,7 @@ import {
   isValidPassword,
   safeAuthNextPath,
 } from '../frontend/lib/auth-policy.ts'
+import { confirmationRequest } from '../frontend/lib/auth-confirmation.ts'
 
 assert.equal(
   canonicalAuthOrigin('https://temporary.vercel.app', 'https://preview.example.com'),
@@ -69,6 +70,20 @@ assert.equal(
   isAllowedAuthOrigin('https://approved-preview.vercel.app', new Set(['https://approved-preview.vercel.app'])),
   true,
 )
+
+assert.deepEqual(
+  confirmationRequest(new URLSearchParams('code=confirmation-code')),
+  { kind: 'code', code: 'confirmation-code' },
+)
+assert.deepEqual(
+  confirmationRequest(new URLSearchParams('token_hash=confirmation-token&type=signup')),
+  { kind: 'token_hash', tokenHash: 'confirmation-token', type: 'signup' },
+)
+assert.deepEqual(
+  confirmationRequest(new URLSearchParams('token_hash=confirmation-token&type=recovery')),
+  { kind: 'invalid' },
+)
+assert.deepEqual(confirmationRequest(new URLSearchParams()), { kind: 'session' })
 
 assert.equal(
   tenantDestinationUrl('https://preview.example.com', 'tenant-a', '/dashboard', 'path'),
