@@ -6,14 +6,19 @@
   "scripts": {
     "predev": "node --import tsx ../scripts/sync-frontend-env.ts",
     "dev": "next dev",
-    "prebuild": "node --import tsx ../scripts/sync-frontend-env.ts && node --env-file-if-exists=../.env --import tsx ../scripts/gen-tenant-map.ts",
+    "prebuild": "node --import tsx ../scripts/sync-frontend-env.ts && node --env-file-if-exists=../.env --import tsx ../scripts/check-deploy-source.ts && node --env-file-if-exists=../.env --import tsx ../scripts/check-config.ts && node --env-file-if-exists=../.env --import tsx ../scripts/gen-tenant-map.ts",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.3.1",
+    "@fortawesome/free-brands-svg-icons": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@fortawesome/react-fontawesome": "^3.5.0",
     "@studio/backend": "*",
-    "@supabase/ssr": "^0.12.7",
-    "next": "^16.3.4",
+    "@supabase/ssr": "^0.12.4",
+    "framer-motion": "^13.1.0",
+    "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -21,7 +26,7 @@
     "@tailwindcss/postcss": "^4.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.2.7",
-    "eslint-config-next": "^16.3.4",
+    "eslint-config-next": "^15.1.0",
     "tailwindcss": "^4.0.0"
   }
 }

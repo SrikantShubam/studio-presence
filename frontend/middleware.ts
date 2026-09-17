@@ -62,6 +62,7 @@ const ROOT_PLATFORM_PATHS = new Set([
 const ROOT_TENANT_PATHS = new Set(['auth', 'dashboard', 'login', 'panel'])
 const TENANT_COOKIE = 'sp_route_tenant'
 const AUTH_PLATFORM_PASSTHROUGH = new Set(['/auth/confirm', '/auth/recovery', '/reset-password'])
+const RETIRED_TENANT_HOSTS = new Set([['qa', 'owner'].join('-')])
 
 /**
  * Paths that are never tenant-scoped — served as-is, not rewritten.
@@ -140,6 +141,7 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
 
   if (hostname.endsWith(`.${ROOT_DOMAIN}`)) {
     const sub = hostname.slice(0, -(ROOT_DOMAIN.length + 1))
+    if (RETIRED_TENANT_HOSTS.has(sub)) return null
     const entry = TENANT_MAP.bySubdomain[sub]
     if (entry) return { entry, viaCustomDomain: false }
 
@@ -162,7 +164,7 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
 }
 
 function usesPathTenants(): boolean {
-  return process.env.NEXT_PUBLIC_TENANT_ROUTING === 'path' || ROOT_DOMAIN.endsWith('.vercel.app') || AUTH_ORIGIN_HOST.endsWith('.vercel.app')
+  return process.env.NEXT_PUBLIC_TENANT_ROUTING === 'path'
 }
 
 function isRootHost(host: string): boolean {

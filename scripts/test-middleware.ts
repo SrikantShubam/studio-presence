@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict'
 import { NextRequest } from 'next/server'
 
-import { middleware } from '../frontend/middleware'
+process.env.NEXT_PUBLIC_ROOT_DOMAIN = 'preview.srikantshubams-projects.vercel.app'
+process.env.NEXT_PUBLIC_TENANT_ROUTING = 'host'
+
+const { middleware } = await import('../frontend/middleware')
 
 function request(url: string): NextRequest {
   const parsed = new URL(url)
@@ -43,5 +46,18 @@ assert.equal(retiredSubdomain.status, 404, 'retired tenant subdomain should fail
 const currentSubdomain = middleware(request('http://ashish.localhost/dashboard'))
 assert.equal(currentSubdomain.status, 200, 'current tenant subdomain should still resolve')
 assert.equal(currentSubdomain.headers.get('x-tenant'), 'ashish-interiors')
+
+const previewRoot = middleware(request('https://preview.srikantshubams-projects.vercel.app/'))
+assert.equal(previewRoot.status, 200, 'preview root should remain a platform route')
+
+const previewTenant = middleware(request('https://ashish-interiors.preview.srikantshubams-projects.vercel.app/dashboard'))
+assert.equal(previewTenant.status, 200, 'preview tenant hostname should resolve directly')
+assert.equal(previewTenant.headers.get('x-tenant'), 'ashish-interiors')
+
+const pathFallback = middleware(request('https://preview.srikantshubams-projects.vercel.app/ashish-interiors/dashboard'))
+assert.equal(pathFallback.status, 404, 'preview must not fall back to path-based tenant routing')
+
+const unknownPreviewTenant = middleware(request('https://qa-owner.preview.srikantshubams-projects.vercel.app/dashboard'))
+assert.equal(unknownPreviewTenant.status, 404, 'retired preview tenant hostname must fail closed')
 
 console.log('middleware routing checks passed')

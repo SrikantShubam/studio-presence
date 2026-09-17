@@ -3,6 +3,7 @@ import type { Session } from '@supabase/supabase-js'
 import {
   AuthError,
   claimOperatorAccess,
+  claimPendingAccess,
   createScopedClient,
   destinationForTenant,
   requireTenant,
@@ -111,6 +112,7 @@ export async function routeAuthenticatedSession(
   if (!user.email) return NextResponse.redirect(`${origin}/login?error=no-email`)
 
   const db = createScopedClient(accessToken)
+  await claimPendingAccess(db)
   await claimOperatorAccess(db)
   const { data: isOperator } = await db.rpc('is_operator')
   if (isOperator) return NextResponse.redirect(`${origin}/super`)

@@ -37,6 +37,9 @@ inspirations/
 graphify-out/
 docs/graphify-out/
 .claude/settings.local.json
+.worktrees/
+.scratch/
+.superpowers/
 
 # generated
 frontend/lib/tenant-map.ts
