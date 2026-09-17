@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { clientConfigSchema } from '../config/schema'
-import { loadClientConfig, mergePatch } from '../config/load'
+import { loadClientConfig, mergePatch, resolveClientConfig } from '../config/load'
 import type { Db } from '../db/scoped'
 
 /**
@@ -117,6 +117,17 @@ async function readPatch(db: Db, tenantId: string): Promise<Json> {
   return (data?.patch as Json) ?? {}
 }
 
+async function readWorkspaceConfig(db: Db, tenantId: string): Promise<unknown | undefined> {
+  const { data, error } = await db
+    .from('tenant_workspaces')
+    .select('config')
+    .eq('tenant_id', tenantId)
+    .maybeSingle()
+
+  if (error) throw new PanelError('Could not load workspace config.', error)
+  return data?.config
+}
+
 /**
  * The panel's read side: the current, resolved value of every editable field
  * (base config + existing override applied), plus the raw patch row so the
@@ -127,7 +138,10 @@ export async function getEditableConfig(
   tenant: { id: string; slug: string },
 ): Promise<{ current: Record<AllowlistedField, unknown>; patch: Json }> {
   const patch = await readPatch(db, tenant.id)
-  const resolved = loadClientConfig(tenant.slug, { override: patch })
+  const workspaceConfig = await readWorkspaceConfig(db, tenant.id)
+  const resolved = workspaceConfig
+    ? resolveClientConfig(tenant.slug, workspaceConfig, { override: patch })
+    : loadClientConfig(tenant.slug, { override: patch })
 
   const current = {} as Record<AllowlistedField, unknown>
   for (const field of allowlistedFields()) {

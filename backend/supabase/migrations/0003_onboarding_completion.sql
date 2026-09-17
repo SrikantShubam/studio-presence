@@ -22,6 +22,11 @@ create table tenant_workspaces (
   updated_by   uuid not null references auth.users
 );
 
+-- A user owns one workspace in this onboarding model. The RPC also takes a
+-- transaction-scoped advisory lock so concurrent retries resolve to the same
+-- committed membership instead of racing each other.
+create unique index tenant_members_one_tenant_per_user_idx on tenant_members (user_id);
+
 alter table onboarding_drafts enable row level security;
 alter table tenant_hostnames enable row level security;
 alter table tenant_workspaces enable row level security;
@@ -42,7 +47,10 @@ create policy tenant_workspaces_member_select on tenant_workspaces
 create policy tenant_workspaces_member_update on tenant_workspaces
   for update to authenticated
   using (tenant_id in (select public.current_tenant_ids()))
-  with check (tenant_id in (select public.current_tenant_ids()));
+  with check (
+    tenant_id in (select public.current_tenant_ids())
+    and updated_by = auth.uid()
+  );
 
 create or replace function public.complete_onboarding(
   p_requested_slug text,
@@ -62,12 +70,15 @@ declare
   v_tenant_id uuid;
   v_slug text := lower(trim(p_requested_slug));
   v_hostname text := lower(trim(p_hostname));
+  v_config jsonb := p_config;
   v_suffix integer := 1;
   v_source text := lower(trim(p_source));
 begin
   if v_user_id is null then raise exception 'authentication required' using errcode = 'insufficient_privilege'; end if;
   if coalesce(trim(p_name), '') = '' or v_slug !~ '^[a-z0-9-]+$' then raise exception 'invalid onboarding identity' using errcode = 'check_violation'; end if;
   if v_source not in ('organic', 'cold-call') then raise exception 'invalid onboarding source' using errcode = 'check_violation'; end if;
+
+  perform pg_advisory_xact_lock(hashtextextended(v_user_id::text, 0));
 
   -- Completion is a user-level singleton. This is the retry/double-click guard.
   select tm.tenant_id into v_existing from tenant_members tm where tm.user_id = v_user_id order by tm.created_at limit 1;
@@ -96,11 +107,14 @@ begin
     v_hostname := regexp_replace(lower(trim(p_hostname)), '^[^.]+', v_slug);
   end loop;
 
+  v_config := jsonb_set(v_config, '{slug}', to_jsonb(v_slug), true);
+  v_config := jsonb_set(v_config, '{domain,demoSubdomain}', to_jsonb(v_slug), true);
+
   insert into tenants (slug, name, tier, status) values (v_slug, trim(p_name), 't0', 'demo') returning id into v_tenant_id;
   insert into tenant_members (user_id, tenant_id, role) values (v_user_id, v_tenant_id, 'owner');
   insert into tenant_hostnames (tenant_id, hostname, source) values (v_tenant_id, v_hostname, 'organic');
-  insert into tenant_workspaces (tenant_id, config, updated_by) values (v_tenant_id, p_config, v_user_id);
-  insert into onboarding_drafts (user_id, payload, completed_at) values (v_user_id, p_config, now())
+  insert into tenant_workspaces (tenant_id, config, updated_by) values (v_tenant_id, v_config, v_user_id);
+  insert into onboarding_drafts (user_id, payload, completed_at) values (v_user_id, v_config, now())
     on conflict (user_id) do update set payload = excluded.payload, completed_at = excluded.completed_at, updated_at = now();
 
   tenant_id := v_tenant_id; tenant_slug := v_slug; hostname := v_hostname;
@@ -114,3 +128,24 @@ $$;
 
 revoke all on function public.complete_onboarding(text, text, text, jsonb, text) from public;
 grant execute on function public.complete_onboarding(text, text, text, jsonb, text) to authenticated;
+
+-- Public site rendering needs the persisted workspace for tenants created after
+-- the static client fixtures were built. The function returns only the public
+-- config and never exposes memberships, draft payloads, or internal metadata.
+create or replace function public.get_public_tenant_config_by_hostname(p_hostname text)
+returns table (tenant_slug text, config jsonb)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select t.slug, tw.config - 'internal'
+  from tenant_hostnames th
+  join tenants t on t.id = th.tenant_id
+  join tenant_workspaces tw on tw.tenant_id = t.id
+  where lower(th.hostname) = lower(trim(p_hostname))
+    and t.status <> 'archived'
+$$;
+
+revoke all on function public.get_public_tenant_config_by_hostname(text) from public;
+grant execute on function public.get_public_tenant_config_by_hostname(text) to anon, authenticated;

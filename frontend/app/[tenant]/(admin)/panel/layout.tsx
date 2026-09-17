@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
-import { loadClientConfig, requireTenant, AuthError, ConfigError } from '@studio/backend'
+import { requireTenant, AuthError, ConfigError } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { loadTenantWorkspaceConfig } from '@/lib/tenant-config'
 import { signOut } from '../actions'
 import { ThemeToggle } from '../ThemeToggle'
 
@@ -72,7 +73,11 @@ export default async function PanelLayout({
   // rendering anyway risks showing one studio's panel under another's URL.
   let branding
   try {
-    branding = loadClientConfig(tenantContext.tenant.slug)
+    branding = await loadTenantWorkspaceConfig(
+      tenantContext.tenant.slug,
+      tenantContext.tenant.id,
+      session.access_token,
+    )
   } catch (e) {
     if (e instanceof ConfigError) return <ProvisioningGap message="This site's config is invalid." />
     throw e

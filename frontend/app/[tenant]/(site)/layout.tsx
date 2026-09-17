@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { ConfigError, loadPublicClientConfig } from '@studio/backend'
+import { ConfigError } from '@studio/backend'
 import { getTokenSet, tokensToCssVars } from '@/lib/tokens'
+import { loadPublicTenantConfigWithOverrides } from '@/lib/tenant-config'
 
 /**
  * Tenant layout — where a client's identity becomes CSS.
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   let config
   try {
-    config = await loadPublicClientConfig(tenant)
+    config = await loadPublicTenantConfigWithOverrides(tenant)
   } catch {
     return { title: 'Not found' }
   }
@@ -61,7 +62,7 @@ export default async function TenantLayout({ children, params }: Props) {
 
   let config
   try {
-    config = await loadPublicClientConfig(tenant)
+    config = await loadPublicTenantConfigWithOverrides(tenant)
   } catch (e) {
     if (e instanceof ConfigError) {
       // A broken config must never render half a site on a client's subdomain.

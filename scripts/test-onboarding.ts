@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict'
 import { EMPTY_ONBOARDING_DRAFT } from '../frontend/lib/onboarding/types.ts'
-import { suggestedIntroduction, validateOnboardingDraft } from '../frontend/lib/onboarding/validation.ts'
+import {
+  parseOnboardingDraftInput,
+  suggestedIntroduction,
+  validateOnboardingDraft,
+  validateOnboardingStage,
+} from '../frontend/lib/onboarding/validation.ts'
 
 const invalid = validateOnboardingDraft(EMPTY_ONBOARDING_DRAFT)
 assert.ok(invalid.errors.studioName && invalid.errors.serviceAreas && invalid.errors.categories && invalid.errors.services && invalid.errors.primaryPhone)
@@ -9,4 +14,16 @@ assert.deepEqual(valid.errors, {})
 assert.deepEqual(valid.draft.serviceAreas, ['South Delhi'])
 assert.equal(valid.draft.whatsapp, '+91 9876543210')
 assert.match(suggestedIntroduction(valid.draft), /GG Studio/)
+assert.equal(
+  validateOnboardingStage({ ...valid.draft, primaryPhone: 'not-a-phone' }, 1).errors.primaryPhone,
+  undefined,
+)
+assert.ok(validateOnboardingStage({ ...valid.draft, primaryPhone: 'not-a-phone' }, 3).errors.primaryPhone)
+assert.equal(
+  validateOnboardingDraft({ ...valid.draft, services: ['Renovation'], otherService: 'stale value' }).draft.otherService,
+  '',
+)
+const malformed = parseOnboardingDraftInput({ ...valid.draft, serviceAreas: null, usePhoneForWhatsapp: 'yes' })
+assert.ok(malformed.errors.serviceAreas)
+assert.ok(malformed.errors.usePhoneForWhatsapp)
 console.log('onboarding validation checks passed')
