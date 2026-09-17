@@ -12,6 +12,7 @@
     "test:platform-auth": "node --env-file-if-exists=.env --import tsx scripts/test-platform-auth.ts",
     "test:onboarding": "node --env-file-if-exists=.env --import tsx scripts/test-onboarding.ts",
     "test:middleware": "node --env-file-if-exists=.env --import tsx scripts/test-middleware.ts",
+    "test:preview-host": "node --import tsx scripts/test-preview-host.ts",
     "dev": "npm run dev --workspace frontend",
     "build": "npm run check:deploy-source && npm run check:config && npm run gen:tenant-map && npm run build --workspace frontend",
     "typecheck": "tsc --noEmit -p backend && tsc --noEmit -p frontend",

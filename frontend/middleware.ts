@@ -33,6 +33,22 @@ const AUTH_ORIGIN_HOST = (() => {
     return ''
   }
 })()
+function envHostname(value: string | undefined): string {
+  if (!value) return ''
+  try {
+    return new URL(value.startsWith('http') ? value : `https://${value}`).hostname.toLowerCase()
+  } catch {
+    return ''
+  }
+}
+
+const VERCEL_HOSTS = new Set(
+  [
+    envHostname(process.env.VERCEL_URL),
+    envHostname(process.env.VERCEL_BRANCH_URL),
+    envHostname(process.env.VERCEL_PROJECT_PRODUCTION_URL),
+  ].filter(Boolean),
+)
 const ROOT_PLATFORM_PATHS = new Set(['/', '/auth/callback', '/demo', '/login', '/onboarding'])
 const ROOT_TENANT_PATHS = new Set(['auth', 'dashboard', 'login', 'panel'])
 const TENANT_COOKIE = 'sp_route_tenant'
@@ -128,7 +144,7 @@ function usesPathTenants(): boolean {
 
 function isRootHost(host: string): boolean {
   const hostname = parseHostname(host)
-  return hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}` || hostname === AUTH_ORIGIN_HOST
+  return hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}` || hostname === AUTH_ORIGIN_HOST || VERCEL_HOSTS.has(hostname)
 }
 
 function isBareDevHost(hostname: string): boolean {
