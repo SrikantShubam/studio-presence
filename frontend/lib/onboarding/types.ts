@@ -14,14 +14,6 @@ export type OnboardingDraft = {
 export type OnboardingErrors = Partial<Record<keyof OnboardingDraft, string>>
 
 export const EMPTY_ONBOARDING_DRAFT: OnboardingDraft = {
-  studioName: '',
-  serviceAreas: [],
-  categories: [],
-  services: [],
-  otherService: '',
-  primaryPhone: '',
-  usePhoneForWhatsapp: true,
-  whatsapp: '',
-  publicEmail: '',
-  introduction: '',
+  studioName: '', serviceAreas: [], categories: [], services: [], otherService: '',
+  primaryPhone: '', usePhoneForWhatsapp: true, whatsapp: '', publicEmail: '', introduction: '',
 }
