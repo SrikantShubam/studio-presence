@@ -9,8 +9,8 @@ import type { Database } from '@studio/backend'
  * This is NOT the RLS-scoped `createScopedClient` from `@studio/backend` —
  * that one takes an access token directly and is used once we already know who
  * the caller is. This one's job is figuring that out: it reads the session
- * Supabase's auth helpers stored in cookies after the magic-link redirect, so
- * `auth.getUser()` and `auth.getSession()` work without the caller passing a
+ * Supabase's auth helpers stored in cookies after an OAuth, confirmation, or
+ * recovery redirect, so `auth.getUser()` and `auth.getSession()` work without the caller passing a
  * token by hand.
  *
  * It still uses the anon key — same public key the browser gets — so anything

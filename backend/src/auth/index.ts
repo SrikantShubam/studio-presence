@@ -4,11 +4,9 @@ import type { Tenant } from '../db/types'
 /**
  * Auth.
  *
- * Magic link only. No passwords, no social sign-in, no self-service account
- * creation — owners are provisioned by us at handover. The user is a
- * non-technical studio owner on an Android phone who signs in a handful of times
- * a month; a password is something they will lose, and a reset flow is a support
- * ticket we would rather not have.
+ * Google OAuth is primary, with email/password as the fallback. Signup creates
+ * only a Supabase Auth user; tenant membership and operator access remain
+ * separately provisioned and are resolved below through RLS-backed queries.
  *
  * Sessions are Supabase's. This module only adds the bit Supabase cannot know:
  * which tenant a user belongs to, and therefore where to send them.

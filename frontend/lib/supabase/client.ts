@@ -7,8 +7,8 @@ import type { Database } from '@studio/backend'
  * Supabase client for Client Components — the login form, specifically.
  *
  * Only the anon key, same as any browser would have. This is what actually
- * sends the magic-link email (`signInWithOtp`); the redirect it triggers lands
- * on `(admin)/auth/callback/route.ts`, which is where a session first exists.
+ * starts Google and email/password Auth flows; server callbacks establish the
+ * session before membership routing.
  *
  * The env reads below MUST be the literal, static `process.env.NEXT_PUBLIC_X`
  * member expression — not a wrapper function taking the name as a variable.

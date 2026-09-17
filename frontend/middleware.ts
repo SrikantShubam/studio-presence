@@ -49,9 +49,19 @@ const VERCEL_HOSTS = new Set(
     envHostname(process.env.VERCEL_PROJECT_PRODUCTION_URL),
   ].filter(Boolean),
 )
-const ROOT_PLATFORM_PATHS = new Set(['/', '/auth/callback', '/demo', '/login', '/onboarding'])
+const ROOT_PLATFORM_PATHS = new Set([
+  '/',
+  '/auth/callback',
+  '/auth/confirm',
+  '/auth/recovery',
+  '/demo',
+  '/login',
+  '/onboarding',
+  '/reset-password',
+])
 const ROOT_TENANT_PATHS = new Set(['auth', 'dashboard', 'login', 'panel'])
 const TENANT_COOKIE = 'sp_route_tenant'
+const AUTH_PLATFORM_PASSTHROUGH = new Set(['/auth/confirm', '/auth/recovery', '/reset-password'])
 
 /**
  * Paths that are never tenant-scoped — served as-is, not rewritten.
@@ -241,6 +251,11 @@ export function middleware(request: NextRequest) {
 
   if (PASSTHROUGH.test(pathname)) return NextResponse.next()
 
+  // Confirmation, recovery, and reset are platform callbacks. They must stay
+  // on their exact browser origin even when the email was opened on a tenant
+  // host; the handlers establish the session before membership routing.
+  if (AUTH_PLATFORM_PASSTHROUGH.has(pathname)) return NextResponse.next()
+
   const host = request.headers.get('host') ?? ''
   const hostname = parseHostname(host)
   const isRootHostRequest =
@@ -293,7 +308,12 @@ export function middleware(request: NextRequest) {
     request.nextUrl.searchParams.get('code') ||
     request.nextUrl.searchParams.get('token_hash') ||
     request.nextUrl.searchParams.get('token')
-  if (authToken && !pathname.includes('/auth/callback') && !pathname.includes('/auth/confirm')) {
+  if (
+    authToken &&
+    !pathname.includes('/auth/callback') &&
+    !pathname.includes('/auth/confirm') &&
+    !pathname.includes('/auth/recovery')
+  ) {
     const dest = request.nextUrl.clone()
     dest.pathname = '/auth/callback'
     return NextResponse.redirect(dest)
