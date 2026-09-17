@@ -3,6 +3,11 @@ import { resolveClientConfig, createScopedClient } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import type { OnboardingDraft } from '@/lib/onboarding/types'
 import { parseOnboardingDraftInput, suggestedIntroduction, validateOnboardingDraft } from '@/lib/onboarding/validation'
+import {
+  ONBOARDING_ALLOCATION_CONFLICT_MESSAGE,
+  onboardingRpcStatus,
+  retrySerialization,
+} from '@/lib/onboarding/retry'
 
 function slugFromName(name: string): string {
   return name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48) || 'studio'
@@ -57,10 +62,19 @@ export async function POST(request: Request) {
   try { config = configFromDraft(result.draft, slug) } catch { return NextResponse.json({ error: 'The preview could not be assembled from these details.' }, { status: 422 }) }
 
   const db = createScopedClient(sessionData.session.access_token)
-  const { data, error } = await db.rpc('complete_onboarding', { p_requested_slug: slug, p_name: result.draft.studioName, p_hostname: hostname, p_config: config, p_source: 'organic' })
+  const { data, error } = await retrySerialization(async () => db.rpc('complete_onboarding', {
+    p_requested_slug: slug,
+    p_name: result.draft.studioName,
+    p_hostname: hostname,
+    p_config: config,
+    p_source: 'organic',
+  }))
   if (error || !data?.[0]) {
-    const status = error?.code === '42501' ? 403 : error?.code === '23505' ? 409 : 400
-    return NextResponse.json({ error: error?.message || 'Onboarding could not be completed.' }, { status })
+    const status = onboardingRpcStatus(error)
+    const message = error?.code === '40001'
+      ? ONBOARDING_ALLOCATION_CONFLICT_MESSAGE
+      : error?.message || 'Onboarding could not be completed.'
+    return NextResponse.json({ error: message }, { status })
   }
   return NextResponse.json({ dashboardPath: `/${data[0].tenant_slug}/dashboard`, hostname: data[0].hostname })
 }
