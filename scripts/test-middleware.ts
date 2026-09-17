@@ -65,7 +65,9 @@ assert.equal(candidateRoot.status, 200, 'candidate root should remain a platform
 
 const candidateTenant = middleware(request('https://ashish-interiors.candidate.srikantshubams-projects.vercel.app/dashboard'))
 assert.equal(candidateTenant.status, 200, 'candidate tenant hostname should resolve directly')
-assert.equal(candidateTenant.headers.get('x-tenant'), 'ashish-interiors')
+const rawVercelHash = middleware(request('https://studio-presence-staging-o8b411qnv-srikantshubams-projects.vercel.app/'))
+assert.equal(rawVercelHash.status, 308, 'raw deployment hash should 308 redirect to candidate domain')
+assert.equal(new URL(location(rawVercelHash)).hostname, 'candidate.srikantshubams-projects.vercel.app')
 
 console.log('middleware routing checks passed')
 

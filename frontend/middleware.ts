@@ -284,6 +284,24 @@ export function middleware(request: NextRequest) {
 
   const host = request.headers.get('host') ?? ''
   const hostname = parseHostname(host)
+
+  // Redirect raw Vercel deployment hash URLs to the named canonical domain
+  if (
+    hostname.endsWith('.vercel.app') &&
+    hostname !== CANDIDATE_DOMAIN &&
+    hostname !== PREVIEW_DOMAIN &&
+    !hostname.endsWith(`.${CANDIDATE_DOMAIN}`) &&
+    !hostname.endsWith(`.${PREVIEW_DOMAIN}`)
+  ) {
+    const isPreviewBuild = process.env.VERCEL_GIT_COMMIT_REF === 'preview' || host.includes('preview')
+    const targetDomain = isPreviewBuild ? PREVIEW_DOMAIN : CANDIDATE_DOMAIN
+    const canonicalUrl = request.nextUrl.clone()
+    canonicalUrl.hostname = targetDomain
+    canonicalUrl.port = ''
+    canonicalUrl.protocol = 'https'
+    return NextResponse.redirect(canonicalUrl, 308)
+  }
+
   const isRootHostRequest =
     isRootHost(host) ||
     (process.env.NODE_ENV !== 'production' && isBareDevHost(hostname))
