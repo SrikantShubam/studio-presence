@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, type FormEvent } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
+import { authCallbackUrl } from '@/lib/platform-auth'
 
 /**
  * Supabase sign-in, per docs/product/prompts/admin-universal/01-login.md.
@@ -10,11 +11,10 @@ import { createSupabaseBrowserClient } from '@/lib/supabase/client'
  * same reason: this user is not going to remember one, and a reset flow is a
  * support ticket we would rather not own.
  *
- * `emailRedirectTo` is built from `window.location.origin` rather than a fixed
- * env var, because it must point back at THIS tenant's subdomain
- * (ashish.vectorveda.online/auth/callback), and that host is only known in the
- * browser. The callback route lives at (admin)/auth/callback and resolves the
- * tenant itself once a session exists.
+ * `emailRedirectTo` uses the configured canonical auth origin when available.
+ * This matters on Vercel: a link created on one temporary deployment must not
+ * return to a different deployment where the PKCE verifier cookie does not
+ * exist. A tenant is carried as a hint only; membership is resolved server-side.
  */
 
 const RESEND_SECONDS = 30
@@ -35,7 +35,7 @@ function messageForOAuthError(error: { message?: string }) {
 
 type Props = {
   whatsappHref: string | null
-  tenant: string
+  tenant?: string
   nextPath?: string
 }
 
@@ -52,10 +52,12 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     let active = true
     void supabase.auth.getSession().then(({ data }) => {
       if (!active || !data.session) return
-      const callback = new URL(`${window.location.origin}/auth/callback`)
-      callback.searchParams.set('tenant', tenant)
-      if (nextPath) callback.searchParams.set('next', nextPath)
-      window.location.replace(callback.toString())
+      window.location.replace(
+        authCallbackUrl(window.location.origin, process.env.NEXT_PUBLIC_AUTH_ORIGIN, {
+          tenant,
+          next: nextPath,
+        }),
+      )
     })
     return () => {
       active = false
@@ -72,14 +74,15 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     setStatus('sending')
     setError(null)
 
-    const callback = new URL(`${window.location.origin}/auth/callback`)
-    callback.searchParams.set('tenant', tenant)
-    if (nextPath) callback.searchParams.set('next', nextPath)
+    const callback = authCallbackUrl(window.location.origin, process.env.NEXT_PUBLIC_AUTH_ORIGIN, {
+      tenant,
+      next: nextPath,
+    })
 
     const { error: sendError } = await supabase.auth.signInWithOtp({
       email: targetEmail,
       options: {
-        emailRedirectTo: callback.toString(),
+        emailRedirectTo: callback,
         // Email entry alone never creates an authenticated session. Supabase
         // creates or signs in the account only after the one-time link is used.
         shouldCreateUser: true,
@@ -101,14 +104,15 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     setStatus('oauth')
     setError(null)
 
-    const callback = new URL(`${window.location.origin}/auth/callback`)
-    callback.searchParams.set('tenant', tenant)
-    if (nextPath) callback.searchParams.set('next', nextPath)
+    const callback = authCallbackUrl(window.location.origin, process.env.NEXT_PUBLIC_AUTH_ORIGIN, {
+      tenant,
+      next: nextPath,
+    })
 
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: callback.toString(),
+        redirectTo: callback,
       },
     })
 

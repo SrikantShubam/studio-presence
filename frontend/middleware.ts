@@ -26,6 +26,16 @@ import { TENANT_MAP, type TenantEntry } from './lib/tenant-map'
 
 /** Hosts that are ours, not a client's. */
 const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
+const AUTH_ORIGIN_HOST = (() => {
+  try {
+    return new URL(process.env.NEXT_PUBLIC_AUTH_ORIGIN ?? '').hostname.toLowerCase()
+  } catch {
+    return ''
+  }
+})()
+const ROOT_PLATFORM_PATHS = new Set(['/', '/auth/callback', '/demo', '/login', '/onboarding'])
+const ROOT_TENANT_PATHS = new Set(['auth', 'dashboard', 'login', 'panel'])
+const TENANT_COOKIE = 'sp_route_tenant'
 
 /**
  * Paths that are never tenant-scoped — served as-is, not rewritten.
@@ -54,11 +64,6 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? 'vectorveda.online'
  * this list against the paragraph above and had the identical bug.
  */
 const PASSTHROUGH = /^\/(?:_next|api\/|clients\/|fonts\/|about-iteration-|contact-iteration-|locations-iteration-|locations-index|locations-showcase|contact-concepts\/|brand\/|favicon\.(?:ico|svg)|icon\.svg|apple-icon\.svg)/
-
-function primaryDevTenant(): TenantEntry | undefined {
-  const sub = Object.keys(TENANT_MAP.bySubdomain)[0]
-  return sub ? TENANT_MAP.bySubdomain[sub] : undefined
-}
 
 function parseHostname(host: string): string {
   const trimmed = host.trim().toLowerCase()
@@ -99,15 +104,9 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
     const entry = sub ? TENANT_MAP.bySubdomain[sub] : undefined
     if (entry) return { entry, viaCustomDomain: false }
 
-    // Bare localhost, loopback, or LAN IP (no subdomain). Supabase "Confirm your email" uses the
-    // project Site URL, which is almost always http://localhost:3000 — that
-    // host is not a tenant, so the click used to die here. In development,
-    // treat it as the primary local site so the auth callback can run.
-    if (process.env.NODE_ENV !== 'production') {
-      const primary = primaryDevTenant()
-      return primary ? { entry: primary, viaCustomDomain: false } : null
-    }
-
+    // Bare localhost, loopback, and LAN IPs are platform hosts, not tenant hosts.
+    // Never silently assign them to the first tenant: that is how a retired route
+    // or a stale auth callback can expose the wrong site locally.
     return null
   }
 
@@ -123,6 +122,99 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
   return entry ? { entry, viaCustomDomain: true } : null
 }
 
+function usesPathTenants(): boolean {
+  return process.env.NEXT_PUBLIC_TENANT_ROUTING === 'path' || ROOT_DOMAIN.endsWith('.vercel.app') || AUTH_ORIGIN_HOST.endsWith('.vercel.app')
+}
+
+function isRootHost(host: string): boolean {
+  const hostname = parseHostname(host)
+  return hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}` || hostname === AUTH_ORIGIN_HOST
+}
+
+function isBareDevHost(hostname: string): boolean {
+  return (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '::1' ||
+    hostname === '[::1]' ||
+    /^192\.168\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+    /^10\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+    /^172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}$/.test(hostname)
+  )
+}
+
+function tenantForPathSegment(segment: string | undefined): TenantEntry | undefined {
+  if (!segment) return undefined
+  return TENANT_MAP.bySubdomain[segment] ?? Object.values(TENANT_MAP.bySubdomain).find((entry) => entry.slug === segment)
+}
+
+function rootPathResponse(request: NextRequest): NextResponse | null {
+  const pathname = request.nextUrl.pathname
+  if (ROOT_PLATFORM_PATHS.has(pathname)) return NextResponse.next()
+
+  const segments = pathname.split('/').filter(Boolean)
+  const first = segments[0]
+  const pathTenant = tenantForPathSegment(first)
+
+  // A tenant-prefixed admin path whose first segment is no longer in the map is
+  // a stale link, not a request for a new tenant. Keep it on the platform login
+  // flow so it cannot fall through to a different tenant.
+  if (!pathTenant && first && segments[1] && ROOT_TENANT_PATHS.has(segments[1])) {
+    const url = new URL('/login', request.url)
+    url.searchParams.set('error', 'retired-tenant')
+    return NextResponse.redirect(url)
+  }
+
+  if (first && ROOT_TENANT_PATHS.has(first)) {
+    const tenant = request.cookies.get(TENANT_COOKIE)?.value
+    if (tenant && Object.values(TENANT_MAP.bySubdomain).some((entry) => entry.slug === tenant)) {
+      const url = request.nextUrl.clone()
+      url.pathname = `/${tenant}${pathname}`
+      return NextResponse.redirect(url)
+    }
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  if (!usesPathTenants()) return null
+
+  if (pathTenant) {
+    if (pathTenant.status === 'archived') {
+      return new NextResponse('This site is no longer available.', {
+        status: 410,
+        headers: { 'x-robots-tag': 'noindex, nofollow' },
+      })
+    }
+
+    const tenantSuffix = first?.length ? pathname.slice(first.length + 1) : ''
+    const canonicalPath = `/${pathTenant.slug}${tenantSuffix}`
+    if (pathname !== canonicalPath) {
+      const url = request.nextUrl.clone()
+      url.pathname = canonicalPath
+      const response = NextResponse.redirect(url)
+      response.cookies.set(TENANT_COOKIE, pathTenant.slug, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: true,
+        path: '/',
+      })
+      return response
+    }
+
+    const response = NextResponse.next()
+    response.cookies.set(TENANT_COOKIE, pathTenant.slug, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: true,
+      path: '/',
+    })
+    response.headers.set('x-tenant', pathTenant.slug)
+    if (pathTenant.status !== 'live') response.headers.set('x-robots-tag', 'noindex, nofollow')
+    return response
+  }
+
+  return null
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -135,16 +227,20 @@ export function middleware(request: NextRequest) {
 
   const host = request.headers.get('host') ?? ''
   const hostname = parseHostname(host)
-  const isRootHost =
-    hostname === ROOT_DOMAIN ||
-    hostname === `www.${ROOT_DOMAIN}` ||
-    (process.env.NODE_ENV !== 'production' && isDevLoopbackOrLan(hostname))
+  const isRootHostRequest =
+    isRootHost(host) ||
+    (process.env.NODE_ENV !== 'production' && isBareDevHost(hostname))
 
   // Platform pages live on the root domain and must never be rewritten to a
   // tenant. Keep this allowlist narrow so an unknown root-domain path still
   // fails closed instead of exposing tenant routing.
-  if (isRootHost && (pathname === '/studio-presence' || pathname.startsWith('/studio-presence/'))) {
+  if (isRootHostRequest && (pathname === '/studio-presence' || pathname.startsWith('/studio-presence/'))) {
     return NextResponse.next()
+  }
+
+  if (isRootHostRequest) {
+    const rootResponse = rootPathResponse(request)
+    if (rootResponse) return rootResponse
   }
 
   const resolved = resolveTenant(host)

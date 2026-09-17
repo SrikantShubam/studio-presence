@@ -2,6 +2,5 @@ import type { NextRequest } from 'next/server'
 import { handleAuthCallback } from '@/lib/auth-callback'
 
 export async function GET(request: NextRequest) {
-  const tenant = request.nextUrl.searchParams.get('tenant') ?? undefined
-  return handleAuthCallback(request, tenant, 'host')
+  return handleAuthCallback(request)
 }

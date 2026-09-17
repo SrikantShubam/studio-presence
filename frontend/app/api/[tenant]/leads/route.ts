@@ -58,8 +58,7 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
   }
 
   try {
-    const requestId = request.headers.get('idempotency-key') ?? crypto.randomUUID()
-    const result = await leads.create({ tenantSlug: tenant, ...parsed.data, requestId })
+    const result = await leads.create({ tenantSlug: tenant, ...parsed.data })
     return NextResponse.json(result, { status: 201 })
   } catch (e) {
     const errText = safeError(e)

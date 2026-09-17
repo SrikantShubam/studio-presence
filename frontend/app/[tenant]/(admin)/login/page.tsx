@@ -4,6 +4,7 @@ import { loadClientConfig, ConfigError } from '@studio/backend'
 import { ThemeToggle } from '../ThemeToggle'
 import { LoginForm } from './LoginForm'
 import { PLATFORM_BRAND } from '@/lib/platform-brand'
+import { AUTH_ERROR_MESSAGES } from '@/lib/auth-messages'
 
 /**
  * `/login`, serving both the panel and the dashboard.
@@ -16,17 +17,6 @@ import { PLATFORM_BRAND } from '@/lib/platform-brand'
  * The screen uses platform branding for authentication, while the left preview
  * can still remind the visitor which tenant site they are trying to access.
  */
-
-const ERROR_MESSAGES: Record<string, string> = {
-  'missing-code': 'That link looks incomplete. Request a new one below.',
-  'link-expired': 'That link has expired or was already used. Request a fresh link below.',
-  'auth-pkce': 'This link was opened in a different browser or device. Request a new link and open it in the same browser where you entered your email.',
-  'auth-invalid': 'That sign-in link was invalid or incomplete. Request a new link below.',
-  'auth-unreachable': 'The sign-in service is temporarily unavailable. Wait a moment and request a new link.',
-  'no-email': 'Something went wrong on our side. Request a new link below.',
-  'no-tenant': "This email isn't linked to a site yet. Message us on WhatsApp and we'll sort it out.",
-  'wrong-tenant': 'This email is linked to more than one site. Message us on WhatsApp and we’ll sort it out.',
-}
 
 export default async function LoginPage({
   params,
@@ -47,6 +37,7 @@ export default async function LoginPage({
   }
 
   const digits = config.business.whatsapp.replace(/[^\d]/g, '')
+  const heroImage = config.sections.hero?.image
   const whatsappHref = digits
     ? `https://wa.me/${digits}?text=${encodeURIComponent("Hi, I'm having trouble signing in to my site.")}`
     : null
@@ -55,14 +46,18 @@ export default async function LoginPage({
     <main className="min-h-screen bg-admin-bg px-4 py-5 text-admin-ink lg:flex lg:items-center lg:justify-center">
       <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-lg border border-admin-border bg-admin-surface lg:min-h-[40rem] lg:grid-cols-[1.05fr_0.95fr]">
         <section className="relative flex min-h-[32rem] flex-col justify-between overflow-hidden border-b border-admin-border p-5 sm:p-7 lg:border-b-0 lg:border-r">
-          <Image
-            src="/clients/ashish-interiors/editorial/hero.jpg"
-            alt=""
-            fill
-            priority
-            sizes="(min-width: 1024px) 52vw, 100vw"
-            className="object-cover"
-          />
+          {heroImage ? (
+            <Image
+              src={heroImage}
+              alt=""
+              fill
+              priority
+              sizes="(min-width: 1024px) 52vw, 100vw"
+              className="object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-admin-primary-soft" />
+          )}
           <div className="absolute inset-0 bg-admin-bg/70" />
           <div className="absolute inset-0 bg-admin-bg/30" />
 
@@ -123,9 +118,9 @@ export default async function LoginPage({
               </p>
             </div>
 
-            {errorCode && ERROR_MESSAGES[errorCode] && (
+            {errorCode && AUTH_ERROR_MESSAGES[errorCode] && (
               <p className="mb-4 rounded-lg border border-admin-alert bg-admin-alert-soft px-3 py-2 text-sm font-medium text-admin-alert">
-                {ERROR_MESSAGES[errorCode]}
+                {AUTH_ERROR_MESSAGES[errorCode]}
               </p>
             )}
 

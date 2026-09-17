@@ -9,21 +9,20 @@ Setup once, before starting:
 
 ```bash
 npm run dev
-npm run provision:qa-owner -- <your-email>
 ```
 
-**`localhost:3000` on its own shows nothing, and that's correct** — every site is a tenant resolved
-by subdomain, so the bare host has no site to serve. The URLs you actually want:
+The platform entry points are available on `localhost:3000`: `/login` starts the sign-in flow and
+`/demo` is the authenticated platform demo. Tenant sites remain resolved by subdomain, so use:
 
 | URL | What it is |
 |---|---|
-| http://qa-owner.localhost:3000/ | your QA tenant — t3, so it has both `/panel` and `/dashboard` |
 | http://ashish.localhost:3000/ | the realistic demo site, t3 with real content |
 | http://minimal.localhost:3000/ | t0 edge case — most sections absent |
 | http://stress.localhost:3000/ | deliberately overloaded t3 — 40 projects, long Hindi text |
 
-Sign in at `qa-owner` for anything admin; use `ashish` for judging the public site. `minimal` and
-`stress` are fixtures for edge cases, not accounts to sign into.
+Sign in through `/login`; the account's tenant membership determines whether `/panel` or
+`/dashboard` is available. Use `ashish` for judging the public site. `minimal` and `stress` are
+fixtures for edge cases, not accounts to sign into.
 
 ---
 
@@ -82,7 +81,7 @@ Sign in at `qa-owner` for anything admin; use `ashish` for judging the public si
 
 ## Panel — content editor (tickets 09-10)
 
-Log into `/panel` as the `qa-owner` tenant.
+Log into `/panel` for a tenant with editor access.
 
 - [ ] You can change the phone number, save, and see it actually change on the live public page
       within about a minute (not instantly — that's expected, just confirm it does eventually)
@@ -105,8 +104,8 @@ Log into `/panel` as the `qa-owner` tenant.
 
 ## Dashboard — leads (ticket 11)
 
-Log into `/dashboard` as `qa-owner` (T3-tier only — confirm a lower-tier account gets redirected to
-`/panel` instead, doesn't error or show a blank page).
+Log into `/dashboard` for a tenant with dashboard access (T3-tier only — confirm a lower-tier
+account gets redirected to `/panel` instead, doesn't error or show a blank page).
 
 - [ ] With no leads yet, the empty state reads like real guidance ("put your website link in your
       Instagram bio..."), not "No data"
@@ -152,8 +151,8 @@ Same login, the "Analytics" tab next to "Leads".
 ## Cross-cutting things worth checking once, not per-ticket
 
 - [ ] **Tenant isolation, the paranoid way**: while logged in as `ashish-interiors`, try changing the
-      URL's tenant slug to `qa-owner` (or vice versa) — you should get bounced out, never see the
-      other tenant's leads/panel/dashboard
+      URL's tenant slug to another tenant — you should get bounced out, never see the other tenant's
+      leads/panel/dashboard
 - [ ] Sign out actually signs out — after it, hitting `/panel` or `/dashboard` directly redirects to
       login, doesn't show a cached page
 - [ ] Magic-link login: request one, actually click the link from your real inbox, confirm it signs
