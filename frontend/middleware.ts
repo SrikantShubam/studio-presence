@@ -42,11 +42,16 @@ function envHostname(value: string | undefined): string {
   }
 }
 
+const CANDIDATE_DOMAIN = 'candidate.srikantshubams-projects.vercel.app'
+const PREVIEW_DOMAIN = 'preview.srikantshubams-projects.vercel.app'
+
 const VERCEL_HOSTS = new Set(
   [
     envHostname(process.env.VERCEL_URL),
     envHostname(process.env.VERCEL_BRANCH_URL),
     envHostname(process.env.VERCEL_PROJECT_PRODUCTION_URL),
+    CANDIDATE_DOMAIN,
+    PREVIEW_DOMAIN,
   ].filter(Boolean),
 )
 const ROOT_PLATFORM_PATHS = new Set([
@@ -137,10 +142,16 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
     return null
   }
 
-  if (hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}`) return null
+  if (
+    hostname === ROOT_DOMAIN ||
+    hostname === `www.${ROOT_DOMAIN}` ||
+    hostname === CANDIDATE_DOMAIN ||
+    hostname === PREVIEW_DOMAIN
+  ) return null
 
-  if (hostname.endsWith(`.${ROOT_DOMAIN}`)) {
-    const sub = hostname.slice(0, -(ROOT_DOMAIN.length + 1))
+  const platformDomain = [ROOT_DOMAIN, CANDIDATE_DOMAIN, PREVIEW_DOMAIN].find((d) => hostname.endsWith(`.${d}`))
+  if (platformDomain) {
+    const sub = hostname.slice(0, -(platformDomain.length + 1))
     if (RETIRED_TENANT_HOSTS.has(sub)) return null
     const entry = TENANT_MAP.bySubdomain[sub]
     if (entry) return { entry, viaCustomDomain: false }

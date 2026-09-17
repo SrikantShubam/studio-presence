@@ -60,4 +60,12 @@ assert.equal(pathFallback.status, 404, 'preview must not fall back to path-based
 const unknownPreviewTenant = middleware(request('https://qa-owner.preview.srikantshubams-projects.vercel.app/dashboard'))
 assert.equal(unknownPreviewTenant.status, 404, 'retired preview tenant hostname must fail closed')
 
+const candidateRoot = middleware(request('https://candidate.srikantshubams-projects.vercel.app/'))
+assert.equal(candidateRoot.status, 200, 'candidate root should remain a platform route')
+
+const candidateTenant = middleware(request('https://ashish-interiors.candidate.srikantshubams-projects.vercel.app/dashboard'))
+assert.equal(candidateTenant.status, 200, 'candidate tenant hostname should resolve directly')
+assert.equal(candidateTenant.headers.get('x-tenant'), 'ashish-interiors')
+
 console.log('middleware routing checks passed')
+
