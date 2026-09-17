@@ -22,11 +22,6 @@ create table tenant_workspaces (
   updated_by   uuid not null references auth.users
 );
 
--- A user owns one workspace in this onboarding model. The RPC also takes a
--- transaction-scoped advisory lock so concurrent retries resolve to the same
--- committed membership instead of racing each other.
-create unique index tenant_members_one_tenant_per_user_idx on tenant_members (user_id);
-
 alter table onboarding_drafts enable row level security;
 alter table tenant_hostnames enable row level security;
 alter table tenant_workspaces enable row level security;
@@ -78,6 +73,11 @@ begin
   if coalesce(trim(p_name), '') = '' or v_slug !~ '^[a-z0-9-]+$' then raise exception 'invalid onboarding identity' using errcode = 'check_violation'; end if;
   if v_source not in ('organic', 'cold-call') then raise exception 'invalid onboarding source' using errcode = 'check_violation'; end if;
 
+  -- Existing operators may have intentionally linked a user to multiple
+  -- tenants; those rows must remain intact because requireTenant fails closed
+  -- instead of silently choosing one. Authenticated clients have no direct
+  -- tenant_members insert policy, so this lock is the onboarding allocation
+  -- guard without a destructive migration-time cleanup.
   perform pg_advisory_xact_lock(hashtextextended(v_user_id::text, 0));
 
   -- Completion is a user-level singleton. This is the retry/double-click guard.
