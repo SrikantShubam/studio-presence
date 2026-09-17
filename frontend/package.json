@@ -6,7 +6,7 @@
   "scripts": {
     "predev": "node --import tsx ../scripts/sync-frontend-env.ts",
     "dev": "next dev",
-    "prebuild": "node --import tsx ../scripts/sync-frontend-env.ts",
+    "prebuild": "node --import tsx ../scripts/sync-frontend-env.ts && node --env-file-if-exists=../.env --import tsx ../scripts/gen-tenant-map.ts",
     "build": "next build",
     "start": "next start"
   },

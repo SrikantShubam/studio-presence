@@ -16,6 +16,7 @@
     "check:config": "node --env-file-if-exists=.env --import tsx scripts/check-config.ts",
     "check:hardcode": "node --env-file-if-exists=.env --import tsx scripts/check-hardcode.ts",
     "check:placeholder": "node --env-file-if-exists=.env --import tsx scripts/check-placeholder.ts",
+    "test:onboarding": "node --env-file-if-exists=.env --import tsx scripts/test-onboarding.ts",
     "check:tiers": "node --env-file-if-exists=.env --import tsx scripts/check-tiers.ts",
     "check:tenant-isolation": "node --env-file-if-exists=.env --import tsx scripts/check-tenant-isolation.ts",
     "check:all": "npm run typecheck && npm run lint && npm run check:config && npm run check:tiers && npm run check:tenant-isolation && npm run check:hardcode && npm run check:placeholder",

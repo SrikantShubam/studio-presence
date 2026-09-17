@@ -63,6 +63,27 @@ export type ClientOverride = {
   updated_by: string | null
 }
 
+export type OnboardingDraft = {
+  user_id: string
+  payload: Record<string, unknown>
+  completed_at: string | null
+  updated_at: string
+}
+
+export type TenantHostname = {
+  tenant_id: string
+  hostname: string
+  source: 'organic' | 'cold-call'
+  created_at: string
+}
+
+export type TenantWorkspace = {
+  tenant_id: string
+  config: Record<string, unknown>
+  updated_at: string
+  updated_by: string
+}
+
 type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
   Row: Row
   Insert: Insert
@@ -78,6 +99,9 @@ export type Database = {
       leads: Table<Lead>
       lead_events: Table<LeadEvent>
       client_overrides: Table<ClientOverride>
+      onboarding_drafts: Table<OnboardingDraft>
+      tenant_hostnames: Table<TenantHostname>
+      tenant_workspaces: Table<TenantWorkspace>
     }
     Views: Record<never, never>
     Functions: {
@@ -104,6 +128,10 @@ export type Database = {
       get_client_overrides: {
         Args: { p_tenant_slug: string }
         Returns: Record<string, unknown>
+      }
+      complete_onboarding: {
+        Args: { p_requested_slug: string; p_name: string; p_hostname: string; p_config: Record<string, unknown>; p_source?: string }
+        Returns: { tenant_id: string; tenant_slug: string; hostname: string }[]
       }
     }
     Enums: {
