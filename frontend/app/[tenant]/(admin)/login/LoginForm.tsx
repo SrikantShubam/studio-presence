@@ -11,10 +11,11 @@ import { authCallbackUrl } from '@/lib/platform-auth'
  * same reason: this user is not going to remember one, and a reset flow is a
  * support ticket we would rather not own.
  *
- * `emailRedirectTo` uses the configured canonical auth origin when available.
- * This matters on Vercel: a link created on one temporary deployment must not
- * return to a different deployment where the PKCE verifier cookie does not
- * exist. A tenant is carried as a hint only; membership is resolved server-side.
+ * Callback URLs stay on the browser's current origin. Supabase's PKCE verifier
+ * is stored on that origin, so sending a preview login to a different
+ * configured/canonical host would make an otherwise valid Google callback look
+ * like it was opened in another browser. A tenant is carried as a hint only;
+ * membership is resolved server-side.
  */
 
 const RESEND_SECONDS = 30
@@ -53,7 +54,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     void supabase.auth.getSession().then(({ data }) => {
       if (!active || !data.session) return
       window.location.replace(
-        authCallbackUrl(window.location.origin, process.env.NEXT_PUBLIC_AUTH_ORIGIN, {
+        authCallbackUrl(window.location.origin, {
           tenant,
           next: nextPath,
         }),
@@ -74,7 +75,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     setStatus('sending')
     setError(null)
 
-    const callback = authCallbackUrl(window.location.origin, process.env.NEXT_PUBLIC_AUTH_ORIGIN, {
+    const callback = authCallbackUrl(window.location.origin, {
       tenant,
       next: nextPath,
     })
@@ -104,7 +105,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     setStatus('oauth')
     setError(null)
 
-    const callback = authCallbackUrl(window.location.origin, process.env.NEXT_PUBLIC_AUTH_ORIGIN, {
+    const callback = authCallbackUrl(window.location.origin, {
       tenant,
       next: nextPath,
     })

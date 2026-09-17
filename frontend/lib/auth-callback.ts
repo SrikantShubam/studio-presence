@@ -7,7 +7,7 @@ import {
   requireTenant,
 } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
-import { tenantDestinationUrl } from '@/lib/platform-auth'
+import { tenantAuthNextPath, tenantDestinationUrl } from '@/lib/platform-auth'
 
 function originFrom(request: NextRequest): string {
   const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host')
@@ -109,7 +109,7 @@ export async function handleAuthCallback(
       return NextResponse.redirect(`${origin}/login?error=wrong-tenant`)
     }
 
-    const destination = next && next.startsWith('/') ? next : destinationForTenant(tenant)
+    const destination = next ? tenantAuthNextPath(next) : destinationForTenant(tenant)
     return NextResponse.redirect(tenantDestinationUrl(origin, tenant.slug, destination, routing))
   } catch (error) {
     if (!(error instanceof AuthError)) throw error

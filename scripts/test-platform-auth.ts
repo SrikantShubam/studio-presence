@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import {
   authCallbackUrl,
   canonicalAuthOrigin,
+  tenantAuthNextPath,
   tenantDestinationUrl,
 } from '../frontend/lib/platform-auth.ts'
 
@@ -12,18 +13,25 @@ assert.equal(
 )
 
 assert.equal(
-  authCallbackUrl('https://temporary.vercel.app', 'https://preview.example.com', {
+  authCallbackUrl('https://temporary.vercel.app', {
     next: '/dashboard',
   }),
-  'https://preview.example.com/auth/callback?next=%2Fdashboard',
+  'https://temporary.vercel.app/auth/callback?next=%2Fdashboard',
 )
 
 assert.equal(
-  authCallbackUrl('https://temporary.vercel.app', 'https://preview.example.com', {
+  authCallbackUrl('https://temporary.vercel.app', {
     tenant: 'ashish-interiors',
   }),
-  'https://preview.example.com/auth/callback?tenant=ashish-interiors',
+  'https://temporary.vercel.app/auth/callback?tenant=ashish-interiors',
 )
+
+assert.equal(tenantAuthNextPath('/dashboard/content'), '/dashboard/content')
+assert.equal(tenantAuthNextPath('/panel'), '/panel')
+assert.equal(tenantAuthNextPath('/demo'), '/dashboard')
+assert.equal(tenantAuthNextPath('/onboarding'), '/dashboard')
+assert.equal(tenantAuthNextPath('https://example.com/demo'), '/dashboard')
+assert.equal(tenantAuthNextPath('//example.com/demo'), '/dashboard')
 
 assert.equal(
   tenantDestinationUrl('https://preview.example.com', 'tenant-a', '/dashboard', 'path'),

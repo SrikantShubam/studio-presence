@@ -12,13 +12,31 @@ export function canonicalAuthOrigin(currentOrigin: string, configuredOrigin?: st
 
 export function authCallbackUrl(
   currentOrigin: string,
-  configuredOrigin: string | undefined,
   options: AuthCallbackOptions = {},
 ): string {
-  const callback = new URL('/auth/callback', canonicalAuthOrigin(currentOrigin, configuredOrigin))
+  // Supabase's browser client stores the PKCE verifier on the origin that
+  // starts the OAuth flow. Returning to a configured/canonical origin when it
+  // differs from the current browser origin loses that verifier and produces
+  // the misleading "different browser or device" error. The callback must
+  // therefore stay on the origin where sign-in began; Vercel preview URLs are
+  // valid origins in their own right.
+  const callback = new URL('/auth/callback', currentOrigin)
   if (options.tenant) callback.searchParams.set('tenant', options.tenant)
   if (options.next) callback.searchParams.set('next', options.next)
   return callback.toString()
+}
+
+const TENANT_ADMIN_PREFIXES = ['/admin', '/dashboard', '/panel']
+
+export function tenantAuthNextPath(next: string | undefined): string {
+  if (!next || !next.startsWith('/') || next.startsWith('//')) return '/dashboard'
+
+  const path = next.split(/[?#]/, 1)[0] ?? next
+  if (TENANT_ADMIN_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) {
+    return next
+  }
+
+  return '/dashboard'
 }
 
 export function tenantDestinationUrl(
