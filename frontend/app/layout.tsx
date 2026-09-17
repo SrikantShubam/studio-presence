@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { AuthHashCatcher } from '@/lib/auth-hash-catcher'
 import './globals.css'
 
 /**
@@ -17,7 +16,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <AuthHashCatcher />
         {children}
       </body>
     </html>

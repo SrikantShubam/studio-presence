@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import type { Session } from '@supabase/supabase-js'
 import {
   AuthError,
   claimOperatorAccess,
@@ -7,12 +8,20 @@ import {
   requireTenant,
 } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { isAllowedAuthOrigin, safeAuthNextPath } from '@/lib/auth-policy'
 import { tenantAuthNextPath, tenantDestinationUrl } from '@/lib/platform-auth'
 
-function originFrom(request: NextRequest): string {
+export function authOriginFromRequest(request: NextRequest): string | null {
   const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host')
   const proto = request.headers.get('x-forwarded-proto') ?? request.nextUrl.protocol.replace(':', '')
-  return `${proto}://${host}`
+  if (!host) return null
+
+  try {
+    const origin = new URL(`${proto}://${host}`).origin
+    return isAllowedAuthOrigin(origin) ? origin : null
+  } catch {
+    return null
+  }
 }
 
 function failureCode(error: { code?: string; status?: number; message?: string } | null | undefined): string {
@@ -62,18 +71,16 @@ export async function handleAuthCallback(
   requestedTenant?: string,
   routing: 'host' | 'path' = pathRouting(),
 ) {
-  const origin = originFrom(request)
+  const origin = authOriginFromRequest(request)
+  if (!origin) return NextResponse.json({ error: 'invalid-origin' }, { status: 400 })
+
   const providerFailure = providerFailureTarget(origin, request)
   if (providerFailure) return NextResponse.redirect(providerFailure)
 
   const params = request.nextUrl.searchParams
   const code = params.get('code')
-  const tokenHash = params.get('token_hash')
-  const token = params.get('token')
-  const email = params.get('email')
-  const otpType = params.get('type')
   const hintedTenant = requestedTenant ?? params.get('tenant') ?? undefined
-  const next = params.get('next')
+  const next = safeAuthNextPath(params.get('next') ?? undefined)
 
   const supabase = await createSupabaseServerClient()
   let session = (await supabase.auth.getSession()).data.session ?? null
@@ -82,18 +89,23 @@ export async function handleAuthCallback(
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
     if (error || !data.session) return NextResponse.redirect(failureTarget(origin, error))
     session = data.session
-  } else if (tokenHash) {
-    const type = otpType === 'recovery' || otpType === 'email' || otpType === 'signup' ? otpType : 'email'
-    const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash })
-    if (error || !data.session) return NextResponse.redirect(failureTarget(origin, error))
-    session = data.session
-  } else if (token && email) {
-    const { data, error } = await supabase.auth.verifyOtp({ type: 'email', email, token })
-    if (error || !data.session) return NextResponse.redirect(failureTarget(origin, error))
-    session = data.session
+  } else if (params.has('token_hash') || params.has('token') || params.has('type')) {
+    return NextResponse.redirect(failureTarget(origin, { code: 'invalid-token' }))
   } else if (!session) {
     return NextResponse.redirect(`${origin}/login?error=missing-code`)
   }
+
+  return routeAuthenticatedSession(origin, session, hintedTenant, next, routing)
+}
+
+export async function routeAuthenticatedSession(
+  origin: string,
+  session: Session,
+  hintedTenant: string | undefined,
+  next: string | undefined,
+  routing: 'host' | 'path',
+) {
+  if (!isAllowedAuthOrigin(origin)) return NextResponse.json({ error: 'invalid-origin' }, { status: 400 })
 
   const { user, access_token: accessToken } = session
   if (!user.email) return NextResponse.redirect(`${origin}/login?error=no-email`)

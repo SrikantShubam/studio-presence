@@ -1,8 +1,11 @@
+import { safeAuthNextPath } from './auth-policy'
+
 export type TenantRouting = 'host' | 'path'
 
 type AuthCallbackOptions = {
   tenant?: string
   next?: string
+  path?: '/auth/callback' | '/auth/confirm' | '/auth/recovery'
 }
 
 export function canonicalAuthOrigin(currentOrigin: string, configuredOrigin?: string): string {
@@ -20,9 +23,9 @@ export function authCallbackUrl(
   // the misleading "different browser or device" error. The callback must
   // therefore stay on the origin where sign-in began; Vercel preview URLs are
   // valid origins in their own right.
-  const callback = new URL('/auth/callback', currentOrigin)
+  const callback = new URL(options.path ?? '/auth/callback', currentOrigin)
   if (options.tenant) callback.searchParams.set('tenant', options.tenant)
-  if (options.next) callback.searchParams.set('next', options.next)
+  if (options.next) callback.searchParams.set('next', safeAuthNextPath(options.next))
   return callback.toString()
 }
 

@@ -22,6 +22,15 @@ assert.equal(new URL(location(bareAdmin)).pathname, '/login')
 const onboarding = middleware(request('http://localhost/onboarding'))
 assert.equal(onboarding.status, 200, 'unlinked accounts need the platform onboarding route')
 
+const confirmation = middleware(request('http://localhost/auth/confirm?token_hash=abc&type=signup'))
+assert.equal(confirmation.status, 200, 'confirmation must remain a platform route')
+
+const recovery = middleware(request('http://ashish.localhost/auth/recovery?token_hash=abc&type=recovery'))
+assert.equal(recovery.status, 200, 'recovery must remain on the exact tenant browser origin')
+
+const reset = middleware(request('http://localhost/reset-password'))
+assert.equal(reset.status, 200, 'reset password must remain a platform route')
+
 const retiredPath = middleware(request('http://localhost/qa-owner/dashboard'))
 assert.equal(retiredPath.status, 307, 'retired tenant admin path should redirect')
 const retiredUrl = new URL(location(retiredPath))

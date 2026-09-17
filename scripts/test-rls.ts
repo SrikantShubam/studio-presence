@@ -47,7 +47,7 @@ function assert(label: string, condition: boolean, detail: string): void {
 async function provision(t: { slug: string; email: string }) {
   const { data: tenant, error: te } = await admin
     .from('tenants')
-    .insert({ slug: t.slug, name: t.slug, tier: 't3', status: 'demo' })
+    .insert({ slug: t.slug, name: t.slug, tier: 't3', status: 'live' })
     .select()
     .single()
   if (te) throw new Error(`creating tenant ${t.slug}: ${te.message}`)
@@ -147,6 +147,22 @@ async function main() {
       'A inserted a row scoped to B. Check the lead_events_insert with-check clause.',
     )
 
+    const { error: membershipInsert } = await asA
+      .from('tenant_members')
+      .insert({ user_id: session.session.user.id, tenant_id: created[1]!.tenantId, role: 'owner' })
+    assert(
+      'A cannot create a membership in B',
+      membershipInsert !== null,
+      'A inserted a tenant_members row. Ordinary users must never grant themselves workspace access.',
+    )
+
+    const { data: operatorResult, error: operatorError } = await asA.rpc('is_operator')
+    assert(
+      'ordinary users cannot reach operator access',
+      !operatorError && operatorResult === false,
+      `is_operator returned ${String(operatorResult)} or errored: ${operatorError?.message ?? 'none'}`,
+    )
+
     // A FRESH client for the anonymous assertions.
     //
     // Reusing `anon` would be wrong and quietly so: signInWithPassword leaves the
@@ -158,9 +174,18 @@ async function main() {
 
     const { data: newLeadId, error: subErr } = await trulyAnon.rpc('submit_lead', {
       p_tenant_slug: A.slug,
+      p_request_id: `${stamp}-anonymous-lead`,
+      p_origin_kind: 'organic',
       p_name: 'Anonymous visitor',
       p_phone: '+919111111111',
+      p_email: null,
+      p_locality: null,
+      p_project_type: null,
+      p_budget_band: null,
+      p_timeline: null,
+      p_message: null,
       p_source: 'whatsapp',
+      p_source_page: null,
     })
     assert(
       'an anonymous visitor can submit a lead',

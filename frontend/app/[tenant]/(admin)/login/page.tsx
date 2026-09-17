@@ -114,7 +114,7 @@ export default async function LoginPage({
               <p className="text-xs font-semibold uppercase tracking-wide text-admin-muted">Login and sign up</p>
               <h1 className="mt-2 text-3xl font-semibold leading-tight text-admin-ink">Access Studio Presence.</h1>
               <p className="mt-3 text-sm leading-6 text-admin-muted">
-                Google is fastest. Email links stay available for personal, work, or temporary addresses.
+                Google is fastest. Email and password access stays available for personal, work, or temporary addresses.
               </p>
             </div>
 

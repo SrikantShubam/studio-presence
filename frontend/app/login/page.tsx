@@ -6,7 +6,7 @@ import { PLATFORM_BRAND } from '@/lib/platform-brand'
 const PLATFORM_LOGIN_COPY = {
   eyebrow: 'Universal access',
   title: 'Access your Studio Presence workspace.',
-  description: 'Use Google or a one-time email link. Your studio workspace is selected after we verify your account.',
+  description: 'Use Google or email and password. Your studio workspace is selected after we verify your account.',
   demoLabel: 'Platform demo',
   demoTitle: 'Explore the product before your studio is connected.',
   demoDescription: 'Unlinked accounts enter a clearly labelled demo with local-only sample content. Real studio data remains membership-gated.',
