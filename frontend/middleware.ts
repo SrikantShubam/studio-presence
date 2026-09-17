@@ -141,7 +141,20 @@ function resolveTenant(host: string): { entry: TenantEntry; viaCustomDomain: boo
   if (hostname.endsWith(`.${ROOT_DOMAIN}`)) {
     const sub = hostname.slice(0, -(ROOT_DOMAIN.length + 1))
     const entry = TENANT_MAP.bySubdomain[sub]
-    return entry ? { entry, viaCustomDomain: false } : null
+    if (entry) return { entry, viaCustomDomain: false }
+
+    // Onboarded tenants are persisted in Supabase and therefore cannot be
+    // compiled into the edge bundle. The page loader verifies this candidate
+    // against tenant_hostnames and falls back to the fixture loader for older
+    // static sites; this placeholder only lets the request reach that loader.
+    if (/^[a-z0-9-]+$/.test(sub)) {
+      return {
+        entry: { slug: sub, status: 'demo', tier: 't0', template: 'editorial' },
+        viaCustomDomain: false,
+      }
+    }
+
+    return null
   }
 
   const entry = TENANT_MAP.byCustomDomain[hostname]

@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import { resolveClientConfig, createScopedClient } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
-import { EMPTY_ONBOARDING_DRAFT, type OnboardingDraft } from '@/lib/onboarding/types'
-import { suggestedIntroduction, validateOnboardingDraft } from '@/lib/onboarding/validation'
+import type { OnboardingDraft } from '@/lib/onboarding/types'
+import { parseOnboardingDraftInput, suggestedIntroduction, validateOnboardingDraft } from '@/lib/onboarding/validation'
 
 function slugFromName(name: string): string {
   return name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48) || 'studio'
@@ -41,9 +41,13 @@ export async function POST(request: Request) {
   const [{ data: userData }, { data: sessionData }] = await Promise.all([supabase.auth.getUser(), supabase.auth.getSession()])
   if (!userData.user || !sessionData.session) return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
 
-  const body = await request.json().catch(() => null) as Partial<OnboardingDraft> | null
-  const candidate: OnboardingDraft = { ...EMPTY_ONBOARDING_DRAFT, ...(body ?? {}) }
-  const result = validateOnboardingDraft(candidate)
+  const body = await request.json().catch(() => null)
+  const parsed = parseOnboardingDraftInput(body)
+  if (Object.keys(parsed.errors).length) {
+    return NextResponse.json({ error: 'Please correct the highlighted fields.', fields: parsed.errors }, { status: 422 })
+  }
+
+  const result = validateOnboardingDraft(parsed.draft)
   if (Object.keys(result.errors).length) return NextResponse.json({ error: 'Please correct the highlighted fields.', fields: result.errors }, { status: 422 })
 
   const slug = slugFromName(result.draft.studioName)

@@ -27,7 +27,7 @@ export type TenantContext = {
 export class AuthError extends Error {
   constructor(
     message: string,
-    public readonly code: 'no-session' | 'no-tenant' | 'wrong-tenant',
+    public readonly code: 'no-session' | 'no-tenant' | 'wrong-tenant' | 'tenant-query-failed',
   ) {
     super(message)
     this.name = 'AuthError'
@@ -48,7 +48,7 @@ export async function requireTenant(user: SessionUser): Promise<TenantContext> {
   // is no filter to forget here.
   const { data, error } = await db.from('tenants').select('*').limit(2)
 
-  if (error) throw new AuthError(`Could not resolve tenant: ${error.message}`, 'no-tenant')
+  if (error) throw new AuthError(`Could not resolve tenant: ${error.message}`, 'tenant-query-failed')
 
   const tenants = (data ?? []) as Tenant[]
   const tenant = tenants[0]

@@ -133,6 +133,10 @@ export type Database = {
         Args: { p_requested_slug: string; p_name: string; p_hostname: string; p_config: Record<string, unknown>; p_source?: string }
         Returns: { tenant_id: string; tenant_slug: string; hostname: string }[]
       }
+      get_public_tenant_config_by_hostname: {
+        Args: { p_hostname: string }
+        Returns: { tenant_slug: string; config: Record<string, unknown> }[]
+      }
     }
     Enums: {
       lead_source: LeadSource

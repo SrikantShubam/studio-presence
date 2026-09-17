@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { ConfigError, loadPublicClientConfig } from '@studio/backend'
-import { siteMetadataBase } from '@/lib/page-meta'
+import { ConfigError } from '@studio/backend'
 import { getTokenSet, tokensToCssVars } from '@/lib/tokens'
+import { loadPublicTenantConfigWithOverrides } from '@/lib/tenant-config'
 
 /**
  * Tenant layout — where a client's identity becomes CSS.
@@ -31,45 +31,28 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tenant } = await params
 
-  if (tenant === '_next') return { title: 'Not found' }
-
   let config
   try {
-    config = await loadPublicClientConfig(tenant)
+    config = await loadPublicTenantConfigWithOverrides(tenant)
   } catch {
     return { title: 'Not found' }
   }
 
   return {
-    metadataBase: await siteMetadataBase(),
-    title: {
-      default: config.seo.title,
-      template: `%s — ${config.business.name}`,
-    },
+    title: config.seo.title,
     description: config.seo.description,
     keywords: config.seo.keywords,
     // Without this a browser falls back to requesting `/favicon.ico` at the
     // root, which is not a tenant-scoped path and has no file behind it. The
     // schema has carried `brand.favicon` from the start; nothing was reading it.
-    icons: {
-      icon: [{ url: config.brand.favicon ?? `/${tenant}/icon.svg`, type: 'image/svg+xml' }],
-      apple: [{ url: `/${tenant}/apple-icon.svg`, type: 'image/svg+xml' }],
-    },
+    icons: config.brand.favicon ? { icon: config.brand.favicon } : undefined,
     // Belt and braces with the middleware header. A demo indexed under the
     // client's own name is expensive to undo and cheap to prevent twice.
     robots: config.seo.noindex ? { index: false, follow: false } : undefined,
     openGraph: {
       title: config.seo.title,
       description: config.seo.description,
-      type: 'website',
-      siteName: config.business.name,
-      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: config.seo.title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: config.seo.title,
-      description: config.seo.description,
-      images: ['/opengraph-image'],
+      images: config.brand.ogImage ? [config.brand.ogImage] : undefined,
     },
   }
 }
@@ -77,11 +60,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function TenantLayout({ children, params }: Props) {
   const { tenant } = await params
 
-  if (tenant === '_next') notFound()
-
   let config
   try {
-    config = await loadPublicClientConfig(tenant)
+    config = await loadPublicTenantConfigWithOverrides(tenant)
   } catch (e) {
     if (e instanceof ConfigError) {
       // A broken config must never render half a site on a client's subdomain.
