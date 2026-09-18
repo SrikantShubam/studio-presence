@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studio Presence | Private Atelier Client Access</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(16px, 3vw, 40px);
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      button, a, input, [role="button"] {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .bg-backdrop {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        filter: brightness(0.62) saturate(1.1);
+        transform: scale(1.03);
+        opacity: 0;
+        transition: opacity 0.7s ease-in-out, transform 10s ease-out;
+      }
+
+      .bg-backdrop.active {
+        opacity: 1;
+      }
+
+      body:hover .bg-backdrop {
+        transform: scale(1.0);
+      }
+
+      .ambient-glow {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.6) 100%);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .floating-modal {
+        position: relative;
+        z-index: 10;
+        width: min(480px, calc(100% - 32px));
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(28px) saturate(180%);
+        -webkit-backdrop-filter: blur(28px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 28px;
+        padding: clamp(28px, 4.5vw, 44px);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+        color: #111827;
+        transition: transform 0.3s ease;
+      }
+
+      /* Mobile Responsive: Fix skinny appearance */
+      @media (max-width: 480px) {
+        body {
+          padding: 16px 12px;
+        }
+
+        .floating-modal {
+          width: 100%;
+          max-width: 100%;
+          border-radius: 22px;
+          padding: 28px 20px;
+        }
+
+        .modal-title {
+          font-size: 1.5rem;
+        }
+
+        .input-field-modal {
+          font-size: 1rem; /* prevents iOS zoom */
+        }
+      }
+
+      /* Dark Mode Overrides */
+      @media (prefers-color-scheme: dark) {
+        .floating-modal {
+          background: rgba(18, 24, 38, 0.88);
+          border-color: rgba(255, 255, 255, 0.15);
+          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+          color: #f3f4f6;
+        }
+
+        .brand-dot {
+          background: #d4af37;
+        }
+
+        .brand-name {
+          color: #f3f4f6;
+        }
+
+        .modal-title {
+          color: #ffffff;
+        }
+
+        .modal-desc {
+          color: #9ca3af;
+        }
+
+        .pill-toggle-container {
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .pill-option {
+          color: #9ca3af;
+        }
+
+        .pill-option.active {
+          background: rgba(255, 255, 255, 0.2);
+          color: #ffffff;
+        }
+
+        .google-btn-modal {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(255, 255, 255, 0.18);
+          color: #ffffff;
+        }
+
+        .google-btn-modal:hover {
+          background: rgba(255, 255, 255, 0.15);
+        }
+
+        .input-label-floating {
+          color: #d1d5db;
+        }
+
+        .input-field-modal {
+          background: rgba(0, 0, 0, 0.4);
+          border-color: rgba(255, 255, 255, 0.18);
+          color: #ffffff;
+        }
+
+        .input-field-modal:focus {
+          border-color: #60a5fa;
+          background: rgba(0, 0, 0, 0.55);
+        }
+
+        .input-field-modal::placeholder {
+          color: #9ca3af;
+        }
+
+        .btn-black-pill {
+          background: #ffffff;
+          color: #111827;
+        }
+
+        .btn-black-pill:hover {
+          background: #f3f4f6;
+        }
+
+        .or-line {
+          color: #9ca3af;
+        }
+
+        .or-line::before, .or-line::after {
+          background: rgba(255, 255, 255, 0.15);
+        }
+
+        .modal-subtext {
+          color: #9ca3af;
+        }
+
+        .modal-subtext a {
+          color: #ffffff !important;
+        }
+      }
+
+      .modal-brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .brand-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #111827;
+      }
+
+      .brand-name {
+        font-size: 0.875rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #111827;
+      }
+
+      .modal-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        text-align: center;
+        margin-bottom: 6px;
+      }
+
+      .modal-desc {
+        font-size: 0.875rem;
+        color: #6b7280;
+        text-align: center;
+        margin-bottom: 24px;
+        line-height: 1.5;
+      }
+
+      /* Sliding Pill Switcher */
+      .pill-toggle-container {
+        position: relative;
+        display: flex;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 4px;
+        border-radius: 12px;
+        margin-bottom: 24px;
+      }
+
+      .pill-option {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 8px 12px;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #6b7280;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+
+      .pill-option.active {
+        background: #ffffff;
+        color: #111827;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Google Only Button */
+      .google-btn-modal {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 12px 18px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #111827;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .google-btn-modal:hover {
+        background: #f9fafb;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .google-btn-modal svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .or-line {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #9ca3af;
+        letter-spacing: 0.05em;
+      }
+
+      .or-line::before,
+      .or-line::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #e5e7eb;
+      }
+
+      .input-box {
+        margin-bottom: 16px;
+      }
+
+      .input-label-floating {
+        display: block;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 6px;
+      }
+
+      .input-field-modal {
+        width: 100%;
+        padding: 12px 16px;
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        font-family: inherit;
+        color: #111827;
+        outline: none;
+        transition: all 0.2s ease;
+      }
+
+      .input-field-modal:focus {
+        border-color: #111827;
+        box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
+      }
+
+      .btn-black-pill {
+        width: 100%;
+        padding: 14px;
+        background: #111827;
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 14px rgba(17, 24, 39, 0.2);
+        margin-top: 8px;
+      }
+
+      .btn-black-pill:hover {
+        background: #000000;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      .modal-subtext {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.8125rem;
+        color: #6b7280;
+      }
+
+      .modal-subtext a {
+        color: #111827;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Fullscreen Architectural Backdrops (smooth cross-fade) -->
+    <img
+      id="bgLogin"
+      class="bg-backdrop active"
+      src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop"
+      alt="Studio Presence High-Ceiling Architecture"
+    />
+    <img
+      id="bgSignup"
+      class="bg-backdrop"
+      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop"
+      alt="Studio Presence Villa Architecture"
+    />
+    <div class="ambient-glow"></div>
+
+    <!-- Centered Glassmorphic Modal -->
+    <div class="floating-modal">
+      <div class="modal-brand">
+        <span class="brand-dot"></span>
+        <span class="brand-name">Studio Presence</span>
+      </div>
+
+      <h1 id="modalHeader" class="modal-title">Welcome</h1>
+      <p id="modalDescription" class="modal-desc">Step into our curated architectural showcase and project commission studio.</p>
+
+      <div class="pill-toggle-container">
+        <button id="toggleLogIn" class="pill-option active">Sign In</button>
+        <button id="toggleSignUp" class="pill-option">Sign Up</button>
+      </div>
+
+      <!-- Google Only -->
+      <button type="button" class="google-btn-modal" onclick="alert('Continuing with Google...');">
+        <svg viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27a7.19 7.19 0 0 1 0-4.54V6.58H1.25a11.98 11.98 0 0 0 0 10.84l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        <span id="googleModalLabel">Continue with Google</span>
+      </button>
+
+      <div class="or-line">OR WITH EMAIL</div>
+
+      <form onsubmit="event.preventDefault(); alert('Access verified.');">
+        <div class="input-box" id="modalNameRow" style="display: none;">
+          <label class="input-label-floating" for="modalName">Full Name</label>
+          <input id="modalName" type="text" class="input-field-modal" placeholder="e.g. Rohini Singhania" />
+        </div>
+
+        <div class="input-box">
+          <label class="input-label-floating" for="modalEmail">Email Address</label>
+          <input id="modalEmail" type="email" class="input-field-modal" placeholder="name@domain.com" required />
+        </div>
+
+        <div class="input-box">
+          <label class="input-label-floating" for="modalPassword">Password</label>
+          <input id="modalPassword" type="password" class="input-field-modal" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required />
+        </div>
+
+        <button id="modalActionBtn" type="submit" class="btn-black-pill">
+          Sign In to Your Project
+        </button>
+      </form>
+
+      <p class="modal-subtext">
+        <span id="subtextPrompt">Need studio access?</span>
+        <a id="subtextSwitch" href="javascript:void(0)">Create an account</a>
+      </p>
+    </div>
+
+    <script>
+      const toggleLogIn = document.getElementById('toggleLogIn');
+      const toggleSignUp = document.getElementById('toggleSignUp');
+      const modalHeader = document.getElementById('modalHeader');
+      const modalDescription = document.getElementById('modalDescription');
+      const modalActionBtn = document.getElementById('modalActionBtn');
+      const googleModalLabel = document.getElementById('googleModalLabel');
+      const subtextPrompt = document.getElementById('subtextPrompt');
+      const subtextSwitch = document.getElementById('subtextSwitch');
+      const modalNameRow = document.getElementById('modalNameRow');
+      const modalName = document.getElementById('modalName');
+      const bgLogin = document.getElementById('bgLogin');
+      const bgSignup = document.getElementById('bgSignup');
+
+      function switchMode(isLogin) {
+        if (isLogin) {
+          bgLogin.classList.add('active');
+          bgSignup.classList.remove('active');
+          toggleLogIn.classList.add('active');
+          toggleSignUp.classList.remove('active');
+          modalHeader.textContent = "Welcome";
+          modalDescription.textContent = "Step into our curated architectural showcase and project commission studio.";
+          googleModalLabel.textContent = "Continue with Google";
+          modalActionBtn.textContent = "Sign In to Your Project";
+          subtextPrompt.textContent = "Need studio access?";
+          subtextSwitch.textContent = "Create an account";
+          modalNameRow.style.display = "none";
+          modalName.required = false;
+        } else {
+          bgSignup.classList.add('active');
+          bgLogin.classList.remove('active');
+          toggleSignUp.classList.add('active');
+          toggleLogIn.classList.remove('active');
+          modalHeader.textContent = "Create Account";
+          modalDescription.textContent = "Register with Studio Presence to unlock exclusive 3D floorplans, material palettes, and turnkey milestones.";
+          googleModalLabel.textContent = "Sign Up with Google";
+          modalActionBtn.textContent = "Create Account";
+          subtextPrompt.textContent = "Already registered?";
+          subtextSwitch.textContent = "Sign in here";
+          modalNameRow.style.display = "block";
+          modalName.required = true;
+        }
+      }
+
+      toggleLogIn.addEventListener('click', () => switchMode(true));
+      toggleSignUp.addEventListener('click', () => switchMode(false));
+      subtextSwitch.addEventListener('click', () => {
+        const isLogin = toggleLogIn.classList.contains('active');
+        switchMode(!isLogin);
+      });
+    </script>
+  
+    <!-- Global Keyboard Arrow Navigation -->
+    <script>
+      (function() {
+        const ALL_PROTOTYPES = [
+          "01-architectural-split-glass.html",
+          "02-haute-editorial-monochrome.html",
+          "05-atelier-floating-modal.html",
+          "07-nordic-scandi-sanctuary.html",
+          "09-biophilic-glasshouse.html",
+          "13-curated-collector-carousel.html",
+          "21-project-split.html",
+          "25-editorial-door.html"
+        ];
+        const currentFile = window.location.pathname.split('/').pop() || ALL_PROTOTYPES[0];
+        const currentIndex = ALL_PROTOTYPES.indexOf(currentFile);
+
+        window.addEventListener('keydown', function(e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'next' }, '*');
+            } else if (currentIndex !== -1) {
+              const nextIdx = (currentIndex + 1) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[nextIdx];
+            }
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'prev' }, '*');
+            } else if (currentIndex !== -1) {
+              const prevIdx = (currentIndex - 1 + ALL_PROTOTYPES.length) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[prevIdx];
+            }
+          }
+        }, true);
+      })();
+    </script>
+</body>
+</html>

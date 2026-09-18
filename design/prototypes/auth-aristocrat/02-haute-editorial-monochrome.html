@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studio Presence | Haute Interior Architecture &amp; Bespoke Estates</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg-white: #ffffff;
+        --ink-pure: #000000;
+        --ink-body: #2d2d2d;
+        --ink-subtle: #757575;
+        --line-hairline: #000000;
+        --line-subtle: #e0e0e0;
+        --page-bg: #faf9f6;
+        --input-bg: #ffffff;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-white: #141414;
+          --ink-pure: #f5f5f5;
+          --ink-body: #d1d5db;
+          --ink-subtle: #9ca3af;
+          --line-hairline: #ffffff;
+          --line-subtle: #2d2d2d;
+          --page-bg: #0d0d0d;
+          --input-bg: #1a1a1a;
+        }
+
+        .btn-editorial-black {
+          background: #f5f5f5 !important;
+          color: #0d0d0d !important;
+          border-color: #f5f5f5 !important;
+        }
+
+        .btn-editorial-black:hover {
+          background: #ffffff !important;
+          color: #000000 !important;
+          border-color: #ffffff !important;
+        }
+
+        .google-editorial-btn {
+          border-color: #333333 !important;
+          color: #f5f5f5 !important;
+        }
+
+        .google-editorial-btn:hover {
+          background: #f5f5f5 !important;
+          color: #0d0d0d !important;
+        }
+
+        .input-minimal {
+          border-bottom-color: #333333 !important;
+          color: #f5f5f5 !important;
+        }
+
+        .input-minimal:focus {
+          border-bottom-color: #ffffff !important;
+        }
+
+        .input-minimal::placeholder {
+          color: #737373 !important;
+        }
+
+        .photo-frame {
+          border-color: #333333 !important;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--page-bg);
+        color: var(--ink-pure);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(16px, 4vw, 48px);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        border-bottom: 1px solid var(--line-hairline);
+        padding-bottom: 18px;
+      }
+
+      .logo-brand {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .edition-tag {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink-subtle);
+      }
+
+      main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: clamp(32px, 6vw, 96px);
+        align-items: center;
+        max-width: 1280px;
+        margin: clamp(32px, 5vw, 64px) auto;
+        width: 100%;
+      }
+
+      /* Editorial Left Column */
+      .editorial-visual {
+        position: relative;
+      }
+
+      .photo-frame {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line-hairline);
+        background: #000;
+        aspect-ratio: 4/5;
+      }
+
+      .photo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(100%) contrast(108%);
+        transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s, opacity 0.4s ease;
+      }
+
+      .photo-frame img.img-switching {
+        opacity: 0.2;
+        transform: scale(0.98);
+      }
+
+      .photo-frame:hover img {
+        transform: scale(1.03);
+        filter: grayscale(85%) contrast(105%);
+      }
+
+      .caption-strip {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 14px;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--line-subtle);
+        padding-bottom: 10px;
+        transition: opacity 0.35s ease, transform 0.35s ease;
+      }
+
+      .quote-block {
+        margin-top: 24px;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.25rem, 2vw, 1.65rem);
+        line-height: 1.4;
+        font-style: italic;
+        color: var(--ink-pure);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+      }
+
+      .text-switching {
+        opacity: 0.15;
+        transform: translateY(4px);
+      }
+
+      /* Right Auth Form Column */
+      .editorial-form-box {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .category-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--ink-subtle);
+        margin-bottom: 12px;
+      }
+
+      .title-serif {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        line-height: 1.05;
+        font-weight: 300;
+        letter-spacing: -0.01em;
+        margin-bottom: 16px;
+      }
+
+      .subtitle-editorial {
+        font-size: 0.9375rem;
+        color: var(--ink-body);
+        line-height: 1.6;
+        margin-bottom: 32px;
+        max-width: 420px;
+      }
+
+      .mode-toggle {
+        display: flex;
+        gap: 24px;
+        border-bottom: 1px solid var(--line-subtle);
+        margin-bottom: 28px;
+      }
+
+      .mode-toggle-btn {
+        background: none;
+        border: none;
+        padding-bottom: 12px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.8125rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--ink-subtle);
+        cursor: pointer;
+        position: relative;
+        transition: color 0.2s;
+      }
+
+      .mode-toggle-btn.active {
+        color: var(--ink-pure);
+        font-weight: 600;
+      }
+
+      .mode-toggle-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--ink-pure);
+      }
+
+      /* Google Button */
+      .google-editorial-btn {
+        width: 100%;
+        background: transparent;
+        border: 1px solid var(--line-hairline);
+        padding: 14px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.8125rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-pure);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        transition: all 0.2s ease;
+        margin-bottom: 24px;
+      }
+
+      .google-editorial-btn:hover {
+        background: var(--ink-pure);
+        color: #ffffff;
+      }
+
+      .google-editorial-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .divider-editorial {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+        font-size: 0.6875rem;
+        letter-spacing: 0.2em;
+        color: var(--ink-subtle);
+      }
+
+      .divider-editorial::before,
+      .divider-editorial::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--line-subtle);
+      }
+
+      /* Inputs */
+      .input-row {
+        position: relative;
+        margin-bottom: 24px;
+      }
+
+      .input-minimal {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--line-hairline);
+        padding: 12px 0;
+        font-size: 1rem;
+        font-family: inherit;
+        color: var(--ink-pure);
+        outline: none;
+        transition: border-bottom-color 0.2s;
+      }
+
+      .input-minimal:focus {
+        border-bottom-width: 2px;
+      }
+
+      .input-minimal::placeholder {
+        color: #a0a0a0;
+        font-size: 0.8125rem;
+        letter-spacing: 0.08em;
+      }
+
+      .toggle-pass-btn {
+        position: absolute;
+        right: 0;
+        top: 12px;
+        background: none;
+        border: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-subtle);
+        cursor: pointer;
+      }
+
+      .btn-editorial-black {
+        width: 100%;
+        background: var(--ink-pure);
+        color: #ffffff;
+        border: 1px solid var(--ink-pure);
+        padding: 16px 28px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.8125rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        margin-top: 8px;
+        font-weight: 600;
+      }
+
+      .btn-editorial-black:hover {
+        background: #ffffff;
+        color: var(--ink-pure);
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--line-subtle);
+        padding-top: 18px;
+        font-size: 0.75rem;
+        color: var(--ink-subtle);
+        letter-spacing: 0.05em;
+      }
+
+      @media (max-width: 900px) {
+        main {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .photo-frame {
+          aspect-ratio: 16/9;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 16px 14px;
+        }
+
+        header {
+          padding-bottom: 14px;
+        }
+
+        .logo-brand {
+          font-size: 1.25rem;
+        }
+
+        .edition-tag {
+          font-size: 0.6875rem;
+        }
+
+        main {
+          margin: 24px auto;
+          gap: 28px;
+        }
+
+        .title-serif {
+          font-size: 2.1rem;
+        }
+
+        .input-minimal {
+          font-size: 1rem; /* prevents iOS zoom */
+        }
+
+        footer {
+          flex-direction: column;
+          gap: 8px;
+          text-align: center;
+          padding-top: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo-brand">Studio Presence</div>
+      <div class="edition-tag">Interior Architecture &mdash; Client Portal</div>
+    </header>
+
+    <main>
+      <!-- Left Visual -->
+      <section class="editorial-visual">
+        <div class="photo-frame">
+          <img
+            id="editorialImg"
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop"
+            alt="Studio Presence Interior Architecture"
+          />
+        </div>
+        <div class="caption-strip">
+          <span id="captionProject">Worli Penthouse &middot; Living Pavilion</span>
+          <span id="captionStatus">Archived Commission</span>
+        </div>
+        <blockquote id="editorialQuote" class="quote-block">
+          “Architecture is not merely the enclosure of space, but the curation of silence and presence.”
+        </blockquote>
+      </section>
+
+      <!-- Right Form -->
+      <section class="editorial-form-box">
+        <span class="category-label">Studio Presence Private Client Access</span>
+        <h1 id="editorialTitle" class="title-serif">Sign In to Your Project</h1>
+        <p id="editorialSubtitle" class="subtitle-editorial">
+          Dedicated portal for studio patrons, turnkey estate commissions, and site milestone reviews across India.
+        </p>
+
+        <div class="mode-toggle">
+          <button id="modeSignIn" class="mode-toggle-btn active" type="button">Sign In</button>
+          <button id="modeRegister" class="mode-toggle-btn" type="button">Create Account</button>
+        </div>
+
+        <!-- Google Signup / Signin Only -->
+        <button type="button" class="google-editorial-btn" onclick="alert('Authenticating with Google...');">
+          <svg viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27a7.19 7.19 0 0 1 0-4.54V6.58H1.25a11.98 11.98 0 0 0 0 10.84l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span id="googleLabel">Sign In with Google</span>
+        </button>
+
+        <div class="divider-editorial">
+          <span>OR WITH EMAIL</span>
+        </div>
+
+        <!-- Email Only Credentials Form -->
+        <form id="editorialForm" onsubmit="event.preventDefault(); alert('Access verified for: ' + document.getElementById('edEmail').value);">
+          <div class="input-row" id="rowFullName" style="display: none;">
+            <input id="edName" type="text" class="input-minimal" placeholder="CLIENT FULL NAME (e.g. Rohini Singhania)" />
+          </div>
+
+          <div class="input-row">
+            <input id="edEmail" type="email" class="input-minimal" placeholder="CLIENT EMAIL ADDRESS" required />
+          </div>
+
+          <div class="input-row">
+            <input id="edPass" type="password" class="input-minimal" placeholder="PASSPHRASE" required />
+            <button type="button" id="togglePass" class="toggle-pass-btn">SHOW</button>
+          </div>
+
+          <button id="submitEditorial" type="submit" class="btn-editorial-black">
+            Sign In to Your Project
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <span>&copy; 2026 Studio Presence. Interior Architecture &amp; Turnkey Estates.</span>
+      <span>Mumbai &middot; Bengaluru &middot; New Delhi</span>
+    </footer>
+
+    <script>
+      const modeSignIn = document.getElementById('modeSignIn');
+      const modeRegister = document.getElementById('modeRegister');
+      const editorialTitle = document.getElementById('editorialTitle');
+      const editorialSubtitle = document.getElementById('editorialSubtitle');
+      const submitEditorial = document.getElementById('submitEditorial');
+      const googleLabel = document.getElementById('googleLabel');
+      const edPass = document.getElementById('edPass');
+      const togglePass = document.getElementById('togglePass');
+      const rowFullName = document.getElementById('rowFullName');
+      const editorialImg = document.getElementById('editorialImg');
+      const captionStrip = document.querySelector('.caption-strip');
+      const captionProject = document.getElementById('captionProject');
+      const captionStatus = document.getElementById('captionStatus');
+      const editorialQuote = document.getElementById('editorialQuote');
+
+      const imgSignIn = "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop";
+      const imgSignUp = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop";
+
+      function switchVisual(isSignUp) {
+        editorialImg.classList.add('img-switching');
+        captionStrip.classList.add('text-switching');
+        editorialQuote.classList.add('text-switching');
+        setTimeout(() => {
+          if (isSignUp) {
+            editorialImg.src = imgSignUp;
+            captionProject.textContent = "Alibaug Coastal Estate \u00b7 Master Sanctuary";
+            captionStatus.textContent = "New Commission";
+            editorialQuote.textContent = "\u201cEvery bespoke estate begins as a conversation between land, light, and private aspiration.\u201d";
+          } else {
+            editorialImg.src = imgSignIn;
+            captionProject.textContent = "Worli Penthouse \u00b7 Living Pavilion";
+            captionStatus.textContent = "Archived Commission";
+            editorialQuote.textContent = "\u201cArchitecture is not merely the enclosure of space, but the curation of silence and presence.\u201d";
+          }
+          editorialImg.classList.remove('img-switching');
+          captionStrip.classList.remove('text-switching');
+          editorialQuote.classList.remove('text-switching');
+        }, 220);
+      }
+
+      modeSignIn.addEventListener('click', () => {
+        modeSignIn.classList.add('active');
+        modeRegister.classList.remove('active');
+        editorialTitle.textContent = "Sign In to Your Project";
+        editorialSubtitle.textContent = "Dedicated portal for studio patrons, turnkey estate commissions, and site milestone reviews across India.";
+        googleLabel.textContent = "Sign In with Google";
+        submitEditorial.textContent = "Sign In to Your Project";
+        rowFullName.style.display = "none";
+        document.getElementById('edName').required = false;
+        switchVisual(false);
+      });
+
+      modeRegister.addEventListener('click', () => {
+        modeRegister.classList.add('active');
+        modeSignIn.classList.remove('active');
+        editorialTitle.textContent = "Create Account";
+        editorialSubtitle.textContent = "Register a client profile to commission residential interiors across Mumbai, Bengaluru & Delhi NCR, review 3D material palettes, and schedule on-site walkthroughs.";
+        googleLabel.textContent = "Sign Up with Google";
+        submitEditorial.textContent = "Create Account";
+        rowFullName.style.display = "block";
+        document.getElementById('edName').required = true;
+        switchVisual(true);
+      });
+
+      togglePass.addEventListener('click', () => {
+        const isPass = edPass.type === 'password';
+        edPass.type = isPass ? 'text' : 'password';
+        togglePass.textContent = isPass ? 'HIDE' : 'SHOW';
+      });
+    </script>
+  
+    <!-- Global Keyboard Arrow Navigation -->
+    <script>
+      (function() {
+        const ALL_PROTOTYPES = [
+          "01-architectural-split-glass.html",
+          "02-haute-editorial-monochrome.html",
+          "05-atelier-floating-modal.html",
+          "07-nordic-scandi-sanctuary.html",
+          "09-biophilic-glasshouse.html",
+          "13-curated-collector-carousel.html",
+          "21-project-split.html",
+          "25-editorial-door.html"
+        ];
+        const currentFile = window.location.pathname.split('/').pop() || ALL_PROTOTYPES[0];
+        const currentIndex = ALL_PROTOTYPES.indexOf(currentFile);
+
+        window.addEventListener('keydown', function(e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'next' }, '*');
+            } else if (currentIndex !== -1) {
+              const nextIdx = (currentIndex + 1) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[nextIdx];
+            }
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'prev' }, '*');
+            } else if (currentIndex !== -1) {
+              const prevIdx = (currentIndex - 1 + ALL_PROTOTYPES.length) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[prevIdx];
+            }
+          }
+        }, true);
+      })();
+    </script>
+</body>
+</html>

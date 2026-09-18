@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Turnkey Project Execution | Studio Presence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #141414;
+        --brown: #51372a;
+        --gold: #d9bc72;
+        --paper: #ffffff;
+        --border-line: #d0cbc6;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #f0f0f0;
+          --brown: #e5cb8e;
+          --gold: #d9bc72;
+          --paper: #121212;
+          --border-line: #333333;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wrap {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+
+      /* Photo Column with Interactive Before / After */
+      .photo {
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        background: #1a1a1a;
+        user-select: none;
+        cursor: ew-resize;
+        touch-action: pan-y;
+        --split: 50%;
+      }
+
+      .img-after,
+      .img-before {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        pointer-events: none;
+      }
+
+      .before-layer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 1;
+        clip-path: polygon(0 0, var(--split, 50%) 0, var(--split, 50%) 100%, 0 100%);
+      }
+
+      .slider-divider {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: var(--split, 50%);
+        width: 2px;
+        background: var(--gold);
+        transform: translateX(-50%);
+        z-index: 3;
+        pointer-events: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      }
+
+      .slider-handle {
+        position: absolute;
+        top: 50%;
+        left: var(--split, 50%);
+        transform: translate(-50%, -50%);
+        width: 44px;
+        height: 44px;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: ew-resize;
+        touch-action: none;
+      }
+
+      .handle-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: #141414;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+        border: 2px solid #ffffff;
+        transition: transform 0.15s ease;
+      }
+
+      .slider-handle:hover .handle-circle,
+      .slider-handle:focus-visible .handle-circle {
+        transform: scale(1.1);
+      }
+
+      .scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(20, 20, 20, 0.25) 0%, transparent 40%, rgba(20, 20, 20, 0.75) 100%);
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .cap {
+        position: absolute;
+        left: 28px;
+        bottom: 28px;
+        right: 28px;
+        z-index: 4;
+        color: #fff;
+        pointer-events: none;
+      }
+
+      .split-side-tag {
+        position: absolute;
+        top: 24px;
+        z-index: 5;
+        padding: 6px 14px;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #ffffff;
+        background: rgba(18, 18, 18, 0.76);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        pointer-events: none;
+      }
+
+      .split-side-tag.tag-left {
+        left: 24px;
+      }
+
+      .split-side-tag.tag-right {
+        right: 24px;
+      }
+
+      .cap small {
+        display: block;
+        font-size: 0.75rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        opacity: 0.85;
+        margin-bottom: 4px;
+      }
+
+      .cap h2 {
+        font-size: 1.45rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      /* Form Column */
+      .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(28px, 5vw, 56px);
+        max-width: 480px;
+        background: var(--paper);
+      }
+
+      .brand {
+        font-size: 0.75rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--brown);
+        margin-bottom: 24px;
+        font-weight: 700;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .lede {
+        font-size: 0.9375rem;
+        line-height: 1.55;
+        color: #5a524c;
+        margin-bottom: 24px;
+      }
+
+      .modes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 1px solid var(--border-line);
+        margin-bottom: 22px;
+      }
+
+      .modes button {
+        background: none;
+        border: 0;
+        padding: 11px;
+        font: inherit;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        color: #6a6460;
+        transition: all 0.2s;
+      }
+
+      .modes button[aria-selected="true"] {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+
+      label {
+        display: block;
+        font-size: 0.78125rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border-line);
+        font: inherit;
+        background: var(--paper);
+        color: var(--ink);
+        border-radius: 0;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      input:focus-visible {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 2px rgba(217, 188, 114, 0.3);
+      }
+
+      .go {
+        width: 100%;
+        padding: 15px;
+        background: var(--gold);
+        color: #141414;
+        border: 0;
+        font: inherit;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-size: 0.8125rem;
+        cursor: pointer;
+        margin-top: 6px;
+        transition: opacity 0.2s;
+      }
+
+      .go:hover {
+        opacity: 0.92;
+      }
+
+      .google {
+        width: 100%;
+        margin-top: 10px;
+        padding: 12px;
+        background: var(--paper);
+        border: 1px solid var(--border-line);
+        color: var(--ink);
+        font: inherit;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        transition: background 0.2s;
+      }
+
+      .google:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+
+      .foot {
+        margin-top: 20px;
+        font-size: 0.8125rem;
+        color: #5a524c;
+      }
+
+      .foot button {
+        background: none;
+        border: 0;
+        font: inherit;
+        font-weight: 700;
+        color: var(--ink);
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .lede, .foot {
+          color: #a0a0a0;
+        }
+        .modes button {
+          color: #888888;
+        }
+        .google:hover {
+          background: rgba(255, 255, 255, 0.05);
+        }
+      }
+
+      @media (max-width: 860px) {
+        .wrap {
+          grid-template-columns: 1fr;
+        }
+        .photo {
+          min-height: 48vh;
+          height: 340px;
+        }
+        .form {
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .photo {
+          min-height: 280px;
+          height: 280px;
+        }
+        .form {
+          padding: 24px 18px;
+        }
+        .cap {
+          left: 16px;
+          right: 16px;
+          bottom: 16px;
+        }
+        .cap h2 {
+          font-size: 1.2rem;
+        }
+        .go, .google {
+          min-height: 48px;
+        }
+        input {
+          min-height: 46px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <!-- Interactive Before / After Split Photo Column -->
+      <section class="photo" id="photoCompare" aria-label="Before and after project comparison">
+        <span class="split-side-tag tag-left">Site Bare Shell</span>
+        <span class="split-side-tag tag-right">Turnkey Execution</span>
+        <img class="img-after" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop" alt="After: Modern Turnkey Living Pavilion" />
+        <div class="before-layer" id="beforeLayer">
+          <img class="img-before" src="assets/empty-room.jpg" alt="Before: Bare shell empty room" />
+        </div>
+        <div class="slider-divider" aria-hidden="true"></div>
+        <div class="slider-handle" id="sliderHandle" role="slider" tabindex="0" aria-label="Before and after split slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="handle-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+        <div class="scrim"></div>
+        <div class="cap">
+          <small>Project Execution &middot; Spec Dossier 04</small>
+          <h2>Modern Living Pavilion</h2>
+        </div>
+      </section>
+
+      <!-- Auth Form Column -->
+      <section class="form">
+        <p class="brand">Studio Presence</p>
+        <h1 id="title">Sign in to your project</h1>
+        <p class="lede" id="lede">Track project milestones, approve material finish boards, and review 3D site elevations for your residence.</p>
+        
+        <div class="modes" role="tablist">
+          <button type="button" id="tabLogin" aria-selected="true">Sign In</button>
+          <button type="button" id="tabSignup" aria-selected="false">Create Account</button>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Authentication verified for Studio Presence.');">
+          <div class="field" id="fieldFullName" style="display: none;">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" placeholder="Ashish Roy" autocomplete="name" />
+          </div>
+
+          <div class="field">
+            <label for="email">Client Email</label>
+            <input id="email" type="email" placeholder="client@studio-presence.in" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password" required />
+          </div>
+
+          <button class="go" id="submitBtn" type="submit">Sign In</button>
+        </form>
+
+        <button type="button" class="google" onclick="alert('Continuing with Google...');">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27a7.19 7.19 0 0 1 0-4.54V6.58H1.25a11.98 11.98 0 0 0 0 10.84l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span id="googleText">Continue with Google</span>
+        </button>
+
+        <p class="foot">
+          <span id="footPrompt">New client to Studio Presence?</span>
+          <button type="button" id="footAction">Create account</button>
+        </p>
+      </section>
+    </main>
+
+    <script>
+      // Mode Switcher
+      const tabLogin = document.getElementById('tabLogin');
+      const tabSignup = document.getElementById('tabSignup');
+      const title = document.getElementById('title');
+      const lede = document.getElementById('lede');
+      const submitBtn = document.getElementById('submitBtn');
+      const footPrompt = document.getElementById('footPrompt');
+      const footAction = document.getElementById('footAction');
+      const fieldFullName = document.getElementById('fieldFullName');
+      const fullNameInput = document.getElementById('fullName');
+      const googleText = document.getElementById('googleText');
+
+      function setMode(mode) {
+        const login = mode === 'login';
+        tabLogin.setAttribute('aria-selected', String(login));
+        tabSignup.setAttribute('aria-selected', String(!login));
+        title.textContent = login ? 'Sign in to your project' : 'Create your studio account';
+        lede.textContent = login
+          ? 'Track project milestones, approve material finish boards, and review 3D site elevations for your residence.'
+          : 'Register with Studio Presence to initiate residential commissions, review custom joinery specs, and access site cameras.';
+        submitBtn.textContent = login ? 'Sign In' : 'Create Studio Account';
+        googleText.textContent = login ? 'Continue with Google' : 'Sign up with Google';
+        footPrompt.textContent = login ? 'New client to Studio Presence?' : 'Already have an account?';
+        footAction.textContent = login ? 'Create account' : 'Sign in';
+        fieldFullName.style.display = login ? 'none' : 'block';
+        if (login) {
+          fullNameInput.removeAttribute('required');
+        } else {
+          fullNameInput.setAttribute('required', 'required');
+        }
+      }
+
+      tabLogin.onclick = () => setMode('login');
+      tabSignup.onclick = () => setMode('signup');
+      footAction.onclick = () => setMode(tabLogin.getAttribute('aria-selected') === 'true' ? 'signup' : 'login');
+
+      // Before / After Slider Interaction (Pointer Events + Keyboard)
+      const photoCompare = document.getElementById('photoCompare');
+      const sliderHandle = document.getElementById('sliderHandle');
+      let currentSplit = 50;
+
+      function updateSliderPosition(clientX) {
+        const rect = photoCompare.getBoundingClientRect();
+        if (rect.width <= 0) return;
+        const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+        const percent = Math.round((offsetX / rect.width) * 1000) / 10;
+        currentSplit = percent;
+        photoCompare.style.setProperty('--split', percent + '%');
+        sliderHandle.setAttribute('aria-valuenow', Math.round(percent));
+      }
+
+      function onPointerDown(e) {
+        photoCompare.setPointerCapture(e.pointerId);
+        updateSliderPosition(e.clientX);
+        photoCompare.addEventListener('pointermove', onPointerMove);
+        photoCompare.addEventListener('pointerup', onPointerUp);
+        photoCompare.addEventListener('pointercancel', onPointerUp);
+      }
+
+      function onPointerMove(e) {
+        updateSliderPosition(e.clientX);
+      }
+
+      function onPointerUp(e) {
+        try {
+          photoCompare.releasePointerCapture(e.pointerId);
+        } catch (err) {}
+        photoCompare.removeEventListener('pointermove', onPointerMove);
+        photoCompare.removeEventListener('pointerup', onPointerUp);
+        photoCompare.removeEventListener('pointercancel', onPointerUp);
+      }
+
+      photoCompare.addEventListener('pointerdown', onPointerDown);
+
+      // Keyboard accessibility for slider handle
+      sliderHandle.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          currentSplit = Math.max(0, currentSplit - 2);
+          photoCompare.style.setProperty('--split', currentSplit + '%');
+          sliderHandle.setAttribute('aria-valuenow', Math.round(currentSplit));
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          currentSplit = Math.min(100, currentSplit + 2);
+          photoCompare.style.setProperty('--split', currentSplit + '%');
+          sliderHandle.setAttribute('aria-valuenow', Math.round(currentSplit));
+        }
+      });
+    </script>
+  
+    <!-- Global Keyboard Arrow Navigation -->
+    <script>
+      (function() {
+        const ALL_PROTOTYPES = [
+          "01-architectural-split-glass.html",
+          "02-haute-editorial-monochrome.html",
+          "05-atelier-floating-modal.html",
+          "07-nordic-scandi-sanctuary.html",
+          "09-biophilic-glasshouse.html",
+          "13-curated-collector-carousel.html",
+          "21-project-split.html",
+          "25-editorial-door.html"
+        ];
+        const currentFile = window.location.pathname.split('/').pop() || ALL_PROTOTYPES[0];
+        const currentIndex = ALL_PROTOTYPES.indexOf(currentFile);
+
+        window.addEventListener('keydown', function(e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'next' }, '*');
+            } else if (currentIndex !== -1) {
+              const nextIdx = (currentIndex + 1) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[nextIdx];
+            }
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'prev' }, '*');
+            } else if (currentIndex !== -1) {
+              const prevIdx = (currentIndex - 1 + ALL_PROTOTYPES.length) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[prevIdx];
+            }
+          }
+        }, true);
+      })();
+    </script>
+</body>
+</html>

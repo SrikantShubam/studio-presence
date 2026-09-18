@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Presence — Websites for Interior Design Studios</title>
+
+  <!-- Google Fonts: Outfit (Display), Plus Jakarta Sans (Body), JetBrains Mono (Technical/Micro) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Outfit"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            canvas: '#FAF7F2',
+            surface: '#FFFFFF',
+            oat: '#F4EFE6',
+            sand: '#ECE5D8',
+            sandDark: '#DDD4C4',
+            charcoal: '#1E1F22',
+            charcoalMuted: '#5C5E64',
+            borderSubtle: '#E6DFC5',
+            terracotta: '#C05A3E',
+            terracottaDark: '#A4442A',
+            terracottaLight: '#FBF2EE',
+            brass: '#C5A059',
+            brassLight: '#F9F5EC',
+          },
+          boxShadow: {
+            'glow-terracotta': '0 0 35px -5px rgba(192, 90, 62, 0.28)',
+            'card-warm': '0 12px 32px -4px rgba(30, 31, 34, 0.05), 0 4px 12px -2px rgba(30, 31, 34, 0.03)',
+            'card-hover': '0 24px 48px -10px rgba(192, 90, 62, 0.14), 0 8px 24px -4px rgba(30, 31, 34, 0.06)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FAF7F2;
+      color: #1E1F22;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Architectural Atelier Cards with Smooth Hover Effects & Terracotta Highlight */
+    .atelier-card {
+      background-color: #FFFFFF;
+      border: 1px solid #E6DFC5;
+      border-radius: 1.5rem;
+      box-shadow: 0 12px 32px -4px rgba(30, 31, 34, 0.05), 0 4px 12px -2px rgba(30, 31, 34, 0.03);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .atelier-card:hover {
+      border-color: #C05A3E;
+      box-shadow: 0 24px 48px -10px rgba(192, 90, 62, 0.14), 0 8px 24px -4px rgba(30, 31, 34, 0.06);
+      transform: translateY(-4px);
+    }
+
+    /* 3D Perspective Card Stage */
+    .perspective-stage {
+      perspective: 1400px;
+    }
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Before/After Drag Slider */
+    #ba-stage {
+      --slider-pos: 50%;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+    .clipped-before {
+      clip-path: polygon(0 0, var(--slider-pos, 50%) 0, var(--slider-pos, 50%) 100%, 0 100%);
+    }
+    .slider-divider-line {
+      left: var(--slider-pos, 50%);
+      transform: translateX(-50%);
+    }
+
+    /* Animated typing indicator */
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+      40% { transform: translateY(-4px); opacity: 1; }
+    }
+    .typing-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #5C5E64;
+      animation: dotBounce 1.2s infinite ease-in-out;
+    }
+    .typing-dot:nth-child(1) { animation-delay: 0s; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    /* Message Animation */
+    @keyframes messagePop {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .anim-msg {
+      animation: messagePop 0.3s ease-out forwards;
+    }
+
+    /* Custom Executive Range input styling */
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: #ECE5D8;
+      height: 8px;
+      border-radius: 9999px;
+      outline: none;
+      transition: background 0.2s;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #C05A3E;
+      cursor: pointer;
+      border: 3px solid #FFFFFF;
+      box-shadow: 0 4px 12px rgba(192, 90, 62, 0.45);
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      background: #A4442A;
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #C05A3E;
+      cursor: pointer;
+      border: 3px solid #FFFFFF;
+      box-shadow: 0 4px 12px rgba(192, 90, 62, 0.45);
+      transition: transform 0.15s ease;
+    }
+  </style>
+</head>
+<body class="selection:bg-terracotta selection:text-white relative">
+
+  <!-- Top Announcement Bar (Clean Branding, No City Lists) -->
+  <aside aria-label="Announcement" class="bg-oat border-b border-borderSubtle px-4 py-2.5 text-center text-xs font-medium text-charcoalMuted flex items-center justify-center gap-2 relative z-50">
+    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+    <span class="font-sans">Free 48-Hour Live Preview &bull; See Your Studio Site Working Before You Pay Anything &bull; ₹0 Upfront</span>
+  </aside>
+
+  <!-- Floating Glass Navbar -->
+  <nav class="sticky top-4 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-2">
+    <div class="bg-surface/90 backdrop-blur-md rounded-2xl border border-borderSubtle px-6 py-3.5 flex items-center justify-between shadow-card-warm">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-terracotta group-hover:bg-terracottaDark transition-colors flex items-center justify-center text-white font-bold text-sm shadow-sm">
+          SP
+        </div>
+        <div>
+          <span class="font-display font-bold text-lg tracking-tight text-charcoal block leading-none">Studio Presence</span>
+          <span class="text-[10px] font-mono text-terracotta font-semibold tracking-wider uppercase">Websites for Interior Design Studios</span>
+        </div>
+      </a>
+
+      <!-- Center Links (Separated and Distinct Sections) -->
+      <div class="hidden lg:flex items-center gap-7 text-xs font-semibold text-charcoalMuted">
+        <a href="#simulator" class="hover:text-terracotta transition-colors">WhatsApp Simulator</a>
+        <a href="#before-after" class="hover:text-terracotta transition-colors">Renovation Showcase</a>
+        <a href="#roi-calculator" class="hover:text-terracotta transition-colors font-bold text-charcoal flex items-center gap-1">
+          <span>ROI Modeler</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+        </a>
+        <a href="#specifications" class="hover:text-terracotta transition-colors">Specifications</a>
+        <a href="#case-studies" class="hover:text-terracotta transition-colors">Case Studies</a>
+        <a href="#pricing" class="hover:text-terracotta transition-colors">Investment</a>
+      </div>
+
+      <!-- Right CTA -->
+      <div class="flex items-center gap-3">
+        <a href="#contact" 
+           class="px-5 py-2.5 rounded-full bg-terracotta hover:bg-terracottaDark text-white text-xs font-bold tracking-wide transition-all shadow-md hover:shadow-glow-terracotta flex items-center gap-1.5">
+          <span>Claim Free Preview</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Hero Section: Spacious, Tall, Un-crowded Architectural Atelier Stage -->
+  <section class="relative py-20 lg:py-28 overflow-hidden border-b border-borderSubtle">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      
+      <!-- Hero Copy -->
+      <div class="lg:col-span-6 space-y-8 z-10">
+        
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-terracottaLight border border-terracotta/25 text-xs font-semibold text-terracotta">
+          <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+          <span>BUILT FOR RESIDENTIAL INTERIOR STUDIOS & ARCHITECTURE PRACTICES</span>
+        </div>
+
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-[56px] font-bold tracking-tight text-charcoal leading-[1.08]">
+          You only need <span class="text-terracotta underline decoration-borderSubtle decoration-4 underline-offset-8">2 or 3 more good clients</span> a year. Here is how they find you.
+        </h1>
+
+        <p class="text-base sm:text-lg text-charcoalMuted leading-relaxed max-w-xl font-normal">
+          Most studio owners try 'the online thing' and get burned by expensive agency retainers, cheap directory leads, or Instagram likes that never convert into projects. We build fast, mobile-first websites that turn local searchers into direct WhatsApp consultations. Live in 48 hours from ₹15,000 — with zero upfront cost.
+        </p>
+
+        <!-- CTA Action Group -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+          <a href="#contact" 
+             class="px-8 py-4 rounded-full bg-terracotta hover:bg-terracottaDark text-white font-bold text-sm tracking-wide text-center transition-all shadow-lg hover:shadow-glow-terracotta flex items-center justify-center gap-2">
+            <span>Claim Your 48-Hour Preview</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="#simulator" 
+             class="px-7 py-4 rounded-full bg-surface hover:bg-oat text-charcoal border border-borderSubtle font-semibold text-sm text-center transition-colors">
+            Test WhatsApp Simulator &darr;
+          </a>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="pt-6 border-t border-borderSubtle grid grid-cols-3 gap-4 text-xs">
+          <div class="p-4 bg-surface rounded-2xl border border-borderSubtle">
+            <div class="font-display text-2xl font-bold text-charcoal">48 Hours</div>
+            <div class="text-charcoalMuted mt-0.5">Photos to live preview</div>
+          </div>
+          <div class="p-4 bg-surface rounded-2xl border border-borderSubtle">
+            <div class="font-display text-2xl font-bold text-charcoal">₹0 Upfront</div>
+            <div class="text-charcoalMuted mt-0.5">Pay only if you love it</div>
+          </div>
+          <div class="p-4 bg-surface rounded-2xl border border-borderSubtle">
+            <div class="font-display text-2xl font-bold text-terracotta">2–3 Clients</div>
+            <div class="text-charcoalMuted mt-0.5">Pays 20x+ ROI for the year</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hero Right: Interactive 3D Perspective Architectural Showcase with Real High-Res Photography -->
+      <div class="lg:col-span-6 perspective-stage flex justify-center">
+        <div id="tilt-box" class="tilt-card w-full max-w-lg bg-surface rounded-3xl p-5 sm:p-6 shadow-card-warm border border-borderSubtle relative">
+          
+          <!-- Viewport Controls & Lighting Switcher -->
+          <div class="flex items-center justify-between border-b border-borderSubtle pb-3.5 mb-3.5 text-xs">
+            <div class="flex items-center gap-2 font-display font-bold text-charcoal">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span>LIVING ATELIER // LIGHTING ENGINE</span>
+            </div>
+            
+            <div class="flex gap-1 bg-oat p-1 rounded-xl text-[10px] font-mono">
+              <button onclick="setLighting('day')" id="btn-light-day" class="px-3 py-1 rounded-lg bg-surface text-charcoal font-bold shadow-sm transition-all">DAYLIGHT</button>
+              <button onclick="setLighting('golden')" id="btn-light-golden" class="px-3 py-1 rounded-lg text-charcoalMuted hover:text-charcoal transition-all">GOLDEN HOUR</button>
+              <button onclick="setLighting('warm')" id="btn-light-warm" class="px-3 py-1 rounded-lg text-charcoalMuted hover:text-charcoal transition-all">WARM 2700K</button>
+            </div>
+          </div>
+
+          <!-- Real High-Res Interior Photography -->
+          <div id="room-canvas" class="aspect-[4/3] rounded-2xl overflow-hidden relative border border-borderSubtle transition-all duration-300 bg-sand">
+            
+            <img id="room-img" 
+                 src="assets/hero.jpg" 
+                 alt="Architectural Living Room Interior" 
+                 class="w-full h-full object-cover transition-all duration-300">
+            
+            <!-- Lighting Atmosphere Overlays -->
+            <div id="golden-overlay" class="absolute inset-0 bg-amber-500/20 mix-blend-multiply opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+            <div id="warm-overlay" class="absolute inset-0 bg-amber-800/30 mix-blend-multiply opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+
+            <!-- Floating Studio Proof Badge -->
+            <div class="absolute bottom-4 left-4 bg-surface/95 backdrop-blur-md px-4 py-2 rounded-xl border border-borderSubtle text-xs font-display font-semibold text-charcoal shadow-sm flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+              <span>Turnkey Living Atelier &bull; 4,200 sq.ft</span>
+            </div>
+
+          </div>
+
+          <!-- Bottom Micro Details -->
+          <div class="mt-3.5 flex items-center justify-between text-xs text-charcoalMuted">
+            <span class="text-[11px] font-mono flex items-center gap-1.5">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+              Move cursor over card to tilt in 3D
+            </span>
+            <span class="font-display font-bold text-terracotta">100% Mobile Optimized</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section: The 3 Costly Realities of Running an Interior Studio -->
+  <section class="py-24 lg:py-28 border-b border-borderSubtle bg-canvas">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-16 space-y-3">
+        <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">THE REALITY CHECK</span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal">
+          Your work is exceptional. The problem is nobody in your city can find proof of it.
+        </h2>
+        <p class="text-base text-charcoalMuted leading-relaxed pt-2">
+          The three false promises that cost independent interior studio owners lakhs every single year:
+        </p>
+      </div>
+
+      <!-- Generous Spacing and Silky Hover Effects -->
+      <div class="grid md:grid-cols-3 gap-8 lg:gap-10">
+        
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-terracottaLight text-terracotta flex items-center justify-center font-bold text-base font-mono">
+              01
+            </div>
+            <h3 class="font-display text-2xl font-bold text-charcoal">The Instagram Trap</h3>
+            <p class="text-sm text-charcoalMuted leading-relaxed">
+              Social algorithms reward fast, fleeting reels, not your structural craft. High-budget homeowners planning ₹15L–₹50L turnkey renovations want a calm, fast portfolio they can examine on their phone, not an endless distracting feed.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderSubtle text-xs font-mono text-terracotta font-semibold">
+            Result: Likes don't pay your site supervisors
+          </div>
+        </div>
+
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-brassLight text-brass flex items-center justify-center font-bold text-base font-mono">
+              02
+            </div>
+            <h3 class="font-display text-2xl font-bold text-charcoal">Directory Commoditization</h3>
+            <p class="text-sm text-charcoalMuted leading-relaxed">
+              Generic listing portals sell the exact same homeowner phone number to 10 civil contractors simultaneously. You waste evenings defending your design fees against bargain hunters who only care about the cheapest sq.ft quote.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderSubtle text-xs font-mono text-brass font-semibold">
+            Result: Race-to-the-bottom price slashing
+          </div>
+        </div>
+
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-oat text-charcoal flex items-center justify-center font-bold text-base font-mono">
+              03
+            </div>
+            <h3 class="font-display text-2xl font-bold text-charcoal">Local Search Invisibility</h3>
+            <p class="text-sm text-charcoalMuted leading-relaxed">
+              When someone searches for a verified interior designer in your locality, Google looks for local schema and verified websites. If you don't have one, your local inquiries go directly to whoever showed up on page one.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderSubtle text-xs font-mono text-charcoal font-semibold">
+            Result: 100% of high-intent search leads missed
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURE 1: Dedicated Interactive WhatsApp Lead Funnel Simulator (SEPARATED & DISTINCT) -->
+  <section id="simulator" class="py-24 lg:py-28 border-b border-borderSubtle bg-oat/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">CORE CAPABILITY // 01</span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal">
+          Interactive WhatsApp Lead Simulator
+        </h2>
+        <p class="text-base text-charcoalMuted">
+          Click the inquiry pills below to see how Studio Presence transforms casual website visitors into pre-qualified WhatsApp consultations on your personal phone.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-surface p-8 sm:p-12 rounded-3xl border border-borderSubtle shadow-card-warm">
+        
+        <!-- Left: Simulator Controls -->
+        <div class="lg:col-span-5 space-y-8">
+          <div class="space-y-3">
+            <span class="text-xs font-mono font-semibold text-terracotta uppercase">STEP 1: SELECT A CLIENT INQUIRY PILL</span>
+            <h3 class="font-display text-2xl font-bold text-charcoal">Pre-Qualified Client Leads</h3>
+            <p class="text-sm text-charcoalMuted leading-relaxed">
+              Instead of a tedious 10-field web form with an 80% abandonment rate, homeowners tap pre-formatted consultation pills that launch WhatsApp directly with project scope and budget already pre-filled.
+            </p>
+          </div>
+
+          <div class="space-y-3.5">
+            <button onclick="simulateLead('villa', this)" class="lead-btn w-full p-4 rounded-2xl border-2 border-terracotta bg-terracottaLight text-left transition-all flex items-center justify-between group shadow-sm">
+              <div>
+                <div class="font-display font-bold text-base text-charcoal group-hover:text-terracotta">🏡 Villa Renovation</div>
+                <div class="text-xs text-charcoalMuted mt-0.5">4,200 sq.ft &bull; Estimated Budget: ₹25L &ndash; ₹35L</div>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-white text-terracotta font-bold flex items-center justify-center shadow-sm">&rarr;</span>
+            </button>
+
+            <button onclick="simulateLead('flat', this)" class="lead-btn w-full p-4 rounded-2xl border border-borderSubtle bg-surface hover:bg-oat text-left transition-all flex items-center justify-between group">
+              <div>
+                <div class="font-display font-bold text-base text-charcoal group-hover:text-terracotta">🏢 3BHK Apartment</div>
+                <div class="text-xs text-charcoalMuted mt-0.5">1,850 sq.ft &bull; Estimated Budget: ₹12L &ndash; ₹16L</div>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-oat text-charcoalMuted group-hover:text-terracotta font-bold flex items-center justify-center">&rarr;</span>
+            </button>
+
+            <button onclick="simulateLead('kitchen', this)" class="lead-btn w-full p-4 rounded-2xl border border-borderSubtle bg-surface hover:bg-oat text-left transition-all flex items-center justify-between group">
+              <div>
+                <div class="font-display font-bold text-base text-charcoal group-hover:text-terracotta">🍳 Modular Kitchen</div>
+                <div class="text-xs text-charcoalMuted mt-0.5">Turnkey Joinery &bull; Budget: ₹5L &ndash; ₹8L</div>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-oat text-charcoalMuted group-hover:text-terracotta font-bold flex items-center justify-center">&rarr;</span>
+            </button>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-oat border border-borderSubtle text-xs text-charcoalMuted flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0">&check;</span>
+            <span>Arrives formatted directly on your phone with zero commission middlemen or third-party delays.</span>
+          </div>
+        </div>
+
+        <!-- Right: Interactive WhatsApp Phone Viewport with Live Typing Animation -->
+        <div class="lg:col-span-7 flex justify-center">
+          <div class="w-full max-w-sm bg-[#ECE5D8] rounded-[40px] p-3.5 shadow-2xl border-4 border-charcoal/80 overflow-hidden">
+            
+            <!-- Phone Header: Verified Studio Principal -->
+            <div class="bg-[#075E54] text-white p-3.5 rounded-t-2xl flex items-center justify-between shadow-sm">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold ring-2 ring-emerald-300/40">
+                  AK
+                </div>
+                <div>
+                  <div class="text-xs font-bold leading-none flex items-center gap-1.5">
+                    <span>Ashish Kumar</span>
+                    <svg class="w-3 h-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  </div>
+                  <div id="wa-header-status" class="text-[10px] text-emerald-200 mt-0.5 font-mono">Online &bull; Studio Principal</div>
+                </div>
+              </div>
+              <span class="text-[10px] font-mono bg-emerald-700/80 px-2.5 py-0.5 rounded-full font-semibold border border-emerald-500/40 tracking-wider">VERIFIED</span>
+            </div>
+
+            <!-- WhatsApp Chat Body -->
+            <div id="wa-chat-box" class="h-88 min-h-[340px] bg-[#E5DDD5] p-3.5 overflow-y-auto space-y-3.5 text-xs flex flex-col justify-end font-sans">
+              
+              <div class="text-center text-[10px] text-zinc-500 font-medium py-1">TODAY &bull; ENQUIRY PROTOCOL</div>
+
+              <!-- Typing Indicator (Visible during pill switch) -->
+              <div id="typing-bubble" class="hidden bg-white px-3.5 py-2.5 rounded-2xl rounded-tl-none shadow-sm w-fit border-l-4 border-terracotta">
+                <div class="flex items-center gap-1">
+                  <span class="typing-dot"></span>
+                  <span class="typing-dot"></span>
+                  <span class="typing-dot"></span>
+                </div>
+              </div>
+
+              <!-- Message 1: Incoming Client Enquiry Pill -->
+              <div id="msg-client" class="anim-msg bg-white p-3.5 rounded-2xl rounded-tl-none shadow-sm max-w-[90%] border-l-4 border-terracotta space-y-1.5">
+                <div class="font-bold text-charcoal text-[11px] flex justify-between items-center">
+                  <span class="flex items-center gap-1 text-terracotta font-mono text-[10px]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+                    DIRECT WEBSITE INQUIRY
+                  </span>
+                  <span class="text-[9px] text-zinc-400 font-normal">2:45 PM</span>
+                </div>
+                <p id="msg-client-text" class="text-zinc-800 text-xs leading-relaxed font-medium">
+                  "Hi Ashish! I saw your completed 4BHK Villa project on your website. We just got possession of our 4,200 sq.ft villa in Indiranagar and want to discuss interior execution. Budget: ₹25L–₹35L."
+                </p>
+                <div class="pt-1.5 border-t border-zinc-200 flex justify-between items-center text-[9px] font-mono">
+                  <span class="text-emerald-700 font-bold">STATUS: PRE-QUALIFIED LEAD</span>
+                  <span class="text-zinc-400">Via yourstudio.in</span>
+                </div>
+              </div>
+
+              <!-- Message 2: Studio Principal Reply -->
+              <div id="msg-reply" class="anim-msg bg-[#DCF8C6] p-3.5 rounded-2xl rounded-tr-none shadow-sm max-w-[88%] ml-auto text-zinc-800 space-y-1">
+                <p id="msg-reply-text" class="text-xs leading-relaxed">
+                  "Hello Mr. Kapoor! Thank you for reaching out. Congratulations on your villa! We'd be glad to share our material docket and walk you through our space planning. Would a quick call at 4:30 PM work for you today?"
+                </p>
+                <div class="text-[9px] text-right text-emerald-800 font-mono">2:46 PM &bull; &check;&check; Read</div>
+              </div>
+
+            </div>
+
+            <!-- Phone Bottom Input Mockup -->
+            <div class="bg-white p-2.5 rounded-b-2xl flex items-center gap-2 border-t border-zinc-200">
+              <input type="text" placeholder="Type a message..." disabled class="grow bg-zinc-100 px-3 py-1.5 rounded-full text-xs text-zinc-400 outline-none">
+              <div class="w-8 h-8 rounded-full bg-[#075E54] text-white flex items-center justify-center text-xs font-bold">
+                &rarr;
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURE 2: Dedicated Before vs After Transformation Slider (SEPARATED & DISTINCT) -->
+  <section id="before-after" class="py-24 lg:py-28 border-b border-borderSubtle bg-canvas">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">CORE CAPABILITY // 02</span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal">
+          Before vs After Transformation Slider
+        </h2>
+        <p class="text-base text-charcoalMuted">
+          High-budget homeowners don't hire based on 3D software renders. They hire when they see raw brick shells transformed into bespoke finished residences. Drag the handle to test this interactive module.
+        </p>
+      </div>
+
+      <!-- Before/After Comparison Container with Real Repo Images -->
+      <div class="max-w-5xl mx-auto p-4 sm:p-6 bg-surface rounded-3xl border border-borderSubtle shadow-card-warm">
+        <div id="ba-stage" class="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden cursor-ew-resize select-none border border-borderSubtle">
+          
+          <!-- After Image (Real Completed Apartment Living Room from Repo) -->
+          <img src="assets/anisabad-3bhk/living.webp" 
+               alt="Completed Luxury Living Atelier" 
+               class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+          
+          <div class="absolute top-5 right-5 bg-charcoal/90 backdrop-blur-md text-white px-4 py-2 rounded-full text-xs font-display font-semibold pointer-events-none shadow-md">
+            FINISHED ATELIER &bull; COMPLETED
+          </div>
+
+          <!-- Before Image (Real Bare Shell from Repo) with clip-path -->
+          <div class="clipped-before absolute inset-0 w-full h-full pointer-events-none">
+            <img src="assets/anisabad-3bhk/before.webp" 
+                 alt="Raw Bare Shell Construction Site" 
+                 class="w-full h-full object-cover pointer-events-none">
+            
+            <div class="absolute top-5 left-5 bg-terracotta/95 backdrop-blur-md text-white px-4 py-2 rounded-full text-xs font-display font-semibold pointer-events-none shadow-md">
+              RAW SITE &bull; BARE BRICK SHELL
+            </div>
+          </div>
+
+          <!-- Draggable Divider Line & Handle -->
+          <div id="ba-divider" class="slider-divider-line absolute top-0 bottom-0 w-[2px] bg-white pointer-events-none shadow-2xl">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-2xl text-charcoal flex items-center justify-center font-bold text-sm pointer-events-none border-2 border-borderSubtle">
+              &#x2194;
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-5 px-3 flex flex-col sm:flex-row items-center justify-between text-xs text-charcoalMuted font-mono gap-2">
+          <span>&larr; RAW BRICK & SITE WORK</span>
+          <span class="text-terracotta font-bold flex items-center gap-1">
+            <span>DRAG HANDLE HORIZONTALLY</span>
+          </span>
+          <span>COMPLETED RESIDENCE &rarr;</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURE 3: Prominent Interactive Studio ROI Modeler (ELEVATED & PROMINENT) -->
+  <section id="roi-calculator" class="py-24 lg:py-28 border-b border-borderSubtle bg-oat/60">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">THE EXECUTIVE FINANCIAL MODEL // 03</span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal">
+          Calculate Your Studio's Investment Return
+        </h2>
+        <p class="text-base text-charcoalMuted">
+          Adjust your average project value and client acquisition targets below to see how a single residential client completely funds decades of your studio's digital presence.
+        </p>
+      </div>
+
+      <!-- Elevated Prominent Revenue Modeler Card -->
+      <div class="bg-surface p-8 sm:p-12 rounded-3xl border-2 border-borderSubtle shadow-card-warm space-y-10">
+        
+        <!-- Controls Grid -->
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+          
+          <!-- Slider 1: Average Project Value -->
+          <div class="space-y-3 bg-canvas p-6 rounded-2xl border border-borderSubtle">
+            <div class="flex justify-between items-baseline mb-2">
+              <label class="font-display font-bold text-charcoal text-sm">Average Project Value / Fee</label>
+              <span id="project-val-label" class="font-display font-extrabold text-terracotta text-2xl">₹5,00,000</span>
+            </div>
+            <input type="range" id="project-val" min="150000" max="2500000" step="50000" value="500000" oninput="calculateROI()">
+            <div class="flex justify-between text-[11px] text-charcoalMuted pt-1 font-mono">
+              <span>₹1.5L (Modular Kitchen)</span>
+              <span>₹25L (Turnkey Villa)</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: Additional Clients Won -->
+          <div class="space-y-3 bg-canvas p-6 rounded-2xl border border-borderSubtle">
+            <div class="flex justify-between items-baseline mb-2">
+              <label class="font-display font-bold text-charcoal text-sm">Additional Clients Won per Year</label>
+              <span id="clients-val-label" class="font-display font-extrabold text-terracotta text-2xl">2 Clients</span>
+            </div>
+            <input type="range" id="clients-val" min="1" max="6" step="1" value="2" oninput="calculateROI()">
+            <div class="flex justify-between text-[11px] text-charcoalMuted pt-1 font-mono">
+              <span>1 Client</span>
+              <span>6 Clients</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Live KPI Metric Cards -->
+        <div class="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+          
+          <div class="p-6 rounded-2xl bg-sand border border-borderSubtle flex flex-col justify-between">
+            <div class="text-xs text-charcoalMuted font-mono font-semibold uppercase tracking-wider">New Studio Revenue</div>
+            <div id="added-rev" class="font-display text-3xl font-extrabold text-charcoal my-2">₹10,00,000</div>
+            <div class="text-[11px] text-charcoalMuted">Gross project billing</div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-sand border border-borderSubtle flex flex-col justify-between">
+            <div class="text-xs text-charcoalMuted font-mono font-semibold uppercase tracking-wider">Website Investment</div>
+            <div class="font-display text-3xl font-extrabold text-charcoal my-2">₹15,000</div>
+            <div class="text-[11px] text-charcoalMuted">One-time transparent fee</div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-terracotta text-white shadow-glow-terracotta flex flex-col justify-between">
+            <div class="text-xs text-white/80 font-mono font-semibold uppercase tracking-wider">Return Multiplier</div>
+            <div id="roi-mult" class="font-display text-4xl font-extrabold text-white my-1">66x ROI</div>
+            <div class="text-[11px] text-white/80">Direct yield on capital</div>
+          </div>
+
+        </div>
+
+        <!-- Live Dynamic Narrative Callout -->
+        <div class="p-5 rounded-2xl bg-oat border border-borderSubtle text-xs sm:text-sm text-charcoal leading-relaxed flex items-center gap-3">
+          <span class="text-2xl shrink-0">💡</span>
+          <p id="roi-narrative">
+            Winning just <strong class="text-charcoal font-bold">2 additional clients</strong> at an average project value of <strong class="text-charcoal font-bold">₹5,00,000</strong> yields <strong class="text-terracotta font-bold">₹10,00,000</strong> in revenue — delivering a massive <strong class="text-terracotta font-bold">66x return</strong> against your one-time ₹15,000 website investment.
+          </p>
+        </div>
+
+        <div class="text-center pt-2">
+          <a href="#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-terracotta hover:bg-terracottaDark text-white font-display font-bold text-sm tracking-wide shadow-md hover:shadow-glow-terracotta transition-all">
+            <span>Lock In Your ₹15,000 Preview</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bento Grid Feature Matrix (Engineered Specifications with Working Hover Effects) -->
+  <section id="specifications" class="py-24 lg:py-28 border-b border-borderSubtle bg-canvas">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">ENGINEERED SPECIFICATIONS</span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal">
+          Everything Your Interior Studio Needs Online
+        </h2>
+        <p class="text-base text-charcoalMuted">
+          Built strictly for the practical realities of residential interior designers and architecture studios.
+        </p>
+      </div>
+
+      <!-- Bento Grid Architecture with generous gap-8 lg:gap-10 and p-8 lg:p-10 -->
+      <div class="grid md:grid-cols-3 gap-8 lg:gap-10">
+        
+        <!-- Bento 1 (Large 2 Cols) -->
+        <div class="md:col-span-2 atelier-card p-8 lg:p-10 space-y-6">
+          <span class="text-xs font-mono font-semibold text-terracotta uppercase">01 // RETINA MOBILE PORTFOLIO</span>
+          <h3 class="font-display text-2xl sm:text-3xl font-bold text-charcoal">Lightning-Fast Architectural Photography Presentation</h3>
+          <p class="text-sm text-charcoalMuted leading-relaxed max-w-2xl">
+            Architectural photography is heavy. Most agency websites take 8 seconds to load on phone connections, causing 60% of affluent visitors to abandon the site. Our platform delivers razor-sharp retina images with instant load times over cellular data.
+          </p>
+          <div class="pt-6 grid grid-cols-3 gap-6 border-t border-borderSubtle text-xs">
+            <div>
+              <div class="font-display font-bold text-xl text-charcoal">Under 1.2s</div>
+              <div class="text-charcoalMuted text-xs mt-1">Average mobile load</div>
+            </div>
+            <div>
+              <div class="font-display font-bold text-xl text-charcoal">Zero Stutter</div>
+              <div class="text-charcoalMuted text-xs mt-1">Optimized image pipeline</div>
+            </div>
+            <div>
+              <div class="font-display font-bold text-xl text-charcoal">Full Bleed</div>
+              <div class="text-charcoalMuted text-xs mt-1">Swipeable galleries</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 2 -->
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="text-xs font-mono font-semibold text-terracotta uppercase">02 // WHATSAPP DIRECT</span>
+            <h3 class="font-display text-2xl font-bold text-charcoal">One-Tap Direct Consultation</h3>
+            <p class="text-sm text-charcoalMuted leading-relaxed">
+              No generic contact forms or email inboxes that sit unread. Connect prospective homeowners directly to your personal WhatsApp with property size and budget pre-filled.
+            </p>
+          </div>
+          <div class="p-3.5 bg-oat rounded-2xl text-xs font-medium text-charcoal flex items-center gap-2 border border-borderSubtle">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Direct WhatsApp Deep Link</span>
+          </div>
+        </div>
+
+        <!-- Bento 3 -->
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="text-xs font-mono font-semibold text-terracotta uppercase">03 // PROFESSIONAL IDENTITY</span>
+            <h3 class="font-display text-2xl font-bold text-charcoal">Domain & Corporate Email</h3>
+            <p class="text-sm text-charcoalMuted leading-relaxed">
+              Replace free Gmail addresses with your own professional domain (e.g. ashish@yourstudio.in). We handle registration, SSL security certificates, and cloud mailbox setup.
+            </p>
+          </div>
+          <div class="p-3.5 bg-oat rounded-2xl text-xs font-medium text-charcoal flex items-center gap-2 border border-borderSubtle">
+            <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+            <span>100% Studio Asset Ownership</span>
+          </div>
+        </div>
+
+        <!-- Bento 4 (Large 2 Cols) -->
+        <div class="md:col-span-2 atelier-card p-8 lg:p-10 space-y-6">
+          <span class="text-xs font-mono font-semibold text-terracotta uppercase">04 // 48-HOUR RAPID PROTOCOL</span>
+          <h3 class="font-display text-2xl sm:text-3xl font-bold text-charcoal">From Photos to Working Link in 2 Days</h3>
+          <p class="text-sm text-charcoalMuted leading-relaxed max-w-2xl">
+            Traditional web design agencies take two to three months of meetings and wireframe revisions. We specialize exclusively in interior studios: send your project photos over WhatsApp, and inspect your private working link within 48 hours.
+          </p>
+          <div class="pt-6 grid grid-cols-3 gap-6 border-t border-borderSubtle text-xs">
+            <div>
+              <div class="font-display font-bold text-xl text-charcoal">₹0 Upfront</div>
+              <div class="text-charcoalMuted text-xs mt-1">Pay only after inspection</div>
+            </div>
+            <div>
+              <div class="font-display font-bold text-xl text-charcoal">48 Hours</div>
+              <div class="text-charcoalMuted text-xs mt-1">Guaranteed preview delivery</div>
+            </div>
+            <div>
+              <div class="font-display font-bold text-xl text-charcoal">Turnkey</div>
+              <div class="text-charcoalMuted text-xs mt-1">Zero technical work for you</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Real Studio Case Studies (Using Real Repository Photography) -->
+  <section id="case-studies" class="py-24 lg:py-28 border-b border-borderSubtle bg-oat/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">STUDIO PRINCIPALS</span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal">
+          Trusted by Interior Practice Founders Across India
+        </h2>
+        <p class="text-base text-charcoalMuted">
+          How independent studio owners replaced bulky PDFs and unreliable portals with a streamlined digital atelier.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 lg:gap-10">
+        
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="aspect-[16/10] bg-sand rounded-2xl overflow-hidden border border-borderSubtle">
+              <img src="assets/portfolio-01.jpg" alt="Living Room Finish Board" class="w-full h-full object-cover">
+            </div>
+            <p class="text-sm text-charcoal leading-relaxed italic pt-2">
+              "Before Studio Presence, we were sending 40MB PDF portfolios over WhatsApp. Having our own clean, fast website completely transformed how clients perceive our design fees."
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderSubtle">
+            <div class="font-display font-bold text-charcoal text-base">Ashish Kumar</div>
+            <div class="text-xs text-charcoalMuted">Principal, Ashish Interiors</div>
+          </div>
+        </div>
+
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="aspect-[16/10] bg-sand rounded-2xl overflow-hidden border border-borderSubtle">
+              <img src="assets/portfolio-02.jpg" alt="Dining joinery" class="w-full h-full object-cover">
+            </div>
+            <p class="text-sm text-charcoal leading-relaxed italic pt-2">
+              "They delivered our working preview in 2 days. The WhatsApp button alone brought us three genuine turnkey villa consultations in our first month."
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderSubtle">
+            <div class="font-display font-bold text-charcoal text-base">Ananya Deshmukh</div>
+            <div class="text-xs text-charcoalMuted">Design Director, Atelier 9</div>
+          </div>
+        </div>
+
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="aspect-[16/10] bg-sand rounded-2xl overflow-hidden border border-borderSubtle">
+              <img src="assets/portfolio-03.jpg" alt="Study nook" class="w-full h-full object-cover">
+            </div>
+            <p class="text-sm text-charcoal leading-relaxed italic pt-2">
+              "Finally a team that understands interior photography. The images look razor-sharp on phones, and I never have to chase a developer to add our new projects."
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderSubtle">
+            <div class="font-display font-bold text-charcoal text-base">Priya Sundaram</div>
+            <div class="text-xs text-charcoalMuted">Founder, Studio Vistara</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Transparent Investment Tiers -->
+  <section id="pricing" class="py-24 lg:py-28 border-b border-borderSubtle bg-canvas">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">TRANSPARENT PACKAGES</span>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal">
+          Clear, Upfront Pricing. Zero Surprises.
+        </h2>
+        <p class="text-base text-charcoalMuted">
+          Domain, cloud hosting, and mobile optimization included in all packages. Pay only after reviewing your working preview.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8 lg:gap-10">
+        
+        <!-- Essentials -->
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="text-xs font-mono font-semibold text-charcoalMuted uppercase">STUDIO ESSENTIALS</span>
+            <div>
+              <h3 class="font-display text-2xl font-bold text-charcoal">Studio Essentials</h3>
+              <div class="mt-3 flex items-baseline gap-2 font-display">
+                <span class="text-4xl font-extrabold text-charcoal">₹15,000</span>
+                <span class="text-xs text-charcoalMuted">one-time fee</span>
+              </div>
+              <p class="text-xs text-charcoalMuted mt-2 leading-relaxed">The complete studio foundation. Ideal for boutique practices opening their first dedicated showroom or online identity.</p>
+            </div>
+
+            <ul class="space-y-3 pt-4 border-t border-borderSubtle text-xs text-charcoal font-medium">
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Complete multi-page website</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Retina mobile project galleries</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Direct WhatsApp consultation trigger</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Google Maps & local search setup</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Custom domain (.in / .com) + email</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Ready in 48 hours</li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="w-full py-4 rounded-full bg-sand hover:bg-sandDark text-charcoal text-center text-xs font-bold font-display transition-colors">
+            Claim ₹15k Preview &rarr;
+          </a>
+        </div>
+
+        <!-- Plus (Featured) -->
+        <div class="atelier-card p-8 lg:p-10 border-2 border-terracotta space-y-6 flex flex-col justify-between relative shadow-xl">
+          <div class="absolute -top-3.5 left-8 bg-terracotta text-white text-[11px] font-display font-bold uppercase px-3.5 py-1 rounded-full shadow-sm">
+            RECOMMENDED FOR STUDIOS
+          </div>
+
+          <div class="space-y-4 pt-2">
+            <span class="text-xs font-mono font-semibold text-terracotta uppercase">STUDIO PLUS</span>
+            <div>
+              <h3 class="font-display text-2xl font-bold text-charcoal">Studio Plus</h3>
+              <div class="mt-3 flex items-baseline gap-2 font-display">
+                <span class="text-4xl font-extrabold text-charcoal">₹25,000</span>
+                <span class="text-xs text-charcoalMuted">one-time fee</span>
+              </div>
+              <p class="text-xs text-charcoalMuted mt-2 leading-relaxed">Everything in Essentials plus interactive project case studies and before/after transformation tools.</p>
+            </div>
+
+            <ul class="space-y-3 pt-4 border-t border-borderSubtle text-xs text-charcoal font-medium">
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Everything in Studio Essentials</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Dedicated individual project pages</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Draggable Before/After comparison sliders</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Live Google 5-star reviews embed</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Client consultation intake questionnaire</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Architectural Journal / Blog</li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="w-full py-4 rounded-full bg-terracotta hover:bg-terracottaDark text-white text-center text-xs font-bold font-display shadow-md hover:shadow-glow-terracotta transition-all">
+            Claim Studio Plus Preview &rarr;
+          </a>
+        </div>
+
+        <!-- Bespoke -->
+        <div class="atelier-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="text-xs font-mono font-semibold text-charcoalMuted uppercase">BESPOKE PARTNER</span>
+            <div>
+              <h3 class="font-display text-2xl font-bold text-charcoal">Bespoke Partner</h3>
+              <div class="mt-3 flex items-baseline gap-2 font-display">
+                <span class="text-4xl font-extrabold text-charcoal">From ₹45,000</span>
+                <span class="text-xs text-charcoalMuted">custom scope</span>
+              </div>
+              <p class="text-xs text-charcoalMuted mt-2 leading-relaxed">For established firms with multiple regional offices, custom 3D walkthrough viewers, or custom CRM pipelines.</p>
+            </div>
+
+            <ul class="space-y-3 pt-4 border-t border-borderSubtle text-xs text-charcoal font-medium">
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Everything in Studio Plus</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Multi-office page architecture</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> 3D Matterport / walkthrough embeds</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Custom CRM & WhatsApp automation</li>
+              <li class="flex items-center gap-2"><span class="text-terracotta font-bold">&check;</span> Priority quarterly portfolio updates</li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="w-full py-4 rounded-full bg-sand hover:bg-sandDark text-charcoal text-center text-xs font-bold font-display transition-colors">
+            Discuss Bespoke Scope &rarr;
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Comparison Matrix (Studio Presence vs Agencies vs Freelancers) -->
+  <section class="py-24 lg:py-28 border-b border-borderSubtle bg-oat/30">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">THE COMPARISON</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-charcoal">
+          Why 90% of Studio Owners Get Burned Elsewhere
+        </h2>
+      </div>
+
+      <div class="bg-surface rounded-3xl border border-borderSubtle shadow-card-warm overflow-hidden text-xs">
+        <div class="grid grid-cols-4 bg-oat/90 p-5 font-display font-bold text-charcoal border-b border-borderSubtle text-sm">
+          <div>Capability</div>
+          <div class="text-terracotta font-extrabold">Studio Presence</div>
+          <div class="text-charcoalMuted">Generic Agencies</div>
+          <div class="text-charcoalMuted">Freelancers</div>
+        </div>
+
+        <div class="divide-y divide-borderSubtle">
+          <div class="grid grid-cols-4 p-5 items-center">
+            <div class="font-bold text-charcoal">Delivery Time</div>
+            <div class="text-terracotta font-bold">48 Hours</div>
+            <div class="text-charcoalMuted">8 to 14 weeks</div>
+            <div class="text-charcoalMuted">Unpredictable</div>
+          </div>
+          <div class="grid grid-cols-4 p-5 items-center">
+            <div class="font-bold text-charcoal">Upfront Risk</div>
+            <div class="text-terracotta font-bold">₹0 (Pay after preview)</div>
+            <div class="text-charcoalMuted">50% upfront retainer</div>
+            <div class="text-charcoalMuted">Advance required</div>
+          </div>
+          <div class="grid grid-cols-4 p-5 items-center">
+            <div class="font-bold text-charcoal">Pricing</div>
+            <div class="text-terracotta font-bold">₹15,000 flat</div>
+            <div class="text-charcoalMuted">₹60,000 – ₹1,50,000+</div>
+            <div class="text-charcoalMuted">Scope creep</div>
+          </div>
+          <div class="grid grid-cols-4 p-5 items-center">
+            <div class="font-bold text-charcoal">Legal & GST Invoice</div>
+            <div class="text-terracotta font-bold">&check; Registered GST entity</div>
+            <div class="text-charcoalMuted">&check; Yes</div>
+            <div class="text-charcoalMuted">&cross; Rarely</div>
+          </div>
+          <div class="grid grid-cols-4 p-5 items-center">
+            <div class="font-bold text-charcoal">Maintenance Burden</div>
+            <div class="text-terracotta font-bold">Zero (We handle updates)</div>
+            <div class="text-charcoalMuted">Heavy monthly fees</div>
+            <div class="text-charcoalMuted">Ghosted after launch</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Form & 48-Hour Preview Request -->
+  <section id="contact" class="py-24 lg:py-28 bg-canvas">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <div class="bg-surface p-8 sm:p-12 rounded-3xl border border-borderSubtle shadow-card-warm space-y-8">
+        <div class="text-center space-y-3">
+          <span class="text-xs font-bold uppercase tracking-widest text-terracotta block font-mono">CLAIM FREE PREVIEW</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-charcoal">
+            See Your Studio's Site Working in 48 Hours
+          </h2>
+          <p class="text-sm text-charcoalMuted max-w-md mx-auto">
+            Zero upfront payment. We build your watermarked preview first so you can test it on your phone before paying anything.
+          </p>
+        </div>
+
+        <form onsubmit="handleForm(event)" class="space-y-4 text-xs font-sans">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="block font-bold text-charcoal">Your Name *</label>
+              <input type="text" required placeholder="Ashish Kumar" class="w-full p-4 rounded-xl bg-oat/50 border border-borderSubtle text-charcoal focus:border-terracotta focus:outline-none text-xs">
+            </div>
+            <div class="space-y-1.5">
+              <label class="block font-bold text-charcoal">Studio / Firm Name *</label>
+              <input type="text" required placeholder="Ashish Interiors" class="w-full p-4 rounded-xl bg-oat/50 border border-borderSubtle text-charcoal focus:border-terracotta focus:outline-none text-xs">
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="block font-bold text-charcoal">WhatsApp Number *</label>
+              <input type="tel" required placeholder="+91 98765 43210" class="w-full p-4 rounded-xl bg-oat/50 border border-borderSubtle text-charcoal focus:border-terracotta focus:outline-none text-xs">
+            </div>
+            <div class="space-y-1.5">
+              <label class="block font-bold text-charcoal">Operating City *</label>
+              <input type="text" required placeholder="e.g. Pune, Delhi NCR, Bengaluru" class="w-full p-4 rounded-xl bg-oat/50 border border-borderSubtle text-charcoal focus:border-terracotta focus:outline-none text-xs">
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block font-bold text-charcoal">Link to Project Photos (Google Drive / Dropbox / Instagram)</label>
+            <input type="text" placeholder="https://drive.google.com/... or @yourstudio" class="w-full p-4 rounded-xl bg-oat/50 border border-borderSubtle text-charcoal focus:border-terracotta focus:outline-none text-xs">
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-full bg-terracotta hover:bg-terracottaDark text-white font-display font-bold text-sm tracking-wide shadow-lg hover:shadow-glow-terracotta transition-all mt-3">
+            Claim Free 48-Hour Preview &rarr;
+          </button>
+        </form>
+
+        <div id="form-success" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-medium text-center">
+          &check; Request received! Our team will inspect your project photos and send your private working preview link within 48 hours on WhatsApp.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Comprehensive Multi-Column Architectural SaaS Footer -->
+  <footer class="bg-charcoal text-sand py-16 sm:py-20 border-t border-charcoal/40 font-sans">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      
+      <!-- Top Columns Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+        
+        <!-- Brand Column -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-terracotta flex items-center justify-center text-white font-bold text-xs">
+              SP
+            </div>
+            <div>
+              <span class="font-display font-bold text-lg text-white block leading-none">Studio Presence</span>
+              <span class="text-[10px] font-mono text-sand/60 tracking-wider uppercase">Websites for Interior Design Studios</span>
+            </div>
+          </div>
+          <p class="text-xs text-sand/70 leading-relaxed max-w-sm font-normal">
+            The dedicated digital presence platform engineered exclusively for residential interior designers and turnkey architecture practices across India. Live in 48 hours with 100% studio asset ownership.
+          </p>
+          <div class="pt-2 flex items-center gap-3 font-mono text-xs">
+            <a href="https://wa.me/919876543210" target="_blank" class="px-4 py-2 rounded-full bg-terracotta text-white font-bold hover:bg-terracottaDark transition-colors">
+              WhatsApp Us &rarr;
+            </a>
+            <span class="text-sand/50 text-[11px]">GST Registered Firm</span>
+          </div>
+        </div>
+
+        <!-- Column 1: System Capabilities -->
+        <div class="lg:col-span-3 space-y-3 font-mono text-xs">
+          <div class="text-white font-bold uppercase tracking-wider border-b border-sand/20 pb-2">
+            Capabilities
+          </div>
+          <ul class="space-y-2.5 text-sand/70">
+            <li><a href="#simulator" class="hover:text-white transition-colors">WhatsApp Lead Simulator</a></li>
+            <li><a href="#before-after" class="hover:text-white transition-colors">Before / After Drag Slider</a></li>
+            <li><a href="#roi-calculator" class="hover:text-white transition-colors">Studio ROI Modeler</a></li>
+            <li><a href="#specifications" class="hover:text-white transition-colors">Retina Mobile Portfolio</a></li>
+            <li><a href="#specifications" class="hover:text-white transition-colors">Custom Domain & Email</a></li>
+            <li><a href="#contact" class="hover:text-white transition-colors">48-Hour Rapid SLA</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Investment Tiers -->
+        <div class="lg:col-span-3 space-y-3 font-mono text-xs">
+          <div class="text-white font-bold uppercase tracking-wider border-b border-sand/20 pb-2">
+            Investment Packages
+          </div>
+          <ul class="space-y-2.5 text-sand/70">
+            <li><a href="#pricing" class="hover:text-white transition-colors">Studio Essentials (₹15,000)</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Studio Plus (₹25,000)</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Bespoke Partner (₹45,000+)</a></li>
+            <li><a href="#roi-calculator" class="hover:text-white transition-colors">Studio ROI Modeler</a></li>
+            <li><a href="#contact" class="hover:text-white transition-colors">₹0 Upfront Risk Free Preview</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Legitimacy & Trust -->
+        <div class="lg:col-span-2 space-y-3 font-mono text-xs">
+          <div class="text-white font-bold uppercase tracking-wider border-b border-sand/20 pb-2">
+            Trust & Legal
+          </div>
+          <ul class="space-y-2.5 text-sand/70">
+            <li>100% Studio Ownership</li>
+            <li>Zero Vendor Lock-in</li>
+            <li>GST Tax Invoicing</li>
+            <li>Written Contract SLA</li>
+            <li>Direct WhatsApp Support</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-sand/15 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-sand/50 gap-4">
+        <div>&copy; 2026 Studio Presence. Registered GST Firm. Built exclusively for Indian Interior Studios.</div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-white transition-colors">Back to Top &uarr;</a>
+          <a href="https://wa.me/919876543210" target="_blank" class="hover:text-white transition-colors">Direct WhatsApp Support</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Interactive Scripts -->
+  <script>
+    // 1. 3D Perspective Card Tilt on Mouse Move
+    const tiltBox = document.getElementById('tilt-box');
+    if (tiltBox) {
+      document.addEventListener('mousemove', (e) => {
+        const rect = tiltBox.getBoundingClientRect();
+        const boxCenterX = rect.left + rect.width / 2;
+        const boxCenterY = rect.top + rect.height / 2;
+        
+        const deltaX = (e.clientX - boxCenterX) / 35;
+        const deltaY = (e.clientY - boxCenterY) / 35;
+
+        const clampX = Math.max(-8, Math.min(8, deltaX));
+        const clampY = Math.max(-8, Math.min(8, deltaY));
+
+        tiltBox.style.transform = `perspective(1200px) rotateX(${-clampY}deg) rotateY(${clampX}deg)`;
+      });
+
+      tiltBox.addEventListener('mouseleave', () => {
+        tiltBox.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    // 2. Hero Lighting Modes: Daylight vs Golden Hour vs Warm 2700K
+    function setLighting(mode) {
+      const goldenOverlay = document.getElementById('golden-overlay');
+      const warmOverlay = document.getElementById('warm-overlay');
+      const roomImg = document.getElementById('room-img');
+
+      const btnDay = document.getElementById('btn-light-day');
+      const btnGolden = document.getElementById('btn-light-golden');
+      const btnWarm = document.getElementById('btn-light-warm');
+
+      [btnDay, btnGolden, btnWarm].forEach(b => {
+        b.classList.remove('bg-surface', 'text-charcoal', 'font-bold', 'shadow-sm');
+        b.classList.add('text-charcoalMuted');
+      });
+
+      if (mode === 'day') {
+        goldenOverlay.style.opacity = '0';
+        warmOverlay.style.opacity = '0';
+        roomImg.style.filter = 'brightness(1)';
+        btnDay.classList.add('bg-surface', 'text-charcoal', 'font-bold', 'shadow-sm');
+      } else if (mode === 'golden') {
+        goldenOverlay.style.opacity = '0.55';
+        warmOverlay.style.opacity = '0';
+        roomImg.style.filter = 'brightness(1.03) contrast(1.05)';
+        btnGolden.classList.add('bg-surface', 'text-charcoal', 'font-bold', 'shadow-sm');
+      } else if (mode === 'warm') {
+        goldenOverlay.style.opacity = '0';
+        warmOverlay.style.opacity = '0.55';
+        roomImg.style.filter = 'brightness(0.97) contrast(1.08)';
+        btnWarm.classList.add('bg-surface', 'text-charcoal', 'font-bold', 'shadow-sm');
+      }
+    }
+
+    // 3. Interactive WhatsApp Lead Simulation with Typing Animation
+    function simulateLead(type, btnElement) {
+      const clientText = document.getElementById('msg-client-text');
+      const replyText = document.getElementById('msg-reply-text');
+      const clientMsg = document.getElementById('msg-client');
+      const replyMsg = document.getElementById('msg-reply');
+      const typingBubble = document.getElementById('typing-bubble');
+      const waHeaderStatus = document.getElementById('wa-header-status');
+      const chatBox = document.getElementById('wa-chat-box');
+
+      // Update button active state
+      document.querySelectorAll('.lead-btn').forEach(btn => {
+        btn.classList.remove('border-2', 'border-terracotta', 'bg-terracottaLight', 'shadow-sm');
+        btn.classList.add('border', 'border-borderSubtle', 'bg-surface');
+        const arrow = btn.querySelector('span:last-child');
+        if (arrow) {
+          arrow.className = "w-8 h-8 rounded-full bg-oat text-charcoalMuted group-hover:text-terracotta font-bold flex items-center justify-center";
+        }
+      });
+
+      btnElement.classList.remove('border', 'border-borderSubtle', 'bg-surface');
+      btnElement.classList.add('border-2', 'border-terracotta', 'bg-terracottaLight', 'shadow-sm');
+      const activeArrow = btnElement.querySelector('span:last-child');
+      if (activeArrow) {
+        activeArrow.className = "w-8 h-8 rounded-full bg-white text-terracotta font-bold flex items-center justify-center shadow-sm";
+      }
+
+      let leadContent = "";
+      let replyContent = "";
+
+      if (type === 'villa') {
+        leadContent = "Hi Ashish! I saw your completed 4BHK Villa project on your website. We just got possession of our 4,200 sq.ft villa in Indiranagar and want to discuss interior execution. Budget: ₹25L–₹35L.";
+        replyContent = "Hello Mr. Kapoor! Thank you for reaching out. Congratulations on your villa! We'd be glad to share our material docket and walk you through our space planning. Would a quick call at 4:30 PM work for you today?";
+      } else if (type === 'flat') {
+        leadContent = "Hi Ashish, we love your residential apartment portfolio. Looking for turnkey design for our 3BHK flat (1,850 sq.ft) in Whitefield. Looking to start within 3 weeks. Budget: ₹12L–₹16L.";
+        replyContent = "Hello Priya! Thank you for contacting us. We recently completed a 3BHK with similar proportions and can share the cost docket directly. Could we hop on a brief 10-minute discovery call tomorrow morning?";
+      } else if (type === 'kitchen') {
+        leadContent = "Hello! We saw your modular kitchen and living room woodwork photos. Need a premium turnkey renovation for our apartment. Budget: ₹5L–₹8L.";
+        replyContent = "Hi Vikram! We specialize in acrylic and veneer kitchen joinery with soft-close Blum hardware. Sending our modular kitchen specification docket right now!";
+      }
+
+      // Hide messages and show typing indicator
+      clientMsg.classList.add('hidden');
+      replyMsg.classList.add('hidden');
+      typingBubble.classList.remove('hidden');
+      waHeaderStatus.textContent = "typing...";
+
+      setTimeout(() => {
+        typingBubble.classList.add('hidden');
+        waHeaderStatus.textContent = "Online • Studio Principal";
+        
+        clientText.textContent = `"${leadContent}"`;
+        clientMsg.classList.remove('hidden');
+        clientMsg.classList.remove('anim-msg');
+        void clientMsg.offsetWidth; // trigger reflow
+        clientMsg.classList.add('anim-msg');
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        setTimeout(() => {
+          replyText.textContent = `"${replyContent}"`;
+          replyMsg.classList.remove('hidden');
+          replyMsg.classList.remove('anim-msg');
+          void replyMsg.offsetWidth; // trigger reflow
+          replyMsg.classList.add('anim-msg');
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }, 400);
+
+      }, 500);
+    }
+
+    // 4. Rock-Solid Before/After Drag Logic with PointerEvent & PointerCapture
+    const baStage = document.getElementById('ba-stage');
+    if (baStage) {
+      let isDragging = false;
+
+      function updateSliderPosition(clientX) {
+        const rect = baStage.getBoundingClientRect();
+        let percentage = ((clientX - rect.left) / rect.width) * 100;
+        percentage = Math.max(3, Math.min(97, percentage));
+        baStage.style.setProperty('--slider-pos', percentage + '%');
+      }
+
+      baStage.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        try { baStage.setPointerCapture(e.pointerId); } catch(err){}
+        updateSliderPosition(e.clientX);
+      });
+
+      baStage.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        updateSliderPosition(e.clientX);
+      });
+
+      baStage.addEventListener('pointerup', (e) => {
+        isDragging = false;
+        try { baStage.releasePointerCapture(e.pointerId); } catch(err){}
+      });
+
+      baStage.addEventListener('pointercancel', (e) => {
+        isDragging = false;
+      });
+    }
+
+    // 5. Dynamic Interactive Studio ROI Modeler
+    function calculateROI() {
+      const projectVal = parseInt(document.getElementById('project-val').value);
+      const clientsVal = parseInt(document.getElementById('clients-val').value);
+
+      document.getElementById('project-val-label').textContent = '₹' + projectVal.toLocaleString('en-IN');
+      document.getElementById('clients-val-label').textContent = clientsVal + (clientsVal === 1 ? ' Client' : ' Clients');
+
+      const addedRev = projectVal * clientsVal;
+      document.getElementById('added-rev').textContent = '₹' + addedRev.toLocaleString('en-IN');
+
+      const multiplier = Math.round(addedRev / 15000);
+      document.getElementById('roi-mult').textContent = multiplier + 'x ROI';
+
+      // Update dynamic narrative
+      const narrativeEl = document.getElementById('roi-narrative');
+      if (narrativeEl) {
+        narrativeEl.innerHTML = `Winning just <strong class="text-charcoal font-bold">${clientsVal} additional ${clientsVal === 1 ? 'client' : 'clients'}</strong> at an average project value of <strong class="text-charcoal font-bold">₹${projectVal.toLocaleString('en-IN')}</strong> yields <strong class="text-terracotta font-bold">₹${addedRev.toLocaleString('en-IN')}</strong> in revenue — delivering a massive <strong class="text-terracotta font-bold">${multiplier}x return</strong> against your one-time ₹15,000 website investment.`;
+      }
+    }
+
+    // 6. Form Submission Mockup
+    function handleForm(e) {
+      e.preventDefault();
+      document.getElementById('form-success').classList.remove('hidden');
+    }
+
+    // Initial setup on load
+    document.addEventListener('DOMContentLoaded', () => {
+      calculateROI();
+    });
+  </script>
+</body>
+</html>

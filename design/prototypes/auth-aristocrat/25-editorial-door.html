@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Private Patron Portal | Studio Presence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #141414;
+        --brown: #8c6d48;
+        --gold: #d9bc72;
+        --paper: #fbfbfa;
+        --border-subtle: #e2ded9;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #f2f2f2;
+          --brown: #e0c58e;
+          --gold: #d9bc72;
+          --paper: #0e0e0e;
+          --border-subtle: #262626;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+      }
+
+      /* Left Visual Wing */
+      .void {
+        position: relative;
+        overflow: hidden;
+        border-right: 1px solid var(--border-subtle);
+        background: #111;
+      }
+
+      .void img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.4s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .scrim-door {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.7) 100%);
+        z-index: 1;
+      }
+
+      .mark {
+        position: absolute;
+        left: 28px;
+        top: 32px;
+        z-index: 2;
+        font-size: 0.75rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        padding: 14px 10px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #ffffff;
+        backdrop-filter: blur(10px);
+        font-weight: 700;
+      }
+
+      .photo-caption-bottom {
+        position: absolute;
+        left: 32px;
+        bottom: 32px;
+        right: 32px;
+        z-index: 2;
+        color: #ffffff;
+      }
+
+      .photo-caption-bottom small {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+
+      .photo-caption-bottom h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.65rem;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+
+      /* Right Door Form Section */
+      .door {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(32px, 6vw, 80px);
+        position: relative;
+        background: var(--paper);
+      }
+
+      .ghost {
+        position: absolute;
+        top: 24px;
+        right: 32px;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(5rem, 8vw, 8rem);
+        font-weight: 300;
+        color: transparent;
+        -webkit-text-stroke: 1px var(--ink);
+        opacity: 0.12;
+        letter-spacing: -0.06em;
+        pointer-events: none;
+      }
+
+      .frame {
+        max-width: 440px;
+        outline: 1px solid var(--border-subtle);
+        outline-offset: 20px;
+        padding: 8px 0;
+      }
+
+      .eye {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        line-height: 1.5;
+        color: var(--brown);
+        margin-bottom: 16px;
+        font-weight: 700;
+      }
+
+      h1 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        line-height: 1.05;
+        margin-bottom: 14px;
+      }
+
+      h1 span {
+        color: var(--brown);
+        font-style: italic;
+      }
+
+      .lede {
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        color: #635e59;
+        margin-bottom: 24px;
+      }
+
+      .modes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 1px solid var(--border-subtle);
+        margin-bottom: 22px;
+      }
+
+      .modes button {
+        background: none;
+        border: 0;
+        padding: 12px;
+        font: inherit;
+        font-size: 0.78125rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+        color: #7a736c;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+
+      .modes button[aria-selected="true"] {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+
+      label {
+        display: block;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+
+      input {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid var(--border-subtle);
+        font: inherit;
+        background: var(--paper);
+        color: var(--ink);
+        border-radius: 0;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      input:focus-visible {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 2px rgba(217, 188, 114, 0.25);
+      }
+
+      .go {
+        width: 100%;
+        padding: 16px;
+        background: var(--gold);
+        color: #141414;
+        border: 0;
+        font: inherit;
+        font-size: 0.78125rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      .go:hover {
+        opacity: 0.92;
+      }
+
+      .google {
+        width: 100%;
+        margin-top: 10px;
+        padding: 12px;
+        border: 1px solid var(--border-subtle);
+        background: var(--paper);
+        color: var(--ink);
+        font: inherit;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        align-items: center;
+        transition: background 0.2s;
+      }
+
+      .google:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      .foot {
+        margin-top: 20px;
+        font-size: 0.8125rem;
+        color: #635e59;
+      }
+
+      .foot button {
+        background: none;
+        border: 0;
+        font: inherit;
+        font-weight: 700;
+        color: var(--ink);
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .lede, .foot {
+          color: #a39c94;
+        }
+        .modes button {
+          color: #8c857c;
+        }
+        .google:hover {
+          background: rgba(255, 255, 255, 0.06);
+        }
+        .frame {
+          outline-color: #262626;
+        }
+        .ghost {
+          -webkit-text-stroke: 1px #f2f2f2;
+        }
+      }
+
+      @media (max-width: 860px) {
+        .page {
+          grid-template-columns: 1fr;
+        }
+        .void {
+          min-height: 40vh;
+          height: 320px;
+        }
+        .ghost {
+          font-size: 5rem;
+          top: 16px;
+          right: 20px;
+        }
+        .frame {
+          outline-offset: 12px;
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .void {
+          min-height: 250px;
+          height: 250px;
+        }
+        .door {
+          padding: 32px 20px;
+        }
+        .frame {
+          outline: none;
+          padding: 0;
+        }
+        .ghost {
+          font-size: 3.8rem;
+          top: 12px;
+          right: 16px;
+        }
+        h1 {
+          font-size: 1.85rem;
+        }
+        .go, .google {
+          min-height: 48px;
+        }
+        input {
+          min-height: 46px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <!-- Left Visual Photo Wing -->
+      <aside class="void">
+        <img id="doorPhoto" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop" alt="Studio Presence Architectural Estate" />
+        <div class="scrim-door"></div>
+        <span class="mark">Studio Presence</span>
+        <div class="photo-caption-bottom">
+          <small id="doorCapTag">Turnkey Architecture &middot; Private Salon</small>
+          <h3 id="doorCapTitle">Curated Spatial Distinction</h3>
+        </div>
+      </aside>
+
+      <!-- Right Form Door Section -->
+      <section class="door">
+        <span class="ghost" id="ghostNum" aria-hidden="true">01</span>
+        <div class="frame">
+          <p class="eye" id="eyeLabel">Bespoke Architectural Atelier</p>
+          <h1 id="title">Sign in to <span>Private Portal</span></h1>
+          <p class="lede" id="lede">Access confidential site elevation models, custom joinery documentation, and finishes schedules.</p>
+
+          <div class="modes" role="tablist">
+            <button type="button" id="tabLogin" aria-selected="true">Sign In</button>
+            <button type="button" id="tabSignup" aria-selected="false">Create Account</button>
+          </div>
+
+          <form onsubmit="event.preventDefault(); alert('Authentication verified for Studio Presence.');">
+            <div class="field" id="fieldFullName" style="display: none;">
+              <label for="fullName">Full Name</label>
+              <input id="fullName" type="text" placeholder="Devendra Singhania" autocomplete="name" />
+            </div>
+
+            <div class="field">
+              <label for="email">Client Email Address</label>
+              <input id="email" type="email" placeholder="client@studio-presence.com" autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label for="password">Private Passkey</label>
+              <input id="password" type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password" required />
+            </div>
+
+            <button class="go" id="submitBtn" type="submit">Sign In to Atelier</button>
+          </form>
+
+          <button type="button" class="google" onclick="alert('Continuing with Google...');">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.28 14.27a7.19 7.19 0 0 1 0-4.54V6.58H1.25a11.98 11.98 0 0 0 0 10.84l4.03-3.15z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            </svg>
+            <span id="googleText">Continue with Google</span>
+          </button>
+
+          <p class="foot">
+            <span id="footPrompt">New patron to Studio Presence?</span>
+            <button type="button" id="footAction">Commission an Estate</button>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const tabLogin = document.getElementById('tabLogin');
+      const tabSignup = document.getElementById('tabSignup');
+      const title = document.getElementById('title');
+      const leede = document.getElementById('lede');
+      const submitBtn = document.getElementById('submitBtn');
+      const footPrompt = document.getElementById('footPrompt');
+      const footAction = document.getElementById('footAction');
+      const fieldFullName = document.getElementById('fieldFullName');
+      const fullNameInput = document.getElementById('fullName');
+      const googleText = document.getElementById('googleText');
+      const doorPhoto = document.getElementById('doorPhoto');
+      const doorCapTag = document.getElementById('doorCapTag');
+      const doorCapTitle = document.getElementById('doorCapTitle');
+      const ghostNum = document.getElementById('ghostNum');
+      const eyeLabel = document.getElementById('eyeLabel');
+
+      const imgLogin = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop";
+      const imgSignup = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop";
+
+      function setDoorMode(mode) {
+        const isLogin = mode === 'login';
+        tabLogin.setAttribute('aria-selected', String(isLogin));
+        tabSignup.setAttribute('aria-selected', String(!isLogin));
+
+        doorPhoto.style.opacity = '0.2';
+        setTimeout(() => {
+          doorPhoto.src = isLogin ? imgLogin : imgSignup;
+          doorPhoto.alt = isLogin
+            ? "Studio Presence Travertine Estate Salon"
+            : "Studio Presence Turnkey Estate Pavilion";
+          doorCapTag.textContent = isLogin
+            ? "Turnkey Architecture \u00b7 Private Salon"
+            : "New Client Commission \u00b7 Coastal Pavilion";
+          doorCapTitle.textContent = isLogin
+            ? "Curated Spatial Distinction"
+            : "The Genesis of Turnkey Estates";
+          doorPhoto.style.opacity = '1';
+        }, 160);
+
+        if (isLogin) {
+          title.innerHTML = 'Sign in to <span>Private Portal</span>';
+          leede.textContent = 'Access confidential site elevation models, custom joinery documentation, and finishes schedules.';
+          submitBtn.textContent = 'Sign In to Atelier';
+          googleText.textContent = 'Continue with Google';
+          footPrompt.textContent = 'New patron to Studio Presence?';
+          footAction.textContent = 'Commission an Estate';
+          ghostNum.textContent = '01';
+          eyeLabel.textContent = 'Bespoke Architectural Atelier';
+          fieldFullName.style.display = 'none';
+          fullNameInput.removeAttribute('required');
+        } else {
+          title.innerHTML = 'Commission a <span>Turnkey Estate</span>';
+          leede.textContent = 'Register a private account to initiate architectural consultations, explore finish boards, and schedule site walkthroughs.';
+          submitBtn.textContent = 'Register Studio Account';
+          googleText.textContent = 'Sign up with Google';
+          footPrompt.textContent = 'Already hold private studio access?';
+          footAction.textContent = 'Sign In to Atelier';
+          ghostNum.textContent = '02';
+          eyeLabel.textContent = 'Private Patron Registration';
+          fieldFullName.style.display = 'block';
+          fullNameInput.setAttribute('required', 'required');
+        }
+      }
+
+      tabLogin.onclick = () => setDoorMode('login');
+      tabSignup.onclick = () => setDoorMode('signup');
+      footAction.onclick = () => setDoorMode(tabLogin.getAttribute('aria-selected') === 'true' ? 'signup' : 'login');
+    </script>
+  
+    <!-- Global Keyboard Arrow Navigation -->
+    <script>
+      (function() {
+        const ALL_PROTOTYPES = [
+          "01-architectural-split-glass.html",
+          "02-haute-editorial-monochrome.html",
+          "05-atelier-floating-modal.html",
+          "07-nordic-scandi-sanctuary.html",
+          "09-biophilic-glasshouse.html",
+          "13-curated-collector-carousel.html",
+          "21-project-split.html",
+          "25-editorial-door.html"
+        ];
+        const currentFile = window.location.pathname.split('/').pop() || ALL_PROTOTYPES[0];
+        const currentIndex = ALL_PROTOTYPES.indexOf(currentFile);
+
+        window.addEventListener('keydown', function(e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'next' }, '*');
+            } else if (currentIndex !== -1) {
+              const nextIdx = (currentIndex + 1) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[nextIdx];
+            }
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'prev' }, '*');
+            } else if (currentIndex !== -1) {
+              const prevIdx = (currentIndex - 1 + ALL_PROTOTYPES.length) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[prevIdx];
+            }
+          }
+        }, true);
+      })();
+    </script>
+</body>
+</html>

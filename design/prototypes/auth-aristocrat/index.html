@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studio Presence — Auth Prototype Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #000000;
+        color: #ffffff;
+      }
+
+      /* Fullscreen Iframe */
+      #viewport {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        border: none;
+        z-index: 1;
+        transition: opacity 0.15s ease;
+      }
+
+      #viewport.fade-out {
+        opacity: 0.2;
+      }
+
+      /* Empty State when all designs are removed */
+      #emptyState {
+        position: fixed;
+        inset: 0;
+        z-index: 5;
+        background: #090a0f;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+      }
+
+      #emptyState.visible {
+        display: flex;
+      }
+
+      .empty-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+
+      .empty-desc {
+        font-size: 0.9375rem;
+        color: #94a3b8;
+        max-width: 420px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      .btn-restore-all {
+        padding: 12px 24px;
+        border-radius: 100px;
+        background: #d4af37;
+        color: #000000;
+        font-size: 0.875rem;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        transition: all 0.2s;
+      }
+
+      .btn-restore-all:hover {
+        background: #e2be4a;
+        transform: translateY(-1px);
+      }
+
+      /* Floating Overlaid Controller Pill */
+      .floating-pill {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        background: rgba(14, 17, 24, 0.92);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 100px;
+        padding: 6px 8px 6px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(0, 0, 0, 0.3);
+        user-select: none;
+        max-width: calc(100vw - 32px);
+      }
+
+      .pill-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+
+      .pill-brand {
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #d4af37;
+      }
+
+      .pill-divider {
+        width: 1px;
+        height: 16px;
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      .pill-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #ffffff;
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .pill-count {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #94a3b8;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 2px 8px;
+        border-radius: 100px;
+        white-space: nowrap;
+      }
+
+      .pill-badge-yes {
+        display: none;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #34d399;
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        padding: 2px 8px;
+        border-radius: 100px;
+      }
+
+      .pill-badge-yes.visible {
+        display: inline-flex;
+      }
+
+      /* YES / NO Decision Buttons */
+      .pill-decision {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .btn-yes {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        height: 32px;
+        padding: 0 13px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: rgba(16, 185, 129, 0.16);
+        border: 1px solid rgba(52, 211, 153, 0.4);
+        color: #34d399;
+        cursor: pointer;
+        transition: all 0.18s ease;
+      }
+
+      .btn-yes:hover {
+        background: #10b981;
+        color: #ffffff;
+        border-color: #10b981;
+        box-shadow: 0 0 16px rgba(16, 185, 129, 0.45);
+        transform: translateY(-1px);
+      }
+
+      .btn-yes.voted {
+        background: #10b981;
+        color: #ffffff;
+        box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+      }
+
+      .btn-no {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        height: 32px;
+        padding: 0 13px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: rgba(239, 68, 68, 0.16);
+        border: 1px solid rgba(248, 113, 113, 0.4);
+        color: #f87171;
+        cursor: pointer;
+        transition: all 0.18s ease;
+      }
+
+      .btn-no:hover {
+        background: #ef4444;
+        color: #ffffff;
+        border-color: #ef4444;
+        box-shadow: 0 0 16px rgba(239, 68, 68, 0.45);
+        transform: translateY(-1px);
+      }
+
+      /* Navigation & Menu Actions */
+      .pill-actions {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .pill-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .pill-btn:hover {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .pill-btn-menu {
+        padding: 0 13px;
+        width: auto;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        background: #ffffff;
+        color: #000000;
+        border: none;
+      }
+
+      .pill-btn-menu:hover {
+        background: #e2e8f0;
+        color: #000000;
+      }
+
+      /* Floating Screen Side Navigation Arrows (Left & Right) */
+      .side-nav-arrow {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 90;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: rgba(14, 17, 24, 0.85);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 14px 38px rgba(0, 0, 0, 0.7);
+        transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        user-select: none;
+        outline: none;
+      }
+
+      .side-nav-arrow.prev-arrow {
+        left: 24px;
+      }
+
+      .side-nav-arrow.next-arrow {
+        right: 24px;
+      }
+
+      .side-nav-arrow:hover {
+        background: #d4af37;
+        color: #000000;
+        border-color: #d4af37;
+        transform: translateY(-50%) scale(1.12);
+        box-shadow: 0 18px 46px rgba(212, 175, 55, 0.5);
+      }
+
+      .side-nav-arrow:active {
+        transform: translateY(-50%) scale(0.94);
+      }
+
+      .arrow-key-hint {
+        font-size: 0.625rem;
+        font-weight: 800;
+        opacity: 0.75;
+        margin-top: 2px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .side-nav-arrow:hover .arrow-key-hint {
+        opacity: 1;
+        color: #000000;
+      }
+
+      @media (max-width: 680px) {
+        .side-nav-arrow {
+          width: 42px;
+          height: 42px;
+        }
+        .side-nav-arrow.prev-arrow {
+          left: 10px;
+        }
+        .side-nav-arrow.next-arrow {
+          right: 10px;
+        }
+        .arrow-key-hint {
+          display: none;
+        }
+      }
+
+      /* Toast Notification */
+      .curation-toast {
+        position: fixed;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-20px);
+        z-index: 250;
+        background: rgba(18, 20, 26, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 100px;
+        padding: 8px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.8125rem;
+        color: #ffffff;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .curation-toast.visible {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .toast-undo-btn {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 100px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .toast-undo-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Overlaid Modal Sheet */
+      .overlay-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        z-index: 200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .overlay-backdrop.open {
+        display: flex;
+      }
+
+      .overlay-sheet {
+        width: 100%;
+        max-width: 740px;
+        max-height: 84vh;
+        background: #11141c;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 20px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .sheet-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .sheet-title {
+        font-size: 1.0625rem;
+        font-weight: 700;
+        color: #ffffff;
+      }
+
+      .sheet-subtitle {
+        font-size: 0.8125rem;
+        color: #94a3b8;
+        margin-top: 2px;
+      }
+
+      .sheet-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sheet-btn-action {
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .sheet-btn-action:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .sheet-close {
+        background: none;
+        border: none;
+        color: #94a3b8;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: color 0.15s, background 0.15s;
+        width: 32px;
+        height: 32px;
+      }
+
+      .sheet-close:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* Modal Filter Tabs */
+      .sheet-filter-bar {
+        padding: 12px 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        gap: 8px;
+        background: rgba(0, 0, 0, 0.2);
+        overflow-x: auto;
+      }
+
+      .filter-tab {
+        padding: 5px 14px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border: 1px solid transparent;
+        background: transparent;
+        color: #94a3b8;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+
+      .filter-tab:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .filter-tab.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .sheet-list {
+        padding: 14px;
+        overflow-y: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .sheet-item {
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        transition: all 0.15s ease;
+      }
+
+      .sheet-item:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.16);
+      }
+
+      .sheet-item.active {
+        background: rgba(212, 175, 55, 0.12);
+        border-color: #d4af37;
+      }
+
+      .sheet-item.is-removed {
+        opacity: 0.55;
+        background: rgba(239, 68, 68, 0.04);
+        border-color: rgba(239, 68, 68, 0.15);
+      }
+
+      .sheet-item.is-shortlisted {
+        border-color: rgba(52, 211, 153, 0.35);
+        background: rgba(16, 185, 129, 0.05);
+      }
+
+      .sheet-item-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .sheet-num {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #d4af37;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 3px 7px;
+        border-radius: 6px;
+        flex-shrink: 0;
+      }
+
+      .sheet-text-wrap {
+        min-width: 0;
+      }
+
+      .sheet-item-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .sheet-item-desc {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        margin-top: 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .sheet-item-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      .item-action-tag {
+        font-size: 0.6875rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 100px;
+      }
+
+      .tag-yes {
+        background: rgba(16, 185, 129, 0.18);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+      }
+
+      .tag-removed {
+        background: rgba(239, 68, 68, 0.18);
+        color: #f87171;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+      }
+
+      .btn-mini-restore {
+        font-size: 0.6875rem;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      .btn-mini-restore:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      @media (max-width: 768px) {
+        .sheet-list {
+          grid-template-columns: 1fr;
+        }
+
+        .pill-title {
+          max-width: 120px;
+        }
+
+        .btn-no span,
+        .btn-yes span {
+          display: none;
+        }
+
+        .btn-no, .btn-yes {
+          padding: 0 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Fullscreen Living Prototype -->
+    <iframe id="viewport" src="01-architectural-split-glass.html" title="Studio Presence Fullscreen Prototype"></iframe>
+
+    <!-- Floating Screen Side Navigation Arrows (Left & Right) -->
+    <button class="side-nav-arrow prev-arrow" onclick="prev()" title="Previous design (Left Arrow / Up Arrow key)" aria-label="Previous Design">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span class="arrow-key-hint">&larr;</span>
+    </button>
+
+    <button class="side-nav-arrow next-arrow" onclick="next()" title="Next design (Right Arrow / Down Arrow key)" aria-label="Next Design">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+      <span class="arrow-key-hint">&rarr;</span>
+    </button>
+
+    <!-- Empty State if all designs are removed -->
+    <div id="emptyState">
+      <div class="empty-title">All Designs Curated</div>
+      <p class="empty-desc">You have filtered through the active rotation. You can review your shortlisted favorites or restore the designs you removed.</p>
+      <div style="display: flex; gap: 12px;">
+        <button class="btn-restore-all" onclick="restoreAll()">Restore All Removed (8)</button>
+        <button class="btn-restore-all" style="background: #ffffff;" onclick="toggleMenu('shortlist')">View Shortlist</button>
+      </div>
+    </div>
+
+    <!-- Floating Minimal Overlaid Controller Pill -->
+    <div class="floating-pill">
+      <div class="pill-info" onclick="toggleMenu()" title="Click to view all variations">
+        <span class="pill-brand">Studio Presence</span>
+        <span class="pill-divider"></span>
+        <span id="currentTitle" class="pill-title">01 · Villa Pavilion</span>
+        <span id="currentCount" class="pill-count">1 / 8</span>
+        <span id="pillBadgeYes" class="pill-badge-yes">&#10003; Yes</span>
+      </div>
+
+      <div class="pill-divider"></div>
+
+      <!-- Yes / No Decision Buttons -->
+      <div class="pill-decision">
+        <button id="btnYes" class="btn-yes" onclick="voteYes()" title="Keep / Shortlist this design (Key: Y)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Yes</span>
+        </button>
+        <button id="btnNo" class="btn-no" onclick="voteNo()" title="Remove this design (Key: N or Delete)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <span>No</span>
+        </button>
+      </div>
+
+      <div class="pill-divider"></div>
+
+      <!-- Prev / Next / All -->
+      <div class="pill-actions">
+        <button class="pill-btn" onclick="prev()" title="Previous design (Left Arrow)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+        <button class="pill-btn" onclick="next()" title="Next design (Right Arrow)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+        <button class="pill-btn pill-btn-menu" onclick="toggleMenu()">
+          <span id="menuLabel">All (8)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Curation Action Toast -->
+    <div id="toast" class="curation-toast">
+      <span id="toastMsg">Design removed</span>
+      <button id="toastUndoBtn" class="toast-undo-btn" onclick="undoLastAction()">Undo</button>
+    </div>
+
+    <!-- Overlaid Modal Sheet -->
+    <div id="overlay" class="overlay-backdrop" onclick="closeMenuOnBackdrop(event)">
+      <div class="overlay-sheet">
+        <div class="sheet-header">
+          <div>
+            <h2 class="sheet-title">Studio Presence &mdash; Curated Prototypes</h2>
+            <p class="sheet-subtitle">Review, shortlist or restore designs from your session</p>
+          </div>
+          <div class="sheet-header-actions">
+            <button class="sheet-btn-action" onclick="copyShortlist()" title="Copy shortlisted titles to clipboard">&#128203; Copy Shortlist</button>
+            <button class="sheet-btn-action" onclick="restoreAll()" title="Restore all removed designs">&#8635; Restore All</button>
+            <button class="sheet-close" onclick="toggleMenu()">&times;</button>
+          </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="sheet-filter-bar">
+          <button id="tabFilterActive" class="filter-tab active" onclick="setFilter('active')">Active Remaining (<span id="cntActive">8</span>)</button>
+          <button id="tabFilterYes" class="filter-tab" onclick="setFilter('shortlist')">Shortlisted &#10003; (<span id="cntYes">0</span>)</button>
+          <button id="tabFilterRemoved" class="filter-tab" onclick="setFilter('removed')">Removed &#10005; (<span id="cntRemoved">0</span>)</button>
+          <button id="tabFilterAll" class="filter-tab" onclick="setFilter('all')">All (<span id="cntAll">8</span>)</button>
+        </div>
+
+        <div id="sheetList" class="sheet-list">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const allPages = [
+        { file: "01-architectural-split-glass.html", title: "Villa Pavilion", desc: "Split screen, pool pavilion, frosted glass card" },
+        { file: "02-haute-editorial-monochrome.html", title: "Haute Editorial", desc: "Architectural monograph, Cormorant Garamond, clean lines" },
+        { file: "05-atelier-floating-modal.html", title: "Double-Height Salon", desc: "Centered frosted glass card over interior" },
+        { file: "07-nordic-scandi-sanctuary.html", title: "Nordic Scandi", desc: "Scandinavian light oak, pine green accents" },
+        { file: "09-biophilic-glasshouse.html", title: "Biophilic Glasshouse", desc: "Living architecture conservatory, sage accents" },
+        { file: "13-curated-collector-carousel.html", title: "Curated Collector", desc: "Multi-slide project gallery with client quotes" },
+        { file: "21-project-split.html", title: "Turnkey Project Split", desc: "Interactive split: bare site shell vs turnkey living pavilion" },
+        { file: "25-editorial-door.html", title: "Editorial Door", desc: "Square identity, sand-gold CTA" }
+      ];
+
+      // Clean and sanitize storage for the chosen 8
+      const validFiles = new Set(allPages.map(p => p.file));
+      let removedFiles = new Set((JSON.parse(localStorage.getItem('sp_removed_files') || '[]')).filter(f => validFiles.has(f)));
+      let shortlistedFiles = new Set((JSON.parse(localStorage.getItem('sp_shortlist_files') || '[]')).filter(f => validFiles.has(f)));
+      let currentActiveIndex = 0;
+      let currentFilter = 'active';
+      let lastAction = null; // for undo { type: 'remove'|'shortlist', file: '', title: '' }
+      let toastTimeout = null;
+
+      const viewport = document.getElementById('viewport');
+      const emptyState = document.getElementById('emptyState');
+      const currentTitle = document.getElementById('currentTitle');
+      const currentCount = document.getElementById('currentCount');
+      const pillBadgeYes = document.getElementById('pillBadgeYes');
+      const btnYes = document.getElementById('btnYes');
+      const menuLabel = document.getElementById('menuLabel');
+      const overlay = document.getElementById('overlay');
+      const sheetList = document.getElementById('sheetList');
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+
+      function saveState() {
+        localStorage.setItem('sp_removed_files', JSON.stringify([...removedFiles]));
+        localStorage.setItem('sp_shortlist_files', JSON.stringify([...shortlistedFiles]));
+        updateCounters();
+      }
+
+      function getActivePages() {
+        return allPages.filter(p => !removedFiles.has(p.file));
+      }
+
+      function updateCounters() {
+        const active = getActivePages();
+        document.getElementById('cntActive').textContent = active.length;
+        document.getElementById('cntYes').textContent = shortlistedFiles.size;
+        document.getElementById('cntRemoved').textContent = removedFiles.size;
+        document.getElementById('cntAll').textContent = allPages.length;
+        menuLabel.textContent = `All (${allPages.length})`;
+      }
+
+      function loadCurrent() {
+        const active = getActivePages();
+        if (active.length === 0) {
+          viewport.style.display = 'none';
+          emptyState.classList.add('visible');
+          currentTitle.textContent = "All designs curated";
+          currentCount.textContent = `0 / ${allPages.length}`;
+          pillBadgeYes.classList.remove('visible');
+          btnYes.classList.remove('voted');
+          return;
+        }
+
+        viewport.style.display = 'block';
+        emptyState.classList.remove('visible');
+
+        if (currentActiveIndex >= active.length) {
+          currentActiveIndex = 0;
+        } else if (currentActiveIndex < 0) {
+          currentActiveIndex = active.length - 1;
+        }
+
+        const p = active[currentActiveIndex];
+        const originalIndex = allPages.findIndex(item => item.file === p.file);
+        const originalNum = String(originalIndex + 1).padStart(2, '0');
+
+        viewport.classList.add('fade-out');
+        setTimeout(() => {
+          viewport.src = p.file;
+          viewport.classList.remove('fade-out');
+        }, 120);
+
+        currentTitle.textContent = `${originalNum} · ${p.title}`;
+        currentCount.textContent = `${currentActiveIndex + 1} of ${active.length}`;
+
+        const isYes = shortlistedFiles.has(p.file);
+        btnYes.classList.toggle('voted', isYes);
+        pillBadgeYes.classList.toggle('visible', isYes);
+
+        renderSheet();
+        updateCounters();
+      }
+
+      // Action: Vote "No" (Remove this design)
+      function voteNo() {
+        const active = getActivePages();
+        if (active.length === 0) return;
+
+        const p = active[currentActiveIndex];
+        removedFiles.add(p.file);
+        shortlistedFiles.delete(p.file);
+        saveState();
+
+        lastAction = { type: 'remove', file: p.file, title: p.title };
+        showToast(`Removed "${p.title}"`, true);
+
+        // Advance to next available
+        loadCurrent();
+      }
+
+      // Action: Vote "Yes" (Keep / Shortlist)
+      function voteYes() {
+        const active = getActivePages();
+        if (active.length === 0) return;
+
+        const p = active[currentActiveIndex];
+        const wasYes = shortlistedFiles.has(p.file);
+
+        if (wasYes) {
+          shortlistedFiles.delete(p.file);
+          showToast(`Unstarred "${p.title}"`, false);
+        } else {
+          shortlistedFiles.add(p.file);
+          lastAction = { type: 'shortlist', file: p.file, title: p.title };
+          showToast(`✓ Kept & Shortlisted "${p.title}"`, false);
+        }
+        saveState();
+        loadCurrent();
+      }
+
+      function showToast(text, canUndo) {
+        toastMsg.textContent = text;
+        document.getElementById('toastUndoBtn').style.display = canUndo ? 'inline-block' : 'none';
+        toast.classList.add('visible');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          toast.classList.remove('visible');
+        }, 3200);
+      }
+
+      function undoLastAction() {
+        if (!lastAction) return;
+        if (lastAction.type === 'remove') {
+          removedFiles.delete(lastAction.file);
+          saveState();
+          showToast(`Restored "${lastAction.title}"`, false);
+          // Set focus on restored file
+          const active = getActivePages();
+          const idx = active.findIndex(p => p.file === lastAction.file);
+          if (idx !== -1) currentActiveIndex = idx;
+          loadCurrent();
+        }
+        lastAction = null;
+        toast.classList.remove('visible');
+      }
+
+      function restoreAll() {
+        removedFiles.clear();
+        saveState();
+        showToast("All 8 designs restored to rotation", false);
+        currentActiveIndex = 0;
+        loadCurrent();
+      }
+
+      function next() {
+        const active = getActivePages();
+        if (active.length <= 1) return;
+        currentActiveIndex = (currentActiveIndex + 1) % active.length;
+        loadCurrent();
+      }
+
+      function prev() {
+        const active = getActivePages();
+        if (active.length <= 1) return;
+        currentActiveIndex = (currentActiveIndex - 1 + active.length) % active.length;
+        loadCurrent();
+      }
+
+      function toggleMenu(forceTab) {
+        if (forceTab) setFilter(forceTab);
+        overlay.classList.toggle('open');
+      }
+
+      function closeMenuOnBackdrop(e) {
+        if (e.target === overlay) {
+          overlay.classList.remove('open');
+        }
+      }
+
+      function setFilter(filter) {
+        currentFilter = filter;
+        document.getElementById('tabFilterActive').classList.toggle('active', filter === 'active');
+        document.getElementById('tabFilterYes').classList.toggle('active', filter === 'shortlist');
+        document.getElementById('tabFilterRemoved').classList.toggle('active', filter === 'removed');
+        document.getElementById('tabFilterAll').classList.toggle('active', filter === 'all');
+        renderSheet();
+      }
+
+      function renderSheet() {
+        sheetList.innerHTML = '';
+        const active = getActivePages();
+        const currentFile = active[currentActiveIndex]?.file;
+
+        let displayList = allPages;
+        if (currentFilter === 'active') {
+          displayList = allPages.filter(p => !removedFiles.has(p.file));
+        } else if (currentFilter === 'shortlist') {
+          displayList = allPages.filter(p => shortlistedFiles.has(p.file));
+        } else if (currentFilter === 'removed') {
+          displayList = allPages.filter(p => removedFiles.has(p.file));
+        }
+
+        if (displayList.length === 0) {
+          sheetList.innerHTML = `<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #64748b; font-size: 0.875rem;">No designs in this category</div>`;
+          return;
+        }
+
+        displayList.forEach(p => {
+          const originalIdx = allPages.findIndex(item => item.file === p.file);
+          const isRemoved = removedFiles.has(p.file);
+          const isShortlisted = shortlistedFiles.has(p.file);
+          const isViewing = p.file === currentFile;
+
+          const item = document.createElement('div');
+          let classNames = ['sheet-item'];
+          if (isViewing) classNames.push('active');
+          if (isRemoved) classNames.push('is-removed');
+          if (isShortlisted) classNames.push('is-shortlisted');
+          item.className = classNames.join(' ');
+
+          const num = String(originalIdx + 1).padStart(2, '0');
+
+          let badgeHtml = '';
+          if (isShortlisted) badgeHtml = `<span class="item-action-tag tag-yes">&#10003; Yes</span>`;
+          else if (isRemoved) badgeHtml = `<span class="item-action-tag tag-removed">&#10005; Removed</span>`;
+
+          item.innerHTML = `
+            <div class="sheet-item-left">
+              <span class="sheet-num">${num}</span>
+              <div class="sheet-text-wrap">
+                <div class="sheet-item-title">${p.title}</div>
+                <div class="sheet-item-desc">${p.desc}</div>
+              </div>
+            </div>
+            <div class="sheet-item-actions">
+              ${badgeHtml}
+              ${isRemoved ? `<button class="btn-mini-restore" onclick="event.stopPropagation(); restoreOne('${p.file}')">Restore</button>` : ''}
+            </div>
+          `;
+
+          item.onclick = () => {
+            if (isRemoved) {
+              removedFiles.delete(p.file);
+              saveState();
+            }
+            const newActive = getActivePages();
+            const idx = newActive.findIndex(a => a.file === p.file);
+            if (idx !== -1) currentActiveIndex = idx;
+            loadCurrent();
+            overlay.classList.remove('open');
+          };
+
+          sheetList.appendChild(item);
+        });
+      }
+
+      function restoreOne(file) {
+        removedFiles.delete(file);
+        saveState();
+        renderSheet();
+        loadCurrent();
+      }
+
+      function copyShortlist() {
+        const list = allPages.filter(p => shortlistedFiles.has(p.file));
+        if (list.length === 0) {
+          alert("You haven't selected 'Yes' for any designs yet! Click the 'Yes' button on any designs you like to build your shortlist.");
+          return;
+        }
+        const text = list.map((p, i) => `${i + 1}. ${p.title} (${p.file}) - ${p.desc}`).join('\n');
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(`Copied ${list.length} shortlisted designs to clipboard!`, false);
+        });
+      }
+
+      // Universal Keyboard Controls: Arrow Keys (Left/Right/Up/Down), Y for Yes, N / Delete for No
+      function handleNavKey(e) {
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          next();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          prev();
+        } else if (e.key === 'y' || e.key === 'Y') {
+          voteYes();
+        } else if (e.key === 'n' || e.key === 'N' || e.key === 'Delete' || e.key === 'Backspace') {
+          voteNo();
+        } else if (e.key === 'u' || e.key === 'U') {
+          undoLastAction();
+        } else if (e.key === 'Escape') {
+          overlay.classList.remove('open');
+        }
+      }
+
+      window.addEventListener('keydown', handleNavKey, true);
+
+      // Connect to iframe document on load so keyboard arrows work even if user clicks inside the prototype
+      function bindIframeKeyListeners() {
+        try {
+          const doc = viewport.contentDocument || (viewport.contentWindow && viewport.contentWindow.document);
+          if (doc) {
+            doc.removeEventListener('keydown', handleNavKey, true);
+            doc.addEventListener('keydown', handleNavKey, true);
+          }
+        } catch (err) {
+          // Cross-origin fallback handled via postMessage
+        }
+      }
+
+      viewport.addEventListener('load', bindIframeKeyListeners);
+
+      // Listen for postMessage events from child prototypes
+      window.addEventListener('message', (e) => {
+        if (!e.data) return;
+        const act = typeof e.data === 'string' ? e.data : (e.data.action || e.data.type);
+        if (act === 'next' || act === 'sp_next') {
+          next();
+        } else if (act === 'prev' || act === 'sp_prev') {
+          prev();
+        } else if (act === 'yes' || act === 'sp_yes') {
+          voteYes();
+        } else if (act === 'no' || act === 'sp_no') {
+          voteNo();
+        }
+      });
+
+      // Initial Load
+      loadCurrent();
+    </script>
+  </body>
+</html>

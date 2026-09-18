@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Portal Access | Studio Presence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --botanical-deep: #1c3029;
+        --moss-primary: #385e4d;
+        --moss-hover: #294639;
+        --fern-light: #e8f0eb;
+        --glass-tint: rgba(255, 255, 255, 0.82);
+        --glass-border: rgba(56, 94, 77, 0.18);
+        --ink-botanical: #14211c;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --botanical-deep: #a5d6a7;
+          --moss-primary: #81c784;
+          --moss-hover: #a5d6a7;
+          --fern-light: #0d1612;
+          --glass-tint: rgba(20, 32, 26, 0.82);
+          --glass-border: rgba(129, 199, 132, 0.2);
+          --ink-botanical: #e8f5ed;
+        }
+
+        .conservatory-card {
+          background: #14221b !important;
+          box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        .conservatory-brand {
+          color: #81c784 !important;
+        }
+
+        .botanical-title {
+          color: #e8f5ed !important;
+        }
+
+        .botanical-desc {
+          color: #a3b8ad !important;
+        }
+
+        .botanical-divider {
+          color: #7b9487 !important;
+        }
+
+        .botanical-label {
+          color: #c4d9ce !important;
+        }
+
+        .botanical-footer {
+          color: #8da498 !important;
+        }
+
+        .botanical-footer a {
+          color: #81c784 !important;
+        }
+
+        .nature-badge {
+          background: rgba(14, 26, 20, 0.85) !important;
+          color: #81c784 !important;
+          border: 1px solid rgba(129, 199, 132, 0.25) !important;
+        }
+
+        .botanical-field {
+          background: #0c1511 !important;
+          border-color: #263830 !important;
+          color: #e8f5ed !important;
+        }
+
+        .botanical-field:focus {
+          border-color: #81c784 !important;
+          background: #111d17 !important;
+        }
+
+        .btn-google-botanical {
+          background: #182620 !important;
+          border-color: #263830 !important;
+          color: #e8f5ed !important;
+        }
+
+        .btn-google-botanical:hover {
+          background: #20332b !important;
+        }
+
+        .botanical-tabs {
+          background: #182620 !important;
+          border-color: #263830 !important;
+        }
+
+        .botanical-tab-btn {
+          color: #a5d6a7 !important;
+        }
+
+        .botanical-tab-btn.active {
+          background: #263830 !important;
+          color: #ffffff !important;
+        }
+
+        .btn-conservatory {
+          background: #81c784 !important;
+          color: #0c1511 !important;
+        }
+
+        .btn-conservatory:hover {
+          background: #a5d6a7 !important;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--fern-light);
+        color: var(--ink-botanical);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(16px, 3vw, 40px);
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      .conservatory-card {
+        width: 100%;
+        max-width: 1060px;
+        background: #ffffff;
+        border-radius: 24px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 25px 70px -15px rgba(28, 48, 41, 0.12);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+      }
+
+      .conservatory-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.3s ease;
+      }
+
+      .conservatory-visual {
+        position: relative;
+        background: var(--botanical-deep);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(28px, 4vw, 48px);
+      }
+
+      .conservatory-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .conservatory-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(28, 48, 41, 0.25) 0%, rgba(28, 48, 41, 0.8) 100%);
+      }
+
+      .nature-badge {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--moss-primary);
+        align-self: flex-start;
+      }
+
+      .botanical-quote {
+        position: relative;
+        z-index: 2;
+        color: #ffffff;
+      }
+
+      .quote-italic {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+
+      .quote-provenance {
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      /* Form Side */
+      .conservatory-form-box {
+        padding: clamp(32px, 5vw, 60px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .conservatory-brand {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--moss-primary);
+        margin-bottom: 12px;
+      }
+
+      .botanical-tabs {
+        display: inline-flex;
+        background: #eef5f1;
+        padding: 4px;
+        border-radius: 30px;
+        margin-bottom: 20px;
+        border: 1px solid var(--glass-border);
+      }
+
+      .botanical-tab-btn {
+        background: transparent;
+        border: none;
+        padding: 6px 18px;
+        border-radius: 20px;
+        font-family: inherit;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #556860;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .botanical-tab-btn.active {
+        background: #ffffff;
+        color: var(--botanical-deep);
+        box-shadow: 0 2px 6px rgba(45, 68, 59, 0.1);
+      }
+
+      .botanical-title {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+        font-weight: 600;
+        color: var(--botanical-deep);
+        margin-bottom: 8px;
+        letter-spacing: -0.01em;
+      }
+
+      .botanical-desc {
+        font-size: 0.875rem;
+        color: #556860;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      /* Google Only Button */
+      .btn-google-botanical {
+        width: 100%;
+        padding: 12px 18px;
+        border: 1px solid var(--glass-border);
+        background: #ffffff;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--botanical-deep);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.2s;
+        margin-bottom: 20px;
+        min-height: 48px;
+      }
+
+      .btn-google-botanical:hover {
+        background: var(--fern-light);
+      }
+
+      .btn-google-botanical svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .botanical-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        font-size: 0.75rem;
+        color: #556860;
+      }
+
+      .botanical-divider::before,
+      .botanical-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--glass-border);
+      }
+
+      .botanical-input-group {
+        margin-bottom: 18px;
+      }
+
+      .botanical-label {
+        display: block;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--botanical-deep);
+        margin-bottom: 6px;
+      }
+
+      .botanical-field {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        font-size: 0.9375rem;
+        font-family: inherit;
+        background: #fbfdfc;
+        outline: none;
+        transition: all 0.2s;
+        min-height: 46px;
+      }
+
+      .botanical-field:focus {
+        border-color: var(--moss-primary);
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(56, 94, 77, 0.12);
+      }
+
+      .btn-conservatory {
+        width: 100%;
+        padding: 14px;
+        background: var(--moss-primary);
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+        margin-top: 8px;
+        box-shadow: 0 4px 15px rgba(56, 94, 77, 0.25);
+        min-height: 48px;
+      }
+
+      .btn-conservatory:hover {
+        background: var(--moss-hover);
+        transform: translateY(-1px);
+      }
+
+      .botanical-footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 0.8125rem;
+        color: #556860;
+      }
+
+      .botanical-footer a {
+        color: var(--moss-primary);
+        font-weight: 600;
+        text-decoration: underline;
+        margin-left: 4px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 860px) {
+        .conservatory-card {
+          grid-template-columns: 1fr;
+        }
+
+        .conservatory-visual {
+          min-height: 260px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 12px;
+        }
+
+        .conservatory-card {
+          border-radius: 16px;
+        }
+
+        .conservatory-visual {
+          min-height: 210px;
+          padding: 22px 18px;
+        }
+
+        .conservatory-form-box {
+          padding: 24px 18px;
+        }
+
+        .quote-italic {
+          font-size: 1.15rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="conservatory-card">
+      <!-- Left Visual -->
+      <section class="conservatory-visual">
+        <img
+          class="conservatory-img"
+          src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600&auto=format&fit=crop"
+          alt="Studio Presence Daylight Botanical Glasshouse"
+        />
+        <div class="conservatory-scrim"></div>
+
+        <div class="nature-badge">
+          <span>&#10047;</span>
+          <span>Studio Presence &middot; Living Architecture</span>
+        </div>
+
+        <div class="botanical-quote">
+          <p class="quote-italic">
+            “When architecture yields to flora, living spaces cultivate human tranquility.”
+          </p>
+          <p class="quote-provenance">Studio Presence &middot; Living Architecture Atrium</p>
+        </div>
+      </section>
+
+      <!-- Right Form -->
+      <section class="conservatory-form-box">
+        <div class="conservatory-brand">Studio Presence</div>
+
+        <div class="botanical-tabs" role="tablist">
+          <button id="botanicalTabSignIn" class="botanical-tab-btn active" role="tab" aria-selected="true">Sign In</button>
+          <button id="botanicalTabSignUp" class="botanical-tab-btn" role="tab" aria-selected="false">Sign Up</button>
+        </div>
+
+        <h1 id="botanicalHeading" class="botanical-title">Client Portal Access</h1>
+        <p id="botanicalSub" class="botanical-desc">Access natural ventilation blueprints, living materials catalog, and bespoke residential atrium concepts.</p>
+
+        <!-- Google Only Button -->
+        <button type="button" class="btn-google-botanical" onclick="alert('Continuing with Google...');">
+          <svg viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27a7.19 7.19 0 0 1 0-4.54V6.58H1.25a11.98 11.98 0 0 0 0 10.84l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span id="googleBotanicalLabel">Continue with Google</span>
+        </button>
+
+        <div class="botanical-divider">
+          <span id="botanicalDividerText">OR SIGN IN WITH EMAIL</span>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Authentication verified for Studio Presence.');">
+          <div class="botanical-input-group" id="bioNameRow" style="display: none;">
+            <label class="botanical-label" for="bioName">Full Name</label>
+            <input id="bioName" type="text" class="botanical-field" placeholder="Ashish Roy" autocomplete="name" />
+          </div>
+
+          <div class="botanical-input-group">
+            <label class="botanical-label" for="bioEmail">Client Email</label>
+            <input id="bioEmail" type="email" class="botanical-field" placeholder="client@studio-presence.com" autocomplete="email" required />
+          </div>
+
+          <div class="botanical-input-group">
+            <label class="botanical-label" for="bioPass">Password</label>
+            <input id="bioPass" type="password" class="botanical-field" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password" required />
+          </div>
+
+          <button id="botanicalSubmitBtn" type="submit" class="btn-conservatory">
+            Sign In to Client Portal
+          </button>
+        </form>
+
+        <p class="botanical-footer">
+          <span id="botanicalFooterPrompt">New client to Studio Presence?</span>
+          <a id="botanicalFooterToggle" href="javascript:void(0)">Create Studio Account</a>
+        </p>
+      </section>
+    </div>
+
+    <script>
+      const tabSignIn = document.getElementById('botanicalTabSignIn');
+      const tabSignUp = document.getElementById('botanicalTabSignUp');
+      const heading = document.getElementById('botanicalHeading');
+      const sub = document.getElementById('botanicalSub');
+      const googleLabel = document.getElementById('googleBotanicalLabel');
+      const dividerText = document.getElementById('botanicalDividerText');
+      const submitBtn = document.getElementById('botanicalSubmitBtn');
+      const footerPrompt = document.getElementById('botanicalFooterPrompt');
+      const footerToggle = document.getElementById('botanicalFooterToggle');
+      const bioNameRow = document.getElementById('bioNameRow');
+      const bioNameInput = document.getElementById('bioName');
+      const conservatoryImg = document.querySelector('.conservatory-img');
+      const quoteItalic = document.querySelector('.quote-italic');
+      const quoteProvenance = document.querySelector('.quote-provenance');
+
+      const imgDaylightGlasshouse = "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600&auto=format&fit=crop";
+      const imgTwilightSalon = "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop";
+
+      function switchBotanicalVisual(isSignUp) {
+        conservatoryImg.style.opacity = '0.3';
+        quoteItalic.style.opacity = '0.3';
+        if (quoteProvenance) quoteProvenance.style.opacity = '0.3';
+        setTimeout(() => {
+          conservatoryImg.src = isSignUp ? imgTwilightSalon : imgDaylightGlasshouse;
+          conservatoryImg.alt = isSignUp ? "Studio Presence Twilight Conservatory Salon" : "Studio Presence Daylight Botanical Glasshouse";
+          quoteItalic.textContent = isSignUp
+            ? "\u201cAt dusk, ambient warmth and living foliage transform the conservatory into an intimate evening sanctuary.\u201d"
+            : "\u201cWhen architecture yields to flora, living spaces cultivate human tranquility.\u201d";
+          if (quoteProvenance) {
+            quoteProvenance.textContent = isSignUp
+              ? "Studio Presence \u00b7 Twilight Conservatory Salon"
+              : "Studio Presence \u00b7 Living Architecture Atrium";
+            quoteProvenance.style.opacity = '1';
+          }
+          conservatoryImg.style.opacity = '1';
+          quoteItalic.style.opacity = '1';
+        }, 180);
+      }
+
+      function setBotanicalMode(isLogin) {
+        if (isLogin) {
+          tabSignIn.classList.add('active');
+          tabSignIn.setAttribute('aria-selected', 'true');
+          tabSignUp.classList.remove('active');
+          tabSignUp.setAttribute('aria-selected', 'false');
+          heading.textContent = "Client Portal Access";
+          sub.textContent = "Access natural ventilation blueprints, living materials catalog, and bespoke residential atrium concepts.";
+          googleLabel.textContent = "Continue with Google";
+          dividerText.textContent = "OR SIGN IN WITH EMAIL";
+          submitBtn.textContent = "Sign In to Client Portal";
+          footerPrompt.textContent = "New client to Studio Presence?";
+          footerToggle.textContent = "Create Studio Account";
+          bioNameRow.style.display = "none";
+          bioNameInput.removeAttribute('required');
+          switchBotanicalVisual(false);
+        } else {
+          tabSignUp.classList.add('active');
+          tabSignUp.setAttribute('aria-selected', 'true');
+          tabSignIn.classList.remove('active');
+          tabSignIn.setAttribute('aria-selected', 'false');
+          heading.textContent = "Create Studio Account";
+          sub.textContent = "Register with Studio Presence to commission sustainable biophilic interior estates and landscape integration.";
+          googleLabel.textContent = "Sign up with Google";
+          dividerText.textContent = "OR REGISTER WITH EMAIL";
+          submitBtn.textContent = "Create Studio Account";
+          footerPrompt.textContent = "Already registered with Studio Presence?";
+          footerToggle.textContent = "Sign In to Portal";
+          bioNameRow.style.display = "block";
+          bioNameInput.setAttribute('required', 'required');
+          switchBotanicalVisual(true);
+        }
+      }
+
+      tabSignIn.addEventListener('click', () => setBotanicalMode(true));
+      tabSignUp.addEventListener('click', () => setBotanicalMode(false));
+      footerToggle.addEventListener('click', () => {
+        const isLogin = tabSignIn.classList.contains('active');
+        setBotanicalMode(!isLogin);
+      });
+    </script>
+  
+    <!-- Global Keyboard Arrow Navigation -->
+    <script>
+      (function() {
+        const ALL_PROTOTYPES = [
+          "01-architectural-split-glass.html",
+          "02-haute-editorial-monochrome.html",
+          "05-atelier-floating-modal.html",
+          "07-nordic-scandi-sanctuary.html",
+          "09-biophilic-glasshouse.html",
+          "13-curated-collector-carousel.html",
+          "21-project-split.html",
+          "25-editorial-door.html"
+        ];
+        const currentFile = window.location.pathname.split('/').pop() || ALL_PROTOTYPES[0];
+        const currentIndex = ALL_PROTOTYPES.indexOf(currentFile);
+
+        window.addEventListener('keydown', function(e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'next' }, '*');
+            } else if (currentIndex !== -1) {
+              const nextIdx = (currentIndex + 1) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[nextIdx];
+            }
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'prev' }, '*');
+            } else if (currentIndex !== -1) {
+              const prevIdx = (currentIndex - 1 + ALL_PROTOTYPES.length) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[prevIdx];
+            }
+          }
+        }, true);
+      })();
+    </script>
+</body>
+</html>

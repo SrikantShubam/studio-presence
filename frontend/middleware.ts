@@ -208,18 +208,29 @@ function rootPathResponse(request: NextRequest): NextResponse | null {
   const first = segments[0]
   const pathTenant = tenantForPathSegment(first)
 
-  // A tenant-prefixed admin path whose first segment is no longer in the map is
-  // a stale link, not a request for a new tenant. Keep it on the platform login
-  // flow so it cannot fall through to a different tenant.
-  if (!pathTenant && first && segments[1] && ROOT_TENANT_PATHS.has(segments[1])) {
+  // If the first segment is explicitly in RETIRED_TENANT_HOSTS, redirect to retired-tenant.
+  if (first && RETIRED_TENANT_HOSTS.has(first)) {
     const url = new URL('/login', request.url)
     url.searchParams.set('error', 'retired-tenant')
     return NextResponse.redirect(url)
   }
 
+  // A dynamic database tenant on root domain (e.g. /[slug]/panel or /[slug]/dashboard)
+  if (!pathTenant && first && /^[a-z0-9-]+$/.test(first) && segments[1] && ROOT_TENANT_PATHS.has(segments[1])) {
+    const response = NextResponse.next()
+    response.cookies.set(TENANT_COOKIE, first, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: true,
+      path: '/',
+    })
+    response.headers.set('x-tenant', first)
+    return response
+  }
+
   if (first && ROOT_TENANT_PATHS.has(first)) {
     const tenant = request.cookies.get(TENANT_COOKIE)?.value
-    if (tenant && Object.values(TENANT_MAP.bySubdomain).some((entry) => entry.slug === tenant)) {
+    if (tenant && (Object.values(TENANT_MAP.bySubdomain).some((entry) => entry.slug === tenant) || /^[a-z0-9-]+$/.test(tenant))) {
       const url = request.nextUrl.clone()
       url.pathname = `/${tenant}${pathname}`
       return NextResponse.redirect(url)

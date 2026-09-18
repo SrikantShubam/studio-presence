@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Presence — Websites for Interior Design Studios</title>
+  
+  <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            paper: '#FAF9F5',
+            canvas: '#F4F2EB',
+            stone: '#EAE7DF',
+            ink: '#141413',
+            inkMuted: '#686660',
+            borderHairline: '#E2DFD7',
+            borderDark: '#141413',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strict Editorial Constraints: Square corners, zero drop shadows, zero gradients */
+    *, *::before, *::after {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+    body {
+      background-color: #FAF9F5;
+      color: #141413;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection {
+      background-color: #141413;
+      color: #FAF9F5;
+    }
+
+    /* Before/After Hero Drag Container */
+    #hero-ba-stage {
+      --slider-pos: 50%;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+    .hero-clipped-before {
+      clip-path: polygon(0 0, var(--slider-pos, 50%) 0, var(--slider-pos, 50%) 100%, 0 100%);
+    }
+    .hero-slider-divider {
+      left: var(--slider-pos, 50%);
+      transform: translateX(-50%);
+    }
+
+    /* Architectural Range Input Styling */
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      background: #EAE7DF;
+      height: 2px;
+      outline: none;
+      border-radius: 0 !important;
+      cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 0 !important;
+      background: #141413;
+      border: 1px solid #FAF9F5;
+      cursor: pointer;
+      box-shadow: none !important;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      background: #333330;
+      transform: scale(1.08);
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 0 !important;
+      background: #141413;
+      border: 1px solid #FAF9F5;
+      cursor: pointer;
+      box-shadow: none !important;
+    }
+
+    /* Editorial Card Base & Explicit Visible Hover Effects */
+    .editorial-card {
+      border: 1px solid #E2DFD7;
+      background-color: #FAF9F5;
+      transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+    }
+    .editorial-card:hover {
+      border-color: #141413;
+      background-color: #FFFFFF;
+    }
+    .editorial-card:hover .card-num {
+      color: #141413;
+      font-weight: 600;
+    }
+
+    .editorial-card-canvas {
+      border: 1px solid #E2DFD7;
+      background-color: #F4F2EB;
+      transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+    }
+    .editorial-card-canvas:hover {
+      border-color: #141413;
+      background-color: #FFFFFF;
+    }
+    .editorial-card-canvas:hover .card-num {
+      color: #141413;
+      font-weight: 600;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+  </style>
+</head>
+<body class="selection:bg-ink selection:text-paper relative">
+
+  <!-- Top Announcement Masthead -->
+  <aside aria-label="Announcement" class="border-b border-borderHairline bg-canvas px-6 lg:px-12 py-3 flex items-center justify-between text-[11px] font-mono tracking-widest text-inkMuted uppercase">
+    <div class="flex items-center gap-2">
+      <span class="w-1.5 h-1.5 bg-ink"></span>
+      <span>STUDIO PRESENCE &bull; MONOGRAPH N° 2026</span>
+    </div>
+    <div class="hidden md:block">FREE 48-HOUR LIVE PREVIEW &bull; SEE YOUR STUDIO WEBSITE WORKING BEFORE YOU PAY ANYTHING &bull; ₹0 UPFRONT</div>
+    <div class="text-ink font-semibold">₹0 UPFRONT &bull; 48H HANDOVER</div>
+  </aside>
+
+  <!-- Primary Architectural Masthead Navigation -->
+  <header class="sticky top-0 z-40 bg-paper/95 backdrop-blur-sm border-b border-borderHairline">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      
+      <!-- Brand Name -->
+      <a href="#" class="flex items-baseline gap-3 group">
+        <span class="font-serif text-3xl sm:text-4xl tracking-tight font-normal uppercase text-ink">STUDIO PRESENCE</span>
+        <span class="text-[10px] font-mono text-inkMuted tracking-widest uppercase hidden lg:inline">// WEBSITES FOR INTERIOR DESIGN STUDIOS</span>
+      </a>
+
+      <!-- Folio Navigation -->
+      <nav class="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-inkMuted">
+        <a href="#thesis" class="hover:text-ink transition-colors">[01] Thesis & Proof</a>
+        <a href="#fractures" class="hover:text-ink transition-colors">[02] The Fractures</a>
+        <a href="#specifications" class="hover:text-ink transition-colors">[03] Specifications</a>
+        <a href="#monographs" class="hover:text-ink transition-colors">[04] Verified Proof</a>
+        <a href="#yield" class="hover:text-ink transition-colors">[05] Commission Yield</a>
+        <a href="#rates" class="hover:text-ink transition-colors">[06] Rates</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-4">
+        <a href="#commission" 
+           class="bg-ink text-paper px-6 py-3 text-xs font-mono uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors border border-ink">
+          Claim 48H Preview &rarr;
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Plate I: The Opening Thesis & Transformation Hero Spread -->
+  <section id="thesis" class="border-b border-borderHairline py-24 lg:py-32 bg-paper">
+    <div class="max-w-7xl mx-auto px-8 lg:px-16">
+      
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Left Column: Grounded Editorial Thesis Pitch -->
+        <div class="lg:col-span-6 space-y-8">
+          
+          <div class="flex items-center gap-2 text-xs font-mono tracking-widest text-ink uppercase">
+            <span class="w-1.5 h-1.5 bg-ink"></span>
+            <span>PLATE I &bull; AUDIENCE PREREQUISITE</span>
+          </div>
+
+          <h1 class="font-serif text-5xl sm:text-6xl lg:text-[76px] font-light tracking-tight leading-[1.02] text-ink">
+            You only need <span class="italic font-normal">2 or 3 more good clients</span> a year. Here is how they find you.
+          </h1>
+
+          <p class="text-base sm:text-lg text-inkMuted font-light leading-relaxed max-w-xl">
+            Most interior studio owners try 'the online thing' and get burned by expensive agency retainers, cheap directory leads, or Instagram likes that never convert into projects. We build understated, ultra-fast portfolio websites that let your completed architectural work speak for itself to affluent homeowners in your city.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            <a href="#commission" 
+               class="bg-ink text-paper px-8 py-4 text-xs font-mono uppercase tracking-widest font-semibold text-center hover:bg-neutral-800 transition-colors border border-ink">
+              Claim 48-Hour Preview &rarr;
+            </a>
+            <a href="#yield" 
+               class="border border-borderHairline hover:border-ink text-ink px-7 py-4 text-xs font-mono uppercase tracking-widest font-semibold text-center transition-colors bg-white">
+              Inspect Commission Yield &darr;
+            </a>
+          </div>
+
+          <!-- Studio Trust Triad -->
+          <div class="pt-8 border-t border-borderHairline grid grid-cols-3 gap-6 font-mono text-xs">
+            <div>
+              <div class="font-serif text-3xl sm:text-4xl font-light text-ink">48 Hours</div>
+              <div class="text-inkMuted text-[10px] mt-1 uppercase tracking-wider">From photos to live preview</div>
+            </div>
+            <div class="border-l border-borderHairline pl-6">
+              <div class="font-serif text-3xl sm:text-4xl font-light text-ink">₹0 Upfront</div>
+              <div class="text-inkMuted text-[10px] mt-1 uppercase tracking-wider">Pay only if you approve</div>
+            </div>
+            <div class="border-l border-borderHairline pl-6">
+              <div class="font-serif text-3xl sm:text-4xl font-light text-ink">2–3 Clients</div>
+              <div class="text-inkMuted text-[10px] mt-1 uppercase tracking-wider">Pays for the entire year</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Immediate Hero Before & After Transformation Slider -->
+        <div class="lg:col-span-6 space-y-4">
+          <div class="border border-ink p-4 sm:p-5 bg-white">
+            
+            <!-- Before/After Viewport -->
+            <div id="hero-ba-stage" class="relative w-full aspect-[4/3] sm:aspect-[16/11] bg-stone cursor-ew-resize overflow-hidden border border-borderHairline">
+              
+              <!-- AFTER IMAGE: Completed Luxury Residential Living Atelier -->
+              <img src="assets/anisabad-3bhk/living.webp" 
+                   alt="Completed 3BHK Residential Atelier" 
+                   class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+              
+              <!-- After Label -->
+              <div class="absolute top-4 right-4 bg-ink text-paper px-3 py-1.5 font-mono text-[10px] tracking-widest uppercase pointer-events-none border border-paper/20">
+                AFTER // COMPLETED LIVING ATELIER
+              </div>
+
+              <!-- BEFORE IMAGE: Raw Bare Demolition Masonry Shell (Clipped) -->
+              <div class="hero-clipped-before absolute inset-0 w-full h-full pointer-events-none">
+                <img src="assets/anisabad-3bhk/before.webp" 
+                     alt="Raw Demolition Bare Brick Shell" 
+                     class="w-full h-full object-cover pointer-events-none">
+                
+                <div class="absolute top-4 left-4 bg-ink text-paper px-3 py-1.5 font-mono text-[10px] tracking-widest uppercase pointer-events-none border border-paper/20">
+                  BEFORE // RAW CIVIL SHELL
+                </div>
+              </div>
+
+              <!-- Draggable Divider Line & Monogram Handle -->
+              <div id="hero-slider-divider" class="hero-slider-divider absolute top-0 bottom-0 w-[2px] bg-white pointer-events-none">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-ink border border-paper text-paper flex items-center justify-center font-mono text-xs pointer-events-none">
+                  &#x2194;
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Architectural Exhibit Under-Caption -->
+            <div class="pt-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between font-mono text-[11px] text-inkMuted border-t border-borderHairline mt-3 gap-2">
+              <div>COMMISSION: RESIDENTIAL 3BHK ATELIER</div>
+              <div class="text-ink font-semibold">&larr; DRAG DIVIDER TO INSPECT TRANSFORMATION &rarr;</div>
+            </div>
+
+          </div>
+
+          <p class="text-xs font-mono text-inkMuted leading-relaxed px-1">
+            "When affluent homeowners evaluate your practice, they do not read marketing copy. They drag this slider, inspect your material junctions, and message you on WhatsApp."
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Plate II: The Three Fractures (The Reality Check) -->
+  <section id="fractures" class="border-b border-borderHairline py-24 lg:py-32 bg-canvas">
+    <div class="max-w-7xl mx-auto px-8 lg:px-16">
+      
+      <!-- Section Header Spread -->
+      <div class="border-b border-borderHairline pb-12 mb-16 space-y-4">
+        <div class="text-xs font-mono uppercase tracking-widest text-inkMuted">PLATE II // THE THREE FRACTURES</div>
+        <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-ink max-w-4xl leading-[1.06]">
+          Your work is exceptional. The problem is that nobody in your city can find proof of it.
+        </h2>
+        <p class="text-base text-inkMuted font-light max-w-2xl leading-relaxed">
+          Interior designers across India face the same three expensive marketing traps. Here is why the usual methods fail to bring high-value turnkey clients:
+        </p>
+      </div>
+
+      <!-- Separated 3-Column Editorial Plates with Generous Gaps & Visible Hovers -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        
+        <!-- Fracture 01 -->
+        <article class="editorial-card p-8 lg:p-12 space-y-6 flex flex-col justify-between group">
+          <div class="space-y-6">
+            <div class="card-num font-mono text-xs text-inkMuted tracking-widest transition-colors">FRACTURE 01 // SOCIAL ALGORITHMS</div>
+            <h3 class="font-serif text-3xl font-light text-ink leading-snug group-hover:text-black">
+              Instagram gets likes. It rarely closes ₹15L turnkey contracts.
+            </h3>
+            <p class="text-sm text-inkMuted font-light leading-relaxed">
+              Social algorithms bury your best architectural photographs beneath dancing reels and video memes. Serious homeowners planning to invest ₹15 Lakhs to ₹50 Lakhs in their home want a tranquil, fast-loading portfolio to study quietly before booking a consultation.
+            </p>
+          </div>
+          <div class="pt-6 border-t border-borderHairline font-mono text-[11px] text-ink">
+            DIAGNOSIS: Zero permanent search equity.
+          </div>
+        </article>
+
+        <!-- Fracture 02 -->
+        <article class="editorial-card p-8 lg:p-12 space-y-6 flex flex-col justify-between group">
+          <div class="space-y-6">
+            <div class="card-num font-mono text-xs text-inkMuted tracking-widest transition-colors">FRACTURE 02 // DIRECTORY PORTALS</div>
+            <h3 class="font-serif text-3xl font-light text-ink leading-snug group-hover:text-black">
+              Listing aggregators sell the same lead to ten contractors.
+            </h3>
+            <p class="text-sm text-inkMuted font-light leading-relaxed">
+              Portals like JustDial or generic aggregator directories charge you ₹40,000 annually to broadcast your phone number alongside low-cost civil contractors. You spend your evenings fielding calls from bargain hunters looking for the cheapest rate per square foot.
+            </p>
+          </div>
+          <div class="pt-6 border-t border-borderHairline font-mono text-[11px] text-ink">
+            DIAGNOSIS: Margin erosion through commoditization.
+          </div>
+        </article>
+
+        <!-- Fracture 03 -->
+        <article class="editorial-card p-8 lg:p-12 space-y-6 flex flex-col justify-between group">
+          <div class="space-y-6">
+            <div class="card-num font-mono text-xs text-inkMuted tracking-widest transition-colors">FRACTURE 03 // LOCAL SEARCH VOID</div>
+            <h3 class="font-serif text-3xl font-light text-ink leading-snug group-hover:text-black">
+              When clients search your city, they find inferior competitors.
+            </h3>
+            <p class="text-sm text-inkMuted font-light leading-relaxed">
+              Every day, homeowners in your city search for trusted interior designers near them. When you lack a dedicated studio website with proper Google Maps integration, those high-value inquiries go to whoever showed up on the first page.
+            </p>
+          </div>
+          <div class="pt-6 border-t border-borderHairline font-mono text-[11px] text-ink">
+            DIAGNOSIS: Invisibility at the moment of highest intent.
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Plate III: Specifications Matrix (What We Build) -->
+  <section id="specifications" class="border-b border-borderHairline py-24 lg:py-32 bg-paper">
+    <div class="max-w-7xl mx-auto px-8 lg:px-16">
+      
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between border-b border-borderHairline pb-8 mb-16 gap-6">
+        <div class="space-y-3">
+          <div class="text-xs font-mono uppercase tracking-widest text-inkMuted">PLATE III // ARCHITECTURAL SPECIFICATIONS</div>
+          <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-ink">
+            Everything Your Studio Needs Online.
+          </h2>
+        </div>
+        <div class="text-xs font-mono text-inkMuted tracking-wider">
+          ZERO THIRD-PARTY ADVERTISING &bull; 100% STUDIO OWNERSHIP
+        </div>
+      </div>
+
+      <!-- Separated 6-Feature Architecture Grid with Generous Gaps & Visible Hovers -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        
+        <!-- Pillar 01 -->
+        <div class="editorial-card-canvas p-8 lg:p-10 space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="card-num font-mono text-xs text-ink font-semibold tracking-wider">SPEC_01 // VISUAL SHOWROOM</div>
+            <h3 class="font-serif text-2xl font-light text-ink group-hover:text-black">Retina Mobile Portfolio</h3>
+            <p class="text-xs sm:text-sm text-inkMuted font-light leading-relaxed">
+              High-resolution photography compression that renders instantly on client phones over 4G and 5G connections without lag. Your prospective clients can browse full-screen project photo galleries with zero stutter.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderHairline text-[11px] font-mono text-inkMuted">
+            ASSET: WebP lossless responsive srcset
+          </div>
+        </div>
+
+        <!-- Pillar 02 -->
+        <div class="editorial-card-canvas p-8 lg:p-10 space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="card-num font-mono text-xs text-ink font-semibold tracking-wider">SPEC_02 // CONVERSION ENGINE</div>
+            <h3 class="font-serif text-2xl font-light text-ink group-hover:text-black">Instant WhatsApp Lead Conduit</h3>
+            <p class="text-xs sm:text-sm text-inkMuted font-light leading-relaxed">
+              Eliminates friction. When a client loves a project, tapping "Consult Studio" opens WhatsApp on their phone with a pre-filled enquiry specifying their property size, location, and approximate budget.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderHairline text-[11px] font-mono text-inkMuted">
+            TRIGGER: Zero typing client intake
+          </div>
+        </div>
+
+        <!-- Pillar 03 -->
+        <div class="editorial-card-canvas p-8 lg:p-10 space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="card-num font-mono text-xs text-ink font-semibold tracking-wider">SPEC_03 // DISCOVERABILITY</div>
+            <h3 class="font-serif text-2xl font-light text-ink group-hover:text-black">Google Maps & Local SEO Schema</h3>
+            <p class="text-xs sm:text-sm text-inkMuted font-light leading-relaxed">
+              We structure your site with Indian local business schema so Google recognizes your operating city and neighborhood. Shows up in Google Maps local 3-pack with direct call and directions triggers.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderHairline text-[11px] font-mono text-inkMuted">
+            SEARCH: Verified local presence schema
+          </div>
+        </div>
+
+        <!-- Pillar 04 -->
+        <div class="editorial-card-canvas p-8 lg:p-10 space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="card-num font-mono text-xs text-ink font-semibold tracking-wider">SPEC_04 // PROFESSIONAL IDENTITY</div>
+            <h3 class="font-serif text-2xl font-light text-ink group-hover:text-black">Studio Domain & Corporate Mail</h3>
+            <p class="text-xs sm:text-sm text-inkMuted font-light leading-relaxed">
+              Replace unprofessional @gmail.com addresses with your own domain name (e.g., ashish@yourstudio.in). We register and configure your SSL certificates, cloud DNS, and email routing.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderHairline text-[11px] font-mono text-inkMuted">
+            IDENTITY: Custom domain + DNS routing
+          </div>
+        </div>
+
+        <!-- Pillar 05 -->
+        <div class="editorial-card-canvas p-8 lg:p-10 space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="card-num font-mono text-xs text-ink font-semibold tracking-wider">SPEC_05 // VELOCITY PROTOCOL</div>
+            <h3 class="font-serif text-2xl font-light text-ink group-hover:text-black">48-Hour Rapid Delivery</h3>
+            <p class="text-xs sm:text-sm text-inkMuted font-light leading-relaxed">
+              Web development agencies usually take 6 to 12 weeks of endless meetings. We take your completed project photos on WhatsApp, curate the copy, and hand you a working link in exactly 48 hours.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderHairline text-[11px] font-mono text-inkMuted">
+            TURNAROUND: 48h staging verification
+          </div>
+        </div>
+
+        <!-- Pillar 06 -->
+        <div class="editorial-card-canvas p-8 lg:p-10 space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="card-num font-mono text-xs text-ink font-semibold tracking-wider">SPEC_06 // MAINTENANCE ZERO</div>
+            <h3 class="font-serif text-2xl font-light text-ink group-hover:text-black">Zero Technical Headaches</h3>
+            <p class="text-xs sm:text-sm text-inkMuted font-light leading-relaxed">
+              No WordPress database updates to crash, no plugin renewals, no hosting server management. Your studio presence is hosted on enterprise edge servers with 99.99% guaranteed uptime.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-borderHairline text-[11px] font-mono text-inkMuted">
+            UPTIME: Edge hosting &bull; Static speed
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Plate IV: Case Studies & Verified Client Proof (Using Real Repo Photography) -->
+  <section id="monographs" class="border-b border-borderHairline py-24 lg:py-32 bg-canvas">
+    <div class="max-w-7xl mx-auto px-8 lg:px-16">
+      
+      <div class="border-b border-borderHairline pb-8 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div class="space-y-3">
+          <div class="text-xs font-mono uppercase tracking-widest text-inkMuted">PLATE IV // MONOGRAPHS OF COMPLETED SITES</div>
+          <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-ink">
+            Built for Studio Principals Across India
+          </h2>
+        </div>
+        <div class="font-mono text-xs text-inkMuted uppercase tracking-wider">VERIFIED STUDIO EXPERIENCES</div>
+      </div>
+
+      <!-- Separated Monograph Plates with Generous Gaps & Visible Hovers -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        
+        <!-- Case Study 01 -->
+        <div class="editorial-card p-8 lg:p-10 flex flex-col justify-between space-y-6 group">
+          <div class="space-y-5">
+            <div class="aspect-[16/10] bg-stone overflow-hidden border border-borderHairline group-hover:border-ink transition-colors">
+              <img src="assets/portfolio-01.jpg" alt="Living Room Finish Board" class="w-full h-full object-cover">
+            </div>
+            <div class="card-num font-mono text-xs text-inkMuted transition-colors">MONOGRAPH 01 &bull; RESIDENTIAL INTERIORS</div>
+            <p class="font-serif text-xl sm:text-2xl font-light text-ink leading-snug">
+              "We used to send 40MB PDF portfolio presentations over WhatsApp to clients. Half the time they wouldn't even download it. Having a fast, dignified website changed the level of clients who take us seriously."
+            </p>
+          </div>
+          <div class="pt-6 border-t border-borderHairline font-mono text-xs">
+            <div class="text-ink font-bold">Ashish Kumar</div>
+            <div class="text-inkMuted text-[11px] mt-0.5">Principal, Ashish Interiors &bull; Founded 2013</div>
+          </div>
+        </div>
+
+        <!-- Case Study 02 -->
+        <div class="editorial-card p-8 lg:p-10 flex flex-col justify-between space-y-6 group">
+          <div class="space-y-5">
+            <div class="aspect-[16/10] bg-stone overflow-hidden border border-borderHairline group-hover:border-ink transition-colors">
+              <img src="assets/portfolio-02.jpg" alt="Dining and Joinery Design" class="w-full h-full object-cover">
+            </div>
+            <div class="card-num font-mono text-xs text-inkMuted transition-colors">MONOGRAPH 02 &bull; TURNKEY RENOVATIONS</div>
+            <p class="font-serif text-xl sm:text-2xl font-light text-ink leading-snug">
+              "They delivered our working preview in under two days. The WhatsApp inquiry button brought us our first ₹28 Lakh turnkey villa project within three weeks of launching our Google Maps listing."
+            </p>
+          </div>
+          <div class="pt-6 border-t border-borderHairline font-mono text-xs">
+            <div class="text-ink font-bold">Ananya Deshmukh</div>
+            <div class="text-inkMuted text-[11px] mt-0.5">Design Director, Atelier 9</div>
+          </div>
+        </div>
+
+        <!-- Case Study 03 -->
+        <div class="editorial-card p-8 lg:p-10 flex flex-col justify-between space-y-6 group">
+          <div class="space-y-5">
+            <div class="aspect-[16/10] bg-stone overflow-hidden border border-borderHairline group-hover:border-ink transition-colors">
+              <img src="assets/portfolio-03.jpg" alt="Study Nook and Lighting" class="w-full h-full object-cover">
+            </div>
+            <div class="card-num font-mono text-xs text-inkMuted transition-colors">MONOGRAPH 03 &bull; BESPOKE APARTMENT</div>
+            <p class="font-serif text-xl sm:text-2xl font-light text-ink leading-snug">
+              "Most web agencies don't know the difference between architectural lighting and interior styling. Studio Presence understood exactly how our photos needed to breathe on phone screens."
+            </p>
+          </div>
+          <div class="pt-6 border-t border-borderHairline font-mono text-xs">
+            <div class="text-ink font-bold">Priya Sundaram</div>
+            <div class="text-inkMuted text-[11px] mt-0.5">Founder, Studio Vistara</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Plate V: Commission Yield & Financial Return Schedule (THE ROI CALCULATOR) -->
+  <section id="yield" class="border-b border-borderHairline py-24 lg:py-32 bg-paper">
+    <div class="max-w-7xl mx-auto px-8 lg:px-16">
+      
+      <!-- Section Header Spread -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div class="text-xs font-mono uppercase tracking-widest text-inkMuted">PLATE V // COMMISSION YIELD & FINANCIAL SCHEDULE</div>
+        <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-ink">
+          Calculate Your Studio's Investment Return
+        </h2>
+        <p class="text-base text-inkMuted font-light leading-relaxed">
+          See how winning just 1 or 2 new residential commissions through your studio website delivers an overwhelming 30x–66x return on your entire digital setup.
+        </p>
+      </div>
+
+      <!-- Broadsheet ROI Modeler Plate -->
+      <div class="max-w-4xl mx-auto border border-ink p-8 sm:p-12 lg:p-16 bg-white space-y-12">
+        
+        <div class="flex items-center justify-between border-b border-borderHairline pb-4 font-mono text-xs text-inkMuted uppercase">
+          <span>SCHEDULE 01 // FINANCIAL PROJECTION MODELER</span>
+          <span class="text-ink font-semibold">INTERACTIVE COMMISSION SIMULATOR</span>
+        </div>
+
+        <!-- Dynamic Sliders -->
+        <div class="space-y-10">
+          
+          <!-- Slider 1: Average Project Value -->
+          <div class="space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+              <label for="project-val" class="font-mono text-xs uppercase tracking-wider text-ink font-semibold">
+                01. Average Project Value / Design Contract Fee
+              </label>
+              <span id="project-val-label" class="font-serif text-3xl font-light text-ink">₹5,00,000</span>
+            </div>
+            <input type="range" id="project-val" min="150000" max="2500000" step="50000" value="500000" oninput="calculateEditorialROI()">
+            <div class="flex justify-between font-mono text-[11px] text-inkMuted pt-1">
+              <span>₹1.5 Lakhs (Modular Kitchen)</span>
+              <span>₹25 Lakhs (Turnkey Luxury Villa)</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: Additional Clients Won -->
+          <div class="space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+              <label for="clients-val" class="font-mono text-xs uppercase tracking-wider text-ink font-semibold">
+                02. Additional Commissions Won per Year via Website
+              </label>
+              <span id="clients-val-label" class="font-serif text-3xl font-light text-ink">2 Commissions</span>
+            </div>
+            <input type="range" id="clients-val" min="1" max="6" step="1" value="2" oninput="calculateEditorialROI()">
+            <div class="flex justify-between font-mono text-[11px] text-inkMuted pt-1">
+              <span>1 Commission</span>
+              <span>6 Commissions</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Real-Time Calculated Results Grid -->
+        <div class="pt-8 border-t border-borderHairline grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+          
+          <div class="p-6 bg-canvas border border-borderHairline flex flex-col justify-between">
+            <div class="font-mono text-[11px] text-inkMuted uppercase tracking-wider">New Studio Revenue</div>
+            <div id="added-rev" class="font-serif text-3xl sm:text-4xl font-normal text-ink my-2">₹10,00,000</div>
+            <div class="font-mono text-[10px] text-inkMuted">Gross contracted revenue</div>
+          </div>
+
+          <div class="p-6 bg-canvas border border-borderHairline flex flex-col justify-between">
+            <div class="font-mono text-[11px] text-inkMuted uppercase tracking-wider">Website Investment</div>
+            <div class="font-serif text-3xl sm:text-4xl font-normal text-ink my-2">₹15,000</div>
+            <div class="font-mono text-[10px] text-inkMuted">One-time foundation fee</div>
+          </div>
+
+          <div class="p-6 bg-ink text-paper border border-ink flex flex-col justify-between">
+            <div class="font-mono text-[11px] text-paper/70 uppercase tracking-wider">Return Multiplier</div>
+            <div id="roi-mult" class="font-serif text-3xl sm:text-4xl font-semibold text-paper my-2">66x ROI</div>
+            <div class="font-mono text-[10px] text-paper/70">Calculated revenue yield</div>
+          </div>
+
+        </div>
+
+        <!-- Architectural Monograph Reality Callout -->
+        <div class="p-5 bg-canvas border border-borderHairline font-mono text-xs text-inkMuted leading-relaxed">
+          <span class="text-ink font-semibold">THE ARCHITECTURAL REALITY:</span> Winning just one residential renovation project in your city pays for 20 years of website hosting, domain registration, and technical maintenance.
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Plate VI: The Commission Schedule / Transparent Rates -->
+  <section id="rates" class="border-b border-borderHairline py-24 lg:py-32 bg-canvas">
+    <div class="max-w-7xl mx-auto px-8 lg:px-16">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div class="text-xs font-mono uppercase tracking-widest text-inkMuted">PLATE VI // COMMISSION RATES & TERMS</div>
+        <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-ink">
+          Clear, Upfront Packages. Zero Surprises.
+        </h2>
+        <p class="text-sm sm:text-base text-inkMuted font-light">
+          Domain, cloud hosting, and mobile optimization included. You pay nothing until you inspect your live preview link.
+        </p>
+      </div>
+
+      <!-- Pricing Comparison Folio: 3 Cleanly Separated Cards with Generous Gaps -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        
+        <!-- Spec 01: Essentials -->
+        <div class="editorial-card p-8 sm:p-12 flex flex-col justify-between space-y-8 group">
+          <div class="space-y-6">
+            <div class="flex items-baseline justify-between border-b border-borderHairline pb-4 font-mono text-xs text-inkMuted">
+              <span class="card-num transition-colors">TIER_01</span>
+              <span>ONE-TIME FEE</span>
+            </div>
+            <div>
+              <h3 class="font-serif text-3xl font-light text-ink">Studio Presence</h3>
+              <div class="font-serif text-4xl font-normal text-ink mt-2">₹15,000</div>
+              <div class="font-mono text-[11px] text-inkMuted mt-1">Single upfront fee &bull; Excl. GST</div>
+            </div>
+            <p class="text-xs text-inkMuted leading-relaxed">
+              The essential foundation for independent interior practices seeking a clean, fast mobile showroom.
+            </p>
+            <ul class="space-y-3 font-mono text-xs text-ink pt-4 border-t border-borderHairline">
+              <li class="flex items-start gap-2">&bull; Complete multi-page architectural website</li>
+              <li class="flex items-start gap-2">&bull; High-resolution mobile project galleries</li>
+              <li class="flex items-start gap-2">&bull; Direct WhatsApp inquiry pre-formatting</li>
+              <li class="flex items-start gap-2">&bull; Google Maps local search registration</li>
+              <li class="flex items-start gap-2">&bull; Custom domain (.in / .com) + SSL setup</li>
+              <li class="flex items-start gap-2">&bull; Live in 48 hours</li>
+            </ul>
+          </div>
+          <a href="#commission" class="w-full py-4 bg-canvas hover:bg-stone text-ink font-mono text-xs uppercase tracking-widest text-center border border-borderHairline font-semibold transition-colors block">
+            Commission Preview &rarr;
+          </a>
+        </div>
+
+        <!-- Spec 02: Plus (Featured Folio) -->
+        <div class="border-2 border-ink p-8 sm:p-12 flex flex-col justify-between space-y-8 bg-white relative">
+          <div class="space-y-6">
+            <div class="flex items-baseline justify-between border-b border-borderHairline pb-4 font-mono text-xs">
+              <span class="text-ink font-bold">TIER_02 // RECOMMENDED</span>
+              <span class="bg-ink text-paper px-2 py-0.5 text-[10px] tracking-widest">MOST POPULAR</span>
+            </div>
+            <div>
+              <h3 class="font-serif text-3xl font-light text-ink">Presence Plus</h3>
+              <div class="font-serif text-4xl font-normal text-ink mt-2">₹25,000</div>
+              <div class="font-mono text-[11px] text-inkMuted mt-1">Single upfront fee &bull; Excl. GST</div>
+            </div>
+            <p class="text-xs text-inkMuted leading-relaxed">
+              Comprehensive digital monograph with interactive case studies and transformation comparisons for established studios.
+            </p>
+            <ul class="space-y-3 font-mono text-xs text-ink pt-4 border-t border-borderHairline">
+              <li class="flex items-start gap-2 font-semibold">&bull; Everything in Studio Presence</li>
+              <li class="flex items-start gap-2">&bull; Interactive Before/After renovation sliders</li>
+              <li class="flex items-start gap-2">&bull; Dedicated deep project case study pages</li>
+              <li class="flex items-start gap-2">&bull; Live Google 5-star customer review embed</li>
+              <li class="flex items-start gap-2">&bull; Project intake consultation questionnaire</li>
+              <li class="flex items-start gap-2">&bull; Studio Journal / Editorial publishing</li>
+            </ul>
+          </div>
+          <a href="#commission" class="w-full py-4 bg-ink hover:bg-neutral-800 text-paper font-mono text-xs uppercase tracking-widest text-center border border-ink font-semibold transition-colors block">
+            Commission Presence Plus &rarr;
+          </a>
+        </div>
+
+        <!-- Spec 03: Bespoke -->
+        <div class="editorial-card p-8 sm:p-12 flex flex-col justify-between space-y-8 group">
+          <div class="space-y-6">
+            <div class="flex items-baseline justify-between border-b border-borderHairline pb-4 font-mono text-xs text-inkMuted">
+              <span class="card-num transition-colors">TIER_03</span>
+              <span>BESPOKE RETAINER</span>
+            </div>
+            <div>
+              <h3 class="font-serif text-3xl font-light text-ink">Bespoke Partner</h3>
+              <div class="font-serif text-4xl font-normal text-ink mt-2">From ₹45,000</div>
+              <div class="font-mono text-[11px] text-inkMuted mt-1">Custom scope &bull; Excl. GST</div>
+            </div>
+            <p class="text-xs text-inkMuted leading-relaxed">
+              Engineered for multi-city firms, custom 3D walkthrough embeddings, and bespoke material library catalogs.
+            </p>
+            <ul class="space-y-3 font-mono text-xs text-ink pt-4 border-t border-borderHairline">
+              <li class="flex items-start gap-2">&bull; Everything in Presence Plus</li>
+              <li class="flex items-start gap-2">&bull; Multi-city studio architecture</li>
+              <li class="flex items-start gap-2">&bull; 3D Matterport & video walkthrough embeds</li>
+              <li class="flex items-start gap-2">&bull; Custom CRM and WhatsApp lead routing</li>
+              <li class="flex items-start gap-2">&bull; Priority quarterly portfolio updates</li>
+            </ul>
+          </div>
+          <a href="#commission" class="w-full py-4 bg-canvas hover:bg-stone text-ink font-mono text-xs uppercase tracking-widest text-center border border-borderHairline font-semibold transition-colors block">
+            Discuss Bespoke Scope &rarr;
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Renewal Terms -->
+      <div class="mt-12 border border-borderHairline bg-paper p-8 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-inkMuted gap-4">
+        <div>MAINTENANCE & HOSTING: ₹1,500 – ₹2,500 / YEAR AFTER YEAR 1 &bull; YEAR 1 HOSTING INCLUDED</div>
+        <div class="text-ink font-semibold">ZERO LOCK-IN &bull; 100% STUDIO CODE & ASSET OWNERSHIP</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Plate VII: The 48-Hour Protocol & Commission Form -->
+  <section id="commission" class="py-24 lg:py-32 bg-paper border-b border-borderHairline">
+    <div class="max-w-5xl mx-auto px-8 lg:px-16 space-y-12">
+      
+      <div class="text-center space-y-4">
+        <div class="text-xs font-mono uppercase tracking-widest text-inkMuted">PLATE VII // COMMISSION YOUR 48-HOUR PREVIEW</div>
+        <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-ink">
+          Inspect Your Working Site Before Paying a Rupee.
+        </h2>
+        <p class="text-base text-inkMuted font-light max-w-xl mx-auto">
+          Send us your studio name, city, and a link to 5-10 project photos. We will build a live, working preview on our test server within 48 hours. If you love it, pay to launch on your custom domain. If not, you owe ₹0.
+        </p>
+      </div>
+
+      <!-- Broadsheet Commission Form Container -->
+      <div class="border border-ink p-8 sm:p-12 lg:p-16 bg-white">
+        <form onsubmit="handleEditorialSubmit(event)" class="space-y-6 font-mono text-xs">
+          
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label class="block text-ink font-semibold uppercase tracking-wider">01. Principal Name *</label>
+              <input type="text" required placeholder="Ashish Kumar" class="w-full p-4 bg-canvas border border-borderHairline text-ink focus:border-ink focus:outline-none">
+            </div>
+            <div class="space-y-2">
+              <label class="block text-ink font-semibold uppercase tracking-wider">02. Studio / Practice Name *</label>
+              <input type="text" required placeholder="Ashish Interiors" class="w-full p-4 bg-canvas border border-borderHairline text-ink focus:border-ink focus:outline-none">
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label class="block text-ink font-semibold uppercase tracking-wider">03. WhatsApp Number *</label>
+              <input type="tel" required placeholder="+91 98765 43210" class="w-full p-4 bg-canvas border border-borderHairline text-ink focus:border-ink focus:outline-none">
+            </div>
+            <div class="space-y-2">
+              <label class="block text-ink font-semibold uppercase tracking-wider">04. Operating City *</label>
+              <input type="text" required placeholder="e.g. Your Operating City" class="w-full p-4 bg-canvas border border-borderHairline text-ink focus:border-ink focus:outline-none">
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-ink font-semibold uppercase tracking-wider">05. Link to Project Photos (Google Drive / Dropbox / Instagram)</label>
+            <input type="text" placeholder="https://drive.google.com/... or @yourstudio" class="w-full p-4 bg-canvas border border-borderHairline text-ink focus:border-ink focus:outline-none">
+          </div>
+
+          <button type="submit" class="w-full py-5 bg-ink text-paper font-mono uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors border border-ink text-xs">
+            Submit Commission for 48-Hour Preview &rarr;
+          </button>
+        </form>
+
+        <div id="ed-form-status" class="hidden mt-6 p-4 bg-canvas border border-ink text-ink font-mono text-xs text-center">
+          &check; Commission request logged. Our design studio will review your project photos and deliver your private preview link to your WhatsApp within 48 hours.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Editorial FAQ Section -->
+  <section class="py-24 lg:py-32 bg-canvas border-b border-borderHairline">
+    <div class="max-w-4xl mx-auto px-8 lg:px-16 space-y-12">
+      
+      <div class="space-y-3">
+        <div class="text-xs font-mono uppercase tracking-widest text-inkMuted">FOLIO ADDENDUM // COMMONLY ASKED QUESTIONS</div>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-ink">
+          Clear Answers for Studio Owners
+        </h2>
+      </div>
+
+      <div class="border-t border-borderHairline divide-y divide-borderHairline font-mono text-xs">
+        
+        <details class="py-6 group cursor-pointer">
+          <summary class="flex justify-between items-center text-ink font-semibold uppercase tracking-wider">
+            <span>How does the 48-hour free preview work?</span>
+            <span class="text-inkMuted group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="mt-4 text-inkMuted leading-relaxed font-sans text-sm">
+            You simply share 5-10 project photos and your studio details via WhatsApp or our form. Our design team curates your layout, typography, and portfolio showcases on a private staging link. You test it on your personal phone before paying any money.
+          </p>
+        </details>
+
+        <details class="py-6 group cursor-pointer">
+          <summary class="flex justify-between items-center text-ink font-semibold uppercase tracking-wider">
+            <span>Do I own the domain and website code?</span>
+            <span class="text-inkMuted group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="mt-4 text-inkMuted leading-relaxed font-sans text-sm">
+            100% yes. We register your domain (.in or .com) directly under your name or business entity. There are no proprietary lock-ins or hostage clauses.
+          </p>
+        </details>
+
+        <details class="py-6 group cursor-pointer">
+          <summary class="flex justify-between items-center text-ink font-semibold uppercase tracking-wider">
+            <span>What happens when I complete a new interior project?</span>
+            <span class="text-inkMuted group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="mt-4 text-inkMuted leading-relaxed font-sans text-sm">
+            Whenever you finish a new project, simply send the photos to our dedicated WhatsApp support line. We optimize the imagery and update your live site within 24 hours.
+          </p>
+        </details>
+
+        <details class="py-6 group cursor-pointer">
+          <summary class="flex justify-between items-center text-ink font-semibold uppercase tracking-wider">
+            <span>How does this help me get clients from Google?</span>
+            <span class="text-inkMuted group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="mt-4 text-inkMuted leading-relaxed font-sans text-sm">
+            We configure your website with local Indian schema markup and link it directly to your Google Business Profile. When homeowners search for interior designers or renovation studios in your city, your practice ranks directly in the local map pack.
+          </p>
+        </details>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Comprehensive Multi-Column Broadsheet Footer -->
+  <footer class="bg-[#121211] text-stone py-20 lg:py-24 border-t border-borderDark font-sans">
+    <div class="max-w-7xl mx-auto px-8 lg:px-16 space-y-16">
+      
+      <!-- Top Grid: Brand & Navigation Columns -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+        
+        <!-- Brand / Identity Column -->
+        <div class="lg:col-span-4 space-y-5">
+          <div class="space-y-2">
+            <span class="font-serif text-3xl sm:text-4xl text-white tracking-tight uppercase block">STUDIO PRESENCE</span>
+            <span class="font-mono text-xs text-stone/60 uppercase tracking-widest block">Websites for Interior Design Studios</span>
+          </div>
+          <p class="text-xs text-stone/70 leading-relaxed font-light max-w-sm">
+            The dedicated digital presence platform engineered exclusively for residential interior architects and turnkey renovation practices across India. Zero technical maintenance, 48-hour delivery, and complete asset ownership.
+          </p>
+          <div class="pt-2 flex items-center gap-3 font-mono text-xs">
+            <a href="https://wa.me/919876543210" target="_blank" class="px-4 py-2 bg-white text-ink font-semibold hover:bg-stone transition-colors">
+              WhatsApp Us &rarr;
+            </a>
+            <span class="text-stone/50 text-[11px]">GST Registered Entity</span>
+          </div>
+        </div>
+
+        <!-- Column 1: System Capabilities -->
+        <div class="lg:col-span-3 space-y-4 font-mono text-xs">
+          <div class="text-white font-semibold uppercase tracking-wider border-b border-white/10 pb-2">
+            Monograph Capabilities
+          </div>
+          <ul class="space-y-2.5 text-stone/70">
+            <li><a href="#specifications" class="hover:text-white transition-colors">Retina Mobile Portfolio</a></li>
+            <li><a href="#specifications" class="hover:text-white transition-colors">WhatsApp Lead Conduit</a></li>
+            <li><a href="#thesis" class="hover:text-white transition-colors">Before / After Drag Sliders</a></li>
+            <li><a href="#specifications" class="hover:text-white transition-colors">Google Maps 3-Pack Schema</a></li>
+            <li><a href="#specifications" class="hover:text-white transition-colors">Studio Domain & Business Mail</a></li>
+            <li><a href="#commission" class="hover:text-white transition-colors">48-Hour Live Preview Protocol</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Commission Packages -->
+        <div class="lg:col-span-3 space-y-4 font-mono text-xs">
+          <div class="text-white font-semibold uppercase tracking-wider border-b border-white/10 pb-2">
+            Commission Tiers
+          </div>
+          <ul class="space-y-2.5 text-stone/70">
+            <li><a href="#rates" class="hover:text-white transition-colors">Studio Presence (₹15,000)</a></li>
+            <li><a href="#rates" class="hover:text-white transition-colors">Presence Plus (₹25,000)</a></li>
+            <li><a href="#rates" class="hover:text-white transition-colors">Bespoke Partner (₹45,000+)</a></li>
+            <li><a href="#rates" class="hover:text-white transition-colors">Hosting & Domain Renewals</a></li>
+            <li><a href="#commission" class="hover:text-white transition-colors">₹0 Upfront Staging Review</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Verification & Ownership -->
+        <div class="lg:col-span-2 space-y-4 font-mono text-xs">
+          <div class="text-white font-semibold uppercase tracking-wider border-b border-white/10 pb-2">
+            Legitimacy & Trust
+          </div>
+          <ul class="space-y-2.5 text-stone/70">
+            <li><span class="text-stone/90">100% Asset Ownership</span></li>
+            <li><span class="text-stone/90">No Proprietary Lock-In</span></li>
+            <li><span class="text-stone/90">GST Invoicing</span></li>
+            <li><span class="text-stone/90">Signed Service SLA</span></li>
+            <li><span class="text-stone/90">Same-Day Support</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-stone/50 gap-4">
+        <div>&copy; 2026 Studio Presence. Registered GST Firm. Built exclusively for Indian Interior Studios.</div>
+        <div class="flex items-center gap-6">
+          <a href="#thesis" class="hover:text-stone transition-colors">Back to Top &uarr;</a>
+          <a href="https://wa.me/919876543210" target="_blank" class="hover:text-white transition-colors">Direct Support Line</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Interactive Logic: Before/After Slider & Dynamic ROI Modeler -->
+  <script>
+    // Rock-Solid Before/After Drag Logic for Hero
+    const heroStage = document.getElementById('hero-ba-stage');
+    if (heroStage) {
+      let isHeroDragging = false;
+
+      function updateHeroSlider(clientX) {
+        const rect = heroStage.getBoundingClientRect();
+        let percentage = ((clientX - rect.left) / rect.width) * 100;
+        percentage = Math.max(3, Math.min(97, percentage));
+        heroStage.style.setProperty('--slider-pos', percentage + '%');
+      }
+
+      heroStage.addEventListener('pointerdown', (e) => {
+        isHeroDragging = true;
+        heroStage.setPointerCapture(e.pointerId);
+        updateHeroSlider(e.clientX);
+      });
+
+      heroStage.addEventListener('pointermove', (e) => {
+        if (!isHeroDragging) return;
+        updateHeroSlider(e.clientX);
+      });
+
+      heroStage.addEventListener('pointerup', (e) => {
+        isHeroDragging = false;
+        try { heroStage.releasePointerCapture(e.pointerId); } catch(err){}
+      });
+
+      heroStage.addEventListener('pointercancel', (e) => {
+        isHeroDragging = false;
+      });
+    }
+
+    // Dynamic Architectural ROI Modeler Logic
+    function calculateEditorialROI() {
+      const projectInput = document.getElementById('project-val');
+      const clientsInput = document.getElementById('clients-val');
+      if (!projectInput || !clientsInput) return;
+
+      const projectVal = parseInt(projectInput.value, 10);
+      const clientsVal = parseInt(clientsInput.value, 10);
+
+      const projectLabel = document.getElementById('project-val-label');
+      const clientsLabel = document.getElementById('clients-val-label');
+      const addedRevElement = document.getElementById('added-rev');
+      const roiMultElement = document.getElementById('roi-mult');
+
+      if (projectLabel) {
+        projectLabel.textContent = '₹' + projectVal.toLocaleString('en-IN');
+      }
+      if (clientsLabel) {
+        clientsLabel.textContent = clientsVal + (clientsVal === 1 ? ' Commission' : ' Commissions');
+      }
+
+      const addedRev = projectVal * clientsVal;
+      if (addedRevElement) {
+        addedRevElement.textContent = '₹' + addedRev.toLocaleString('en-IN');
+      }
+
+      const multiplier = Math.round(addedRev / 15000);
+      if (roiMultElement) {
+        roiMultElement.textContent = multiplier + 'x ROI';
+      }
+    }
+
+    // Initial Calculation on Load
+    calculateEditorialROI();
+
+    // Form Submission Handler
+    function handleEditorialSubmit(e) {
+      e.preventDefault();
+      const statusEl = document.getElementById('ed-form-status');
+      if (statusEl) {
+        statusEl.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>

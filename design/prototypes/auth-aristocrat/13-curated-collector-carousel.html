@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Curated Collector Gallery | Studio Presence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --collector-bg: #f8fafc;
+        --collector-dark: #0f172a;
+        --accent-blue: #3b82f6;
+        --border-subtle: #e2e8f0;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --collector-bg: #0b0f19;
+          --collector-dark: #f8fafc;
+          --border-subtle: #1e293b;
+        }
+
+        .collector-card {
+          background: #0f172a !important;
+          border-color: #1e293b !important;
+          box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        .auth-headline {
+          color: #f8fafc !important;
+        }
+
+        .auth-sub {
+          color: #94a3b8 !important;
+        }
+
+        .label-c {
+          color: #cbd5e1 !important;
+        }
+
+        .c-sep {
+          color: #64748b !important;
+        }
+
+        .c-sep::before,
+        .c-sep::after {
+          background: #1e293b !important;
+        }
+
+        .collector-footer {
+          color: #94a3b8 !important;
+        }
+
+        .collector-footer a {
+          color: #60a5fa !important;
+        }
+
+        .field-c {
+          background: #0b0f19 !important;
+          border-color: #1e293b !important;
+          color: #f8fafc !important;
+        }
+
+        .field-c:focus {
+          border-color: #3b82f6 !important;
+          background: #111827 !important;
+        }
+
+        .btn-google-c {
+          background: #1e293b !important;
+          border-color: #334155 !important;
+          color: #f8fafc !important;
+        }
+
+        .btn-google-c:hover {
+          background: #283548 !important;
+        }
+
+        .btn-collector-primary {
+          background: #f8fafc !important;
+          color: #0f172a !important;
+        }
+
+        .btn-collector-primary:hover {
+          background: #e2e8f0 !important;
+        }
+
+        .collector-tabs {
+          background: #1e293b !important;
+          border-color: #334155 !important;
+        }
+
+        .collector-tab-btn {
+          color: #94a3b8 !important;
+        }
+
+        .collector-tab-btn.active {
+          background: #334155 !important;
+          color: #ffffff !important;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--collector-bg);
+        color: var(--collector-dark);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(16px, 3vw, 40px);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .collector-card {
+        width: 100%;
+        max-width: 1080px;
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid var(--border-subtle);
+        box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.08);
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        overflow: hidden;
+      }
+
+      /* Carousel Left Section */
+      .carousel-wing {
+        position: relative;
+        background: #0f172a;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(28px, 4vw, 48px);
+        overflow: hidden;
+      }
+
+      .carousel-bg-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.5s ease;
+      }
+
+      .carousel-gradient {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.3) 0%, rgba(15, 23, 42, 0.88) 100%);
+      }
+
+      .carousel-top-bar {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .collector-badge {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--collector-dark);
+      }
+
+      .carousel-counter {
+        color: #ffffff;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+      }
+
+      .carousel-content {
+        position: relative;
+        z-index: 2;
+        color: #ffffff;
+      }
+
+      .project-tag {
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent-blue);
+        margin-bottom: 6px;
+      }
+
+      .project-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 12px;
+      }
+
+      .project-quote {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: #cbd5e1;
+        margin-bottom: 20px;
+      }
+
+      /* Slide Selectors */
+      .slide-dots {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .dot {
+        width: 36px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.35);
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+      }
+
+      .dot:hover {
+        background: rgba(255, 255, 255, 0.65);
+      }
+
+      .dot:focus-visible {
+        outline: 2px solid var(--accent-blue);
+        outline-offset: 2px;
+      }
+
+      .dot.active {
+        background: #ffffff;
+        width: 52px;
+      }
+
+      /* Right Auth Form */
+      .form-collector-wing {
+        padding: clamp(32px, 5vw, 60px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .collector-brand-tag {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent-blue);
+        margin-bottom: 8px;
+      }
+
+      .collector-tabs {
+        display: inline-flex;
+        background: #f1f5f9;
+        padding: 4px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid var(--border-subtle);
+      }
+
+      .collector-tab-btn {
+        background: transparent;
+        border: none;
+        padding: 6px 16px;
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #64748b;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .collector-tab-btn.active {
+        background: #ffffff;
+        color: var(--collector-dark);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      }
+
+      .auth-headline {
+        font-size: 1.875rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .auth-sub {
+        font-size: 0.875rem;
+        color: #64748b;
+        margin-bottom: 24px;
+      }
+
+      /* Google Only Button */
+      .btn-google-c {
+        width: 100%;
+        padding: 12px 18px;
+        background: #ffffff;
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--collector-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 20px;
+      }
+
+      .btn-google-c:hover {
+        background: var(--collector-bg);
+      }
+
+      .btn-google-c svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .c-sep {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        font-size: 0.75rem;
+        color: #94a3b8;
+      }
+
+      .c-sep::before,
+      .c-sep::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border-subtle);
+      }
+
+      .input-wrapper-c {
+        margin-bottom: 18px;
+      }
+
+      .label-c {
+        display: block;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .field-c {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        font-size: 0.9375rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .field-c:focus {
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      }
+
+      .btn-collector-primary {
+        width: 100%;
+        padding: 14px;
+        background: var(--collector-dark);
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+        margin-top: 8px;
+        min-height: 48px;
+      }
+
+      .btn-collector-primary:hover {
+        background: #1e293b;
+      }
+
+      .collector-footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 0.8125rem;
+        color: #64748b;
+      }
+
+      .collector-footer a {
+        color: var(--accent-blue);
+        font-weight: 600;
+        text-decoration: underline;
+        margin-left: 4px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 860px) {
+        .collector-card {
+          grid-template-columns: 1fr;
+        }
+
+        .carousel-wing {
+          min-height: 280px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 12px;
+        }
+
+        .collector-card {
+          border-radius: 16px;
+        }
+
+        .carousel-wing {
+          min-height: 250px;
+          padding: 24px 18px;
+        }
+
+        .form-collector-wing {
+          padding: 24px 18px;
+        }
+
+        .project-title {
+          font-size: 1.35rem;
+        }
+
+        .btn-collector-primary,
+        .btn-google-c {
+          min-height: 48px;
+        }
+
+        .field-c {
+          min-height: 46px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="collector-card">
+      <!-- Carousel Left Wing -->
+      <section class="carousel-wing">
+        <img
+          id="slideImg"
+          class="carousel-bg-image"
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop"
+          alt="Studio Presence Curated Architecture"
+        />
+        <div class="carousel-gradient"></div>
+
+        <div class="carousel-top-bar">
+          <span class="collector-badge">Studio Presence</span>
+          <span id="slideCounter" class="carousel-counter">01 / 03</span>
+        </div>
+
+        <div class="carousel-content">
+          <p id="slideTag" class="project-tag">Villa Altius &middot; Goa Clifftop</p>
+          <h2 id="slideTitle" class="project-title">Turnkey Infinity Pavilion</h2>
+          <p id="slideQuote" class="project-quote">
+            “Every perspective from the master salon frames the Arabian Sea. Studio Presence delivered the full estate turnkey within twelve months.”
+          </p>
+          <div class="slide-dots" role="tablist" aria-label="Curated Project Slides">
+            <button type="button" class="dot active" role="tab" aria-label="Slide 1: Villa Altius" aria-selected="true" onclick="selectSlide(0)"></button>
+            <button type="button" class="dot" role="tab" aria-label="Slide 2: The Oberoi Duplex" aria-selected="false" onclick="selectSlide(1)"></button>
+            <button type="button" class="dot" role="tab" aria-label="Slide 3: Courtyard Sanctorum" aria-selected="false" onclick="selectSlide(2)"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Form -->
+      <section class="form-collector-wing">
+        <div class="collector-brand-tag">Studio Presence</div>
+
+        <div class="collector-tabs" role="tablist">
+          <button id="collectorTabSignIn" class="collector-tab-btn active" role="tab" aria-selected="true" type="button">Sign In</button>
+          <button id="collectorTabSignUp" class="collector-tab-btn" role="tab" aria-selected="false" type="button">Sign Up</button>
+        </div>
+
+        <h1 id="collectorHeading" class="auth-headline">Collector Portal</h1>
+        <p id="collectorSub" class="auth-sub">Access verified architectural specs, high-resolution rendering packs, and private project dockets.</p>
+
+        <!-- Google Only Button -->
+        <button type="button" class="btn-google-c" onclick="alert('Continuing with Google...');">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27a7.19 7.19 0 0 1 0-4.54V6.58H1.25a11.98 11.98 0 0 0 0 10.84l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span id="googleCollectorLabel">Continue with Google</span>
+        </button>
+
+        <div class="c-sep">
+          <span id="collectorDividerText">OR SIGN IN WITH EMAIL</span>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Authentication verified for Studio Presence.');">
+          <div class="input-wrapper-c" id="collectorNameRow" style="display: none;">
+            <label class="label-c" for="collectorName">Full Name</label>
+            <input id="collectorName" type="text" class="field-c" placeholder="Ashish Roy" autocomplete="name" />
+          </div>
+
+          <div class="input-wrapper-c">
+            <label class="label-c" for="collectorEmail">Client Email</label>
+            <input id="collectorEmail" type="email" class="field-c" placeholder="client@studio-presence.com" autocomplete="email" required />
+          </div>
+
+          <div class="input-wrapper-c">
+            <label class="label-c" for="collectorPass">Password</label>
+            <input id="collectorPass" type="password" class="field-c" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password" required />
+          </div>
+
+          <button id="collectorSubmitBtn" type="submit" class="btn-collector-primary">
+            Enter Studio Presence
+          </button>
+        </form>
+
+        <p class="collector-footer">
+          <span id="collectorFooterPrompt">New client to Studio Presence?</span>
+          <a id="collectorFooterToggle" href="javascript:void(0)">Create Account</a>
+        </p>
+      </section>
+    </div>
+
+    <script>
+      const tabSignIn = document.getElementById('collectorTabSignIn');
+      const tabSignUp = document.getElementById('collectorTabSignUp');
+      const heading = document.getElementById('collectorHeading');
+      const sub = document.getElementById('collectorSub');
+      const googleLabel = document.getElementById('googleCollectorLabel');
+      const dividerText = document.getElementById('collectorDividerText');
+      const submitBtn = document.getElementById('collectorSubmitBtn');
+      const footerPrompt = document.getElementById('collectorFooterPrompt');
+      const footerToggle = document.getElementById('collectorFooterToggle');
+      const collectorNameRow = document.getElementById('collectorNameRow');
+      const collectorNameInput = document.getElementById('collectorName');
+
+      const slides = [
+        {
+          img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
+          tag: "Villa Altius · Goa Clifftop",
+          title: "Turnkey Infinity Pavilion",
+          quote: "“Every perspective from the master salon frames the Arabian Sea. Studio Presence delivered the full estate turnkey within twelve months.”"
+        },
+        {
+          img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop",
+          tag: "The Oberoi Duplex · Mumbai",
+          title: "Double-Height Travertine Residence",
+          quote: "“The bespoke fluted timber paneling and custom bronze light installation elevated the penthouse to gallery standards.”"
+        },
+        {
+          img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1600&auto=format&fit=crop",
+          tag: "Courtyard Sanctorum · Bangalore",
+          title: "Serene Water Pavilion",
+          quote: "“Quiet luxury manifested in black granite, tranquil reflection pools, and curated Japanese flora.”"
+        }
+      ];
+
+      let currentSlideIdx = 0;
+      let autoplayTimer = null;
+
+      function setSlide(idx) {
+        const slideImg = document.getElementById('slideImg');
+        slideImg.style.opacity = '0.4';
+        setTimeout(() => {
+          slideImg.src = slides[idx].img;
+          document.getElementById('slideTag').textContent = slides[idx].tag;
+          document.getElementById('slideTitle').textContent = slides[idx].title;
+          document.getElementById('slideQuote').textContent = slides[idx].quote;
+          document.getElementById('slideCounter').textContent = `0${idx + 1} / 03`;
+          slideImg.style.opacity = '1';
+        }, 150);
+
+        document.querySelectorAll('.dot').forEach((d, i) => {
+          const isActive = i === idx;
+          d.classList.toggle('active', isActive);
+          d.setAttribute('aria-selected', String(isActive));
+        });
+      }
+
+      function nextSlide() {
+        currentSlideIdx = (currentSlideIdx + 1) % slides.length;
+        setSlide(currentSlideIdx);
+      }
+
+      function selectSlide(idx) {
+        currentSlideIdx = idx;
+        setSlide(idx);
+        restartAutoplay();
+      }
+
+      function startAutoplay() {
+        clearInterval(autoplayTimer);
+        autoplayTimer = setInterval(nextSlide, 6000);
+      }
+
+      function pauseAutoplay() {
+        clearInterval(autoplayTimer);
+      }
+
+      function restartAutoplay() {
+        clearInterval(autoplayTimer);
+        startAutoplay();
+      }
+
+      const carouselWing = document.querySelector('.carousel-wing');
+      if (carouselWing) {
+        carouselWing.addEventListener('mouseenter', pauseAutoplay);
+        carouselWing.addEventListener('mouseleave', startAutoplay);
+      }
+
+      startAutoplay();
+
+      function setCollectorMode(isLogin) {
+        if (isLogin) {
+          tabSignIn.classList.add('active');
+          tabSignIn.setAttribute('aria-selected', 'true');
+          tabSignUp.classList.remove('active');
+          tabSignUp.setAttribute('aria-selected', 'false');
+          heading.textContent = "Collector Portal";
+          sub.textContent = "Access verified architectural specs, high-resolution rendering packs, and private project dockets.";
+          googleLabel.textContent = "Continue with Google";
+          dividerText.textContent = "OR SIGN IN WITH EMAIL";
+          submitBtn.textContent = "Enter Studio Presence";
+          footerPrompt.textContent = "New client to Studio Presence?";
+          footerToggle.textContent = "Create Account";
+          collectorNameRow.style.display = "none";
+          collectorNameInput.removeAttribute('required');
+        } else {
+          tabSignUp.classList.add('active');
+          tabSignUp.setAttribute('aria-selected', 'true');
+          tabSignIn.classList.remove('active');
+          tabSignIn.setAttribute('aria-selected', 'false');
+          heading.textContent = "Register Portfolio";
+          sub.textContent = "Create your collector account with Studio Presence to track luxury residential acquisitions.";
+          googleLabel.textContent = "Sign up with Google";
+          dividerText.textContent = "OR REGISTER WITH EMAIL";
+          submitBtn.textContent = "Create Collector Account";
+          footerPrompt.textContent = "Already have an account?";
+          footerToggle.textContent = "Sign In";
+          collectorNameRow.style.display = "block";
+          collectorNameInput.setAttribute('required', 'required');
+        }
+      }
+
+      tabSignIn.addEventListener('click', () => setCollectorMode(true));
+      tabSignUp.addEventListener('click', () => setCollectorMode(false));
+      footerToggle.addEventListener('click', () => {
+        const isLogin = tabSignIn.classList.contains('active');
+        setCollectorMode(!isLogin);
+      });
+    </script>
+  
+    <!-- Global Keyboard Arrow Navigation -->
+    <script>
+      (function() {
+        const ALL_PROTOTYPES = [
+          "01-architectural-split-glass.html",
+          "02-haute-editorial-monochrome.html",
+          "05-atelier-floating-modal.html",
+          "07-nordic-scandi-sanctuary.html",
+          "09-biophilic-glasshouse.html",
+          "13-curated-collector-carousel.html",
+          "21-project-split.html",
+          "25-editorial-door.html"
+        ];
+        const currentFile = window.location.pathname.split('/').pop() || ALL_PROTOTYPES[0];
+        const currentIndex = ALL_PROTOTYPES.indexOf(currentFile);
+
+        window.addEventListener('keydown', function(e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'next' }, '*');
+            } else if (currentIndex !== -1) {
+              const nextIdx = (currentIndex + 1) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[nextIdx];
+            }
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'prev' }, '*');
+            } else if (currentIndex !== -1) {
+              const prevIdx = (currentIndex - 1 + ALL_PROTOTYPES.length) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[prevIdx];
+            }
+          }
+        }, true);
+      })();
+    </script>
+</body>
+</html>

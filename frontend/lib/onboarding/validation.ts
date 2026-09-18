@@ -1,8 +1,18 @@
 import { EMPTY_ONBOARDING_DRAFT, type OnboardingDraft, type OnboardingErrors } from './types'
 
-const PHONE_PATTERN = /^(?:\+?91[\s-]?)?[6-9]\d{9}$/
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const STRING_FIELDS = ['studioName', 'otherService', 'primaryPhone', 'whatsapp', 'publicEmail', 'introduction'] as const
+const STRING_FIELDS = [
+  'studioName',
+  'otherService',
+  'primaryPhone',
+  'whatsapp',
+  'publicEmail',
+  'introduction',
+  'logoPath',
+  'palette',
+  'primaryCity',
+  'primaryState',
+] as const
 const LIST_FIELDS = ['serviceAreas', 'categories', 'services'] as const
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -10,6 +20,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 const cleanList = (values: string[]) => [...new Set(values.map((value) => value.trim()).filter(Boolean))]
+
+/**
+ * Format any Indian phone number to strict E.164 (+91[6-9]XXXXXXXXX).
+ */
+export function normalizePhoneNumber(raw: string): string {
+  const digits = raw.replace(/[^\d]/g, '')
+  if (digits.length === 10 && /^[6-9]/.test(digits)) {
+    return `+91${digits}`
+  }
+  if (digits.length === 12 && digits.startsWith('91') && /^91[6-9]/.test(digits)) {
+    return `+${digits}`
+  }
+  return raw.trim()
+}
 
 /** Parse the untrusted JSON body before normalization can call string methods. */
 export function parseOnboardingDraftInput(input: unknown): { draft: OnboardingDraft; errors: OnboardingErrors } {
@@ -46,20 +70,26 @@ export function parseOnboardingDraftInput(input: unknown): { draft: OnboardingDr
   return { draft, errors }
 }
 
+const PHONE_PATTERN = /^(?:\+?91[\s-]?)?[6-9]\d{9}$/
+
 export function normalizeOnboardingDraft(input: OnboardingDraft): OnboardingDraft {
-  const primaryPhone = input.primaryPhone.trim()
-  const services = cleanList(input.services)
+  const primaryPhone = (input.primaryPhone || '').trim()
+  const services = cleanList(input.services || [])
   return {
     ...input,
-    studioName: input.studioName.trim(),
-    serviceAreas: cleanList(input.serviceAreas),
-    categories: cleanList(input.categories),
+    studioName: (input.studioName || '').trim(),
+    serviceAreas: cleanList(input.serviceAreas || []),
+    categories: cleanList(input.categories || []),
     services,
-    otherService: services.includes('Other service') ? input.otherService.trim() : '',
+    otherService: services.includes('Other service') ? (input.otherService || '').trim() : '',
     primaryPhone,
-    whatsapp: input.usePhoneForWhatsapp ? primaryPhone : input.whatsapp.trim(),
-    publicEmail: input.publicEmail.trim().toLowerCase(),
-    introduction: input.introduction.trim(),
+    whatsapp: input.usePhoneForWhatsapp ? primaryPhone : (input.whatsapp || '').trim(),
+    publicEmail: (input.publicEmail || '').trim().toLowerCase(),
+    introduction: (input.introduction || '').trim(),
+    logoPath: (input.logoPath || '').trim(),
+    palette: (input.palette || 'editorial').trim(),
+    primaryCity: (input.primaryCity || '').trim(),
+    primaryState: (input.primaryState || '').trim(),
   }
 }
 
@@ -79,7 +109,7 @@ export function validateOnboardingDraft(input: OnboardingDraft): { draft: Onboar
 
 const STAGE_FIELDS: Record<1 | 2 | 3, Array<keyof OnboardingDraft>> = {
   1: ['studioName', 'serviceAreas', 'categories', 'services', 'otherService'],
-  2: [],
+  2: ['logoPath', 'palette'],
   3: ['primaryPhone', 'whatsapp', 'publicEmail'],
 }
 
@@ -94,6 +124,7 @@ export function validateOnboardingStage(input: OnboardingDraft, stage: 1 | 2 | 3
 }
 
 export function suggestedIntroduction(draft: OnboardingDraft): string {
-  const services = [...draft.services.filter((service) => service !== 'Other service'), ...(draft.otherService ? [draft.otherService] : [])]
-  return `${draft.studioName || 'Your studio'} creates thoughtful ${(draft.categories.slice(0, 2).join(' and ') || 'spaces').toLowerCase()} across ${draft.serviceAreas[0] || 'your area'}${services.length ? `, with ${services.slice(0, 2).join(' and ').toLowerCase()}.` : '.'}`
+  const services = [...(draft.services || []).filter((service) => service !== 'Other service'), ...(draft.otherService ? [draft.otherService] : [])]
+  const area = (draft.serviceAreas && draft.serviceAreas[0]) || draft.primaryCity || 'your area'
+  return `${draft.studioName || 'Your studio'} creates thoughtful ${((draft.categories || []).slice(0, 2).join(' and ') || 'spaces').toLowerCase()} across ${area}${services.length ? `, with ${services.slice(0, 2).join(' and ').toLowerCase()}.` : '.'}`
 }

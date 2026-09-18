@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Presence — Websites for Interior Design Studios</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#F6F5EE',
+            panel: '#ECEBE2',
+            card: '#FFFFFF',
+            ink: '#181818',
+            subtle: '#62625D',
+            hairline: '#DFDFD5',
+            hairlineDark: '#CBCBC0',
+            vermilion: '#F94C26',
+            vermilionDark: '#DF3C17',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F6F5EE;
+      color: #181818;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .bg-dot-matrix {
+      background-image: radial-gradient(#181818 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+      opacity: 0.07;
+    }
+
+    /* CAD Corner Crosshairs */
+    .cad-plus {
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .cad-plus::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 0;
+      width: 11px;
+      height: 1px;
+      background-color: #181818;
+      transition: background-color 0.25s ease;
+    }
+    .cad-plus::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 5px;
+      width: 1px;
+      height: 11px;
+      background-color: #181818;
+      transition: background-color 0.25s ease;
+    }
+    .cad-plus.tl { top: -5px; left: -5px; }
+    .cad-plus.tr { top: -5px; right: -5px; }
+    .cad-plus.bl { bottom: -5px; left: -5px; }
+    .cad-plus.br { bottom: -5px; right: -5px; }
+
+    /* Corner crosshair hover response */
+    .swiss-card:hover .cad-plus::before,
+    .swiss-card:hover .cad-plus::after {
+      background-color: #F94C26;
+    }
+
+    /* Animated and static ruler ticks */
+    .ruler-ticks-h {
+      background-image: repeating-linear-gradient(to right, #181818 0, #181818 1px, transparent 1px, transparent 16px);
+      background-size: 100% 6px;
+      background-position: bottom;
+      background-repeat: no-repeat;
+    }
+    .ruler-ticks-v {
+      background-image: repeating-linear-gradient(to bottom, #181818 0, #181818 1px, transparent 1px, transparent 16px);
+      background-size: 6px 100%;
+      background-position: right;
+      background-repeat: no-repeat;
+    }
+
+    /* Clean Swiss Card Hover (Explicitly working without jank) */
+    .swiss-card {
+      position: relative;
+      background-color: #FFFFFF;
+      border: 1px solid #DFDFD5;
+      transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .swiss-card:hover {
+      border-color: #F94C26;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px -10px rgba(249, 76, 38, 0.12);
+    }
+
+    /* Button Style */
+    .btn-heron {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .btn-heron:hover {
+      transform: translateY(-1px);
+    }
+
+    /* Technical Slider Styling */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #DFDFD5;
+      outline: none;
+      border-radius: 0;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #F94C26;
+      cursor: pointer;
+      border: 2px solid #181818;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      background: #DF3C17;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #F94C26;
+      cursor: pointer;
+      border: 2px solid #181818;
+      border-radius: 0;
+    }
+
+    /* Custom drag slider for Before/After */
+    .ba-slider-container {
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+    .ba-slider-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .ba-slider-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background-color: #F94C26;
+      cursor: ew-resize;
+      z-index: 30;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-vermilion selection:text-white relative">
+
+  <!-- Background Dot Matrix Grid -->
+  <div class="fixed inset-0 bg-dot-matrix pointer-events-none z-0"></div>
+
+  <!-- Announcement Bar -->
+  <aside aria-label="Announcement" class="border-b border-hairline bg-panel px-4 py-2.5 text-center font-mono text-xs text-ink flex items-center justify-center gap-2.5 relative z-50">
+    <span class="w-2 h-2 rounded-full bg-vermilion animate-pulse"></span>
+    <span class="font-semibold tracking-wide uppercase">FREE 48-HOUR LIVE PREVIEW &bull; SEE YOUR STUDIO WEBSITE WORKING BEFORE YOU PAY ANYTHING &bull; ₹0 UPFRONT</span>
+  </aside>
+
+  <!-- Heron Clean Swiss Header -->
+  <header class="sticky top-0 z-50 bg-canvas/95 backdrop-blur-md border-b border-hairline">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+      
+      <!-- Brand Identity with Technical Cube Mark -->
+      <a href="#" class="flex items-center gap-3.5 group">
+        <div class="w-10 h-10 border border-ink bg-white flex items-center justify-center shadow-sm relative">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+          <svg class="w-5 h-5 text-ink group-hover:text-vermilion transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="text-sm font-extrabold tracking-wider text-ink uppercase flex items-center gap-1.5">
+            <span>STUDIO PRESENCE</span>
+            <span class="inline-block w-1.5 h-1.5 bg-vermilion"></span>
+          </div>
+          <div class="text-[10px] font-mono text-subtle tracking-widest uppercase mt-0.5">
+            Websites for Interior Design Studios
+          </div>
+        </div>
+      </a>
+
+      <!-- Visible Swiss Hairline Navigation Bar -->
+      <nav class="hidden lg:flex items-center border-l border-r border-hairline h-12 font-mono text-xs text-ink font-semibold">
+        <a href="#why" class="px-5 py-3 hover:text-vermilion hover:bg-white transition-colors border-r border-hairline">
+          [01] The Reality
+        </a>
+        <a href="#features" class="px-5 py-3 hover:text-vermilion hover:bg-white transition-colors border-r border-hairline">
+          [02] What We Build
+        </a>
+        <a href="#calculator" class="px-5 py-3 hover:text-vermilion hover:bg-white transition-colors border-r border-hairline flex items-center gap-1.5">
+          <span>[03] ROI Engine</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-vermilion"></span>
+        </a>
+        <a href="#cases" class="px-5 py-3 hover:text-vermilion hover:bg-white transition-colors border-r border-hairline">
+          [04] Studio Proof
+        </a>
+        <a href="#pricing" class="px-5 py-3 hover:text-vermilion hover:bg-white transition-colors">
+          [05] Pricing
+        </a>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center gap-2 font-mono text-[10px] text-subtle px-3 py-1.5 bg-panel border border-hairline">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span>48H DISPATCH ACTIVE</span>
+        </div>
+        <a href="#contact" 
+           class="btn-heron bg-vermilion hover:bg-vermilionDark text-white px-5 py-3 border border-vermilionDark shadow-sm">
+          <span>CLAIM 48H PREVIEW</span>
+          <span class="ml-2">&rarr;</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO SECTION: EXPANSIVE & SCREAMING INTERIOR ARCHITECTURE -->
+  <section class="border-b border-hairline py-16 lg:py-24 relative bg-canvas min-h-[85vh] flex flex-col justify-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 space-y-12 w-full">
+      
+      <!-- Top Technical CAD Stage: Real High-Res Interior Architecture Photo Inside 4-Sided Measurement Frame -->
+      <div id="hero-cad-stage" class="border border-ink bg-white relative p-4 sm:p-6 shadow-sm overflow-hidden">
+        
+        <!-- Corner Plus Signs -->
+        <div class="cad-plus tl"></div>
+        <div class="cad-plus tr"></div>
+        <div class="cad-plus bl"></div>
+        <div class="cad-plus br"></div>
+
+        <!-- Top Rulers & HUD Metadata -->
+        <div class="flex items-center justify-between border-b border-hairline pb-3 mb-4 font-mono text-[11px]">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-panel border border-hairline text-ink font-bold">
+              <span class="w-2 h-2 rounded-full bg-vermilion"></span>
+              CAD VIEWPORT 1.0 // LIVE TELEMETRY
+            </span>
+            <span class="text-subtle hidden md:inline">PROJECT_REF: RESIDENTIAL LIVING ATELIER // 4,200 SQ.FT</span>
+          </div>
+
+          <!-- Realtime Mouse Coordinate HUD Tracker -->
+          <div class="flex items-center gap-3 bg-panel border border-hairline px-3.5 py-1 text-[10px]">
+            <span class="text-subtle">CURSOR HUD:</span>
+            <span id="hud-coords" class="font-bold text-ink tracking-wide">X: 612PX &bull; Y: 248PX</span>
+          </div>
+        </div>
+
+        <!-- Expansive Interior Photography Render that Screams High-End Interior Design -->
+        <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] lg:aspect-[2.4/1] bg-panel border border-hairline overflow-hidden group">
+          
+          <!-- Real Repository Image: assets/hero.jpg -->
+          <img src="assets/hero.jpg" 
+               alt="Luxury Architectural Living Atelier" 
+               class="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-out">
+
+          <!-- Architectural Spec Callouts Floating on the Photo -->
+          <div class="absolute top-4 left-4 bg-ink/90 backdrop-blur-sm text-white px-3.5 py-2 font-mono text-[10px] tracking-wider uppercase border border-white/20">
+            SPEC_01 // HIGH-RESOLUTION RESIDENTIAL ATELIER
+          </div>
+
+          <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm text-ink px-4 py-2.5 font-mono text-xs border border-ink shadow-sm flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-vermilion"></span>
+            <span class="font-bold">48-Hour Live Dispatch &bull; 100% Studio Asset Ownership</span>
+          </div>
+
+          <div class="absolute bottom-4 right-4 hidden sm:flex items-center gap-2.5 bg-panel/95 backdrop-blur-sm px-3.5 py-2 font-mono text-[10px] text-ink border border-hairline font-semibold">
+            <span>SCALE: 1:50</span>
+            <span>&bull;</span>
+            <span>2700K WARM ARCHITECTURAL COVE</span>
+            <span>&bull;</span>
+            <span class="text-vermilion font-bold">VERIFIED PRODUCTION</span>
+          </div>
+
+          <!-- 4-Sided Measurement Rulers Framing the Showcase -->
+          <div class="absolute top-0 left-0 right-0 h-2.5 ruler-ticks-h pointer-events-none opacity-40"></div>
+          <div class="absolute bottom-0 left-0 right-0 h-2.5 ruler-ticks-h pointer-events-none opacity-40"></div>
+          <div class="absolute top-0 bottom-0 left-0 w-2.5 ruler-ticks-v pointer-events-none opacity-40"></div>
+          <div class="absolute top-0 bottom-0 right-0 w-2.5 ruler-ticks-v pointer-events-none opacity-40"></div>
+
+        </div>
+
+      </div>
+
+      <!-- Grounded Sales Proposition Directly Below the Viewport -->
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start pt-4">
+        
+        <div class="lg:col-span-8 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-panel border border-hairline font-mono text-xs text-ink font-semibold">
+            <span>[ SPEC_01 // THE GROUNDED SALES PITCH ]</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-ink leading-[1.08]">
+            You only need <span class="text-vermilion">2 or 3 more good clients</span> a year. Here is how they find you.
+          </h1>
+
+          <p class="text-base sm:text-lg text-subtle leading-relaxed max-w-2xl font-normal">
+            Most studio owners try 'the online thing' and get burned by expensive agency retainers, cheap directory leads, or Instagram likes that never convert into projects. We build understated, ultra-fast portfolio websites that turn local searchers into direct WhatsApp consultations. Live in 48 hours from ₹15,000 — with zero upfront cost.
+          </p>
+
+          <!-- Dual CTAs -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            <a href="#contact" 
+               class="btn-heron bg-vermilion hover:bg-vermilionDark text-white px-8 py-4 border border-vermilionDark text-sm shadow-sm">
+              <span>Claim 48-Hour Preview</span>
+              <span class="ml-2">&rarr;</span>
+            </a>
+            <a href="#why" 
+               class="btn-heron bg-white hover:bg-panel text-ink border border-ink px-7 py-4 text-xs shadow-sm">
+              <span>Inspect Reality Diagnosis &darr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Side Key Trust Telemetry Panel -->
+        <div class="lg:col-span-4 border border-ink p-8 bg-white space-y-6 relative shadow-sm">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="border-b border-hairline pb-3 font-mono text-xs text-subtle flex justify-between items-center">
+            <span>COMMITMENT SCHEDULE</span>
+            <span class="text-vermilion font-bold">&check; VERIFIED</span>
+          </div>
+
+          <div class="space-y-5 font-mono text-xs">
+            <div>
+              <div class="text-2xl font-extrabold text-ink font-sans">48 Hours</div>
+              <div class="text-subtle mt-0.5">From project photos to private link</div>
+            </div>
+            <div class="pt-4 border-t border-hairline">
+              <div class="text-2xl font-extrabold text-ink font-sans">₹0 Upfront</div>
+              <div class="text-subtle mt-0.5">Pay only after inspecting your working site</div>
+            </div>
+            <div class="pt-4 border-t border-hairline">
+              <div class="text-2xl font-extrabold text-vermilion font-sans">100% Studio Ownership</div>
+              <div class="text-subtle mt-0.5">Domain and code registered directly in your name</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- THE THREE FRACTURES (SEPARATED ONE BY ONE AS REQUESTED) -->
+  <section id="why" class="border-b border-hairline py-24 bg-panel/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      
+      <!-- Section Header -->
+      <div class="max-w-3xl mb-16 space-y-3">
+        <span class="font-mono text-xs text-vermilion font-bold tracking-wider uppercase">[ 01 // THE REALITY &bull; THREE SEPARATE FRACTURES ]</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ink tracking-tight">
+          Your work is exceptional. The problem is nobody in your city can find proof of it.
+        </h2>
+        <p class="text-sm sm:text-base text-subtle leading-relaxed">
+          The three false promises that cost independent interior studio owners lakhs every single year. Here is the exact clinical autopsy of each, separated one by one:
+        </p>
+      </div>
+
+      <!-- Fractures Separated One by One with Generous Spacing -->
+      <div class="space-y-12">
+        
+        <!-- Fracture 01: Social Media -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between border-b border-hairline pb-4 gap-2">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 bg-panel border border-hairline font-mono text-xs font-bold text-vermilion">
+                FRACTURE 01 / 03 // THE INSTAGRAM ILLUSION
+              </span>
+              <span class="font-mono text-xs text-subtle">CHANNEL: SOCIAL MEDIA</span>
+            </div>
+            <div class="font-mono text-xs text-subtle">ESTIMATED CONVERSION RATE: &lt; 0.2%</div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            <div class="lg:col-span-7 space-y-4">
+              <h3 class="text-2xl font-bold text-ink">
+                Instagram gets likes. It rarely closes ₹15L–₹30L turnkey interior contracts.
+              </h3>
+              <p class="text-sm text-subtle leading-relaxed">
+                Social algorithms are engineered for rapid entertainment and video reels, not your structural craftsmanship. Serious homeowners planning to invest ₹15L to ₹50L do not hire an interior architect from a 15-second compressed reel. They want a calm, high-resolution website where they can inspect floor finishes, lighting joinery, and past project scale quietly before making a high-ticket call.
+              </p>
+            </div>
+
+            <!-- Telemetry Comparison Box -->
+            <div class="lg:col-span-5 bg-panel border border-hairline p-6 font-mono text-xs space-y-4">
+              <div class="text-ink font-bold pb-2 border-b border-hairline">DIAGNOSTIC AUDIT</div>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2 text-subtle">
+                  <span class="text-red-500 font-bold">&times;</span>
+                  <span><strong>Instagram:</strong> 500 likes from strangers across India &rarr; Zero local high-net-worth site visits.</span>
+                </div>
+                <div class="flex items-start gap-2 text-ink font-semibold">
+                  <span class="text-vermilion font-bold">&check;</span>
+                  <span><strong>Studio Presence:</strong> 15 quiet local homeowners &rarr; 3 high-budget site consultation bookings.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fracture 02: Directory Aggregators -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between border-b border-hairline pb-4 gap-2">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 bg-panel border border-hairline font-mono text-xs font-bold text-vermilion">
+                FRACTURE 02 / 03 // THE DIRECTORY PORTAL TRAP
+              </span>
+              <span class="font-mono text-xs text-subtle">CHANNEL: LISTING PORTALS (JUSTDIAL / INDIAMART)</span>
+            </div>
+            <div class="font-mono text-xs text-subtle">LEAD EXCLUSIVITY: 0% (BROADCAST)</div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            <div class="lg:col-span-7 space-y-4">
+              <h3 class="text-2xl font-bold text-ink">
+                Listing portals sell your exact phone number to 10 competing contractors.
+              </h3>
+              <p class="text-sm text-subtle leading-relaxed">
+                Platforms like JustDial charge you ₹40,000 to ₹80,000 annually to broadcast your contact information alongside low-cost labor contractors. The homeowner receives 8 simultaneous phone calls within five minutes. You end up spending your evenings defending your pricing against bargain hunters looking for the cheapest square-foot rate.
+              </p>
+            </div>
+
+            <!-- Telemetry Comparison Box -->
+            <div class="lg:col-span-5 bg-panel border border-hairline p-6 font-mono text-xs space-y-4">
+              <div class="text-ink font-bold pb-2 border-b border-hairline">DIAGNOSTIC AUDIT</div>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2 text-subtle">
+                  <span class="text-red-500 font-bold">&times;</span>
+                  <span><strong>Portals:</strong> Shared, commoditized leads demanding the cheapest square-foot labor rate.</span>
+                </div>
+                <div class="flex items-start gap-2 text-ink font-semibold">
+                  <span class="text-vermilion font-bold">&check;</span>
+                  <span><strong>Studio Presence:</strong> 100% exclusive direct inbound. Clients contact you specifically for your aesthetic.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fracture 03: Local Search Vacuum -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between border-b border-hairline pb-4 gap-2">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 bg-panel border border-hairline font-mono text-xs font-bold text-vermilion">
+                FRACTURE 03 / 03 // THE LOCAL SEARCH VACUUM
+              </span>
+              <span class="font-mono text-xs text-subtle">CHANNEL: GOOGLE LOCAL SEARCH & MAPS</span>
+            </div>
+            <div class="font-mono text-xs text-subtle">MISSED INTENT: HIGH-BUDGET LOCAL SEARCH</div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            <div class="lg:col-span-7 space-y-4">
+              <h3 class="text-2xl font-bold text-ink">
+                When homeowners search your city, they find inferior competitors who simply have a site.
+              </h3>
+              <p class="text-sm text-subtle leading-relaxed">
+                Hundreds of affluent homeowners search "architectural interior designer near me" or "luxury home interior in [your city]" every single month. When you lack a dedicated, fast studio website with proper Google Maps 3-Pack Schema, those high-ticket turnkey projects slip straight to whichever competitor shows up on page one.
+              </p>
+            </div>
+
+            <!-- Telemetry Comparison Box -->
+            <div class="lg:col-span-5 bg-panel border border-hairline p-6 font-mono text-xs space-y-4">
+              <div class="text-ink font-bold pb-2 border-b border-hairline">DIAGNOSTIC AUDIT</div>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2 text-subtle">
+                  <span class="text-red-500 font-bold">&times;</span>
+                  <span><strong>No Domain:</strong> Completely invisible in local Google 3-Pack; leads go to whoever ranks.</span>
+                </div>
+                <div class="flex items-start gap-2 text-ink font-semibold">
+                  <span class="text-vermilion font-bold">&check;</span>
+                  <span><strong>Studio Presence:</strong> Google Maps LocalBusiness schema + verified studio authority on top of search.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHAT WE BUILD (6 Precision Engineering Pillars with Generous Spacing & Verified Hover) -->
+  <section id="features" class="border-b border-hairline py-24 bg-canvas">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div class="space-y-3 max-w-xl">
+          <span class="font-mono text-xs text-vermilion font-bold tracking-wider uppercase">[ 02 // WHAT WE BUILD ]</span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ink tracking-tight">
+            Everything Your Studio Needs. Nothing It Doesn't.
+          </h2>
+        </div>
+        <div class="font-mono text-xs text-subtle">
+          SWISS PRECISION &bull; COMPLETE ASSET OWNERSHIP
+        </div>
+      </div>
+
+      <!-- Generous Card Spacing & Padding -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        
+        <!-- Pillar 01 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-5">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="font-mono text-xs font-bold text-vermilion">01 // RETINA SHOWROOM</div>
+          <h3 class="text-xl font-bold text-ink">Ultra-Fast Photography Pipeline</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            Proprietary WebP image optimization renders edge-to-edge architectural photography in sub-second speeds on 4G and 5G phone connections. No lag, no compression blur.
+          </p>
+          <div class="pt-3 border-t border-hairline font-mono text-[11px] text-ink font-semibold flex items-center justify-between">
+            <span>PERFORMANCE: 98/100</span>
+            <span class="text-vermilion">&rarr;</span>
+          </div>
+        </div>
+
+        <!-- Pillar 02 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-5">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="font-mono text-xs font-bold text-vermilion">02 // DIRECT CONDUIT</div>
+          <h3 class="text-xl font-bold text-ink">Direct WhatsApp Lead Intake</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            Homeowners tap "Consult Studio" and land in your private WhatsApp with property dimensions, neighborhood location, and tentative budget pre-formatted.
+          </p>
+          <div class="pt-3 border-t border-hairline font-mono text-[11px] text-ink font-semibold flex items-center justify-between">
+            <span>FRICTION: ZERO FORMS</span>
+            <span class="text-vermilion">&rarr;</span>
+          </div>
+        </div>
+
+        <!-- Pillar 03 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-5">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="font-mono text-xs font-bold text-vermilion">03 // LOCAL SEO SCHEMA</div>
+          <h3 class="text-xl font-bold text-ink">Google Maps 3-Pack Dominance</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            Structured Indian schema markup coordinates your website with your Google Business Profile to capture local homeowners searching for interior designers in your area.
+          </p>
+          <div class="pt-3 border-t border-hairline font-mono text-[11px] text-ink font-semibold flex items-center justify-between">
+            <span>DISCOVERABILITY: HIGH</span>
+            <span class="text-vermilion">&rarr;</span>
+          </div>
+        </div>
+
+        <!-- Pillar 04 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-5">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="font-mono text-xs font-bold text-vermilion">04 // PROFESSIONAL DOMAIN</div>
+          <h3 class="text-xl font-bold text-ink">Branded Domain & Studio Email</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            Phase out free Gmail addresses. We configure your custom domain (yourstudio.in / yourstudio.com) with SSL encryption and professional studio email inbox.
+          </p>
+          <div class="pt-3 border-t border-hairline font-mono text-[11px] text-ink font-semibold flex items-center justify-between">
+            <span>CREDIBILITY: INSTITUTIONAL</span>
+            <span class="text-vermilion">&rarr;</span>
+          </div>
+        </div>
+
+        <!-- Pillar 05 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-5">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="font-mono text-xs font-bold text-vermilion">05 // RAPID PROTOCOL</div>
+          <h3 class="text-xl font-bold text-ink">48-Hour Deployment Guarantee</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            Drop your project photos over WhatsApp. We build and deliver your working preview link in 48 hours. Zero meetings, zero briefings, zero chasing developers.
+          </p>
+          <div class="pt-3 border-t border-hairline font-mono text-[11px] text-ink font-semibold flex items-center justify-between">
+            <span>SLA: 48 HOURS MAX</span>
+            <span class="text-vermilion">&rarr;</span>
+          </div>
+        </div>
+
+        <!-- Pillar 06 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-5">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="font-mono text-xs font-bold text-vermilion">06 // ZERO HEADACHES</div>
+          <h3 class="text-xl font-bold text-ink">Zero Technical Maintenance</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            No WordPress database updates to crash, no plugin renewals. When you wrap up a new residential project, send photos on WhatsApp and we update your portfolio.
+          </p>
+          <div class="pt-3 border-t border-hairline font-mono text-[11px] text-ink font-semibold flex items-center justify-between">
+            <span>MAINTENANCE: EFFORTLESS</span>
+            <span class="text-vermilion">&rarr;</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE ROI CALCULATOR (EXPLICIT USER REQUEST) -->
+  <section id="calculator" class="border-b border-hairline py-24 bg-panel/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      
+      <div class="border border-ink bg-white p-8 lg:p-12 shadow-sm relative space-y-12">
+        <div class="cad-plus tl"></div>
+        <div class="cad-plus tr"></div>
+        <div class="cad-plus bl"></div>
+        <div class="cad-plus br"></div>
+
+        <!-- Header -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between border-b border-hairline pb-6 gap-4">
+          <div class="space-y-2">
+            <span class="font-mono text-xs text-vermilion font-bold tracking-wider uppercase">[ 03 // CAD TELEMETRY &bull; STUDIO ROI ENGINE ]</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
+              The Mathematics of a High-Ticket Studio Website
+            </h2>
+            <p class="text-sm text-subtle max-w-2xl">
+              Interior design is not high-volume e-commerce. You don't need 10,000 visitors. You only need 2 or 3 more discerning homeowners a year to completely transform your practice's annual profit.
+            </p>
+          </div>
+          <div class="font-mono text-xs text-subtle">
+            CAL_MODEL: SP-ROI-v2.6
+          </div>
+        </div>
+
+        <!-- Interactive Calculator Grid -->
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          
+          <!-- Sliders Left (7 Cols) -->
+          <div class="lg:col-span-7 space-y-8">
+            
+            <!-- Slider 1: Average Project Value -->
+            <div class="space-y-3 bg-panel p-6 border border-hairline">
+              <div class="flex justify-between items-center font-mono text-xs">
+                <label for="project-value" class="font-bold text-ink">AVERAGE PROJECT VALUE (TURNKEY)</label>
+                <span id="project-value-display" class="font-bold text-vermilion text-sm">₹5,00,000 (₹5.0 Lakhs)</span>
+              </div>
+              <input type="range" id="project-value" min="150000" max="2500000" step="50000" value="500000">
+              <div class="flex justify-between font-mono text-[10px] text-subtle">
+                <span>₹1.5 Lakhs (Boutique)</span>
+                <span>₹10 Lakhs (3BHK)</span>
+                <span>₹25 Lakhs (Luxury Villa)</span>
+              </div>
+            </div>
+
+            <!-- Slider 2: Additional Clients Won -->
+            <div class="space-y-3 bg-panel p-6 border border-hairline">
+              <div class="flex justify-between items-center font-mono text-xs">
+                <label for="clients-count" class="font-bold text-ink">ADDITIONAL CLIENTS WON PER YEAR</label>
+                <span id="clients-count-display" class="font-bold text-vermilion text-sm">2 Clients / Year</span>
+              </div>
+              <input type="range" id="clients-count" min="1" max="6" step="1" value="2">
+              <div class="flex justify-between font-mono text-[10px] text-subtle">
+                <span>1 Client</span>
+                <span>2 Clients (Typical)</span>
+                <span>6 Clients</span>
+              </div>
+            </div>
+
+            <!-- Quick Project Presets -->
+            <div class="flex items-center gap-2 font-mono text-xs flex-wrap">
+              <span class="text-subtle text-[11px]">QUICK PRESETS:</span>
+              <button onclick="setPreset(350000, 2)" class="px-3 py-1 bg-white border border-hairline hover:border-ink transition-colors text-[11px]">
+                2BHK Modular (₹3.5L)
+              </button>
+              <button onclick="setPreset(750000, 2)" class="px-3 py-1 bg-white border border-hairline hover:border-ink transition-colors text-[11px]">
+                3BHK Turnkey (₹7.5L)
+              </button>
+              <button onclick="setPreset(1800000, 3)" class="px-3 py-1 bg-white border border-hairline hover:border-ink transition-colors text-[11px]">
+                Luxury Villa (₹18L)
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Telemetry Output Metrics Right (5 Cols) -->
+          <div class="lg:col-span-5 border-2 border-ink p-8 bg-white space-y-6">
+            <div class="font-mono text-xs text-subtle border-b border-hairline pb-3 flex justify-between">
+              <span>PROJECTED RETURN TELEMETRY</span>
+              <span class="text-vermilion font-bold">&bull; LIVE</span>
+            </div>
+
+            <div class="space-y-4 font-mono">
+              <div>
+                <div class="text-[11px] text-subtle uppercase">New Studio Revenue</div>
+                <div id="new-revenue-display" class="text-3xl lg:text-4xl font-extrabold text-ink font-sans tracking-tight">₹10,00,000</div>
+                <div class="text-[11px] text-subtle mt-0.5">₹10.0 Lakhs incremental contract value</div>
+              </div>
+
+              <div class="pt-3 border-t border-hairline flex justify-between items-center">
+                <div>
+                  <div class="text-[11px] text-subtle uppercase">One-Time Investment</div>
+                  <div class="text-xl font-bold text-ink font-sans">₹15,000</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-[11px] text-subtle uppercase">Return Multiplier</div>
+                  <div id="roi-multiplier-display" class="text-2xl font-extrabold text-vermilion font-sans">66.7x ROI</div>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-hairline">
+                <div class="text-[11px] text-subtle uppercase">Break-Even Point</div>
+                <div class="text-xs font-bold text-ink mt-0.5">First client inquiry pays for 20+ years of hosting</div>
+              </div>
+            </div>
+
+            <a href="#contact" class="btn-heron w-full py-3.5 bg-vermilion hover:bg-vermilionDark text-white text-xs border border-vermilionDark shadow-sm">
+              <span>Claim Free 48H Preview &rarr;</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Prominent Callout Banner -->
+        <div class="border border-ink bg-panel p-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+          <div class="flex items-center gap-3 text-ink">
+            <span class="w-3 h-3 bg-vermilion inline-block"></span>
+            <span class="font-bold text-sm font-sans">Winning just one 3BHK project in your city pays for 20 years of website hosting.</span>
+          </div>
+          <span class="text-subtle text-[11px] uppercase tracking-wider whitespace-nowrap">Zero Risk &bull; ₹0 Upfront</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE BEFORE / AFTER SHOWCASE (Using Real Repository Images) -->
+  <section class="border-b border-hairline py-24 bg-canvas">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 space-y-12">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div class="space-y-2 max-w-xl">
+          <span class="font-mono text-xs text-vermilion font-bold tracking-wider uppercase">[ 04 // INTERACTIVE TRANSFORMATION SLIDER ]</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
+            Before / After Comparison Tool
+          </h2>
+          <p class="text-xs sm:text-sm text-subtle">
+            Every studio website we build includes interactive comparison sliders so prospective clients can drag to reveal your raw civil handovers turned into turnkey architectural triumphs.
+          </p>
+        </div>
+        <div class="font-mono text-xs text-subtle">
+          DRAG SLIDER TO INSPECT TRANSFORMATION &harr;
+        </div>
+      </div>
+
+      <!-- Real Before/After Comparison Tool -->
+      <div class="border border-ink bg-white p-4 sm:p-6 relative shadow-sm">
+        <div class="cad-plus tl"></div>
+        <div class="cad-plus tr"></div>
+        <div class="cad-plus bl"></div>
+        <div class="cad-plus br"></div>
+
+        <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-panel border border-hairline overflow-hidden ba-slider-container" id="ba-slider">
+          
+          <!-- After Image (Background) -->
+          <img src="assets/anisabad-3bhk/living.webp" alt="Completed Luxury 3BHK Living Atelier" class="absolute inset-0 w-full h-full object-cover">
+          <div class="absolute top-4 right-4 bg-ink/90 backdrop-blur-sm text-white px-3 py-1 font-mono text-[10px] tracking-wider uppercase border border-white/20 z-10">
+            AFTER // COMPLETED 3BHK ATELIER
+          </div>
+
+          <!-- Before Image (Overlay clipped) -->
+          <div class="ba-slider-overlay" id="ba-overlay">
+            <img src="assets/anisabad-3bhk/before.webp" alt="Raw Site Before Renovation" class="absolute inset-0 w-full h-full object-cover max-w-none" id="ba-before-img">
+            <div class="absolute top-4 left-4 bg-ink/90 backdrop-blur-sm text-white px-3 py-1 font-mono text-[10px] tracking-wider uppercase border border-white/20 z-10">
+              BEFORE // RAW CIVIL HANDOVER
+            </div>
+          </div>
+
+          <!-- Divider Handle -->
+          <div class="ba-slider-handle flex items-center justify-center" id="ba-handle">
+            <div class="w-8 h-8 bg-ink border-2 border-white flex items-center justify-center text-white font-mono text-xs shadow-md">
+              &harr;
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-subtle gap-2">
+          <span>PROJECT: ANISABAD RESIDENTIAL TRANSFORMATION &bull; 2,400 SQ.FT</span>
+          <span class="text-ink font-semibold">Included in Presence Plus & Bespoke tiers</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VERIFIED STUDIO REVIEWS (Using Real Repository Images) -->
+  <section id="cases" class="border-b border-hairline py-24 bg-panel/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      
+      <div class="border-b border-hairline pb-6 mb-16 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <span class="font-mono text-xs text-vermilion font-bold tracking-wider uppercase">[ 05 // VERIFIED STUDIO CASES ]</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ink mt-1 tracking-tight">
+            Built for Studio Principals Across India
+          </h2>
+        </div>
+        <span class="font-mono text-xs text-subtle">100% REAL EXPERIENCES &bull; VERIFIED</span>
+      </div>
+
+      <!-- Case Study Cards with Generous Spacing and Verified Hover -->
+      <div class="grid md:grid-cols-3 gap-8 lg:gap-10">
+        
+        <!-- Case 01 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="aspect-[16/10] bg-panel overflow-hidden border border-hairline">
+            <img src="assets/portfolio-01.jpg" alt="Living room finish board" class="w-full h-full object-cover">
+          </div>
+          <div class="font-mono text-[11px] text-vermilion font-bold">ASHISH INTERIORS // RESIDENTIAL</div>
+          <p class="text-xs text-ink leading-relaxed italic">
+            "Before Studio Presence, we were sending 40MB PDF portfolios over WhatsApp. Having our own clean, fast website changed the calibre of clients who take us seriously. We won two turnkey contracts in our first month."
+          </p>
+          <div class="pt-4 border-t border-hairline font-mono text-xs">
+            <div class="font-bold text-ink">Ashish Kumar</div>
+            <div class="text-subtle text-[11px]">Principal Architect, Ashish Interiors</div>
+          </div>
+        </div>
+
+        <!-- Case 02 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="aspect-[16/10] bg-panel overflow-hidden border border-hairline">
+            <img src="assets/portfolio-02.jpg" alt="Dining joinery" class="w-full h-full object-cover">
+          </div>
+          <div class="font-mono text-[11px] text-vermilion font-bold">ATELIER 9 // LUXURY VILLAS</div>
+          <p class="text-xs text-ink leading-relaxed italic">
+            "They delivered our working preview in under two days. The WhatsApp inquiry button brought us our first ₹28 Lakh turnkey villa project within three weeks. Zero hassle, zero developer headaches."
+          </p>
+          <div class="pt-4 border-t border-hairline font-mono text-xs">
+            <div class="font-bold text-ink">Ananya Deshmukh</div>
+            <div class="text-subtle text-[11px]">Design Director, Atelier 9</div>
+          </div>
+        </div>
+
+        <!-- Case 03 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="aspect-[16/10] bg-panel overflow-hidden border border-hairline">
+            <img src="assets/portfolio-03.jpg" alt="Study nook" class="w-full h-full object-cover">
+          </div>
+          <div class="font-mono text-[11px] text-vermilion font-bold">STUDIO VISTARA // BESPOKE</div>
+          <p class="text-xs text-ink leading-relaxed italic">
+            "Most web agencies don't know the difference between architectural lighting and interior styling. Studio Presence understood exactly how our photography needed to breathe on phone screens."
+          </p>
+          <div class="pt-4 border-t border-hairline font-mono text-xs">
+            <div class="font-bold text-ink">Priya Sundaram</div>
+            <div class="text-subtle text-[11px]">Founder, Studio Vistara</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 48-HOUR DISPATCH PROTOCOL -->
+  <section class="border-b border-hairline py-24 bg-canvas">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      
+      <div class="max-w-2xl mb-16 space-y-3">
+        <span class="font-mono text-xs text-vermilion font-bold tracking-wider uppercase">[ 06 // PRODUCTION PROTOCOL ]</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
+          How Your Studio Goes Live in 48 Hours
+        </h2>
+        <p class="text-sm text-subtle">
+          Zero design meetings. Zero technical setup on your end. The entire production pipeline is handled in 4 crisp stages:
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-8">
+        
+        <!-- Step 1 -->
+        <div class="swiss-card p-8 space-y-4">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+          <div class="font-mono text-xs font-bold text-vermilion">PHASE_01 // DISPATCH</div>
+          <h3 class="text-lg font-bold text-ink">Send Your Photos</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            Drop your raw project photography or Drive link to our WhatsApp line. No formatting required.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="swiss-card p-8 space-y-4">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+          <div class="font-mono text-xs font-bold text-vermilion">PHASE_02 // BUILD</div>
+          <h3 class="text-lg font-bold text-ink">We Build in 48H</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            We structure your layouts, optimize images, configure local SEO schema, and write studio copy.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="swiss-card p-8 space-y-4">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+          <div class="font-mono text-xs font-bold text-vermilion">PHASE_03 // AUDIT</div>
+          <h3 class="text-lg font-bold text-ink">Inspect On Your Phone</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            Test your private preview link directly on your mobile. Check speeds, galleries, and WhatsApp button.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="swiss-card p-8 space-y-4">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+          <div class="font-mono text-xs font-bold text-vermilion">PHASE_04 // RELEASE</div>
+          <h3 class="text-lg font-bold text-ink">Launch & Transfer</h3>
+          <p class="text-xs text-subtle leading-relaxed">
+            Pay ₹15,000 only when 100% satisfied. We link your custom domain and transfer complete ownership.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TRANSPARENT PRICING PACKAGES -->
+  <section id="pricing" class="border-b border-hairline py-24 bg-panel/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <span class="font-mono text-xs text-vermilion font-bold tracking-wider uppercase">[ 07 // TRANSPARENT PACKAGES ]</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ink tracking-tight">
+          Clear, Upfront Pricing. Zero Surprises.
+        </h2>
+        <p class="text-sm text-subtle">
+          Domain registration, high-speed hosting, and mobile optimization included in all packages.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8 lg:gap-10 items-stretch">
+        
+        <!-- Tier 1 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="space-y-4">
+            <div class="font-mono text-xs text-subtle">TIER_01 // ESSENTIALS</div>
+            <div>
+              <h3 class="text-2xl font-bold text-ink">Studio Presence</h3>
+              <div class="text-3xl font-extrabold text-ink mt-2">₹15,000</div>
+              <div class="font-mono text-[11px] text-subtle mt-0.5">One-time fee &bull; Excl. GST</div>
+            </div>
+            <p class="text-xs text-subtle">The complete studio foundation. Ideal for boutique practices establishing their first dedicated showroom.</p>
+            <ul class="space-y-3 pt-4 border-t border-hairline text-xs font-mono text-ink">
+              <li>&check; Complete multi-page studio website</li>
+              <li>&check; Retina mobile project galleries</li>
+              <li>&check; Direct WhatsApp consultation trigger</li>
+              <li>&check; Google Maps local search setup</li>
+              <li>&check; Custom domain (.in / .com) + email</li>
+              <li>&check; Ready in 48 hours</li>
+            </ul>
+          </div>
+          <a href="#contact" class="btn-heron w-full py-4 bg-panel hover:bg-hairline text-ink border border-hairline text-xs">
+            Claim ₹15k Preview &rarr;
+          </a>
+        </div>
+
+        <!-- Tier 2 (Featured) -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6 flex flex-col justify-between border-2 !border-vermilion shadow-md relative">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="font-mono text-xs font-bold text-vermilion">TIER_02 // RECOMMENDED</span>
+              <span class="bg-vermilion text-white font-mono text-[10px] px-2.5 py-1 font-bold">MOST POPULAR</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-ink">Presence Plus</h3>
+              <div class="text-3xl font-extrabold text-ink mt-2">₹25,000</div>
+              <div class="font-mono text-[11px] text-subtle mt-0.5">One-time fee &bull; Excl. GST</div>
+            </div>
+            <p class="text-xs text-subtle">Everything in Essentials plus interactive case studies and transformation before/after tools.</p>
+            <ul class="space-y-3 pt-4 border-t border-hairline text-xs font-mono text-ink">
+              <li class="font-bold">&check; Everything in Studio Presence</li>
+              <li>&check; Dedicated project case study pages</li>
+              <li>&check; Draggable Before/After comparison slider</li>
+              <li>&check; Live Google 5-star reviews embed</li>
+              <li>&check; Client intake questionnaire</li>
+              <li>&check; Architectural Journal / Blog</li>
+            </ul>
+          </div>
+          <a href="#contact" class="btn-heron w-full py-4 bg-vermilion hover:bg-vermilionDark text-white text-xs shadow-sm">
+            Claim Presence Plus Preview &rarr;
+          </a>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="swiss-card p-8 lg:p-10 space-y-6 flex flex-col justify-between">
+          <div class="cad-plus tl"></div>
+          <div class="cad-plus tr"></div>
+          <div class="cad-plus bl"></div>
+          <div class="cad-plus br"></div>
+
+          <div class="space-y-4">
+            <div class="font-mono text-xs text-subtle">TIER_03 // BESPOKE</div>
+            <div>
+              <h3 class="text-2xl font-bold text-ink">Bespoke Partner</h3>
+              <div class="text-3xl font-extrabold text-ink mt-2">From ₹45,000</div>
+              <div class="font-mono text-[11px] text-subtle mt-0.5">Custom scope &bull; Excl. GST</div>
+            </div>
+            <p class="text-xs text-subtle">For established firms with multiple regional offices or custom 3D walkthrough requirements.</p>
+            <ul class="space-y-3 pt-4 border-t border-hairline text-xs font-mono text-ink">
+              <li>&check; Everything in Presence Plus</li>
+              <li>&check; Multi-office page architecture</li>
+              <li>&check; 3D Matterport / walkthrough embeds</li>
+              <li>&check; Custom CRM & WhatsApp automation</li>
+              <li>&check; Priority quarterly portfolio updates</li>
+            </ul>
+          </div>
+          <a href="#contact" class="btn-heron w-full py-4 bg-panel hover:bg-hairline text-ink border border-hairline text-xs">
+            Discuss Bespoke Scope &rarr;
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 48-HOUR FREE PREVIEW CLAIM FORM -->
+  <section id="contact" class="py-24 bg-panel border-b border-hairline">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10">
+      
+      <div class="bg-white border border-ink p-8 sm:p-12 space-y-8 shadow-sm relative">
+        <div class="cad-plus tl"></div>
+        <div class="cad-plus tr"></div>
+        <div class="cad-plus bl"></div>
+        <div class="cad-plus br"></div>
+
+        <div class="text-center space-y-3">
+          <div class="font-mono text-xs text-vermilion font-bold tracking-wider uppercase">[ CLAIM FREE PREVIEW ]</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
+            See Your Studio's Site Working in 48 Hours
+          </h2>
+          <p class="text-xs sm:text-sm text-subtle max-w-md mx-auto">
+            Zero upfront payment. We build your working preview first so you can test it on your personal phone before paying anything.
+          </p>
+        </div>
+
+        <form onsubmit="handleSwissSubmit(event)" class="space-y-4 text-xs font-mono">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="block font-bold text-ink">Your Name *</label>
+              <input type="text" required placeholder="Ashish Kumar" class="w-full p-3.5 bg-canvas border border-hairline text-ink focus:border-ink focus:outline-none">
+            </div>
+            <div class="space-y-1.5">
+              <label class="block font-bold text-ink">Studio / Firm Name *</label>
+              <input type="text" required placeholder="Ashish Interiors" class="w-full p-3.5 bg-canvas border border-hairline text-ink focus:border-ink focus:outline-none">
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="block font-bold text-ink">WhatsApp Number *</label>
+              <input type="tel" required placeholder="+91 98765 43210" class="w-full p-3.5 bg-canvas border border-hairline text-ink focus:border-ink focus:outline-none">
+            </div>
+            <div class="space-y-1.5">
+              <label class="block font-bold text-ink">Operating City *</label>
+              <input type="text" required placeholder="Enter your operating city" class="w-full p-3.5 bg-canvas border border-hairline text-ink focus:border-ink focus:outline-none">
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block font-bold text-ink">Link to Project Photos (Google Drive / Dropbox / Instagram)</label>
+            <input type="text" placeholder="https://drive.google.com/... or @yourstudio" class="w-full p-3.5 bg-canvas border border-hairline text-ink focus:border-ink focus:outline-none">
+          </div>
+
+          <button type="submit" class="btn-heron w-full py-4 bg-vermilion hover:bg-vermilionDark text-white text-xs shadow-sm mt-2 border border-vermilionDark">
+            <span>Claim Free 48-Hour Preview</span>
+            <span class="ml-2">&rarr;</span>
+          </button>
+        </form>
+
+        <div id="swiss-form-status" class="hidden p-4 bg-panel border border-ink text-ink font-mono text-xs text-center">
+          &check; Request received! Our team will inspect your project photography and dispatch your working preview link within 48 hours on WhatsApp.
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPREHENSIVE MULTI-COLUMN SWISS SAAS FOOTER -->
+  <footer class="bg-ink text-canvas py-16 border-t border-ink font-sans">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 space-y-14">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+        
+        <!-- Brand / Identity Column -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="text-lg font-extrabold uppercase tracking-wider text-white">STUDIO PRESENCE</span>
+            <span class="w-1.5 h-1.5 bg-vermilion"></span>
+          </div>
+          <p class="text-xs text-hairline/70 leading-relaxed max-w-sm">
+            The dedicated digital presence platform engineered exclusively for residential interior designers and turnkey architecture practices. Live in 48 hours with complete asset ownership.
+          </p>
+          <div class="pt-2 flex items-center gap-3 font-mono text-xs">
+            <a href="https://wa.me/919876543210" target="_blank" class="px-4 py-2 bg-white text-ink font-bold hover:bg-canvas transition-colors">
+              WhatsApp Support &rarr;
+            </a>
+            <span class="text-hairline/50 text-[11px]">GST Registered Firm</span>
+          </div>
+        </div>
+
+        <!-- Column 1: Platform Capabilities -->
+        <div class="lg:col-span-3 space-y-3 font-mono text-xs">
+          <div class="text-white font-bold uppercase tracking-wider border-b border-hairline/20 pb-2">
+            Platform Capabilities
+          </div>
+          <ul class="space-y-2 text-hairline/70">
+            <li><a href="#features" class="hover:text-white transition-colors">Retina Mobile Portfolio</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">WhatsApp Lead Conduit</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Google Maps 3-Pack Schema</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Domain & Studio Email</a></li>
+            <li><a href="#calculator" class="hover:text-white transition-colors">Studio ROI Calculator</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Commission Packages -->
+        <div class="lg:col-span-3 space-y-3 font-mono text-xs">
+          <div class="text-white font-bold uppercase tracking-wider border-b border-hairline/20 pb-2">
+            Pricing Packages
+          </div>
+          <ul class="space-y-2 text-hairline/70">
+            <li><a href="#pricing" class="hover:text-white transition-colors">Studio Presence (₹15,000)</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Presence Plus (₹25,000)</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Bespoke Partner (₹45,000+)</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Transparent Annual Terms</a></li>
+            <li><a href="#contact" class="hover:text-white transition-colors">₹0 Upfront Guarantee</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Legitimacy & Trust -->
+        <div class="lg:col-span-2 space-y-3 font-mono text-xs">
+          <div class="text-white font-bold uppercase tracking-wider border-b border-hairline/20 pb-2">
+            Legitimacy
+          </div>
+          <ul class="space-y-2 text-hairline/70">
+            <li>100% Client Ownership</li>
+            <li>Zero Vendor Lock-in</li>
+            <li>GST Invoicing Included</li>
+            <li>Transparent Service Contract</li>
+            <li>Direct WhatsApp Support</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-hairline/20 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-hairline/50 gap-4">
+        <div>&copy; 2026 Studio Presence. Registered GST Firm. Built exclusively for Interior Studios.</div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-canvas transition-colors">Back to Top &uarr;</a>
+          <a href="https://wa.me/919876543210" target="_blank" class="hover:text-white transition-colors">Direct Support Line</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // 1. Real-time Mouse Coordinate HUD Tracker on Hero CAD Stage
+    const cadStage = document.getElementById('hero-cad-stage');
+    const hudCoords = document.getElementById('hud-coords');
+    if (cadStage && hudCoords) {
+      cadStage.addEventListener('mousemove', (e) => {
+        const rect = cadStage.getBoundingClientRect();
+        const x = Math.round(e.clientX - rect.left);
+        const y = Math.round(e.clientY - rect.top);
+        hudCoords.textContent = `X: ${x}PX • Y: ${y}PX`;
+      });
+    }
+
+    // 2. Interactive ROI Calculator Logic
+    const projectValueInput = document.getElementById('project-value');
+    const clientsCountInput = document.getElementById('clients-count');
+    const projectValueDisplay = document.getElementById('project-value-display');
+    const clientsCountDisplay = document.getElementById('clients-count-display');
+    const newRevenueDisplay = document.getElementById('new-revenue-display');
+    const roiMultiplierDisplay = document.getElementById('roi-multiplier-display');
+
+    function formatIndianCurrency(amount) {
+      return '₹' + amount.toLocaleString('en-IN');
+    }
+
+    function calculateROI() {
+      if (!projectValueInput || !clientsCountInput) return;
+      const val = parseInt(projectValueInput.value, 10);
+      const clients = parseInt(clientsCountInput.value, 10);
+      const lakhs = (val / 100000).toFixed(1);
+
+      projectValueDisplay.textContent = `${formatIndianCurrency(val)} (₹${lakhs} Lakhs)`;
+      clientsCountDisplay.textContent = `${clients} ${clients === 1 ? 'Client' : 'Clients'} / Year`;
+
+      const totalRevenue = val * clients;
+      const revLakhs = (totalRevenue / 100000).toFixed(1);
+      newRevenueDisplay.textContent = formatIndianCurrency(totalRevenue);
+
+      const investment = 15000;
+      const multiplier = (totalRevenue / investment).toFixed(1);
+      roiMultiplierDisplay.textContent = `${multiplier}x ROI`;
+    }
+
+    if (projectValueInput && clientsCountInput) {
+      projectValueInput.addEventListener('input', calculateROI);
+      clientsCountInput.addEventListener('input', calculateROI);
+      calculateROI();
+    }
+
+    function setPreset(val, clients) {
+      if (projectValueInput && clientsCountInput) {
+        projectValueInput.value = val;
+        clientsCountInput.value = clients;
+        calculateROI();
+      }
+    }
+
+    // 3. Interactive Before/After Comparison Drag Slider
+    const baSlider = document.getElementById('ba-slider');
+    const baOverlay = document.getElementById('ba-overlay');
+    const baHandle = document.getElementById('ba-handle');
+    const baBeforeImg = document.getElementById('ba-before-img');
+
+    if (baSlider && baOverlay && baHandle && baBeforeImg) {
+      let isDragging = false;
+
+      function updateSliderWidth() {
+        if (baSlider && baBeforeImg) {
+          baBeforeImg.style.width = baSlider.offsetWidth + 'px';
+        }
+      }
+
+      window.addEventListener('resize', updateSliderWidth);
+      updateSliderWidth();
+
+      function setSliderPosition(x) {
+        const rect = baSlider.getBoundingClientRect();
+        let posX = x - rect.left;
+        if (posX < 0) posX = 0;
+        if (posX > rect.width) posX = rect.width;
+        const percent = (posX / rect.width) * 100;
+        baOverlay.style.width = percent + '%';
+        baHandle.style.left = percent + '%';
+      }
+
+      baSlider.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        setSliderPosition(e.clientX);
+      });
+
+      window.addEventListener('mouseup', () => { isDragging = false; });
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        setSliderPosition(e.clientX);
+      });
+
+      // Touch events
+      baSlider.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        if (e.touches[0]) setSliderPosition(e.touches[0].clientX);
+      });
+
+      window.addEventListener('touchend', () => { isDragging = false; });
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging || !e.touches[0]) return;
+        setSliderPosition(e.touches[0].clientX);
+      });
+    }
+
+    // 4. Form Submit Handler
+    function handleSwissSubmit(e) {
+      e.preventDefault();
+      const statusEl = document.getElementById('swiss-form-status');
+      if (statusEl) {
+        statusEl.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>

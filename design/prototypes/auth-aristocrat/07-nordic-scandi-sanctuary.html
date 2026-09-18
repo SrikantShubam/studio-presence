@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studio Presence | Nordic Minimalist Interior Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --nordic-bg: #f8faf9;
+        --pine-forest: #234338;
+        --pine-soft: #eaf1ed;
+        --sage-accent: #4e7a68;
+        --ink-nordic: #1a2421;
+        --ink-sub: #64746e;
+        --border-nordic: #e2e8e5;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --nordic-bg: #0d1512;
+          --pine-forest: #81c784;
+          --pine-soft: #182620;
+          --sage-accent: #a5d6a7;
+          --ink-nordic: #e8f5e9;
+          --ink-sub: #9e9e9e;
+          --border-nordic: #263830;
+        }
+
+        .scandi-shell {
+          background: #14201a !important;
+          box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .scandi-input {
+          background: #0d1512 !important;
+          border-color: #263830 !important;
+          color: #e8f5e9 !important;
+        }
+
+        .scandi-input:focus {
+          border-color: #81c784 !important;
+          background: #111d17 !important;
+        }
+
+        .scandi-input::placeholder {
+          color: #64746e !important;
+        }
+
+        .google-scandi-btn {
+          background: #182620 !important;
+          border-color: #263830 !important;
+          color: #e8f5e9 !important;
+        }
+
+        .google-scandi-btn:hover {
+          background: #20332b !important;
+          border-color: #385045 !important;
+        }
+
+        .btn-nordic-pine {
+          background: #81c784 !important;
+          color: #0d1512 !important;
+        }
+
+        .btn-nordic-pine:hover {
+          background: #a5d6a7 !important;
+        }
+
+        .scandi-tabs {
+          background: #182620 !important;
+          border-color: #263830 !important;
+        }
+
+        .scandi-tab {
+          color: #9e9e9e !important;
+        }
+
+        .scandi-tab.active {
+          background: #263830 !important;
+          color: #ffffff !important;
+        }
+
+        .nordic-tag {
+          background: rgba(18, 38, 32, 0.85) !important;
+          color: #a5d6a7 !important;
+          border: 1px solid rgba(165, 214, 167, 0.25) !important;
+        }
+
+        .scandi-title {
+          color: #f0fdf4 !important;
+        }
+
+        .scandi-footer-link a {
+          color: #81c784 !important;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      button, a, input, [role="button"] {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background-color: var(--nordic-bg);
+        color: var(--ink-nordic);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(16px, 3vw, 40px);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .scandi-shell {
+        width: 100%;
+        max-width: 1040px;
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid var(--border-nordic);
+        box-shadow: 0 20px 50px -15px rgba(35, 67, 56, 0.08);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+      }
+
+      .scandi-visual {
+        position: relative;
+        background: var(--pine-soft);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(28px, 4vw, 48px);
+      }
+
+      .scandi-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .scandi-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(35, 67, 56, 0.2) 0%, rgba(35, 67, 56, 0.75) 100%);
+      }
+
+      .nordic-tag {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--pine-forest);
+        align-self: flex-start;
+      }
+
+      .scandi-quote-wrap {
+        position: relative;
+        z-index: 2;
+        color: #ffffff;
+      }
+
+      .scandi-quote {
+        font-size: 1.25rem;
+        line-height: 1.5;
+        font-weight: 300;
+        margin-bottom: 12px;
+        transition: opacity 0.35s ease, transform 0.35s ease;
+      }
+
+      .scandi-byline {
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.8);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+      }
+
+      .scandi-form-pane {
+        padding: clamp(32px, 5vw, 56px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .scandi-top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 28px;
+        gap: 16px;
+        width: 100%;
+      }
+
+      .brand-scandi-title {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--pine-forest);
+        flex-shrink: 0;
+      }
+
+      .scandi-tabs {
+        display: inline-flex;
+        background: #f0f4f1;
+        padding: 3px;
+        border-radius: 8px;
+        border: 1px solid var(--border-nordic);
+        flex-shrink: 0;
+      }
+
+      .scandi-tab {
+        background: transparent;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--ink-sub);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .scandi-tab.active {
+        background: #ffffff;
+        color: var(--pine-forest);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+      }
+
+      .scandi-title {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: var(--pine-forest);
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
+      }
+
+      .scandi-subtitle {
+        font-size: 0.875rem;
+        color: var(--ink-sub);
+        margin-bottom: 24px;
+      }
+
+      /* Google Only Button */
+      .google-scandi-btn {
+        width: 100%;
+        padding: 12px 16px;
+        background: #ffffff;
+        border: 1px solid var(--border-nordic);
+        border-radius: 10px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--ink-nordic);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.2s;
+        margin-bottom: 20px;
+      }
+
+      .google-scandi-btn:hover {
+        background: var(--nordic-bg);
+        border-color: #cbd5e1;
+      }
+
+      .google-scandi-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .scandi-sep {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        font-size: 0.75rem;
+        color: var(--ink-sub);
+      }
+
+      .scandi-sep::before,
+      .scandi-sep::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border-nordic);
+      }
+
+      .form-group-scandi {
+        margin-bottom: 18px;
+      }
+
+      .scandi-label {
+        display: block;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--ink-nordic);
+        margin-bottom: 6px;
+      }
+
+      .scandi-input {
+        width: 100%;
+        padding: 12px 16px;
+        background: #ffffff;
+        border: 1px solid var(--border-nordic);
+        border-radius: 10px;
+        font-size: 0.9375rem;
+        font-family: inherit;
+        color: var(--ink-nordic);
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .scandi-input:focus {
+        border-color: var(--pine-forest);
+        box-shadow: 0 0 0 3px rgba(35, 67, 56, 0.1);
+      }
+
+      .btn-nordic-pine {
+        width: 100%;
+        padding: 13px;
+        background: var(--pine-forest);
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+        margin-top: 8px;
+      }
+
+      .btn-nordic-pine:hover {
+        background: #19322a;
+      }
+
+      .scandi-footer-link {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 0.8125rem;
+        color: var(--ink-sub);
+      }
+
+      .scandi-footer-link a {
+        color: var(--pine-forest);
+        font-weight: 600;
+        text-decoration: underline;
+        margin-left: 4px;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+
+      .scandi-footer-link a:hover {
+        color: var(--sage-accent);
+      }
+
+      @media (max-width: 860px) {
+        .scandi-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .scandi-visual {
+          min-height: 240px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 12px;
+        }
+
+        .scandi-shell {
+          border-radius: 16px;
+        }
+
+        .scandi-form-pane {
+          padding: 24px 16px;
+        }
+
+        .scandi-top-bar {
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+
+        .scandi-title {
+          font-size: 1.5rem;
+        }
+
+        .scandi-input {
+          font-size: 1rem; /* prevents iOS zoom */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scandi-shell">
+      <!-- Left Visual -->
+      <section class="scandi-visual">
+        <img
+          class="scandi-photo"
+          src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1600&auto=format&fit=crop"
+          alt="Studio Presence Nordic Interior"
+        />
+        <div class="scandi-overlay"></div>
+
+        <div class="nordic-tag">
+          <span>&#9851;</span>
+          <span>Studio Presence &middot; Nordic Atelier</span>
+        </div>
+
+        <div class="scandi-quote-wrap">
+          <p class="scandi-quote">
+            “Form gives light a quiet stage to perform upon.”
+          </p>
+          <p class="scandi-byline">Bengaluru Minimalist Villa &middot; Living Pavilion</p>
+        </div>
+      </section>
+
+      <!-- Right Form -->
+      <section class="scandi-form-pane">
+        <!-- Top Bar with Brand & Switcher Tabs -->
+        <div class="scandi-top-bar">
+          <div class="brand-scandi-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 3v18"/>
+              <path d="M3 12h18"/>
+            </svg>
+            Studio Presence
+          </div>
+
+          <div class="scandi-tabs" role="tablist">
+            <button id="scandiTabSignIn" class="scandi-tab active" role="tab" aria-selected="true" type="button">Sign In</button>
+            <button id="scandiTabSignUp" class="scandi-tab" role="tab" aria-selected="false" type="button">Sign Up</button>
+          </div>
+        </div>
+
+        <h1 id="scandiTitle" class="scandi-title">Client Access</h1>
+        <p id="scandiSubtitle" class="scandi-subtitle">Sign in to coordinate material palettes, view lighting simulations, and approve revisions.</p>
+
+        <!-- Google Only Button -->
+        <button type="button" class="google-scandi-btn" onclick="alert('Continuing with Google...');">
+          <svg viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27a7.19 7.19 0 0 1 0-4.54V6.58H1.25a11.98 11.98 0 0 0 0 10.84l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span id="googleScandiLabel">Continue with Google</span>
+        </button>
+
+        <div class="scandi-sep">
+          <span id="scandiDividerText">OR CONTINUE WITH EMAIL</span>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Authentication link dispatched.');">
+          <div class="form-group-scandi" id="scandiNameRow" style="display: none;">
+            <label class="scandi-label" for="scandiName">Full Name</label>
+            <input id="scandiName" type="text" class="scandi-input" placeholder="e.g. Rohini Singhania" />
+          </div>
+
+          <div class="form-group-scandi">
+            <label class="scandi-label" for="scandiEmail">Work Email</label>
+            <input id="scandiEmail" type="email" class="scandi-input" placeholder="client@studio-presence.com" required />
+          </div>
+
+          <div class="form-group-scandi">
+            <label class="scandi-label" for="scandiCode">Password</label>
+            <input id="scandiCode" type="password" class="scandi-input" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required />
+          </div>
+
+          <button id="scandiSubmitBtn" type="submit" class="btn-nordic-pine">
+            Sign In to Your Project
+          </button>
+        </form>
+
+        <p class="scandi-footer-link">
+          <span id="scandiFooterPrompt">New client to Studio Presence?</span>
+          <a id="scandiFooterToggle" href="javascript:void(0)">Create Account</a>
+        </p>
+      </section>
+    </div>
+
+    <script>
+      const tabSignIn = document.getElementById('scandiTabSignIn');
+      const tabSignUp = document.getElementById('scandiTabSignUp');
+      const scandiTitle = document.getElementById('scandiTitle');
+      const scandiSubtitle = document.getElementById('scandiSubtitle');
+      const googleLabel = document.getElementById('googleScandiLabel');
+      const dividerText = document.getElementById('scandiDividerText');
+      const submitBtn = document.getElementById('scandiSubmitBtn');
+      const footerPrompt = document.getElementById('scandiFooterPrompt');
+      const footerToggle = document.getElementById('scandiFooterToggle');
+      const scandiNameRow = document.getElementById('scandiNameRow');
+      const scandiName = document.getElementById('scandiName');
+      const scandiPhoto = document.querySelector('.scandi-photo');
+      const scandiQuote = document.querySelector('.scandi-quote');
+      const scandiByline = document.querySelector('.scandi-byline');
+
+      const imgSignIn = "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1600&auto=format&fit=crop";
+      const imgSignUp = "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=1600&auto=format&fit=crop";
+
+      function switchScandiVisual(isSignUp) {
+        scandiPhoto.style.opacity = '0.25';
+        scandiPhoto.style.transform = 'scale(1.02)';
+        scandiQuote.style.opacity = '0.2';
+        scandiByline.style.opacity = '0.2';
+        setTimeout(() => {
+          scandiPhoto.src = isSignUp ? imgSignUp : imgSignIn;
+          if (isSignUp) {
+            scandiQuote.textContent = "\u201cQuiet simplicity and organic warmth define our bespoke residential commissions across India.\u201d";
+            scandiByline.textContent = "Alibaug Coastal Sanctuary \u00b7 Master Suite";
+          } else {
+            scandiQuote.textContent = "\u201cForm gives light a quiet stage to perform upon.\u201d";
+            scandiByline.textContent = "Bengaluru Minimalist Villa \u00b7 Living Pavilion";
+          }
+          scandiPhoto.style.opacity = '1';
+          scandiPhoto.style.transform = 'scale(1.0)';
+          scandiQuote.style.opacity = '1';
+          scandiByline.style.opacity = '1';
+        }, 180);
+      }
+
+      function setScandiMode(isLogin) {
+        if (isLogin) {
+          tabSignIn.classList.add('active');
+          tabSignUp.classList.remove('active');
+          tabSignIn.setAttribute('aria-selected', 'true');
+          tabSignUp.setAttribute('aria-selected', 'false');
+          scandiTitle.textContent = "Client Access";
+          scandiSubtitle.textContent = "Sign in to coordinate material palettes, view lighting simulations, and approve revisions.";
+          googleLabel.textContent = "Continue with Google";
+          dividerText.textContent = "OR CONTINUE WITH EMAIL";
+          submitBtn.textContent = "Sign In to Your Project";
+          footerPrompt.textContent = "New client to Studio Presence?";
+          footerToggle.textContent = "Create Account";
+          scandiNameRow.style.display = "none";
+          scandiName.required = false;
+          switchScandiVisual(false);
+        } else {
+          tabSignUp.classList.add('active');
+          tabSignIn.classList.remove('active');
+          tabSignUp.setAttribute('aria-selected', 'true');
+          tabSignIn.setAttribute('aria-selected', 'false');
+          scandiTitle.textContent = "Create Account";
+          scandiSubtitle.textContent = "Register with Studio Presence to access project documentation and custom timber schedules.";
+          googleLabel.textContent = "Continue with Google";
+          dividerText.textContent = "OR REGISTER WITH EMAIL";
+          submitBtn.textContent = "Create Account";
+          footerPrompt.textContent = "Already an existing client?";
+          footerToggle.textContent = "Sign In";
+          scandiNameRow.style.display = "block";
+          scandiName.required = true;
+          switchScandiVisual(true);
+        }
+      }
+
+      tabSignIn.addEventListener('click', () => setScandiMode(true));
+      tabSignUp.addEventListener('click', () => setScandiMode(false));
+      footerToggle.addEventListener('click', () => {
+        const isLogin = tabSignIn.classList.contains('active');
+        setScandiMode(!isLogin);
+      });
+    </script>
+  
+    <!-- Global Keyboard Arrow Navigation -->
+    <script>
+      (function() {
+        const ALL_PROTOTYPES = [
+          "01-architectural-split-glass.html",
+          "02-haute-editorial-monochrome.html",
+          "05-atelier-floating-modal.html",
+          "07-nordic-scandi-sanctuary.html",
+          "09-biophilic-glasshouse.html",
+          "13-curated-collector-carousel.html",
+          "21-project-split.html",
+          "25-editorial-door.html"
+        ];
+        const currentFile = window.location.pathname.split('/').pop() || ALL_PROTOTYPES[0];
+        const currentIndex = ALL_PROTOTYPES.indexOf(currentFile);
+
+        window.addEventListener('keydown', function(e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'next' }, '*');
+            } else if (currentIndex !== -1) {
+              const nextIdx = (currentIndex + 1) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[nextIdx];
+            }
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ action: 'prev' }, '*');
+            } else if (currentIndex !== -1) {
+              const prevIdx = (currentIndex - 1 + ALL_PROTOTYPES.length) % ALL_PROTOTYPES.length;
+              window.location.href = ALL_PROTOTYPES[prevIdx];
+            }
+          }
+        }, true);
+      })();
+    </script>
+</body>
+</html>

@@ -1,5 +1,10 @@
-import { redirect } from 'next/navigation'
+import { ContentManagerPage } from '../dashboard/content/ContentManagerPage'
 
-export default function PanelPage() {
-  redirect('/dashboard/content')
+export default async function PanelPage({
+  params,
+}: {
+  params: Promise<{ tenant: string }>
+}) {
+  const { tenant } = await params
+  return <ContentManagerPage tenant={tenant} />
 }
