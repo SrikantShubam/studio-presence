@@ -17,6 +17,10 @@ import {
   formatBytes,
   LOGO_PRESET,
 } from '@/lib/onboarding/image-compression'
+import {
+  COUNTRY_DIAL_CODES,
+  splitPhoneAndCountry,
+} from '@/lib/onboarding/countries'
 
 const CATEGORIES = ['Residential', 'Office', 'Retail', 'Hospitality']
 const SERVICES = [
@@ -73,6 +77,12 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
   // Staging area input state
   const [areaInput, setAreaInput] = useState('')
 
+  // Phone & WhatsApp country code and national number state
+  const [phoneCountry, setPhoneCountry] = useState('+91')
+  const [phoneNational, setPhoneNational] = useState('')
+  const [whatsappCountry, setWhatsappCountry] = useState('+91')
+  const [whatsappNational, setWhatsappNational] = useState('')
+
   // Logo upload state
   const [uploadingLogo, setUploadingLogo] = useState(false)
   const [logoStats, setLogoStats] = useState<{
@@ -98,6 +108,16 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
               ...payload.draft,
               publicEmail: payload.draft.publicEmail || current.publicEmail || initialEmail,
             }))
+            if (payload.draft.primaryPhone) {
+              const parsed = splitPhoneAndCountry(payload.draft.primaryPhone)
+              setPhoneCountry(parsed.dialCode)
+              setPhoneNational(parsed.nationalNumber)
+            }
+            if (payload.draft.whatsapp) {
+              const parsed = splitPhoneAndCountry(payload.draft.whatsapp)
+              setWhatsappCountry(parsed.dialCode)
+              setWhatsappNational(parsed.nationalNumber)
+            }
             if (payload.draft.logoPath) {
               setLogoStats({
                 originalSize: 0,
@@ -132,6 +152,45 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
       const nextDraft = { ...current, [key]: value }
       return nextDraft
     })
+  }
+
+  const handlePhoneCountryChange = (code: string) => {
+    setPhoneCountry(code)
+    const combined = phoneNational ? `${code} ${phoneNational}` : code
+    update('primaryPhone', combined)
+    if (draft.usePhoneForWhatsapp) {
+      setWhatsappCountry(code)
+      update('whatsapp', combined)
+    }
+  }
+
+  const handlePhoneNationalChange = (num: string) => {
+    setPhoneNational(num)
+    const combined = num ? `${phoneCountry} ${num}` : ''
+    update('primaryPhone', combined)
+    if (draft.usePhoneForWhatsapp) {
+      setWhatsappNational(num)
+      update('whatsapp', combined)
+    }
+  }
+
+  const handleWhatsappCountryChange = (code: string) => {
+    setWhatsappCountry(code)
+    update('whatsapp', whatsappNational ? `${code} ${whatsappNational}` : code)
+  }
+
+  const handleWhatsappNationalChange = (num: string) => {
+    setWhatsappNational(num)
+    update('whatsapp', num ? `${whatsappCountry} ${num}` : '')
+  }
+
+  const handleToggleWhatsapp = (checked: boolean) => {
+    update('usePhoneForWhatsapp', checked)
+    if (checked) {
+      setWhatsappCountry(phoneCountry)
+      setWhatsappNational(phoneNational)
+      update('whatsapp', draft.primaryPhone)
+    }
   }
 
   const toggle = (key: 'categories' | 'services', value: string) => {
@@ -278,7 +337,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
   return (
     <div className="space-y-6">
       <div className="flex gap-2 text-sm">
-        {['Studio Identity', 'Branding & Palette', 'Contact & Launch'].map((label, index) => (
+        {['Studio Identity', 'Branding & Palette', 'Contact & Dashboard'].map((label, index) => (
           <div
             key={label}
             className={`flex-1 border-b-2 pb-2 ${
@@ -427,7 +486,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
               </button>
             </div>
             <p className="mt-1 text-xs text-admin-muted">
-              Upload your studio logo or test with our sample logo. Our Canvas engine automatically converts it to high-performance WebP downscaled to under 35 KB.
+              Upload your studio logo (PNG, JPG, SVG, or WebP), or use our sample logo. Automatically optimized for retina displays and fast loading.
             </p>
 
             <div className="mt-3">
@@ -443,15 +502,10 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-admin-ink">Logo Processed</p>
-                    {logoStats.originalSize > 0 && (
-                      <p className="mt-0.5 text-xs text-admin-muted">
-                        Optimized: {formatBytes(logoStats.originalSize)} →{' '}
-                        <span className="font-medium text-emerald-600">
-                          {formatBytes(logoStats.compressedSize)} WebP
-                        </span>
-                      </p>
-                    )}
+                    <p className="text-sm font-medium text-admin-ink">Logo uploaded</p>
+                    <p className="mt-0.5 text-xs text-admin-muted">
+                      {logoStats.compressedSize > 0 ? `${formatBytes(logoStats.compressedSize)} WebP · ` : ''}Ready for display
+                    </p>
                   </div>
                   <button
                     type="button"
@@ -477,7 +531,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
                     }}
                   />
                   <span className="text-sm font-medium text-admin-ink">
-                    {uploadingLogo ? 'Optimizing & Uploading…' : 'Click to upload your logo'}
+                    {uploadingLogo ? 'Processing logo…' : 'Click to upload your logo'}
                   </span>
                   <span className="mt-1 text-xs text-admin-muted">
                     Supports WebP, PNG, or JPEG. You can also click &ldquo;Use Sample Architectural Logo&rdquo; above.
@@ -529,41 +583,35 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
       {/* Stage 3: Contact & AI Studio Voice */}
       {stage === 3 && (
         <section className="space-y-5">
-          <Field
+          <PhoneField
             id="primaryPhone"
             label="Business contact phone"
+            countryCode={phoneCountry}
+            nationalNumber={phoneNational}
+            onCountryChange={handlePhoneCountryChange}
+            onNumberChange={handlePhoneNationalChange}
             error={errors.primaryPhone}
-          >
-            <input
-              id="primaryPhone"
-              placeholder="e.g. +91 98765 43210 or 9876543210"
-              value={draft.primaryPhone}
-              onChange={(event) => update('primaryPhone', event.target.value)}
-            />
-          </Field>
+          />
 
           <label className="flex items-center gap-2 text-sm text-admin-ink">
             <input
               type="checkbox"
               checked={draft.usePhoneForWhatsapp}
-              onChange={(event) => update('usePhoneForWhatsapp', event.target.checked)}
+              onChange={(event) => handleToggleWhatsapp(event.target.checked)}
             />{' '}
             Use this number for WhatsApp
           </label>
 
           {!draft.usePhoneForWhatsapp && (
-            <Field
+            <PhoneField
               id="whatsapp"
               label="WhatsApp number"
+              countryCode={whatsappCountry}
+              nationalNumber={whatsappNational}
+              onCountryChange={handleWhatsappCountryChange}
+              onNumberChange={handleWhatsappNationalChange}
               error={errors.whatsapp}
-            >
-              <input
-                id="whatsapp"
-                placeholder="e.g. +91 98765 43210 or 9876543210"
-                value={draft.whatsapp}
-                onChange={(event) => update('whatsapp', event.target.value)}
-              />
-            </Field>
+            />
           )}
 
           <Field
@@ -629,7 +677,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
             className="rounded bg-admin-ink px-4 py-2 text-sm text-admin-bg disabled:opacity-50"
             onClick={submit}
           >
-            {busy ? 'Creating your studio website…' : 'Launch Studio'}
+            {busy ? 'Opening your dashboard…' : 'Go to Dashboard'}
           </button>
         )}
       </div>
@@ -655,6 +703,55 @@ function Field({
       </label>
       <div className="mt-2 [&_input]:w-full [&_input]:rounded [&_input]:border [&_input]:border-admin-border [&_input]:bg-admin-bg [&_input]:px-3 [&_input]:py-2 [&_input]:text-admin-ink">
         {children}
+      </div>
+      <ErrorText message={error} />
+    </div>
+  )
+}
+
+function PhoneField({
+  id,
+  label,
+  countryCode,
+  nationalNumber,
+  onCountryChange,
+  onNumberChange,
+  error,
+}: {
+  id: string
+  label: string
+  countryCode: string
+  nationalNumber: string
+  onCountryChange: (code: string) => void
+  onNumberChange: (number: string) => void
+  error?: string
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-admin-ink">
+        {label}
+      </label>
+      <div className="mt-2 flex rounded border border-admin-border bg-admin-bg">
+        <select
+          aria-label={`${label} country code`}
+          value={countryCode}
+          onChange={(e) => onCountryChange(e.target.value)}
+          className="border-r border-admin-border bg-admin-surface px-2.5 py-2 text-sm font-medium text-admin-ink outline-none cursor-pointer"
+        >
+          {COUNTRY_DIAL_CODES.map((c) => (
+            <option key={`${c.code}-${c.dialCode}`} value={c.dialCode}>
+              {c.flag} {c.dialCode} ({c.name})
+            </option>
+          ))}
+        </select>
+        <input
+          id={id}
+          type="tel"
+          className="w-full bg-transparent px-3 py-2 text-sm text-admin-ink outline-none"
+          placeholder={countryCode === '+91' ? '10-digit mobile number' : 'Phone number'}
+          value={nationalNumber}
+          onChange={(e) => onNumberChange(e.target.value)}
+        />
       </div>
       <ErrorText message={error} />
     </div>

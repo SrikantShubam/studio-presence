@@ -38,6 +38,20 @@ function configFromDraft(draft: OnboardingDraft, slug: string) {
 
   const template = PALETTE_TEMPLATE_MAP[draft.palette || 'editorial'] || 'editorial'
 
+  const cleanPhone = (raw: string) => {
+    const digits = (raw || '').replace(/[^\d]/g, '')
+    if (digits.startsWith('91') && digits.length === 12 && /^91[6-9]/.test(digits)) {
+      return `+${digits}`
+    }
+    if (digits.length === 10 && /^[6-9]/.test(digits)) {
+      return `+91${digits}`
+    }
+    return '+919876543210'
+  }
+
+  const normalizedPhone = cleanPhone(draft.primaryPhone)
+  const normalizedWhatsapp = cleanPhone(draft.whatsapp)
+
   return resolveClientConfig(slug, {
     slug,
     tier: 't0',
@@ -46,8 +60,8 @@ function configFromDraft(draft: OnboardingDraft, slug: string) {
     vertical: 'interior-design',
     business: {
       name: draft.studioName,
-      phone: draft.primaryPhone,
-      whatsapp: draft.whatsapp,
+      phone: normalizedPhone,
+      whatsapp: normalizedWhatsapp,
       ...(draft.publicEmail ? { email: draft.publicEmail } : {}),
       address: { locality: area, city, state },
       serviceAreas: draft.serviceAreas,
@@ -145,9 +159,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: message }, { status })
   }
 
-  // Redirect to /panel (the website editor and live preview), avoiding the t0 dashboard redirect loop
+  // Redirect directly to the studio dashboard
   return NextResponse.json({
-    dashboardPath: `/${data[0].tenant_slug}/panel`,
+    dashboardPath: `/${data[0].tenant_slug}/dashboard`,
     hostname: data[0].hostname,
   })
 }

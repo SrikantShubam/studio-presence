@@ -22,8 +22,8 @@ export interface CompressionResult {
 }
 
 export const LOGO_PRESET: CompressionOptions = {
-  maxDimension: 512,
-  quality: 0.85,
+  maxDimension: 1200,
+  quality: 0.92,
   targetMimeType: 'image/webp',
 }
 

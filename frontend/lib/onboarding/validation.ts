@@ -25,11 +25,15 @@ const cleanList = (values: string[]) => [...new Set(values.map((value) => value.
  * Format any Indian phone number to strict E.164 (+91[6-9]XXXXXXXXX).
  */
 export function normalizePhoneNumber(raw: string): string {
-  const digits = raw.replace(/[^\d]/g, '')
+  const trimmed = raw.trim()
+  const digits = trimmed.replace(/[^\d]/g, '')
   if (digits.length === 10 && /^[6-9]/.test(digits)) {
     return `+91${digits}`
   }
   if (digits.length === 12 && digits.startsWith('91') && /^91[6-9]/.test(digits)) {
+    return `+${digits}`
+  }
+  if (trimmed.startsWith('+') && digits.length >= 7) {
     return `+${digits}`
   }
   return raw.trim()
@@ -70,7 +74,22 @@ export function parseOnboardingDraftInput(input: unknown): { draft: OnboardingDr
   return { draft, errors }
 }
 
-const PHONE_PATTERN = /^(?:\+?91[\s-]?)?[6-9]\d{9}$/
+export function isValidPhoneNumber(raw: string): boolean {
+  const trimmed = (raw || '').trim()
+  if (!trimmed) return false
+  const digits = trimmed.replace(/[^\d]/g, '')
+  if (trimmed.startsWith('+91')) {
+    const local = digits.slice(2)
+    return local.length === 10 && /^[6-9]/.test(local)
+  }
+  if (!trimmed.startsWith('+') && digits.length === 10 && /^[6-9]/.test(digits)) {
+    return true
+  }
+  if (trimmed.startsWith('+')) {
+    return digits.length >= 7 && digits.length <= 15
+  }
+  return digits.length >= 7 && digits.length <= 15
+}
 
 export function normalizeOnboardingDraft(input: OnboardingDraft): OnboardingDraft {
   const primaryPhone = (input.primaryPhone || '').trim()
@@ -101,8 +120,16 @@ export function validateOnboardingDraft(input: OnboardingDraft): { draft: Onboar
   if (!draft.categories.length) errors.categories = 'Choose at least one category.'
   if (!draft.services.length) errors.services = 'Choose at least one service.'
   if (draft.services.includes('Other service') && !draft.otherService) errors.otherService = 'Describe the other service.'
-  if (!PHONE_PATTERN.test(draft.primaryPhone.replace(/[()]/g, ''))) errors.primaryPhone = 'Enter a valid Indian mobile number.'
-  if (!draft.usePhoneForWhatsapp && !PHONE_PATTERN.test(draft.whatsapp.replace(/[()]/g, ''))) errors.whatsapp = 'Enter a valid WhatsApp number.'
+  if (!isValidPhoneNumber(draft.primaryPhone)) {
+    errors.primaryPhone = draft.primaryPhone.startsWith('+91') || !draft.primaryPhone.startsWith('+')
+      ? 'Enter a valid Indian mobile number.'
+      : 'Enter a valid phone number.'
+  }
+  if (!draft.usePhoneForWhatsapp && !isValidPhoneNumber(draft.whatsapp)) {
+    errors.whatsapp = draft.whatsapp.startsWith('+91') || !draft.whatsapp.startsWith('+')
+      ? 'Enter a valid WhatsApp number.'
+      : 'Enter a valid WhatsApp number.'
+  }
   if (draft.publicEmail && !EMAIL_PATTERN.test(draft.publicEmail)) errors.publicEmail = 'Enter a valid public email.'
   return { draft, errors }
 }
