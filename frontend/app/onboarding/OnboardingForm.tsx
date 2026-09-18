@@ -8,7 +8,6 @@ import {
   type OnboardingErrors,
 } from '@/lib/onboarding/types'
 import {
-  normalizePhoneNumber,
   suggestedIntroduction,
   validateOnboardingDraft,
   validateOnboardingStage,
@@ -27,16 +26,6 @@ const SERVICES = [
   'Design consultation',
   'Modular kitchen',
   'Other service',
-]
-
-const QUICK_CITIES = [
-  'Delhi NCR',
-  'Mumbai',
-  'Bengaluru',
-  'Hyderabad',
-  'Patna',
-  'Pune',
-  'Kolkata',
 ]
 
 const PALETTES = [
@@ -71,9 +60,12 @@ function ErrorText({ message }: { message?: string }) {
   return <p className="mt-1 text-sm text-admin-alert">{message}</p>
 }
 
-export function OnboardingForm() {
+export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string }) {
   const [stage, setStage] = useState(1)
-  const [draft, setDraft] = useState<OnboardingDraft>(EMPTY_ONBOARDING_DRAFT)
+  const [draft, setDraft] = useState<OnboardingDraft>(() => ({
+    ...EMPTY_ONBOARDING_DRAFT,
+    publicEmail: initialEmail,
+  }))
   const [errors, setErrors] = useState<OnboardingErrors>({})
   const [busy, setBusy] = useState(false)
   const [serverError, setServerError] = useState('')
@@ -104,6 +96,7 @@ export function OnboardingForm() {
             setDraft((current) => ({
               ...current,
               ...payload.draft,
+              publicEmail: payload.draft.publicEmail || current.publicEmail || initialEmail,
             }))
             if (payload.draft.logoPath) {
               setLogoStats({
@@ -119,7 +112,7 @@ export function OnboardingForm() {
       }
     }
     loadSavedDraft()
-  }, [])
+  }, [initialEmail])
 
   // Auto-save draft on step navigation
   const persistDraft = useCallback(async (updated: OnboardingDraft) => {
@@ -215,6 +208,21 @@ export function OnboardingForm() {
     }
   }
 
+  const useSampleLogo = async () => {
+    setUploadingLogo(true)
+    setServerError('')
+    try {
+      const response = await fetch('/images/sample-logo.png')
+      if (!response.ok) throw new Error('Could not load sample logo.')
+      const blob = await response.blob()
+      const sampleFile = new File([blob], 'sample-logo.png', { type: 'image/png' })
+      await handleLogoFile(sampleFile)
+    } catch (err) {
+      setServerError(err instanceof Error ? err.message : 'Sample logo failed.')
+      setUploadingLogo(false)
+    }
+  }
+
   const removeLogo = () => {
     update('logoPath', '')
     setLogoStats(null)
@@ -304,41 +312,37 @@ export function OnboardingForm() {
 
           <div>
             <label htmlFor="primaryCity" className="text-sm font-medium text-admin-ink">
-              Primary City / Base
+              Primary Studio Location (Headquarters / Office)
             </label>
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {QUICK_CITIES.map((city) => (
-                <button
-                  type="button"
-                  key={city}
-                  className={`rounded-full border px-3 py-1 text-xs transition-colors ${
-                    draft.primaryCity === city
-                      ? 'border-admin-ink bg-admin-ink text-admin-on-primary'
-                      : 'border-admin-border bg-admin-surface text-admin-muted hover:text-admin-ink'
-                  }`}
-                  onClick={() => {
-                    update('primaryCity', city)
-                    addArea(city)
-                  }}
-                >
-                  {city}
-                </button>
-              ))}
-            </div>
+            <p className="mt-0.5 text-xs text-admin-muted">
+              The city or locality where your studio or design office is physically based.
+            </p>
             <div className="mt-2 [&_input]:w-full [&_input]:rounded [&_input]:border [&_input]:border-admin-border [&_input]:bg-admin-bg [&_input]:px-3 [&_input]:py-2 [&_input]:text-admin-ink">
               <input
                 id="primaryCity"
-                placeholder="Or enter another city (e.g. Chandigarh, Jaipur)"
+                placeholder="e.g. Gurugram, South Delhi, Indiranagar, Patna"
                 value={draft.primaryCity || ''}
                 onChange={(e) => update('primaryCity', e.target.value)}
               />
             </div>
+            {draft.primaryCity?.trim() && !draft.serviceAreas.includes(draft.primaryCity.trim()) && (
+              <button
+                type="button"
+                className="mt-1.5 text-xs text-admin-muted hover:text-admin-ink"
+                onClick={() => addArea(draft.primaryCity?.trim())}
+              >
+                + Also add &ldquo;{draft.primaryCity.trim()}&rdquo; to your project service areas
+              </button>
+            )}
           </div>
 
           <div>
             <label htmlFor="serviceAreas" className="text-sm font-medium text-admin-ink">
-              Service Areas (press Enter or comma to add badges)
+              Service Areas & Project Coverage
             </label>
+            <p className="mt-0.5 text-xs text-admin-muted">
+              The cities, localities, or neighbourhoods where you design and execute projects. Press Enter or comma to add each area.
+            </p>
             <div className="mt-2 flex min-h-12 flex-wrap items-center gap-2 rounded border border-admin-border bg-admin-bg p-2">
               {draft.serviceAreas.map((area, index) => (
                 <span
@@ -358,8 +362,10 @@ export function OnboardingForm() {
               ))}
               <input
                 id="serviceAreas"
-                className="min-w-32 flex-1 bg-transparent px-1 py-1 text-sm text-admin-ink outline-none"
-                placeholder={draft.serviceAreas.length ? 'Add another area…' : 'e.g. South Delhi, Gurugram'}
+                className="min-w-40 flex-1 bg-transparent px-1 py-1 text-sm text-admin-ink outline-none"
+                placeholder={
+                  draft.serviceAreas.length ? 'Add another area…' : 'e.g. South Delhi, Noida, Gurugram'
+                }
                 value={areaInput}
                 onChange={(e) => setAreaInput(e.target.value)}
                 onKeyDown={handleAreaKeyDown}
@@ -406,9 +412,19 @@ export function OnboardingForm() {
       {stage === 2 && (
         <section className="space-y-6">
           <div>
-            <h2 className="text-sm font-medium text-admin-ink">Studio Logo</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-medium text-admin-ink">Studio Logo</h2>
+              <button
+                type="button"
+                className="text-xs font-medium text-admin-ink underline hover:text-admin-muted"
+                onClick={useSampleLogo}
+                disabled={uploadingLogo}
+              >
+                Use Sample Architectural Logo
+              </button>
+            </div>
             <p className="mt-1 text-xs text-admin-muted">
-              Upload your studio logo. Our active Canvas engine automatically converts it to high-performance WebP and downscales it to under 35 KB.
+              Upload your studio logo or test with our sample logo. Our Canvas engine automatically converts it to high-performance WebP downscaled to under 35 KB.
             </p>
 
             <div className="mt-3">
@@ -461,7 +477,7 @@ export function OnboardingForm() {
                     {uploadingLogo ? 'Optimizing & Uploading…' : 'Click to upload your logo'}
                   </span>
                   <span className="mt-1 text-xs text-admin-muted">
-                    Supports WebP, PNG, or JPEG. You can also skip this and add it later.
+                    Supports WebP, PNG, or JPEG. You can also click &ldquo;Use Sample Architectural Logo&rdquo; above.
                   </span>
                 </div>
               )}
@@ -469,9 +485,9 @@ export function OnboardingForm() {
           </div>
 
           <div>
-            <h2 className="text-sm font-medium text-admin-ink">Architectural Identity & Palette</h2>
+            <h2 className="text-sm font-medium text-admin-ink">Architectural Identity Template</h2>
             <p className="mt-1 text-xs text-admin-muted">
-              Choose the visual identity template for your studio website. Switchable at any time from config.
+              Choose your studio design palette. Defaults to Editorial Crisp. Switchable anytime from config.
             </p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {PALETTES.map((p) => {
@@ -510,26 +526,18 @@ export function OnboardingForm() {
       {/* Stage 3: Contact & AI Studio Voice */}
       {stage === 3 && (
         <section className="space-y-5">
-          <div>
-            <label htmlFor="primaryPhone" className="text-sm font-medium text-admin-ink">
-              Business phone
-            </label>
-            <div className="mt-2 flex rounded border border-admin-border bg-admin-bg">
-              <span className="flex items-center border-r border-admin-border px-3 text-sm font-medium text-admin-muted">
-                +91
-              </span>
-              <input
-                id="primaryPhone"
-                className="w-full bg-transparent px-3 py-2 text-sm text-admin-ink outline-none"
-                placeholder="10-digit mobile number"
-                value={draft.primaryPhone.replace(/^\+91/, '')}
-                onChange={(event) =>
-                  update('primaryPhone', normalizePhoneNumber(event.target.value))
-                }
-              />
-            </div>
-            <ErrorText message={errors.primaryPhone} />
-          </div>
+          <Field
+            id="primaryPhone"
+            label="Business contact phone"
+            error={errors.primaryPhone}
+          >
+            <input
+              id="primaryPhone"
+              placeholder="e.g. +91 98765 43210 or 9876543210"
+              value={draft.primaryPhone}
+              onChange={(event) => update('primaryPhone', event.target.value)}
+            />
+          </Field>
 
           <label className="flex items-center gap-2 text-sm text-admin-ink">
             <input
@@ -541,31 +549,23 @@ export function OnboardingForm() {
           </label>
 
           {!draft.usePhoneForWhatsapp && (
-            <div>
-              <label htmlFor="whatsapp" className="text-sm font-medium text-admin-ink">
-                WhatsApp number
-              </label>
-              <div className="mt-2 flex rounded border border-admin-border bg-admin-bg">
-                <span className="flex items-center border-r border-admin-border px-3 text-sm font-medium text-admin-muted">
-                  +91
-                </span>
-                <input
-                  id="whatsapp"
-                  className="w-full bg-transparent px-3 py-2 text-sm text-admin-ink outline-none"
-                  placeholder="10-digit mobile number"
-                  value={draft.whatsapp.replace(/^\+91/, '')}
-                  onChange={(event) =>
-                    update('whatsapp', normalizePhoneNumber(event.target.value))
-                  }
-                />
-              </div>
-              <ErrorText message={errors.whatsapp} />
-            </div>
+            <Field
+              id="whatsapp"
+              label="WhatsApp number"
+              error={errors.whatsapp}
+            >
+              <input
+                id="whatsapp"
+                placeholder="e.g. +91 98765 43210 or 9876543210"
+                value={draft.whatsapp}
+                onChange={(event) => update('whatsapp', event.target.value)}
+              />
+            </Field>
           )}
 
           <Field
             id="publicEmail"
-            label="Public email (optional)"
+            label="Public business email (optional)"
             error={errors.publicEmail}
           >
             <input
@@ -626,7 +626,7 @@ export function OnboardingForm() {
             className="rounded bg-admin-ink px-4 py-2 text-sm text-admin-bg disabled:opacity-50"
             onClick={submit}
           >
-            {busy ? 'Creating your studio website…' : 'Launch Preview'}
+            {busy ? 'Creating your studio website…' : 'Launch Studio'}
           </button>
         )}
       </div>

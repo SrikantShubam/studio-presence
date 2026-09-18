@@ -30,15 +30,14 @@ export async function uploadAsset(
   params: StorageUploadParams,
   accessToken?: string,
 ): Promise<StorageUploadResult> {
-  const isPaid = params.tier && params.tier !== 't0'
-  const isR2Eligible = isPaid && !params.isStaging && params.tenantSlug
-
   const r2 = getR2Client()
 
-  if (isR2Eligible && r2) {
+  if (r2) {
     const bucketName = process.env.R2_BUCKET_NAME || 'studio-presence-assets'
     const cdnBase = process.env.NEXT_PUBLIC_CDN_BASE_URL || ''
-    const key = `tenants/${params.tenantSlug}/${params.assetType}/${params.filename}`
+    const key = params.isStaging && params.userId
+      ? `staging/${params.userId}/${params.assetType}/${params.filename}`
+      : `tenants/${params.tenantSlug || 'demo'}/${params.assetType}/${params.filename}`
 
     await r2.send(
       new PutObjectCommand({
@@ -62,7 +61,7 @@ export async function uploadAsset(
     }
   }
 
-  // Demo / Staging upload to Supabase Storage 'tenant-assets' bucket
+  // Fallback to Supabase Storage 'tenant-assets' bucket
   const client = accessToken ? createScopedClient(accessToken) : createAnonClient()
   const key = params.isStaging && params.userId
     ? `staging/${params.userId}/${params.assetType}/${params.filename}`
@@ -94,7 +93,7 @@ export async function uploadAsset(
  */
 export function resolveAssetPublicUrl(key: string): string {
   const cdnBase = process.env.NEXT_PUBLIC_CDN_BASE_URL
-  if (key.startsWith('tenants/') && cdnBase) {
+  if ((key.startsWith('tenants/') || key.startsWith('staging/')) && cdnBase) {
     return `${cdnBase.replace(/\/$/, '')}/${key}`
   }
 

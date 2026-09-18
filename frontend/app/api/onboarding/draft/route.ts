@@ -26,9 +26,14 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
+  const draftPayload = (data?.payload && typeof data.payload === 'object') ? { ...(data.payload as Record<string, unknown>) } : {}
+  if (!draftPayload.publicEmail && userData.user.email) {
+    draftPayload.publicEmail = userData.user.email
+  }
+
   return NextResponse.json({
     ok: true,
-    draft: data?.payload ?? null,
+    draft: Object.keys(draftPayload).length ? draftPayload : null,
     completedAt: data?.completed_at ?? null,
   })
 }
