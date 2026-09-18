@@ -68,6 +68,16 @@ Exit 0, plus:
 - At 375px: no horizontal scroll, primary action reachable by thumb
 - Screenshots captured to `design/actual/<section>/`
 
+## Deployment to candidate branch
+
+Whenever code is pushed to branch `candidate`, the custom alias `candidate.srikantshubams-projects.vercel.app` must point to the newly built deployment. Older deployments must never occupy that spot.
+
+After pushing to `origin candidate`, immediately run:
+```bash
+npm run promote:candidate
+```
+This guarantees `candidate.srikantshubams-projects.vercel.app` always serves the latest READY build from branch `candidate`.
+
 ## When you are stuck
 
 **Two failed attempts at `check:all`, stop.** Do not keep iterating, do not guess, do not disable a
