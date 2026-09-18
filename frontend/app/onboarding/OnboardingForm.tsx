@@ -212,7 +212,10 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
     setUploadingLogo(true)
     setServerError('')
     try {
-      const response = await fetch('/images/sample-logo.png')
+      let response = await fetch('/images/sample-logo.png')
+      if (!response.ok) {
+        response = await fetch('/brand/sample-logo.png')
+      }
       if (!response.ok) throw new Error('Could not load sample logo.')
       const blob = await response.blob()
       const sampleFile = new File([blob], 'sample-logo.png', { type: 'image/png' })

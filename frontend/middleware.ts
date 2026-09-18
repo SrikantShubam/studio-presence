@@ -95,7 +95,7 @@ const RETIRED_TENANT_HOSTS = new Set([['qa', 'owner'].join('-')])
  * and a browser's automatic favicon request 500s the page. `robots.txt` was in
  * this list against the paragraph above and had the identical bug.
  */
-const PASSTHROUGH = /^\/(?:_next|api\/|clients\/|fonts\/|about-iteration-|contact-iteration-|locations-iteration-|locations-index|locations-showcase|contact-concepts\/|brand\/|favicon\.(?:ico|svg)|icon\.svg|apple-icon\.svg)/
+const PASSTHROUGH = /^\/(?:_next|api\/|clients\/|fonts\/|images\/|about-iteration-|contact-iteration-|locations-iteration-|locations-index|locations-showcase|contact-concepts\/|brand\/|favicon\.(?:ico|svg)|icon\.svg|apple-icon\.svg)/
 
 function parseHostname(host: string): string {
   const trimmed = host.trim().toLowerCase()
