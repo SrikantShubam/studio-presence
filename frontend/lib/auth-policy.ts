@@ -40,6 +40,8 @@ function configuredOrigins(): Set<string> {
     process.env.VERCEL_URL,
     process.env.VERCEL_BRANCH_URL,
     process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    'https://candidate.srikantshubams-projects.vercel.app',
+    'https://preview.srikantshubams-projects.vercel.app',
   ]
     .flatMap((value) => (value ?? '').split(','))
     .map((value) => value.trim())
@@ -60,6 +62,13 @@ export function isAllowedAuthOrigin(origin: string, allowed = configuredOrigins(
   try {
     const parsed = new URL(origin)
     if (allowed.has(parsed.origin)) return true
+    if (
+      parsed.hostname === 'candidate.srikantshubams-projects.vercel.app' ||
+      parsed.hostname === 'preview.srikantshubams-projects.vercel.app' ||
+      parsed.hostname.endsWith('.srikantshubams-projects.vercel.app')
+    ) {
+      return true
+    }
     return (
       parsed.protocol === 'http:' &&
       (parsed.hostname === 'localhost' ||

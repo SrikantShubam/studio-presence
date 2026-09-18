@@ -65,6 +65,8 @@ assert.equal(AUTH_ERROR_MESSAGES['invalid-credentials'], 'Unable to sign in with
 assert.equal(AUTH_ERROR_MESSAGES['recovery-sent'], 'If an account exists for that email, recovery instructions are on the way.')
 assert.equal(isAllowedAuthOrigin('http://localhost:3000'), true)
 assert.equal(isAllowedAuthOrigin('http://ashish.localhost:3000'), true)
+assert.equal(isAllowedAuthOrigin('https://candidate.srikantshubams-projects.vercel.app'), true)
+assert.equal(isAllowedAuthOrigin('https://preview.srikantshubams-projects.vercel.app'), true)
 assert.equal(isAllowedAuthOrigin('https://unapproved.example.com'), false)
 assert.equal(
   isAllowedAuthOrigin('https://approved-preview.vercel.app', new Set(['https://approved-preview.vercel.app'])),
