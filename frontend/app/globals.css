@@ -211,46 +211,46 @@
     mode: --a-surface goes near-black, and you get black text on a green button.
   */
   --a-surface: #ffffff;
-  --a-bg: #f4f4f2;
-  --a-raised: #edeeeb;
-  --a-border: #e5e5e2;
-  --a-ink: #1a1a19;
-  --a-muted: #6b6b68;
-  --a-primary: #2f6f4e;
-  --a-on-primary: #ffffff;
-  --a-primary-soft: #e7f0ea;
-  --a-alert: #b4462f;
-  --a-alert-soft: #f9e9e5;
+  --a-bg: #fafafa;
+  --a-raised: #f4f4f5;
+  --a-border: #e4e4e7;
+  --a-ink: #09090b;
+  --a-muted: #71717a;
+  --a-primary: #18181b;
+  --a-on-primary: #fafafa;
+  --a-primary-soft: #f4f4f5;
+  --a-alert: #e11d48;
+  --a-alert-soft: #ffe4e6;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-admin-theme="light"]) {
-    --a-surface: #1a1d1f;
-    --a-bg: #121415;
-    --a-raised: #23272a;
-    --a-border: #2f3437;
-    --a-ink: #e8eaea;
-    --a-muted: #979d9f;
-    --a-primary: #52a67a;
-    --a-on-primary: #0a1710;
-    --a-primary-soft: #1d3a2b;
-    --a-alert: #e07a63;
-    --a-alert-soft: #3a211b;
+    --a-surface: #18181b;
+    --a-bg: #09090b;
+    --a-raised: #27272a;
+    --a-border: #27272a;
+    --a-ink: #fafafa;
+    --a-muted: #a1a1aa;
+    --a-primary: #fafafa;
+    --a-on-primary: #09090b;
+    --a-primary-soft: #27272a;
+    --a-alert: #f43f5e;
+    --a-alert-soft: #4c0519;
   }
 }
 
 :root[data-admin-theme="dark"] {
-  --a-surface: #1a1d1f;
-  --a-bg: #121415;
-  --a-raised: #23272a;
-  --a-border: #2f3437;
-  --a-ink: #e8eaea;
-  --a-muted: #979d9f;
-  --a-primary: #52a67a;
-  --a-on-primary: #0a1710;
-  --a-primary-soft: #1d3a2b;
-  --a-alert: #e07a63;
-  --a-alert-soft: #3a211b;
+  --a-surface: #18181b;
+  --a-bg: #09090b;
+  --a-raised: #27272a;
+  --a-border: #27272a;
+  --a-ink: #fafafa;
+  --a-muted: #a1a1aa;
+  --a-primary: #fafafa;
+  --a-on-primary: #09090b;
+  --a-primary-soft: #27272a;
+  --a-alert: #f43f5e;
+  --a-alert-soft: #4c0519;
 }
 
 @theme inline {

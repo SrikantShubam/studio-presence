@@ -32,32 +32,34 @@ export async function uploadAsset(
 ): Promise<StorageUploadResult> {
   const r2 = getR2Client()
 
-  if (r2) {
-    const bucketName = process.env.R2_BUCKET_NAME || 'studio-presence-assets'
-    const cdnBase = process.env.NEXT_PUBLIC_CDN_BASE_URL || ''
-    const key = params.isStaging && params.userId
-      ? `staging/${params.userId}/${params.assetType}/${params.filename}`
-      : `tenants/${params.tenantSlug || 'demo'}/${params.assetType}/${params.filename}`
+  if (r2 && !params.isStaging) {
+    try {
+      const bucketName = process.env.R2_BUCKET_NAME || 'studio-presence-assets'
+      const cdnBase = process.env.NEXT_PUBLIC_CDN_BASE_URL || ''
+      const key = `tenants/${params.tenantSlug || 'demo'}/${params.assetType}/${params.filename}`
 
-    await r2.send(
-      new PutObjectCommand({
-        Bucket: bucketName,
-        Key: key,
-        Body: params.buffer,
-        ContentType: params.contentType,
-        CacheControl: 'public, max-age=31536000, immutable',
-      }),
-    )
+      await r2.send(
+        new PutObjectCommand({
+          Bucket: bucketName,
+          Key: key,
+          Body: params.buffer,
+          ContentType: params.contentType,
+          CacheControl: 'public, max-age=31536000, immutable',
+        }),
+      )
 
-    const url = cdnBase ? `${cdnBase.replace(/\/$/, '')}/${key}` : key
-    const assetPath = `/api/assets/${key}`
+      const url = cdnBase ? `${cdnBase.replace(/\/$/, '')}/${key}` : key
+      const assetPath = `/api/assets/${key}`
 
-    return {
-      assetPath,
-      key,
-      bytes: params.buffer.length,
-      storageProvider: 'r2',
-      url,
+      return {
+        assetPath,
+        key,
+        bytes: params.buffer.length,
+        storageProvider: 'r2',
+        url,
+      }
+    } catch (r2Error) {
+      console.warn('R2 upload failed, falling back to Supabase Storage:', r2Error)
     }
   }
 
