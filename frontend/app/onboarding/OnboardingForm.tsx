@@ -19,6 +19,8 @@ import {
 } from '@/lib/onboarding/image-compression'
 import {
   COUNTRY_DIAL_CODES,
+  CountryFlag,
+  getCountryByDialCode,
   splitPhoneAndCountry,
 } from '@/lib/onboarding/countries'
 
@@ -726,24 +728,110 @@ function PhoneField({
   onNumberChange: (number: string) => void
   error?: string
 }) {
+  const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const selectedCountry = useMemo(
+    () => getCountryByDialCode(countryCode),
+    [countryCode],
+  )
+
+  const filteredCountries = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    if (!q) return COUNTRY_DIAL_CODES
+    return COUNTRY_DIAL_CODES.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.dialCode.includes(q) ||
+        c.code.toLowerCase().includes(q),
+    )
+  }, [search])
+
+  useEffect(() => {
+    if (!open) return
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false)
+      }
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open])
+
   return (
     <div>
       <label htmlFor={id} className="text-sm font-medium text-admin-ink">
         {label}
       </label>
-      <div className="mt-2 flex rounded border border-admin-border bg-admin-bg">
-        <select
-          aria-label={`${label} country code`}
-          value={countryCode}
-          onChange={(e) => onCountryChange(e.target.value)}
-          className="border-r border-admin-border bg-admin-surface px-2.5 py-2 text-sm font-medium text-admin-ink outline-none cursor-pointer"
-        >
-          {COUNTRY_DIAL_CODES.map((c) => (
-            <option key={`${c.code}-${c.dialCode}`} value={c.dialCode}>
-              {c.flag} {c.dialCode} ({c.name})
-            </option>
-          ))}
-        </select>
+      <div className="relative mt-2 flex rounded border border-admin-border bg-admin-bg">
+        <div ref={dropdownRef} className="relative">
+          <button
+            type="button"
+            aria-label={`${label} country code selector`}
+            aria-expanded={open}
+            onClick={() => {
+              setOpen((prev) => !prev)
+              setSearch('')
+            }}
+            className="flex h-full items-center gap-2 border-r border-admin-border bg-admin-surface px-3 py-2 text-sm font-medium text-admin-ink transition-colors hover:bg-admin-raised cursor-pointer"
+          >
+            <CountryFlag code={selectedCountry.code} className="h-3.5 w-5 shrink-0 rounded-[2px] object-cover shadow-xs" />
+            <span>{selectedCountry.dialCode}</span>
+            <span className="text-xs text-admin-muted">▾</span>
+          </button>
+
+          {open && (
+            <div className="absolute left-0 top-full z-50 mt-1 max-h-64 w-72 overflow-hidden rounded-md border border-admin-border bg-admin-surface shadow-lg">
+              <div className="border-b border-admin-border p-2">
+                <input
+                  type="text"
+                  placeholder="Search country or code..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full rounded border border-admin-border bg-admin-bg px-2.5 py-1.5 text-xs text-admin-ink outline-none"
+                  autoFocus
+                />
+              </div>
+              <ul className="max-h-48 overflow-y-auto py-1">
+                {filteredCountries.map((c) => (
+                  <li key={`${c.code}-${c.dialCode}`}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onCountryChange(c.dialCode)
+                        setOpen(false)
+                      }}
+                      className={`flex w-full items-center gap-2.5 px-3 py-2 text-left text-xs transition-colors hover:bg-admin-raised ${
+                        c.dialCode === countryCode ? 'bg-admin-raised font-semibold text-admin-ink' : 'text-admin-ink'
+                      }`}
+                    >
+                      <CountryFlag code={c.code} className="h-3.5 w-5 shrink-0 rounded-[2px] object-cover shadow-xs" />
+                      <span className="flex-1 truncate">{c.name}</span>
+                      <span className="text-admin-muted">{c.dialCode}</span>
+                    </button>
+                  </li>
+                ))}
+                {filteredCountries.length === 0 && (
+                  <li className="px-3 py-3 text-center text-xs text-admin-muted">
+                    No country found.
+                  </li>
+                )}
+              </ul>
+            </div>
+          )}
+        </div>
+
         <input
           id={id}
           type="tel"

@@ -1,8 +1,17 @@
+import type { ComponentType } from 'react'
+import * as Flags from 'country-flag-icons/react/3x2'
+
 export interface CountryDialCode {
   name: string
   code: string
   dialCode: string
   flag: string
+}
+
+export function CountryFlag({ code, className = 'h-3.5 w-5' }: { code: string; className?: string }) {
+  const Flag = (Flags as Record<string, ComponentType<{ className?: string; title?: string }>>)[code]
+  if (!Flag) return null
+  return <Flag className={className} title={code} />
 }
 
 export const COUNTRY_DIAL_CODES: CountryDialCode[] = [
@@ -54,4 +63,12 @@ export function splitPhoneAndCountry(rawPhone: string): { dialCode: string; nati
   }
 
   return { dialCode: '+91', nationalNumber: trimmed.replace(/^\+91\s*/, '') }
+}
+
+const DEFAULT_COUNTRY: CountryDialCode = { name: 'India', code: 'IN', dialCode: '+91', flag: '🇮🇳' }
+
+export function getCountryByDialCode(dialCode: string): CountryDialCode {
+  return (
+    COUNTRY_DIAL_CODES.find((c) => c.dialCode === dialCode) ?? DEFAULT_COUNTRY
+  )
 }
