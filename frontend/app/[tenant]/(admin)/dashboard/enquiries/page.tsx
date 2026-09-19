@@ -110,7 +110,10 @@ async function loadLeads(tenantSlug: string, demoParam: string | undefined): Pro
     data: { session },
   } = await supabase.auth.getSession()
 
-  if (!user?.email || !session) redirect('/login')
+  if (!user?.email || !session) {
+    if (demoParam === '0') redirect(`/login?next=/${encodeURIComponent(tenantSlug)}/dashboard/enquiries`)
+    return { leads: DEMO_LEADS, mode: 'demo' }
+  }
 
   try {
     const tenantContext = await requireTenant({

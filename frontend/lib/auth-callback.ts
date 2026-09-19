@@ -123,7 +123,7 @@ export async function routeAuthenticatedSession(
       return NextResponse.redirect(`${origin}/login?error=wrong-tenant`)
     }
 
-    const destination = next ? tenantAuthNextPath(next) : destinationForTenant(tenant)
+    const destination = next ? tenantAuthNextPath(next, tenant.slug) : destinationForTenant(tenant)
     return NextResponse.redirect(tenantDestinationUrl(origin, tenant.slug, destination, routing))
   } catch (error) {
     if (!(error instanceof AuthError)) throw error

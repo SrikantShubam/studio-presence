@@ -181,7 +181,7 @@ async function requireDashboardContext(expectedTenantSlug?: string) {
   } = await supabase.auth.getSession()
 
   if (!user?.email || !session) {
-    redirect('/login')
+    redirect(`/login?next=/${encodeURIComponent(expectedTenantSlug ?? '')}/dashboard/enquiries`)
   }
 
   const tenantContext = await requireTenant({
@@ -191,7 +191,7 @@ async function requireDashboardContext(expectedTenantSlug?: string) {
   })
 
   if (expectedTenantSlug && tenantContext.tenant.slug !== expectedTenantSlug) {
-    redirect('/login')
+    redirect(`/${tenantContext.tenant.slug}/dashboard/enquiries`)
   }
 
   if (!canAccessDashboard(tenantContext.tenant)) {

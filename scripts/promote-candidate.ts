@@ -37,7 +37,9 @@ async function main() {
   let currentSha = ''
   try {
     currentSha = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim()
-  } catch {}
+  } catch {
+    currentSha = ''
+  }
 
   const MAX_ATTEMPTS = 40
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {

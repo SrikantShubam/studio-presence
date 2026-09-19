@@ -31,12 +31,24 @@ export function authCallbackUrl(
 
 const TENANT_ADMIN_PREFIXES = ['/admin', '/dashboard', '/panel']
 
-export function tenantAuthNextPath(next: string | undefined): string {
+export function tenantAuthNextPath(next: string | undefined, expectedTenantSlug?: string): string {
   if (!next || !next.startsWith('/') || next.startsWith('//')) return '/dashboard'
 
-  const path = next.split(/[?#]/, 1)[0] ?? next
+  const [pathOnly, queryOrHash] = next.split(/([?#].*)/, 2)
+  const path = pathOnly ?? next
+  const suffix = queryOrHash ?? ''
+
   if (TENANT_ADMIN_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) {
     return next
+  }
+
+  const tenantMatch = path.match(/^\/([a-z0-9-]+)(\/(?:admin|dashboard|panel)(?:\/.*)?)$/)
+  if (tenantMatch) {
+    const slug = tenantMatch[1]
+    const innerPath = tenantMatch[2]
+    if (!expectedTenantSlug || slug === expectedTenantSlug) {
+      return `${innerPath}${suffix}`
+    }
   }
 
   return '/dashboard'
@@ -49,6 +61,8 @@ export function tenantDestinationUrl(
   routing: TenantRouting,
 ): string {
   const base = canonicalAuthOrigin(origin)
-  const tenantPrefix = routing === 'path' ? `/${encodeURIComponent(tenantSlug)}` : ''
+  const encodedSlug = encodeURIComponent(tenantSlug)
+  const alreadyPrefixed = path === `/${encodedSlug}` || path.startsWith(`/${encodedSlug}/`) || path === `/${tenantSlug}` || path.startsWith(`/${tenantSlug}/`)
+  const tenantPrefix = routing === 'path' && !alreadyPrefixed ? `/${encodedSlug}` : ''
   return `${base}${tenantPrefix}${path.startsWith('/') ? path : `/${path}`}`
 }

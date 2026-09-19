@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { ConfigError, loadPublicClientConfig } from '@studio/backend'
+import { ConfigError } from '@studio/backend'
+import { loadPublicTenantConfig } from '@/lib/tenant-config'
 import { AdminCard, AdminChip, AdminShell } from '../../components'
 
 export default async function DashboardSettingsPage({ params }: { params: Promise<{ tenant: string }> }) {
@@ -90,7 +91,7 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
 
 async function settingsConfig(tenant: string) {
   try {
-    return await loadPublicClientConfig(tenant)
+    return await loadPublicTenantConfig(tenant)
   } catch (error) {
     if (error instanceof ConfigError) return null
     throw error

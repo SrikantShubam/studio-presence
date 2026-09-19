@@ -92,7 +92,7 @@ async function provision(t: { slug: string; email: string }) {
 
   const { data: tenant, error: te } = await admin
     .from('tenants')
-    .insert({ slug: t.slug, name: t.slug, tier: 't1', status: 'demo' })
+    .insert({ slug: t.slug, name: t.slug, tier: 't1', status: 'live' })
     .select()
     .single()
   if (te) throw new Error(`creating tenant ${t.slug}: ${te.message}`)

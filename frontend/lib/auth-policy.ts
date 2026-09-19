@@ -21,12 +21,17 @@ export function isValidPassword(password: string): boolean {
 }
 
 const ALLOWED_NEXT_PREFIXES = ['/admin', '/dashboard', '/panel']
+const TENANT_NEXT_PATH_REGEX = /^\/([a-z0-9-]+)\/(admin|dashboard|panel)(?:[/?#]|$)/
 
 export function safeAuthNextPath(next: string | undefined): string {
   if (!next || !next.startsWith('/') || next.startsWith('//')) return '/dashboard'
 
   const path = next.split(/[?#]/, 1)[0] ?? next
   if (ALLOWED_NEXT_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) {
+    return next
+  }
+
+  if (TENANT_NEXT_PATH_REGEX.test(path)) {
     return next
   }
 

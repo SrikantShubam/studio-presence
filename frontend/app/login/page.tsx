@@ -15,9 +15,10 @@ const PLATFORM_LOGIN_COPY = {
 export default async function PlatformLoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; next?: string }>
+  searchParams: Promise<{ error?: string; next?: string; tenant?: string }>
 }) {
-  const { error: errorCode, next } = await searchParams
+  const { error: errorCode, next, tenant: paramTenant } = await searchParams
+  const hintedTenant = paramTenant ?? next?.match(/^\/([a-z0-9-]+)\//)?.[1]
 
   return (
     <main className="min-h-screen bg-admin-bg px-4 py-5 text-admin-ink lg:flex lg:items-center lg:justify-center">
@@ -57,7 +58,7 @@ export default async function PlatformLoginPage({
               </p>
             )}
 
-            <LoginForm whatsappHref={null} nextPath={next} />
+            <LoginForm whatsappHref={null} tenant={hintedTenant} nextPath={next} />
           </div>
         </section>
       </div>

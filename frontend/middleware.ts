@@ -215,19 +215,6 @@ function rootPathResponse(request: NextRequest): NextResponse | null {
     return NextResponse.redirect(url)
   }
 
-  // A dynamic database tenant on root domain (e.g. /[slug]/panel or /[slug]/dashboard)
-  if (!pathTenant && first && /^[a-z0-9-]+$/.test(first) && segments[1] && ROOT_TENANT_PATHS.has(segments[1])) {
-    const response = NextResponse.next()
-    response.cookies.set(TENANT_COOKIE, first, {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: true,
-      path: '/',
-    })
-    response.headers.set('x-tenant', first)
-    return response
-  }
-
   if (first && ROOT_TENANT_PATHS.has(first)) {
     const tenant = request.cookies.get(TENANT_COOKIE)?.value
     if (tenant && (Object.values(TENANT_MAP.bySubdomain).some((entry) => entry.slug === tenant) || /^[a-z0-9-]+$/.test(tenant))) {
@@ -236,6 +223,20 @@ function rootPathResponse(request: NextRequest): NextResponse | null {
       return NextResponse.redirect(url)
     }
     return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  // A dynamic database tenant on root domain (e.g. /[slug] or /[slug]/dashboard)
+  if (!pathTenant && first && /^[a-z0-9-]+$/.test(first)) {
+    const response = NextResponse.next()
+    response.cookies.set(TENANT_COOKIE, first, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: true,
+      path: '/',
+    })
+    response.headers.set('x-tenant', first)
+    response.headers.set('x-robots-tag', 'noindex, nofollow')
+    return response
   }
 
   if (!usesPathTenants()) return null

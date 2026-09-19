@@ -185,7 +185,10 @@ async function loadLeads(tenantSlug: string, demoParam: string | undefined): Pro
   } = await supabase.auth.getSession()
 
   if (!user?.email || !session) {
-    redirect('/login')
+    if (demoParam === '0') {
+      redirect(`/login?next=/${encodeURIComponent(tenantSlug)}/dashboard`)
+    }
+    return { leads: DEMO_LEADS, mode: 'demo', displayName: 'Demo guest' }
   }
   const displayName = profileName(user.email, user.user_metadata)
 

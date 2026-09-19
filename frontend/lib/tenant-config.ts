@@ -43,11 +43,31 @@ export async function loadPublicTenantConfig(slug: string): Promise<ClientConfig
   const requestHeaders = await headers()
   const host = (requestHeaders.get('x-forwarded-host') ?? requestHeaders.get('host') ?? '').split(':')[0] ?? ''
   const db = createAnonClient()
-  const { data, error } = await db.rpc('get_public_tenant_config_by_hostname', { p_hostname: host })
 
-  if (error) throw new Error(`Could not load public workspace config: ${error.message}`)
+  const candidateHosts = Array.from(
+    new Set(
+      [
+        host,
+        `${slug}.${host}`,
+        process.env.NEXT_PUBLIC_ROOT_DOMAIN ? `${slug}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` : '',
+        `${slug}.preview.srikantshubams-projects.vercel.app`,
+        `${slug}.candidate.srikantshubams-projects.vercel.app`,
+        `${slug}.localhost`,
+      ].filter(Boolean),
+    ),
+  )
 
-  const row = (data as PublicConfigRow[] | null)?.[0]
+  let row: PublicConfigRow | null = null
+  for (const candidateHost of candidateHosts) {
+    const { data, error } = await db.rpc('get_public_tenant_config_by_hostname', { p_hostname: candidateHost })
+    if (error) throw new Error(`Could not load public workspace config: ${error.message}`)
+    const match = (data as PublicConfigRow[] | null)?.[0]
+    if (match) {
+      row = match
+      break
+    }
+  }
+
   if (row) {
     if (row.tenant_slug !== slug) throw new Error('Public hostname and tenant route do not match.')
     return resolveClientConfig(slug, row.config)
