@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { AuthError, canAccessDashboard, getI18nStatus, leads, requireTenant, type Lead, type LeadStatus } from '@studio/backend'
+import { AuthError, canAccessDashboard, getI18nStatus, leads, requireTenant, type I18nCompletion, type Lead, type LeadStatus } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { AdminCard, AdminChip, AdminMetric, AdminShell } from '../components'
 import { DEMO_LEADS } from '../demo-data'
@@ -27,7 +27,19 @@ export default async function DashboardPage({
   const activeFilter = filterFrom(query?.filter)
   const baseDashboard = `/${tenant}/dashboard`
   const { leads: allLeads, mode, displayName } = await loadLeads(tenant, query?.demo)
-  const hindiStatus = await getI18nStatus(tenant)
+  let hindiStatus: I18nCompletion = {
+    locale: 'hi',
+    enabled: false,
+    translated: 0,
+    total: 1,
+    percent: 0,
+    status: 'disabled',
+  }
+  try {
+    hindiStatus = await getI18nStatus(tenant)
+  } catch {
+    // Graceful fallback if runtime cannot reach repo root seed files
+  }
   const visibleLeads = filterLeads(allLeads, activeFilter)
   const won = allLeads.filter((lead) => lead.status === 'won').length
   const notContacted = allLeads.filter(isNotContacted).length
