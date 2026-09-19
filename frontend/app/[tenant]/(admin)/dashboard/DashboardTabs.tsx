@@ -25,12 +25,13 @@ export function DashboardTabs({ orientation = 'top' }: { orientation?: 'top' | '
 
   if (orientation === 'side') {
     return (
-      <nav className="grid gap-1 text-sm font-medium">
+      <nav aria-label="Primary navigation" className="grid gap-1 text-sm font-medium">
         {items.map((item) => (
           <Link
             key={item.label}
             href={`${tenantPrefix}${item.href}`}
-            className={`flex min-h-11 items-center rounded px-3 transition-colors ${
+            aria-current={item.active ? 'page' : undefined}
+            className={`flex min-h-11 items-center rounded-lg px-3 transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary ${
               item.active
                 ? 'bg-admin-primary-soft text-admin-primary'
                 : 'text-admin-muted hover:bg-admin-raised hover:text-admin-ink'
@@ -44,12 +45,13 @@ export function DashboardTabs({ orientation = 'top' }: { orientation?: 'top' | '
   }
 
   return (
-    <nav className="flex min-h-12 max-w-full gap-1 overflow-x-auto rounded-lg border border-admin-border bg-admin-raised p-1 text-sm font-medium">
+    <nav aria-label="Primary navigation" className="grid grid-cols-2 gap-1 rounded-lg border border-admin-border bg-admin-raised p-1 text-sm font-medium sm:grid-cols-3">
       {items.map((item) => (
         <Link
           key={item.label}
           href={`${tenantPrefix}${item.href}`}
-          className={`flex min-w-20 shrink-0 items-center justify-center rounded px-3 transition-colors ${
+          aria-current={item.active ? 'page' : undefined}
+          className={`flex min-h-11 items-center justify-center rounded-lg px-3 text-center transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary ${
             item.active
               ? 'bg-admin-primary text-admin-on-primary'
               : 'text-admin-muted hover:text-admin-ink'

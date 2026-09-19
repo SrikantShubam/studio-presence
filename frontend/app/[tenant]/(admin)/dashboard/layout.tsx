@@ -85,53 +85,88 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-admin-bg text-admin-ink">
-      <header className="border-b border-admin-border bg-admin-surface px-4 py-3">
-        <div className="mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex min-w-0 items-center gap-2">
-            {branding.brand.logo && (
-              <Image src={branding.brand.logo} alt="" width={24} height={24} className="rounded" />
-            )}
-            <span className="truncate text-sm font-medium text-admin-ink">{branding.business.name}</span>
-          </div>
-
-          <DashboardTabs />
-
-          <div className="flex items-center justify-between gap-3 sm:justify-end">
-            <ThemeToggle />
-            {isAuthenticated && user?.email ? (
-              <>
-                <span className="flex min-h-12 min-w-12 items-center justify-center rounded-lg border border-admin-border bg-admin-raised text-sm font-semibold text-admin-ink">
-                  {initialsFor(user.email)}
-                </span>
-                <form action={signOut}>
-                  <button type="submit" className="min-h-12 rounded-lg px-2 text-sm font-medium text-admin-muted">
-                    Sign out
-                  </button>
-                </form>
-              </>
-            ) : (
-              <div className="flex items-center gap-2">
-                <span className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border bg-admin-raised px-2.5 text-xs font-semibold uppercase tracking-wider text-admin-muted">
-                  Demo
-                </span>
-                <Link
-                  href={`/login?next=/${encodeURIComponent(tenantSlug)}/dashboard`}
-                  className="inline-flex min-h-11 items-center justify-center rounded bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary"
-                >
-                  Sign in
-                </Link>
-              </div>
-            )}
+    <div className="min-h-screen bg-admin-bg text-admin-ink lg:grid lg:grid-cols-[15rem_minmax(0,1fr)]">
+      <aside className="hidden min-h-screen border-r border-admin-border bg-admin-surface px-4 py-5 lg:flex lg:flex-col">
+        <div className="flex min-w-0 items-center gap-3">
+          {branding.brand.logo ? (
+            <Image src={branding.brand.logo} alt="" width={36} height={36} className="h-9 w-9 shrink-0 rounded-lg object-cover" />
+          ) : (
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-admin-primary text-xs font-bold text-admin-on-primary" aria-hidden="true">
+              {initialsFor(branding.business.name)}
+            </span>
+          )}
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-admin-ink">{branding.business.name}</p>
           </div>
         </div>
-      </header>
-      <main>{children}</main>
+
+        <div className="mt-8">
+          <DashboardTabs orientation="side" />
+        </div>
+
+      </aside>
+
+      <div className="min-w-0">
+        <header className="border-b border-admin-border bg-admin-surface px-4 py-3 sm:px-6">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex min-w-0 items-center justify-between gap-3">
+              <div className="flex min-w-0 items-center gap-3 lg:hidden">
+                {branding.brand.logo ? (
+                  <Image src={branding.brand.logo} alt="" width={32} height={32} className="h-8 w-8 shrink-0 rounded-lg object-cover" />
+                ) : (
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-admin-primary text-[0.65rem] font-bold text-admin-on-primary" aria-hidden="true">
+                    {initialsFor(branding.business.name)}
+                  </span>
+                )}
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-admin-ink">{branding.business.name}</p>
+                </div>
+              </div>
+
+              <div className="hidden min-w-0 lg:block" aria-hidden="true" />
+
+              <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+                <ThemeToggle />
+                {isAuthenticated && user?.email ? (
+                  <>
+                    <span className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-admin-border bg-admin-raised text-sm font-semibold text-admin-ink" aria-label={`Signed in as ${user.email}`}>
+                      {initialsFor(user.email)}
+                    </span>
+                    <form action={signOut}>
+                      <button type="submit" className="min-h-11 rounded-lg px-2 text-sm font-medium text-admin-muted transition-colors motion-reduce:transition-none hover:bg-admin-raised hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary">
+                        Sign out
+                      </button>
+                    </form>
+                  </>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="hidden min-h-11 items-center justify-center rounded-lg border border-admin-border bg-admin-raised px-2.5 text-xs font-semibold uppercase tracking-wider text-admin-muted sm:inline-flex">
+                      Demo
+                    </span>
+                    <Link
+                      href={`/login?next=/${encodeURIComponent(tenantSlug)}/dashboard`}
+                      className="inline-flex min-h-11 items-center justify-center rounded-lg bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary transition-opacity motion-reduce:transition-none hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary"
+                    >
+                      Sign in
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-3 lg:hidden">
+              <DashboardTabs orientation="top" />
+            </div>
+          </div>
+        </header>
+        <main>{children}</main>
+      </div>
     </div>
   )
 }
 
-function initialsFor(email: string): string {
+function initialsFor(value: string): string {
+  const email = value.includes('@') ? value : value.replace(/\s+/g, '.')
   const name = email.split('@')[0] ?? ''
   const parts = name.split(/[._-]+/).filter(Boolean)
   const letters = (parts.length > 1 ? parts.slice(0, 2) : [name.slice(0, 2)])

@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { EMPTY_ONBOARDING_DRAFT } from '../frontend/lib/onboarding/types.ts'
 import {
   parseOnboardingDraftInput,
@@ -59,4 +61,20 @@ assert.equal(onboardingRpcStatus({ code: '40001' }), 409)
 assert.equal(onboardingRpcStatus({ code: '42501' }), 403)
 assert.equal(onboardingRpcStatus({ code: '23505' }), 409)
 assert.equal(onboardingRpcStatus({ code: '22000' }), 400)
+
+const onboardingPage = readFileSync(join(process.cwd(), 'frontend', 'app', 'onboarding', 'page.tsx'), 'utf8')
+const onboardingForm = readFileSync(join(process.cwd(), 'frontend', 'app', 'onboarding', 'OnboardingForm.tsx'), 'utf8')
+
+assert.match(onboardingPage, /ThemeToggle/, 'onboarding must expose the explicit system/light/dark theme control')
+assert.match(onboardingPage, /NO_FLASH_SCRIPT/, 'onboarding must apply a stored theme before first paint')
+assert.match(onboardingPage, /aria-labelledby/, 'onboarding page must have a labelled main content region')
+assert.match(onboardingPage, /bg-admin-primary-soft/, 'onboarding page must establish a neutral admin visual hierarchy')
+assert.match(onboardingForm, /isHydrating/, 'onboarding must expose a draft hydration state')
+assert.match(onboardingForm, /aria-label="Onboarding progress"/, 'stage navigation must be announced as onboarding progress')
+assert.match(onboardingForm, /aria-current=\{active \? 'step'/, 'the active onboarding stage must be identified to assistive technology')
+assert.match(onboardingForm, /motion-reduce:transition-none/, 'onboarding transitions must respect reduced-motion preferences')
+assert.match(onboardingForm, /focus-visible:ring-2 focus-visible:ring-admin-primary/, 'interactive controls must have visible admin focus states')
+assert.doesNotMatch(onboardingForm, /bg-(?:amber|stone|zinc|black)-/, 'onboarding must use admin theme tokens instead of raw palette classes')
+assert.doesNotMatch(onboardingForm, /style\s*=/, 'onboarding must not introduce inline styles')
+
 console.log('onboarding validation checks passed')

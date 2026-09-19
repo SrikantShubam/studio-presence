@@ -61,6 +61,8 @@ function main() {
   const settingsPage = readFile(join(adminRoot, 'dashboard', 'settings', 'page.tsx'))
   const editor = readFile(join(adminRoot, 'panel', 'PanelEditor.tsx'))
   const analytics = readFile(join(adminRoot, 'dashboard', 'analytics', 'AnalyticsDashboard.tsx'))
+  const dashboardLayout = readFile(join(adminRoot, 'dashboard', 'layout.tsx'))
+  const themeToggle = readFile(join(adminRoot, 'ThemeToggle.tsx'))
 
   assert.ok(existsSync(join(adminRoot, 'dashboard', 'enquiries', 'page.tsx')), 'enquiries must be a real dashboard route')
   assert.ok(existsSync(join(adminRoot, 'dashboard', 'content', 'page.tsx')), 'website content must be a real dashboard route')
@@ -96,6 +98,12 @@ function main() {
     assert.match(analytics, new RegExp(question), `analytics must answer: ${question}`)
   }
   assert.match(analytics, /tabular-nums/, 'analytics bars must be paired with readable numeric values')
+
+  assert.match(dashboardTabs, /aria-label="Primary navigation"/, 'dashboard shell must label its primary navigation')
+  assert.match(dashboardLayout, /DashboardTabs orientation="side"/, 'dashboard shell must expose desktop side navigation')
+  assert.match(dashboardLayout, /DashboardTabs orientation="top"/, 'dashboard shell must expose mobile navigation')
+  assert.match(themeToggle, /system/, 'theme control must expose an explicit system preference')
+  assert.match(themeToggle, /removeAttribute\('data-admin-theme'\)/, 'system theme must clear the explicit document override')
 
   console.log('\x1b[32mPASS\x1b[0m  admin content boundary checks\n')
 }

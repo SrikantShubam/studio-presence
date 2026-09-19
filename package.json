@@ -18,6 +18,7 @@
     "check:placeholder": "node --env-file-if-exists=.env --import tsx scripts/check-placeholder.ts",
     "check:legacy-artifacts": "node --env-file-if-exists=.env --import tsx scripts/check-legacy-artifacts.ts",
     "test:onboarding": "node --env-file-if-exists=.env --import tsx scripts/test-onboarding.ts",
+    "test:admin-redesign": "node --env-file-if-exists=.env --import tsx scripts/test-admin-redesign.ts",
     "test:platform-auth": "node --env-file-if-exists=.env --import tsx scripts/test-platform-auth.ts",
     "check:tiers": "node --env-file-if-exists=.env --import tsx scripts/check-tiers.ts",
     "check:tenant-isolation": "node --env-file-if-exists=.env --import tsx scripts/check-tenant-isolation.ts",

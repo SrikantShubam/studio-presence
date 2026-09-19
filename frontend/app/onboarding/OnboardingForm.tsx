@@ -34,36 +34,67 @@ const SERVICES = [
   'Other service',
 ]
 
+const CITY_SUGGESTIONS = [
+  'Mumbai',
+  'Delhi NCR',
+  'Bengaluru',
+  'Hyderabad',
+  'Chennai',
+  'Kolkata',
+  'Pune',
+  'Ahmedabad',
+  'Gurugram',
+  'Noida',
+  'Jaipur',
+  'Chandigarh',
+  'Kochi',
+  'Goa',
+]
+
 const PALETTES = [
   {
     id: 'editorial',
     title: 'Editorial Crisp',
     blurb: 'High-contrast monochrome, precision hairline borders, gallery aesthetic.',
-    swatches: ['bg-admin-ink', 'bg-admin-surface', 'border-admin-border'],
+    swatches: ['bg-admin-ink', 'bg-admin-surface', 'bg-admin-border'],
   },
   {
     id: 'warm-earth',
     title: 'Warm Earth',
     blurb: 'Natural limestone surfaces, terracotta accents, warm organic feel.',
-    swatches: ['bg-amber-800', 'bg-stone-200', 'bg-stone-500'],
+    swatches: ['bg-admin-primary', 'bg-admin-primary-soft', 'bg-admin-alert-soft'],
   },
   {
     id: 'charcoal-modern',
     title: 'Charcoal Modern',
     blurb: 'Deep slate surfaces, tailored charcoal structure, bold elegance.',
-    swatches: ['bg-zinc-900', 'bg-zinc-700', 'bg-zinc-400'],
+    swatches: ['bg-admin-ink', 'bg-admin-raised', 'bg-admin-muted'],
   },
   {
     id: 'monolith-dark',
     title: 'Monolith Dark',
     blurb: 'Premium luxury midnight obsidian with restrained architectural bronze.',
-    swatches: ['bg-black', 'bg-neutral-800', 'bg-amber-700'],
+    swatches: ['bg-admin-ink', 'bg-admin-primary', 'bg-admin-alert'],
   },
 ]
 
+const STAGES = [
+  { id: 1, label: 'Studio identity', summary: 'Name, location, and services' },
+  { id: 2, label: 'Visual direction', summary: 'Logo and palette' },
+  { id: 3, label: 'Contact details', summary: 'Phone, email, and introduction' },
+] as const
+
+const PROGRESS_WIDTHS = ['w-1/3', 'w-2/3', 'w-full'] as const
+
+const CONTROL_CLASS =
+  'min-h-12 w-full rounded-lg border border-admin-border bg-admin-bg px-3 text-base text-admin-ink outline-none transition-colors placeholder:text-admin-muted focus-visible:border-admin-primary focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-offset-admin-surface motion-reduce:transition-none'
+
+const BUTTON_CLASS =
+  'inline-flex min-h-11 items-center justify-center rounded-lg border px-4 text-sm font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-offset-admin-surface motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-60'
+
 function ErrorText({ message }: { message?: string }) {
   if (!message) return null
-  return <p className="mt-1 text-sm text-admin-alert">{message}</p>
+  return <p className="mt-2 text-sm text-admin-alert" role="alert">{message}</p>
 }
 
 export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string }) {
@@ -75,6 +106,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
   const [errors, setErrors] = useState<OnboardingErrors>({})
   const [busy, setBusy] = useState(false)
   const [serverError, setServerError] = useState('')
+  const [isHydrating, setIsHydrating] = useState(true)
 
   // Staging area input state
   const [areaInput, setAreaInput] = useState('')
@@ -87,12 +119,16 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
 
   // Logo upload state
   const [uploadingLogo, setUploadingLogo] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
   const [logoStats, setLogoStats] = useState<{
     originalSize: number
     compressedSize: number
     previewUrl: string
   } | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Track if user explicitly edited the introduction
+  const [isIntroCustomized, setIsIntroCustomized] = useState(false)
 
   // Auto-fill suggested intro if user hasn't typed custom intro
   const suggestedIntro = useMemo(() => suggestedIntroduction(draft), [draft])
@@ -110,6 +146,9 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
               ...payload.draft,
               publicEmail: payload.draft.publicEmail || current.publicEmail || initialEmail,
             }))
+            if (payload.draft.introduction) {
+              setIsIntroCustomized(true)
+            }
             if (payload.draft.primaryPhone) {
               const parsed = splitPhoneAndCountry(payload.draft.primaryPhone)
               setPhoneCountry(parsed.dialCode)
@@ -131,12 +170,14 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
         }
       } catch {
         // Silently fall back to empty draft
+      } finally {
+        setIsHydrating(false)
       }
     }
     loadSavedDraft()
   }, [initialEmail])
 
-  // Auto-save draft on step navigation
+  // Auto-save draft on step navigation and debounce
   const persistDraft = useCallback(async (updated: OnboardingDraft) => {
     try {
       await fetch('/api/onboarding/draft', {
@@ -148,6 +189,18 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
       // Draft autosave failure is non-blocking
     }
   }, [])
+
+  const isInitialMount = useRef(true)
+  useEffect(() => {
+    if (isInitialMount.current || isHydrating) {
+      isInitialMount.current = false
+      return
+    }
+    const timer = setTimeout(() => {
+      persistDraft(draft)
+    }, 800)
+    return () => clearTimeout(timer)
+  }, [draft, isHydrating, persistDraft])
 
   const update = <K extends keyof OnboardingDraft>(key: K, value: OnboardingDraft[K]) => {
     setDraft((current) => {
@@ -296,7 +349,11 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
   }
 
   const next = () => {
-    const result = validateOnboardingStage(draft, stage as 1 | 2 | 3)
+    const draftToValidate = {
+      ...draft,
+      introduction: isIntroCustomized ? draft.introduction : (draft.introduction.trim() || suggestedIntro),
+    }
+    const result = validateOnboardingStage(draftToValidate, stage as 1 | 2 | 3)
     setDraft(result.draft)
     setErrors(result.errors)
     if (!Object.keys(result.errors).length) {
@@ -306,7 +363,11 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
   }
 
   const submit = async () => {
-    const result = validateOnboardingDraft(draft)
+    const draftToValidate = {
+      ...draft,
+      introduction: isIntroCustomized ? draft.introduction : (draft.introduction.trim() || suggestedIntro),
+    }
+    const result = validateOnboardingDraft(draftToValidate)
     setDraft(result.draft)
     setErrors(result.errors)
     setServerError('')
@@ -336,353 +397,360 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
     }
   }
 
+  const currentStage = STAGES[stage - 1] ?? STAGES[0]
+
   return (
-    <div className="space-y-6">
-      <div className="flex gap-2 text-sm">
-        {['Studio Identity', 'Branding & Palette', 'Contact & Dashboard'].map((label, index) => (
-          <div
-            key={label}
-            className={`flex-1 border-b-2 pb-2 ${
-              stage === index + 1
-                ? 'border-admin-ink font-semibold text-admin-ink'
-                : 'border-admin-border text-admin-muted'
-            }`}
-          >
-            {index + 1}. {label}
-          </div>
-        ))}
+    <div className="space-y-6" aria-busy={isHydrating || busy}>
+      <div className="flex flex-col gap-2 border-b border-admin-border pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Setup flow</p>
+          <h2 id="onboarding-form-title" className="mt-2 text-2xl font-semibold tracking-tight text-admin-ink">
+            {currentStage.label}
+          </h2>
+          <p className="mt-1 text-sm text-admin-muted">{currentStage.summary}</p>
+        </div>
+        <p className="text-sm font-medium tabular-nums text-admin-muted">Step {stage} of {STAGES.length}</p>
       </div>
 
-      {serverError && (
-        <p
-          role="alert"
-          className="rounded border border-admin-alert bg-admin-alert-soft px-3 py-2 text-sm text-admin-alert"
+      <nav aria-label="Onboarding progress" className="space-y-3">
+        <ol className="grid grid-cols-3 gap-2">
+          {STAGES.map((item) => {
+            const active = item.id === stage
+            const complete = item.id < stage
+            return (
+              <li key={item.id} className="min-w-0">
+                <div className={`flex min-h-16 flex-col justify-between rounded-lg border p-3 text-left transition-colors motion-reduce:transition-none ${
+                  active
+                    ? 'border-admin-primary bg-admin-primary-soft text-admin-ink'
+                    : complete
+                      ? 'border-admin-border bg-admin-raised text-admin-ink'
+                      : 'border-admin-border bg-admin-surface text-admin-muted'
+                }`} aria-current={active ? 'step' : undefined}>
+                  <span className="text-xs font-semibold tabular-nums">0{item.id}</span>
+                  <span className="mt-2 truncate text-xs font-semibold sm:text-sm">{item.label}</span>
+                </div>
+              </li>
+            )
+          })}
+        </ol>
+        <div
+          className="h-1 overflow-hidden rounded-full bg-admin-raised"
+          role="progressbar"
+          aria-label="Onboarding completion"
+          aria-valuemin={1}
+          aria-valuemax={STAGES.length}
+          aria-valuenow={stage}
         >
-          {serverError}
-        </p>
-      )}
+          <div
+            className={`h-full rounded-full bg-admin-primary transition-[width] motion-reduce:transition-none ${PROGRESS_WIDTHS[stage - 1]}`}
+          />
+        </div>
+      </nav>
 
-      {/* Stage 1: Studio Identity & Operations */}
-      {stage === 1 && (
-        <section className="space-y-5">
-          <Field id="studioName" label="Studio name" error={errors.studioName}>
-            <input
-              id="studioName"
-              placeholder="e.g. Studio Arcform"
-              value={draft.studioName}
-              onChange={(event) => update('studioName', event.target.value)}
-            />
-          </Field>
-
+      {isHydrating ? (
+        <div className="flex min-h-40 items-center justify-center rounded-lg border border-dashed border-admin-border bg-admin-surface px-5 text-center" role="status" aria-live="polite">
           <div>
-            <label htmlFor="primaryCity" className="text-sm font-medium text-admin-ink">
-              Primary Studio Location (Headquarters / Office)
-            </label>
-            <p className="mt-0.5 text-xs text-admin-muted">
-              The city or locality where your studio or design office is physically based.
-            </p>
-            <div className="mt-2 [&_input]:w-full [&_input]:rounded [&_input]:border [&_input]:border-admin-border [&_input]:bg-admin-bg [&_input]:px-3 [&_input]:py-2 [&_input]:text-admin-ink">
-              <input
-                id="primaryCity"
-                placeholder="e.g. Gurugram, South Delhi, Indiranagar, Bandra"
-                value={draft.primaryCity || ''}
-                onChange={(e) => update('primaryCity', e.target.value)}
-              />
+            <p className="text-sm font-semibold text-admin-ink">Loading your saved answers</p>
+            <p className="mt-1 text-sm text-admin-muted">Your setup will be ready in a moment.</p>
+          </div>
+        </div>
+      ) : (
+        <>
+          {serverError && (
+            <div role="alert" className="rounded-lg border border-admin-alert bg-admin-alert-soft px-4 py-3 text-sm text-admin-alert">
+              <p className="font-semibold">We couldn’t finish that step.</p>
+              <p className="mt-1">{serverError}</p>
             </div>
-            {draft.primaryCity?.trim() && !draft.serviceAreas.includes(draft.primaryCity.trim()) && (
-              <button
-                type="button"
-                className="mt-1.5 text-xs text-admin-muted hover:text-admin-ink"
-                onClick={() => addArea(draft.primaryCity?.trim())}
-              >
-                + Also add &ldquo;{draft.primaryCity.trim()}&rdquo; to your project service areas
+          )}
+
+          {stage === 1 && (
+            <section aria-labelledby="stage-1-title" className="space-y-6">
+              <div>
+                <h3 id="stage-1-title" className="text-lg font-semibold text-admin-ink">Tell us about your studio</h3>
+                <p className="mt-1 text-sm leading-6 text-admin-muted">Start with the essentials. You can refine the copy and coverage later.</p>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field id="studioName" label="Studio name" error={errors.studioName}>
+                  <input
+                    id="studioName"
+                    placeholder="e.g. Studio Arcform"
+                    value={draft.studioName}
+                    aria-invalid={Boolean(errors.studioName)}
+                    onChange={(event) => update('studioName', event.target.value)}
+                  />
+                </Field>
+
+                <Field
+                  id="primaryCity"
+                  label="Primary studio location"
+                  hint="The city or locality where your studio is based."
+                >
+                  <input
+                    id="primaryCity"
+                    list="city-suggestions"
+                    placeholder="e.g. Gurugram, South Delhi, Indiranagar"
+                    value={draft.primaryCity || ''}
+                    onChange={(event) => update('primaryCity', event.target.value)}
+                  />
+                  <datalist id="city-suggestions">
+                    {CITY_SUGGESTIONS.map((city) => (
+                      <option key={city} value={city} />
+                    ))}
+                  </datalist>
+                </Field>
+              </div>
+
+              {draft.primaryCity?.trim() && !draft.serviceAreas.includes(draft.primaryCity.trim()) && (
+                <button
+                  type="button"
+                  className="-mt-3 text-left text-sm text-admin-primary underline decoration-transparent underline-offset-4 transition hover:decoration-current focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-offset-admin-surface focus-visible:outline-none motion-reduce:transition-none"
+                  onClick={() => addArea(draft.primaryCity?.trim())}
+                >
+                  Also add “{draft.primaryCity.trim()}” to your project service areas
+                </button>
+              )}
+
+              <fieldset className="space-y-4 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+                <legend className="px-1 text-sm font-semibold text-admin-ink">Project coverage</legend>
+                <div>
+                  <label htmlFor="serviceAreas" className="text-sm font-medium text-admin-ink">Service areas</label>
+                  <p id="serviceAreas-hint" className="mt-1 text-sm leading-6 text-admin-muted">Add the cities, localities, or neighbourhoods where you work. Press Enter or comma after each area.</p>
+                  <div className="mt-3 flex min-h-12 flex-wrap items-center gap-2 rounded-lg border border-admin-border bg-admin-bg p-2 transition-colors focus-within:border-admin-primary focus-within:ring-2 focus-within:ring-admin-primary motion-reduce:transition-none">
+                    {draft.serviceAreas.map((area, index) => (
+                      <span key={area} className="flex items-center gap-1.5 rounded-full border border-admin-border bg-admin-raised px-3 py-1.5 text-xs font-medium text-admin-ink">
+                        {area}
+                        <button
+                          type="button"
+                          className="rounded-full text-admin-muted outline-none hover:text-admin-alert focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-offset-admin-raised focus-visible:outline-none"
+                          onClick={() => removeArea(index)}
+                          aria-label={`Remove ${area}`}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                    <input
+                      id="serviceAreas"
+                      className="min-w-40 flex-1 bg-transparent px-1 py-2 text-sm text-admin-ink outline-none placeholder:text-admin-muted"
+                      placeholder={draft.serviceAreas.length ? 'Add another area…' : 'e.g. South Delhi, Noida, Gurugram'}
+                      value={areaInput}
+                      aria-describedby="serviceAreas-hint"
+                      aria-invalid={Boolean(errors.serviceAreas)}
+                      onChange={(event) => setAreaInput(event.target.value)}
+                      onKeyDown={handleAreaKeyDown}
+                      onBlur={() => addArea()}
+                    />
+                  </div>
+                  <ErrorText message={errors.serviceAreas} />
+                </div>
+
+                <ChoiceGroup
+                  label="Project categories"
+                  values={CATEGORIES}
+                  selected={draft.categories}
+                  onToggle={(value) => toggle('categories', value)}
+                  error={errors.categories}
+                />
+
+                <ChoiceGroup
+                  label="Design services"
+                  values={SERVICES}
+                  selected={draft.services}
+                  onToggle={(value) => toggle('services', value)}
+                  error={errors.services}
+                />
+
+                {draft.services.includes('Other service') && (
+                  <Field id="otherService" label="Tell us about the other service" error={errors.otherService}>
+                    <input
+                      id="otherService"
+                      placeholder="e.g. Lighting design, Landscape styling"
+                      value={draft.otherService}
+                      aria-invalid={Boolean(errors.otherService)}
+                      onChange={(event) => update('otherService', event.target.value)}
+                    />
+                  </Field>
+                )}
+              </fieldset>
+            </section>
+          )}
+
+          {stage === 2 && (
+            <section aria-labelledby="stage-2-title" className="space-y-6">
+              <div>
+                <h3 id="stage-2-title" className="text-lg font-semibold text-admin-ink">Set the visual direction</h3>
+                <p className="mt-1 text-sm leading-6 text-admin-muted">Choose a starting point. These settings can change as your site takes shape.</p>
+              </div>
+
+              <fieldset className="space-y-4 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+                <legend className="px-1 text-sm font-semibold text-admin-ink">Studio logo</legend>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                  <p className="text-sm leading-6 text-admin-muted">Upload a PNG, JPG, or WebP logo. We optimise it for the preview.</p>
+                  <button
+                    type="button"
+                    className={`${BUTTON_CLASS} shrink-0 border-admin-border bg-admin-surface text-admin-ink hover:bg-admin-raised`}
+                    onClick={useSampleLogo}
+                    disabled={uploadingLogo}
+                  >
+                    Use sample logo
+                  </button>
+                </div>
+
+                {logoStats?.previewUrl ? (
+                  <div className="flex flex-col gap-4 rounded-lg border border-admin-border bg-admin-raised p-4 sm:flex-row sm:items-center">
+                    <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded border border-admin-border bg-admin-surface">
+                      <Image src={logoStats.previewUrl} alt="Logo preview" width={64} height={64} className="max-h-full max-w-full object-contain" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-admin-ink">Logo uploaded</p>
+                      <p className="mt-1 text-sm text-admin-muted">{logoStats.compressedSize > 0 ? `${formatBytes(logoStats.compressedSize)} WebP · ` : ''}Ready for display.</p>
+                    </div>
+                    <button type="button" onClick={removeLogo} className={`${BUTTON_CLASS} border-admin-border text-admin-alert hover:bg-admin-surface`}>
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <label
+                    htmlFor="logo-upload"
+                    onDragOver={(event) => {
+                      event.preventDefault()
+                      event.stopPropagation()
+                      setIsDragging(true)
+                    }}
+                    onDragLeave={(event) => {
+                      event.preventDefault()
+                      event.stopPropagation()
+                      setIsDragging(false)
+                    }}
+                    onDrop={(event) => {
+                      event.preventDefault()
+                      event.stopPropagation()
+                      setIsDragging(false)
+                      const file = event.dataTransfer.files?.[0]
+                      if (file) handleLogoFile(file)
+                    }}
+                    className={`flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed ${isDragging ? 'border-admin-primary bg-admin-primary-soft' : 'border-admin-border bg-admin-bg hover:border-admin-primary'} px-5 py-6 text-center transition-colors focus-within:border-admin-primary focus-within:ring-2 focus-within:ring-admin-primary motion-reduce:transition-none`}
+                  >
+                    <input
+                      id="logo-upload"
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/webp,image/png,image/jpeg"
+                      className="sr-only"
+                      onChange={(event) => {
+                        const file = event.target.files?.[0]
+                        if (file) handleLogoFile(file)
+                      }}
+                    />
+                    <span className="text-sm font-semibold text-admin-ink">{uploadingLogo ? 'Processing logo…' : 'Choose or drop a logo file'}</span>
+                    <span className="mt-1 text-sm text-admin-muted">or use the sample logo above</span>
+                  </label>
+                )}
+              </fieldset>
+
+              <fieldset className="space-y-4 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+                <legend className="px-1 text-sm font-semibold text-admin-ink">Architectural identity</legend>
+                <p className="text-sm leading-6 text-admin-muted">Select a starting palette for the public site. You can switch it later from config.</p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {PALETTES.map((palette) => {
+                    const selected = (draft.palette || 'editorial') === palette.id
+                    return (
+                      <button
+                        key={palette.id}
+                        type="button"
+                        onClick={() => update('palette', palette.id)}
+                        aria-pressed={selected}
+                        className={`flex min-h-28 flex-col rounded-lg border p-4 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-offset-admin-surface motion-reduce:transition-none ${selected ? 'border-admin-primary bg-admin-primary-soft' : 'border-admin-border bg-admin-surface hover:bg-admin-raised'}`}
+                      >
+                        <span className="flex items-center justify-between gap-3 text-sm font-semibold text-admin-ink">
+                          {palette.title}
+                          <span className="flex gap-1.5" aria-hidden="true">
+                            {palette.swatches.map((swatch) => <span key={swatch} className={`h-3.5 w-3.5 rounded-full border border-admin-border ${swatch}`} />)}
+                          </span>
+                        </span>
+                        <span className="mt-2 text-sm leading-6 text-admin-muted">{palette.blurb}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </fieldset>
+            </section>
+          )}
+
+          {stage === 3 && (
+            <section aria-labelledby="stage-3-title" className="space-y-6">
+              <div>
+                <h3 id="stage-3-title" className="text-lg font-semibold text-admin-ink">Make it easy to reach you</h3>
+                <p className="mt-1 text-sm leading-6 text-admin-muted">These details help visitors contact the right studio team.</p>
+              </div>
+
+              <fieldset className="space-y-5 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+                <legend className="px-1 text-sm font-semibold text-admin-ink">Contact details</legend>
+                <PhoneField id="primaryPhone" label="Business contact phone" countryCode={phoneCountry} nationalNumber={phoneNational} onCountryChange={handlePhoneCountryChange} onNumberChange={handlePhoneNationalChange} error={errors.primaryPhone} />
+
+                <label className="flex min-h-11 items-center gap-3 rounded-lg border border-admin-border bg-admin-bg px-3 text-sm font-medium text-admin-ink focus-within:border-admin-primary focus-within:ring-2 focus-within:ring-admin-primary">
+                  <input
+                    type="checkbox"
+                    className="size-4 accent-admin-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-admin-primary"
+                    checked={draft.usePhoneForWhatsapp}
+                    onChange={(event) => handleToggleWhatsapp(event.target.checked)}
+                  />
+                  Use this number for WhatsApp
+                </label>
+
+                {!draft.usePhoneForWhatsapp && <PhoneField id="whatsapp" label="WhatsApp number" countryCode={whatsappCountry} nationalNumber={whatsappNational} onCountryChange={handleWhatsappCountryChange} onNumberChange={handleWhatsappNationalChange} error={errors.whatsapp} />}
+
+                <Field id="publicEmail" label="Public business email (optional)" error={errors.publicEmail}>
+                  <input id="publicEmail" type="email" placeholder="hello@yourstudio.com" value={draft.publicEmail} aria-invalid={Boolean(errors.publicEmail)} onChange={(event) => update('publicEmail', event.target.value)} />
+                </Field>
+              </fieldset>
+
+              <fieldset className="space-y-4 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+                <legend className="px-1 text-sm font-semibold text-admin-ink">Studio introduction</legend>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                  <p className="text-sm leading-6 text-admin-muted">Start with a draft and make it sound like your studio.</p>
+                  <button
+                    type="button"
+                    className="text-left text-sm font-semibold text-admin-primary underline decoration-transparent underline-offset-4 transition hover:decoration-current focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-offset-admin-surface focus-visible:outline-none motion-reduce:transition-none"
+                    onClick={() => {
+                      setIsIntroCustomized(false)
+                      update('introduction', suggestedIntro)
+                    }}
+                  >
+                    Reset to suggestion
+                  </button>
+                </div>
+                <textarea
+                  id="introduction"
+                  rows={5}
+                  className={`${CONTROL_CLASS} min-h-32 py-3`}
+                  value={isIntroCustomized ? draft.introduction : (draft.introduction || suggestedIntro)}
+                  onChange={(event) => {
+                    setIsIntroCustomized(true)
+                    update('introduction', event.target.value)
+                  }}
+                />
+              </fieldset>
+            </section>
+          )}
+
+          <div className="flex flex-col-reverse gap-3 border-t border-admin-border pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <button type="button" className={`${BUTTON_CLASS} border-admin-border bg-admin-surface text-admin-ink hover:bg-admin-raised`} disabled={stage === 1 || busy} onClick={() => setStage((value) => value - 1)}>
+              Back
+            </button>
+            {stage < 3 ? (
+              <button type="button" className={`${BUTTON_CLASS} border-admin-primary bg-admin-primary text-admin-on-primary hover:opacity-90`} onClick={next}>
+                Continue
+              </button>
+            ) : (
+              <button type="button" disabled={busy || uploadingLogo} className={`${BUTTON_CLASS} border-admin-primary bg-admin-primary text-admin-on-primary hover:opacity-90`} onClick={submit}>
+                {busy ? 'Opening your dashboard…' : 'Go to dashboard'}
               </button>
             )}
           </div>
-
-          <div>
-            <label htmlFor="serviceAreas" className="text-sm font-medium text-admin-ink">
-              Service Areas & Project Coverage
-            </label>
-            <p className="mt-0.5 text-xs text-admin-muted">
-              The cities, localities, or neighbourhoods where you design and execute projects. Press Enter or comma to add each area.
-            </p>
-            <div className="mt-2 flex min-h-12 flex-wrap items-center gap-2 rounded border border-admin-border bg-admin-bg p-2">
-              {draft.serviceAreas.map((area, index) => (
-                <span
-                  key={area}
-                  className="flex items-center gap-1.5 rounded-full border border-admin-border bg-admin-raised px-3 py-1 text-xs font-medium text-admin-ink"
-                >
-                  {area}
-                  <button
-                    type="button"
-                    className="text-admin-muted hover:text-admin-alert"
-                    onClick={() => removeArea(index)}
-                    aria-label={`Remove ${area}`}
-                  >
-                    ×
-                  </button>
-                </span>
-              ))}
-              <input
-                id="serviceAreas"
-                className="min-w-40 flex-1 bg-transparent px-1 py-1 text-sm text-admin-ink outline-none"
-                placeholder={
-                  draft.serviceAreas.length ? 'Add another area…' : 'e.g. South Delhi, Noida, Gurugram'
-                }
-                value={areaInput}
-                onChange={(e) => setAreaInput(e.target.value)}
-                onKeyDown={handleAreaKeyDown}
-                onBlur={() => addArea()}
-              />
-            </div>
-            <ErrorText message={errors.serviceAreas} />
-          </div>
-
-          <ChoiceGroup
-            label="What project categories do you work in?"
-            values={CATEGORIES}
-            selected={draft.categories}
-            onToggle={(value) => toggle('categories', value)}
-            error={errors.categories}
-          />
-
-          <ChoiceGroup
-            label="What design services do you offer?"
-            values={SERVICES}
-            selected={draft.services}
-            onToggle={(value) => toggle('services', value)}
-            error={errors.services}
-          />
-
-          {draft.services.includes('Other service') && (
-            <Field
-              id="otherService"
-              label="Tell us about the other service"
-              error={errors.otherService}
-            >
-              <input
-                id="otherService"
-                placeholder="e.g. Lighting design, Landscape styling"
-                value={draft.otherService}
-                onChange={(event) => update('otherService', event.target.value)}
-              />
-            </Field>
-          )}
-        </section>
+        </>
       )}
-
-      {/* Stage 2: Visual Branding & Palette */}
-      {stage === 2 && (
-        <section className="space-y-6">
-          <div>
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-medium text-admin-ink">Studio Logo</h2>
-              <button
-                type="button"
-                className="text-xs font-medium text-admin-ink underline hover:text-admin-muted"
-                onClick={useSampleLogo}
-                disabled={uploadingLogo}
-              >
-                Use Sample Architectural Logo
-              </button>
-            </div>
-            <p className="mt-1 text-xs text-admin-muted">
-              Upload your studio logo (PNG, JPG, SVG, or WebP), or use our sample logo. Automatically optimized for retina displays and fast loading.
-            </p>
-
-            <div className="mt-3">
-              {logoStats?.previewUrl ? (
-                <div className="flex items-center gap-4 rounded-lg border border-admin-border bg-admin-raised p-4">
-                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded border border-admin-border bg-admin-surface">
-                    <Image
-                      src={logoStats.previewUrl}
-                      alt="Logo preview"
-                      width={64}
-                      height={64}
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-admin-ink">Logo uploaded</p>
-                    <p className="mt-0.5 text-xs text-admin-muted">
-                      {logoStats.compressedSize > 0 ? `${formatBytes(logoStats.compressedSize)} WebP · ` : ''}Ready for display
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={removeLogo}
-                    className="rounded border border-admin-border px-3 py-1.5 text-xs font-medium text-admin-alert hover:bg-admin-surface"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ) : (
-                <div
-                  className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-admin-border bg-admin-surface p-6 text-center transition-colors hover:border-admin-ink"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/webp,image/png,image/jpeg"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) handleLogoFile(file)
-                    }}
-                  />
-                  <span className="text-sm font-medium text-admin-ink">
-                    {uploadingLogo ? 'Processing logo…' : 'Click to upload your logo'}
-                  </span>
-                  <span className="mt-1 text-xs text-admin-muted">
-                    Supports WebP, PNG, or JPEG. You can also click &ldquo;Use Sample Architectural Logo&rdquo; above.
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-sm font-medium text-admin-ink">Architectural Identity Template</h2>
-            <p className="mt-1 text-xs text-admin-muted">
-              Choose your studio design palette. Defaults to Editorial Crisp. Switchable anytime from config.
-            </p>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              {PALETTES.map((p) => {
-                const selected = (draft.palette || 'editorial') === p.id
-                return (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => update('palette', p.id)}
-                    className={`flex flex-col rounded-lg border p-4 text-left transition-all ${
-                      selected
-                        ? 'border-admin-ink bg-admin-raised ring-1 ring-admin-ink'
-                        : 'border-admin-border bg-admin-surface hover:border-admin-muted'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold text-admin-ink">{p.title}</span>
-                      <div className="flex gap-1.5">
-                        {p.swatches.map((swatch) => (
-                          <span
-                            key={swatch}
-                            className={`h-3.5 w-3.5 rounded-full border border-admin-border ${swatch}`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="mt-2 text-xs leading-relaxed text-admin-muted">{p.blurb}</p>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Stage 3: Contact & AI Studio Voice */}
-      {stage === 3 && (
-        <section className="space-y-5">
-          <PhoneField
-            id="primaryPhone"
-            label="Business contact phone"
-            countryCode={phoneCountry}
-            nationalNumber={phoneNational}
-            onCountryChange={handlePhoneCountryChange}
-            onNumberChange={handlePhoneNationalChange}
-            error={errors.primaryPhone}
-          />
-
-          <label className="flex items-center gap-2 text-sm text-admin-ink">
-            <input
-              type="checkbox"
-              checked={draft.usePhoneForWhatsapp}
-              onChange={(event) => handleToggleWhatsapp(event.target.checked)}
-            />{' '}
-            Use this number for WhatsApp
-          </label>
-
-          {!draft.usePhoneForWhatsapp && (
-            <PhoneField
-              id="whatsapp"
-              label="WhatsApp number"
-              countryCode={whatsappCountry}
-              nationalNumber={whatsappNational}
-              onCountryChange={handleWhatsappCountryChange}
-              onNumberChange={handleWhatsappNationalChange}
-              error={errors.whatsapp}
-            />
-          )}
-
-          <Field
-            id="publicEmail"
-            label="Public business email (optional)"
-            error={errors.publicEmail}
-          >
-            <input
-              id="publicEmail"
-              type="email"
-              placeholder="hello@yourstudio.com"
-              value={draft.publicEmail}
-              onChange={(event) => update('publicEmail', event.target.value)}
-            />
-          </Field>
-
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="introduction" className="text-sm font-medium text-admin-ink">
-                Studio Introduction
-              </label>
-              <button
-                type="button"
-                className="text-xs text-admin-muted hover:text-admin-ink"
-                onClick={() => update('introduction', suggestedIntro)}
-              >
-                Reset to AI suggestion
-              </button>
-            </div>
-            <div className="mt-2 [&_textarea]:w-full [&_textarea]:rounded [&_textarea]:border [&_textarea]:border-admin-border [&_textarea]:bg-admin-bg [&_textarea]:px-3 [&_textarea]:py-2 [&_textarea]:text-admin-ink">
-              <textarea
-                id="introduction"
-                rows={3}
-                value={draft.introduction || suggestedIntro}
-                onChange={(e) => update('introduction', e.target.value)}
-              />
-            </div>
-          </div>
-        </section>
-      )}
-
-      <div className="flex justify-between gap-3 pt-2">
-        <button
-          type="button"
-          className="rounded border border-admin-border px-4 py-2 text-sm text-admin-ink disabled:opacity-50"
-          disabled={stage === 1 || busy}
-          onClick={() => setStage((value) => value - 1)}
-        >
-          Back
-        </button>
-        {stage < 3 ? (
-          <button
-            type="button"
-            className="rounded bg-admin-ink px-4 py-2 text-sm text-admin-bg"
-            onClick={next}
-          >
-            Continue
-          </button>
-        ) : (
-          <button
-            type="button"
-            disabled={busy || uploadingLogo}
-            className="rounded bg-admin-ink px-4 py-2 text-sm text-admin-bg disabled:opacity-50"
-            onClick={submit}
-          >
-            {busy ? 'Opening your dashboard…' : 'Go to Dashboard'}
-          </button>
-        )}
-      </div>
     </div>
   )
 }
@@ -690,11 +758,13 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
 function Field({
   id,
   label,
+  hint,
   error,
   children,
 }: {
   id: string
   label: string
+  hint?: string
   error?: string
   children: React.ReactNode
 }) {
@@ -703,7 +773,8 @@ function Field({
       <label htmlFor={id} className="text-sm font-medium text-admin-ink">
         {label}
       </label>
-      <div className="mt-2 [&_input]:w-full [&_input]:rounded [&_input]:border [&_input]:border-admin-border [&_input]:bg-admin-bg [&_input]:px-3 [&_input]:py-2 [&_input]:text-admin-ink">
+      {hint && <p className="mt-1 text-sm leading-6 text-admin-muted">{hint}</p>}
+      <div className="mt-2 [&_input]:min-h-12 [&_input]:w-full [&_input]:rounded-lg [&_input]:border [&_input]:border-admin-border [&_input]:bg-admin-bg [&_input]:px-3 [&_input]:text-base [&_input]:text-admin-ink [&_input]:outline-none [&_input]:transition-colors [&_input]:placeholder:text-admin-muted [&_input]:focus-visible:border-admin-primary [&_input]:focus-visible:ring-2 [&_input]:focus-visible:ring-admin-primary [&_input]:focus-visible:ring-offset-2 [&_input]:focus-visible:ring-offset-admin-surface [&_input]:motion-reduce:transition-none">
         {children}
       </div>
       <ErrorText message={error} />
@@ -774,7 +845,7 @@ function PhoneField({
       <label htmlFor={id} className="text-sm font-medium text-admin-ink">
         {label}
       </label>
-      <div className="relative mt-2 flex rounded border border-admin-border bg-admin-bg">
+      <div className="relative mt-2 flex min-h-12 rounded-lg border border-admin-border bg-admin-bg transition-colors focus-within:border-admin-primary focus-within:ring-2 focus-within:ring-admin-primary motion-reduce:transition-none">
         <div ref={dropdownRef} className="relative">
           <button
             type="button"
@@ -784,22 +855,22 @@ function PhoneField({
               setOpen((prev) => !prev)
               setSearch('')
             }}
-            className="flex h-full items-center gap-2 border-r border-admin-border bg-admin-surface px-3 py-2 text-sm font-medium text-admin-ink transition-colors hover:bg-admin-raised cursor-pointer"
+            className="flex h-full min-h-12 items-center gap-2 border-r border-admin-border bg-admin-surface px-3 text-sm font-medium text-admin-ink outline-none transition-colors hover:bg-admin-raised focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-inset motion-reduce:transition-none"
           >
-            <CountryFlag code={selectedCountry.code} className="h-3.5 w-5 shrink-0 rounded-[2px] object-cover shadow-xs" />
+            <CountryFlag code={selectedCountry.code} className="h-3.5 w-5 shrink-0 rounded-sm object-cover" />
             <span>{selectedCountry.dialCode}</span>
             <span className="text-xs text-admin-muted">▾</span>
           </button>
 
           {open && (
-            <div className="absolute left-0 top-full z-50 mt-1 max-h-64 w-72 overflow-hidden rounded-md border border-admin-border bg-admin-surface shadow-lg">
+            <div className="absolute left-0 top-full z-50 mt-1 max-h-64 w-[min(18rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-admin-border bg-admin-surface">
               <div className="border-b border-admin-border p-2">
                 <input
                   type="text"
                   placeholder="Search country or code..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full rounded border border-admin-border bg-admin-bg px-2.5 py-1.5 text-xs text-admin-ink outline-none"
+                  className="min-h-10 w-full rounded-lg border border-admin-border bg-admin-bg px-2.5 text-sm text-admin-ink outline-none focus-visible:border-admin-primary focus-visible:ring-2 focus-visible:ring-admin-primary"
                   autoFocus
                 />
               </div>
@@ -812,11 +883,11 @@ function PhoneField({
                         onCountryChange(c.dialCode)
                         setOpen(false)
                       }}
-                      className={`flex w-full items-center gap-2.5 px-3 py-2 text-left text-xs transition-colors hover:bg-admin-raised ${
+                      className={`flex min-h-10 w-full items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors hover:bg-admin-raised focus-visible:bg-admin-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-admin-primary motion-reduce:transition-none ${
                         c.dialCode === countryCode ? 'bg-admin-raised font-semibold text-admin-ink' : 'text-admin-ink'
                       }`}
                     >
-                      <CountryFlag code={c.code} className="h-3.5 w-5 shrink-0 rounded-[2px] object-cover shadow-xs" />
+                      <CountryFlag code={c.code} className="h-3.5 w-5 shrink-0 rounded-sm object-cover" />
                       <span className="flex-1 truncate">{c.name}</span>
                       <span className="text-admin-muted">{c.dialCode}</span>
                     </button>
@@ -835,7 +906,7 @@ function PhoneField({
         <input
           id={id}
           type="tel"
-          className="w-full bg-transparent px-3 py-2 text-sm text-admin-ink outline-none"
+          className="min-h-12 w-full min-w-0 bg-transparent px-3 text-base text-admin-ink outline-none placeholder:text-admin-muted focus-visible:ring-2 focus-visible:ring-admin-primary"
           placeholder={countryCode === '+91' ? '10-digit mobile number' : 'Phone number'}
           value={nationalNumber}
           onChange={(e) => onNumberChange(e.target.value)}
@@ -861,7 +932,7 @@ function ChoiceGroup({
 }) {
   const groupId = useId()
   return (
-    <fieldset>
+    <fieldset aria-invalid={Boolean(error)}>
       <legend className="text-sm font-medium text-admin-ink">{label}</legend>
       <div className="mt-2 flex flex-wrap gap-2">
         {values.map((value) => {
@@ -870,10 +941,10 @@ function ChoiceGroup({
             <button
               type="button"
               key={`${groupId}-${value}`}
-              className={`rounded border px-3 py-2 text-sm transition-colors ${
+              className={`${BUTTON_CLASS} min-h-10 px-3 py-2 ${
                 isSelected
-                  ? 'border-admin-ink bg-admin-raised font-medium text-admin-ink'
-                  : 'border-admin-border text-admin-muted hover:text-admin-ink'
+                  ? 'border-admin-primary bg-admin-primary-soft text-admin-ink'
+                  : 'border-admin-border bg-admin-surface text-admin-muted hover:bg-admin-raised hover:text-admin-ink'
               }`}
               aria-pressed={isSelected}
               onClick={() => onToggle(value)}
