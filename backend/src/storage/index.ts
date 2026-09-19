@@ -24,15 +24,28 @@ function getR2Client(): S3Client | null {
 }
 
 /**
- * Upload an asset either to Supabase Storage (staging/demo) or Cloudflare R2 (paid tier).
+ * ==============================================================================
+ * ARCHITECTURAL INVARIANT — STORAGE BOUNDARY RULE
+ * ==============================================================================
+ * Cloudflare R2 is STRICTLY RESERVED for paying, live customer tenants (paid tiers).
+ * 
+ * - Staging, onboarding, and demo tenants (t0 / status: demo) MUST NEVER touch R2.
+ * - All demo, staging, and onboarding assets belong EXCLUSIVELY in Supabase Storage
+ *   under the `tenant-assets` bucket (`staging/<userId>/...`).
+ * 
+ * Any attempt to route unpaid, demo, or staging uploads to R2 is a severe architectural
+ * and cost-isolation violation. Do not bypass or weaken this boundary.
+ * ==============================================================================
  */
 export async function uploadAsset(
   params: StorageUploadParams,
   accessToken?: string,
 ): Promise<StorageUploadResult> {
-  const r2 = getR2Client()
+  // Guardrail: Never allow staging or demo uploads to touch R2
+  const isDemoOrStaging = params.isStaging || !params.tenantSlug || params.tenantSlug === 'demo'
+  const r2 = isDemoOrStaging ? null : getR2Client()
 
-  if (r2 && !params.isStaging) {
+  if (r2) {
     try {
       const bucketName = process.env.R2_BUCKET_NAME || 'studio-presence-assets'
       const cdnBase = process.env.NEXT_PUBLIC_CDN_BASE_URL || ''
