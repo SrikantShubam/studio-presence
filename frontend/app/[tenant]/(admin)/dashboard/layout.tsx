@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import {
   AuthError,
-  canAccessDashboard,
   ConfigError,
   requireTenant,
 } from '@studio/backend'
@@ -67,10 +66,6 @@ export default async function DashboardLayout({
 
   if (branding.slug !== tenantSlug) {
     redirect('/login')
-  }
-
-  if (!canAccessDashboard(tenantContext.tenant)) {
-    redirect('/panel')
   }
 
   return (

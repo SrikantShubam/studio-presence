@@ -32,8 +32,8 @@ export default async function EnquiriesPage({
   const { tenant } = await params
   const query = await searchParams
   const activeFilter = filterFrom(query?.filter)
-  const forceDemo = query?.demo === '1'
-  const { leads: allLeads, mode } = await loadLeads(tenant, forceDemo)
+  const baseDashboard = `/${tenant}/dashboard`
+  const { leads: allLeads, mode } = await loadLeads(tenant, query?.demo)
   const visibleLeads = filterLeads(allLeads, activeFilter)
   const sampleMode = mode === 'demo'
   const unavailableMode = mode === 'unavailable'
@@ -54,7 +54,7 @@ export default async function EnquiriesPage({
                   : 'All enquiries submitted through the website are listed here.'}
             </p>
           </div>
-          <Link href={sampleMode ? '/dashboard/enquiries' : '/dashboard/enquiries?demo=1'} className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
+          <Link href={sampleMode ? `${baseDashboard}/enquiries?demo=0` : `${baseDashboard}/enquiries?demo=1`} className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
             {sampleMode ? 'Turn sample data off' : 'Turn sample data on'}
           </Link>
         </div>
@@ -69,7 +69,7 @@ export default async function EnquiriesPage({
               This is the separate owner sheet for every lead captured by WhatsApp, estimate, form, call, or other source.
             </p>
           </div>
-          <Link href="/dashboard" className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+          <Link href={baseDashboard} className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
             Back to overview
           </Link>
         </div>
@@ -85,7 +85,7 @@ export default async function EnquiriesPage({
         {FILTERS.map((filter) => (
           <Link
             key={filter.value}
-            href={filter.value === 'all' ? (sampleMode ? '/dashboard/enquiries?demo=1' : '/dashboard/enquiries') : `/dashboard/enquiries?${sampleMode ? 'demo=1&' : ''}filter=${filter.value}`}
+            href={filter.value === 'all' ? (sampleMode ? `${baseDashboard}/enquiries?demo=1` : `${baseDashboard}/enquiries`) : `${baseDashboard}/enquiries?${sampleMode ? 'demo=1&' : ''}filter=${filter.value}`}
             className={`flex min-h-11 shrink-0 items-center rounded border px-4 text-sm font-semibold ${
               activeFilter === filter.value ? 'border-admin-primary bg-admin-primary-soft text-admin-primary' : 'border-admin-border bg-admin-surface text-admin-ink'
             }`}
@@ -100,8 +100,8 @@ export default async function EnquiriesPage({
   )
 }
 
-async function loadLeads(tenantSlug: string, forceDemo: boolean): Promise<{ leads: Lead[]; mode: 'paid' | 'demo' | 'unavailable' }> {
-  if (forceDemo) return { leads: DEMO_LEADS, mode: 'demo' }
+async function loadLeads(tenantSlug: string, demoParam: string | undefined): Promise<{ leads: Lead[]; mode: 'paid' | 'demo' | 'unavailable' }> {
+  if (demoParam === '1') return { leads: DEMO_LEADS, mode: 'demo' }
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -119,8 +119,10 @@ async function loadLeads(tenantSlug: string, forceDemo: boolean): Promise<{ lead
       accessToken: session.access_token,
     })
 
-    if (tenantContext.tenant.slug !== tenantSlug || !canAccessDashboard(tenantContext.tenant)) return { leads: [], mode: 'unavailable' }
-    return { leads: await leads.list(tenantContext.db), mode: 'paid' }
+    if (tenantContext.tenant.slug !== tenantSlug) return { leads: [], mode: 'unavailable' }
+    if (demoParam === '0') return { leads: [], mode: 'unavailable' }
+    if (canAccessDashboard(tenantContext.tenant)) return { leads: await leads.list(tenantContext.db), mode: 'paid' }
+    return { leads: DEMO_LEADS, mode: 'demo' }
   } catch (e) {
     if (e instanceof AuthError && (e.code === 'no-tenant' || e.code === 'wrong-tenant')) return { leads: [], mode: 'unavailable' }
     throw e

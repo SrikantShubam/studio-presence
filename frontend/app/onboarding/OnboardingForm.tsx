@@ -384,7 +384,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
             <div className="mt-2 [&_input]:w-full [&_input]:rounded [&_input]:border [&_input]:border-admin-border [&_input]:bg-admin-bg [&_input]:px-3 [&_input]:py-2 [&_input]:text-admin-ink">
               <input
                 id="primaryCity"
-                placeholder="e.g. Gurugram, South Delhi, Indiranagar, Patna"
+                placeholder="e.g. Gurugram, South Delhi, Indiranagar, Bandra"
                 value={draft.primaryCity || ''}
                 onChange={(e) => update('primaryCity', e.target.value)}
               />

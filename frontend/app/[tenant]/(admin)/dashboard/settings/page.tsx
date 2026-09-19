@@ -9,6 +9,7 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
   const instagramPosts = site?.sections.instagram?.embedPostUrls.length ?? 0
   const umami = site?.integrations.umami
   const estimate = site?.sections.estimate
+  const contentHref = `/${tenant}/dashboard/content`
 
   return (
     <AdminShell>
@@ -21,7 +22,7 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
               This page only shows high-level controls and integration status. Editing copy, pages, socials, and calculator values stays in Website Content.
             </p>
           </div>
-          <Link href="/dashboard/content" className="inline-flex min-h-11 items-center justify-center rounded bg-admin-primary px-4 text-sm font-semibold text-admin-on-primary">
+          <Link href={contentHref} className="inline-flex min-h-11 items-center justify-center rounded bg-admin-primary px-4 text-sm font-semibold text-admin-on-primary">
             Open Website Content
           </Link>
         </div>
@@ -33,10 +34,10 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
             Phone, WhatsApp number, WhatsApp starter message, CTA labels, contact address, and footer socials are content settings.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
-            <Link href="/dashboard/content" className="inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+            <Link href={contentHref} className="inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
               Edit contact and footer
             </Link>
-            <Link href="/dashboard/content" className="inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+            <Link href={contentHref} className="inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
               Edit CTAs
             </Link>
           </div>
@@ -46,7 +47,7 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
           <p className="text-sm leading-6 text-admin-muted">
             The owner can turn the calculator on/off and change rates, multipliers, result notes, and included items from Website Content.
           </p>
-          <Link href="/dashboard/content" className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+          <Link href={contentHref} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
             Edit calculator
           </Link>
         </SettingsCard>
@@ -65,7 +66,7 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
               <dd className="font-semibold tabular-nums text-admin-ink">{instagramPosts}</dd>
             </div>
           </dl>
-          <Link href="/dashboard/content" className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+          <Link href={contentHref} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
             Edit Instagram picks
           </Link>
         </SettingsCard>

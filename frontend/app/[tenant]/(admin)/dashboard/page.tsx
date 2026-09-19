@@ -25,8 +25,8 @@ export default async function DashboardPage({
   const { tenant } = await params
   const query = await searchParams
   const activeFilter = filterFrom(query?.filter)
-  const forceDemo = query?.demo === '1'
-  const { leads: allLeads, mode, displayName } = await loadLeads(tenant, forceDemo)
+  const baseDashboard = `/${tenant}/dashboard`
+  const { leads: allLeads, mode, displayName } = await loadLeads(tenant, query?.demo)
   const hindiStatus = await getI18nStatus(tenant)
   const visibleLeads = filterLeads(allLeads, activeFilter)
   const won = allLeads.filter((lead) => lead.status === 'won').length
@@ -52,10 +52,10 @@ export default async function DashboardPage({
             </p>
           </div>
           <Link
-            href={sampleMode ? '/dashboard' : '/dashboard?demo=1'}
+            href={sampleMode ? `${baseDashboard}?demo=0` : `${baseDashboard}?demo=1`}
             className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-primary px-4 text-sm font-semibold text-admin-primary"
           >
-            {sampleMode ? 'Turn sample data off' : unavailableMode ? 'Turn sample data on' : 'Turn sample data on'}
+            {sampleMode ? 'Turn sample data off' : 'Turn sample data on'}
           </Link>
         </div>
       </AdminCard>
@@ -71,7 +71,7 @@ export default async function DashboardPage({
                   Follow up enquiries, update website content, check analytics, and manage conversion settings from one place.
                 </p>
               </div>
-              <Link href="/" target="_blank" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+              <Link href={previewHref} target="_blank" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
                 View public site
               </Link>
             </div>
@@ -117,11 +117,11 @@ export default async function DashboardPage({
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Enquiries</p>
               <h2 className="mt-1 text-xl font-semibold text-admin-ink">Recent people waiting for a reply</h2>
               </div>
-              <Link href={sampleMode ? '/dashboard/enquiries?demo=1' : '/dashboard/enquiries'} className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+              <Link href={sampleMode ? `${baseDashboard}/enquiries?demo=1` : `${baseDashboard}/enquiries`} className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
                 Open all enquiries
               </Link>
             </div>
-            {recentLeads.length === 0 ? <EmptyState unavailable={unavailableMode} /> : <AdminCard className="overflow-hidden">{recentLeads.map((lead) => <LeadCard key={lead.id} lead={lead} demo={sampleMode} />)}</AdminCard>}
+            {recentLeads.length === 0 ? <EmptyState unavailable={unavailableMode} /> : <AdminCard className="overflow-hidden">{recentLeads.map((lead) => <LeadCard key={lead.id} lead={lead} demo={sampleMode} baseDashboard={baseDashboard} />)}</AdminCard>}
           </section>
         </div>
 
@@ -135,7 +135,7 @@ export default async function DashboardPage({
               <AdminChip tone="primary">editable</AdminChip>
             </div>
             <p className="mt-4 text-sm text-admin-muted">Change copy, projects, services, CTAs, socials, Hindi translations, and estimate settings for the pages this tenant has.</p>
-            <Link href="/dashboard/content" className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
+            <Link href={`${baseDashboard}/content`} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
               Open content manager
             </Link>
           </AdminCard>
@@ -149,7 +149,7 @@ export default async function DashboardPage({
               <AdminChip tone={hindiStatus.status === 'published' ? 'primary' : 'alert'}>{hindiStatus.status}</AdminChip>
             </div>
             <p className="mt-4 text-sm text-admin-muted">Use the language switcher inside Website Content to edit English and Hindi without raw JSON.</p>
-            <Link href="/dashboard/content" className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
+            <Link href={`${baseDashboard}/content`} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
               Edit translations
             </Link>
           </AdminCard>
@@ -163,7 +163,7 @@ export default async function DashboardPage({
               <AdminChip tone={sampleMode ? 'alert' : 'neutral'}>{sampleMode ? 'sample' : 'live'}</AdminChip>
             </div>
             <p className="mt-4 text-sm text-admin-muted">Visitor data comes from Umami when configured. If it is unavailable, the analytics screen says so instead of inventing numbers.</p>
-            <Link href="/dashboard/analytics" className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
+            <Link href={`${baseDashboard}/analytics`} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
               Open analytics
             </Link>
           </AdminCard>
@@ -174,8 +174,8 @@ export default async function DashboardPage({
   )
 }
 
-async function loadLeads(tenantSlug: string, forceDemo: boolean): Promise<{ leads: Lead[]; mode: 'paid' | 'demo' | 'unavailable'; displayName: string }> {
-  if (forceDemo) return { leads: DEMO_LEADS, mode: 'demo', displayName: 'Demo user' }
+async function loadLeads(tenantSlug: string, demoParam: string | undefined): Promise<{ leads: Lead[]; mode: 'paid' | 'demo' | 'unavailable'; displayName: string }> {
+  if (demoParam === '1') return { leads: DEMO_LEADS, mode: 'demo', displayName: 'Demo user' }
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -196,11 +196,20 @@ async function loadLeads(tenantSlug: string, forceDemo: boolean): Promise<{ lead
       accessToken: session.access_token,
     })
 
-    if (tenantContext.tenant.slug !== tenantSlug || !canAccessDashboard(tenantContext.tenant)) {
+    if (tenantContext.tenant.slug !== tenantSlug) {
       return { leads: [], mode: 'unavailable', displayName }
     }
 
-    return { leads: await leads.list(tenantContext.db), mode: 'paid', displayName }
+    if (demoParam === '0') {
+      return { leads: [], mode: 'unavailable', displayName }
+    }
+
+    if (canAccessDashboard(tenantContext.tenant)) {
+      return { leads: await leads.list(tenantContext.db), mode: 'paid', displayName }
+    }
+
+    // Connected tenant without T3 lead store (demo / newly onboarded studio). Default to demo sample leads.
+    return { leads: DEMO_LEADS, mode: 'demo', displayName }
   } catch (e) {
     if (e instanceof AuthError && (e.code === 'no-tenant' || e.code === 'wrong-tenant')) {
       return { leads: [], mode: 'unavailable', displayName }
@@ -240,7 +249,7 @@ function isThisMonth(value: string): boolean {
   return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
 }
 
-function LeadCard({ lead, demo }: { lead: Lead; demo: boolean }) {
+function LeadCard({ lead, demo, baseDashboard }: { lead: Lead; demo: boolean; baseDashboard: string }) {
   const whatsappHref = `https://wa.me/${lead.phone.replace(/\D/g, '')}`
   const detailLines = [lead.project_type, lead.locality].filter(Boolean).join(' - ')
   const budget = lead.source === 'estimate' ? lead.budget_band : null
@@ -269,7 +278,7 @@ function LeadCard({ lead, demo }: { lead: Lead; demo: boolean }) {
 
   return (
     <article className="grid gap-3 border-b border-admin-border p-4 last:border-b-0 sm:grid-cols-[1fr_auto] sm:items-center">
-      {demo ? content : <Link href={`/dashboard/${lead.id}`}>{content}</Link>}
+      {demo ? content : <Link href={`${baseDashboard}/${lead.id}`}>{content}</Link>}
 
       <div className="grid grid-cols-2 gap-2 sm:w-48">
         <a

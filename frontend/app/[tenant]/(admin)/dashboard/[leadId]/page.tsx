@@ -54,8 +54,8 @@ export default async function LeadDetailPage({
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 py-5 pb-28 sm:px-6 lg:py-8">
-      <Link href="/dashboard" className="flex min-h-12 items-center text-sm font-medium text-admin-primary">
-        Back to leads
+      <Link href={`/${tenantSlug}/dashboard/enquiries`} className="flex min-h-12 items-center text-sm font-medium text-admin-primary">
+        Back to enquiries
       </Link>
 
       <section className="rounded-lg border border-admin-border bg-admin-surface p-4">
@@ -195,7 +195,7 @@ async function requireDashboardContext(expectedTenantSlug?: string) {
   }
 
   if (!canAccessDashboard(tenantContext.tenant)) {
-    redirect('/panel')
+    redirect(`/${tenantContext.tenant.slug}/dashboard/enquiries`)
   }
 
   return tenantContext

@@ -6,13 +6,17 @@ import { usePathname } from 'next/navigation'
 export function DashboardTabs({ orientation = 'top' }: { orientation?: 'top' | 'side' }) {
   const pathname = usePathname()
   const current = pathname ?? ''
-  const onEnquiries = current.endsWith('/dashboard/enquiries')
-  const onContent = current.endsWith('/dashboard/content')
-  const onAnalytics = current.endsWith('/dashboard/analytics')
-  const onSettings = current.endsWith('/dashboard/settings')
+  const segments = current.split('/').filter(Boolean)
+  const tenantPrefix = segments[0] && segments[0] !== 'dashboard' ? `/${segments[0]}` : ''
+
+  const onEnquiries = current.includes('/dashboard/enquiries') || /\/dashboard\/[0-9a-f-]+/.test(current)
+  const onContent = current.includes('/dashboard/content')
+  const onAnalytics = current.includes('/dashboard/analytics')
+  const onSettings = current.includes('/dashboard/settings')
+  const onOverview = !onEnquiries && !onContent && !onAnalytics && !onSettings && current.includes('/dashboard')
 
   const items = [
-    { href: '/dashboard', label: 'Overview', active: current.endsWith('/dashboard') },
+    { href: '/dashboard', label: 'Overview', active: onOverview },
     { href: '/dashboard/enquiries', label: 'Enquiries', active: onEnquiries },
     { href: '/dashboard/content', label: 'Website Content', active: onContent },
     { href: '/dashboard/analytics', label: 'Analytics', active: onAnalytics },
@@ -25,7 +29,7 @@ export function DashboardTabs({ orientation = 'top' }: { orientation?: 'top' | '
         {items.map((item) => (
           <Link
             key={item.label}
-            href={item.href}
+            href={`${tenantPrefix}${item.href}`}
             className={`flex min-h-11 items-center rounded px-3 transition-colors ${
               item.active
                 ? 'bg-admin-primary-soft text-admin-primary'
@@ -44,7 +48,7 @@ export function DashboardTabs({ orientation = 'top' }: { orientation?: 'top' | '
       {items.map((item) => (
         <Link
           key={item.label}
-          href={item.href}
+          href={`${tenantPrefix}${item.href}`}
           className={`flex min-w-20 shrink-0 items-center justify-center rounded px-3 transition-colors ${
             item.active
               ? 'bg-admin-primary text-admin-on-primary'
