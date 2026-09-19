@@ -85,13 +85,13 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-admin-bg text-admin-ink lg:grid lg:grid-cols-[15rem_minmax(0,1fr)]">
-      <aside className="hidden min-h-screen border-r border-admin-border bg-admin-surface px-4 py-5 lg:flex lg:flex-col">
+    <div className="min-h-screen bg-admin-bg text-admin-ink lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
+      <aside className="hidden min-h-screen border-r border-admin-border bg-admin-surface px-5 py-6 lg:flex lg:flex-col">
         <div className="flex min-w-0 items-center gap-3">
           {branding.brand.logo ? (
-            <Image src={branding.brand.logo} alt="" width={36} height={36} className="h-9 w-9 shrink-0 rounded-lg object-cover" />
+            <Image src={branding.brand.logo} alt="" width={36} height={36} className="h-9 w-9 shrink-0 rounded-xl object-cover" />
           ) : (
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-admin-primary text-xs font-bold text-admin-on-primary" aria-hidden="true">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-admin-primary text-xs font-bold text-admin-on-primary" aria-hidden="true">
               {initialsFor(branding.business.name)}
             </span>
           )}
@@ -104,11 +104,22 @@ export default async function DashboardLayout({
           <DashboardTabs orientation="side" />
         </div>
 
+        <div className="mt-auto border-t border-admin-border pt-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Workspace</p>
+          <p className="mt-2 text-sm leading-6 text-admin-muted">Manage enquiries, update the public site, and review visitor signals.</p>
+          <Link
+            href={'/' + tenantSlug}
+            target="_blank"
+            className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-md border border-admin-border px-3 text-sm font-semibold text-admin-ink transition-colors motion-reduce:transition-none hover:border-admin-primary hover:text-admin-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-admin-surface"
+          >
+            Open public site
+          </Link>
+        </div>
       </aside>
 
       <div className="min-w-0">
-        <header className="border-b border-admin-border bg-admin-surface px-4 py-3 sm:px-6">
-          <div className="mx-auto max-w-7xl">
+        <header className="border-b border-admin-border bg-admin-surface px-4 py-4 sm:px-6">
+          <div className="mx-auto flex max-w-7xl flex-col gap-3">
             <div className="flex min-w-0 items-center justify-between gap-3">
               <div className="flex min-w-0 items-center gap-3 lg:hidden">
                 {branding.brand.logo ? (
@@ -129,7 +140,7 @@ export default async function DashboardLayout({
                 <ThemeToggle />
                 {isAuthenticated && user?.email ? (
                   <>
-                    <span className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-admin-border bg-admin-raised text-sm font-semibold text-admin-ink" aria-label={`Signed in as ${user.email}`}>
+                    <span className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-sm font-semibold text-admin-ink" aria-label={`Signed in as ${user.email}`}>
                       {initialsFor(user.email)}
                     </span>
                     <form action={signOut}>
@@ -154,7 +165,7 @@ export default async function DashboardLayout({
               </div>
             </div>
 
-            <div className="mt-3 lg:hidden">
+            <div className="mt-1 lg:hidden">
               <DashboardTabs orientation="top" />
             </div>
           </div>
@@ -179,7 +190,7 @@ function initialsFor(value: string): string {
 function ProvisioningGap({ message }: { message: string }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-admin-bg px-4">
-      <div className="w-full max-w-sm rounded-lg border border-admin-border bg-admin-surface p-6">
+      <div className="w-full max-w-sm rounded-xl border border-admin-border bg-admin-surface p-6">
         <h1 className="mb-2 text-lg font-semibold text-admin-ink">Almost there</h1>
         <p className="mb-4 text-sm text-admin-muted">{message}</p>
         <form action={signOut}>
@@ -203,7 +214,7 @@ function TenantMismatchNotice({
 }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-admin-bg px-4">
-      <div className="w-full max-w-md rounded-lg border border-admin-border bg-admin-surface p-6">
+      <div className="w-full max-w-md rounded-xl border border-admin-border bg-admin-surface p-6">
         <h1 className="mb-2 text-lg font-semibold text-admin-ink">Different workspace</h1>
         <p className="mb-4 text-sm text-admin-muted">
           You are signed in as <span className="font-medium text-admin-ink">{userEmail}</span>, which is linked to{' '}
@@ -213,14 +224,14 @@ function TenantMismatchNotice({
         <div className="flex flex-col gap-3">
           <Link
             href={`/${currentSlug}/dashboard`}
-            className="inline-flex min-h-11 items-center justify-center rounded bg-admin-primary px-4 text-sm font-semibold text-admin-on-primary"
+            className="inline-flex min-h-11 items-center justify-center rounded-md bg-admin-primary px-4 text-sm font-semibold text-admin-on-primary"
           >
             Go to your studio dashboard
           </Link>
           <form action={signOut}>
             <button
               type="submit"
-              className="inline-flex min-h-11 w-full items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-admin-border px-4 text-sm font-semibold text-admin-ink"
             >
               Sign out to switch account
             </button>

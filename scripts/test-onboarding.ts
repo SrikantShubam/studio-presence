@@ -9,12 +9,40 @@ import {
   validateOnboardingStage,
 } from '../frontend/lib/onboarding/validation.ts'
 import { onboardingRpcStatus, retrySerialization } from '../frontend/lib/onboarding/retry.ts'
+import { dashboardDestination } from '../frontend/lib/onboarding/dashboard-destination.ts'
 
 const invalid = validateOnboardingDraft(EMPTY_ONBOARDING_DRAFT)
 assert.ok(invalid.errors.studioName && invalid.errors.serviceAreas && invalid.errors.categories && invalid.errors.services && invalid.errors.primaryPhone)
 const valid = validateOnboardingDraft({ ...EMPTY_ONBOARDING_DRAFT, studioName: '  GG Studio ', serviceAreas: ['South Delhi', ' South Delhi '], categories: ['Residential'], services: ['Other service'], otherService: 'Lighting design', primaryPhone: '+91 9876543210' })
 assert.deepEqual(valid.errors, {})
 assert.deepEqual(valid.draft.serviceAreas, ['South Delhi'])
+assert.equal(
+  dashboardDestination({
+    requestUrl: 'http://localhost:3002/onboarding',
+    tenantSlug: 'gg-studio',
+    tenantHostname: 'gg-studio.vectorveda.online',
+    routing: 'path',
+  }),
+  '/gg-studio/dashboard',
+)
+assert.equal(
+  dashboardDestination({
+    requestUrl: 'http://localhost:3002/onboarding',
+    tenantSlug: 'gg-studio',
+    tenantHostname: 'gg-studio.vectorveda.online',
+    routing: 'host',
+  }),
+  'http://gg-studio.localhost:3002/dashboard',
+)
+assert.equal(
+  dashboardDestination({
+    requestUrl: 'https://vectorveda.online/onboarding',
+    tenantSlug: 'gg-studio',
+    tenantHostname: 'gg-studio.vectorveda.online',
+    routing: 'host',
+  }),
+  'https://gg-studio.vectorveda.online/dashboard',
+)
 assert.equal(valid.draft.whatsapp, '+91 9876543210')
 assert.match(suggestedIntroduction(valid.draft), /GG Studio/)
 assert.equal(
@@ -74,6 +102,12 @@ assert.match(onboardingForm, /aria-label="Onboarding progress"/, 'stage navigati
 assert.match(onboardingForm, /aria-current=\{active \? 'step'/, 'the active onboarding stage must be identified to assistive technology')
 assert.match(onboardingForm, /motion-reduce:transition-none/, 'onboarding transitions must respect reduced-motion preferences')
 assert.match(onboardingForm, /focus-visible:ring-2 focus-visible:ring-admin-primary/, 'interactive controls must have visible admin focus states')
+assert.doesNotMatch(onboardingForm, /sm:grid-cols-2/, 'onboarding questions must not split into two columns on narrow viewports')
+assert.doesNotMatch(onboardingForm, /<ol className="grid grid-cols-3 gap-2">/, 'mobile onboarding must not render three truncated progress cards')
+assert.doesNotMatch(onboardingForm, /Could not save automatically/, 'background draft failures must not alarm the user')
+assert.match(onboardingForm, /md:rounded-xl md:border md:border-admin-border md:bg-admin-surface/, 'form groups must only use card chrome from tablet widths')
+assert.match(onboardingForm, /flex flex-wrap gap-2/, 'service choices must remain compact wrapping pills')
+assert.match(onboardingPage, /md:rounded-xl md:border md:border-admin-border md:bg-admin-surface/, 'the outer form card must be removed on mobile')
 assert.doesNotMatch(onboardingForm, /bg-(?:amber|stone|zinc|black)-/, 'onboarding must use admin theme tokens instead of raw palette classes')
 assert.doesNotMatch(onboardingForm, /style\s*=/, 'onboarding must not introduce inline styles')
 

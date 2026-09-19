@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { AuthError, canAccessDashboard, leads, requireTenant, type Lead, type LeadStatus } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
-import { AdminCard, AdminChip, AdminMetric, AdminShell } from '../../components'
+import { AdminCard, AdminChip, AdminLinkButton, AdminMetric, AdminPageHeader, AdminShell } from '../../components'
 import { DEMO_LEADS } from '../../demo-data'
 
 type Filter = 'all' | 'new' | 'not-contacted' | 'this-month'
@@ -54,25 +54,19 @@ export default async function EnquiriesPage({
                   : 'All enquiries submitted through the website are listed here.'}
             </p>
           </div>
-          <Link href={sampleMode ? `${baseDashboard}/enquiries?demo=0` : `${baseDashboard}/enquiries?demo=1`} className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
+          <Link href={sampleMode ? `${baseDashboard}/enquiries?demo=0` : `${baseDashboard}/enquiries?demo=1`} className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-md border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
             {sampleMode ? 'Turn sample data off' : 'Turn sample data on'}
           </Link>
         </div>
       </AdminCard>
 
       <AdminCard className="p-5 sm:p-6">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Enquiries</p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-admin-ink">All customer enquiries</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-admin-muted">
-              This is the separate owner sheet for every lead captured by WhatsApp, estimate, form, call, or other source.
-            </p>
-          </div>
-          <Link href={baseDashboard} className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
-            Back to overview
-          </Link>
-        </div>
+        <AdminPageHeader
+          eyebrow="Enquiries"
+          title="All customer enquiries"
+          description="This is the separate owner sheet for every lead captured by WhatsApp, estimate, form, call, or other source."
+          action={<AdminLinkButton href={baseDashboard}>Back to overview</AdminLinkButton>}
+        />
         <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
           <AdminMetric label="total enquiries" value={allLeads.length} tone="primary" />
           <AdminMetric label="this month" value={thisMonth} />
@@ -177,10 +171,10 @@ function LeadRow({ lead, demo }: { lead: Lead; demo: boolean }) {
         {demo && <span>read-only sample</span>}
       </div>
       <div className="grid grid-cols-2 gap-2 lg:w-48">
-        <a href={whatsappHref} className="flex min-h-11 items-center justify-center rounded bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary">
+        <a href={whatsappHref} className="flex min-h-11 items-center justify-center rounded-md bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary">
           WhatsApp
         </a>
-        <a href={`tel:${lead.phone}`} className="flex min-h-11 items-center justify-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
+        <a href={`tel:${lead.phone}`} className="flex min-h-11 items-center justify-center rounded-md border border-admin-border px-3 text-sm font-semibold text-admin-ink">
           Call
         </a>
       </div>

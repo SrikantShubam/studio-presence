@@ -3,6 +3,7 @@ import { resolveClientConfig, createScopedClient } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import type { OnboardingDraft } from '@/lib/onboarding/types'
 import { parseOnboardingDraftInput, suggestedIntroduction, validateOnboardingDraft } from '@/lib/onboarding/validation'
+import { dashboardDestination } from '@/lib/onboarding/dashboard-destination'
 import {
   ONBOARDING_ALLOCATION_CONFLICT_MESSAGE,
   onboardingRpcStatus,
@@ -159,9 +160,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: message }, { status })
   }
 
-  // Redirect directly to the studio dashboard
+  // Return both a stable path and a routing-aware URL. The path keeps existing
+  // callers compatible; the URL prevents host-based deployments from landing
+  // on the platform origin after onboarding.
+  const dashboardPath = '/' + data[0].tenant_slug + '/dashboard'
+  const routing = process.env.NEXT_PUBLIC_TENANT_ROUTING === 'host' ? 'host' : 'path'
+  const dashboardUrl = dashboardDestination({
+    requestUrl: request.url,
+    tenantSlug: data[0].tenant_slug,
+    tenantHostname: data[0].hostname,
+    routing,
+  })
+
   return NextResponse.json({
-    dashboardPath: `/${data[0].tenant_slug}/dashboard`,
+    dashboardPath,
+    dashboardUrl,
     hostname: data[0].hostname,
   })
 }

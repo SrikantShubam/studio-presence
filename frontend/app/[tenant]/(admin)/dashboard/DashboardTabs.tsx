@@ -25,7 +25,7 @@ export function DashboardTabs({ orientation = 'top' }: { orientation?: 'top' | '
 
   if (orientation === 'side') {
     return (
-      <nav aria-label="Primary navigation" className="grid gap-1 text-sm font-medium">
+      <nav aria-label="Primary navigation" className="grid gap-1 rounded-xl border border-admin-border bg-admin-bg p-2 text-sm font-medium">
         {items.map((item) => (
           <Link
             key={item.label}
@@ -33,7 +33,7 @@ export function DashboardTabs({ orientation = 'top' }: { orientation?: 'top' | '
             aria-current={item.active ? 'page' : undefined}
             className={`flex min-h-11 items-center rounded-lg px-3 transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary ${
               item.active
-                ? 'bg-admin-primary-soft text-admin-primary'
+                ? 'bg-admin-primary text-admin-on-primary'
                 : 'text-admin-muted hover:bg-admin-raised hover:text-admin-ink'
             }`}
           >
@@ -45,7 +45,7 @@ export function DashboardTabs({ orientation = 'top' }: { orientation?: 'top' | '
   }
 
   return (
-    <nav aria-label="Primary navigation" className="grid grid-cols-2 gap-1 rounded-lg border border-admin-border bg-admin-raised p-1 text-sm font-medium sm:grid-cols-3">
+    <nav aria-label="Primary navigation" className="grid grid-cols-2 gap-1 rounded-xl border border-admin-border bg-admin-raised p-1 text-sm font-medium sm:grid-cols-3">
       {items.map((item) => (
         <Link
           key={item.label}

@@ -92,6 +92,9 @@ const CONTROL_CLASS =
 const BUTTON_CLASS =
   'inline-flex min-h-11 items-center justify-center rounded-lg border px-4 text-sm font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-offset-admin-surface motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-60'
 
+const CHOICE_BUTTON_CLASS =
+  'inline-flex min-h-9 items-center justify-center rounded-lg border px-3 py-1.5 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-admin-primary focus-visible:ring-offset-2 focus-visible:ring-offset-admin-surface motion-reduce:transition-none'
+
 function ErrorText({ message }: { message?: string }) {
   if (!message) return null
   return <p className="mt-2 text-sm text-admin-alert" role="alert">{message}</p>
@@ -107,6 +110,8 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
   const [busy, setBusy] = useState(false)
   const [serverError, setServerError] = useState('')
   const [isHydrating, setIsHydrating] = useState(true)
+  const [draftRestored, setDraftRestored] = useState(false)
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle')
 
   // Staging area input state
   const [areaInput, setAreaInput] = useState('')
@@ -146,6 +151,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
               ...payload.draft,
               publicEmail: payload.draft.publicEmail || current.publicEmail || initialEmail,
             }))
+            setDraftRestored(true)
             if (payload.draft.introduction) {
               setIsIntroCustomized(true)
             }
@@ -179,17 +185,19 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
 
   // Auto-save draft on step navigation and debounce
   const persistDraft = useCallback(async (updated: OnboardingDraft) => {
+    setSaveState('saving')
     try {
-      await fetch('/api/onboarding/draft', {
+      const response = await fetch('/api/onboarding/draft', {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(updated),
       })
+      if (!response.ok) throw new Error('Draft save failed')
+      setSaveState('saved')
     } catch {
-      // Draft autosave failure is non-blocking
+      setSaveState('idle')
     }
   }, [])
-
   const isInitialMount = useRef(true)
   useEffect(() => {
     if (isInitialMount.current || isHydrating) {
@@ -389,7 +397,16 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
         setServerError(payload.error || 'We could not save your setup. Your answers are still here.')
         return
       }
-      window.location.assign(payload.dashboardPath)
+      const destination = typeof payload.dashboardUrl === 'string'
+        ? payload.dashboardUrl
+        : typeof payload.dashboardPath === 'string'
+          ? payload.dashboardPath
+          : ''
+      if (!destination) {
+        setServerError('Your setup was saved, but the dashboard link was missing. Please refresh and try again.')
+        return
+      }
+      window.location.assign(destination)
     } catch {
       setServerError('We could not reach the server. Your answers are still here.')
     } finally {
@@ -398,28 +415,34 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
   }
 
   const currentStage = STAGES[stage - 1] ?? STAGES[0]
+  const saveMessage = saveState === 'saving' ? 'Saving' : saveState === 'saved' ? 'Saved' : draftRestored ? 'Draft restored' : 'Changes save as you go'
 
   return (
     <div className="space-y-6" aria-busy={isHydrating || busy}>
-      <div className="flex flex-col gap-2 border-b border-admin-border pb-5 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-3 border-b border-admin-border pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Setup flow</p>
           <h2 id="onboarding-form-title" className="mt-2 text-2xl font-semibold tracking-tight text-admin-ink">
             {currentStage.label}
           </h2>
           <p className="mt-1 text-sm text-admin-muted">{currentStage.summary}</p>
+          <p className="mt-3 text-xs font-medium text-admin-muted" aria-live="polite">{saveMessage}</p>
         </div>
         <p className="text-sm font-medium tabular-nums text-admin-muted">Step {stage} of {STAGES.length}</p>
       </div>
 
       <nav aria-label="Onboarding progress" className="space-y-3">
-        <ol className="grid grid-cols-3 gap-2">
+        <div className="flex items-center justify-between gap-3 md:hidden">
+          <p className="min-w-0 truncate text-sm font-medium text-admin-ink">Step {stage} of {STAGES.length} · {currentStage.label}</p>
+          <span className="shrink-0 text-xs text-admin-muted">{currentStage.summary}</span>
+        </div>
+        <ol className="hidden grid-cols-3 gap-2 md:grid">
           {STAGES.map((item) => {
             const active = item.id === stage
             const complete = item.id < stage
             return (
               <li key={item.id} className="min-w-0">
-                <div className={`flex min-h-16 flex-col justify-between rounded-lg border p-3 text-left transition-colors motion-reduce:transition-none ${
+                <div className={`flex min-h-16 flex-col justify-between rounded-xl border p-3 text-left transition-colors motion-reduce:transition-none ${
                   active
                     ? 'border-admin-primary bg-admin-primary-soft text-admin-ink'
                     : complete
@@ -448,7 +471,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
       </nav>
 
       {isHydrating ? (
-        <div className="flex min-h-40 items-center justify-center rounded-lg border border-dashed border-admin-border bg-admin-surface px-5 text-center" role="status" aria-live="polite">
+        <div className="flex min-h-40 items-center justify-center rounded-xl border border-dashed border-admin-border bg-admin-surface px-5 text-center" role="status" aria-live="polite">
           <div>
             <p className="text-sm font-semibold text-admin-ink">Loading your saved answers</p>
             <p className="mt-1 text-sm text-admin-muted">Your setup will be ready in a moment.</p>
@@ -470,7 +493,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
                 <p className="mt-1 text-sm leading-6 text-admin-muted">Start with the essentials. You can refine the copy and coverage later.</p>
               </div>
 
-              <div className="grid gap-5 sm:grid-cols-2">
+              <div className="grid gap-5">
                 <Field id="studioName" label="Studio name" error={errors.studioName}>
                   <input
                     id="studioName"
@@ -511,7 +534,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
                 </button>
               )}
 
-              <fieldset className="space-y-4 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+              <fieldset className="space-y-4 md:rounded-xl md:border md:border-admin-border md:bg-admin-surface md:p-5">
                 <legend className="px-1 text-sm font-semibold text-admin-ink">Project coverage</legend>
                 <div>
                   <label htmlFor="serviceAreas" className="text-sm font-medium text-admin-ink">Service areas</label>
@@ -583,7 +606,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
                 <p className="mt-1 text-sm leading-6 text-admin-muted">Choose a starting point. These settings can change as your site takes shape.</p>
               </div>
 
-              <fieldset className="space-y-4 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+              <fieldset className="space-y-4 md:rounded-xl md:border md:border-admin-border md:bg-admin-surface md:p-5">
                 <legend className="px-1 text-sm font-semibold text-admin-ink">Studio logo</legend>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                   <p className="text-sm leading-6 text-admin-muted">Upload a PNG, JPG, or WebP logo. We optimise it for the preview.</p>
@@ -649,10 +672,10 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
                 )}
               </fieldset>
 
-              <fieldset className="space-y-4 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+              <fieldset className="space-y-4 md:rounded-xl md:border md:border-admin-border md:bg-admin-surface md:p-5">
                 <legend className="px-1 text-sm font-semibold text-admin-ink">Architectural identity</legend>
                 <p className="text-sm leading-6 text-admin-muted">Select a starting palette for the public site. You can switch it later from config.</p>
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-3">
                   {PALETTES.map((palette) => {
                     const selected = (draft.palette || 'editorial') === palette.id
                     return (
@@ -685,7 +708,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
                 <p className="mt-1 text-sm leading-6 text-admin-muted">These details help visitors contact the right studio team.</p>
               </div>
 
-              <fieldset className="space-y-5 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+              <fieldset className="space-y-5 md:rounded-xl md:border md:border-admin-border md:bg-admin-surface md:p-5">
                 <legend className="px-1 text-sm font-semibold text-admin-ink">Contact details</legend>
                 <PhoneField id="primaryPhone" label="Business contact phone" countryCode={phoneCountry} nationalNumber={phoneNational} onCountryChange={handlePhoneCountryChange} onNumberChange={handlePhoneNationalChange} error={errors.primaryPhone} />
 
@@ -706,7 +729,7 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
                 </Field>
               </fieldset>
 
-              <fieldset className="space-y-4 rounded-lg border border-admin-border bg-admin-surface p-4 sm:p-5">
+              <fieldset className="space-y-4 md:rounded-xl md:border md:border-admin-border md:bg-admin-surface md:p-5">
                 <legend className="px-1 text-sm font-semibold text-admin-ink">Studio introduction</legend>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                   <p className="text-sm leading-6 text-admin-muted">Start with a draft and make it sound like your studio.</p>
@@ -735,16 +758,16 @@ export function OnboardingForm({ initialEmail = '' }: { initialEmail?: string })
             </section>
           )}
 
-          <div className="flex flex-col-reverse gap-3 border-t border-admin-border pt-5 sm:flex-row sm:items-center sm:justify-between">
-            <button type="button" className={`${BUTTON_CLASS} border-admin-border bg-admin-surface text-admin-ink hover:bg-admin-raised`} disabled={stage === 1 || busy} onClick={() => setStage((value) => value - 1)}>
+          <div className="mt-8 flex gap-3 border-t border-admin-border pt-4 pb-12 md:items-center md:justify-between md:pb-0">
+            <button type="button" className={`${BUTTON_CLASS} shrink-0 border-admin-border bg-admin-surface text-admin-ink hover:bg-admin-raised`} disabled={stage === 1 || busy} onClick={() => setStage((value) => value - 1)}>
               Back
             </button>
             {stage < 3 ? (
-              <button type="button" className={`${BUTTON_CLASS} border-admin-primary bg-admin-primary text-admin-on-primary hover:opacity-90`} onClick={next}>
+              <button type="button" className={`${BUTTON_CLASS} flex-1 border-admin-primary bg-admin-primary text-admin-on-primary hover:opacity-90 md:flex-none`} onClick={next}>
                 Continue
               </button>
             ) : (
-              <button type="button" disabled={busy || uploadingLogo} className={`${BUTTON_CLASS} border-admin-primary bg-admin-primary text-admin-on-primary hover:opacity-90`} onClick={submit}>
+              <button type="button" disabled={busy || uploadingLogo} className={`${BUTTON_CLASS} flex-1 border-admin-primary bg-admin-primary text-admin-on-primary hover:opacity-90 md:flex-none`} onClick={submit}>
                 {busy ? 'Opening your dashboard…' : 'Go to dashboard'}
               </button>
             )}
@@ -874,7 +897,7 @@ function PhoneField({
                   autoFocus
                 />
               </div>
-              <ul className="max-h-48 overflow-y-auto py-1">
+              <ul className="py-1">
                 {filteredCountries.map((c) => (
                   <li key={`${c.code}-${c.dialCode}`}>
                     <button
@@ -941,7 +964,7 @@ function ChoiceGroup({
             <button
               type="button"
               key={`${groupId}-${value}`}
-              className={`${BUTTON_CLASS} min-h-10 px-3 py-2 ${
+              className={`${CHOICE_BUTTON_CLASS} ${
                 isSelected
                   ? 'border-admin-primary bg-admin-primary-soft text-admin-ink'
                   : 'border-admin-border bg-admin-surface text-admin-muted hover:bg-admin-raised hover:text-admin-ink'

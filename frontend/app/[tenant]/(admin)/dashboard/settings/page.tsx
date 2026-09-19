@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ConfigError } from '@studio/backend'
 import { loadPublicTenantConfig } from '@/lib/tenant-config'
-import { AdminCard, AdminChip, AdminShell } from '../../components'
+import { AdminCard, AdminChip, AdminLinkButton, AdminPageHeader, AdminShell } from '../../components'
 
 export default async function DashboardSettingsPage({ params }: { params: Promise<{ tenant: string }> }) {
   const { tenant } = await params
@@ -15,18 +15,12 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
   return (
     <AdminShell>
       <AdminCard className="p-5 sm:p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Settings</p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-admin-ink">Minimal owner settings</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-admin-muted">
-              This page only shows high-level controls and integration status. Editing copy, pages, socials, and calculator values stays in Website Content.
-            </p>
-          </div>
-          <Link href={contentHref} className="inline-flex min-h-11 items-center justify-center rounded bg-admin-primary px-4 text-sm font-semibold text-admin-on-primary">
-            Open Website Content
-          </Link>
-        </div>
+        <AdminPageHeader
+          eyebrow="Settings"
+          title="Minimal owner settings"
+          description="This page only shows high-level controls and integration status. Editing copy, pages, socials, and calculator values stays in Website Content."
+          action={<AdminLinkButton href={contentHref} variant="primary">Open Website Content</AdminLinkButton>}
+        />
       </AdminCard>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -35,10 +29,10 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
             Phone, WhatsApp number, WhatsApp starter message, CTA labels, contact address, and footer socials are content settings.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
-            <Link href={contentHref} className="inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+            <Link href={contentHref} className="inline-flex min-h-11 items-center rounded-md border border-admin-border px-4 text-sm font-semibold text-admin-ink">
               Edit contact and footer
             </Link>
-            <Link href={contentHref} className="inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+            <Link href={contentHref} className="inline-flex min-h-11 items-center rounded-md border border-admin-border px-4 text-sm font-semibold text-admin-ink">
               Edit CTAs
             </Link>
           </div>
@@ -48,7 +42,7 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
           <p className="text-sm leading-6 text-admin-muted">
             The owner can turn the calculator on/off and change rates, multipliers, result notes, and included items from Website Content.
           </p>
-          <Link href={contentHref} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+          <Link href={contentHref} className="mt-4 inline-flex min-h-11 items-center rounded-md border border-admin-border px-4 text-sm font-semibold text-admin-ink">
             Edit calculator
           </Link>
         </SettingsCard>
@@ -67,7 +61,7 @@ export default async function DashboardSettingsPage({ params }: { params: Promis
               <dd className="font-semibold tabular-nums text-admin-ink">{instagramPosts}</dd>
             </div>
           </dl>
-          <Link href={contentHref} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
+          <Link href={contentHref} className="mt-4 inline-flex min-h-11 items-center rounded-md border border-admin-border px-4 text-sm font-semibold text-admin-ink">
             Edit Instagram picks
           </Link>
         </SettingsCard>
@@ -112,7 +106,7 @@ function SettingsCard({ title, status, children }: { title: string; status: stri
 
 function CredentialRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex min-h-10 items-center justify-between gap-4 rounded border border-admin-border bg-admin-bg px-3">
+    <div className="flex min-h-10 items-center justify-between gap-4 rounded-md border border-admin-border bg-admin-bg px-3">
       <span className="text-admin-muted">{label}</span>
       <span className="font-semibold text-admin-ink">{value}</span>
     </div>

@@ -4,6 +4,8 @@ import { AuthError, canAccessDashboard, getI18nStatus, leads, requireTenant, typ
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { AdminCard, AdminChip, AdminMetric, AdminShell } from '../components'
 import { DEMO_LEADS } from '../demo-data'
+import { loadPublicTenantConfig } from '@/lib/tenant-config'
+import { StudioOverviewHub } from './StudioOverviewHub'
 
 type Filter = 'all' | 'new' | 'not-contacted' | 'this-month'
 
@@ -49,9 +51,25 @@ export default async function DashboardPage({
   const recentLeads = visibleLeads.slice(0, 4)
   const previewHref = `/${tenant}`
 
+  let branding = null
+  try {
+    branding = await loadPublicTenantConfig(tenant)
+  } catch {
+    branding = null
+  }
+
+  const studioName = branding?.business?.name || displayName
+  const phone = branding?.business?.phone || ''
+  const whatsapp = branding?.business?.whatsapp || phone
+  const paletteName = typeof branding?.brand?.palette === 'string' ? branding.brand.palette : 'Editorial Crisp'
+  const serviceAreas = branding?.business?.serviceAreas || []
+  const city = branding?.business?.address?.city || ''
+  const hasProjects = Boolean(branding?.sections?.portfolio?.projects?.length)
+  const newLeadsCount = allLeads.filter((lead) => lead.status === 'new').length
+
   return (
-    <AdminShell>
-      <AdminCard className={`p-4 ${sampleMode ? 'border-admin-alert bg-admin-alert-soft' : 'border-admin-primary bg-admin-primary-soft'}`}>
+    <AdminShell spacious>
+      <AdminCard className={`p-4 sm:p-5 ${sampleMode ? 'border-admin-alert bg-admin-alert-soft' : 'border-admin-primary bg-admin-primary-soft'}`}>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-semibold text-admin-ink">{sampleMode ? 'Sample data is on' : unavailableMode ? 'Live data unavailable' : 'Live customer data'}</p>
@@ -72,13 +90,13 @@ export default async function DashboardPage({
         </div>
       </AdminCard>
 
-      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_20rem]">
+      <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="flex min-w-0 flex-col gap-5">
           <AdminCard className="p-5 sm:p-6">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Overview</p>
-                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-admin-ink">Hello, {displayName}</h1>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Overview</p>
+                <h1 className="mt-2 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl text-admin-ink">Hello, {displayName}</h1>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-admin-muted">
                   Follow up enquiries, update website content, check analytics, and manage conversion settings from one place.
                 </p>
@@ -88,7 +106,7 @@ export default async function DashboardPage({
               </Link>
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-4">
               <AdminMetric label="enquiries" value={allLeads.length} note={unavailableMode ? 'live unavailable' : 'total loaded'} tone="primary" />
               <AdminMetric label="not contacted" value={notContacted} note="needs action" tone={notContacted > 0 ? 'alert' : 'neutral'} />
               <AdminMetric label="qualified" value={qualified} note="quoted or won" />
@@ -96,10 +114,23 @@ export default async function DashboardPage({
             </div>
           </AdminCard>
 
+          <StudioOverviewHub
+            tenant={tenant}
+            studioName={studioName}
+            phone={phone}
+            whatsapp={whatsapp}
+            paletteName={paletteName}
+            serviceAreas={serviceAreas}
+            city={city}
+            hasProjects={hasProjects}
+            previewUrl={previewHref}
+            newLeadsCount={newLeadsCount}
+          />
+
           <AdminCard className="overflow-hidden">
             <div className="flex flex-col gap-3 border-b border-admin-border p-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Live website preview</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Live website preview</p>
                 <h2 className="mt-1 text-xl font-semibold text-admin-ink">See the current public site here</h2>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-admin-muted">
                   This is the saved public page, shown inside the dashboard. Content edits still save through Website Content.
@@ -118,15 +149,15 @@ export default async function DashboardPage({
               <iframe
                 title="Live website preview"
                 src={previewHref}
-                className="h-[34rem] w-full rounded-lg border border-admin-border bg-admin-surface"
+                className="h-[36rem] w-full rounded-xl border border-admin-border bg-admin-surface"
               />
             </div>
           </AdminCard>
 
           <section id="enquiries" className="scroll-mt-24">
-            <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Enquiries</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Enquiries</p>
               <h2 className="mt-1 text-xl font-semibold text-admin-ink">Recent people waiting for a reply</h2>
               </div>
               <Link href={sampleMode ? `${baseDashboard}/enquiries?demo=1` : `${baseDashboard}/enquiries`} className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
@@ -141,7 +172,7 @@ export default async function DashboardPage({
           <AdminCard className="p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Website content</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Website content</p>
                 <h2 className="mt-1 text-lg font-semibold text-admin-ink">Edit the pages customers see</h2>
               </div>
               <AdminChip tone="primary">editable</AdminChip>
@@ -155,7 +186,7 @@ export default async function DashboardPage({
           <AdminCard className="p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Hindi</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Hindi</p>
                 <h2 className="mt-1 text-lg font-semibold text-admin-ink">{hindiStatus.translated} fields translated</h2>
               </div>
               <AdminChip tone={hindiStatus.status === 'published' ? 'primary' : 'alert'}>{hindiStatus.status}</AdminChip>
@@ -169,7 +200,7 @@ export default async function DashboardPage({
           <AdminCard className="p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-admin-muted">Analytics</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Analytics</p>
                 <h2 className="mt-1 text-lg font-semibold text-admin-ink">What visitors did</h2>
               </div>
               <AdminChip tone={sampleMode ? 'alert' : 'neutral'}>{sampleMode ? 'sample' : 'live'}</AdminChip>
