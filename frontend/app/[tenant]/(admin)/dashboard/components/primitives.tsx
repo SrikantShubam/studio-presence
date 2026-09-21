@@ -11,9 +11,9 @@ import type { LeadStatus } from "@studio/backend";
 import { STATUS_LABELS } from "./types";
 
 export const buttonClass =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-none border border-admin-border bg-admin-surface px-3 py-2 text-xs font-medium text-admin-ink hover:bg-admin-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-none border border-admin-border bg-admin-bg px-3 py-2 text-xs font-medium text-admin-ink hover:bg-admin-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:cursor-not-allowed disabled:opacity-50";
 export const inputClass =
-  "min-h-11 w-full min-w-0 rounded-none border border-admin-border bg-admin-surface px-3 py-2 text-sm text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:opacity-50";
+  "min-h-11 w-full min-w-0 rounded-none border border-admin-border bg-admin-bg px-3 py-2 text-sm text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:opacity-50";
 export const monoClass =
   "[font-family:var(--font-dashboard-mono)] tabular-nums";
 export function Button({
@@ -61,7 +61,7 @@ export function Panel({
 }) {
   return (
     <section
-      className={`min-w-0 border border-admin-border bg-admin-surface ${className}`}
+      className={`min-w-0 border border-admin-border bg-admin-bg ${className}`}
     >
       <div className="flex flex-wrap items-start justify-between gap-3 p-5 pb-3">
         <div>
@@ -141,7 +141,7 @@ export function Dialog({
   open: boolean;
   onClose: () => void;
   title: string;
-  side?: boolean;
+  side?: "left" | "right";
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -177,7 +177,7 @@ export function Dialog({
         event.preventDefault();
         onClose();
       }}
-      className={`fixed border border-admin-border bg-admin-surface p-0 text-admin-ink backdrop:bg-admin-ink/40 ${side ? "inset-y-0 right-0 left-auto m-0 h-dvh max-h-dvh w-full max-w-md" : "inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg"}`}
+      className={`fixed border border-admin-border bg-admin-bg p-0 text-admin-ink backdrop:bg-admin-ink/40 ${side ? `inset-y-0 ${side === "left" ? "left-0 right-auto" : "right-0 left-auto"} m-0 h-dvh max-h-dvh w-full max-w-md` : "inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg"}`}
     >
       <header className="flex items-start justify-between gap-3 border-b border-admin-border p-5">
         <h2 id={id} className="text-lg font-semibold">

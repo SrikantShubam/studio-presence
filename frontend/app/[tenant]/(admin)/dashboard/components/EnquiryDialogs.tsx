@@ -185,7 +185,7 @@ export function EnquiryDetails({
   return (
     <Dialog
       open
-      side
+      side="right"
       title={enquiry.name}
       onClose={() => {
         if (!pending) onClose();

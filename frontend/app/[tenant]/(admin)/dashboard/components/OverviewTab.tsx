@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight, ArrowUpRight, BriefcaseBusiness, Clock3, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BriefcaseBusiness, CalendarDays, ChevronRight, Clock3, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Users } from "lucide-react";
 
 import {
   Badge,
@@ -104,11 +104,7 @@ export default function OverviewTab({
       <PageHeading
         title="Your studio, at a glance."
         description="Start with the conversations that need you."
-        action={
-          <Badge>
-            {sample ? "Sample workspace" : data.config.business.name}
-          </Badge>
-        }
+        action={<Badge><CalendarDays aria-hidden="true" className="size-3.5" /><span>September <span className={monoClass}>2026</span></span></Badge>}
       />
       <div className="flex flex-wrap gap-2">
         <Button
@@ -118,7 +114,7 @@ export default function OverviewTab({
         >
           <Plus aria-hidden="true" className="size-4" />Log walk-in lead
         </Button>
-        <Button onClick={() => onNavigate("card")}><MessageCircle aria-hidden="true" className="size-4" />Share studio card</Button>
+        <Button onClick={() => onNavigate("card")}><MessageCircle aria-hidden="true" className="size-4" />Share WhatsApp vCard</Button>
         <Button onClick={() => onNavigate("calculator")}>
           <SlidersHorizontal aria-hidden="true" className="size-4" />Tune pricing <span className={monoClass}>₹/sqft</span>
         </Button>
@@ -128,21 +124,22 @@ export default function OverviewTab({
           target="_blank"
           rel="noopener noreferrer"
         >
-          View public site <ArrowUpRight aria-hidden="true" className="size-4" />
+          View live site <ArrowUpRight aria-hidden="true" className="size-4" />
         </a>
       </div>
       {waiting > 0 && (
         <section
-          className="my-5 flex flex-wrap items-center justify-between gap-4 border border-admin-alert/30 border-l-2 border-l-admin-alert bg-admin-alert-soft p-4"
+          className="my-5 flex flex-col items-start gap-4 border border-admin-alert/30 border-l-[3px] border-l-admin-alert bg-admin-bg p-4 xl:flex-row xl:items-center xl:justify-between"
           aria-label="Enquiries awaiting response"
         >
-          <div>
-            <p className="font-semibold">
+          <div className="flex items-start gap-2.5">
+            <Clock3 aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-admin-alert" strokeWidth={1.8} />
+            <div><p className="font-semibold">
               {waiting} enquiries are waiting for a first response
             </p>
             <p className="mt-1 text-[11px] text-admin-muted">
               A quick reply helps turn an enquiry into a site visit.
-            </p>
+            </p></div>
           </div>
           <Button onClick={() => onNavigate("enquiries", "new")}>
             Review new enquiries <ArrowRight aria-hidden="true" className="size-4" />
@@ -153,11 +150,11 @@ export default function OverviewTab({
         aria-label="Studio performance"
         className="my-5 grid grid-cols-2 gap-3 xl:grid-cols-3"
       >
-        {metrics.map((metric) => (
+        {metrics.map((metric, index) => (
           <button
             key={metric.label}
             onClick={() => onNavigate(metric.view)}
-            className="min-w-0 border border-admin-border bg-admin-surface p-4 text-left hover:border-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary sm:p-5"
+            className="min-w-0 border border-admin-border bg-admin-bg p-4 text-left hover:border-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary sm:p-5"
           >
             <div className="flex items-center justify-between gap-2"><p className="text-xs font-medium">{metric.label}</p><metric.icon aria-hidden="true" className="size-4 text-admin-muted" strokeWidth={1.8} /></div>
             <p className={`${monoClass} my-3 text-[29px] tracking-tight`}>
@@ -165,7 +162,7 @@ export default function OverviewTab({
                 ? "—"
                 : metric.value}
             </p>
-            <div className="mt-3 flex items-center justify-between gap-2 text-[10px] text-admin-muted"><span>{metric.subtitle}</span><span className="font-medium text-admin-ink">{metric.delta}</span></div>
+            <div className="mt-3 flex items-center justify-between gap-2 text-[10px] text-admin-muted"><span>{metric.subtitle}</span><span className={`${monoClass} shrink-0 bg-admin-raised px-1.5 py-0.5 font-medium ${index === 2 && waiting > 0 ? "text-admin-alert" : "text-admin-ink"}`}>{metric.delta}</span></div>
           </button>
         ))}
       </section>
@@ -173,14 +170,11 @@ export default function OverviewTab({
         <AttentionChart enquiries={data.enquiries} sample={sample} />
         <Panel
           title="Where your next project begins"
-          description={
-            sample
-              ? "Sample city demand. Select a row to explore."
-              : "Enquiries by supplied locality / city."
-          }
+          description={sample ? "City demand · select a row to explore enquiries" : "Enquiries by supplied locality / city."}
+          action={sample ? <Badge>September</Badge> : undefined}
         >
           <div className="px-5 pb-5">
-            <div className="mb-2 grid grid-cols-[1fr_auto_auto] gap-4 text-[10px] uppercase tracking-[0.14em] text-admin-muted"><span>City</span><span>Visits</span><span>Enquiries</span></div>
+            <div className="mb-2 grid grid-cols-[minmax(0,1fr)_55px_80px] gap-3 text-[10px] text-admin-muted"><span>City</span><span className="text-right">Visits</span><span className="text-right">Enquiries</span></div>
             {areas.length ? (
               areas.map((area) => (
                 <button
@@ -195,11 +189,11 @@ export default function OverviewTab({
                       .getElementById("enquiries")
                       ?.scrollIntoView({ block: "start" });
                   }}
-                  className="grid min-h-16 w-full grid-cols-[1fr_auto_auto] items-center gap-4 border-b border-admin-border py-3 text-left"
+                  className="grid min-h-16 w-full grid-cols-[minmax(0,1fr)_55px_80px] items-center gap-3 border-t border-admin-border py-3 text-left hover:bg-admin-raised/40"
                   aria-label={`View ${area.name} enquiries`}
                 >
                   <div>
-                    <p className="text-xs font-medium">{area.name}</p>
+                    <p className="text-xs font-semibold">{area.name}{area.name === "Patna" && <span className="ml-2 text-[9px] font-normal text-admin-muted">Studio HQ</span>}</p>
                     <svg
                       className="mt-2 h-1 w-full max-w-48"
                       viewBox="0 0 100 2"
@@ -213,16 +207,16 @@ export default function OverviewTab({
                       />
                       <rect
                         width={
-                          ((area.enquiries) /
-                            Math.max(1, ...areas.map((item) => item.enquiries))) *
+                          ((area.visits ?? 0) /
+                            Math.max(1, ...areas.map((item) => item.visits ?? 0))) *
                           100
                         }
                         height="2"
-                        className="fill-admin-muted"
+                        className="fill-admin-ink/60"
                       />
                     </svg>
                   </div>
-                  <span className={`${monoClass} text-xs text-admin-muted`}>{area.visits ?? "—"}</span><span className={`${monoClass} text-xs`}>{area.enquiries} →</span>
+                  <span className={`${monoClass} text-right text-xs text-admin-muted`}>{area.visits ?? "—"}</span><span className={`${monoClass} flex items-center justify-end gap-2 text-xs`}>{area.enquiries}<ChevronRight aria-hidden="true" className="size-4 text-admin-muted" /></span>
                 </button>
               ))
             ) : (
@@ -256,97 +250,50 @@ export function AttentionChart({
 }) {
   const rows = sample
     ? SAMPLE_TREND
-    : (trend ??
-      Array.from({ length: 6 }, (_, index) => {
-        const now = new Date();
-        const date = new Date(
-          Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 5 + index, 1),
-        );
-        const key = date.toISOString().slice(0, 7);
-        return {
-          month: key,
-          count: enquiries.filter((item) => item.created_at.startsWith(key))
-            .length,
-        };
-      }));
-  const max = Math.max(1, ...rows.map((row) => row.count));
-  const curvePath = (values: number[], scale: number) => values.map((value, index) => { const x = 30 + index * 90; const y = 160 - (value / scale) * 120; if (index === 0) return "M " + x + " " + y; const previousX = 30 + (index - 1) * 90; const previousY = 160 - ((values[index - 1] ?? 0) / scale) * 120; const controlX = (previousX + x) / 2; return " Q " + controlX + " " + previousY + " " + x + " " + y; }).join("");
-  const points = curvePath(rows.map((row) => row.count), max);
+    : (trend ?? Array.from({ length: 6 }, (_, index) => {
+      const now = new Date();
+      const date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 5 + index, 1));
+      const key = date.toISOString().slice(0, 7);
+      return { month: key, count: enquiries.filter((item) => item.created_at.startsWith(key)).length };
+    }));
+  const visits = sample ? SAMPLE_TREND.map((row) => row.visits) : [];
+  const totalEnquiries = rows.reduce((sum, row) => sum + row.count, 0);
+  const maxVisits = Math.max(1500, ...visits);
+  const maxEnquiries = Math.max(60, ...rows.map((row) => row.count));
+  const x = (index: number) => 40 + index * 95;
+  const visitY = (value: number) => 170 - (value / maxVisits) * 135;
+  const enquiryY = (value: number) => 170 - (value / maxEnquiries) * 135;
+  const smoothPath = (values: number[], position: (value: number) => number) => values.map((value, index) => {
+    if (index === 0) return "M " + x(index) + " " + position(value);
+    const previous = values[index - 1] ?? 0;
+    const control = (x(index - 1) + x(index)) / 2;
+    return " C " + control + " " + position(previous) + " " + control + " " + position(value) + " " + x(index) + " " + position(value);
+  }).join("");
+  const visitPath = visits.length ? smoothPath(visits, visitY) : "";
+  const enquiryPath = smoothPath(rows.map((row) => row.count), enquiryY);
   return (
     <Panel
       title="Attention into enquiries"
-      description={
-        sample
-          ? "Sample visits and enquiries, April to September 2026"
-          : "Recorded enquiry trend. Traffic history is not supplied."
-      }
-      action={<Badge>{sample ? "Sample" : "Enquiries"}</Badge>}
+      description={sample ? "Sample visits and recorded enquiries" : "Recorded enquiry trend. Traffic history is not supplied."}
+      action={<Badge>{sample ? "Apr – Sep" : "Enquiries"}</Badge>}
     >
       <div className="px-5 pb-5">
-        <div className="my-4 flex gap-8">
-          <div>
-            <p className={`${monoClass} text-xl`}>
-              {rows.reduce((sum, row) => sum + row.count, 0)}
-            </p>
-            <p className="text-[10px] text-admin-muted">
-              Enquiries over six months
-            </p>
-          </div>
-          {sample && (
-            <div>
-              <p className={`${monoClass} text-xl`}>5,812</p>
-              <p className="text-[10px] text-admin-muted">Site visits over six months</p>
-            </div>
-          )}
+        <div className="mb-4 mt-4 flex gap-8">
+          {sample && <div><p className={monoClass + " text-xl"}>5,812</p><p className="text-[10px] text-admin-muted">Site visits</p></div>}
+          <div><p className={monoClass + " text-xl"}>{totalEnquiries}</p><p className="text-[10px] text-admin-muted">Enquiries</p></div>
         </div>
-        <svg
-          viewBox="0 0 510 195"
-          className="w-full text-admin-ink"
-          role="img"
-          aria-label={rows
-            .map((row) => `${row.month}: ${row.count} enquiries`)
-            .join("; ")}
-        >
-          {[40, 80, 120, 160].map((y) => (
-            <line
-              key={y}
-              x1="20"
-              x2="495"
-              y1={y}
-              y2={y}
-              className="stroke-admin-border"
-            />
-          ))}
-          <path d={points} fill="none" stroke="currentColor" strokeWidth="2" />
-          {sample && (
-            <path d={curvePath(SAMPLE_TREND.map((row) => row.visits), 1500)} fill="none" className="stroke-admin-muted" strokeWidth="1.5" strokeDasharray="4 4" />
-          )}
-          {rows.map((row, index) => (
-            <g key={row.month}>
-              <circle
-                cx={30 + index * 90}
-                cy={160 - (row.count / max) * 120}
-                r="3"
-                className="fill-admin-surface stroke-admin-ink"
-              >
-                <title>{`${row.month}: ${row.count} enquiries`}</title>
-              </circle>
-              <text
-                x={30 + index * 90}
-                y="187"
-                textAnchor="middle"
-                className="fill-admin-muted text-[10px]"
-              >
-                {row.month.length > 3 ? row.month.slice(5) : row.month}
-              </text>
-            </g>
-          ))}
+        <svg viewBox="0 0 540 215" className="h-[210px] w-full overflow-visible" role="img" aria-label={rows.map((row, index) => row.month + ": " + (visits[index]?.toLocaleString("en-IN") ?? "no visit data") + " visits, " + row.count + " enquiries").join("; ")}>
+          <title>{sample ? "Sample website visits and enquiries, April to September 2026" : "Recorded enquiry trend"}</title>
+          {[35, 80, 125, 170].map((y, index) => <g key={y}><line x1="35" y1={y} x2="525" y2={y} className="stroke-admin-border" strokeDasharray="3 4" /><text x="0" y={y + 4} className="fill-admin-muted text-[10px] [font-family:var(--font-dashboard-mono)]">{sample ? [1500, 1000, 500, 0][index] : [maxEnquiries, Math.round(maxEnquiries * 0.66), Math.round(maxEnquiries * 0.33), 0][index]}</text></g>)}
+          {sample && <path d={visitPath + " L 515 170 L 40 170 Z"} className="fill-admin-raised/40" />}
+          {sample && <path d={visitPath} fill="none" stroke="currentColor" strokeWidth="2" />}
+          <path d={enquiryPath} fill="none" className="stroke-admin-muted" strokeWidth="1.5" strokeDasharray="4 4" />
+          {rows.map((row, index) => <g key={row.month}><circle cx={x(index)} cy={sample ? visitY(visits[index] ?? 0) : enquiryY(row.count)} r="3" className="fill-admin-bg stroke-admin-ink" strokeWidth="1.5"><title>{row.month + ": " + (visits[index]?.toLocaleString("en-IN") ?? "no visit data") + " visits, " + row.count + " enquiries"}</title></circle><text x={x(index)} y="201" textAnchor="middle" className="fill-admin-muted text-[10px]">{row.month.length > 3 ? row.month.slice(5) : row.month}</text></g>)}
         </svg>
-        <p className="mt-3 text-[10px] text-admin-muted">
-          {sample
-            ? "Solid: enquiries (0–31). Dashed: visits (0–1,500). Sample series use separate scales."
-            : "Monthly enquiry counts, grouped in UTC."}
-        </p>
+        <div className="mt-3 flex flex-wrap gap-5 text-[10px] text-admin-muted">
+          {sample && <span className="flex items-center gap-1.5"><span className="w-4 border-t-[1.5px] border-admin-ink" />Visits · left scale</span>}
+          <span className="flex items-center gap-1.5"><span className="w-4 border-t border-dashed border-admin-muted" />Enquiries · scale <span className={monoClass}>0–{maxEnquiries}</span></span>
+        </div>
       </div>
     </Panel>
   );

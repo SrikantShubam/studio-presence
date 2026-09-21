@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Calculator, ChartNoAxesCombined, LayoutDashboard, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
+import { Calculator, ChartNoAxesCombined, Inbox, LayoutDashboard, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
 import {
   Badge,
@@ -37,7 +37,7 @@ import {
 
 const NAV_ICONS: Record<DashboardView, LucideIcon> = {
   overview: LayoutDashboard,
-  enquiries: Menu,
+  enquiries: Inbox,
   analytics: ChartNoAxesCombined,
   website: PanelsTopLeft,
   calculator: Calculator,
@@ -127,9 +127,14 @@ export function DashboardShell({
           Studio Presence
         </p>
       </div>
-      <div className="my-7 border border-admin-border bg-admin-surface p-3">
-        <p className="truncate text-xs font-semibold">{studioName}</p>
-        <p className="mt-1 text-[11px] text-admin-muted">Studio workspace</p>
+      <div className="my-7 flex items-center gap-3 border border-admin-border bg-admin-bg p-3">
+        <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
+          {(studioName || "S").slice(0, 2).toUpperCase()}
+        </span>
+        <div className="min-w-0">
+          <p className="truncate text-xs font-semibold">{studioName}</p>
+          <p className="mt-1 text-[11px] text-admin-muted">Studio workspace</p>
+        </div>
       </div>
     </>
   );
@@ -141,18 +146,23 @@ export function DashboardShell({
       >
         Skip to dashboard content
       </a>
-      <aside className="sticky top-0 hidden h-dvh flex-col border-r border-admin-border bg-admin-surface p-4 pt-7 lg:flex">
+      <aside className="sticky top-0 hidden h-dvh flex-col border-r border-admin-border bg-admin-bg p-4 pt-7 lg:flex">
         {brand}
         {navigation}
-        <div className="mt-auto border-t border-admin-border px-3 pt-5">
-          <p className="text-xs font-semibold">{ownerName || studioName}</p>
-          <p className="mt-1 text-[11px] text-admin-muted">
-            {authenticated ? "Signed in" : "Demo visitor"}
+        <div className="mt-auto px-3 pt-5">
+          <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted">
+            Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}
           </p>
+          <div className="flex items-center gap-2.5">
+            <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
+              {(ownerName || studioName).split(/\s+/).filter(Boolean).slice(0, 2).map((word) => word[0]).join("").toUpperCase()}
+            </span>
+            <div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="mt-1 text-[11px] text-admin-muted">Workspace owner</p></div>
+          </div>
         </div>
       </aside>
       <div className="min-w-0">
-        <header className="flex h-16 items-center justify-between gap-3 border-b border-admin-border bg-admin-surface px-4 sm:px-8">
+        <header className="flex h-16 items-center justify-between gap-3 border-b border-admin-border bg-admin-bg px-4 sm:px-8">
           <div className="flex min-w-0 items-center gap-3">
             <Button
               className="lg:hidden"
@@ -170,9 +180,7 @@ export function DashboardShell({
             </p>
           </div>
           <div className="flex shrink-0 items-center gap-2">
-            <div className="[&_select]:rounded-none [&_select]:shadow-none">
-              <ThemeToggle />
-            </div>
+            <ThemeToggle />
             {authenticated ? (
               <form action={signOutAction}>
                 <Button type="submit"><LogOut aria-hidden="true" className="size-4" />Sign out</Button>
@@ -199,11 +207,15 @@ export function DashboardShell({
         open={mobile}
         onClose={() => setMobile(false)}
         title="Studio navigation"
-        side
+        side="left"
       >
-        <div className="p-4">
+        <div className="flex h-full flex-col p-4">
           {brand}
           {navigation}
+          <div className="mt-auto px-3 pt-5">
+            <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted">Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}</p>
+            <div className="flex items-center gap-2.5"><span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">{(ownerName || studioName).split(/\s+/).filter(Boolean).slice(0, 2).map((word) => word[0]).join("").toUpperCase()}</span><div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="mt-1 text-[11px] text-admin-muted">Workspace owner</p></div></div>
+          </div>
         </div>
       </Dialog>
     </div>

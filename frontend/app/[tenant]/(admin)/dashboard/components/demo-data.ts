@@ -43,8 +43,10 @@ export const SAMPLE_CITIES = [
   { name: "Patna", count: 14, enquiries: 14, visits: 612 },
   { name: "Delhi NCR", count: 3, enquiries: 3, visits: 142 },
   { name: "Ranchi", count: 3, enquiries: 3, visits: 128 },
-];
-export const SAMPLE_ESTIMATE = {
+  { name: "Kolkata", count: 1, enquiries: 1, visits: 96 },
+  { name: "Varanasi", count: 2, enquiries: 2, visits: 84 },
+  { name: "Bengaluru", count: 1, enquiries: 1, visits: 54 },
+];export const SAMPLE_ESTIMATE = {
   enabled: true,
   ratePerSqft: { basic: 1200, standard: 1800, premium: 2400 },
   area: { min: 400, max: 3500, step: 50, default: 1000 },
