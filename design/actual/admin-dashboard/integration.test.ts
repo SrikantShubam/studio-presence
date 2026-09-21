@@ -25,3 +25,7 @@ test('turning samples off never substitutes demo leads for unavailable live data
   assert.equal(dashboardMode('1', true), 'demo')
   assert.equal(dashboardMode(undefined, false), 'demo')
 })
+
+test('quote rounds per-square-foot rates before multiplying area, like the public calculator', () => {
+  assert.deepEqual(calculateQuote(1000, 1001, 1001, 1.15), { low: 1151000, high: 1151000 })
+})
