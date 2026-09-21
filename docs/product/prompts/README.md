@@ -16,8 +16,8 @@ admin-universal/            — NOT themed. One design serves all 4 identities.
   00-universal-system.md    — neutral palette, system fonts, admin-tool conventions
   01-login.md               — /panel/login and /dashboard/login, one screen
   02-client-panel.md        — /panel, all tiers
-  03-dashboard-leads.md     — /dashboard, T3 only
-  04-dashboard-analytics.md — /dashboard/analytics, T3 only
+  03-dashboard-leads.md     — /dashboard, Growth/custom scope
+  04-dashboard-analytics.md — /dashboard/analytics, shared Umami reporting views
 
 unit-1-editorial/            — DEV.UN-based. Full agency-grade set. Do this unit first.
   00-identity-system.md
@@ -68,19 +68,19 @@ client-specific element is their logo and name in the header, so they know whose
 
 **This cut 16 screens down to 4.**
 
-## What T3 actually is
+## What Growth actually is
 
-T3 was "T2 plus a dashboard" — too thin to justify the tier, and hard to describe in a pitch. It's
-now the **agency-grade site**: the page set [BAMO](https://bamo.com/) and
-[Tredi](https://www.trediinteriors.com/) actually run. Categorised portfolio, the team, press
-coverage, a working journal, careers, multiple offices.
+Growth is not "Presence Plus plus a dashboard" and it is not a fixed agency-grade page bundle. It is
+custom design and implementation outside the three approved standard templates.
 
-**Build the capability, gate by config.** Every page type ships in the template; `journal: false`
-turns it off for a client who won't publish. An earlier version of these docs argued against
-building a journal at all because "a Tier 2-3 studio owner will never write blog posts" — that
-reasoned from the median studio rather than the target one. A practice running five projects a
-month at ₹8–15L each has a marketing function. Building the capability costs nothing per client;
-assuming it away costs the clients who would have used it.
+Custom work may include a new visual direction, bespoke page families, custom content types, custom
+editor fields, branding, custom icons, migration, or named integrations. The quote must list the
+pages, structures, assets, and revision rounds. The dashboard is only included when the Growth quote
+names the workflow.
+
+The journal is a standard capability for Presence Plus when the editorial workflow is available, with
+a 100-post limit. Growth can include a larger journal with up to 1,000 published posts when the
+custom scope requires it. This is a content-record allowance, not unlimited media storage.
 
 **The estimate calculator is a gimmick — offer it, don't push it.** Three inputs, a ballpark range,
 a CTA. Available at every tier, `estimate: false` turns it off. Neither reference site runs one, so

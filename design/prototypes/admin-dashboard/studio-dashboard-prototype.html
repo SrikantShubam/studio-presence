@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Presence · Studio Client Dashboard</title>
+  
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind CSS CDN with Shadcn Zinc Configuration -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            border: 'hsl(var(--border))',
+            input: 'hsl(var(--input))',
+            ring: 'hsl(var(--ring))',
+            background: 'hsl(var(--background))',
+            foreground: 'hsl(var(--foreground))',
+            primary: {
+              DEFAULT: 'hsl(var(--primary))',
+              foreground: 'hsl(var(--primary-foreground))',
+            },
+            secondary: {
+              DEFAULT: 'hsl(var(--secondary))',
+              foreground: 'hsl(var(--secondary-foreground))',
+            },
+            destructive: {
+              DEFAULT: 'hsl(var(--destructive))',
+              foreground: 'hsl(var(--destructive-foreground))',
+            },
+            muted: {
+              DEFAULT: 'hsl(var(--muted))',
+              foreground: 'hsl(var(--muted-foreground))',
+            },
+            accent: {
+              DEFAULT: 'hsl(var(--accent))',
+              foreground: 'hsl(var(--accent-foreground))',
+            },
+            popover: {
+              DEFAULT: 'hsl(var(--popover))',
+              foreground: 'hsl(var(--popover-foreground))',
+            },
+            card: {
+              DEFAULT: 'hsl(var(--card))',
+              foreground: 'hsl(var(--card-foreground))',
+            },
+          },
+          borderRadius: {
+            lg: 'var(--radius)',
+            md: 'calc(var(--radius) - 2px)',
+            sm: 'calc(var(--radius) - 4px)',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Shadcn Plain Zinc Tokens (Light & Dark) */
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 240 10% 3.9%;
+      --card: 0 0% 100%;
+      --card-foreground: 240 10% 3.9%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 240 10% 3.9%;
+      --primary: 240 5.9% 10%;
+      --primary-foreground: 0 0% 98%;
+      --secondary: 240 4.8% 95.9%;
+      --secondary-foreground: 240 5.9% 10%;
+      --muted: 240 4.8% 95.9%;
+      --muted-foreground: 240 3.8% 46.1%;
+      --accent: 240 4.8% 95.9%;
+      --accent-foreground: 240 5.9% 10%;
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 0 0% 98%;
+      --border: 240 5.9% 90%;
+      --input: 240 5.9% 90%;
+      --ring: 240 5.9% 10%;
+      --radius: 0.5rem;
+    }
+
+    .dark {
+      --background: 240 10% 3.9%; /* #09090b */
+      --foreground: 0 0% 98%;      /* #fafafa */
+      --card: 240 10% 4.9%;        /* #0f0f12 */
+      --card-foreground: 0 0% 98%;
+      --popover: 240 10% 4.9%;
+      --popover-foreground: 0 0% 98%;
+      --primary: 0 0% 98%;         /* #fafafa */
+      --primary-foreground: 240 5.9% 10%; /* #18181b */
+      --secondary: 240 3.7% 15.9%; /* #27272a */
+      --secondary-foreground: 0 0% 98%;
+      --muted: 240 3.7% 15.9%;
+      --muted-foreground: 240 5% 64.9%; /* #a1a1aa */
+      --accent: 240 3.7% 15.9%;
+      --accent-foreground: 0 0% 98%;
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 0 0% 98%;
+      --border: 240 3.7% 15.9%;     /* #27272a */
+      --input: 240 3.7% 15.9%;
+      --ring: 240 4.9% 83.9%;
+      --radius: 0.5rem;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Custom scrollbar for shadcn sleek look */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: hsl(var(--muted-foreground) / 0.25);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--muted-foreground) / 0.4);
+    }
+
+    /* Subtle pulse animation for glowing map nodes */
+    @keyframes pulse-glow {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.35);
+        opacity: 0.25;
+      }
+    }
+    .pulse-node {
+      animation: pulse-glow 2.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-background text-foreground min-h-screen flex flex-col selection:bg-primary selection:text-primary-foreground">
+
+  <!-- TOP SHELL NOTIFICATION BANNER (Launch Readiness) -->
+  <aside aria-label="Launch readiness notification" class="bg-muted/60 border-b border-border text-xs px-4 py-2 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-primary text-primary-foreground">DEMO PREVIEW</span>
+      <span class="text-muted-foreground hidden sm:inline">Workspace:</span>
+      <span class="font-medium text-foreground">Ashish Interiors · Patna</span>
+      <span class="text-muted-foreground">|</span>
+      <span class="text-muted-foreground flex items-center gap-1.5">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500"></i>
+        Tier 3 Full Platform Access
+      </span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="switchView('onboarding')" class="text-xs font-medium hover:underline text-foreground flex items-center gap-1">
+        <span>Launch Checklist (4/5 complete)</span>
+        <i data-lucide="arrow-right" class="w-3 h-3"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN APPLICATION SHELL -->
+  <div class="flex flex-1 overflow-hidden">
+    
+    <!-- SIDEBAR -->
+    <aside class="w-64 border-r border-border bg-card/40 flex-col justify-between hidden md:flex shrink-0">
+      <div class="p-4 space-y-4">
+        <!-- Studio Workspace Switcher -->
+        <div class="relative">
+          <button id="workspace-dropdown-btn" onclick="toggleWorkspaceDropdown()" class="w-full flex items-center justify-between p-2 rounded-lg border border-border bg-card hover:bg-accent hover:text-accent-foreground transition text-left group">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-md bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs">
+                AI
+              </div>
+              <div class="leading-tight">
+                <div class="text-xs font-semibold tracking-tight text-foreground">Ashish Interiors</div>
+                <div class="text-[11px] text-muted-foreground font-mono">ashish-interiors.in</div>
+              </div>
+            </div>
+            <i data-lucide="chevrons-up-down" class="w-4 h-4 text-muted-foreground group-hover:text-foreground"></i>
+          </button>
+
+          <!-- Dropdown items -->
+          <div id="workspace-dropdown" class="hidden absolute top-full left-0 mt-1.5 w-full bg-popover border border-border rounded-lg shadow-xl z-50 p-1 space-y-0.5 text-xs">
+            <div class="px-2 py-1.5 text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Workspaces</div>
+            <button onclick="selectWorkspace('Ashish Interiors', 'Patna', 't3')" class="w-full text-left px-2 py-1.5 rounded flex items-center justify-between bg-accent text-accent-foreground font-medium">
+              <span>Ashish Interiors (Patna)</span>
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="selectWorkspace('ABC Studios', 'Ranchi', 't0')" class="w-full text-left px-2 py-1.5 rounded flex items-center justify-between hover:bg-accent text-muted-foreground hover:text-foreground">
+              <span>ABC Studios (Ranchi)</span>
+              <span class="text-[10px] font-mono px-1 rounded bg-muted">Demo</span>
+            </button>
+            <button onclick="selectWorkspace('Studio Minimal', 'Bengaluru', 't1')" class="w-full text-left px-2 py-1.5 rounded flex items-center justify-between hover:bg-accent text-muted-foreground hover:text-foreground">
+              <span>Studio Minimal (BLR)</span>
+            </button>
+            <div class="border-t border-border my-1"></div>
+            <button onclick="switchView('onboarding')" class="w-full text-left px-2 py-1.5 rounded flex items-center gap-2 hover:bg-accent text-foreground">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>New Studio Onboarding</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Primary Navigation Links -->
+        <nav class="space-y-1 text-sm font-medium">
+          <div class="px-2 pb-1 text-[11px] font-mono font-medium text-muted-foreground uppercase tracking-wider">Core Workspace</div>
+          
+          <button onclick="switchView('overview')" id="nav-overview" class="nav-item w-full flex items-center justify-between px-2.5 py-2 rounded-md bg-accent text-accent-foreground transition">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+              <span>Overview</span>
+            </div>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-background text-foreground border border-border">Hub</span>
+          </button>
+
+          <button onclick="switchView('leads')" id="nav-leads" class="nav-item w-full flex items-center justify-between px-2.5 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="inbox" class="w-4 h-4"></i>
+              <span>Enquiries & Leads</span>
+            </div>
+            <span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-rose-500/10 text-rose-500 border border-rose-500/20">3 new</span>
+          </button>
+
+          <button onclick="switchView('analytics')" id="nav-analytics" class="nav-item w-full flex items-center justify-between px-2.5 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="line-chart" class="w-4 h-4"></i>
+              <span>Traffic & Insights</span>
+            </div>
+          </button>
+
+          <button onclick="switchView('content')" id="nav-content" class="nav-item w-full flex items-center justify-between px-2.5 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="file-text" class="w-4 h-4"></i>
+              <span>Studio Content</span>
+            </div>
+            <span class="text-[10px] font-mono text-muted-foreground">Live</span>
+          </button>
+
+          <div class="pt-4 px-2 pb-1 text-[11px] font-mono font-medium text-muted-foreground uppercase tracking-wider">Setup & Growth</div>
+
+          <button onclick="switchView('onboarding')" id="nav-onboarding" class="nav-item w-full flex items-center justify-between px-2.5 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="compass" class="w-4 h-4"></i>
+              <span>3-Step Onboarding</span>
+            </div>
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          </button>
+
+          <button onclick="switchView('settings')" id="nav-settings" class="nav-item w-full flex items-center justify-between px-2.5 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="settings" class="w-4 h-4"></i>
+              <span>Settings & Access</span>
+            </div>
+          </button>
+        </nav>
+      </div>
+
+      <!-- User Profile & Quick Theme in Sidebar Footer -->
+      <div class="p-3 border-t border-border m-2 rounded-lg bg-card/60 flex items-center justify-between">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center font-bold text-xs border border-border shrink-0">
+            AK
+          </div>
+          <div class="min-w-0">
+            <div class="text-xs font-medium truncate text-foreground">Ashish Kumar</div>
+            <div class="text-[10px] text-muted-foreground font-mono truncate">Studio Principal</div>
+          </div>
+        </div>
+        <button onclick="cycleTheme()" class="p-1.5 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition" title="Toggle Light / Dark theme">
+          <i data-lucide="sun-moon" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTENT WRAPPER -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      
+      <!-- TOP NAVBAR -->
+      <header class="h-14 border-b border-border px-4 sm:px-6 flex items-center justify-between bg-card/20 backdrop-blur-md sticky top-0 z-30">
+        <!-- Breadcrumb / Section Title -->
+        <div class="flex items-center gap-2 text-xs">
+          <button class="md:hidden p-1.5 -ml-1.5 rounded hover:bg-accent text-muted-foreground" onclick="toggleMobileMenu()">
+            <i data-lucide="menu" class="w-4 h-4"></i>
+          </button>
+          <span class="text-muted-foreground font-mono">Ashish Interiors</span>
+          <span class="text-muted-foreground">/</span>
+          <span id="breadcrumb-title" class="font-semibold text-foreground">Overview Hub</span>
+        </div>
+
+        <!-- Right Quick Actions & Search -->
+        <div class="flex items-center gap-2">
+          <!-- Command Bar Trigger -->
+          <button onclick="openCommandPalette()" class="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-md border border-border bg-card hover:bg-accent text-muted-foreground text-xs transition">
+            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            <span>Search enquiries or projects...</span>
+            <kbd class="ml-2 font-mono text-[10px] bg-muted px-1.5 py-0.5 rounded border border-border">⌘K</kbd>
+          </button>
+
+          <!-- WhatsApp Direct Test Action -->
+          <a href="https://wa.me/919431000000?text=Hi%20Ashish%20Interiors,%20I'd%20like%20to%20consult%20for%20my%20flat" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium transition shadow-sm">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Test WhatsApp</span>
+          </a>
+
+          <!-- View Live Website -->
+          <a href="https://candidate.srikantshubams-projects.vercel.app/ashish-interiors" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-border bg-card hover:bg-accent text-foreground text-xs font-medium transition">
+            <span class="hidden sm:inline">Live Site</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-muted-foreground"></i>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button onclick="cycleTheme()" class="p-2 rounded-md border border-border bg-card hover:bg-accent text-muted-foreground hover:text-foreground transition" aria-label="Toggle Theme">
+            <i data-lucide="sun-moon" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW PANELS CONTAINER -->
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+        <!-- ========================================================================= -->
+        <!-- 1. OVERVIEW HUB VIEW -->
+        <!-- ========================================================================= -->
+        <section id="view-overview" class="view-panel space-y-6">
+          
+          <!-- Welcome & Status Banner -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border">
+            <div>
+              <h1 class="text-2xl font-bold tracking-tight text-foreground">Welcome back, Ashish</h1>
+              <p class="text-xs text-muted-foreground mt-0.5">Here is what happened with your studio website and client consultations this week.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                Lead Capture Active
+              </span>
+              <button onclick="switchView('leads')" class="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition">
+                View 3 New Leads
+              </button>
+            </div>
+          </div>
+
+          <!-- TOP 4 ACTIONABLE KPI CARDS -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Metric 1 -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-2">
+              <div class="flex items-center justify-between text-muted-foreground">
+                <span class="text-xs font-medium uppercase tracking-wider font-mono">Total Enquiries</span>
+                <div class="p-1.5 rounded-md bg-secondary text-foreground">
+                  <i data-lucide="inbox" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold tracking-tight text-foreground">14</span>
+                <span class="text-xs font-mono font-medium text-emerald-500">+5 vs last mo</span>
+              </div>
+              <p class="text-[11px] text-muted-foreground">6 residential · 8 kitchen / turnkey</p>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-2">
+              <div class="flex items-center justify-between text-muted-foreground">
+                <span class="text-xs font-medium uppercase tracking-wider font-mono">Immediate Action</span>
+                <div class="p-1.5 rounded-md bg-rose-500/10 text-rose-500">
+                  <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold tracking-tight text-rose-500">2</span>
+                <span class="text-xs font-medium text-muted-foreground">not contacted yet</span>
+              </div>
+              <p class="text-[11px] text-rose-500 font-medium">Boring Road & Patliputra enquiries</p>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-2">
+              <div class="flex items-center justify-between text-muted-foreground">
+                <span class="text-xs font-medium uppercase tracking-wider font-mono">Verified Visitors</span>
+                <div class="p-1.5 rounded-md bg-secondary text-foreground">
+                  <i data-lucide="eye" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold tracking-tight text-foreground">1,248</span>
+                <span class="text-xs font-mono font-medium text-emerald-500">+18.4%</span>
+              </div>
+              <p class="text-[11px] text-muted-foreground">No tracking cookies · Umami verified</p>
+            </div>
+
+            <!-- Metric 4 -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-2">
+              <div class="flex items-center justify-between text-muted-foreground">
+                <span class="text-xs font-medium uppercase tracking-wider font-mono">WhatsApp Clicks</span>
+                <div class="p-1.5 rounded-md bg-secondary text-foreground">
+                  <i data-lucide="phone-call" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold tracking-tight text-foreground">86</span>
+                <span class="text-xs font-mono font-medium text-emerald-500">+23%</span>
+              </div>
+              <p class="text-[11px] text-muted-foreground">Direct conversation triggers</p>
+            </div>
+          </div>
+
+          <!-- DUAL COLUMN: RECHARTS INTERACTIVE TREND + GEOGRAPHIC CATCHMENT RADAR -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- RECHARTS STYLE TREND CHART WITH GLOW -->
+            <div class="lg:col-span-2 p-5 rounded-lg border border-border bg-card shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2 class="text-sm font-semibold tracking-tight text-foreground">Consultation Enquiries vs Site Traffic</h2>
+                  <p class="text-xs text-muted-foreground">Monthly trends over the last 6 months (Apr – Sep 2026)</p>
+                </div>
+                <!-- Interactive metric selector -->
+                <div class="flex items-center gap-1 p-0.5 rounded-md bg-muted border border-border text-xs">
+                  <button onclick="setChartMetric('combined')" id="btn-chart-combined" class="px-2.5 py-1 rounded bg-background shadow-xs font-medium text-foreground">All</button>
+                  <button onclick="setChartMetric('enquiries')" id="btn-chart-enquiries" class="px-2.5 py-1 rounded text-muted-foreground hover:text-foreground font-medium">Enquiries Only</button>
+                </div>
+              </div>
+
+              <!-- Recharts Interactive SVG with Gradient Glow -->
+              <div class="relative w-full h-64 select-none">
+                <svg viewBox="0 0 700 240" class="w-full h-full overflow-visible" id="recharts-svg">
+                  <defs>
+                    <!-- Linear Gradient for Area Fill -->
+                    <linearGradient id="areaGlowGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="currentColor" stop-opacity="0.25" class="text-foreground" />
+                      <stop offset="100%" stop-color="currentColor" stop-opacity="0.0" class="text-foreground" />
+                    </linearGradient>
+
+                    <!-- Neon Glow Filter -->
+                    <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <!-- Horizontal Grid Lines -->
+                  <line x1="0" y1="30" x2="700" y2="30" stroke="hsl(var(--border))" stroke-dasharray="3 3" />
+                  <line x1="0" y1="85" x2="700" y2="85" stroke="hsl(var(--border))" stroke-dasharray="3 3" />
+                  <line x1="0" y1="140" x2="700" y2="140" stroke="hsl(var(--border))" stroke-dasharray="3 3" />
+                  <line x1="0" y1="195" x2="700" y2="195" stroke="hsl(var(--border))" />
+
+                  <!-- Y-Axis Values -->
+                  <text x="5" y="26" class="text-[10px] font-mono fill-muted-foreground">30 leads / 1.5k visits</text>
+                  <text x="5" y="81" class="text-[10px] font-mono fill-muted-foreground">20 leads / 1.0k visits</text>
+                  <text x="5" y="136" class="text-[10px] font-mono fill-muted-foreground">10 leads / 500 visits</text>
+
+                  <!-- Smooth Area Fill under the curve -->
+                  <path d="M 50 160 C 130 145, 170 120, 230 125 C 290 130, 330 90, 410 75 C 470 65, 520 95, 590 60 C 630 45, 650 35, 680 25 L 680 195 L 50 195 Z" 
+                        fill="url(#areaGlowGradient)" />
+
+                  <!-- Primary Smooth Bezier Trend Line with Glow -->
+                  <path id="recharts-line"
+                        d="M 50 160 C 130 145, 170 120, 230 125 C 290 130, 330 90, 410 75 C 470 65, 520 95, 590 60 C 630 45, 650 35, 680 25" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        stroke-width="2.5" 
+                        class="text-foreground"
+                        filter="url(#glowFilter)" />
+
+                  <!-- Secondary dotted line (Enquiry Conversion) -->
+                  <path d="M 50 185 C 130 178, 170 165, 230 168 C 290 170, 330 150, 410 140 C 470 135, 520 145, 590 120 C 630 110, 650 100, 680 85"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.75"
+                        stroke-dasharray="4 4"
+                        class="text-muted-foreground" />
+
+                  <!-- Interactive Data Points with Tooltip Triggers -->
+                  <g class="cursor-pointer group" onmouseover="showChartTooltip(50, 160, 'Apr 2026', '6 leads', '420 visits')">
+                    <circle cx="50" cy="160" r="4" class="fill-background stroke-foreground" stroke-width="2" />
+                    <text x="50" y="215" text-anchor="middle" class="text-[11px] font-mono fill-muted-foreground">Apr</text>
+                  </g>
+                  <g class="cursor-pointer group" onmouseover="showChartTooltip(175, 125, 'May 2026', '9 leads', '610 visits')">
+                    <circle cx="175" cy="125" r="4" class="fill-background stroke-foreground" stroke-width="2" />
+                    <text x="175" y="215" text-anchor="middle" class="text-[11px] font-mono fill-muted-foreground">May</text>
+                  </g>
+                  <g class="cursor-pointer group" onmouseover="showChartTooltip(300, 115, 'Jun 2026', '11 leads', '790 visits')">
+                    <circle cx="300" cy="115" r="4" class="fill-background stroke-foreground" stroke-width="2" />
+                    <text x="300" y="215" text-anchor="middle" class="text-[11px] font-mono fill-muted-foreground">Jun</text>
+                  </g>
+                  <g class="cursor-pointer group" onmouseover="showChartTooltip(425, 75, 'Jul 2026', '16 leads', '980 visits')">
+                    <circle cx="425" cy="75" r="4" class="fill-background stroke-foreground" stroke-width="2" />
+                    <text x="425" y="215" text-anchor="middle" class="text-[11px] font-mono fill-muted-foreground">Jul</text>
+                  </g>
+                  <g class="cursor-pointer group" onmouseover="showChartTooltip(550, 70, 'Aug 2026', '19 leads', '1,120 visits')">
+                    <circle cx="550" cy="70" r="4" class="fill-background stroke-foreground" stroke-width="2" />
+                    <text x="550" y="215" text-anchor="middle" class="text-[11px] font-mono fill-muted-foreground">Aug</text>
+                  </g>
+                  <g class="cursor-pointer group" onmouseover="showChartTooltip(675, 25, 'Sep 2026', '24 leads', '1,248 visits')">
+                    <circle cx="675" cy="25" r="5" class="fill-primary stroke-background" stroke-width="2" />
+                    <text x="675" y="215" text-anchor="middle" class="text-[11px] font-mono font-bold fill-foreground">Sep (Current)</text>
+                  </g>
+                </svg>
+
+                <!-- Floating Chart Tooltip -->
+                <div id="chart-tooltip" class="absolute hidden pointer-events-none p-2 rounded-md bg-popover border border-border shadow-xl text-xs space-y-0.5 z-20">
+                  <div id="tt-date" class="font-mono text-[10px] text-muted-foreground">Sep 2026</div>
+                  <div id="tt-enquiries" class="font-semibold text-foreground">24 Enquiries</div>
+                  <div id="tt-visits" class="text-muted-foreground text-[11px]">1,248 Visits</div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border">
+                <div class="flex items-center gap-4">
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-0.5 bg-foreground inline-block"></span> Site Traffic Trend</span>
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-0.5 border-b border-dashed border-muted-foreground inline-block"></span> Consultation Enquiries</span>
+                </div>
+                <span class="font-mono text-[11px]">Peak conversion: Boring Road Kitchen campaign</span>
+              </div>
+            </div>
+
+            <!-- GEOGRAPHIC LOCALITY DEMAND & CATCHMENT MAP -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm flex flex-col justify-between space-y-4">
+              <div>
+                <div class="flex items-center justify-between">
+                  <h2 class="text-sm font-semibold tracking-tight text-foreground">Locality Demand</h2>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">Patna Metro Area</span>
+                </div>
+                <p class="text-xs text-muted-foreground mt-0.5">Click any locality hotspot to filter incoming enquiries.</p>
+              </div>
+
+              <!-- Interactive Visual Locality Radar / Catchment Map -->
+              <div class="relative w-full aspect-square max-h-56 mx-auto bg-muted/20 rounded-lg border border-border flex items-center justify-center overflow-hidden">
+                <!-- Concentric Distance Rings -->
+                <div class="absolute w-44 h-44 rounded-full border border-border/40 border-dashed"></div>
+                <div class="absolute w-32 h-32 rounded-full border border-border/60"></div>
+                <div class="absolute w-16 h-16 rounded-full border border-border"></div>
+                
+                <!-- Center Studio Pin (Boring Road HQ) -->
+                <div class="absolute flex flex-col items-center">
+                  <div class="w-3 h-3 rounded-full bg-primary ring-4 ring-primary/20 z-10"></div>
+                  <span class="text-[9px] font-mono font-bold mt-1 bg-background/90 px-1 rounded shadow-xs">STUDIO HQ</span>
+                </div>
+
+                <!-- Hotspot 1: Boring Canal Road (High Density) -->
+                <button onclick="filterByLocality('Boring Road')" class="group absolute top-10 left-12 flex flex-col items-center" title="Boring Road: 31 completed, 6 active enquiries">
+                  <div class="w-4 h-4 rounded-full bg-rose-500/30 flex items-center justify-center relative">
+                    <span class="w-4 h-4 rounded-full bg-rose-500 pulse-node absolute"></span>
+                    <span class="w-2 h-2 rounded-full bg-rose-500 relative z-10"></span>
+                  </div>
+                  <span class="text-[9px] font-semibold tracking-tight group-hover:underline text-foreground mt-0.5">Boring Rd (6)</span>
+                </button>
+
+                <!-- Hotspot 2: Patliputra Colony -->
+                <button onclick="filterByLocality('Patliputra')" class="group absolute top-12 right-12 flex flex-col items-center" title="Patliputra: 4 active enquiries">
+                  <div class="w-3 h-3 rounded-full bg-emerald-500/30 flex items-center justify-center relative">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500 pulse-node absolute"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 relative z-10"></span>
+                  </div>
+                  <span class="text-[9px] font-semibold tracking-tight group-hover:underline text-foreground mt-0.5">Patliputra (4)</span>
+                </button>
+
+                <!-- Hotspot 3: Kankarbagh -->
+                <button onclick="filterByLocality('Kankarbagh')" class="group absolute bottom-10 left-14 flex flex-col items-center" title="Kankarbagh: 3 active enquiries">
+                  <div class="w-3 h-3 rounded-full bg-foreground/30 flex items-center justify-center relative">
+                    <span class="w-1.5 h-1.5 rounded-full bg-foreground relative z-10"></span>
+                  </div>
+                  <span class="text-[9px] font-medium group-hover:underline text-muted-foreground mt-0.5">Kankarbagh (3)</span>
+                </button>
+
+                <!-- Hotspot 4: Bailey Road -->
+                <button onclick="filterByLocality('Bailey Road')" class="group absolute bottom-12 right-10 flex flex-col items-center" title="Bailey Road: 2 active enquiries">
+                  <div class="w-3 h-3 rounded-full bg-foreground/30 flex items-center justify-center relative">
+                    <span class="w-1.5 h-1.5 rounded-full bg-foreground relative z-10"></span>
+                  </div>
+                  <span class="text-[9px] font-medium group-hover:underline text-muted-foreground mt-0.5">Bailey Rd (2)</span>
+                </button>
+              </div>
+
+              <!-- Locality breakdown list -->
+              <div class="space-y-1.5 text-xs">
+                <div class="flex items-center justify-between text-muted-foreground">
+                  <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Boring Road & Canal</span>
+                  <span class="font-mono text-foreground font-medium">₹8L – ₹14L avg</span>
+                </div>
+                <div class="flex items-center justify-between text-muted-foreground">
+                  <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Patliputra Colony</span>
+                  <span class="font-mono text-foreground font-medium">₹15L – ₹28L avg</span>
+                </div>
+                <div class="flex items-center justify-between text-muted-foreground">
+                  <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-foreground"></span> Kankarbagh & Rajendra Ngr</span>
+                  <span class="font-mono text-foreground font-medium">₹6L – ₹10L avg</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RECENT ENQUIRIES FEED WITH ONE-TAP WHATSAPP / CALL -->
+          <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 class="text-sm font-semibold tracking-tight text-foreground">Recent Client Enquiries</h2>
+                <p class="text-xs text-muted-foreground">Every lead is worth ₹2–15 lakh to this studio. Tappable actions connect directly to WhatsApp.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="active-locality-filter" class="hidden text-xs font-mono px-2 py-0.5 rounded bg-primary text-primary-foreground">Filtered</span>
+                <button onclick="clearLocalityFilter()" id="btn-clear-filter" class="hidden text-xs text-muted-foreground hover:text-foreground">Clear</button>
+                <button onclick="switchView('leads')" class="text-xs font-medium hover:underline text-foreground flex items-center gap-1">
+                  <span>View All Enquiries</span>
+                  <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Lead cards list -->
+            <div class="space-y-3" id="overview-lead-list">
+              <!-- Dynamically populated via JS for full interactivity -->
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 2. LEADS & ENQUIRIES CRM VIEW -->
+        <!-- ========================================================================= -->
+        <section id="view-leads" class="view-panel hidden space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border">
+            <div>
+              <h1 class="text-2xl font-bold tracking-tight text-foreground">Enquiries & Consultations</h1>
+              <p class="text-xs text-muted-foreground mt-0.5">Direct client enquiries received through the website contact form, estimate calculator, and WhatsApp clicks.</p>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <button onclick="exportLeadsCsv()" class="px-3 py-1.5 rounded-md border border-border bg-card hover:bg-accent text-xs font-medium transition flex items-center gap-1.5">
+                <i data-lucide="download" class="w-3.5 h-3.5 text-muted-foreground"></i>
+                <span>Export CSV</span>
+              </button>
+              <button onclick="openNewLeadModal()" class="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition flex items-center gap-1.5">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Log Walk-in / Call</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Status Filter Tabs & Search Bar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-1 p-1 rounded-lg bg-muted border border-border overflow-x-auto text-xs font-medium">
+              <button onclick="filterLeads('ALL')" id="filter-tab-ALL" class="lead-filter-tab px-3 py-1.5 rounded-md bg-background text-foreground shadow-xs font-semibold">All (14)</button>
+              <button onclick="filterLeads('NEW')" id="filter-tab-NEW" class="lead-filter-tab px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground">New (3)</button>
+              <button onclick="filterLeads('CONTACTED')" id="filter-tab-CONTACTED" class="lead-filter-tab px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground">Contacted (5)</button>
+              <button onclick="filterLeads('QUOTED')" id="filter-tab-QUOTED" class="lead-filter-tab px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground">Quoted (4)</button>
+              <button onclick="filterLeads('WON')" id="filter-tab-WON" class="lead-filter-tab px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground">Won (2)</button>
+            </div>
+
+            <div class="relative w-full sm:w-64">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="lead-search-input" oninput="searchLeads(this.value)" placeholder="Search by name, locality, budget..." class="w-full pl-9 pr-3 py-1.5 rounded-md border border-border bg-card text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring">
+            </div>
+          </div>
+
+          <!-- Full Leads List Cards (Mobile First, Thumb Friendly) -->
+          <div class="space-y-3" id="full-lead-list">
+            <!-- Populated via JavaScript -->
+          </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 3. TRAFFIC & ANALYTICS VIEW -->
+        <!-- ========================================================================= -->
+        <section id="view-analytics" class="view-panel hidden space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border">
+            <div>
+              <h1 class="text-2xl font-bold tracking-tight text-foreground">Traffic & Conversion Analytics</h1>
+              <p class="text-xs text-muted-foreground mt-0.5">The four numbers that actually matter to an interior design studio owner.</p>
+            </div>
+            <div class="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>Self-hosted Umami feed</span>
+            </div>
+          </div>
+
+          <!-- 4 Core Answers Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-2">
+              <span class="text-xs font-mono uppercase text-muted-foreground">1. Enquiries This Month</span>
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold tracking-tight text-foreground">14</span>
+                <span class="text-xs text-muted-foreground">vs 9 last month</span>
+              </div>
+              <p class="text-xs font-medium text-emerald-500">+55% conversion growth</p>
+            </div>
+
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-2">
+              <span class="text-xs font-mono uppercase text-muted-foreground">2. Total Site Visitors</span>
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-bold tracking-tight text-foreground">1,248</span>
+                <span class="text-xs text-muted-foreground">vs 1,054 last month</span>
+              </div>
+              <p class="text-xs text-muted-foreground font-mono">4.9% overall conversion rate</p>
+            </div>
+
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-2">
+              <span class="text-xs font-mono uppercase text-muted-foreground">3. Top Conversion Action</span>
+              <div class="flex items-baseline gap-2">
+                <span class="text-2xl font-bold tracking-tight text-foreground">WhatsApp</span>
+                <span class="text-xs text-muted-foreground">61% of leads</span>
+              </div>
+              <p class="text-xs text-muted-foreground">Direct chat preference in Bihar/NCR</p>
+            </div>
+
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-2">
+              <span class="text-xs font-mono uppercase text-muted-foreground">4. Most Viewed Project</span>
+              <div class="flex items-baseline gap-2">
+                <span class="text-xl font-bold tracking-tight text-foreground truncate">Boring Rd Kitchen</span>
+              </div>
+              <p class="text-xs text-muted-foreground font-mono">238 views · 6 consultation leads</p>
+            </div>
+
+          </div>
+
+          <!-- Where Actions Came From & Top Project Breakdown -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Attribution Channels -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-4">
+              <h2 class="text-sm font-semibold tracking-tight text-foreground">Where Website Actions Came From</h2>
+              <p class="text-xs text-muted-foreground">Directional attribution without privacy-violating ad trackers.</p>
+              
+              <div class="space-y-4 pt-2">
+                <div>
+                  <div class="flex justify-between text-xs mb-1.5">
+                    <span class="font-medium text-foreground">Website Direct Form</span>
+                    <span class="font-mono text-muted-foreground">6 leads (43%)</span>
+                  </div>
+                  <div class="w-full h-2 bg-muted rounded-full overflow-hidden">
+                    <div class="h-full bg-primary rounded-full" style="width: 43%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs mb-1.5">
+                    <span class="font-medium text-foreground">WhatsApp Floating CTA</span>
+                    <span class="font-mono text-muted-foreground">5 leads (36%)</span>
+                  </div>
+                  <div class="w-full h-2 bg-muted rounded-full overflow-hidden">
+                    <div class="h-full bg-emerald-500 rounded-full" style="width: 36%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs mb-1.5">
+                    <span class="font-medium text-foreground">Estimate Calculator CTA</span>
+                    <span class="font-mono text-muted-foreground">2 leads (14%)</span>
+                  </div>
+                  <div class="w-full h-2 bg-muted rounded-full overflow-hidden">
+                    <div class="h-full bg-primary/70 rounded-full" style="width: 14%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs mb-1.5">
+                    <span class="font-medium text-foreground">Studio QR Card</span>
+                    <span class="font-mono text-muted-foreground">1 lead (7%)</span>
+                  </div>
+                  <div class="w-full h-2 bg-muted rounded-full overflow-hidden">
+                    <div class="h-full bg-muted-foreground/50 rounded-full" style="width: 7%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-md bg-muted/40 border border-border text-xs text-muted-foreground flex items-start gap-2 mt-4">
+                <i data-lucide="lightbulb" class="w-4 h-4 text-amber-500 shrink-0 mt-0.5"></i>
+                <span><strong>Owner insight:</strong> 80% of clients look at 2 project pages before tapping WhatsApp. High-resolution kitchen photos are your highest ROI content.</span>
+              </div>
+            </div>
+
+            <!-- Top Project Pages Performance -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-4">
+              <h2 class="text-sm font-semibold tracking-tight text-foreground">Top Performing Portfolio Pages</h2>
+              <p class="text-xs text-muted-foreground">Which case studies inspire prospective clients to request a quote.</p>
+
+              <div class="space-y-3 pt-2">
+                <div class="flex items-center justify-between p-2.5 rounded-md border border-border bg-muted/20">
+                  <div>
+                    <div class="text-xs font-semibold text-foreground">Modular Kitchen, Boring Canal Rd</div>
+                    <div class="text-[11px] text-muted-foreground font-mono">₹2.4L refit · 22 days on site</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-xs font-mono font-bold text-foreground">238 views</div>
+                    <div class="text-[11px] text-emerald-500 font-medium">6 consultations</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between p-2.5 rounded-md border border-border bg-muted/20">
+                  <div>
+                    <div class="text-xs font-semibold text-foreground">3BHK Full Home, Anisabad</div>
+                    <div class="text-[11px] text-muted-foreground font-mono">1,900 sq ft · Family interior</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-xs font-mono font-bold text-foreground">184 views</div>
+                    <div class="text-[11px] text-emerald-500 font-medium">4 consultations</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between p-2.5 rounded-md border border-border bg-muted/20">
+                  <div>
+                    <div class="text-xs font-semibold text-foreground">Patliputra Duplex Penthouse</div>
+                    <div class="text-[11px] text-muted-foreground font-mono">Teak joinery & staircase</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-xs font-mono font-bold text-foreground">143 views</div>
+                    <div class="text-[11px] text-emerald-500 font-medium">3 consultations</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 4. STUDIO CONTENT & PROFILE VIEW -->
+        <!-- ========================================================================= -->
+        <section id="view-content" class="view-panel hidden space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border">
+            <div>
+              <h1 class="text-2xl font-bold tracking-tight text-foreground">Studio Content & Public Presence</h1>
+              <p class="text-xs text-muted-foreground mt-0.5">Manage the content that appears on your published website across English and Hindi.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="publishContentDraft()" class="px-3.5 py-1.5 rounded-md bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition flex items-center gap-1.5">
+                <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
+                <span>Publish Draft Updates</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left 2 Cols: Content Sections List -->
+            <div class="lg:col-span-2 space-y-4">
+              <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-4">
+                <h2 class="text-sm font-semibold tracking-tight text-foreground">Configured Sections</h2>
+                
+                <div class="space-y-3">
+                  <!-- Section 1: Hero -->
+                  <div class="p-3.5 rounded-md border border-border bg-muted/20 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="p-2 rounded bg-background border border-border">
+                        <i data-lucide="image" class="w-4 h-4 text-foreground"></i>
+                      </div>
+                      <div>
+                        <div class="text-xs font-semibold text-foreground">Hero Section & Visual Identity</div>
+                        <div class="text-[11px] text-muted-foreground">Editorial Typography · 3 Slides · Headline & WhatsApp CTA</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Active</span>
+                  </div>
+
+                  <!-- Section 2: Portfolio -->
+                  <div class="p-3.5 rounded-md border border-border bg-muted/20 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="p-2 rounded bg-background border border-border">
+                        <i data-lucide="layout-grid" class="w-4 h-4 text-foreground"></i>
+                      </div>
+                      <div>
+                        <div class="text-xs font-semibold text-foreground">Portfolio & Project Showcases</div>
+                        <div class="text-[11px] text-muted-foreground">5 Published projects · Detail pages enabled · Hi-res gallery</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Active</span>
+                  </div>
+
+                  <!-- Section 3: Services Detailed -->
+                  <div class="p-3.5 rounded-md border border-border bg-muted/20 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="p-2 rounded bg-background border border-border">
+                        <i data-lucide="layers" class="w-4 h-4 text-foreground"></i>
+                      </div>
+                      <div>
+                        <div class="text-xs font-semibold text-foreground">Design Services with Price Anchors</div>
+                        <div class="text-[11px] text-muted-foreground">Interior Design (from ₹85/sq ft) · Turnkey Renovation · Modular Kitchens</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Active</span>
+                  </div>
+
+                  <!-- Section 4: Bilingual Hindi Toggle -->
+                  <div class="p-3.5 rounded-md border border-border bg-muted/20 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="p-2 rounded bg-background border border-border">
+                        <i data-lucide="languages" class="w-4 h-4 text-foreground"></i>
+                      </div>
+                      <div>
+                        <div class="text-xs font-semibold text-foreground">Bilingual Hindi Localization (Tier 3)</div>
+                        <div class="text-[11px] text-muted-foreground">Natural Patna conversational phrasing (`/ashish-interiors/hi`)</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-primary text-primary-foreground">Live /hi</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Col: Live Micro-Preview Card -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <h2 class="text-sm font-semibold tracking-tight text-foreground">Website Preview</h2>
+                <span class="text-[10px] font-mono text-muted-foreground">375px viewport</span>
+              </div>
+
+              <!-- Smartphone Mock Container -->
+              <div class="border border-border rounded-xl p-3 bg-background shadow-inner space-y-3 max-w-xs mx-auto">
+                <div class="h-2 w-16 bg-muted rounded-full mx-auto"></div>
+                <div class="p-3 rounded-lg border border-border bg-card space-y-2">
+                  <div class="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">Ashish Interiors · Patna</div>
+                  <div class="text-sm font-bold tracking-tight leading-snug">Spaces shaped around the way a family actually lives.</div>
+                  <div class="w-full h-24 bg-muted/60 rounded-md flex items-center justify-center text-xs text-muted-foreground border border-dashed border-border">
+                    Featured Project: Boring Rd Kitchen
+                  </div>
+                  <div class="flex gap-1.5 pt-1">
+                    <div class="flex-1 py-1 bg-emerald-600 text-white rounded text-[10px] font-semibold text-center">WhatsApp</div>
+                    <div class="flex-1 py-1 border border-border rounded text-[10px] font-medium text-center">Call Now</div>
+                  </div>
+                </div>
+              </div>
+
+              <a href="https://candidate.srikantshubams-projects.vercel.app/ashish-interiors" target="_blank" class="w-full block py-2 rounded-md border border-border bg-secondary hover:bg-accent text-secondary-foreground text-center text-xs font-medium transition">
+                Open Full Screen Live Site ↗
+              </a>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 5. 3-STAGE ONBOARDING & LAUNCH WALKTHROUGH -->
+        <!-- ========================================================================= -->
+        <section id="view-onboarding" class="view-panel hidden space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border">
+            <div>
+              <h1 class="text-2xl font-bold tracking-tight text-foreground">Studio Onboarding & Launch Flow</h1>
+              <p class="text-xs text-muted-foreground mt-0.5">The real 3-stage onboarding engine that provisions an interior design studio website in under 5 minutes.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono text-emerald-500 font-medium flex items-center gap-1">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                Staging Ready
+              </span>
+            </div>
+          </div>
+
+          <!-- Stepper Navigation -->
+          <div class="grid grid-cols-3 gap-3 p-1.5 rounded-lg bg-muted border border-border text-xs">
+            <button onclick="setStage(1)" id="step-btn-1" class="step-nav-btn py-2 px-3 rounded-md bg-background text-foreground font-semibold shadow-xs flex items-center justify-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-mono flex items-center justify-center">1</span>
+              <span class="hidden sm:inline">Studio Identity</span>
+            </button>
+            <button onclick="setStage(2)" id="step-btn-2" class="step-nav-btn py-2 px-3 rounded-md text-muted-foreground font-medium flex items-center justify-center gap-2 hover:text-foreground">
+              <span class="w-5 h-5 rounded-full bg-muted border border-border text-[10px] font-mono flex items-center justify-center">2</span>
+              <span class="hidden sm:inline">Visual Direction</span>
+            </button>
+            <button onclick="setStage(3)" id="step-btn-3" class="step-nav-btn py-2 px-3 rounded-md text-muted-foreground font-medium flex items-center justify-center gap-2 hover:text-foreground">
+              <span class="w-5 h-5 rounded-full bg-muted border border-border text-[10px] font-mono flex items-center justify-center">3</span>
+              <span class="hidden sm:inline">Domain & Launch</span>
+            </button>
+          </div>
+
+          <!-- STAGE 1: Studio Identity -->
+          <div id="stage-1" class="onboarding-stage p-6 rounded-lg border border-border bg-card shadow-sm space-y-5">
+            <div class="flex items-start justify-between">
+              <div>
+                <h2 class="text-base font-semibold tracking-tight text-foreground">Stage 1: Studio Identity & WhatsApp Routing</h2>
+                <p class="text-xs text-muted-foreground">Define your studio branding and the verified phone number where enquiries land.</p>
+              </div>
+              <span class="text-xs font-mono text-muted-foreground">Step 1 of 3</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div class="space-y-1.5">
+                <label class="font-medium text-foreground">Studio Business Name</label>
+                <input type="text" id="ob-name" value="Ashish Interiors" class="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-ring">
+              </div>
+
+              <div class="space-y-1.5">
+                <label class="font-medium text-foreground">Studio Slug (URL path)</label>
+                <input type="text" id="ob-slug" value="ashish-interiors" class="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground font-mono focus:outline-none focus:ring-1 focus:ring-ring">
+              </div>
+
+              <div class="space-y-1.5">
+                <label class="font-medium text-foreground">Primary Operating City</label>
+                <input type="text" id="ob-city" value="Patna, Bihar" class="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-ring">
+              </div>
+
+              <div class="space-y-1.5">
+                <label class="font-medium text-foreground">WhatsApp Consultation Phone</label>
+                <input type="text" id="ob-phone" value="+91 94310 00000" class="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground font-mono focus:outline-none focus:ring-1 focus:ring-ring">
+              </div>
+            </div>
+
+            <!-- Logo Upload Dropzone (Simulated Supabase Storage upload) -->
+            <div class="space-y-2">
+              <label class="text-xs font-medium text-foreground">Studio Logo (Stored in Supabase `tenant-assets` bucket)</label>
+              <div onclick="simulateLogoUpload()" class="border-2 border-dashed border-border hover:border-primary/50 p-6 rounded-lg text-center cursor-pointer transition bg-muted/10 space-y-2">
+                <div class="w-10 h-10 rounded-full bg-muted flex items-center justify-center mx-auto text-muted-foreground">
+                  <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                </div>
+                <div class="text-xs font-medium text-foreground" id="logo-status-text">Click to upload logo PNG/WebP (Max 2MB)</div>
+                <p class="text-[11px] text-muted-foreground">Verified via Supabase Storage RLS staging policy.</p>
+              </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+              <button onclick="setStage(2)" class="px-4 py-2 rounded-md bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition flex items-center gap-1.5">
+                <span>Continue to Visual Direction</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE 2: Visual Direction -->
+          <div id="stage-2" class="onboarding-stage hidden p-6 rounded-lg border border-border bg-card shadow-sm space-y-5">
+            <div class="flex items-start justify-between">
+              <div>
+                <h2 class="text-base font-semibold tracking-tight text-foreground">Stage 2: Select Visual Identity</h2>
+                <p class="text-xs text-muted-foreground">Choose the architectural aesthetic that best complements your studio's portfolio.</p>
+              </div>
+              <span class="text-xs font-mono text-muted-foreground">Step 2 of 3</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Identity 1: Editorial -->
+              <div onclick="selectIdentity('editorial')" id="card-id-editorial" class="p-4 rounded-lg border-2 border-primary bg-card cursor-pointer transition space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-foreground">1. Editorial (Selected)</span>
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i>
+                </div>
+                <p class="text-xs text-muted-foreground">Quiet discipline, high typographic craft, square corners, zero gratuitous shadows.</p>
+                <div class="h-10 rounded bg-muted/40 border border-border flex items-center px-3 text-[11px] font-serif italic text-muted-foreground">
+                  "Rooms drawn around daily life."
+                </div>
+              </div>
+
+              <!-- Identity 2: Warm Contemporary -->
+              <div onclick="selectIdentity('warm')" id="card-id-warm" class="p-4 rounded-lg border border-border hover:border-muted-foreground/50 bg-card cursor-pointer transition space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-foreground">2. Warm Contemporary</span>
+                  <span class="w-4 h-4 rounded-full border border-border"></span>
+                </div>
+                <p class="text-xs text-muted-foreground">Tactile textures, warm linen tones, grounded earth palettes for family homes.</p>
+                <div class="h-10 rounded bg-stone-100 dark:bg-stone-900 border border-border flex items-center px-3 text-[11px] text-muted-foreground">
+                  Natural oak & lime-plaster harmony.
+                </div>
+              </div>
+
+              <!-- Identity 3: Bold Modern -->
+              <div onclick="selectIdentity('bold')" id="card-id-bold" class="p-4 rounded-lg border border-border hover:border-muted-foreground/50 bg-card cursor-pointer transition space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-foreground">3. Bold Modern</span>
+                  <span class="w-4 h-4 rounded-full border border-border"></span>
+                </div>
+                <p class="text-xs text-muted-foreground">Heavy structured blocks, high-contrast framing, commanding urban presence.</p>
+                <div class="h-10 rounded bg-zinc-900 text-zinc-100 flex items-center px-3 text-[11px] font-bold tracking-wider uppercase">
+                  Precision Turnkey Engineering
+                </div>
+              </div>
+
+              <!-- Identity 4: Minimal Monochrome -->
+              <div onclick="selectIdentity('minimal')" id="card-id-minimal" class="p-4 rounded-lg border border-border hover:border-muted-foreground/50 bg-card cursor-pointer transition space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-foreground">4. Minimal Monochrome</span>
+                  <span class="w-4 h-4 rounded-full border border-border"></span>
+                </div>
+                <p class="text-xs text-muted-foreground">Stark obsidian monochrome, letting architectural photography speak completely.</p>
+                <div class="h-10 rounded bg-background border border-border flex items-center px-3 text-[11px] font-mono text-muted-foreground">
+                  RAW FINISHES · 0 GRADIENTS
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between pt-2">
+              <button onclick="setStage(1)" class="px-4 py-2 rounded-md border border-border bg-card text-xs font-medium hover:bg-accent transition">
+                Back
+              </button>
+              <button onclick="setStage(3)" class="px-4 py-2 rounded-md bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition flex items-center gap-1.5">
+                <span>Continue to Domain & Launch</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STAGE 3: Domain & Launch Checklist -->
+          <div id="stage-3" class="onboarding-stage hidden p-6 rounded-lg border border-border bg-card shadow-sm space-y-5">
+            <div class="flex items-start justify-between">
+              <div>
+                <h2 class="text-base font-semibold tracking-tight text-foreground">Stage 3: Custom Domain & Verification</h2>
+                <p class="text-xs text-muted-foreground">Connect your custom studio domain (e.g. `ashish-interiors.in`) via Vercel Edge DNS.</p>
+              </div>
+              <span class="text-xs font-mono text-muted-foreground">Step 3 of 3</span>
+            </div>
+
+            <!-- DNS Configuration Table -->
+            <div class="border border-border rounded-lg overflow-hidden text-xs">
+              <table class="w-full text-left">
+                <thead class="bg-muted/50 border-b border-border font-mono text-muted-foreground">
+                  <tr>
+                    <th class="p-3">Type</th>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Value</th>
+                    <th class="p-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+                  <tr>
+                    <td class="p-3 font-mono font-bold">CNAME</td>
+                    <td class="p-3 font-mono">@</td>
+                    <td class="p-3 font-mono text-muted-foreground">cname.vercel-dns.com</td>
+                    <td class="p-3">
+                      <span class="inline-flex items-center gap-1 text-emerald-500 font-medium">
+                        <i data-lucide="check" class="w-3 h-3"></i> Active
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-mono font-bold">TXT</td>
+                    <td class="p-3 font-mono">_vercel</td>
+                    <td class="p-3 font-mono text-muted-foreground">vc-domain-verify=ashish-interiors.in</td>
+                    <td class="p-3">
+                      <span class="inline-flex items-center gap-1 text-emerald-500 font-medium">
+                        <i data-lucide="check" class="w-3 h-3"></i> Verified
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Launch Readiness Checklist -->
+            <div class="p-4 rounded-lg bg-muted/20 border border-border space-y-3 text-xs">
+              <div class="font-semibold text-foreground">Launch Readiness Checklist:</div>
+              <div class="space-y-2 text-muted-foreground">
+                <div class="flex items-center gap-2 text-foreground">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
+                  <span>Logo and visual identity assets configured</span>
+                </div>
+                <div class="flex items-center gap-2 text-foreground">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
+                  <span>WhatsApp direct deep link connected (+91 94310 00000)</span>
+                </div>
+                <div class="flex items-center gap-2 text-foreground">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
+                  <span>Services and price anchors configured (₹85/sq ft)</span>
+                </div>
+                <div class="flex items-center gap-2 text-foreground">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
+                  <span>Supabase Storage RLS verified for client media uploads</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between pt-2">
+              <button onclick="setStage(2)" class="px-4 py-2 rounded-md border border-border bg-card text-xs font-medium hover:bg-accent transition">
+                Back
+              </button>
+              <button onclick="celebrateLaunch()" class="px-4 py-2 rounded-md bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="rocket" class="w-3.5 h-3.5"></i>
+                <span>Complete Onboarding & Go Live</span>
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 6. SETTINGS & ACCESS VIEW -->
+        <!-- ========================================================================= -->
+        <section id="view-settings" class="view-panel hidden space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border">
+            <div>
+              <h1 class="text-2xl font-bold tracking-tight text-foreground">Settings & Team Access</h1>
+              <p class="text-xs text-muted-foreground mt-0.5">Control workspace theme preferences, team member privileges, and notification endpoints.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Appearance / Theme Selector (Shadcn plain old themes) -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-4">
+              <h2 class="text-sm font-semibold tracking-tight text-foreground">Dashboard Appearance</h2>
+              <p class="text-xs text-muted-foreground">Neutral high-contrast Shadcn zinc theme. No brand tint contamination.</p>
+
+              <div class="grid grid-cols-3 gap-2.5 pt-2">
+                <button onclick="setThemeExplicit('light')" id="theme-btn-light" class="p-3 rounded-lg border border-border hover:border-primary flex flex-col items-center gap-2 text-xs font-medium transition">
+                  <i data-lucide="sun" class="w-5 h-5 text-amber-500"></i>
+                  <span>Light</span>
+                </button>
+                <button onclick="setThemeExplicit('dark')" id="theme-btn-dark" class="p-3 rounded-lg border-2 border-primary bg-accent flex flex-col items-center gap-2 text-xs font-semibold transition">
+                  <i data-lucide="moon" class="w-5 h-5 text-indigo-400"></i>
+                  <span>Dark</span>
+                </button>
+                <button onclick="setThemeExplicit('system')" id="theme-btn-system" class="p-3 rounded-lg border border-border hover:border-primary flex flex-col items-center gap-2 text-xs font-medium transition">
+                  <i data-lucide="laptop" class="w-5 h-5 text-muted-foreground"></i>
+                  <span>System</span>
+                </button>
+              </div>
+
+              <div class="text-[11px] text-muted-foreground pt-1">
+                Both light and dark themes follow pure Shadcn zinc design tokens with zero custom hex overrides.
+              </div>
+            </div>
+
+            <!-- Team Roles & Isolation -->
+            <div class="p-5 rounded-lg border border-border bg-card shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <h2 class="text-sm font-semibold tracking-tight text-foreground">Team Members & Isolation</h2>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">3 Members</span>
+              </div>
+              <p class="text-xs text-muted-foreground">Postgres RLS restricts members strictly to the `ashish-interiors` workspace.</p>
+
+              <div class="space-y-3 pt-2 text-xs">
+                <div class="flex items-center justify-between p-2.5 rounded-md border border-border bg-muted/20">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-[10px]">
+                      AK
+                    </div>
+                    <div>
+                      <div class="font-semibold text-foreground">Ashish Kumar</div>
+                      <div class="text-[11px] text-muted-foreground">ashish@ashish-interiors.in</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-primary text-primary-foreground">Owner</span>
+                </div>
+
+                <div class="flex items-center justify-between p-2.5 rounded-md border border-border bg-muted/20">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-muted text-muted-foreground flex items-center justify-center font-bold text-[10px]">
+                      SR
+                    </div>
+                    <div>
+                      <div class="font-semibold text-foreground">Sunita Raj</div>
+                      <div class="text-[11px] text-muted-foreground">sunita@ashish-interiors.in</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-foreground">Editor</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- SLIDE-OVER DETAIL SHEET / DRAWER (For Lead Inspection) -->
+  <div id="lead-sheet-backdrop" onclick="closeLeadSheet()" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden opacity-0 transition-opacity duration-200"></div>
+  <aside id="lead-sheet" class="fixed top-0 right-0 h-full w-full sm:w-[480px] bg-card border-l border-border shadow-2xl z-50 transform translate-x-full transition-transform duration-200 ease-in-out flex flex-col">
+    <!-- Sheet Header -->
+    <div class="p-5 border-b border-border flex items-start justify-between">
+      <div>
+        <div class="flex items-center gap-2">
+          <span id="sheet-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase">NEW</span>
+          <span id="sheet-time" class="text-xs text-muted-foreground font-mono">15 min ago</span>
+        </div>
+        <h2 id="sheet-lead-name" class="text-lg font-bold tracking-tight text-foreground mt-1.5">Rohan Verma</h2>
+        <p id="sheet-locality" class="text-xs text-muted-foreground flex items-center gap-1">
+          <i data-lucide="map-pin" class="w-3 h-3 text-muted-foreground"></i>
+          <span>Boring Road, Patna</span>
+        </p>
+      </div>
+      <button onclick="closeLeadSheet()" class="p-1.5 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Sheet Body -->
+    <div class="flex-1 overflow-y-auto p-5 space-y-5 text-xs">
+      <!-- Project Scope & Value -->
+      <div class="p-4 rounded-lg bg-muted/40 border border-border space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-muted-foreground">Project Category</span>
+          <span id="sheet-project-type" class="font-semibold text-foreground">3BHK Full Home Turnkey</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-muted-foreground">Estimated Budget Band</span>
+          <span id="sheet-budget" class="font-bold text-foreground font-mono">₹12.0L – ₹15.0L</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-muted-foreground">Timeline Requirement</span>
+          <span id="sheet-timeline" class="font-medium text-foreground">Immediate (Within 30 Days)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-muted-foreground">Originating Source</span>
+          <span id="sheet-source" class="font-medium text-foreground">Estimate Calculator</span>
+        </div>
+      </div>
+
+      <!-- Client Message -->
+      <div class="space-y-1.5">
+        <label class="font-semibold text-foreground">Client Message & Requirements</label>
+        <div id="sheet-message" class="p-3 rounded-md bg-background border border-border text-foreground leading-relaxed text-xs">
+          "We just received possession of our 3BHK flat near Rajapur Pul, Boring Road. We need turnkey modular kitchen, 3 wardrobes, and living room false ceiling before Diwali."
+        </div>
+      </div>
+
+      <!-- Status Selector -->
+      <div class="space-y-1.5">
+        <label class="font-semibold text-foreground">Lead Progress Status</label>
+        <select id="sheet-status-select" onchange="updateLeadStatus(this.value)" class="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground text-xs font-medium focus:outline-none focus:ring-1 focus:ring-ring">
+          <option value="NEW">New (Needs Initial Response)</option>
+          <option value="CONTACTED">Contacted (WhatsApp/Call Done)</option>
+          <option value="QUOTED">Quoted (Initial BOQ / Estimate Shared)</option>
+          <option value="WON">Won (Consultation Retainer Received)</option>
+          <option value="LOST">Lost (Cold / Budget Mismatch)</option>
+        </select>
+      </div>
+
+      <!-- Studio Private Notes -->
+      <div class="space-y-1.5">
+        <div class="flex justify-between items-center">
+          <label class="font-semibold text-foreground">Studio Private Notes</label>
+          <span class="text-[10px] text-muted-foreground font-mono">Saved in DB</span>
+        </div>
+        <textarea id="sheet-notes" rows="3" placeholder="Add site visit observations or custom requirements..." class="w-full p-3 rounded-md border border-border bg-background text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-ring resize-none"></textarea>
+      </div>
+    </div>
+
+    <!-- Sticky Thumb-Height Action Footer -->
+    <div class="p-4 border-t border-border bg-card/90 backdrop-blur-sm grid grid-cols-2 gap-3">
+      <a id="sheet-whatsapp-btn" href="#" target="_blank" class="py-2.5 px-4 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-center text-xs flex items-center justify-center gap-2 shadow-sm transition">
+        <i data-lucide="message-circle" class="w-4 h-4"></i>
+        <span>Chat on WhatsApp</span>
+      </a>
+      <a id="sheet-call-btn" href="#" class="py-2.5 px-4 rounded-md border border-border bg-card hover:bg-accent text-foreground font-semibold text-center text-xs flex items-center justify-center gap-2 transition">
+        <i data-lucide="phone" class="w-4 h-4 text-muted-foreground"></i>
+        <span>Call Client</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- JAVASCRIPT STATE ENGINE & INTERACTION -->
+  <script>
+    // State: Mock Data for Studio Presence Interior Leads (Patna Reference)
+    const leadsData = [
+      {
+        id: 1,
+        name: "Rohan Verma",
+        locality: "Boring Road",
+        phone: "+919431123456",
+        project: "3BHK Full Home Turnkey",
+        budget: "₹12L – ₹15L",
+        timeline: "Within 30 Days",
+        source: "Estimate Calculator",
+        status: "NEW",
+        time: "15 min ago",
+        message: "We just received possession of our 3BHK flat near Rajapur Pul, Boring Road. We need turnkey modular kitchen, 3 wardrobes, and living room false ceiling before Diwali.",
+        notes: "Requested site visit on Sunday 11 AM."
+      },
+      {
+        id: 2,
+        name: "Priya Sharma",
+        locality: "Patliputra Colony",
+        phone: "+919431234567",
+        project: "Duplex Penthouse Joinery",
+        budget: "₹22L – ₹28L",
+        timeline: "45 Days",
+        source: "Website Direct Form",
+        status: "NEW",
+        time: "2 hours ago",
+        message: "Saw your Patliputra duplex project online. Looking for custom teak joinery, master suite walk-in wardrobe, and open breakfast counter.",
+        notes: "High value lead. Principal Ashish should call personally."
+      },
+      {
+        id: 3,
+        name: "Vikramaditya Roy",
+        locality: "Kankarbagh",
+        phone: "+919431345678",
+        project: "Modular Kitchen Refit",
+        budget: "₹3.5L – ₹4.5L",
+        timeline: "Immediate",
+        source: "WhatsApp Floating CTA",
+        status: "CONTACTED",
+        time: "Yesterday",
+        message: "Need kitchen remodel in old housing board colony. Water seepage resolved, need quartz countertop and acrylic shutters.",
+        notes: "Spoke yesterday. Sent reference photos of Rajapur Pul refit."
+      },
+      {
+        id: 4,
+        name: "Ananya Mishra",
+        locality: "Bailey Road",
+        phone: "+919431456789",
+        project: "Living & Dining Interior",
+        budget: "₹5L – ₹7L",
+        timeline: "2 Months",
+        source: "Website Direct Form",
+        status: "QUOTED",
+        time: "2 days ago",
+        message: "Living room TV console, concealed prayer unit, and 6-seater dining partition for new apartment on Bailey Road.",
+        notes: "Shared initial BOQ ₹5.4L. Waiting for family confirmation."
+      },
+      {
+        id: 5,
+        name: "Sanjay Singhania",
+        locality: "Boring Road",
+        phone: "+919431567890",
+        project: "Turnkey 2BHK Renovation",
+        budget: "₹9L – ₹11L",
+        timeline: "Ready to start",
+        source: "Estimate Calculator",
+        status: "WON",
+        time: "3 days ago",
+        message: "Full turnkey contract agreed. Carpentry work to commence next Monday.",
+        notes: "Retainer received ₹1.5L. Site measurement completed."
+      },
+      {
+        id: 6,
+        name: "Meenakshi Das",
+        locality: "Danapur",
+        phone: "+919431678901",
+        project: "4BHK Apartment Styling",
+        budget: "₹18L – ₹22L",
+        timeline: "60 Days",
+        source: "Studio QR Card",
+        status: "CONTACTED",
+        time: "4 days ago",
+        message: "Met at the IIID Patna chapter event. Would love to discuss interior finishes for our Saguna More property.",
+        notes: "Sent studio monograph and case study PDF."
+      }
+    ];
+
+    let currentSelectedLead = leadsData[0];
+    let activeFilter = 'ALL';
+    let currentLocality = null;
+
+    // Initialize on DOM load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderOverviewLeads();
+      renderFullLeads();
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    });
+
+    // Navigation Switcher
+    function switchView(viewId) {
+      document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
+      const targetPanel = document.getElementById('view-' + viewId);
+      if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+      }
+
+      // Update Breadcrumb
+      const titles = {
+        overview: 'Overview Hub',
+        leads: 'Enquiries & Consultations (CRM)',
+        analytics: 'Traffic & Conversion Analytics',
+        content: 'Studio Content & Identity',
+        onboarding: '3-Stage Studio Onboarding',
+        settings: 'Settings & Team Access'
+      };
+      document.getElementById('breadcrumb-title').textContent = titles[viewId] || 'Dashboard';
+
+      // Update sidebar nav highlights
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('bg-accent', 'text-accent-foreground');
+        item.classList.add('text-muted-foreground');
+      });
+      const activeNav = document.getElementById('nav-' + viewId);
+      if (activeNav) {
+        activeNav.classList.remove('text-muted-foreground');
+        activeNav.classList.add('bg-accent', 'text-accent-foreground');
+      }
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Render Overview Leads (Latest 3)
+    function renderOverviewLeads() {
+      const container = document.getElementById('overview-lead-list');
+      const filtered = currentLocality 
+        ? leadsData.filter(l => l.locality.toLowerCase().includes(currentLocality.toLowerCase()))
+        : leadsData.slice(0, 3);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-xs text-muted-foreground">No enquiries found for ${currentLocality}.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(lead => generateLeadCardHTML(lead)).join('');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // Render Full Leads List
+    function renderFullLeads() {
+      const container = document.getElementById('full-lead-list');
+      let list = leadsData;
+
+      if (activeFilter !== 'ALL') {
+        list = list.filter(l => l.status === activeFilter);
+      }
+
+      if (currentLocality) {
+        list = list.filter(l => l.locality.toLowerCase().includes(currentLocality.toLowerCase()));
+      }
+
+      container.innerHTML = list.map(lead => generateLeadCardHTML(lead)).join('');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // Lead Card Generator
+    function generateLeadCardHTML(lead) {
+      const isNew = lead.status === 'NEW';
+      const badgeClass = isNew 
+        ? 'bg-rose-500/10 text-rose-500 border-rose-500/20' 
+        : lead.status === 'WON'
+        ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+        : 'bg-muted text-muted-foreground border-border';
+
+      return `
+        <div class="p-4 rounded-lg border border-border bg-card hover:border-muted-foreground/40 transition shadow-sm space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 cursor-pointer" onclick="openLeadSheet(${lead.id})">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-sm text-foreground hover:underline">${lead.name}</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold border ${badgeClass}">${lead.status}</span>
+                <span class="text-xs text-muted-foreground font-mono">· ${lead.time}</span>
+              </div>
+              <div class="text-xs text-muted-foreground mt-0.5 flex items-center gap-1.5">
+                <span>${lead.project}</span>
+                <span>•</span>
+                <span class="font-mono text-foreground font-semibold">${lead.budget}</span>
+                <span>•</span>
+                <span class="flex items-center gap-0.5"><i data-lucide="map-pin" class="w-3 h-3"></i> ${lead.locality}</span>
+              </div>
+            </div>
+
+            <div class="text-xs text-muted-foreground font-mono">
+              Via ${lead.source}
+            </div>
+          </div>
+
+          <!-- Direct One-Tap Thumb Buttons (No Salesforce CRM complexity) -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 border-t border-border/60">
+            <a href="https://wa.me/${lead.phone.replace(/\\D/g, '')}?text=Hi%20${encodeURIComponent(lead.name)},%20this%20is%20Ashish%20from%20Ashish%20Interiors%20Patna.%20I%20saw%20your%20enquiry%20regarding%20${encodeURIComponent(lead.project)}." 
+               target="_blank" 
+               class="py-2 px-3 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs flex items-center justify-center gap-1.5 transition shadow-xs col-span-1 sm:col-span-2">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+              <span>WhatsApp Client</span>
+            </a>
+            
+            <a href="tel:${lead.phone}" class="py-2 px-3 rounded-md border border-border bg-card hover:bg-accent text-foreground font-medium text-xs flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-muted-foreground"></i>
+              <span>Call Now</span>
+            </a>
+
+            <button onclick="openLeadSheet(${lead.id})" class="py-2 px-3 rounded-md border border-border bg-card hover:bg-accent text-muted-foreground hover:text-foreground text-xs font-medium transition flex items-center justify-center gap-1">
+              <span>View Notes</span>
+              <i data-lucide="chevron-right" class="w-3 h-3"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Locality Filter
+    function filterByLocality(locality) {
+      currentLocality = locality;
+      document.getElementById('active-locality-filter').textContent = `Locality: ${locality}`;
+      document.getElementById('active-locality-filter').classList.remove('hidden');
+      document.getElementById('btn-clear-filter').classList.remove('hidden');
+      renderOverviewLeads();
+      renderFullLeads();
+      showToast(`Filtered leads for ${locality}`);
+    }
+
+    function clearLocalityFilter() {
+      currentLocality = null;
+      document.getElementById('active-locality-filter').classList.add('hidden');
+      document.getElementById('btn-clear-filter').classList.add('hidden');
+      renderOverviewLeads();
+      renderFullLeads();
+      showToast('Cleared locality filter');
+    }
+
+    // Status Filter for CRM
+    function filterLeads(status) {
+      activeFilter = status;
+      document.querySelectorAll('.lead-filter-tab').forEach(t => {
+        t.classList.remove('bg-background', 'text-foreground', 'font-semibold', 'shadow-xs');
+        t.classList.add('text-muted-foreground');
+      });
+      const activeTab = document.getElementById('filter-tab-' + status);
+      if (activeTab) {
+        activeTab.classList.remove('text-muted-foreground');
+        activeTab.classList.add('bg-background', 'text-foreground', 'font-semibold', 'shadow-xs');
+      }
+      renderFullLeads();
+    }
+
+    // Search Enquiries
+    function searchLeads(query) {
+      const q = query.toLowerCase();
+      const container = document.getElementById('full-lead-list');
+      const filtered = leadsData.filter(l => 
+        l.name.toLowerCase().includes(q) ||
+        l.locality.toLowerCase().includes(q) ||
+        l.project.toLowerCase().includes(q) ||
+        l.budget.toLowerCase().includes(q)
+      );
+      container.innerHTML = filtered.map(lead => generateLeadCardHTML(lead)).join('');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // Lead Detail Sheet (Slide-Over Drawer)
+    function openLeadSheet(leadId) {
+      const lead = leadsData.find(l => l.id === leadId);
+      if (!lead) return;
+      currentSelectedLead = lead;
+
+      document.getElementById('sheet-lead-name').textContent = lead.name;
+      document.getElementById('sheet-locality').innerHTML = `<i data-lucide="map-pin" class="w-3 h-3 text-muted-foreground"></i> ${lead.locality}, Patna`;
+      document.getElementById('sheet-time').textContent = lead.time;
+      document.getElementById('sheet-project-type').textContent = lead.project;
+      document.getElementById('sheet-budget').textContent = lead.budget;
+      document.getElementById('sheet-timeline').textContent = lead.timeline;
+      document.getElementById('sheet-source').textContent = lead.source;
+      document.getElementById('sheet-message').textContent = `"${lead.message}"`;
+      document.getElementById('sheet-notes').value = lead.notes;
+      document.getElementById('sheet-status-select').value = lead.status;
+
+      const badge = document.getElementById('sheet-status-badge');
+      badge.textContent = lead.status;
+      badge.className = `px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase ${
+        lead.status === 'NEW' ? 'bg-rose-500/10 text-rose-500 border-rose-500/20' : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+      }`;
+
+      // Set action links
+      document.getElementById('sheet-whatsapp-btn').href = `https://wa.me/${lead.phone.replace(/\\D/g, '')}?text=Hi%20${encodeURIComponent(lead.name)},%20this%20is%20Ashish%20from%20Ashish%20Interiors%20Patna.`;
+      document.getElementById('sheet-call-btn').href = `tel:${lead.phone}`;
+
+      const sheet = document.getElementById('lead-sheet');
+      const backdrop = document.getElementById('lead-sheet-backdrop');
+      backdrop.classList.remove('hidden');
+      setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+      sheet.classList.remove('translate-x-full');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeLeadSheet() {
+      const sheet = document.getElementById('lead-sheet');
+      const backdrop = document.getElementById('lead-sheet-backdrop');
+      sheet.classList.add('translate-x-full');
+      backdrop.classList.add('opacity-0');
+      setTimeout(() => backdrop.classList.add('hidden'), 200);
+    }
+
+    function updateLeadStatus(newStatus) {
+      if (currentSelectedLead) {
+        currentSelectedLead.status = newStatus;
+        showToast(`Lead status updated to ${newStatus}`);
+        renderOverviewLeads();
+        renderFullLeads();
+      }
+    }
+
+    // Recharts Hover Tooltip
+    function showChartTooltip(x, y, date, enquiries, visits) {
+      const tt = document.getElementById('chart-tooltip');
+      document.getElementById('tt-date').textContent = date;
+      document.getElementById('tt-enquiries').textContent = enquiries;
+      document.getElementById('tt-visits').textContent = visits;
+
+      tt.style.left = `${(x / 700) * 85 + 5}%`;
+      tt.style.top = `${(y / 240) * 60}%`;
+      tt.classList.remove('hidden');
+    }
+
+    // Onboarding Stage Stepper
+    function setStage(stageNum) {
+      document.querySelectorAll('.onboarding-stage').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`stage-${stageNum}`).classList.remove('hidden');
+
+      document.querySelectorAll('.step-nav-btn').forEach(btn => {
+        btn.classList.remove('bg-background', 'text-foreground', 'font-semibold', 'shadow-xs');
+        btn.classList.add('text-muted-foreground', 'font-medium');
+      });
+
+      const activeBtn = document.getElementById(`step-btn-${stageNum}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-muted-foreground', 'font-medium');
+        activeBtn.classList.add('bg-background', 'text-foreground', 'font-semibold', 'shadow-xs');
+      }
+    }
+
+    function selectIdentity(idKey) {
+      showToast(`Selected Visual Identity: ${idKey.toUpperCase()}`);
+    }
+
+    function simulateLogoUpload() {
+      const text = document.getElementById('logo-status-text');
+      text.textContent = 'Uploading to Supabase Storage staging/...';
+      setTimeout(() => {
+        text.innerHTML = '<span class="text-emerald-500 font-semibold">✔ logo-ashish-interiors.webp uploaded to tenant-assets</span>';
+        showToast('Logo uploaded to Supabase Storage staging bucket');
+      }, 700);
+    }
+
+    function celebrateLaunch() {
+      showToast('🎉 Ashish Interiors is now verified and live at ashish-interiors.in!');
+      switchView('overview');
+    }
+
+    // Plain Old Shadcn Theme Toggle Engine
+    function cycleTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        setThemeExplicit('light');
+      } else {
+        setThemeExplicit('dark');
+      }
+    }
+
+    function setThemeExplicit(theme) {
+      const root = document.documentElement;
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        localStorage.setItem('sp_theme', 'dark');
+        showToast('Switched to Plain Dark theme');
+      } else if (theme === 'light') {
+        root.classList.remove('dark');
+        localStorage.setItem('sp_theme', 'light');
+        showToast('Switched to Plain Light theme');
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) root.classList.add('dark');
+        else root.classList.remove('dark');
+        localStorage.removeItem('sp_theme');
+        showToast('Theme set to System Default');
+      }
+    }
+
+    // Toast Engine
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'px-4 py-2.5 rounded-lg bg-popover text-popover-foreground border border-border shadow-xl text-xs font-medium flex items-center gap-2 transform translate-y-2 opacity-0 transition duration-200 pointer-events-auto';
+      toast.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i><span>${msg}</span>`;
+      container.appendChild(toast);
+      if (window.lucide) lucide.createIcons();
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 200);
+      }, 2500);
+    }
+
+    function toggleWorkspaceDropdown() {
+      const dd = document.getElementById('workspace-dropdown');
+      dd.classList.toggle('hidden');
+    }
+
+    function selectWorkspace(name, city, tier) {
+      toggleWorkspaceDropdown();
+      showToast(`Switched workspace to ${name} (${city})`);
+    }
+
+    function exportLeadsCsv() {
+      showToast('Exporting 14 consultation enquiries to CSV...');
+    }
+
+    function openNewLeadModal() {
+      showToast('Walk-in log modal opened');
+    }
+
+    function publishContentDraft() {
+      showToast('Published content draft updates to live site.');
+    }
+
+    function openCommandPalette() {
+      showToast('Quick command palette: ⌘K');
+    }
+  </script>
+</body>
+</html>

@@ -23,7 +23,7 @@ formed contracts. No DocuSign needed.
 
 We will design and build a website for your business as described in the selected package:
 
-**Package selected:** ☐ Presence (₹15,000) ☐ Presence Plus (₹25,000) ☐ Growth / Custom (₹`____`)
+**Package selected:** ☐ Presence (₹17,999 including GST) ☐ Presence Plus (₹29,999 including GST) ☐ Growth / Custom (from ₹53,999 including GST, final quote ₹`____`)
 
 The features included in each package are listed in Schedule A, attached and forming part of this
 agreement.
@@ -58,8 +58,9 @@ page or a new "Team" page — or restructuring the site navigation.
 **Always quoted separately:** changes to layout, visual design, or overall look; any feature not
 listed in Schedule A; ongoing SEO, advertising, or social media services.
 
-You get **one consolidated round of revisions** at the staging review stage (§4). Further rounds are
-quoted separately.
+The selected package includes the following pre-launch revision rounds at the staging review stage
+(§4): Presence, 2 rounds; Presence Plus, 3 rounds; Growth from ₹53,999, 3 rounds; Growth Custom from
+₹64,999, 5 rounds. Further rounds are quoted separately.
 
 ---
 
@@ -80,7 +81,8 @@ quoted separately.
 The preview link stays active for 14 days after approval. After that a late fee of 2% per week
 applies to the outstanding balance.
 
-All prices are exclusive of GST, charged at 18% as applicable.
+All listed package prices include 18% GST. Any separately quoted work will state its GST treatment
+before approval.
 
 ---
 
@@ -120,19 +122,22 @@ remains yours, and we provide the export described in §11.
 Your website includes privacy-friendly analytics (Umami) which we use to monitor site performance.
 It does not use cookies or collect personal information about your visitors.
 
-Access to the analytics dashboard is included in the Growth package and available to others on an
-active support plan.
+The website uses the same Umami-backed analytics source for every tier. The reporting view depends on
+the selected package. Presence receives a visitor summary, Presence Plus receives trends and
+comparisons, and Growth receives the deeper reporting named in the quote. This does not include access
+to WhatsApp conversations.
 
 ---
 
 ## 8. Support
 
-Support is **optional and opt-in** at ₹1,000/month, which covers responses within 3 working days and
-a monthly performance summary.
+Every package includes 30 days of launch support after go-live. It covers defects in the delivered
+scope and small supplied-content corrections. Presence includes 3 small request batches, Presence
+Plus includes 4, and Growth includes 6. New pages, redesigns, new content types, branding,
+integrations, writing, and migration are quoted separately.
 
-Without a support plan, the site continues to work normally and you can update your own content
-using the panel and walkthrough we provide. One-off support is available at our stated rate, with no
-guaranteed response time.
+After the launch period, yearly renewal or optional care is available under the separate support and
+renewal policy.
 
 ---
 

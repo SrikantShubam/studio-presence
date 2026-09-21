@@ -40,6 +40,9 @@ docs/graphify-out/
 .worktrees/
 .scratch/
 .superpowers/
+.playwright-cli/
+.codex/
+*.zone
 
 # generated
 frontend/lib/tenant-map.ts

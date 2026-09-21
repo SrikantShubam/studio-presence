@@ -16,7 +16,7 @@ this screen has no data to render without it.
 ---
 
 ```
-You are building one admin screen of a multi-tenant Next.js product: the T3-only leads dashboard,
+You are building one admin screen of a multi-tenant Next.js product: the Growth/custom leads dashboard,
 where a studio owner sees enquiries from their website. This is NOT one of the themed marketing
 sections you may have seen elsewhere in this repo — forget identity variants, --t-* design tokens and
 per-client theming entirely for this ticket.

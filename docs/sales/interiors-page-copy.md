@@ -32,7 +32,8 @@ Replaces the copy in `phase4_monolith/mockups/studio-presence.html`.
 *(Keep this. It's the best line on the current page.)*
 
 **Sub:** Full web presence for interior design studios — portfolio, enquiries, local search.
-Live in days, from ₹15,000. You see it working before you pay anything.
+From ₹17,999 including GST. Standard sites can be ready in two working days after your content is
+complete.
 
 **Primary CTA:** See partner pricing
 **Secondary CTA:** WhatsApp us
@@ -124,37 +125,35 @@ Two edits:
 
 ## 7. Pricing
 
-⚠️ **Drop "Custom quote" on all three.** `pricing-and-negotiation.md`: never "contact for pricing,"
-always show a number. This market has been conditioned by JustDial to expect being sized up first,
-and opacity reads as untrustworthy. A visible price filters non-buyers before they cost sales time.
+⚠️ **Show a number for the standard packages.** Growth has a starting price because the final amount
+depends on custom design, implementation, revision rounds, and integrations.
 
-⚠️ **Drop "Studio Starter" (single-page).** That's T0, which we cut deliberately — it cannibalises
-the ₹15k tier, gives the intern a perverse incentive, and adds a permanent support relationship for
-minimal revenue.
+⚠️ **Do not add a cheap single-page tier.** It would split the standard offer and add a permanent
+support relationship for little revenue.
 
 ⚠️ **Rename the middle tier.** "Studio Presence" collides with the page concept.
 
-**Eyebrow:** / Partner pricing
+**Eyebrow:** / Studio Presence pricing
 
-**H2:** Founding studio partner rates.
+**H2:** A proper website for the work you already do.
 
-**Sub:** We're onboarding a limited number of studios this quarter. These rates reflect that
-partnership, not a permanent rate card.
+**Sub:** Presence and Presence Plus use our standard templates. Growth is custom design and
+implementation outside those templates.
 
-| | **Presence** | **Presence Plus** *(most studios pick this)* | **Partner** |
+| | **Presence** | **Presence Plus** *(most studios pick this)* | **Growth / Custom** |
 |---|---|---|---|
-| Price | **₹15,000** | **₹25,000** | **From ₹45,000** |
-| | Full multi-page site | Everything that compounds | Custom build + ongoing |
+| Price | **₹17,999 including GST** | **₹29,999 including GST** | **From ₹53,999 including GST** |
+| | Standard template site | Expanded standard site | Custom design and implementation |
 | | Portfolio, services, about, contact | Everything in Presence | Everything in Presence Plus |
 | | WhatsApp + call enquiries | Individual project pages | Custom design, not a template variant |
-| | Google Business Profile setup | Before/after galleries | Lead tracking dashboard |
-| | Local SEO + schema | Google reviews on site | Ongoing edits included |
-| | Your own domain + email | Enquiry form with budget/timeline | Priority on new features |
-| | Live in 2 days | Estimate calculator | |
+| | Google Business Profile setup | Before/after galleries | Custom design, not a template variant |
+| | Local SEO + schema | Google Reviews and journal | Custom branding and icon design |
+| | Your own domain + email | Enquiry form and visual editor | Named integrations and custom structures |
+| | 2 revision rounds | 3 revision rounds | 3 rounds, or 5 at ₹64,999 |
 | CTA | Get a free preview | Get a free preview | Talk to us |
 
-**Under the table:** All plans include domain and hosting for year one. Renewal ₹1,500–2,500/year.
-Prices exclude GST.
+**Under the table:** All plans include domain connection and hosting for the agreed first period.
+Renewal and domain costs are stated separately. Prices include 18% GST.
 
 ---
 

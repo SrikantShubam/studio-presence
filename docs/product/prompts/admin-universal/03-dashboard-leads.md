@@ -1,9 +1,10 @@
-# Universal admin — Dashboard: leads (T3 only)
+# Universal admin — Dashboard: leads (Growth/custom scope)
 
 Attach: none required
 
-Covers `/dashboard`. **T3 only** — this is the screen that justifies ₹45–55k over T2, so it has to
-feel worth the difference. Design it now; building it stays deferred until a real T3 sale.
+Covers `/dashboard`. Lead status, private notes, and pipeline views are Growth/custom work. The
+standard tiers can still show website enquiry records without promising a full CRM. Design it now;
+build the custom workflow only when the scope is approved for a real project.
 
 Paste `00-universal-system.md` first, then this:
 

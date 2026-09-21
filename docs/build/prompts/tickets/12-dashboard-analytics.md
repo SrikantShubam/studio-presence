@@ -17,7 +17,7 @@ Analytics tab header component rather than building a second one — check befor
 ---
 
 ```
-You are building one admin screen of a multi-tenant Next.js product: the T3-only analytics dashboard,
+You are building one admin screen of a multi-tenant Next.js product: the shared Umami-backed analytics dashboard,
 where a studio owner sees whether their website is working. This is NOT one of the themed marketing
 sections you may have seen elsewhere in this repo — forget identity variants, --t-* design tokens and
 per-client theming entirely for this ticket.

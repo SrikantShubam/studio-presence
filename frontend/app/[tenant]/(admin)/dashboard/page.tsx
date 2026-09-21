@@ -1,376 +1,85 @@
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { AuthError, canAccessDashboard, getI18nStatus, leads, requireTenant, type I18nCompletion, type Lead, type LeadStatus } from '@studio/backend'
+import { revalidatePath } from 'next/cache'
+import { z } from 'zod'
+import { canAccessDashboard, leads, leadStatusSchema, panel, requireTenant } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
-import { AdminCard, AdminChip, AdminMetric, AdminShell } from '../components'
-import { DEMO_LEADS } from '../demo-data'
-import { loadPublicTenantConfig } from '@/lib/tenant-config'
-import { StudioOverviewHub } from './StudioOverviewHub'
+import { loadPublicTenantConfig, loadTenantWorkspaceConfig } from '@/lib/tenant-config'
+import { DashboardWorkspace } from './components/DashboardShell'
+import { DEMO_ENQUIRIES } from './components/demo-data'
+import { applyConfigPatch, dashboardMode, normalizeIndianPhone, type ActionResult, type Enquiry, type LeadAction, type WorkspaceConfig } from './components/types'
 
-type Filter = 'all' | 'new' | 'not-contacted' | 'this-month'
+const leadInput = z.object({
+  name: z.string().trim().min(1).max(120), phone: z.string().max(30),
+  locality: z.string().trim().max(160), projectType: z.string().trim().max(160),
+  budgetBand: z.string().trim().max(100), timeline: z.string().trim().max(160),
+  message: z.string().trim().max(3000),
+})
+const mutation = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('create'), values: leadInput }),
+  z.object({ kind: z.literal('update'), id: z.string().uuid(), status: leadStatusSchema, notes: z.string().max(2000) }),
+])
 
-const STATUS_LABELS: Record<LeadStatus, string> = {
-  new: 'NEW',
-  contacted: 'CONTACTED',
-  quoted: 'QUOTED',
-  won: 'WON',
-  lost: 'LOST',
+async function authenticatedContext(expectedTenant: string) {
+  const supabase = await createSupabaseServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!user?.email || !session) return null
+  const context = await requireTenant({ id: user.id, email: user.email, accessToken: session.access_token })
+  if (context.tenant.slug !== expectedTenant || context.tenant.status === 'archived') throw new Error('Workspace access denied.')
+  return context
 }
 
-export default async function DashboardPage({
-  params,
-  searchParams,
-}: {
+export default async function DashboardPage({ params, searchParams }: {
   params: Promise<{ tenant: string }>
-  searchParams?: Promise<{ filter?: string; demo?: string }>
+  searchParams?: Promise<{ demo?: string; tab?: string }>
 }) {
   const { tenant } = await params
   const query = await searchParams
-  const activeFilter = filterFrom(query?.filter)
-  const baseDashboard = `/${tenant}/dashboard`
-  const { leads: allLeads, mode, displayName } = await loadLeads(tenant, query?.demo)
-  let hindiStatus: I18nCompletion = {
-    locale: 'hi',
-    enabled: false,
-    translated: 0,
-    total: 1,
-    percent: 0,
-    status: 'disabled',
+  const context = await authenticatedContext(tenant)
+  const base = context
+    ? await loadTenantWorkspaceConfig(tenant, context.tenant.id, context.user.accessToken)
+    : await loadPublicTenantConfig(tenant)
+  if (!context && (base.status !== 'demo' || query?.demo === '0')) redirect(`/login?next=${encodeURIComponent(`/${tenant}/dashboard`)}`)
+  const eligible = Boolean(context && canAccessDashboard(context.tenant) && context.tenant.status !== 'demo')
+  const mode = dashboardMode(query?.demo, eligible)
+  let config: WorkspaceConfig = { business: base.business, sections: base.sections, integrations: base.integrations, status: base.status }
+  if (context) {
+    const editable = await panel.getEditableConfig(context.db, context.tenant)
+    config = applyConfigPatch(config, Object.fromEntries(Object.entries(editable.current).filter(([key, value]) => value !== undefined && (key.startsWith('business.') || key.startsWith('sections.')))))
   }
-  try {
-    hindiStatus = await getI18nStatus(tenant)
-  } catch {
-    // Graceful fallback if runtime cannot reach repo root seed files
-  }
-  const visibleLeads = filterLeads(allLeads, activeFilter)
-  const won = allLeads.filter((lead) => lead.status === 'won').length
-  const notContacted = allLeads.filter(isNotContacted).length
-  const qualified = allLeads.filter((lead) => lead.status === 'quoted' || lead.status === 'won').length
-  const sampleMode = mode === 'demo'
-  const unavailableMode = mode === 'unavailable'
-  const recentLeads = visibleLeads.slice(0, 4)
-  const previewHref = `/${tenant}`
-
-  let branding = null
-  try {
-    branding = await loadPublicTenantConfig(tenant)
-  } catch {
-    branding = null
+  let items: Enquiry[] = mode === 'demo' ? DEMO_ENQUIRIES : []
+  let leadError: string | undefined
+  if (mode === 'live' && context) {
+    try { items = await leads.list(context.db) }
+    catch { leadError = 'Live enquiries could not be loaded. Refresh to try again.' }
   }
 
-  const studioName = branding?.business?.name || displayName
-  const phone = branding?.business?.phone || ''
-  const whatsapp = branding?.business?.whatsapp || phone
-  const paletteName = typeof branding?.brand?.palette === 'string' ? branding.brand.palette : 'Editorial Crisp'
-  const serviceAreas = branding?.business?.serviceAreas || []
-  const city = branding?.business?.address?.city || ''
-  const hasProjects = Boolean(branding?.sections?.portfolio?.projects?.length)
-  const newLeadsCount = allLeads.filter((lead) => lead.status === 'new').length
-
-  return (
-    <AdminShell spacious>
-      <AdminCard className={`p-4 sm:p-5 ${sampleMode ? 'border-admin-alert bg-admin-alert-soft' : 'border-admin-primary bg-admin-primary-soft'}`}>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold text-admin-ink">{sampleMode ? 'Sample data is on' : unavailableMode ? 'Live data unavailable' : 'Live customer data'}</p>
-            <p className="mt-1 text-sm text-admin-muted">
-              {sampleMode
-                ? 'Numbers and enquiries here are demo-only. Website edits stay local until access is granted or saved from a live tenant.'
-                : unavailableMode
-                  ? 'Sample data is off, but this signed-in account is not connected to this tenant dashboard. Ask an operator to grant tenant access, or turn sample data back on for a demo preview.'
-                : 'This view is connected to the tenant account. Saved website edits publish through the override store.'}
-            </p>
-          </div>
-          <Link
-            href={sampleMode ? `${baseDashboard}?demo=0` : `${baseDashboard}?demo=1`}
-            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-primary px-4 text-sm font-semibold text-admin-primary"
-          >
-            {sampleMode ? 'Turn sample data off' : 'Turn sample data on'}
-          </Link>
-        </div>
-      </AdminCard>
-
-      <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
-        <div className="flex min-w-0 flex-col gap-5">
-          <AdminCard className="p-5 sm:p-6">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-              <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Overview</p>
-                <h1 className="mt-2 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl text-admin-ink">Hello, {displayName}</h1>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-admin-muted">
-                  Follow up enquiries, update website content, check analytics, and manage conversion settings from one place.
-                </p>
-              </div>
-              <Link href={previewHref} target="_blank" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
-                View public site
-              </Link>
-            </div>
-
-            <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-4">
-              <AdminMetric label="enquiries" value={allLeads.length} note={unavailableMode ? 'live unavailable' : 'total loaded'} tone="primary" />
-              <AdminMetric label="not contacted" value={notContacted} note="needs action" tone={notContacted > 0 ? 'alert' : 'neutral'} />
-              <AdminMetric label="qualified" value={qualified} note="quoted or won" />
-              <AdminMetric label="won" value={won} note="closed jobs" />
-            </div>
-          </AdminCard>
-
-          <StudioOverviewHub
-            tenant={tenant}
-            studioName={studioName}
-            phone={phone}
-            whatsapp={whatsapp}
-            paletteName={paletteName}
-            serviceAreas={serviceAreas}
-            city={city}
-            hasProjects={hasProjects}
-            previewUrl={previewHref}
-            newLeadsCount={newLeadsCount}
-          />
-
-          <AdminCard className="overflow-hidden">
-            <div className="flex flex-col gap-3 border-b border-admin-border p-5 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Live website preview</p>
-                <h2 className="mt-1 text-xl font-semibold text-admin-ink">See the current public site here</h2>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-admin-muted">
-                  This is the saved public page, shown inside the dashboard. Content edits still save through Website Content.
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <Link href={previewHref} target="_blank" className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
-                  Open site
-                </Link>
-                <Link href={`/${tenant}/hi`} target="_blank" className="inline-flex min-h-11 items-center justify-center rounded bg-admin-primary px-4 text-sm font-semibold text-admin-on-primary">
-                  Hindi
-                </Link>
-              </div>
-            </div>
-            <div className="bg-admin-bg p-3">
-              <iframe
-                title="Live website preview"
-                src={previewHref}
-                className="h-[36rem] w-full rounded-xl border border-admin-border bg-admin-surface"
-              />
-            </div>
-          </AdminCard>
-
-          <section id="enquiries" className="scroll-mt-24">
-            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Enquiries</p>
-              <h2 className="mt-1 text-xl font-semibold text-admin-ink">Recent people waiting for a reply</h2>
-              </div>
-              <Link href={sampleMode ? `${baseDashboard}/enquiries?demo=1` : `${baseDashboard}/enquiries`} className="inline-flex min-h-11 items-center justify-center rounded border border-admin-border px-4 text-sm font-semibold text-admin-ink">
-                Open all enquiries
-              </Link>
-            </div>
-            {recentLeads.length === 0 ? <EmptyState unavailable={unavailableMode} /> : <AdminCard className="overflow-hidden">{recentLeads.map((lead) => <LeadCard key={lead.id} lead={lead} demo={sampleMode} baseDashboard={baseDashboard} />)}</AdminCard>}
-          </section>
-        </div>
-
-        <aside className="grid content-start gap-5">
-          <AdminCard className="p-5">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Website content</p>
-                <h2 className="mt-1 text-lg font-semibold text-admin-ink">Edit the pages customers see</h2>
-              </div>
-              <AdminChip tone="primary">editable</AdminChip>
-            </div>
-            <p className="mt-4 text-sm text-admin-muted">Change copy, projects, services, CTAs, socials, Hindi translations, and estimate settings for the pages this tenant has.</p>
-            <Link href={`${baseDashboard}/content`} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
-              Open content manager
-            </Link>
-          </AdminCard>
-
-          <AdminCard className="p-5">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Hindi</p>
-                <h2 className="mt-1 text-lg font-semibold text-admin-ink">{hindiStatus.translated} fields translated</h2>
-              </div>
-              <AdminChip tone={hindiStatus.status === 'published' ? 'primary' : 'alert'}>{hindiStatus.status}</AdminChip>
-            </div>
-            <p className="mt-4 text-sm text-admin-muted">Use the language switcher inside Website Content to edit English and Hindi without raw JSON.</p>
-            <Link href={`${baseDashboard}/content`} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
-              Edit translations
-            </Link>
-          </AdminCard>
-
-          <AdminCard className="p-5">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-admin-muted">Analytics</p>
-                <h2 className="mt-1 text-lg font-semibold text-admin-ink">What visitors did</h2>
-              </div>
-              <AdminChip tone={sampleMode ? 'alert' : 'neutral'}>{sampleMode ? 'sample' : 'live'}</AdminChip>
-            </div>
-            <p className="mt-4 text-sm text-admin-muted">Visitor data comes from Umami when configured. If it is unavailable, the analytics screen says so instead of inventing numbers.</p>
-            <Link href={`${baseDashboard}/analytics`} className="mt-4 inline-flex min-h-11 items-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink">
-              Open analytics
-            </Link>
-          </AdminCard>
-        </aside>
-      </section>
-
-    </AdminShell>
-  )
-}
-
-async function loadLeads(tenantSlug: string, demoParam: string | undefined): Promise<{ leads: Lead[]; mode: 'paid' | 'demo' | 'unavailable'; displayName: string }> {
-  if (demoParam === '1') return { leads: DEMO_LEADS, mode: 'demo', displayName: 'Demo user' }
-  const supabase = await createSupabaseServerClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
-  if (!user?.email || !session) {
-    if (demoParam === '0') {
-      redirect(`/login?next=/${encodeURIComponent(tenantSlug)}/dashboard`)
-    }
-    return { leads: DEMO_LEADS, mode: 'demo', displayName: 'Demo guest' }
+  async function mutateLead(input: Parameters<LeadAction>[0]): Promise<ActionResult<Enquiry>> {
+    'use server'
+    if (mode !== 'live') return { ok: false, error: 'Sample and unavailable workspaces cannot change live enquiries.' }
+    const parsed = mutation.safeParse(input)
+    if (!parsed.success) return { ok: false, error: 'Check the lead details. Notes must be under 2,000 characters.' }
+    try {
+      const current = await authenticatedContext(tenant)
+      if (!current || !canAccessDashboard(current.tenant) || current.tenant.status === 'demo') return { ok: false, error: 'You do not have access to this enquiry desk.' }
+      let row: Enquiry
+      if (parsed.data.kind === 'create') {
+        if (current.tenant.status !== 'live') return { ok: false, error: 'Lead capture is available after the studio goes live.' }
+        const phone = normalizeIndianPhone(parsed.data.values.phone)
+        if (!phone) return { ok: false, error: 'Enter a valid 10-digit Indian mobile number.' }
+        const result = await leads.create({ ...parsed.data.values, phone: `+${phone}`, tenantSlug: tenant, source: 'other', sourcePage: `/${tenant}/dashboard#walk-in` })
+        const created = await leads.get(current.db, result.leadId)
+        if (!created) return { ok: false, error: 'The lead was submitted but could not be reloaded. Refresh before trying again.' }
+        row = created
+      } else {
+        const { data, error } = await current.db.from('leads').update({ status: parsed.data.status, notes: parsed.data.notes.trim() }).eq('id', parsed.data.id).eq('tenant_id', current.tenant.id).select('*').single()
+        if (error || !data) return { ok: false, error: 'The enquiry could not be saved. Refresh and try again.' }
+        row = data
+      }
+      revalidatePath(`/${tenant}/dashboard`)
+      return { ok: true, data: row }
+    } catch { return { ok: false, error: 'The enquiry could not be saved. Check your access and try again.' } }
   }
-  const displayName = profileName(user.email, user.user_metadata)
 
-  try {
-    const tenantContext = await requireTenant({
-      id: user.id,
-      email: user.email,
-      accessToken: session.access_token,
-    })
-
-    if (tenantContext.tenant.slug !== tenantSlug) {
-      return { leads: [], mode: 'unavailable', displayName }
-    }
-
-    if (demoParam === '0') {
-      return { leads: [], mode: 'unavailable', displayName }
-    }
-
-    if (canAccessDashboard(tenantContext.tenant)) {
-      return { leads: await leads.list(tenantContext.db), mode: 'paid', displayName }
-    }
-
-    // Connected tenant without T3 lead store (demo / newly onboarded studio). Default to demo sample leads.
-    return { leads: DEMO_LEADS, mode: 'demo', displayName }
-  } catch (e) {
-    if (e instanceof AuthError && (e.code === 'no-tenant' || e.code === 'wrong-tenant')) {
-      return { leads: [], mode: 'unavailable', displayName }
-    }
-    throw e
-  }
-}
-
-function profileName(email: string, metadata: Record<string, unknown> | null | undefined): string {
-  const name = stringFrom(metadata?.full_name) ?? stringFrom(metadata?.name)
-  return name ?? email.split('@')[0] ?? 'there'
-}
-
-function stringFrom(value: unknown): string | null {
-  return typeof value === 'string' && value.trim() ? value : null
-}
-
-function filterFrom(value: string | undefined): Filter {
-  if (value === 'new' || value === 'not-contacted' || value === 'this-month') return value
-  return 'all'
-}
-
-function filterLeads(items: Lead[], filter: Filter): Lead[] {
-  if (filter === 'new') return items.filter((lead) => lead.status === 'new')
-  if (filter === 'not-contacted') return items.filter(isNotContacted)
-  if (filter === 'this-month') return items.filter((lead) => isThisMonth(lead.created_at))
-  return items
-}
-
-function isNotContacted(lead: Lead): boolean {
-  return lead.status === 'new' && lead.contacted_at === null
-}
-
-function isThisMonth(value: string): boolean {
-  const date = new Date(value)
-  const now = new Date()
-  return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
-}
-
-function LeadCard({ lead, demo, baseDashboard }: { lead: Lead; demo: boolean; baseDashboard: string }) {
-  const whatsappHref = `https://wa.me/${lead.phone.replace(/\D/g, '')}`
-  const detailLines = [lead.project_type, lead.locality].filter(Boolean).join(' - ')
-  const budget = lead.source === 'estimate' ? lead.budget_band : null
-  const content = (
-    <div className="min-w-0">
-      <div className="flex items-start gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-admin-raised text-sm font-semibold text-admin-ink">
-          {lead.name.slice(0, 1).toUpperCase()}
-        </span>
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h2 className="truncate text-base font-semibold text-admin-ink">{lead.name}</h2>
-            <StatusPill status={lead.status} />
-          </div>
-          {detailLines && <p className="mt-1 text-sm font-medium text-admin-ink">{detailLines}</p>}
-          <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-admin-muted">
-            {budget && <span>{budget}</span>}
-            <span>{relativeTime(lead.created_at)}</span>
-            {lead.source && <span>{lead.source}</span>}
-            {demo && <span>read-only sample</span>}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-
-  return (
-    <article className="grid gap-3 border-b border-admin-border p-4 last:border-b-0 sm:grid-cols-[1fr_auto] sm:items-center">
-      {demo ? content : <Link href={`${baseDashboard}/${lead.id}`}>{content}</Link>}
-
-      <div className="grid grid-cols-2 gap-2 sm:w-48">
-        <a
-          href={whatsappHref}
-          className="flex min-h-11 items-center justify-center rounded bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary"
-        >
-          WhatsApp
-        </a>
-        <a
-          href={`tel:${lead.phone}`}
-          className="flex min-h-11 items-center justify-center rounded border border-admin-border px-3 text-sm font-semibold text-admin-ink"
-        >
-          Call
-        </a>
-      </div>
-    </article>
-  )
-}
-
-function StatusPill({ status }: { status: LeadStatus }) {
-  const tone = status === 'new' ? 'primary' : status === 'lost' ? 'alert' : 'neutral'
-  return <AdminChip tone={tone}>{STATUS_LABELS[status]}</AdminChip>
-}
-
-function relativeTime(value: string): string {
-  const then = new Date(value).getTime()
-  const now = Date.now()
-  const diffSeconds = Math.round((then - now) / 1000)
-  const absSeconds = Math.abs(diffSeconds)
-  const formatter = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
-
-  if (absSeconds < 60) return 'just now'
-  if (absSeconds < 3600) return formatter.format(Math.round(diffSeconds / 60), 'minute')
-  if (absSeconds < 86400) return formatter.format(Math.round(diffSeconds / 3600), 'hour')
-  return formatter.format(Math.round(diffSeconds / 86400), 'day')
-}
-
-function EmptyState({ unavailable = false }: { unavailable?: boolean }) {
-  return (
-    <AdminCard className="p-5">
-      <h1 className="text-lg font-semibold text-admin-ink">{unavailable ? 'Live enquiries unavailable.' : 'No enquiries yet.'}</h1>
-      <p className="mt-2 text-base text-admin-muted">
-        {unavailable
-          ? 'This confirms sample data is off. Connect this login to the tenant to load real enquiries.'
-          : 'Put your website link in your Instagram bio and send it to anyone who asks for your work.'}
-      </p>
-    </AdminCard>
-  )
+  return <DashboardWorkspace key={`${tenant}:${mode}`} initialData={{ tenant, mode, config, enquiries: items, canEdit: mode === 'demo' || Boolean(context && context.tenant.status !== 'demo'), canCreate: mode === 'demo' || Boolean(eligible && context?.tenant.status === 'live'), leadError }} leadAction={mutateLead} />
 }

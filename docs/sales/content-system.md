@@ -76,7 +76,7 @@ WhatsApp.
 |---|---|---|
 | **Teardown** ⭐ | "This studio's site: three things costing them clients" | Highest leverage in the system. Works at all four depths, doubles as a warm outreach opener, and generates the next post |
 | **Rebuild / before-after** ⭐ | "We rebuilt it — here's the difference" | The money format. Inherently visual, instantly legible with zero explanation |
-| **Comparison** | "₹15,000 site vs ₹50,000 site: what actually differs" · "Wix vs custom for a studio" | Highest-performing format on Instagram for this vertical. Needs no context to understand |
+| **Comparison** | "₹17,999 standard site vs ₹53,999 custom site: what actually differs" · "Wix vs custom for a studio" | Explains the difference between the standard templates and custom Growth work |
 | **Pattern** | "Why every good studio site puts the phone number in the same place" | Demonstrates judgement. This is the format that pulls the product/design audience in |
 | **Mistake** | "The one thing every interior studio website gets wrong" | Strong hook, easy to serialise across three parts |
 | **Self-audit** | "Five things to check on your own site right now" | Saveable and shareable. Reliably generates inbound DMs |

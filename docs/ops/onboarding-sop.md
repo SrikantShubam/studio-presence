@@ -175,5 +175,6 @@ Tier 2-3 owners often don't have a mental model of a funnel. The education *is* 
 - Any request touching layout, structure, or navigation → change order, quoted separately
 - Any request to go live before final payment → no, always
 - Any request for credentials or backend access → no, handover package only
-- Client wants to pay below the ₹12,000 floor → decline. There is no cheaper tier by design
+- Client wants to pay below the ₹17,999 Presence price → reduce scope only through a written decision;
+  there is no cheaper tier by design
 - Client goes silent >7 days post-payment → pause, log, reset timeline

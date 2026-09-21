@@ -70,8 +70,9 @@ Max 15–20/day, spread across hours.
 >
 > Quick 60-second walkthrough: [Loom link]
 >
-> This is a preview on our domain, so it's watermarked. If you like it, it goes on your own domain
-> with your own email. From ₹15,000, live in two days.
+> This is a preview on our domain. If you like it, it goes on your own domain with your own email.
+> Presence is ₹17,999 including GST. Standard sites can be ready in two working days after the
+> content is complete.
 >
 > Anything you'd change?
 
@@ -115,8 +116,8 @@ Let them do the arithmetic aloud. People believe their own numbers.
 ## Objections
 
 **"How much?"** *(the most common, and it comes early)*
-> ₹15,000 for the standard package, ₹25,000 for the bigger one, and custom above that. Everything's
-> on our site — we don't do the "contact for pricing" thing.
+> Presence is ₹17,999 including GST, Presence Plus is ₹29,999, and Growth starts at ₹53,999 because
+> it involves custom design and implementation. Everything is scoped clearly.
 
 Never discount here. You aren't authorised to and it destroys the anchor.
 
@@ -124,8 +125,8 @@ Never discount here. You aren't authorised to and it destroys the anchor.
 > Fair. What were you expecting? — [listen] — For context, JustDial runs ₹6,000 to ₹50,000 a year,
 > every year. This is once, and it's yours. And if it lands two projects it's paid back many times.
 
-If they genuinely can't do ₹12k, say so plainly and leave the door open:
-*"Then we're probably not the right fit right now — and I'd rather say that than build you something
+If they genuinely cannot afford Presence, say so plainly and leave the door open:
+*"Then we're probably not the right fit right now, and I'd rather say that than build you something
 half-done. If the budget changes, I'm here."*
 
 **There is no cheap version to fall back on.** That's deliberate. Walking away protects the price for
@@ -183,7 +184,7 @@ consistently gets more replies than pressure does.
 ## Things that lose deals
 - Sending the link before they've agreed to see it
 - Generic praise with no specific detail
-- Quoting below ₹15,000
+- Quoting below ₹17,999 including GST
 - Promising a feature or timeline you can't confirm
 - Arguing with an objection instead of asking about it
 - Chasing past two follow-ups

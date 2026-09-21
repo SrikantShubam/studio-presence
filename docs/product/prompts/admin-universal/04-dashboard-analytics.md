@@ -1,9 +1,9 @@
-# Universal admin — Dashboard: analytics (T3 only)
+# Universal admin — Dashboard: analytics
 
 Attach: none required
 
-Covers `/dashboard/analytics`. **T3 only.** Deliberately narrow — the note at the bottom explains
-why, and it matters more than the layout does.
+Covers `/dashboard/analytics`. The screen is available across tiers with different reporting views.
+Growth custom work may add deeper filters or exports, but every tier uses the same Umami source.
 
 Paste `00-universal-system.md` first, then this:
 
@@ -13,7 +13,7 @@ Design the ANALYTICS screen — the studio owner's view of whether their website
 WHY THIS IS DELIBERATELY SMALL: this owner does not read analytics and will never act on a bounce
 rate. They have exactly one question — "is this thing bringing me work?" Answer that and stop.
 A screen full of metrics they can't act on makes them feel like they're failing to understand their
-own website, which is the opposite of what a Growth tier should feel like.
+own website, which is the opposite of what a useful owner-facing dashboard should feel like.
 
 HEADER: client logo + studio name left, tabs "Leads · Analytics" centre, owner initials right.
 
@@ -30,10 +30,11 @@ SHOW EXACTLY FOUR THINGS:
 2. MONTHLY TREND — one simple bar per month, last 6 months. No y-axis, no gridlines, no legend,
    no tooltips. Just six bars and their month labels.
 
-3. WHERE ENQUIRIES CAME FROM — a short ranked list, never a pie chart:
-   "WhatsApp button — 8"
-   "Estimate calculator — 4"
-   "Enquiry form — 2"
+3. WHERE WEBSITE ACTIONS CAME FROM — a short ranked list, never a pie chart:
+   "Website enquiry form — 8"
+   "QR card form — 4"
+   "WhatsApp click — 2"
+   Label WhatsApp clicks as clicks. Do not call them conversations or leads.
 
 4. MOST-VIEWED PROJECTS — top three project names with view counts. This is the genuinely
    actionable one: it tells them what kind of work to photograph more of.
@@ -60,9 +61,8 @@ project was that analytics only create value when the owner *acts* on them — a
 owner will not act on a bounce rate. Four numbers they can act on beat twenty that are merely
 accurate. Expect pressure to add more during implementation; resist it.
 
-The one addition worth making is the visits stat under the headline. It's not the same category as
-bounce rate or session duration — it needs no interpretation, and a T3 customer paying ₹45–55k
-otherwise sees only enquiry counts with no sense of how much traffic is happening at all, which reads
-thin. It also removes any reason for them to want a second login into Umami directly — there is
+The one addition worth making is the visits stat under the headline. It needs no interpretation, and
+an owner otherwise sees only enquiry counts with no sense of how much traffic is happening. It also
+removes any reason for them to want a second login into Umami directly — there is
 deliberately only one owner-facing dashboard in this product. If someone asks for a second Umami-fed
 number, the bar is the same as the other four: would this owner ever act on it.

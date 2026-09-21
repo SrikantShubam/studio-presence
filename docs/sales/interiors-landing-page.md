@@ -13,8 +13,8 @@ exactly the behaviour this market has been burned by.
 
 **Headline:** When someone searches for an interior designer in your city, do they find you?
 
-**Sub:** We build websites for interior design studios. Live in two days, from ₹15,000. You see it
-working before you pay anything.
+**Sub:** We build websites for interior design studios. From ₹17,999 including GST. Once your content
+is ready, we can prepare the standard site in two working days.
 
 **Primary CTA:** See a real example →
 **Secondary CTA:** Get a free preview of yours
@@ -36,7 +36,7 @@ Your work is good. The problem is that nobody can find proof of it.
 
 ## What you get
 
-**Starting at ₹15,000 — live in 2 days**
+**Starting at ₹17,999 including GST**
 
 - A proper website that works on a phone, because that's where your clients are
 - Your projects, laid out so the work sells itself
@@ -46,12 +46,15 @@ Your work is good. The problem is that nobody can find proof of it.
 - Search setup so "interior designer in [your area]" starts finding you
 - Your own domain and email — `hello@yourstudio.in`, not a Gmail address
 
-**₹25,000 — Presence Plus**
-Everything above, plus individual project pages, before/after sliders, your Google reviews on the
-site, an enquiry form, and a blog for search.
+**₹29,999 — Presence Plus**
+Everything above, plus more project and location setup, before/after work, Google Reviews, an
+enquiry form, visual editing, and a journal with up to 100 published posts.
 
-**₹45,000+ — Custom**
-Multi-location studios, lead tracking dashboards, or anything beyond the standard build.
+**From ₹53,999 — Growth / Custom**
+Custom design and implementation outside the three approved templates, including custom pages,
+branding, icon design, content structures, and integrations when required.
+
+Growth Custom starts at ₹64,999 when the project needs deeper custom work and five revision rounds.
 
 *(Three packages. No cut-price option — we'd rather build one site properly than three badly.)*
 
@@ -83,9 +86,10 @@ and then they stopped replying.
 
 1. **Send us four things** — your studio name, your area, what you do, and your number. Two minutes
    on WhatsApp.
-2. **We build a preview.** Live link in two days. Watermarked, on our domain, free.
-3. **You look at it.** Like it? We take 50%, build the real thing, and put it on your own domain when
-   the balance clears. Don't like it? Nothing owed, no hard feelings.
+2. **We prepare the first version.** Standard sites can be ready in two working days after the
+   content is complete. Custom Growth work follows the agreed scope.
+3. **You review it.** We make the included revision rounds, then launch it on your own domain when
+   the balance clears.
 
 ---
 
@@ -126,7 +130,7 @@ that's a different conversation — happy to have it.
 
 ## Final CTA
 
-**Send us your studio name and area on WhatsApp. We'll send back a preview in two days.**
+**Send us your studio name and area on WhatsApp. We'll show you which package fits.**
 [WhatsApp button] [Or fill this form]
 
 ---

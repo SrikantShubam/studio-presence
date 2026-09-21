@@ -10,9 +10,10 @@ rather than disguised employment.
 
 ## 1. What Vector Veda actually sells
 
-We build websites for interior design studios in Tier 2 and Tier 3 cities. ₹15,000 for the standard
-package, ₹25,000 for the larger one, ₹45,000+ for custom. **Those are the only three options — there
-is no cheap version.** If someone can't do ₹12,000, they're not our customer, and that's fine.
+We build websites for interior design studios in Tier 2 and Tier 3 cities. ₹17,999 including GST for
+the standard Presence package, ₹29,999 including GST for Presence Plus, and custom Growth from
+₹53,999 including GST. **Those are the standard options. There is no cheap version.** If someone
+cannot afford Presence, they are not our customer yet, and that is fine.
 
 **What makes us different — memorise this, it's the whole pitch:**
 
@@ -43,7 +44,8 @@ That's the entire job, and it's harder than it sounds. Specifically:
 5. Escalate genuinely interested leads to Srikant
 6. Keep the tracker accurate
 
-**You never:** quote a price below ₹15,000, promise a feature, commit to a timeline, or negotiate.
+**You never:** quote a price below ₹17,999 including GST, promise a feature, commit to a timeline, or
+negotiate.
 If any of those come up, the answer is: *"Let me get Srikant on this, he handles the specifics."*
 That's not a weakness in the pitch — handing off to the founder is a signal that they're being taken
 seriously.
@@ -54,10 +56,10 @@ seriously.
 
 - **Base: ₹5,000/month.** Paid for doing the process properly — outreach volume, documented calls,
   accurate tracker, clean escalations. Not for closing.
-- **Commission: 33% of the deal value** on any deal you sourced that closes.
-  - ₹15,000 deal → ₹5,000 to you
-  - ₹25,000 deal → ₹8,250
-  - ₹45,000 deal → ₹14,850
+- **Commission: 25% of the service value before GST** on any deal you sourced that closes.
+  - ₹17,999 deal → approximately ₹3,813
+  - ₹29,999 deal → approximately ₹6,356
+  - ₹53,999 deal → approximately ₹11,440
 - **Paid the month after the client's payment fully clears our bank.** Not on signing, not on
   promise — on cleared money. This protects both of us from deals that fall apart.
 - **Quality bonus (discretionary):** for consistently good call recordings, thorough notes, and a

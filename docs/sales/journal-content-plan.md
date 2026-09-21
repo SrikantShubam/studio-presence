@@ -59,7 +59,7 @@ Ranked by what earns trust with a studio owner and what they actually search.
 | 5 | Why "interior designer near me" doesn't find you | Patterns | Local SEO without jargon. Sets up the GBP retainer |
 | 6 | How to photograph your projects on a phone | Studio Notes | Genuinely useful **and** fixes our own intake bottleneck. Link it from the onboarding SOP |
 | 7 | Every good studio site puts the phone number in the same place | Patterns | Pure design judgement. This is the post that pulls the product/tech audience in |
-| 8 | ₹15,000 site vs ₹50,000 site: what actually differs | Comparisons | Justifies the ladder and pre-empts the price objection before it's raised |
+| 8 | ₹17,999 standard site vs ₹53,999 custom site: what actually differs | Comparisons | Explains the difference between the standard templates and custom Growth work |
 | 9 | Five things to check on your own site right now | Patterns | Saveable, shareable, and reliably generates inbound DMs |
 | 10 | A 3BHK in Patna: how one studio's site turned a follower into a project | Studio Notes | The case study. **Write this only when it's true** |
 
