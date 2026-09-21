@@ -30,6 +30,7 @@ const SECTIONS = [
   { id: "footer", label: "Footer", icon: PanelBottom },
 ] as const;
 type Section = (typeof SECTIONS)[number]["id"];
+const PAGES: Record<string, Section[]> = { Home: ["hero", "about", "portfolio", "services", "contact", "footer"], About: ["about", "contact", "footer"], Projects: ["portfolio", "contact", "footer"], Services: ["services", "contact", "footer"], Contact: ["contact", "footer"] };
 
 export default function WebsiteEditor({
   config,
@@ -46,6 +47,8 @@ export default function WebsiteEditor({
 }) {
   const [patch, setPatch] = useState<Record<string, unknown>>({});
   const [section, setSection] = useState<Section>("hero");
+  const [page, setPage] = useState("Home");
+  const [language, setLanguage] = useState("English");
   const [device, setDevice] = useState<"desktop" | "phone">("desktop");
   const [preview, setPreview] = useState<"draft" | "published">("draft");
   const [pending, setPending] = useState(false);
@@ -145,10 +148,14 @@ export default function WebsiteEditor({
         }
       />
       <Feedback error={error} message={feedback} />
+      <div className="mb-4 flex flex-wrap items-end gap-3 border border-admin-border bg-admin-surface p-4">
+        <label className="grid gap-1 text-xs font-medium">Page<select className={inputClass} value={page} onChange={(event) => { setPage(event.target.value); setSection(PAGES[event.target.value]![0]!); }}><option>Home</option><option>About</option><option>Projects</option><option>Services</option><option>Contact</option></select></label>
+        <label className="grid gap-1 text-xs font-medium">Language<select className={inputClass} value={language} onChange={(event) => setLanguage(event.target.value)}><option>English</option><option>Hindi</option></select></label>
+      </div>
       <div className="grid items-start gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
         <Panel title="Website sections">
           <div className="grid grid-cols-2 gap-2 p-4">
-            {SECTIONS.map((item) => (
+            {SECTIONS.filter((item) => PAGES[page]!.includes(item.id)).map((item) => (
               <Button
                 key={item.id}
                 aria-pressed={section === item.id}
@@ -337,7 +344,7 @@ export default function WebsiteEditor({
                 aria-pressed={device === "phone"}
                 onClick={() => setDevice("phone")}
               >
-                <Smartphone aria-hidden="true" className="size-3.5" strokeWidth={1.8} />375px phone
+                <Smartphone aria-hidden="true" className="size-3.5" strokeWidth={1.8} />Phone
               </Button>
             </div>
             <a

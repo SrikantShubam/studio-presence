@@ -14,14 +14,14 @@ export const DEMO_ENQUIRIES: Enquiry[] = [
   name: `Sample client ${index + 1}`,
   phone: "",
   email: null,
-  locality: ["Sample central area", "Sample north area", "Sample south area"][
+  locality: ["Patna", "Delhi NCR", "Ranchi"][
     index % 3
   ]!,
-  project_type: ["2 BHK interiors", "3 BHK interiors", "Kitchen renovation"][
+  project_type: ["3 BHK · Full home", "Modular kitchen", "2 BHK · Full home"][
     index % 3
   ]!,
-  budget_band: ["₹8–12 lakh", "₹12–18 lakh", "₹3–5 lakh"][index % 3]!,
-  timeline: "Sample: within 3 months",
+  budget_band: ["₹12L–₹16L", "₹3L–₹5L", "₹8L–₹10L"][index % 3]!,
+  timeline: "Within 3 months",
   message:
     "Sample enquiry for exploring the dashboard. This is not a real customer.",
   source: "other",
@@ -40,9 +40,9 @@ export const SAMPLE_TREND = [
   { month: "Sep", visits: 1248, count: 31 },
 ];
 export const SAMPLE_CITIES = [
-  { name: "Sample central area", count: 2, visits: 612 },
-  { name: "Sample north area", count: 2, visits: 381 },
-  { name: "Sample south area", count: 2, visits: 255 },
+  { name: "Patna", count: 14, enquiries: 14, visits: 612 },
+  { name: "Delhi NCR", count: 3, enquiries: 3, visits: 142 },
+  { name: "Ranchi", count: 3, enquiries: 3, visits: 128 },
 ];
 export const SAMPLE_ESTIMATE = {
   enabled: true,
@@ -53,7 +53,25 @@ export const SAMPLE_ESTIMATE = {
     label: `${bhk} BHK`,
     factor: 1,
   })),
-  finishLevels: [],
-  included: [],
+  finishLevels: [
+    { id: "basic", label: "Essential", low: 0.94, high: 1 },
+    { id: "standard", label: "Premium", low: 1, high: 1.06 },
+    { id: "premium", label: "Luxe", low: 1.06, high: 1.12 },
+  ],
+  included: ["Design consultation", "Modular furniture", "Installation"],
   resultNote: "Sample indicative estimate. Final pricing follows a site visit.",
 };
+
+export const SAMPLE_SOURCES = [
+  { name: "Estimate Calculator", count: 12 },
+  { name: "Website Direct Form", count: 9 },
+  { name: "Digital QR Card", count: 7 },
+  { name: "WhatsApp follow-up", count: 3 },
+] as const;
+
+export const SAMPLE_PAGE_BREAKDOWN = [
+  { page: "Home", views: 586, enquiries: 14 },
+  { page: "Projects", views: 211, enquiries: 7 },
+  { page: "Services", views: 148, enquiries: 6 },
+  { page: "Contact", views: 97, enquiries: 4 },
+] as const;

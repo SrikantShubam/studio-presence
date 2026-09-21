@@ -114,10 +114,10 @@ export default function CalculatorTab({
   return (
     <>
       <PageHeading
-        title="Pricing you can test before saving."
+        title="Pricing you can test before publishing."
         description={
           mode === "demo"
-            ? "Try sample rates. Your public website stays unchanged."
+            ? "Adjust your baseline rates, then see what a client would receive."
             : "Saving updates the pricing used by your public website."
         }
       />

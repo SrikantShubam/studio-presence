@@ -1,5 +1,5 @@
 "use client";
-import { Download, MessageCircle, NotebookPen, Phone, X } from "lucide-react";
+import { Download, MessageCircle, NotebookPen, Phone, Search, X } from "lucide-react";
 
 import { useDeferredValue } from "react";
 import {
@@ -107,16 +107,17 @@ export function EnquiryDesk({
               </button>
             ))}
           </div>
-          <input
-            className={`${inputClass} max-w-xs`}
-            type="search"
-            aria-label="Search enquiries"
-            placeholder="Search name, phone, locality or notes"
-            value={filters.query}
-            onChange={(event) =>
-              onFiltersChange({ ...filters, query: event.target.value })
-            }
-          />
+          <div className="relative w-full max-w-xs">
+            <Search aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-admin-muted" />
+            <input
+              className={`${inputClass} w-full pl-9`}
+              type="search"
+              aria-label="Search enquiries"
+              placeholder="Search name, phone, locality or notes"
+              value={filters.query}
+              onChange={(event) => onFiltersChange({ ...filters, query: event.target.value })}
+            />
+          </div>
         </div>
         {filters.locality && (
           <div className="flex items-center gap-3 px-5 pb-4">

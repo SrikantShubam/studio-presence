@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { SunMoon } from 'lucide-react'
 
 /**
  * System/light/dark theme preference for the admin screens.
@@ -58,12 +59,12 @@ export function ThemeToggle() {
 
   return (
     <label className="flex min-h-11 items-center gap-2 text-xs font-medium text-admin-muted">
-      <span>Theme</span>
+      <SunMoon aria-hidden="true" className="size-4" /><span className="sr-only">Theme</span>
       <select
         aria-label="Theme preference"
         value={preference}
         onChange={(event) => changePreference(event.target.value as ThemePreference)}
-        className="min-h-11 rounded-lg border border-admin-border bg-admin-surface px-2 text-sm font-medium text-admin-ink outline-none transition focus-visible:border-admin-primary focus-visible:ring-2 focus-visible:ring-admin-primary motion-reduce:transition-none"
+        className="min-h-11 rounded-none border border-admin-border bg-admin-surface px-2 text-sm font-medium text-admin-ink outline-none transition focus-visible:border-admin-primary focus-visible:ring-2 focus-visible:ring-admin-primary motion-reduce:transition-none"
       >
         <option value="system">System</option>
         <option value="light">Light</option>

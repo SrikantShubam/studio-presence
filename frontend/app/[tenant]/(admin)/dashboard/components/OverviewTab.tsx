@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight, ArrowUpRight, BriefcaseBusiness, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Trophy, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BriefcaseBusiness, Clock3, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Trophy, Users } from "lucide-react";
 
 import {
   Badge,
@@ -42,45 +42,49 @@ export default function OverviewTab({
     {
       label: "New enquiries",
       icon: Inbox,
-      value: waiting,
-      note: "Awaiting first response",
+      value: sample ? "31" : waiting,
+      subtitle: sample ? "20 last month" : "Awaiting first response",
+      delta: sample ? "+55%" : waiting > 0 ? waiting + " waiting" : "No new leads",
       view: "enquiries",
     },
     {
       label: "Active pipeline",
       icon: BriefcaseBusiness,
-      value: open,
-      note: "Open enquiries, not revenue",
+      value: sample ? "₹39.5L" : open,
+      subtitle: sample ? "6 open sample enquiries" : "Open enquiries",
+      delta: sample ? "Budget midpoints" : "Not revenue",
       view: "enquiries",
     },
     {
-      label: "Projects won",
-      icon: Trophy,
-      value: data.enquiries.filter((item) => item.status === "won").length,
-      note: "Recorded in this desk",
+      label: "First response",
+      icon: Clock3,
+      value: sample ? "24 min" : "—",
+      subtitle: "Monthly sample average",
+      delta: sample ? waiting + " awaiting contact" : "Response tracking unavailable",
       view: "enquiries",
     },
     {
       label: "Website visitors",
       icon: Users,
       value: sample ? "1,248" : "—",
-      note: sample
-        ? "Sample September 2026"
-        : "Open analytics for live traffic",
+      subtitle: sample ? "1,058 last month" : "Open analytics for live traffic",
+      delta: sample ? "+18%" : "Traffic tracking unavailable",
       view: "analytics",
     },
     {
       label: "WhatsApp clicks",
       icon: MessageCircle,
       value: sample ? "86" : "—",
-      note: sample ? "Sample link clicks" : "Click tracking unavailable",
+      subtitle: sample ? "Link clicks, not private chats" : "Click tracking unavailable",
+      delta: sample ? "Top action channel" : "—",
       view: "analytics",
     },
     {
       label: "Digital card scans",
       icon: ScanLine,
       value: sample ? "34" : "—",
-      note: sample ? "Sample scan count" : "Scan tracking unavailable",
+      subtitle: sample ? "24 last month" : "Open digital card",
+      delta: sample ? "+42%" : "Scan tracking unavailable",
       view: "card",
     },
   ] as const;
@@ -92,8 +96,8 @@ export default function OverviewTab({
           return all;
         }, {}),
       )
-        .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count)
+        .map(([name, enquiries]) => ({ name, enquiries, visits: null }))
+        .sort((a, b) => b.enquiries - a.enquiries)
         .slice(0, 6);
   return (
     <>
@@ -161,7 +165,7 @@ export default function OverviewTab({
                 ? "—"
                 : metric.value}
             </p>
-            <p className="text-[10px] text-admin-muted">{metric.note}</p>
+            <div className="mt-3 flex items-center justify-between gap-2 text-[10px] text-admin-muted"><span>{metric.subtitle}</span><span className="font-medium text-admin-ink">{metric.delta}</span></div>
           </button>
         ))}
       </section>
@@ -176,6 +180,7 @@ export default function OverviewTab({
           }
         >
           <div className="px-5 pb-5">
+            <div className="mb-2 grid grid-cols-[1fr_auto_auto] gap-4 text-[10px] uppercase tracking-[0.14em] text-admin-muted"><span>City</span><span>Visits</span><span>Enquiries</span></div>
             {areas.length ? (
               areas.map((area) => (
                 <button
@@ -190,7 +195,7 @@ export default function OverviewTab({
                       .getElementById("enquiries")
                       ?.scrollIntoView({ block: "start" });
                   }}
-                  className="grid min-h-16 w-full grid-cols-[1fr_auto] items-center gap-4 border-b border-admin-border py-3 text-left"
+                  className="grid min-h-16 w-full grid-cols-[1fr_auto_auto] items-center gap-4 border-b border-admin-border py-3 text-left"
                   aria-label={`View ${area.name} enquiries`}
                 >
                   <div>
@@ -208,8 +213,8 @@ export default function OverviewTab({
                       />
                       <rect
                         width={
-                          (area.count /
-                            Math.max(1, ...areas.map((item) => item.count))) *
+                          ((area.enquiries) /
+                            Math.max(1, ...areas.map((item) => item.enquiries))) *
                           100
                         }
                         height="2"
@@ -217,7 +222,7 @@ export default function OverviewTab({
                       />
                     </svg>
                   </div>
-                  <span className={`${monoClass} text-xs`}>{area.count} →</span>
+                  <span className={`${monoClass} text-xs text-admin-muted`}>{area.visits ?? "—"}</span><span className={`${monoClass} text-xs`}>{area.enquiries} →</span>
                 </button>
               ))
             ) : (
@@ -265,9 +270,8 @@ export function AttentionChart({
         };
       }));
   const max = Math.max(1, ...rows.map((row) => row.count));
-  const points = rows
-    .map((row, index) => `${30 + index * 90},${160 - (row.count / max) * 120}`)
-    .join(" ");
+  const curvePath = (values: number[], scale: number) => values.map((value, index) => { const x = 30 + index * 90; const y = 160 - (value / scale) * 120; if (index === 0) return "M " + x + " " + y; const previousX = 30 + (index - 1) * 90; const previousY = 160 - ((values[index - 1] ?? 0) / scale) * 120; const controlX = (previousX + x) / 2; return " Q " + controlX + " " + previousY + " " + x + " " + y; }).join("");
+  const points = curvePath(rows.map((row) => row.count), max);
   return (
     <Panel
       title="Attention into enquiries"
@@ -291,7 +295,7 @@ export function AttentionChart({
           {sample && (
             <div>
               <p className={`${monoClass} text-xl`}>5,812</p>
-              <p className="text-[10px] text-admin-muted">Sample site visits</p>
+              <p className="text-[10px] text-admin-muted">Site visits over six months</p>
             </div>
           )}
         </div>
@@ -313,23 +317,9 @@ export function AttentionChart({
               className="stroke-admin-border"
             />
           ))}
-          <polyline
-            points={points}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          />
+          <path d={points} fill="none" stroke="currentColor" strokeWidth="2" />
           {sample && (
-            <polyline
-              points={SAMPLE_TREND.map(
-                (row, index) =>
-                  `${30 + index * 90},${160 - (row.visits / 1500) * 120}`,
-              ).join(" ")}
-              fill="none"
-              className="stroke-admin-muted"
-              strokeWidth="1.5"
-              strokeDasharray="4 4"
-            />
+            <path d={curvePath(SAMPLE_TREND.map((row) => row.visits), 1500)} fill="none" className="stroke-admin-muted" strokeWidth="1.5" strokeDasharray="4 4" />
           )}
           {rows.map((row, index) => (
             <g key={row.month}>

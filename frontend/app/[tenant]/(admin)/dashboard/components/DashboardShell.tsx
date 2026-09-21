@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Calculator, ChartNoAxesCombined, LayoutDashboard, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
+import { Calculator, ChartNoAxesCombined, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
 import {
   Badge,
@@ -120,7 +120,7 @@ export function DashboardShell({
   const brand = (
     <>
       <div className="flex items-center gap-2 px-3">
-        <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-admin-ink">
+        <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-ink text-admin-bg">
           <PanelsTopLeft aria-hidden="true" className="size-4" strokeWidth={1.8} />
         </span>
         <p className="text-sm font-semibold tracking-tight">
@@ -175,7 +175,7 @@ export function DashboardShell({
             </div>
             {authenticated ? (
               <form action={signOutAction}>
-                <Button type="submit">Sign out</Button>
+                <Button type="submit"><LogOut aria-hidden="true" className="size-4" />Sign out</Button>
               </form>
             ) : (
               <Link
