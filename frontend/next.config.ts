@@ -1,4 +1,8 @@
 import type { NextConfig } from 'next'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /**
  * Env: `.env` lives at the repo root (every workspace needs the same Supabase
@@ -16,6 +20,14 @@ import type { NextConfig } from 'next'
  */
 
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: path.resolve(__dirname, '..'),
+  outputFileTracingIncludes: {
+    '/**': [
+      '../clients/**/*',
+      '../backend/**/*',
+      './public/**/*',
+    ],
+  },
   reactStrictMode: true,
   transpilePackages: [
     '@fortawesome/fontawesome-svg-core',
