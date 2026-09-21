@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { normalizeIndianPhone, csvCell, calculateQuote, dashboardMode } from '../../../frontend/app/[tenant]/(admin)/dashboard/components/types'
+import { normalizeIndianPhone, csvCell, calculateQuote, dashboardMode, NAV_ITEMS } from '../../../frontend/app/[tenant]/(admin)/dashboard/components/types'
 
 test('walk-in lead accepts Indian mobile numbers and rejects incomplete or foreign numbers', () => {
   assert.equal(normalizeIndianPhone('9876543210'), '919876543210')
@@ -28,4 +28,13 @@ test('turning samples off never substitutes demo leads for unavailable live data
 
 test('quote rounds per-square-foot rates before multiplying area, like the public calculator', () => {
   assert.deepEqual(calculateQuote(1000, 1001, 1001, 1.15), { low: 1151000, high: 1151000 })
+})
+
+test('navigation matches the prototype pages and category labels', () => {
+  assert.deepEqual(NAV_ITEMS.map((item) => item.id), [
+    'overview', 'enquiries', 'analytics', 'website', 'calculator', 'card', 'settings', 'integrations',
+  ])
+  assert.deepEqual(NAV_ITEMS.map((item) => item.group ?? null), [
+    null, null, null, 'Your website', null, null, 'Workspace', null,
+  ])
 })

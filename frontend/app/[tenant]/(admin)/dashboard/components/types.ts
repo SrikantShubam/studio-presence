@@ -32,14 +32,14 @@ export const STATUS_LABELS: Record<LeadStatus, string> = {
   won: "Won",
   lost: "Lost",
 };
-export const NAV_ITEMS: { id: DashboardView; label: string; mark: string }[] = [
+export const NAV_ITEMS: { id: DashboardView; label: string; mark: string; group?: string }[] = [
   { id: "overview", label: "Overview", mark: "01" },
   { id: "enquiries", label: "Enquiries", mark: "02" },
-  { id: "website", label: "Website editor", mark: "03" },
-  { id: "calculator", label: "Estimate calculator", mark: "04" },
-  { id: "card", label: "Digital card & QR", mark: "05" },
-  { id: "analytics", label: "Traffic & analytics", mark: "06" },
-  { id: "settings", label: "Workspace settings", mark: "07" },
+  { id: "analytics", label: "Traffic & analytics", mark: "03" },
+  { id: "website", label: "Website editor", mark: "04", group: "Your website" },
+  { id: "calculator", label: "Estimate calculator", mark: "05" },
+  { id: "card", label: "Digital card & QR", mark: "06" },
+  { id: "settings", label: "Workspace settings", mark: "07", group: "Workspace" },
   { id: "integrations", label: "Integrations", mark: "08" },
 ];
 export type LeadInput = {

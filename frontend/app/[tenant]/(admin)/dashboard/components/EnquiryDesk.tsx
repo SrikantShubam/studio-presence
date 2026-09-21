@@ -1,4 +1,5 @@
 "use client";
+import { Download, MessageCircle, NotebookPen, Phone, X } from "lucide-react";
 
 import { useDeferredValue } from "react";
 import {
@@ -73,7 +74,7 @@ export function EnquiryDesk({
               )
             }
           >
-            Export CSV
+            <Download aria-hidden="true" className="size-4" />Export CSV
           </Button>
         }
       >
@@ -123,7 +124,7 @@ export function EnquiryDesk({
             <Button
               onClick={() => onFiltersChange({ ...filters, locality: "" })}
             >
-              Clear area filter
+              <X aria-hidden="true" className="size-4" />Clear area filter
             </Button>
           </div>
         )}
@@ -201,7 +202,7 @@ export function EnquiryDesk({
                             onClick={() => onOpenEnquiry(item)}
                             aria-label={`View notes for ${item.name}`}
                           >
-                            Notes
+                            <NotebookPen aria-hidden="true" className="size-4" />Notes
                           </Button>
                         </div>
                       </td>
@@ -258,9 +259,9 @@ export function ContactActions({
           disabled
           title="Contact actions are unavailable for sample contacts"
         >
-          WhatsApp
+          <MessageCircle aria-hidden="true" className="size-4" />WhatsApp
         </Button>
-        <Button disabled>Call</Button>
+        <Button disabled><Phone aria-hidden="true" className="size-4" />Call</Button>
       </>
     );
   return (
@@ -272,14 +273,14 @@ export function ContactActions({
         rel="noopener noreferrer"
         aria-label={`WhatsApp ${enquiry.name}`}
       >
-        WhatsApp
+        <MessageCircle aria-hidden="true" className="size-4" />WhatsApp
       </a>
       <a
         className={buttonClass}
         href={`tel:+${phone}`}
         aria-label={`Call ${enquiry.name}`}
       >
-        Call
+        <Phone aria-hidden="true" className="size-4" />Call
       </a>
     </>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, FileText, Image as ImageIcon, Images, Layers, Monitor, PanelBottom, Phone, Smartphone } from "lucide-react";
 import { createPortal } from "react-dom";
 import {
   Button,
@@ -21,12 +22,12 @@ import {
 } from "./types";
 
 const SECTIONS = [
-  { id: "hero", label: "Hero" },
-  { id: "about", label: "About studio" },
-  { id: "portfolio", label: "Projects" },
-  { id: "services", label: "Services" },
-  { id: "contact", label: "Contact" },
-  { id: "footer", label: "Footer" },
+  { id: "hero", label: "Hero", icon: ImageIcon },
+  { id: "about", label: "About studio", icon: FileText },
+  { id: "portfolio", label: "Projects", icon: Images },
+  { id: "services", label: "Services", icon: Layers },
+  { id: "contact", label: "Contact", icon: Phone },
+  { id: "footer", label: "Footer", icon: PanelBottom },
 ] as const;
 type Section = (typeof SECTIONS)[number]["id"];
 
@@ -154,7 +155,7 @@ export default function WebsiteEditor({
                 variant={section === item.id ? "primary" : undefined}
                 onClick={() => setSection(item.id)}
               >
-                {item.label}
+                <item.icon aria-hidden="true" className="size-3.5" strokeWidth={1.8} />{item.label}
               </Button>
             ))}
           </div>
@@ -330,13 +331,13 @@ export default function WebsiteEditor({
                 aria-pressed={device === "desktop"}
                 onClick={() => setDevice("desktop")}
               >
-                Desktop
+                <Monitor aria-hidden="true" className="size-3.5" strokeWidth={1.8} />Desktop
               </Button>
               <Button
                 aria-pressed={device === "phone"}
                 onClick={() => setDevice("phone")}
               >
-                375px phone
+                <Smartphone aria-hidden="true" className="size-3.5" strokeWidth={1.8} />375px phone
               </Button>
             </div>
             <a
@@ -345,7 +346,7 @@ export default function WebsiteEditor({
               target="_blank"
               rel="noopener noreferrer"
             >
-              Open public site ↗
+              Open public site <ArrowUpRight aria-hidden="true" className="size-4" />
             </a>
           </div>
           <div className="flex flex-wrap gap-2 border-b border-admin-border p-3">

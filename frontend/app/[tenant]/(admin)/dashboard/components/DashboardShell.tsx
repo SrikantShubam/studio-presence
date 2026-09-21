@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { Calculator, ChartNoAxesCombined, LayoutDashboard, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
 import {
   Badge,
@@ -10,7 +11,6 @@ import {
   Dialog,
   Feedback,
   buttonClass,
-  monoClass,
 } from "./primitives";
 import {
   applyConfigPatch,
@@ -35,6 +35,16 @@ import {
   SettingsTab,
 } from "./SupportingTabs";
 
+const NAV_ICONS: Record<DashboardView, LucideIcon> = {
+  overview: LayoutDashboard,
+  enquiries: Menu,
+  analytics: ChartNoAxesCombined,
+  website: PanelsTopLeft,
+  calculator: Calculator,
+  card: QrCode,
+  settings: Settings2,
+  integrations: Unplug,
+};
 export function DashboardShell({
   tenant,
   studioName,
@@ -72,39 +82,51 @@ export function DashboardShell({
   }
   const navigation = (
     <nav className="grid gap-1" aria-label="Dashboard navigation">
-      {NAV_ITEMS.map((item) => (
-        <Link
-          key={item.id}
-          href={href(item.id)}
-          onClick={(event) => {
-            if (
-              isDashboardRoot &&
-              !event.ctrlKey &&
-              !event.metaKey &&
-              !event.shiftKey &&
-              !event.altKey
-            ) {
-              event.preventDefault();
-              window.history.pushState(null, "", href(item.id));
-            }
-            setMobile(false);
-          }}
-          aria-current={active === item.id ? "page" : undefined}
-          className={`flex min-h-11 items-center gap-3 px-3 py-2 text-xs focus-visible:outline-2 focus-visible:outline-admin-primary ${active === item.id ? "bg-admin-raised font-semibold text-admin-ink" : "text-admin-muted hover:bg-admin-raised"}`}
-        >
-          <span className={`${monoClass} text-[10px] text-admin-muted`}>
-            {item.mark}
-          </span>
-          {item.label}
-        </Link>
-      ))}
+      {NAV_ITEMS.map((item) => {
+        const Icon = NAV_ICONS[item.id];
+        return (
+          <div key={item.id}>
+            {item.group && (
+              <p className="px-3 pb-1 pt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-admin-muted">
+                {item.group}
+              </p>
+            )}
+            <Link
+              href={href(item.id)}
+              onClick={(event) => {
+                if (
+                  isDashboardRoot &&
+                  !event.ctrlKey &&
+                  !event.metaKey &&
+                  !event.shiftKey &&
+                  !event.altKey
+                ) {
+                  event.preventDefault();
+                  window.history.pushState(null, "", href(item.id));
+                }
+                setMobile(false);
+              }}
+              aria-current={active === item.id ? "page" : undefined}
+              className={active === item.id ? "flex min-h-11 items-center gap-3 bg-admin-raised px-3 py-2 text-xs font-semibold text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary" : "flex min-h-11 items-center gap-3 px-3 py-2 text-xs text-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary hover:bg-admin-raised"}
+            >
+              <Icon aria-hidden="true" className="size-4 shrink-0" strokeWidth={1.8} />
+              {item.label}
+            </Link>
+          </div>
+        );
+      })}
     </nav>
   );
   const brand = (
     <>
-      <p className="px-3 text-sm font-semibold tracking-tight">
-        Studio Presence
-      </p>
+      <div className="flex items-center gap-2 px-3">
+        <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-admin-ink">
+          <PanelsTopLeft aria-hidden="true" className="size-4" strokeWidth={1.8} />
+        </span>
+        <p className="text-sm font-semibold tracking-tight">
+          Studio Presence
+        </p>
+      </div>
       <div className="my-7 border border-admin-border bg-admin-surface p-3">
         <p className="truncate text-xs font-semibold">{studioName}</p>
         <p className="mt-1 text-[11px] text-admin-muted">Studio workspace</p>
@@ -138,7 +160,7 @@ export function DashboardShell({
               aria-expanded={mobile}
               onClick={() => setMobile(true)}
             >
-              ☰
+              <Menu aria-hidden="true" className="size-4" strokeWidth={1.8} />
             </Button>
             <p className="truncate text-xs">
               <span className="hidden text-admin-muted sm:inline">

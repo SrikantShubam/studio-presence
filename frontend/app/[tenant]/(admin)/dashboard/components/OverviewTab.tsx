@@ -1,4 +1,5 @@
 "use client";
+import { ArrowRight, ArrowUpRight, BriefcaseBusiness, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Trophy, Users } from "lucide-react";
 
 import {
   Badge,
@@ -40,24 +41,28 @@ export default function OverviewTab({
   const metrics = [
     {
       label: "New enquiries",
+      icon: Inbox,
       value: waiting,
       note: "Awaiting first response",
       view: "enquiries",
     },
     {
       label: "Active pipeline",
+      icon: BriefcaseBusiness,
       value: open,
       note: "Open enquiries, not revenue",
       view: "enquiries",
     },
     {
       label: "Projects won",
+      icon: Trophy,
       value: data.enquiries.filter((item) => item.status === "won").length,
       note: "Recorded in this desk",
       view: "enquiries",
     },
     {
       label: "Website visitors",
+      icon: Users,
       value: sample ? "1,248" : "—",
       note: sample
         ? "Sample September 2026"
@@ -66,12 +71,14 @@ export default function OverviewTab({
     },
     {
       label: "WhatsApp clicks",
+      icon: MessageCircle,
       value: sample ? "86" : "—",
       note: sample ? "Sample link clicks" : "Click tracking unavailable",
       view: "analytics",
     },
     {
       label: "Digital card scans",
+      icon: ScanLine,
       value: sample ? "34" : "—",
       note: sample ? "Sample scan count" : "Scan tracking unavailable",
       view: "card",
@@ -105,11 +112,11 @@ export default function OverviewTab({
           disabled={!data.canCreate || Boolean(data.leadError)}
           onClick={onCreate}
         >
-          ＋ Log walk-in lead
+          <Plus aria-hidden="true" className="size-4" />Log walk-in lead
         </Button>
-        <Button onClick={() => onNavigate("card")}>Share studio card</Button>
+        <Button onClick={() => onNavigate("card")}><MessageCircle aria-hidden="true" className="size-4" />Share studio card</Button>
         <Button onClick={() => onNavigate("calculator")}>
-          Tune pricing <span className={monoClass}>₹/sqft</span>
+          <SlidersHorizontal aria-hidden="true" className="size-4" />Tune pricing <span className={monoClass}>₹/sqft</span>
         </Button>
         <a
           className={buttonClass}
@@ -117,7 +124,7 @@ export default function OverviewTab({
           target="_blank"
           rel="noopener noreferrer"
         >
-          View public site ↗
+          View public site <ArrowUpRight aria-hidden="true" className="size-4" />
         </a>
       </div>
       {waiting > 0 && (
@@ -134,7 +141,7 @@ export default function OverviewTab({
             </p>
           </div>
           <Button onClick={() => onNavigate("enquiries", "new")}>
-            Review new enquiries →
+            Review new enquiries <ArrowRight aria-hidden="true" className="size-4" />
           </Button>
         </section>
       )}
@@ -148,7 +155,7 @@ export default function OverviewTab({
             onClick={() => onNavigate(metric.view)}
             className="min-w-0 border border-admin-border bg-admin-surface p-4 text-left hover:border-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary sm:p-5"
           >
-            <p className="text-xs font-medium">{metric.label}</p>
+            <div className="flex items-center justify-between gap-2"><p className="text-xs font-medium">{metric.label}</p><metric.icon aria-hidden="true" className="size-4 text-admin-muted" strokeWidth={1.8} /></div>
             <p className={`${monoClass} my-3 text-[29px] tracking-tight`}>
               {data.mode === "unavailable" || data.leadError
                 ? "—"
