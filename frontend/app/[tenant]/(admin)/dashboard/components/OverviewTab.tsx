@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight, ArrowUpRight, BriefcaseBusiness, Clock3, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Trophy, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BriefcaseBusiness, Clock3, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Users } from "lucide-react";
 
 import {
   Badge,

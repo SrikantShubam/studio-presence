@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Calculator, ChartNoAxesCombined, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
+import { Calculator, ChartNoAxesCombined, LayoutDashboard, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
 import {
   Badge,
