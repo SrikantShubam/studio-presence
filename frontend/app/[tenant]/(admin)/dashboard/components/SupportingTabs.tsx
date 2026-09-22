@@ -470,7 +470,7 @@ export function DigitalCardTab({
         <Panel title="Your studio card" action={<PanelsTopLeft aria-hidden="true" className="size-4 text-admin-muted" />}>
           <div className="p-5">
             <div className="border border-admin-border bg-admin-bg p-6">
-              <div className="mb-4 flex items-center gap-2 text-[10px] uppercase tracking-wider text-admin-muted"><PanelsTopLeft aria-hidden="true" className="size-4" />{config.business.address.city}</div>
+              <div className="mb-4 flex items-center justify-between gap-3 text-[10px] uppercase tracking-wider text-admin-muted"><span className="flex items-center gap-2">{config.brand.logo ? <img src={config.brand.logo} alt={config.business.name} className="size-10 border border-admin-border object-contain" /> : <PanelsTopLeft aria-hidden="true" className="size-4" />}{config.business.address.city}</span><a className="text-admin-primary hover:underline" href={`/${tenant}/dashboard?demo=1&tab=website`}>Change logo</a></div>
               <h2 className="text-2xl font-semibold">{config.business.name}</h2>
               <p className="my-5 text-xs text-admin-muted">
                 {config.business.tagline}
