@@ -118,8 +118,8 @@ export const SAMPLE_SOURCES = [
 ] as const;
 
 export const SAMPLE_PAGE_BREAKDOWN = [
-  { page: "Home", views: 586, enquiries: 14 },
-  { page: "Projects", views: 211, enquiries: 7 },
-  { page: "Services", views: 148, enquiries: 6 },
-  { page: "Contact", views: 97, enquiries: 4 },
+  { page: "Home", views: 586, enquiries: 14, lastMonthViews: 512, lastMonthEnquiries: 11 },
+  { page: "Projects", views: 211, enquiries: 7, lastMonthViews: 188, lastMonthEnquiries: 6 },
+  { page: "Services", views: 148, enquiries: 6, lastMonthViews: 132, lastMonthEnquiries: 5 },
+  { page: "Contact", views: 97, enquiries: 4, lastMonthViews: 89, lastMonthEnquiries: 3 },
 ] as const;

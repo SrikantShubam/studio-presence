@@ -79,6 +79,8 @@ export function AnalyticsTab({
         page: project.title,
         views: project.views,
         enquiries: null,
+        lastMonthViews: null,
+        lastMonthEnquiries: null,
       })) ?? []);
   const barSpans = ["col-span-12", "col-span-9", "col-span-7", "col-span-5", "col-span-4"];
 
@@ -155,31 +157,21 @@ export function AnalyticsTab({
       </div>
       {pageRows.length > 0 && (
         <div className="mt-5">
-          <Panel title="Traffic by page" description="Page views and recorded enquiries.">
-            <div className="border-b border-admin-border px-5 pb-5 pt-4">
-              <p className="mb-3 text-[10px] uppercase tracking-[0.14em] text-admin-muted">Top visited pages</p>
-              <div className="grid gap-3" role="img" aria-label="Horizontal bar chart of the top visited pages">
-                {[...pageRows].sort((a, b) => b.views - a.views).slice(0, 5).map((page, index) => {
-                  const widths = ["w-full", "w-3/4", "w-1/2", "w-1/3", "w-1/4"];
-                  return <div key={page.page} className="grid grid-cols-[minmax(0,8rem)_minmax(0,1fr)_4rem] items-center gap-3 text-xs">
-                    <span className="truncate">{page.page}</span>
-                    <span className="h-2 bg-admin-raised"><span className={`block h-2 bg-admin-ink/60 ${widths[index] ?? "w-1/4"}`} /></span>
-                    <span className={monoClass + " text-right"}>{page.views.toLocaleString("en-IN")}</span>
-                  </div>;
-                })}
-              </div>
-            </div>
+          <Panel title="Traffic by page" description="Month-over-month page views and recorded enquiries.">
             <div className="max-w-full overflow-x-auto">
-              <table className="w-full min-w-[560px] border-collapse text-left text-xs">
+              <table className="w-full min-w-[760px] border-collapse text-left text-xs">
                 <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
-                  <tr><th scope="col" className="px-5 py-3 font-medium">Page</th><th scope="col" className="px-5 py-3 text-right font-medium">Views</th><th scope="col" className="px-5 py-3 text-right font-medium">Enquiries</th></tr>
+                  <tr><th scope="col" className="px-5 py-3 font-medium">Page</th><th scope="col" className="px-5 py-3 text-right font-medium">Last month</th><th scope="col" className="px-5 py-3 text-right font-medium">Current month</th><th scope="col" className="px-5 py-3 text-right font-medium">Change</th><th scope="col" className="px-5 py-3 text-right font-medium">Views</th><th scope="col" className="px-5 py-3 text-right font-medium">Enquiries</th></tr>
                 </thead>
                 <tbody>
-                  {pageRows.map((page, index) => (
+                  {pageRows.map((page) => (
                     <tr key={page.page} className="border-b border-admin-border last:border-b-0">
-                      <td className="px-5 py-3 font-medium"><span>{page.page}</span><div className="mt-2 grid h-1 grid-cols-12 bg-admin-raised"><span className={barSpans[index] + " bg-admin-ink/60"} /></div></td>
+                      <td className="px-5 py-3 font-medium">{page.page}</td>
+                      <td className={monoClass + " px-5 py-3 text-right"}>{page.lastMonthViews?.toLocaleString("en-IN") ?? "—"}</td>
                       <td className={monoClass + " px-5 py-3 text-right"}>{page.views.toLocaleString("en-IN")}</td>
-                      <td className={monoClass + " px-5 py-3 text-right"}>{page.enquiries ?? "â€”"}</td>
+                      <td className={monoClass + " px-5 py-3 text-right text-admin-primary"}>{page.lastMonthEnquiries && page.enquiries ? `${Math.round(((page.enquiries - page.lastMonthEnquiries) / page.lastMonthEnquiries) * 100)}%` : "—"}</td>
+                      <td className={monoClass + " px-5 py-3 text-right"}>{page.views.toLocaleString("en-IN")}</td>
+                      <td className={monoClass + " px-5 py-3 text-right"}>{page.enquiries ?? "—"}</td>
                     </tr>
                   ))}
                 </tbody>
