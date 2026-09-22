@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, QrCode, ScanLine, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, QrCode, ScanLine, ShieldCheck, Users } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
@@ -256,7 +256,7 @@ export function SettingsTab({
     const phone = contactPhone(business.phone);
     const whatsapp = contactPhone(business.whatsapp);
     if (!phone || !whatsapp) {
-      setError("Phone and WhatsApp must be valid Indian mobile numbers.");
+      setError("Phone and WhatsApp must be valid international numbers.");
       return;
     }
     if (config.business.email && !business.email?.trim()) {
@@ -500,7 +500,7 @@ export function DigitalCardTab({
         <Panel title="Your studio card" action={<PanelsTopLeft aria-hidden="true" className="size-4 text-admin-muted" />}>
           <div className="p-5">
             <div className="border border-admin-border bg-admin-bg p-6">
-              <div className="mb-4 flex items-center justify-between gap-3 text-[10px] uppercase tracking-wider text-admin-muted"><span className="flex items-center gap-2">{config.brand.logo ? <img src={config.brand.logo} alt={config.business.name} className="size-10 border border-admin-border object-contain" /> : <PanelsTopLeft aria-hidden="true" className="size-4" />}{config.business.address.city}</span><a className="text-admin-primary hover:underline" href={`/${tenant}/dashboard?demo=1&tab=website`}>Change logo</a></div>
+              <div className="mb-4 flex items-center justify-between gap-3 text-[10px] uppercase tracking-wider text-admin-muted"><span className="flex items-center gap-2">{config.brand.logo ? <img src={config.brand.logo} alt={config.business.name} className="size-10 border border-admin-border object-contain" /> : <PanelsTopLeft aria-hidden="true" className="size-4" />}{config.business.address.city}</span><a className="text-admin-primary hover:underline" href={`/${tenant}/dashboard?tab=website`}>Change logo</a></div>
               <h2 className="text-2xl font-semibold">{config.business.name}</h2>
               <p className="my-5 text-xs text-admin-muted">
                 {config.business.tagline}
@@ -508,34 +508,34 @@ export function DigitalCardTab({
               <div className="grid gap-3">
                 {whatsapp && (
                   <a
-                    className={buttonClass}
+                    className={buttonClass + " !justify-start"}
                     href={`https://wa.me/${whatsapp}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <MessageCircle aria-hidden="true" className="size-4 text-admin-primary" />Start a WhatsApp conversation
+                    <MessageCircle aria-hidden="true" className="size-4 text-admin-primary" />Start a WhatsApp conversation<ArrowUpRight aria-hidden="true" className="ml-auto size-4" />
                   </a>
                 )}
                 {phone && (
-                  <a className={buttonClass} href={`tel:+${phone}`}>
-                    <Phone aria-hidden="true" className="size-4" />Call the studio
+                  <a className={buttonClass + " !justify-start"} href={`tel:+${phone}`}>
+                    <Phone aria-hidden="true" className="size-4" />Call the studio<ArrowUpRight aria-hidden="true" className="ml-auto size-4" />
                   </a>
                 )}
                 {config.business.email && (
                   <a
-                    className={buttonClass}
+                    className={buttonClass + " !justify-start"}
                     href={`mailto:${config.business.email}`}
                   >
-                    <Mail aria-hidden="true" className="size-4" />Email the studio
+                    <Mail aria-hidden="true" className="size-4" />Email the studio<ArrowUpRight aria-hidden="true" className="ml-auto size-4" />
                   </a>
                 )}
                 <a
-                  className={buttonClass}
+                  className={buttonClass + " !justify-start"}
                   href={`/${tenant}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Globe aria-hidden="true" className="size-4" />View public website
+                  <Globe aria-hidden="true" className="size-4" />View public website<ArrowUpRight aria-hidden="true" className="ml-auto size-4" />
                 </a>
               </div>
             </div>

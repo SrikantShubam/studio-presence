@@ -49,6 +49,7 @@ export function DashboardShell({
   studioName,
   ownerName,
   ownerEmail,
+  ownerAvatarUrl,
   authenticated,
   signOutAction,
   children,
@@ -57,6 +58,7 @@ export function DashboardShell({
   studioName: string;
   ownerName: string;
   ownerEmail: string;
+  ownerAvatarUrl?: string | null;
   authenticated: boolean;
   signOutAction: () => Promise<void>;
   children: ReactNode;
@@ -160,9 +162,13 @@ export function DashboardShell({
             Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}
           </p>
           <div className="flex items-center gap-2.5">
-            <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
-              <UserRound aria-hidden="true" className="size-4" />
-            </span>
+            {ownerAvatarUrl ? (
+              <img src={ownerAvatarUrl} alt="" referrerPolicy="no-referrer" className="size-8 rounded-full border border-admin-border object-cover" />
+            ) : (
+              <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
+                <UserRound aria-hidden="true" className="size-4" />
+              </span>
+            )}
             <div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div>
           </div>
         </div>
@@ -229,7 +235,7 @@ export function DashboardShell({
           {navigation}
           <div className="mt-auto px-3 pt-5">
             <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted">Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}</p>
-            <div className="flex items-center gap-2.5"><span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised"><UserRound aria-hidden="true" className="size-4" /></span><div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div></div>
+            <div className="flex items-center gap-2.5">{ownerAvatarUrl ? <img src={ownerAvatarUrl} alt="" referrerPolicy="no-referrer" className="size-8 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised"><UserRound aria-hidden="true" className="size-4" /></span>}<div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div></div>
           </div>
         </div>
       </Dialog>

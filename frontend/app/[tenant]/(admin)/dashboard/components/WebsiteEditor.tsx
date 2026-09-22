@@ -52,6 +52,7 @@ export default function WebsiteEditor({
   const [device, setDevice] = useState<"desktop" | "phone">("desktop");
   const [preview, setPreview] = useState<"draft" | "published">("draft");
   const [pending, setPending] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
   const [review, setReview] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [error, setError] = useState("");
@@ -105,6 +106,25 @@ export default function WebsiteEditor({
       </Field>
     );
   }
+  async function uploadLogo(file: File) {
+    setUploadingLogo(true);
+    setError("");
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("assetType", "logo");
+      const response = await fetch("/api/onboarding/upload", { method: "POST", body: formData });
+      const payload = (await response.json()) as { assetPath?: string; error?: string };
+      if (!response.ok || !payload.assetPath) throw new Error(payload.error ?? "Logo upload failed.");
+      update("brand.logo", payload.assetPath);
+      setFeedback("Logo uploaded. Review and save to apply it.");
+    } catch (uploadError) {
+      setError(errorMessage(uploadError));
+    } finally {
+      setUploadingLogo(false);
+    }
+  }
+
   async function save() {
     setPending(true);
     setError("");
@@ -162,7 +182,11 @@ export default function WebsiteEditor({
       </div>
       <Panel title="Studio identity & search" description="Set the public logo and the metadata used when your site is shared.">
         <div className="grid gap-4 p-4 sm:grid-cols-2">
-          <Field label="Logo path">
+          <Field label="Upload your logo" hint={mode === "live" ? "PNG, JPG, or WebP up to 2 MB." : "Sign in to upload a logo to this workspace."}>
+            <input className={inputClass} type="file" accept="image/png,image/jpeg,image/webp" disabled={uploadingLogo || !canEdit || mode !== "live"} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadLogo(file); }} />
+            {draft.brand.logo && <img src={draft.brand.logo} alt="Current studio logo" className="mt-2 h-12 w-24 border border-admin-border bg-admin-bg object-contain p-2" />}
+          </Field>
+          <Field label="Logo URL or uploaded asset path">
             <input className={inputClass} value={draft.brand.logo ?? ""} placeholder="/clients/your-studio/logo.svg" onChange={(event) => update("brand.logo", event.target.value)} />
           </Field>
           <Field label="Social share image">

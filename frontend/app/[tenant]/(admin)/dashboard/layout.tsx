@@ -93,13 +93,27 @@ export default async function DashboardLayout({
     }
   }
 
+  const profileMetadata = { ...(user?.user_metadata ?? {}), ...(user?.identities?.[0]?.identity_data ?? {}) };
+  const profileName =
+    stringFrom(profileMetadata.full_name) ??
+    stringFrom(profileMetadata.name) ??
+    branding.business.ownerName ??
+    "";
+  const profileAvatarUrl =
+    stringFrom(profileMetadata.avatar_url) ??
+    stringFrom(profileMetadata.picture) ??
+    stringFrom(profileMetadata.avatarUrl) ??
+    stringFrom(profileMetadata.photoURL) ??
+    stringFrom(profileMetadata.image);
+
   return (
     <div className={`${inter.className} ${mono.variable} text-[13px]`}>
       <DashboardShell
         tenant={tenantSlug}
         studioName={branding.business.name}
-        ownerName={branding.business.ownerName ?? ""}
+        ownerName={profileName}
         ownerEmail={user?.email ?? branding.business.email ?? ""}
+        ownerAvatarUrl={profileAvatarUrl}
         authenticated={isAuthenticated}
         signOutAction={signOut}
       >
@@ -108,6 +122,10 @@ export default async function DashboardLayout({
     </div>
   );
 }
+function stringFrom(value: unknown): string | null {
+  return typeof value === "string" && value.trim() ? value : null;
+}
+
 function ProvisioningGap({ message }: { message: string }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-admin-bg px-4">
