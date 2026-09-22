@@ -339,7 +339,7 @@ export function IntegrationsTab({
     {
       title: "WhatsApp click-to-chat",
       status: contactPhone(data.config.business.whatsapp)
-        ? "Connected"
+        ? "Ready"
         : "Not connected",
       description:
         "Public contact links open WhatsApp. Private conversations are not read or imported.",
@@ -382,7 +382,7 @@ export function IntegrationsTab({
           <Panel
             key={item.title}
             title={item.title}
-            action={<div className="flex items-center gap-2"><Icon aria-hidden="true" className="size-4 text-admin-muted" /><Badge className={item.status === "Connected" ? "border-admin-primary text-admin-primary" : ""}>{item.status}</Badge></div>}
+            action={<div className="flex items-center gap-2"><Icon aria-hidden="true" className="size-4 text-admin-muted" /><Badge className={item.status === "Connected" || item.status === "Ready" ? "border-admin-success text-admin-success" : ""}>{item.status}</Badge></div>}
           >
             <div className="p-5">
               <p className="mb-5 text-xs leading-6 text-admin-muted">

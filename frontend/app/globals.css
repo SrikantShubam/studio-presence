@@ -221,6 +221,7 @@
   --a-primary-soft: #f4f4f5;
   --a-alert: #e11d48;
   --a-alert-soft: #ffe4e6;
+  --a-success: hsl(142 71% 30%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -236,6 +237,7 @@
     --a-primary-soft: #27272a;
     --a-alert: #f43f5e;
     --a-alert-soft: #4c0519;
+    --a-success: hsl(142 71% 45%);
   }
 }
 
@@ -251,6 +253,7 @@
   --a-primary-soft: #27272a;
   --a-alert: #f43f5e;
   --a-alert-soft: #4c0519;
+  --a-success: hsl(142 71% 45%);
 }
 
 @theme inline {
@@ -279,6 +282,7 @@
   --color-admin-on-primary: var(--a-on-primary);
   --color-admin-primary-soft: var(--a-primary-soft);
   --color-admin-alert-soft: var(--a-alert-soft);
+  --color-admin-success: var(--a-success);
 }
 
 html {
