@@ -71,7 +71,7 @@ export function EnquiryDesk({
         .includes(query),
   );
   return (
-    <div id="enquiries">
+    <div id="enquiries" className="min-w-0">
       <Panel
         title="Your enquiry desk"
         description={
@@ -148,12 +148,12 @@ export function EnquiryDesk({
         {filtered.length > 0 ? (
           <>
             <div
-              className="max-w-full overflow-x-auto"
+              className="w-full min-w-0 max-w-full overflow-x-auto overscroll-x-contain"
               tabIndex={0}
               role="region"
               aria-label="Enquiry table"
             >
-              <table className="w-full min-w-[760px] border-collapse text-left text-xs">
+              <table className="w-full min-w-[920px] border-collapse text-left text-xs">
                 <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
                   <tr>
                     {[

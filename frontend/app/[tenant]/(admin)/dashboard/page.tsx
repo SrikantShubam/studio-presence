@@ -93,6 +93,8 @@ export default async function DashboardPage({
   const mode = dashboardMode(query?.demo, eligible);
   let config: WorkspaceConfig = {
     business: base.business,
+    brand: base.brand,
+    seo: base.seo,
     sections: base.sections,
     integrations: base.integrations,
     status: base.status,
@@ -105,7 +107,7 @@ export default async function DashboardPage({
         Object.entries(editable.current).filter(
           ([key, value]) =>
             value !== undefined &&
-            (key.startsWith("business.") || key.startsWith("sections.")),
+            (key.startsWith("business.") || key.startsWith("brand.") || key.startsWith("seo.") || key.startsWith("sections.")),
         ),
       ),
     );
@@ -211,6 +213,7 @@ export default async function DashboardPage({
         tenant,
         mode,
         config,
+        ownerEmail: context?.user.email ?? base.business.email ?? "",
         enquiries: items,
         canEdit:
           mode === "demo" ||

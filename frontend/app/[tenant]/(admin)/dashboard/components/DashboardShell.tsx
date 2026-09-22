@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Calculator, ChartNoAxesCombined, Inbox, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
+import { Calculator, ChartNoAxesCombined, Inbox, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, UserRound, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
 import {
   Button,
@@ -48,6 +48,7 @@ export function DashboardShell({
   tenant,
   studioName,
   ownerName,
+  ownerEmail,
   authenticated,
   signOutAction,
   children,
@@ -55,6 +56,7 @@ export function DashboardShell({
   tenant: string;
   studioName: string;
   ownerName: string;
+  ownerEmail: string;
   authenticated: boolean;
   signOutAction: () => Promise<void>;
   children: ReactNode;
@@ -159,9 +161,9 @@ export function DashboardShell({
           </p>
           <div className="flex items-center gap-2.5">
             <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
-              {(ownerName || studioName).split(/\s+/).filter(Boolean).slice(0, 2).map((word) => word[0]).join("").toUpperCase()}
+              <UserRound aria-hidden="true" className="size-4" />
             </span>
-            <div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="mt-1 text-[11px] text-admin-muted">Workspace owner</p></div>
+            <div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div>
           </div>
         </div>
       </aside>
@@ -227,7 +229,7 @@ export function DashboardShell({
           {navigation}
           <div className="mt-auto px-3 pt-5">
             <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted">Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}</p>
-            <div className="flex items-center gap-2.5"><span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">{(ownerName || studioName).split(/\s+/).filter(Boolean).slice(0, 2).map((word) => word[0]).join("").toUpperCase()}</span><div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="mt-1 text-[11px] text-admin-muted">Workspace owner</p></div></div>
+            <div className="flex items-center gap-2.5"><span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised"><UserRound aria-hidden="true" className="size-4" /></span><div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div></div>
           </div>
         </div>
       </Dialog>
@@ -261,7 +263,7 @@ export function DashboardWorkspace({
           const allowed = Object.fromEntries(
             Object.entries(patch).filter(
               ([key]) =>
-                key.startsWith("business.") || key.startsWith("sections."),
+                key.startsWith("business.") || key.startsWith("brand.") || key.startsWith("seo.") || key.startsWith("sections."),
             ),
           );
           setData((previous) => ({
@@ -424,6 +426,7 @@ export function DashboardWorkspace({
       <PersistentTab active={view === "settings"}>
         <SettingsTab
           config={data.config}
+          ownerEmail={data.ownerEmail}
           mode={data.mode}
           canEdit={data.canEdit}
           onSave={saveConfig}

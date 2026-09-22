@@ -136,12 +136,14 @@ export function Dialog({
   open,
   onClose,
   title,
+  eyebrow,
   side,
   children,
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
+  eyebrow?: string;
   side?: "left" | "right";
   children: ReactNode;
 }) {
@@ -181,9 +183,12 @@ export function Dialog({
       className={`fixed border border-admin-border bg-admin-bg p-0 text-admin-ink backdrop:bg-admin-ink/40 ${side ? `inset-y-0 ${side === "left" ? "left-0 right-auto" : "right-0 left-auto"} m-0 h-dvh max-h-dvh w-full max-w-md` : "inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg"}`}
     >
       <header className="flex items-start justify-between gap-3 border-b border-admin-border p-5">
-        <h2 id={id} className="text-lg font-semibold">
-          {title}
-        </h2>
+        <div className="min-w-0">
+          {eyebrow && <p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-admin-muted">{eyebrow}</p>}
+          <h2 id={id} className="text-lg font-semibold">
+            {title}
+          </h2>
+        </div>
         <Button
           onClick={onClose}
           className="w-11 px-0"

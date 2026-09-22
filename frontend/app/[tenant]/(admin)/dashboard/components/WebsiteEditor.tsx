@@ -160,6 +160,22 @@ export default function WebsiteEditor({
         <label className="grid min-w-40 gap-1 text-xs font-medium">Language<select className={inputClass} value={language} onChange={(event) => setLanguage(event.target.value)}><option>English</option><option>Hindi</option></select></label>
         <p className="pb-2 text-[10px] text-admin-muted">Language changes the editor view. Publish translated content separately.</p>
       </div>
+      <Panel title="Studio identity & search" description="Set the public logo and the metadata used when your site is shared.">
+        <div className="grid gap-4 p-4 sm:grid-cols-2">
+          <Field label="Logo path">
+            <input className={inputClass} value={draft.brand.logo ?? ""} placeholder="/clients/your-studio/logo.svg" onChange={(event) => update("brand.logo", event.target.value)} />
+          </Field>
+          <Field label="Social share image">
+            <input className={inputClass} value={draft.brand.ogImage ?? ""} placeholder="/clients/your-studio/og-image.jpg" onChange={(event) => update("brand.ogImage", event.target.value)} />
+          </Field>
+          <Field label="Meta title">
+            <input className={inputClass} maxLength={160} value={draft.seo.title} onChange={(event) => update("seo.title", event.target.value)} />
+          </Field>
+          <Field label="Meta description">
+            <textarea className={inputClass} rows={2} maxLength={320} value={draft.seo.description} onChange={(event) => update("seo.description", event.target.value)} />
+          </Field>
+        </div>
+      </Panel>
       <div className="grid items-start gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
         <Panel title="Website sections">
           <div className="grid grid-cols-2 gap-2 p-4">

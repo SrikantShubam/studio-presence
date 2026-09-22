@@ -195,7 +195,7 @@ export default function CalculatorTab({
                 </Field>
               ))}
               </div>
-              <Field label="Estimate note">
+              <Field label="Result disclaimer">
                 <textarea
                   className={inputClass}
                   rows={3}

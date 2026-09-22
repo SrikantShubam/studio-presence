@@ -13,7 +13,7 @@ export type DashboardView =
 export type Enquiry = Lead;
 export type WorkspaceConfig = Pick<
   ClientConfig,
-  "business" | "sections" | "integrations" | "status"
+  "business" | "brand" | "seo" | "sections" | "integrations" | "status"
 >;
 export type EnquiryFilters = {
   status: "all" | LeadStatus;
@@ -69,6 +69,7 @@ export type WorkspaceData = {
   tenant: string;
   mode: Mode;
   config: WorkspaceConfig;
+  ownerEmail: string;
   enquiries: Enquiry[];
   canEdit: boolean;
   canCreate: boolean;

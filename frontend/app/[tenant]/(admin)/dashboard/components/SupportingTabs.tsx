@@ -3,7 +3,7 @@
 import { ArrowRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, QrCode, ScanLine, ShieldCheck, Users } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
-import { SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
+import { SAMPLE_CITIES, SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
 import {
   Button,
   Badge,
@@ -66,12 +66,12 @@ export function AnalyticsTab({
   const visitors = sample ? "1,248" : report?.visitStats?.thisMonth.toLocaleString("en-IN") ?? "Unavailable";
   const enquiries = sample ? "31" : report?.enquiryStats.thisMonth.toLocaleString("en-IN") ?? "Unavailable";
   const summaryRows = [
-    { label: "New enquiries", value: enquiries, icon: BriefcaseBusiness },
-    { label: "Active pipeline", value: sample ? "₹46.5L" : "Unavailable", icon: BriefcaseBusiness },
-    { label: "First response", value: sample ? "24 min" : "Unavailable", icon: Clock3 },
-    { label: "Website visitors", value: visitors, icon: Users },
-    { label: "WhatsApp clicks", value: sample ? "86" : "Unavailable", icon: MessageCircle },
-    { label: "Digital card scans", value: sample ? "34" : "Unavailable", icon: ScanLine },
+    { label: "New enquiries", value: enquiries, detail: "+55%", icon: BriefcaseBusiness },
+    { label: "Active pipeline", value: sample ? "₹46.5L" : "Unavailable", detail: "6 open sample enquiries", icon: BriefcaseBusiness },
+    { label: "First response", value: sample ? "24 min" : "Unavailable", detail: "2 awaiting contact", icon: Clock3 },
+    { label: "Website visitors", value: visitors, detail: "+18%", icon: Users },
+    { label: "WhatsApp clicks", value: sample ? "86" : "Unavailable", detail: "Top action channel", icon: MessageCircle },
+    { label: "Digital card scans", value: sample ? "34" : "Unavailable", detail: "+42%", icon: ScanLine },
   ] as const;
   const pageRows = sample
     ? SAMPLE_PAGE_BREAKDOWN
@@ -110,12 +110,23 @@ export function AnalyticsTab({
           const Icon = metric.icon;
           return (
             <Panel key={metric.label} title={metric.label} action={<Icon aria-hidden="true" className="size-4 text-admin-muted" />}>
-              <p className={monoClass + " p-4 text-[clamp(20px,3vw,28px)] sm:p-5"}>{metric.value}</p>
+              <div className="p-4 sm:p-5">
+                <p className={monoClass + " text-[clamp(20px,3vw,28px)]"}>{metric.value}</p>
+                <div className="mt-3 flex min-h-5 items-center justify-between gap-2 text-[10px] text-admin-muted">
+                  <span className="truncate">{metric.detail}</span>
+                  <span className="shrink-0 border border-admin-border bg-admin-raised px-1.5 py-1 text-admin-ink">{metric.detail.startsWith("+") ? metric.detail : "Details"}</span>
+                </div>
+              </div>
             </Panel>
           );
         })}
       </div>
-      {(sample || report) && <AttentionChart enquiries={data.enquiries} sample={sample} trend={report?.monthlyTrend} />}
+      {(sample || report) && (
+        <div className="mt-5 grid gap-5 xl:grid-cols-2">
+          <AttentionChart enquiries={data.enquiries} sample={sample} trend={report?.monthlyTrend} />
+          <CityDemandPanel data={data} onNavigate={onNavigate} />
+        </div>
+      )}
       <div className="mt-5 grid gap-5 xl:grid-cols-2">
         <Panel title="Where actions started" description="Recorded enquiry sources · September" action={sample ? <Badge>September</Badge> : undefined}>
           <div className="px-5 pb-5">
@@ -145,6 +156,17 @@ export function AnalyticsTab({
       {pageRows.length > 0 && (
         <div className="mt-5">
           <Panel title="Traffic by page" description="Page views and recorded enquiries.">
+            <div className="border-b border-admin-border px-5 pb-5 pt-4">
+              <svg viewBox="0 0 520 120" className="h-28 w-full" role="img" aria-label="Traffic by page line chart">
+                <line x1="20" y1="100" x2="500" y2="100" className="stroke-admin-border" />
+                <polyline points={pageRows.map((page, index) => (30 + index * (460 / Math.max(pageRows.length - 1, 1))) + "," + (100 - (page.views / Math.max(...pageRows.map((item) => item.views))) * 75)).join(" ")} fill="none" className="stroke-admin-ink" strokeWidth="2" />
+                {pageRows.map((page, index) => {
+                  const x = 30 + index * (460 / Math.max(pageRows.length - 1, 1));
+                  const y = 100 - (page.views / Math.max(...pageRows.map((item) => item.views))) * 75;
+                  return <g key={page.page}><circle cx={x} cy={y} r="3" className="fill-admin-bg stroke-admin-ink" /><text x={x} y="116" textAnchor="middle" className="fill-admin-muted text-[9px]">{page.page}</text></g>;
+                })}
+              </svg>
+            </div>
             <div className="max-w-full overflow-x-auto">
               <table className="w-full min-w-[560px] border-collapse text-left text-xs">
                 <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
@@ -168,13 +190,35 @@ export function AnalyticsTab({
   );
 }
 
+
+function CityDemandPanel({ data, onNavigate }: { data: WorkspaceData; onNavigate: (view: DashboardView) => void }) {
+  const sample = data.mode === "demo";
+  const cityBars = ["w-full", "w-1/3", "w-1/4", "w-1/6", "w-1/6", "w-1/12"];
+  return (
+    <Panel title="Where your next project begins" description="City demand · visits and enquiries" action={sample ? <Badge>September</Badge> : undefined}>
+      <div className="px-5 pb-5">
+        {sample ? SAMPLE_CITIES.map((city, index) => (
+          <button key={city.name} type="button" className="grid w-full grid-cols-[minmax(0,1fr)_4rem_4rem] items-center gap-3 border-t border-admin-border py-3 text-left first:border-t-0" onClick={() => onNavigate("enquiries")}>
+            <span className="min-w-0"><span className="block truncate text-xs font-semibold">{city.name}</span><span className="mt-2 block h-1 max-w-44 bg-admin-raised"><span className={"block h-1 bg-admin-ink/60 " + (cityBars[index] ?? "w-1/12")} /></span></span>
+            <span className={monoClass + " text-right text-xs"}>{city.visits}</span>
+            <span className={monoClass + " text-right text-xs"}>{city.enquiries}</span>
+          </button>
+        )) : <p className="py-8 text-xs text-admin-muted">City attribution is unavailable for this workspace.</p>}
+        {sample && <Button className="mt-3" onClick={() => onNavigate("enquiries")}>Open enquiry desk <ArrowRight aria-hidden="true" className="size-4" /></Button>}
+      </div>
+    </Panel>
+  );
+}
+
 export function SettingsTab({
   config,
+  ownerEmail,
   mode,
   canEdit,
   onSave,
 }: {
   config: WorkspaceConfig;
+  ownerEmail: string;
   mode: Mode;
   canEdit: boolean;
   onSave: SaveConfig;
@@ -248,6 +292,7 @@ export function SettingsTab({
             <Panel title="Workspace owner" description="The owner visible to your studio team." action={<ShieldCheck aria-hidden="true" className="size-4 text-admin-muted" />}>
               <fieldset disabled={!canEdit || pending} className="grid gap-4 p-5">
                 <Field label="Owner name"><input className={inputClass} maxLength={250} value={business.ownerName ?? ""} onChange={(event) => setEdits({ ...edits, ownerName: event.target.value })} /></Field>
+                <Field label="Owner email"><input className={inputClass} value={ownerEmail} readOnly /></Field>
                 <p className="text-xs leading-6 text-admin-muted">Workspace access and sign out are available from the studio account menu.</p>
               </fieldset>
             </Panel>
@@ -280,10 +325,10 @@ export function IntegrationsTab({
       title: "Workspace access",
       status:
         data.mode === "live"
-          ? "Tenant authorized"
+          ? "Connected"
           : data.mode === "demo"
-            ? "Local sample mode"
-            : "Enquiries unavailable",
+            ? "Demo mode"
+            : "Not connected",
       description:
         "Private lead reads and updates use the signed-in tenant account.",
       view: "enquiries",
@@ -292,8 +337,8 @@ export function IntegrationsTab({
     {
       title: "WhatsApp click-to-chat",
       status: contactPhone(data.config.business.whatsapp)
-        ? "Number configured"
-        : "Number unavailable",
+        ? "Connected"
+        : "Not connected",
       description:
         "Public contact links open WhatsApp. Private conversations are not read or imported.",
       view: "settings",
@@ -302,8 +347,8 @@ export function IntegrationsTab({
     {
       title: "Website analytics",
       status: data.config.integrations.umami.enabled
-        ? "Configured; check report"
-        : "Not configured",
+        ? "Connected"
+        : "Not connected",
       description:
         "The report shows unavailable when the analytics service cannot return data.",
       view: "analytics",
@@ -311,7 +356,7 @@ export function IntegrationsTab({
     },
     {
       title: "Lead notifications",
-      status: "Delivery not verified",
+      status: "Not connected",
       description:
         "Notifications use the existing server-side delivery service. This screen does not verify inbox delivery.",
       view: "settings",

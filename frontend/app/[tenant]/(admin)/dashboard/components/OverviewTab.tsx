@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ArrowRight, ArrowUpRight, BriefcaseBusiness, CalendarDays, ChevronRight, Clock3, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BriefcaseBusiness, CalendarDays, ChevronDown, ChevronRight, Clock3, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Users } from "lucide-react";
 
 import {
   Badge,
@@ -295,7 +295,7 @@ export function AttentionChart({
     <Panel
       title="Attention into enquiries"
       description={sample ? "Sample visits and recorded enquiries" : "Recorded enquiry trend. Traffic history is not supplied."}
-      action={sample ? <select aria-label="Analytics date range" className="min-h-8 border border-admin-border bg-admin-bg px-2 text-[10px] text-admin-ink" value={rangeStart} onChange={(event) => setRangeStart(Number(event.target.value))}><option value="0">Apr – Sep</option><option value="1">May – Sep</option><option value="2">Jun – Sep</option></select> : <Badge>Enquiries</Badge>}
+      action={sample ? <label className="relative block"><span className="sr-only">Analytics date range</span><select aria-label="Analytics date range" className="min-h-8 appearance-none border border-admin-border bg-admin-bg py-1 pl-2 pr-8 text-[10px] text-admin-ink" value={rangeStart} onChange={(event) => setRangeStart(Number(event.target.value))}><option value="0">Apr – Sep</option><option value="1">May – Sep</option><option value="2">Jun – Sep</option></select><ChevronDown aria-hidden="true" className="pointer-events-none absolute right-2 top-1/2 size-3 -translate-y-1/2 text-admin-muted" /></label> : <Badge>Enquiries</Badge>}
     >
       <div className="px-5 pb-5">
         <div className="mb-4 mt-4 flex gap-8">

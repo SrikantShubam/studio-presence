@@ -99,6 +99,7 @@ export default async function DashboardLayout({
         tenant={tenantSlug}
         studioName={branding.business.name}
         ownerName={branding.business.ownerName ?? ""}
+        ownerEmail={user?.email ?? branding.business.email ?? ""}
         authenticated={isAuthenticated}
         signOutAction={signOut}
       >
