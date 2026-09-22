@@ -30,7 +30,7 @@ export async function AdminChrome({
     redirect('/login')
   }
 
-  const profile = profileFor(user.email, user.user_metadata)
+  const profile = profileFor(user.email, { ...(user.user_metadata ?? {}), ...(user.identities?.[0]?.identity_data ?? {}) })
   const businessName = await tenantBusinessName(tenant)
 
   return (

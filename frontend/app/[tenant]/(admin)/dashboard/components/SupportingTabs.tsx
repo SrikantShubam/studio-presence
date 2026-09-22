@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, QrCode, ScanLine, ShieldCheck, Users } from "lucide-react";
+import PhoneInput from "react-phone-number-input";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
 import { SAMPLE_CITIES, SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
@@ -20,7 +21,6 @@ import {
   csvCell,
   downloadFile,
   errorMessage,
-  normalizeIndianPhone,
   vCard,
   type Analytics,
   type DashboardView,
@@ -253,8 +253,8 @@ export function SettingsTab({
     event.preventDefault();
     setError("");
     setMessage("");
-    const phone = normalizeIndianPhone(business.phone);
-    const whatsapp = normalizeIndianPhone(business.whatsapp);
+    const phone = contactPhone(business.phone);
+    const whatsapp = contactPhone(business.whatsapp);
     if (!phone || !whatsapp) {
       setError("Phone and WhatsApp must be valid Indian mobile numbers.");
       return;
@@ -300,8 +300,21 @@ export function SettingsTab({
                 { key: "email", label: "Public email", type: "email" },
                 { key: "hours", label: "Opening hours" },
               ] as const).map((field) => (
-                <Field key={field.key} label={field.label} hint={field.key === "phone" || field.key === "whatsapp" ? "Include country code, for example +91 99999 99999." : undefined}>
-                  <input className={inputClass} maxLength={250} type={"type" in field ? field.type : "text"} required={field.key === "phone" || field.key === "whatsapp" || (field.key === "email" && Boolean(config.business.email))} value={business[field.key] ?? ""} onChange={(event) => setEdits({ ...edits, [field.key]: event.target.value })} />
+                <Field key={field.key} label={field.label} hint={field.key === "phone" || field.key === "whatsapp" ? "Choose a country, then enter the number without the country code." : undefined}>
+                  {field.key === "phone" || field.key === "whatsapp" ? (
+                    <PhoneInput
+                      international
+                      defaultCountry="IN"
+                      countryCallingCodeEditable={false}
+                      required
+                      value={business[field.key] || undefined}
+                      onChange={(value) => setEdits({ ...edits, [field.key]: value ?? "" })}
+                      className={inputClass + " flex items-center gap-2"}
+                      numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
+                    />
+                  ) : (
+                    <input className={inputClass} maxLength={250} type={"type" in field ? field.type : "text"} required={field.key === "email" && Boolean(config.business.email)} value={business[field.key] ?? ""} onChange={(event) => setEdits({ ...edits, [field.key]: event.target.value })} />
+                  )}
                 </Field>
               ))}
               <Field label="City"><input className={inputClass} required value={business.address.city} onChange={(event) => setEdits({ ...edits, address: { ...business.address, city: event.target.value } })} /></Field>
@@ -495,12 +508,12 @@ export function DigitalCardTab({
               <div className="grid gap-3">
                 {whatsapp && (
                   <a
-                    className={buttonClass + " border-admin-primary text-admin-primary"}
+                    className={buttonClass}
                     href={`https://wa.me/${whatsapp}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <MessageCircle aria-hidden="true" className="size-4" />Start a WhatsApp conversation
+                    <MessageCircle aria-hidden="true" className="size-4 text-admin-primary" />Start a WhatsApp conversation
                   </a>
                 )}
                 {phone && (

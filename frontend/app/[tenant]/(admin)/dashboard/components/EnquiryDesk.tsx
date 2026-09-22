@@ -11,7 +11,6 @@ import {
   monoClass,
 } from "./primitives";
 const contactButtonClass = "!min-h-9 !w-9 !p-0";
-const whatsappButtonClass = contactButtonClass + " !border-admin-primary !text-admin-primary hover:!bg-admin-primary/10";
 const sourceLabels = {
   estimate: "Estimate calculator",
   form: "Website direct form",
@@ -271,12 +270,12 @@ export function ContactActions({
     return (
       <>
         <Button
-          className={whatsappButtonClass}
+          className={contactButtonClass}
           disabled
           aria-label={"WhatsApp " + enquiry.name}
           title="Contact actions are unavailable for sample contacts"
         >
-          <MessageCircle aria-hidden="true" className="size-4" />
+          <MessageCircle aria-hidden="true" className="size-4 text-admin-primary" />
         </Button>
         <Button
           className={contactButtonClass}
@@ -291,14 +290,14 @@ export function ContactActions({
   return (
     <>
       <a
-        className={buttonClass + " " + whatsappButtonClass}
+        className={buttonClass + " " + contactButtonClass}
         href={"https://wa.me/" + phone}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={"WhatsApp " + enquiry.name}
         title={"WhatsApp " + enquiry.name}
       >
-        <MessageCircle aria-hidden="true" className="size-4" />
+        <MessageCircle aria-hidden="true" className="size-4 text-admin-primary" />
       </a>
       <a
         className={buttonClass + " " + contactButtonClass}
