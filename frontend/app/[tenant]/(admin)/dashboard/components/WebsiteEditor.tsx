@@ -57,6 +57,13 @@ export default function WebsiteEditor({
   const [error, setError] = useState("");
   const [revision, setRevision] = useState(0);
   const draft = applyConfigPatch(config, patch);
+  const sectionEnabled =
+    section === "hero" ? draft.sections.hero.enabled :
+    section === "about" ? Boolean(draft.sections.about?.enabled) :
+    section === "portfolio" ? draft.sections.portfolio.enabled :
+    section === "services" ? Boolean(draft.sections.services?.enabled) :
+    section === "contact" ? Boolean(draft.sections.contact?.enabled) :
+    Boolean(draft.sections.footer?.enabled);
   const dirty = Object.keys(patch).length > 0;
   useEffect(() => {
     if (!dirty) return;
@@ -148,9 +155,10 @@ export default function WebsiteEditor({
         }
       />
       <Feedback error={error} message={feedback} />
-      <div className="mb-4 flex flex-wrap items-end gap-3 border border-admin-border bg-admin-surface p-4">
-        <label className="grid gap-1 text-xs font-medium">Page<select className={inputClass} value={page} onChange={(event) => { setPage(event.target.value); setSection(PAGES[event.target.value]![0]!); }}><option>Home</option><option>About</option><option>Projects</option><option>Services</option><option>Contact</option></select></label>
-        <label className="grid gap-1 text-xs font-medium">Language<select className={inputClass} value={language} onChange={(event) => setLanguage(event.target.value)}><option>English</option><option>Hindi</option></select></label>
+      <div className="mb-4 flex flex-wrap items-end gap-4 border border-admin-border bg-admin-surface p-4">
+        <label className="grid min-w-40 gap-1 text-xs font-medium">Page<select className={inputClass} value={page} onChange={(event) => { setPage(event.target.value); setSection(PAGES[event.target.value]![0]!); }}><option>Home</option><option>About</option><option>Projects</option><option>Services</option><option>Contact</option></select></label>
+        <label className="grid min-w-40 gap-1 text-xs font-medium">Language<select className={inputClass} value={language} onChange={(event) => setLanguage(event.target.value)}><option>English</option><option>Hindi</option></select></label>
+        <p className="pb-2 text-[10px] text-admin-muted">Language changes the editor view. Publish translated content separately.</p>
       </div>
       <div className="grid items-start gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
         <Panel title="Website sections">
@@ -170,6 +178,15 @@ export default function WebsiteEditor({
             className="grid gap-4 border-t border-admin-border p-4"
             disabled={pending || !canEdit}
           >
+            <label className="flex items-center justify-between gap-3 border border-admin-border bg-admin-bg px-3 py-2 text-xs">
+              Show on website
+              <input
+                type="checkbox"
+                className="size-4 accent-admin-primary"
+                checked={sectionEnabled}
+                onChange={(event) => update("sections." + section + ".enabled", event.target.checked)}
+              />
+            </label>
             {section === "hero" && (
               <>
                 {field(
@@ -388,7 +405,7 @@ export default function WebsiteEditor({
           </div>
           <p className="p-3 text-[10px] text-admin-muted">
             {preview === "draft"
-              ? "Content preview updates as you type. Check Published site for the exact public layout."
+              ? "Demo preview updates as you type. Check Published site for the exact public layout."
               : "This is the saved public website. Unsaved changes are not included."}
           </p>
         </section>

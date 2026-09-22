@@ -11,6 +11,20 @@ import {
   monoClass,
 } from "./primitives";
 const contactButtonClass = "!min-h-9 !w-9 !p-0";
+const sourceLabels = {
+  estimate: "Estimate calculator",
+  form: "Website direct form",
+  whatsapp: "WhatsApp floating CTA",
+  call: "Walk-in / call",
+  other: "Digital QR card",
+} as const;
+const formatISTDate = (value: string) =>
+  new Intl.DateTimeFormat("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "Asia/Kolkata",
+  }).format(new Date(value));
 
 import {
   contactPhone,
@@ -42,7 +56,7 @@ export function EnquiryDesk({
   const filtered = enquiries.filter(
     (item) =>
       (filters.status === "all" || item.status === filters.status) &&
-      (!filters.locality || item.locality === filters.locality) &&
+      (!filters.locality || item.locality?.includes(filters.locality)) &&
       [
         item.name,
         item.phone,
@@ -133,62 +147,8 @@ export function EnquiryDesk({
         )}
         {filtered.length > 0 ? (
           <>
-            <div className="divide-y divide-admin-border xl:hidden" aria-label="Enquiry cards">
-              {filtered.map((item) => (
-                <article key={item.id} className="grid gap-4 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <button
-                        className="min-h-11 text-left font-semibold underline-offset-4 hover:underline"
-                        onClick={() => onOpenEnquiry(item)}
-                      >
-                        {item.name}
-                      </button>
-                      <p className="text-[10px] text-admin-muted">
-                        {item.locality || "Area not supplied"}
-                      </p>
-                    </div>
-                    <StatusBadge status={item.status} />
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-xs">
-                    <div>
-                      <p className="text-[10px] text-admin-muted">Project</p>
-                      <p className="mt-1">{item.project_type || "Project not supplied"}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-admin-muted">Budget</p>
-                      <p className={monoClass + " mt-1"}>{item.budget_band || "Budget not supplied"}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-admin-muted">Source</p>
-                      <p className="mt-1">{item.source}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-admin-muted">Timeline</p>
-                      <p className="mt-1">{item.timeline || "Not supplied"}</p>
-                      <p className="mt-1 text-[10px] text-admin-muted">
-                        {new Date(item.created_at).toLocaleDateString("en-IN", {
-                          timeZone: "Asia/Kolkata",
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-end gap-1 border-t border-admin-border pt-3">
-                    <ContactActions enquiry={item} mode={mode} />
-                    <Button
-                      className={contactButtonClass}
-                      onClick={() => onOpenEnquiry(item)}
-                      aria-label={"View notes for " + item.name}
-                      title={"View notes for " + item.name}
-                    >
-                      <NotebookPen aria-hidden="true" className="size-4" />
-                    </Button>
-                  </div>
-                </article>
-              ))}
-            </div>
             <div
-              className="hidden overflow-x-auto xl:block"
+              className="max-w-full overflow-x-auto"
               tabIndex={0}
               role="region"
               aria-label="Enquiry table"
@@ -239,22 +199,19 @@ export function EnquiryDesk({
                           {item.budget_band || "Budget not supplied"}
                         </p>
                       </td>
-                      <td className="px-5 py-4">{item.source}</td>
+                      <td className="px-5 py-4">{sourceLabels[item.source]}</td>
                       <td className="px-5 py-4">
                         <StatusBadge status={item.status} />
                       </td>
                       <td className="px-5 py-4">
                         <p>{item.timeline || "Not supplied"}</p>
                         <p className="mt-1 text-[10px] text-admin-muted">
-                          {new Date(item.created_at).toLocaleDateString(
-                            "en-IN",
-                            { timeZone: "Asia/Kolkata" },
-                          )}
+                          {formatISTDate(item.created_at)}
                         </p>
                       </td>
                       <td className="px-5 py-4">
                         <div className="flex gap-1">
-                          <ContactActions enquiry={item} mode={mode} />
+                          <ContactActions enquiry={item} />
                           <Button
                             className={contactButtonClass}
                             onClick={() => onOpenEnquiry(item)}
@@ -305,13 +262,11 @@ export function EnquiryDesk({
 
 export function ContactActions({
   enquiry,
-  mode,
 }: {
   enquiry: Enquiry;
-  mode: Mode;
 }) {
   const phone = contactPhone(enquiry.phone);
-  if (mode === "demo" || !phone)
+  if (!phone)
     return (
       <>
         <Button

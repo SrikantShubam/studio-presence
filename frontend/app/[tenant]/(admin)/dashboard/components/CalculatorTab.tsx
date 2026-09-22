@@ -1,5 +1,6 @@
 "use client";
 
+import { Calculator, Check, RotateCcw, Save, TimerReset } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import {
   Button,
@@ -14,7 +15,6 @@ import { SAMPLE_ESTIMATE } from "./demo-data";
 import {
   calculateQuote,
   errorMessage,
-  money,
   type Mode,
   type SaveConfig,
   type WorkspaceConfig,
@@ -99,6 +99,7 @@ export default function CalculatorTab({
           default: 1000,
         },
         "sections.estimate.resultNote": estimate.resultNote ?? "",
+        "sections.estimate.included": estimate.included,
       });
       setMessage(
         mode === "demo"
@@ -110,6 +111,17 @@ export default function CalculatorTab({
     } finally {
       setPending(false);
     }
+  }
+  const lakh = (value: number) => "₹" + (value / 100000).toFixed(1) + "L";
+  const effectiveRate = Math.round(base * (finish.low ?? 1) * (home?.factor ?? 1));
+  const timeline = ["8–10 weeks", "10–14 weeks", "14–18 weeks"][finishIndex] ?? "10–14 weeks";
+  function reset() {
+    if (mode === "demo") setEstimate(SAMPLE_ESTIMATE);
+    setArea(1000);
+    setHomeIndex(0);
+    setFinishIndex(0);
+    setError("");
+    setMessage("");
   }
   return (
     <>
@@ -128,6 +140,7 @@ export default function CalculatorTab({
         >
           <form onSubmit={save} className="p-5">
             <fieldset disabled={!canEdit || pending} className="grid gap-5">
+              <div className="grid gap-4 sm:grid-cols-3">
               {(["basic", "standard", "premium"] as const).map((key) => (
                 <Field
                   key={key}
@@ -153,9 +166,11 @@ export default function CalculatorTab({
                   />
                 </Field>
               ))}
+              </div>
               <h3 className="border-t border-admin-border pt-4 font-semibold">
                 Home type multipliers
               </h3>
+              <div className="grid gap-4 sm:grid-cols-2">
               {estimate.homeTypes.map((type, index) => (
                 <Field key={type.id} label={type.label}>
                   <input
@@ -179,6 +194,7 @@ export default function CalculatorTab({
                   />
                 </Field>
               ))}
+              </div>
               <Field label="Estimate note">
                 <textarea
                   className={inputClass}
@@ -189,20 +205,28 @@ export default function CalculatorTab({
                   }
                 />
               </Field>
-              <Button type="submit" variant="primary">
-                {pending
-                  ? "Saving…"
-                  : mode === "demo"
-                    ? "Save sample pricing"
-                    : "Save pricing to website"}
-              </Button>
+              <div className="flex flex-wrap gap-2">
+                <Button type="submit" variant="primary">
+                  <Save aria-hidden="true" className="size-4" />
+                  {pending ? "Saving…" : "Save rates"}
+                </Button>
+                <Button type="submit">
+                  <Check aria-hidden="true" className="size-4" />
+                  Publish rates
+                </Button>
+                <Button type="button" onClick={reset}>
+                  <RotateCcw aria-hidden="true" className="size-4" />
+                  Reset defaults
+                </Button>
+              </div>
             </fieldset>
             <Feedback error={error} message={message} />
           </form>
         </Panel>
         <Panel
-          title="Live quote preview"
-          description="Matches the public calculator's rate rounding"
+          title="Your indicative investment"
+          description="A live calculation using the same public pricing model"
+          action={<Calculator aria-hidden="true" className="size-4 text-admin-muted" />}
         >
           <div className="p-5">
             <label htmlFor="carpet-area" className="flex justify-between gap-3">
@@ -265,19 +289,31 @@ export default function CalculatorTab({
               className="mt-8 border-y border-admin-border py-6"
               aria-live="polite"
             >
-              <p className="text-xs text-admin-muted">Indicative investment</p>
-              <p
-                className={`${monoClass} mt-3 break-words text-xl sm:text-2xl`}
-              >
-                {money(quote.low)} – {money(quote.high)}
+              <p className="text-xs text-admin-muted">Your indicative investment</p>
+              <p className={`${monoClass} mt-3 break-words text-[clamp(28px,5vw,42px)]`}>
+                {lakh(quote.low)} – {lakh(quote.high)}
               </p>
               <p className="mt-2 text-[11px] text-admin-muted">
-                Area × rounded baseline × finish factor × home factor
+                ₹{effectiveRate.toLocaleString("en-IN")}/sqft effective rate
               </p>
             </div>
-            <p className="mt-5 text-xs leading-6 text-admin-muted">
-              {estimate.resultNote}
-            </p>
+            <div className="mt-5 flex items-center gap-2 text-xs text-admin-muted">
+              <TimerReset aria-hidden="true" className="size-4" />
+              Estimated timeline: <span className={monoClass + " text-admin-ink"}>{timeline}</span>
+            </div>
+            {estimate.included.length > 0 && (
+              <section className="mt-5 border-t border-admin-border pt-5">
+                <h3 className="text-xs font-semibold">Included in the estimate</h3>
+                <ul className="mt-3 grid gap-3">
+                  {estimate.included.map((item) => (
+                    <li key={item.title} className="text-xs leading-5 text-admin-muted">
+                      <span className="font-medium text-admin-ink">{item.title}</span> · {item.body}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+            <p className="mt-5 text-xs leading-6 text-admin-muted">{estimate.resultNote}</p>
             {!estimate.enabled && (
               <p className="mt-4 text-xs text-admin-alert">
                 The calculator is currently disabled on the public website.

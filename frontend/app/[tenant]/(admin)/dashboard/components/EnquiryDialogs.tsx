@@ -201,7 +201,7 @@ export function EnquiryDetails({
           {enquiry.message || "No brief supplied."}
         </p>
         <div className="mb-6 flex flex-wrap gap-2">
-          <ContactActions enquiry={enquiry} mode={mode} />
+          <ContactActions enquiry={enquiry} />
         </div>
         <form onSubmit={submit}>
           <fieldset

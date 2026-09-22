@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { ArrowRight, ArrowUpRight, BriefcaseBusiness, CalendarDays, ChevronRight, Clock3, Inbox, MessageCircle, Plus, ScanLine, SlidersHorizontal, Users } from "lucide-react";
 
 import {
@@ -104,7 +105,23 @@ export default function OverviewTab({
       <PageHeading
         title="Your studio, at a glance."
         description="Start with the conversations that need you."
-        action={<Badge><CalendarDays aria-hidden="true" className="size-3.5" /><span>September <span className={monoClass}>2026</span></span></Badge>}
+        action={
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge>
+              <CalendarDays aria-hidden="true" className="size-3.5" />
+              <span>18 September <span className={monoClass}>2026</span></span>
+            </Badge>
+            {data.mode !== "live" && (
+              <a
+                className={buttonClass + " !min-h-8 px-2 py-1 text-[10px]"}
+                href={"/" + data.tenant + "/dashboard?demo=" + (sample ? "0" : "1") + "&tab=overview"}
+                aria-label={sample ? "Turn sample data off" : "Turn sample data on"}
+              >
+                {sample ? "Sample data: on" : "Sample data: off"}
+              </a>
+            )}
+          </div>
+        }
       />
       <div className="flex flex-wrap gap-2">
         <Button
@@ -162,7 +179,7 @@ export default function OverviewTab({
                 ? "—"
                 : metric.value}
             </p>
-            <div className="mt-3 flex items-center justify-between gap-2 text-[10px] text-admin-muted"><span>{metric.subtitle}</span><span className={`${monoClass} shrink-0 bg-admin-raised px-1.5 py-0.5 font-medium ${index === 2 && waiting > 0 ? "text-admin-alert" : "text-admin-ink"}`}>{metric.delta}</span></div>
+            <div className="mt-3 flex flex-col items-start gap-2 text-[10px] text-admin-muted sm:flex-row sm:items-center sm:justify-between"><span>{metric.subtitle}</span><span className={`${monoClass} shrink-0 bg-admin-raised px-1.5 py-0.5 font-medium ${index === 2 && waiting > 0 ? "text-admin-alert" : "text-admin-ink"}`}>{metric.delta}</span></div>
           </button>
         ))}
       </section>
@@ -248,7 +265,8 @@ export function AttentionChart({
   sample: boolean;
   trend?: { month: string; count: number }[];
 }) {
-  const rows = sample
+  const [rangeStart, setRangeStart] = useState(0);
+  const allRows = sample
     ? SAMPLE_TREND
     : (trend ?? Array.from({ length: 6 }, (_, index) => {
       const now = new Date();
@@ -256,11 +274,13 @@ export function AttentionChart({
       const key = date.toISOString().slice(0, 7);
       return { month: key, count: enquiries.filter((item) => item.created_at.startsWith(key)).length };
     }));
-  const visits = sample ? SAMPLE_TREND.map((row) => row.visits) : [];
+  const rows = allRows.slice(rangeStart);
+  const visits = sample ? SAMPLE_TREND.map((row) => row.visits).slice(rangeStart) : [];
   const totalEnquiries = rows.reduce((sum, row) => sum + row.count, 0);
   const maxVisits = Math.max(1500, ...visits);
   const maxEnquiries = Math.max(60, ...rows.map((row) => row.count));
-  const x = (index: number) => 40 + index * 95;
+  const x = (index: number) => 40 + index * (rows.length > 1 ? 475 / (rows.length - 1) : 0);
+  const finalX = x(Math.max(rows.length - 1, 0));
   const visitY = (value: number) => 170 - (value / maxVisits) * 135;
   const enquiryY = (value: number) => 170 - (value / maxEnquiries) * 135;
   const smoothPath = (values: number[], position: (value: number) => number) => values.map((value, index) => {
@@ -275,7 +295,7 @@ export function AttentionChart({
     <Panel
       title="Attention into enquiries"
       description={sample ? "Sample visits and recorded enquiries" : "Recorded enquiry trend. Traffic history is not supplied."}
-      action={<Badge>{sample ? "Apr – Sep" : "Enquiries"}</Badge>}
+      action={sample ? <select aria-label="Analytics date range" className="min-h-8 border border-admin-border bg-admin-bg px-2 text-[10px] text-admin-ink" value={rangeStart} onChange={(event) => setRangeStart(Number(event.target.value))}><option value="0">Apr – Sep</option><option value="1">May – Sep</option><option value="2">Jun – Sep</option></select> : <Badge>Enquiries</Badge>}
     >
       <div className="px-5 pb-5">
         <div className="mb-4 mt-4 flex gap-8">
@@ -285,7 +305,7 @@ export function AttentionChart({
         <svg viewBox="0 0 540 215" className="h-[210px] w-full overflow-visible" role="img" aria-label={rows.map((row, index) => row.month + ": " + (visits[index]?.toLocaleString("en-IN") ?? "no visit data") + " visits, " + row.count + " enquiries").join("; ")}>
           <title>{sample ? "Sample website visits and enquiries, April to September 2026" : "Recorded enquiry trend"}</title>
           {[35, 80, 125, 170].map((y, index) => <g key={y}><line x1="35" y1={y} x2="525" y2={y} className="stroke-admin-border" strokeDasharray="3 4" /><text x="0" y={y + 4} className="fill-admin-muted text-[10px] [font-family:var(--font-dashboard-mono)]">{sample ? [1500, 1000, 500, 0][index] : [maxEnquiries, Math.round(maxEnquiries * 0.66), Math.round(maxEnquiries * 0.33), 0][index]}</text></g>)}
-          {sample && <path d={visitPath + " L 515 170 L 40 170 Z"} className="fill-admin-raised/40" />}
+          {sample && <path d={visitPath + " L " + finalX + " 170 L 40 170 Z"} className="fill-admin-raised/40" />}
           {sample && <path d={visitPath} fill="none" stroke="currentColor" strokeWidth="2" />}
           <path d={enquiryPath} fill="none" className="stroke-admin-muted" strokeWidth="1.5" strokeDasharray="4 4" />
           {rows.map((row, index) => <g key={row.month}><circle cx={x(index)} cy={sample ? visitY(visits[index] ?? 0) : enquiryY(row.count)} r="3" className="fill-admin-bg stroke-admin-ink" strokeWidth="1.5"><title>{row.month + ": " + (visits[index]?.toLocaleString("en-IN") ?? "no visit data") + " visits, " + row.count + " enquiries"}</title></circle><text x={x(index)} y="201" textAnchor="middle" className="fill-admin-muted text-[10px]">{row.month.length > 3 ? row.month.slice(5) : row.month}</text></g>)}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Download } from "lucide-react";
+import { ArrowRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, QrCode, ScanLine, ShieldCheck, Users } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
 import { SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
@@ -30,7 +30,13 @@ import {
   type WorkspaceData,
 } from "./types";
 
-export function AnalyticsTab({ data }: { data: WorkspaceData }) {
+export function AnalyticsTab({
+  data,
+  onNavigate,
+}: {
+  data: WorkspaceData;
+  onNavigate: (view: DashboardView) => void;
+}) {
   const [report, setReport] = useState<Analytics | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(data.mode === "live");
@@ -44,12 +50,11 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
       signal: controller.signal,
     })
       .then(async (response) => {
-        if (!response.ok)
-          throw new Error("Live analytics are unavailable. Try again later.");
+        if (!response.ok) throw new Error("Live analytics are unavailable. Try again later.");
         setReport((await response.json()) as Analytics);
       })
-      .catch((error: unknown) => {
-        if (!controller.signal.aborted) setError(errorMessage(error));
+      .catch((requestError: unknown) => {
+        if (!controller.signal.aborted) setError(errorMessage(requestError));
       })
       .finally(() => {
         if (!controller.signal.aborted) setLoading(false);
@@ -61,10 +66,12 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
   const visitors = sample ? "1,248" : report?.visitStats?.thisMonth.toLocaleString("en-IN") ?? "Unavailable";
   const enquiries = sample ? "31" : report?.enquiryStats.thisMonth.toLocaleString("en-IN") ?? "Unavailable";
   const summaryRows = [
-    ["Website visitors", visitors],
-    ["New enquiries", enquiries],
-    ["WhatsApp clicks", sample ? "86" : "Unavailable"],
-    ["Digital card scans", sample ? "34" : "Unavailable"],
+    { label: "New enquiries", value: enquiries, icon: BriefcaseBusiness },
+    { label: "Active pipeline", value: sample ? "₹46.5L" : "Unavailable", icon: BriefcaseBusiness },
+    { label: "First response", value: sample ? "24 min" : "Unavailable", icon: Clock3 },
+    { label: "Website visitors", value: visitors, icon: Users },
+    { label: "WhatsApp clicks", value: sample ? "86" : "Unavailable", icon: MessageCircle },
+    { label: "Digital card scans", value: sample ? "34" : "Unavailable", icon: ScanLine },
   ] as const;
   const pageRows = sample
     ? SAMPLE_PAGE_BREAKDOWN
@@ -73,25 +80,20 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
         views: project.views,
         enquiries: null,
       })) ?? []);
+  const barSpans = ["col-span-12", "col-span-9", "col-span-7", "col-span-5", "col-span-4"];
 
   return (
     <>
       <PageHeading
         title="Understand what brings work in."
-        description={
-          sample
-            ? "Sample September 2026 report. No live traffic is implied."
-            : "Traffic from Umami and recorded website enquiries."
-        }
+        description={sample ? "Candidate sample report for September 2026." : "Traffic from Umami and recorded website enquiries."}
         action={
           <Button
             disabled={loading || (!sample && !report)}
             onClick={() =>
               downloadFile(
                 data.tenant + "-" + (sample ? "sample" : "live") + "-analytics.csv",
-                summaryRows
-                  .map((row) => row.map(csvCell).join(","))
-                  .join("\r\n"),
+                summaryRows.map((row) => [row.label, row.value].map(csvCell).join(",")).join("\r\n"),
                 "text/csv;charset=utf-8",
               )
             }
@@ -102,105 +104,58 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
         }
       />
       <Feedback error={error} message={loading ? "Loading analytics…" : undefined} />
-      {error && (
-        <Button onClick={() => setAttempt((value) => value + 1)}>
-          Retry analytics
-        </Button>
-      )}
-      <div className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {summaryRows.map(([label, value]) => (
-          <Panel key={label} title={label}>
-            <p className={monoClass + " p-5 text-3xl"}>{value}</p>
-          </Panel>
-        ))}
+      {error && <Button onClick={() => setAttempt((value) => value + 1)}>Retry analytics</Button>}
+      <div className="mb-5 grid grid-cols-2 gap-3 xl:grid-cols-3">
+        {summaryRows.map((metric) => {
+          const Icon = metric.icon;
+          return (
+            <Panel key={metric.label} title={metric.label} action={<Icon aria-hidden="true" className="size-4 text-admin-muted" />}>
+              <p className={monoClass + " p-4 text-[clamp(20px,3vw,28px)] sm:p-5"}>{metric.value}</p>
+            </Panel>
+          );
+        })}
       </div>
-      {(sample || report) && (
-        <AttentionChart
-          enquiries={data.enquiries}
-          sample={sample}
-          trend={report?.monthlyTrend}
-        />
-      )}
+      {(sample || report) && <AttentionChart enquiries={data.enquiries} sample={sample} trend={report?.monthlyTrend} />}
       <div className="mt-5 grid gap-5 xl:grid-cols-2">
-        <Panel
-          title="Where actions started"
-          description="Recorded enquiry sources · September"
-          action={sample ? <Badge>September</Badge> : undefined}
-        >
+        <Panel title="Where actions started" description="Recorded enquiry sources · September" action={sample ? <Badge>September</Badge> : undefined}>
           <div className="px-5 pb-5">
-            {sample ? (
-              SAMPLE_SOURCES.map((source, index) => (
-                <div
-                  key={source.name}
-                  className="border-t border-admin-border py-3 first:border-t-0 first:pt-0"
-                >
-                  <div className="mb-2 flex items-center justify-between text-xs">
-                    <span>{source.name}</span>
-                    <span className={monoClass}>{source.count}</span>
-                  </div>
-                  <div className="grid h-1 grid-cols-12 bg-admin-raised">
-                    <span
-                      className={[
-                        "col-span-12 bg-admin-ink/60",
-                        "col-span-9 bg-admin-ink/60",
-                        "col-span-7 bg-admin-ink/60",
-                        "col-span-3 bg-admin-ink/60",
-                      ][index]}
-                    />
-                  </div>
+            {sample ? SAMPLE_SOURCES.map((source, index) => (
+              <div key={source.name} className="border-t border-admin-border py-3 first:border-t-0 first:pt-0">
+                <div className="mb-2 flex items-center justify-between text-xs">
+                  <span>{source.name}</span><span className={monoClass}>{source.count}</span>
                 </div>
-              ))
-            ) : (
-              <p className="text-xs leading-6 text-admin-muted">
-                Source attribution is unavailable for this workspace.
-              </p>
-            )}
+                <div className="grid h-1 grid-cols-12 bg-admin-raised"><span className={barSpans[index] + " bg-admin-ink/60"} /></div>
+              </div>
+            )) : <p className="text-xs leading-6 text-admin-muted">Source attribution is unavailable for this workspace.</p>}
           </div>
         </Panel>
         <Panel title="A clearer picture, not just more numbers.">
           <div className="px-5 pb-5">
             <p className="text-xs leading-6 text-admin-muted">
-              {sample
-                ? "The sample shows how visits turn into conversations. WhatsApp clicks are link clicks, not access to private messages. Enquiry counts include submitted and manually recorded briefs."
-                : "Traffic totals and recorded enquiries are kept separate from private client conversations."}
+              {sample ? "The sample shows how visits turn into conversations. WhatsApp clicks are link clicks, not access to private messages. Enquiry counts include submitted and manually recorded briefs." : "Traffic totals and recorded enquiries are kept separate from private client conversations."}
             </p>
             <div className="my-5 border-y border-admin-border py-5">
-              <p className="text-[11px] text-admin-muted">
-                Visitor-to-enquiry conversion
-              </p>
-              <p className={monoClass + " mt-2 text-[29px]"}>
-                {sample ? "2.48" : "—"}
-                <span className="text-[18px]">%</span>
-              </p>
+              <p className="text-[11px] text-admin-muted">Visitor-to-enquiry conversion</p>
+              <p className={monoClass + " mt-2 text-[29px]"}>{sample ? "2.48" : "—"}<span className="text-[18px]">%</span></p>
             </div>
+            <Button onClick={() => onNavigate("enquiries")}><ArrowRight aria-hidden="true" className="size-4" />Open your enquiry desk</Button>
           </div>
         </Panel>
       </div>
       {pageRows.length > 0 && (
         <div className="mt-5">
-          <Panel
-            title="Traffic by page"
-            description="Page views and recorded enquiries."
-          >
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-left text-xs">
+          <Panel title="Traffic by page" description="Page views and recorded enquiries.">
+            <div className="max-w-full overflow-x-auto">
+              <table className="w-full min-w-[560px] border-collapse text-left text-xs">
                 <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
-                  <tr>
-                    <th scope="col" className="px-5 py-3 font-medium">Page</th>
-                    <th scope="col" className="px-5 py-3 text-right font-medium">Views</th>
-                    <th scope="col" className="px-5 py-3 text-right font-medium">Enquiries</th>
-                  </tr>
+                  <tr><th scope="col" className="px-5 py-3 font-medium">Page</th><th scope="col" className="px-5 py-3 text-right font-medium">Views</th><th scope="col" className="px-5 py-3 text-right font-medium">Enquiries</th></tr>
                 </thead>
                 <tbody>
-                  {pageRows.map((page) => (
+                  {pageRows.map((page, index) => (
                     <tr key={page.page} className="border-b border-admin-border last:border-b-0">
-                      <td className="px-5 py-3 font-medium">{page.page}</td>
-                      <td className={monoClass + " px-5 py-3 text-right"}>
-                        {page.views.toLocaleString("en-IN")}
-                      </td>
-                      <td className={monoClass + " px-5 py-3 text-right"}>
-                        {page.enquiries ?? "—"}
-                      </td>
+                      <td className="px-5 py-3 font-medium"><span>{page.page}</span><div className="mt-2 grid h-1 grid-cols-12 bg-admin-raised"><span className={barSpans[index] + " bg-admin-ink/60"} /></div></td>
+                      <td className={monoClass + " px-5 py-3 text-right"}>{page.views.toLocaleString("en-IN")}</td>
+                      <td className={monoClass + " px-5 py-3 text-right"}>{page.enquiries ?? "—"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -212,7 +167,6 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
     </>
   );
 }
-
 
 export function SettingsTab({
   config,
@@ -230,6 +184,8 @@ export function SettingsTab({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [newLeadAlerts, setNewLeadAlerts] = useState(true);
+  const [weeklyDigest, setWeeklyDigest] = useState(true);
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
@@ -268,72 +224,45 @@ export function SettingsTab({
   }
   return (
     <>
-      <PageHeading
-        title="Your studio. Your workspace."
-        description="Update the contact details your customers see."
-      />
+      <PageHeading title="Your studio. Your workspace." description="Update the contact details your customers see." />
       <form onSubmit={save}>
-        <Panel
-          title="Public studio details"
-          description="Studio name and domain are managed by your operator."
-        >
-          <fieldset
-            disabled={!canEdit || pending}
-            className="grid gap-5 p-5 sm:grid-cols-2"
-          >
-            <Field label="Studio name">
-              <input className={inputClass} value={business.name} readOnly />
-            </Field>
-            {(
-              [
+        <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)]">
+          <Panel title="Public studio details" description="Studio name and domain are managed by your operator." action={<Globe aria-hidden="true" className="size-4 text-admin-muted" />}>
+            <fieldset disabled={!canEdit || pending} className="grid gap-5 p-5 sm:grid-cols-2">
+              <Field label="Studio name"><input className={inputClass} value={business.name} readOnly /></Field>
+              {([
                 { key: "tagline", label: "Studio tagline" },
-                { key: "ownerName", label: "Owner name" },
                 { key: "phone", label: "Studio phone", type: "tel" },
                 { key: "whatsapp", label: "WhatsApp number", type: "tel" },
                 { key: "email", label: "Public email", type: "email" },
                 { key: "hours", label: "Opening hours" },
-              ] as const
-            ).map((field) => (
-              <Field key={field.key} label={field.label}>
-                <input
-                  className={inputClass}
-                  maxLength={250}
-                  type={"type" in field ? field.type : "text"}
-                  required={
-                    field.key === "phone" ||
-                    field.key === "whatsapp" ||
-                    (field.key === "email" && Boolean(config.business.email))
-                  }
-                  value={business[field.key] ?? ""}
-                  onChange={(event) =>
-                    setEdits({ ...edits, [field.key]: event.target.value })
-                  }
-                />
-              </Field>
-            ))}
-            <Field label="City">
-              <input
-                className={inputClass}
-                required
-                value={business.address.city}
-                onChange={(event) =>
-                  setEdits({
-                    ...edits,
-                    address: { ...business.address, city: event.target.value },
-                  })
-                }
-              />
-            </Field>
-            <Button type="submit" variant="primary">
-              {pending
-                ? "Saving…"
-                : mode === "demo"
-                  ? "Save sample settings"
-                  : "Save studio details"}
-            </Button>
-          </fieldset>
-        </Panel>
-        <Feedback error={error} message={message} />
+              ] as const).map((field) => (
+                <Field key={field.key} label={field.label}>
+                  <input className={inputClass} maxLength={250} type={"type" in field ? field.type : "text"} required={field.key === "phone" || field.key === "whatsapp" || (field.key === "email" && Boolean(config.business.email))} value={business[field.key] ?? ""} onChange={(event) => setEdits({ ...edits, [field.key]: event.target.value })} />
+                </Field>
+              ))}
+              <Field label="City"><input className={inputClass} required value={business.address.city} onChange={(event) => setEdits({ ...edits, address: { ...business.address, city: event.target.value } })} /></Field>
+            </fieldset>
+          </Panel>
+          <div className="grid gap-5">
+            <Panel title="Workspace owner" description="The owner visible to your studio team." action={<ShieldCheck aria-hidden="true" className="size-4 text-admin-muted" />}>
+              <fieldset disabled={!canEdit || pending} className="grid gap-4 p-5">
+                <Field label="Owner name"><input className={inputClass} maxLength={250} value={business.ownerName ?? ""} onChange={(event) => setEdits({ ...edits, ownerName: event.target.value })} /></Field>
+                <p className="text-xs leading-6 text-admin-muted">Workspace access and sign out are available from the studio account menu.</p>
+              </fieldset>
+            </Panel>
+            <Panel title="Notification preferences" description="Choose the updates shown for this workspace." action={<Bell aria-hidden="true" className="size-4 text-admin-muted" />}>
+              <div className="grid gap-3 p-5 text-xs">
+                <label className="flex items-center justify-between gap-3"><span><span className="block font-medium">New enquiry alerts</span><span className="text-admin-muted">Show an alert when a lead arrives.</span></span><input type="checkbox" className="size-4 accent-admin-primary" checked={newLeadAlerts} onChange={(event) => setNewLeadAlerts(event.target.checked)} /></label>
+                <label className="flex items-center justify-between gap-3 border-t border-admin-border pt-3"><span><span className="block font-medium">Weekly activity digest</span><span className="text-admin-muted">Show the last seven days in your workspace.</span></span><input type="checkbox" className="size-4 accent-admin-primary" checked={weeklyDigest} onChange={(event) => setWeeklyDigest(event.target.checked)} /></label>
+              </div>
+            </Panel>
+          </div>
+        </div>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <Button type="submit" variant="primary">{pending ? "Saving…" : mode === "demo" ? "Save sample settings" : "Save studio details"}</Button>
+          <Feedback error={error} message={message} />
+        </div>
       </form>
     </>
   );
@@ -358,6 +287,7 @@ export function IntegrationsTab({
       description:
         "Private lead reads and updates use the signed-in tenant account.",
       view: "enquiries",
+      icon: ShieldCheck,
     },
     {
       title: "WhatsApp click-to-chat",
@@ -367,6 +297,7 @@ export function IntegrationsTab({
       description:
         "Public contact links open WhatsApp. Private conversations are not read or imported.",
       view: "settings",
+      icon: MessageCircle,
     },
     {
       title: "Website analytics",
@@ -376,6 +307,7 @@ export function IntegrationsTab({
       description:
         "The report shows unavailable when the analytics service cannot return data.",
       view: "analytics",
+      icon: Globe,
     },
     {
       title: "Lead notifications",
@@ -383,6 +315,7 @@ export function IntegrationsTab({
       description:
         "Notifications use the existing server-side delivery service. This screen does not verify inbox delivery.",
       view: "settings",
+      icon: Mail,
     },
   ] as const;
   return (
@@ -392,22 +325,25 @@ export function IntegrationsTab({
         description="Configuration and verified delivery are shown separately."
       />
       <div className="grid gap-5 xl:grid-cols-2">
-        {items.map((item) => (
+        {items.map((item) => {
+          const Icon = item.icon;
+          return (
           <Panel
             key={item.title}
             title={item.title}
-            action={<Badge>{item.status}</Badge>}
+            action={<div className="flex items-center gap-2"><Icon aria-hidden="true" className="size-4 text-admin-muted" /><Badge>{item.status}</Badge></div>}
           >
             <div className="p-5">
               <p className="mb-5 text-xs leading-6 text-admin-muted">
                 {item.description}
               </p>
               <Button onClick={() => onNavigate(item.view)}>
-                Open {item.view} →
+                Open {item.view} <ArrowRight aria-hidden="true" className="size-4" />
               </Button>
             </div>
           </Panel>
-        ))}
+          );
+        })}
       </div>
     </>
   );
@@ -472,12 +408,10 @@ export function DigitalCardTab({
         description="Share your public website or download your studio contact."
       />
       <div className="grid items-start gap-5 xl:grid-cols-2">
-        <Panel title="Your studio card">
+        <Panel title="Your studio card" action={<PanelsTopLeft aria-hidden="true" className="size-4 text-admin-muted" />}>
           <div className="p-5">
             <div className="border border-admin-border bg-admin-bg p-6">
-              <p className="mb-2 text-[10px] uppercase tracking-wider text-admin-muted">
-                {config.business.address.city}
-              </p>
+              <div className="mb-4 flex items-center gap-2 text-[10px] uppercase tracking-wider text-admin-muted"><PanelsTopLeft aria-hidden="true" className="size-4" />{config.business.address.city}</div>
               <h2 className="text-2xl font-semibold">{config.business.name}</h2>
               <p className="my-5 text-xs text-admin-muted">
                 {config.business.tagline}
@@ -490,12 +424,12 @@ export function DigitalCardTab({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Start a WhatsApp conversation ↗
+                    <MessageCircle aria-hidden="true" className="size-4" />Start a WhatsApp conversation
                   </a>
                 )}
                 {phone && (
                   <a className={buttonClass} href={`tel:+${phone}`}>
-                    Call the studio
+                    <Phone aria-hidden="true" className="size-4" />Call the studio
                   </a>
                 )}
                 {config.business.email && (
@@ -503,7 +437,7 @@ export function DigitalCardTab({
                     className={buttonClass}
                     href={`mailto:${config.business.email}`}
                   >
-                    Email the studio
+                    <Mail aria-hidden="true" className="size-4" />Email the studio
                   </a>
                 )}
                 <a
@@ -512,7 +446,7 @@ export function DigitalCardTab({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  View public website ↗
+                  <Globe aria-hidden="true" className="size-4" />View public website
                 </a>
               </div>
             </div>
@@ -527,7 +461,7 @@ export function DigitalCardTab({
                   )
                 }
               >
-                Download contact (.vcf)
+                <Download aria-hidden="true" className="size-4" />Download contact (.vcf)
               </Button>
               {url && (
                 <a
@@ -536,7 +470,7 @@ export function DigitalCardTab({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Share on WhatsApp ↗
+                  <MessageCircle aria-hidden="true" className="size-4" />Share on WhatsApp
                 </a>
               )}
             </div>
@@ -545,6 +479,7 @@ export function DigitalCardTab({
         <Panel
           title="From a scan to a conversation"
           description="This QR opens your tenant's public website."
+          action={<QrCode aria-hidden="true" className="size-4 text-admin-muted" />}
         >
           <div className="p-5">
             {cells.length > 0 && (
@@ -581,10 +516,10 @@ export function DigitalCardTab({
             </Field>
             <div className="mt-4 flex flex-wrap gap-2">
               <Button disabled={!url} onClick={copy}>
-                Copy link
+                <ArrowRight aria-hidden="true" className="size-4" />Copy link
               </Button>
               <Button disabled={!cells.length} onClick={exportQR}>
-                Download QR SVG
+                <Download aria-hidden="true" className="size-4" />Download QR SVG
               </Button>
             </div>
             <Feedback error={error} message={message} />

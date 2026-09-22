@@ -166,7 +166,7 @@ export function DashboardShell({
         </div>
       </aside>
       <div className="min-w-0">
-        <header className="flex h-16 items-center justify-between gap-3 border-b border-admin-border bg-admin-bg px-4 sm:px-8">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-admin-border bg-admin-bg px-4 sm:px-8">
           <div className="flex min-w-0 items-center gap-3">
             <Button
               className="lg:hidden"
@@ -420,7 +420,7 @@ export function DashboardWorkspace({
       {view === "card" && (
         <DigitalCardTab config={data.config} tenant={data.tenant} />
       )}
-      {view === "analytics" && <AnalyticsTab data={data} />}
+      {view === "analytics" && <AnalyticsTab data={data} onNavigate={navigate} />}
       <PersistentTab active={view === "settings"}>
         <SettingsTab
           config={data.config}
