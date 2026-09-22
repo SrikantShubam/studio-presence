@@ -50,7 +50,7 @@ export default function OverviewTab({
     {
       label: "Active pipeline",
       icon: BriefcaseBusiness,
-      value: sample ? "₹39.5L" : open,
+      value: sample ? "₹46.5L" : open,
       subtitle: sample ? "6 open sample enquiries" : "Open enquiries",
       delta: sample ? "Budget midpoints" : "Not revenue",
       view: "enquiries",

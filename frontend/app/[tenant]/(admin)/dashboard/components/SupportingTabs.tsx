@@ -1,7 +1,9 @@
 "use client";
 
+import { Download } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
+import { SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
 import {
   Button,
   Badge,
@@ -38,7 +40,7 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
     const controller = new AbortController();
     setLoading(true);
     setError("");
-    fetch(`/api/${encodeURIComponent(data.tenant)}/analytics`, {
+    fetch("/api/" + encodeURIComponent(data.tenant) + "/analytics", {
       signal: controller.signal,
     })
       .then(async (response) => {
@@ -54,13 +56,24 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
       });
     return () => controller.abort();
   }, [data.tenant, data.mode, attempt]);
+
   const sample = data.mode === "demo";
-  const visitors = sample ? 1248 : report?.visitStats?.thisMonth;
-  const enquiries = sample ? 31 : report?.enquiryStats.thisMonth;
-  const rows = [
-    ["Visitors this month", visitors?.toString() ?? "Unavailable"],
-    ["Enquiries this month", enquiries?.toString() ?? "Unavailable"],
-  ];
+  const visitors = sample ? "1,248" : report?.visitStats?.thisMonth.toLocaleString("en-IN") ?? "Unavailable";
+  const enquiries = sample ? "31" : report?.enquiryStats.thisMonth.toLocaleString("en-IN") ?? "Unavailable";
+  const summaryRows = [
+    ["Website visitors", visitors],
+    ["New enquiries", enquiries],
+    ["WhatsApp clicks", sample ? "86" : "Unavailable"],
+    ["Digital card scans", sample ? "34" : "Unavailable"],
+  ] as const;
+  const pageRows = sample
+    ? SAMPLE_PAGE_BREAKDOWN
+    : (report?.topProjects.map((project) => ({
+        page: project.title,
+        views: project.views,
+        enquiries: null,
+      })) ?? []);
+
   return (
     <>
       <PageHeading
@@ -75,29 +88,29 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
             disabled={loading || (!sample && !report)}
             onClick={() =>
               downloadFile(
-                `${data.tenant}-${sample ? "sample" : "live"}-analytics.csv`,
-                rows.map((row) => row.map(csvCell).join(",")).join("\r\n"),
+                data.tenant + "-" + (sample ? "sample" : "live") + "-analytics.csv",
+                summaryRows
+                  .map((row) => row.map(csvCell).join(","))
+                  .join("\r\n"),
                 "text/csv;charset=utf-8",
               )
             }
           >
+            <Download aria-hidden="true" className="size-4" />
             Export report
           </Button>
         }
       />
-      <Feedback
-        error={error}
-        message={loading ? "Loading analytics…" : undefined}
-      />
+      <Feedback error={error} message={loading ? "Loading analytics…" : undefined} />
       {error && (
         <Button onClick={() => setAttempt((value) => value + 1)}>
           Retry analytics
         </Button>
       )}
-      <div className="mb-5 grid gap-4 sm:grid-cols-2">
-        {rows.map(([label, value]) => (
-          <Panel key={label} title={label!}>
-            <p className={`${monoClass} p-5 text-3xl`}>{value}</p>
+      <div className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {summaryRows.map(([label, value]) => (
+          <Panel key={label} title={label}>
+            <p className={monoClass + " p-5 text-3xl"}>{value}</p>
           </Panel>
         ))}
       </div>
@@ -108,38 +121,98 @@ export function AnalyticsTab({ data }: { data: WorkspaceData }) {
           trend={report?.monthlyTrend}
         />
       )}
-      <div className="mt-5">
-        <Panel title="Traffic connection">
-          <p className="px-5 pb-5 text-xs leading-6 text-admin-muted">
-            {sample
-              ? "All traffic and scan counts in this report are sample values."
-              : report?.visitStats
-                ? "Visitor totals were returned by the analytics service."
-                : "Visitor totals are unavailable. No sample numbers are substituted."}{" "}
-            WhatsApp link clicks do not provide access to private conversations.
-          </p>
+      <div className="mt-5 grid gap-5 xl:grid-cols-2">
+        <Panel
+          title="Where actions started"
+          description="Recorded enquiry sources · September"
+          action={sample ? <Badge>September</Badge> : undefined}
+        >
+          <div className="px-5 pb-5">
+            {sample ? (
+              SAMPLE_SOURCES.map((source, index) => (
+                <div
+                  key={source.name}
+                  className="border-t border-admin-border py-3 first:border-t-0 first:pt-0"
+                >
+                  <div className="mb-2 flex items-center justify-between text-xs">
+                    <span>{source.name}</span>
+                    <span className={monoClass}>{source.count}</span>
+                  </div>
+                  <div className="grid h-1 grid-cols-12 bg-admin-raised">
+                    <span
+                      className={[
+                        "col-span-12 bg-admin-ink/60",
+                        "col-span-9 bg-admin-ink/60",
+                        "col-span-7 bg-admin-ink/60",
+                        "col-span-3 bg-admin-ink/60",
+                      ][index]}
+                    />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-xs leading-6 text-admin-muted">
+                Source attribution is unavailable for this workspace.
+              </p>
+            )}
+          </div>
+        </Panel>
+        <Panel title="A clearer picture, not just more numbers.">
+          <div className="px-5 pb-5">
+            <p className="text-xs leading-6 text-admin-muted">
+              {sample
+                ? "The sample shows how visits turn into conversations. WhatsApp clicks are link clicks, not access to private messages. Enquiry counts include submitted and manually recorded briefs."
+                : "Traffic totals and recorded enquiries are kept separate from private client conversations."}
+            </p>
+            <div className="my-5 border-y border-admin-border py-5">
+              <p className="text-[11px] text-admin-muted">
+                Visitor-to-enquiry conversion
+              </p>
+              <p className={monoClass + " mt-2 text-[29px]"}>
+                {sample ? "2.48" : "—"}
+                <span className="text-[18px]">%</span>
+              </p>
+            </div>
+          </div>
         </Panel>
       </div>
-      {report && report.topProjects.length > 0 && (
+      {pageRows.length > 0 && (
         <div className="mt-5">
-          <Panel title="Most viewed projects">
-            <ul className="px-5 pb-5">
-              {report.topProjects.map((project) => (
-                <li
-                  key={project.slug}
-                  className="flex justify-between gap-4 border-t border-admin-border py-3"
-                >
-                  <span>{project.title}</span>
-                  <span className={monoClass}>{project.views}</span>
-                </li>
-              ))}
-            </ul>
+          <Panel
+            title="Traffic by page"
+            description="Page views and recorded enquiries."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-xs">
+                <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
+                  <tr>
+                    <th scope="col" className="px-5 py-3 font-medium">Page</th>
+                    <th scope="col" className="px-5 py-3 text-right font-medium">Views</th>
+                    <th scope="col" className="px-5 py-3 text-right font-medium">Enquiries</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pageRows.map((page) => (
+                    <tr key={page.page} className="border-b border-admin-border last:border-b-0">
+                      <td className="px-5 py-3 font-medium">{page.page}</td>
+                      <td className={monoClass + " px-5 py-3 text-right"}>
+                        {page.views.toLocaleString("en-IN")}
+                      </td>
+                      <td className={monoClass + " px-5 py-3 text-right"}>
+                        {page.enquiries ?? "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </Panel>
         </div>
       )}
     </>
   );
 }
+
 
 export function SettingsTab({
   config,

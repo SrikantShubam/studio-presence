@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Calculator, ChartNoAxesCombined, Inbox, LayoutDashboard, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
+import { Calculator, ChartNoAxesCombined, Inbox, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
 import {
-  Badge,
   Button,
   Dialog,
   Feedback,
@@ -119,14 +118,19 @@ export function DashboardShell({
   );
   const brand = (
     <>
-      <div className="flex items-center gap-2 px-3">
+      <Link
+        href={href("overview")}
+        onClick={() => setMobile(false)}
+        aria-label="Go to workspace overview"
+        className="flex items-center gap-2 px-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary"
+      >
         <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-ink text-admin-bg">
           <PanelsTopLeft aria-hidden="true" className="size-4" strokeWidth={1.8} />
         </span>
         <p className="text-sm font-semibold tracking-tight">
           Studio Presence
         </p>
-      </div>
+      </Link>
       <div className="my-7 flex items-center gap-3 border border-admin-border bg-admin-bg p-3">
         <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
           {(studioName || "S").slice(0, 2).toUpperCase()}
@@ -183,14 +187,23 @@ export function DashboardShell({
             <ThemeToggle />
             {authenticated ? (
               <form action={signOutAction}>
-                <Button type="submit"><LogOut aria-hidden="true" className="size-4" />Sign out</Button>
+                <Button
+                  type="submit"
+                  className="w-11 px-0"
+                  aria-label="Sign out"
+                  title="Sign out"
+                >
+                  <LogOut aria-hidden="true" className="size-4" />
+                </Button>
               </form>
             ) : (
               <Link
-                className={buttonClass}
-                href={`/login?next=${encodeURIComponent(base)}`}
+                className={buttonClass + " w-11 px-0"}
+                href={"/login?next=" + encodeURIComponent(base)}
+                aria-label="Sign in"
+                title="Sign in"
               >
-                Sign in
+                <LogIn aria-hidden="true" className="size-4" />
               </Link>
             )}
           </div>
@@ -345,34 +358,8 @@ export function DashboardWorkspace({
         Restoring local demo changes…
       </p>
     );
-  const description =
-    data.mode === "demo"
-      ? "Sample workspace. Website changes save only in this browser; sample leads reset on refresh."
-      : data.mode === "unavailable"
-        ? "Sample data is off. Live enquiries require an eligible tenant account."
-        : "Tenant workspace. Website saves update published content.";
   return (
     <>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border border-admin-border bg-admin-surface p-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <Badge>
-            {data.mode === "demo"
-              ? "Sample data"
-              : data.mode === "live"
-                ? "Live workspace"
-                : "Live enquiries unavailable"}
-          </Badge>
-          <p className="text-[11px] text-admin-muted">{description}</p>
-        </div>
-        <Link
-          className="min-h-11 content-center text-xs underline"
-          href={`/${data.tenant}/dashboard?demo=${data.mode === "demo" ? "0" : "1"}&tab=${view}`}
-        >
-          {data.mode === "demo"
-            ? "Turn sample data off"
-            : "Turn sample data on"}
-        </Link>
-      </div>
       <Feedback error={storageError || data.leadError} />
       {view === "overview" && (
         <OverviewTab

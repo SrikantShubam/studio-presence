@@ -7,6 +7,7 @@ import {
   type ButtonHTMLAttributes,
   type ReactNode,
 } from "react";
+import { X } from "lucide-react";
 import type { LeadStatus } from "@studio/backend";
 import { STATUS_LABELS } from "./types";
 
@@ -183,8 +184,13 @@ export function Dialog({
         <h2 id={id} className="text-lg font-semibold">
           {title}
         </h2>
-        <Button onClick={onClose} aria-label="Close dialog">
-          ×
+        <Button
+          onClick={onClose}
+          className="w-11 px-0"
+          aria-label="Close dialog"
+          title="Close dialog"
+        >
+          <X aria-hidden="true" className="size-4" />
         </Button>
       </header>
       {children}

@@ -10,6 +10,8 @@ import {
   inputClass,
   monoClass,
 } from "./primitives";
+const contactButtonClass = "!min-h-9 !w-9 !p-0";
+
 import {
   contactPhone,
   downloadFile,
@@ -60,7 +62,7 @@ export function EnquiryDesk({
         title="Your enquiry desk"
         description={
           mode === "demo"
-            ? "Sample contacts. Contact actions are disabled."
+            ? "Representative sample leads · review demo contact details before calling"
             : "Budget bands are estimates, not booked revenue."
         }
         action={
@@ -200,10 +202,12 @@ export function EnquiryDesk({
                         <div className="flex gap-1">
                           <ContactActions enquiry={item} mode={mode} />
                           <Button
+                            className={contactButtonClass}
                             onClick={() => onOpenEnquiry(item)}
-                            aria-label={`View notes for ${item.name}`}
+                            aria-label={"View notes for " + item.name}
+                            title={"View notes for " + item.name}
                           >
-                            <NotebookPen aria-hidden="true" className="size-4" />Notes
+                            <NotebookPen aria-hidden="true" className="size-4" />
                           </Button>
                         </div>
                       </td>
@@ -257,31 +261,42 @@ export function ContactActions({
     return (
       <>
         <Button
+          className={contactButtonClass}
           disabled
+          aria-label={"WhatsApp " + enquiry.name}
           title="Contact actions are unavailable for sample contacts"
         >
-          <MessageCircle aria-hidden="true" className="size-4" />WhatsApp
+          <MessageCircle aria-hidden="true" className="size-4" />
         </Button>
-        <Button disabled><Phone aria-hidden="true" className="size-4" />Call</Button>
+        <Button
+          className={contactButtonClass}
+          disabled
+          aria-label={"Call " + enquiry.name}
+          title="Contact actions are unavailable for sample contacts"
+        >
+          <Phone aria-hidden="true" className="size-4" />
+        </Button>
       </>
     );
   return (
     <>
       <a
-        className={buttonClass}
-        href={`https://wa.me/${phone}`}
+        className={buttonClass + " " + contactButtonClass}
+        href={"https://wa.me/" + phone}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`WhatsApp ${enquiry.name}`}
+        aria-label={"WhatsApp " + enquiry.name}
+        title={"WhatsApp " + enquiry.name}
       >
-        <MessageCircle aria-hidden="true" className="size-4" />WhatsApp
+        <MessageCircle aria-hidden="true" className="size-4" />
       </a>
       <a
-        className={buttonClass}
-        href={`tel:+${phone}`}
-        aria-label={`Call ${enquiry.name}`}
+        className={buttonClass + " " + contactButtonClass}
+        href={"tel:+" + phone}
+        aria-label={"Call " + enquiry.name}
+        title={"Call " + enquiry.name}
       >
-        <Phone aria-hidden="true" className="size-4" />Call
+        <Phone aria-hidden="true" className="size-4" />
       </a>
     </>
   );
