@@ -67,7 +67,7 @@ export function AnalyticsTab({
   const enquiries = sample ? "31" : report?.enquiryStats.thisMonth.toLocaleString("en-IN") ?? "Unavailable";
   const summaryRows = [
     { label: "New enquiries", value: enquiries, detail: "+55%", icon: BriefcaseBusiness },
-    { label: "Active pipeline", value: sample ? "â‚¹46.5L" : "Unavailable", detail: "6 open sample enquiries", icon: BriefcaseBusiness },
+    { label: "Active pipeline", value: sample ? "₹46.5L" : "Unavailable", detail: "6 open sample enquiries", icon: BriefcaseBusiness },
     { label: "First response", value: sample ? "24 min" : "Unavailable", detail: "2 awaiting contact", icon: Clock3 },
     { label: "Website visitors", value: visitors, detail: "+18%", icon: Users },
     { label: "WhatsApp clicks", value: sample ? "86" : "Unavailable", detail: "Top action channel", icon: MessageCircle },
@@ -105,7 +105,7 @@ export function AnalyticsTab({
           </Button>
         }
       />
-      <Feedback error={error} message={loading ? "Loading analyticsâ€¦" : undefined} />
+      <Feedback error={error} message={loading ? "Loading analytics…" : undefined} />
       {error && <Button onClick={() => setAttempt((value) => value + 1)}>Retry analytics</Button>}
       <div className="mb-5 grid grid-cols-2 gap-3 xl:grid-cols-3">
         {summaryRows.map((metric) => {
@@ -130,7 +130,7 @@ export function AnalyticsTab({
         </div>
       )}
       <div className="mt-5 grid gap-5 xl:grid-cols-2">
-        <Panel title="Where actions started" description="Recorded enquiry sources Â· September" action={sample ? <Badge>September</Badge> : undefined}>
+        <Panel title="Where actions started" description="Recorded enquiry sources · September" action={sample ? <Badge>September</Badge> : undefined}>
           <div className="px-5 pb-5">
             {sample ? SAMPLE_SOURCES.map((source, index) => (
               <div key={source.name} className="border-t border-admin-border py-3 first:border-t-0 first:pt-0">
@@ -149,7 +149,7 @@ export function AnalyticsTab({
             </p>
             <div className="my-5 border-y border-admin-border py-5">
               <p className="text-[11px] text-admin-muted">Visitor-to-enquiry conversion</p>
-              <p className={monoClass + " mt-2 text-[29px]"}>{sample ? "2.48" : "â€”"}<span className="text-[18px]">%</span></p>
+              <p className={monoClass + " mt-2 text-[29px]"}>{sample ? "2.48" : "—"}<span className="text-[18px]">%</span></p>
             </div>
             <Button onClick={() => onNavigate("enquiries")}><ArrowRight aria-hidden="true" className="size-4" />Open your enquiry desk</Button>
           </div>
@@ -189,7 +189,7 @@ function CityDemandPanel({ data, onNavigate }: { data: WorkspaceData; onNavigate
   const sample = data.mode === "demo";
   const cityBars = ["w-full", "w-1/3", "w-1/4", "w-1/6", "w-1/6", "w-1/12"];
   return (
-    <Panel title="Where your next project begins" description="City demand Â· visits and enquiries" action={sample ? <Badge>September</Badge> : undefined}>
+    <Panel title="Where your next project begins" description="City demand · visits and enquiries" action={sample ? <Badge>September</Badge> : undefined}>
       <div className="px-5 pb-5">
         {sample ? SAMPLE_CITIES.map((city, index) => (
           <button key={city.name} type="button" className="grid w-full grid-cols-[minmax(0,1fr)_4rem_4rem] items-center gap-3 border-t border-admin-border py-3 text-left first:border-t-0" onClick={() => onNavigate("enquiries")}>
@@ -299,7 +299,7 @@ export function SettingsTab({
           </div>
         </div>
         <div className="mt-5 flex flex-wrap items-center gap-3">
-          <Button type="submit" variant="primary">{pending ? "Savingâ€¦" : mode === "demo" ? "Save sample settings" : "Save studio details"}</Button>
+          <Button type="submit" variant="primary">{pending ? "Saving…" : mode === "demo" ? "Save sample settings" : "Save studio details"}</Button>
           <Feedback error={error} message={message} />
         </div>
       </form>

@@ -9,7 +9,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
     {
       id: "sample-1", tenant_id: "sample", name: "Ananya Sinha",
       phone: "919999999991", email: null, locality: "Boring Road, Patna",
-      project_type: "3 BHK Â· Full home", budget_band: "â‚¹12Lâ€“â‚¹16L",
+      project_type: "3 BHK · Full home", budget_band: "₹12L–₹16L",
       timeline: "Within 2 months",
       message: "Moving into our new 3 BHK. Looking for a warm, practical home with a modular kitchen and plenty of storage.",
       source: "estimate", source_page: "sample", status: "new",
@@ -18,7 +18,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
     {
       id: "sample-2", tenant_id: "sample", name: "Rahul Verma",
       phone: "919999999992", email: null, locality: "Kankarbagh, Patna",
-      project_type: "Modular kitchen", budget_band: "â‚¹3Lâ€“â‚¹5L",
+      project_type: "Modular kitchen", budget_band: "₹3L–₹5L",
       timeline: "Within 1 month",
       message: "Visited your studio and scanned the card. Need a kitchen renovation for our family home.",
       source: "other", source_page: "sample", status: "new",
@@ -27,7 +27,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
     {
       id: "sample-3", tenant_id: "sample", name: "Priya & Amit",
       phone: "919999999993", email: null, locality: "Lalpur, Ranchi",
-      project_type: "2 BHK Â· Full home", budget_band: "â‚¹8Lâ€“â‚¹10L",
+      project_type: "2 BHK · Full home", budget_band: "₹8L–₹10L",
       timeline: "Within 3 months",
       message: "Need interiors for a new apartment. Handover is next month.",
       source: "form", source_page: "sample", status: "contacted",
@@ -36,7 +36,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
     {
       id: "sample-4", tenant_id: "sample", name: "Saurabh Mishra",
       phone: "919999999994", email: null, locality: "Lanka, Varanasi",
-      project_type: "Living & dining", budget_band: "â‚¹4Lâ€“â‚¹6L",
+      project_type: "Living & dining", budget_band: "₹4L–₹6L",
       timeline: "Within 2 months",
       message: "Redesign our living and dining rooms. Prefer easy maintenance finishes.",
       source: "form", source_page: "sample", status: "quoted",
@@ -45,7 +45,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
     {
       id: "sample-5", tenant_id: "sample", name: "Meera Bose",
       phone: "919999999995", email: null, locality: "Salt Lake, Kolkata",
-      project_type: "2 BHK Â· Renovation", budget_band: "â‚¹6Lâ€“â‚¹9L",
+      project_type: "2 BHK · Renovation", budget_band: "₹6L–₹9L",
       timeline: "Within 4 months",
       message: "Sample enquiry manually recorded after a WhatsApp conversation. Click tracking alone does not create a lead.",
       source: "whatsapp", source_page: "sample", status: "contacted",
@@ -54,7 +54,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
     {
       id: "sample-6", tenant_id: "sample", name: "Rohan Kapoor",
       phone: "919999999996", email: null, locality: "Noida, Delhi NCR",
-      project_type: "Home office", budget_band: "â‚¹2Lâ€“â‚¹4L",
+      project_type: "Home office", budget_band: "₹2L–₹4L",
       timeline: "This month",
       message: "A quiet, practical home office with custom storage and a comfortable workspace.",
       source: "other", source_page: "sample", status: "won",
@@ -63,7 +63,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
     {
       id: "sample-7", tenant_id: "sample", name: "Neha Rao",
       phone: "919999999997", email: null, locality: "Whitefield, Bengaluru",
-      project_type: "Bedroom & storage", budget_band: "â‚¹6Lâ€“â‚¹8L",
+      project_type: "Bedroom & storage", budget_band: "₹6L–₹8L",
       timeline: "Within 3 months",
       message: "Looking for a restful bedroom with full-height wardrobes and thoughtful storage.",
       source: "estimate", source_page: "sample", status: "quoted",
