@@ -191,11 +191,11 @@ export function DashboardShell({
               <form action={signOutAction}>
                 <Button
                   type="submit"
-                  className="w-11 px-0"
+                  className="border-0 px-2"
                   aria-label="Sign out"
                   title="Sign out"
                 >
-                  <LogOut aria-hidden="true" className="size-4" />
+                  <LogOut aria-hidden="true" className="size-4" /><span className="hidden sm:inline">Sign out</span>
                 </Button>
               </form>
             ) : (

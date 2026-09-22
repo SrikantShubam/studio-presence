@@ -157,15 +157,17 @@ export function AnalyticsTab({
         <div className="mt-5">
           <Panel title="Traffic by page" description="Page views and recorded enquiries.">
             <div className="border-b border-admin-border px-5 pb-5 pt-4">
-              <svg viewBox="0 0 520 120" className="h-28 w-full" role="img" aria-label="Traffic by page line chart">
-                <line x1="20" y1="100" x2="500" y2="100" className="stroke-admin-border" />
-                <polyline points={pageRows.map((page, index) => (30 + index * (460 / Math.max(pageRows.length - 1, 1))) + "," + (100 - (page.views / Math.max(...pageRows.map((item) => item.views))) * 75)).join(" ")} fill="none" className="stroke-admin-ink" strokeWidth="2" />
-                {pageRows.map((page, index) => {
-                  const x = 30 + index * (460 / Math.max(pageRows.length - 1, 1));
-                  const y = 100 - (page.views / Math.max(...pageRows.map((item) => item.views))) * 75;
-                  return <g key={page.page}><circle cx={x} cy={y} r="3" className="fill-admin-bg stroke-admin-ink" /><text x={x} y="116" textAnchor="middle" className="fill-admin-muted text-[9px]">{page.page}</text></g>;
+              <p className="mb-3 text-[10px] uppercase tracking-[0.14em] text-admin-muted">Top visited pages</p>
+              <div className="grid gap-3" role="img" aria-label="Horizontal bar chart of the top visited pages">
+                {[...pageRows].sort((a, b) => b.views - a.views).slice(0, 5).map((page, index) => {
+                  const widths = ["w-full", "w-3/4", "w-1/2", "w-1/3", "w-1/4"];
+                  return <div key={page.page} className="grid grid-cols-[minmax(0,8rem)_minmax(0,1fr)_4rem] items-center gap-3 text-xs">
+                    <span className="truncate">{page.page}</span>
+                    <span className="h-2 bg-admin-raised"><span className={`block h-2 bg-admin-ink/60 ${widths[index] ?? "w-1/4"}`} /></span>
+                    <span className={monoClass + " text-right"}>{page.views.toLocaleString("en-IN")}</span>
+                  </div>;
                 })}
-              </svg>
+              </div>
             </div>
             <div className="max-w-full overflow-x-auto">
               <table className="w-full min-w-[560px] border-collapse text-left text-xs">
@@ -281,7 +283,7 @@ export function SettingsTab({
                 { key: "email", label: "Public email", type: "email" },
                 { key: "hours", label: "Opening hours" },
               ] as const).map((field) => (
-                <Field key={field.key} label={field.label}>
+                <Field key={field.key} label={field.label} hint={field.key === "phone" || field.key === "whatsapp" ? "Include country code, for example +91 99999 99999." : undefined}>
                   <input className={inputClass} maxLength={250} type={"type" in field ? field.type : "text"} required={field.key === "phone" || field.key === "whatsapp" || (field.key === "email" && Boolean(config.business.email))} value={business[field.key] ?? ""} onChange={(event) => setEdits({ ...edits, [field.key]: event.target.value })} />
                 </Field>
               ))}
@@ -363,6 +365,10 @@ export function IntegrationsTab({
       icon: Mail,
     },
   ] as const;
+  const [metaId, setMetaId] = useState("");
+  const [analyticsId, setAnalyticsId] = useState(data.config.integrations.umami.siteId ?? "");
+  const [notificationEmail, setNotificationEmail] = useState(data.ownerEmail);
+  const [saved, setSaved] = useState(false);
   return (
     <>
       <PageHeading
@@ -376,7 +382,7 @@ export function IntegrationsTab({
           <Panel
             key={item.title}
             title={item.title}
-            action={<div className="flex items-center gap-2"><Icon aria-hidden="true" className="size-4 text-admin-muted" /><Badge>{item.status}</Badge></div>}
+            action={<div className="flex items-center gap-2"><Icon aria-hidden="true" className="size-4 text-admin-muted" /><Badge className={item.status === "Connected" ? "border-admin-primary text-admin-primary" : ""}>{item.status}</Badge></div>}
           >
             <div className="p-5">
               <p className="mb-5 text-xs leading-6 text-admin-muted">
@@ -390,6 +396,14 @@ export function IntegrationsTab({
           );
         })}
       </div>
+      <Panel title="Connection details" description="Add provider identifiers when you connect external services.">
+        <div className="grid gap-4 p-5 sm:grid-cols-2">
+          <Field label="Instagram / Meta business ID" hint="Used to connect Instagram publishing and insights."><input className={inputClass} value={metaId} onChange={(event) => { setMetaId(event.target.value); setSaved(false); }} placeholder="Not connected" /></Field>
+          <Field label="Analytics site ID" hint="The site identifier returned by your analytics provider."><input className={inputClass} value={analyticsId} onChange={(event) => { setAnalyticsId(event.target.value); setSaved(false); }} placeholder="Not connected" /></Field>
+          <Field label="Lead notification email" hint="Used when server-side delivery is enabled."><input className={inputClass} type="email" value={notificationEmail} onChange={(event) => { setNotificationEmail(event.target.value); setSaved(false); }} placeholder="owner@example.com" /></Field>
+          <div className="flex items-end"><Button type="button" onClick={() => setSaved(true)}>{saved ? "Saved in this session" : "Save connection details"}</Button></div>
+        </div>
+      </Panel>
     </>
   );
 }
@@ -464,7 +478,7 @@ export function DigitalCardTab({
               <div className="grid gap-3">
                 {whatsapp && (
                   <a
-                    className={buttonClass}
+                    className={buttonClass + " border-admin-primary text-admin-primary"}
                     href={`https://wa.me/${whatsapp}`}
                     target="_blank"
                     rel="noopener noreferrer"

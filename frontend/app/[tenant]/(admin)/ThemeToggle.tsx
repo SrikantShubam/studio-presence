@@ -39,9 +39,9 @@ export function ThemeToggle() {
       aria-label={switchToLight ? 'Switch to light theme' : 'Switch to dark theme'}
       title={switchToLight ? 'Switch to light theme' : 'Switch to dark theme'}
       onClick={() => changePreference(switchToLight ? 'light' : 'dark')}
-      className="inline-flex size-11 items-center justify-center border border-admin-border bg-admin-bg text-admin-ink hover:bg-admin-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary"
+      className="inline-flex min-h-11 items-center gap-2 border-0 bg-transparent px-2 text-xs text-admin-ink hover:bg-admin-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary"
     >
-      {switchToLight ? <Sun aria-hidden="true" className="size-4" /> : <Moon aria-hidden="true" className="size-4" />}
+      {switchToLight ? <Sun aria-hidden="true" className="size-4" /> : <Moon aria-hidden="true" className="size-4" />}<span className="hidden sm:inline">{switchToLight ? 'Light theme' : 'Dark theme'}</span>
     </button>
   )
 }

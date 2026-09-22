@@ -31,9 +31,9 @@ export function Button({
     />
   );
 }
-export function Badge({ children }: { children: ReactNode }) {
+export function Badge({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <span className="inline-flex items-center gap-1 border border-admin-border px-2 py-1 text-[10px] text-admin-muted">
+    <span className={`inline-flex items-center gap-1 border border-admin-border px-2 py-1 text-[10px] text-admin-muted ${className}`}>
       {children}
     </span>
   );
@@ -180,7 +180,7 @@ export function Dialog({
         event.preventDefault();
         onClose();
       }}
-      className={`fixed border border-admin-border bg-admin-bg p-0 text-admin-ink backdrop:bg-admin-ink/40 ${side ? `inset-y-0 ${side === "left" ? "left-0 right-auto" : "right-0 left-auto"} m-0 h-dvh max-h-dvh w-full max-w-md` : "inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg"}`}
+      className={`fixed border border-admin-border bg-admin-bg p-0 text-admin-ink backdrop:bg-transparent ${side ? `inset-y-0 ${side === "left" ? "left-0 right-auto" : "right-0 left-auto"} m-0 h-dvh max-h-dvh w-full max-w-md` : "inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg"}`}
     >
       <header className="flex items-start justify-between gap-3 border-b border-admin-border p-5">
         <div className="min-w-0">

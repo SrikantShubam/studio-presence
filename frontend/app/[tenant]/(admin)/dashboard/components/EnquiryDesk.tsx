@@ -290,7 +290,7 @@ export function ContactActions({
   return (
     <>
       <a
-        className={buttonClass + " " + contactButtonClass}
+        className={buttonClass + " " + contactButtonClass + " border-admin-primary text-admin-primary"}
         href={"https://wa.me/" + phone}
         target="_blank"
         rel="noopener noreferrer"
