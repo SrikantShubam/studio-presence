@@ -83,6 +83,8 @@ export function AnalyticsTab({
         lastMonthEnquiries: null,
       })) ?? []);
   const barSpans = ["col-span-12", "col-span-9", "col-span-7", "col-span-5", "col-span-4"];
+  const topTrafficPages = [...pageRows].sort((a, b) => b.views - a.views).slice(0, 5);
+  const topTrafficMax = Math.max(...topTrafficPages.map((page) => page.views), 1);
 
   return (
     <>
@@ -158,6 +160,20 @@ export function AnalyticsTab({
       {pageRows.length > 0 && (
         <div className="mt-5">
           <Panel title="Traffic by page" description="Month-over-month page views and recorded enquiries.">
+            <div className="border-b border-admin-border px-5 py-5">
+              <h3 className="text-xs font-semibold text-admin-ink">Top 5 pages by Traffic</h3>
+              <div className="mt-4 grid gap-3">
+                {topTrafficPages.map((page) => (
+                  <div key={page.page} className="grid grid-cols-[minmax(8rem,0.32fr)_minmax(0,1fr)_4.5rem] items-center gap-3 text-xs">
+                    <span className="min-w-0 truncate font-medium">{page.page}</span>
+                    <span className="h-2 bg-admin-raised">
+                      <span className="block h-2 bg-admin-primary" style={{ width: `${Math.max((page.views / topTrafficMax) * 100, 4)}%` }} />
+                    </span>
+                    <span className={monoClass + " text-right"}>{page.views.toLocaleString("en-IN")}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="max-w-full overflow-x-auto">
               <table className="w-full min-w-[760px] border-collapse text-left text-xs">
                 <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
@@ -169,7 +185,7 @@ export function AnalyticsTab({
                       <td className="px-5 py-3 font-medium">{page.page}</td>
                       <td className={monoClass + " px-5 py-3 text-right"}>{page.lastMonthViews?.toLocaleString("en-IN") ?? "—"}</td>
                       <td className={monoClass + " px-5 py-3 text-right"}>{page.views.toLocaleString("en-IN")}</td>
-                      <td className={monoClass + " px-5 py-3 text-right text-admin-primary"}>{page.lastMonthEnquiries && page.enquiries ? `${Math.round(((page.enquiries - page.lastMonthEnquiries) / page.lastMonthEnquiries) * 100)}%` : "—"}</td>
+                      <td className={monoClass + " px-5 py-3 text-right text-admin-primary"}>{page.lastMonthViews ? `${Math.round(((page.views - page.lastMonthViews) / page.lastMonthViews) * 100)}%` : "\u2014"}</td>
                       <td className={monoClass + " px-5 py-3 text-right"}>{page.views.toLocaleString("en-IN")}</td>
                       <td className={monoClass + " px-5 py-3 text-right"}>{page.enquiries ?? "—"}</td>
                     </tr>

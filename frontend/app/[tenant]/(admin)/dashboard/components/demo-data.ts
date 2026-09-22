@@ -122,4 +122,10 @@ export const SAMPLE_PAGE_BREAKDOWN = [
   { page: "Projects", views: 211, enquiries: 7, lastMonthViews: 188, lastMonthEnquiries: 6 },
   { page: "Services", views: 148, enquiries: 6, lastMonthViews: 132, lastMonthEnquiries: 5 },
   { page: "Contact", views: 97, enquiries: 4, lastMonthViews: 89, lastMonthEnquiries: 3 },
+  { page: "Modular Kitchens", views: 86, enquiries: 3, lastMonthViews: 72, lastMonthEnquiries: 2 },
+  { page: "Full Home Interiors", views: 74, enquiries: 2, lastMonthViews: 61, lastMonthEnquiries: 2 },
+  { page: "About", views: 58, enquiries: 1, lastMonthViews: 53, lastMonthEnquiries: 1 },
+  { page: "Estimate Calculator", views: 52, enquiries: 3, lastMonthViews: 44, lastMonthEnquiries: 2 },
+  { page: "Locations", views: 39, enquiries: 1, lastMonthViews: 31, lastMonthEnquiries: 1 },
+  { page: "Careers", views: 24, enquiries: 0, lastMonthViews: 18, lastMonthEnquiries: 0 },
 ] as const;
