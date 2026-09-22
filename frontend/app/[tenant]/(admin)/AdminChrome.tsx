@@ -105,7 +105,12 @@ function profileFor(email: string, metadata: Record<string, unknown> | null | un
   return {
     name,
     initials: initialsFor(name || email),
-    avatarUrl: stringFrom(metadata?.avatar_url) ?? stringFrom(metadata?.picture),
+    avatarUrl:
+      stringFrom(metadata?.avatar_url) ??
+      stringFrom(metadata?.picture) ??
+      stringFrom(metadata?.avatarUrl) ??
+      stringFrom(metadata?.photoURL) ??
+      stringFrom(metadata?.image),
   }
 }
 

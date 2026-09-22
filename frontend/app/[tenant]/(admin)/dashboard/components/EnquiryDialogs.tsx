@@ -241,7 +241,7 @@ export function EnquiryDetails({
       </div>
       {contactPhone(enquiry.phone) && (
         <div className="sticky bottom-0 flex gap-2.5 border-t border-admin-border bg-admin-bg px-6 py-4">
-          <a className={buttonClass + " flex-1 justify-center border-admin-primary text-admin-primary"} href={"https://wa.me/" + contactPhone(enquiry.phone)} target="_blank" rel="noopener noreferrer"><MessageCircle aria-hidden="true" className="size-4" />WhatsApp</a>
+          <a className={buttonClass + " flex-1 justify-center !border-admin-primary !text-admin-primary hover:!bg-admin-primary/10"} href={"https://wa.me/" + contactPhone(enquiry.phone)} target="_blank" rel="noopener noreferrer"><MessageCircle aria-hidden="true" className="size-4" />WhatsApp</a>
           <a className={buttonClass + " flex-1 justify-center"} href={"tel:+" + contactPhone(enquiry.phone)}><Phone aria-hidden="true" className="size-4" />Call client</a>
         </div>
       )}

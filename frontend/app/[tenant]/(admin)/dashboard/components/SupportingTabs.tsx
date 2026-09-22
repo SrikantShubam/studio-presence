@@ -85,6 +85,10 @@ export function AnalyticsTab({
   const barSpans = ["col-span-12", "col-span-9", "col-span-7", "col-span-5", "col-span-4"];
   const topTrafficPages = [...pageRows].sort((a, b) => b.views - a.views).slice(0, 5);
   const topTrafficMax = Math.max(...topTrafficPages.map((page) => page.views), 1);
+  const dotPositions = [
+    "col-start-1", "col-start-2", "col-start-3", "col-start-4", "col-start-5", "col-start-6",
+    "col-start-7", "col-start-8", "col-start-9", "col-start-10", "col-start-11", "col-start-12",
+  ];
 
   return (
     <>
@@ -158,22 +162,27 @@ export function AnalyticsTab({
         </Panel>
       </div>
       {pageRows.length > 0 && (
-        <div className="mt-5">
-          <Panel title="Traffic by page" description="Month-over-month page views and recorded enquiries.">
-            <div className="border-b border-admin-border px-5 py-5">
-              <h3 className="text-xs font-semibold text-admin-ink">Top 5 pages by Traffic</h3>
+        <div className="mt-5 grid gap-5">
+          <Panel title="Top 5 pages by Traffic" description="The pages drawing the most attention this month.">
+            <div className="px-5 pb-5">
               <div className="mt-4 grid gap-3">
-                {topTrafficPages.map((page) => (
-                  <div key={page.page} className="grid grid-cols-[minmax(8rem,0.32fr)_minmax(0,1fr)_4.5rem] items-center gap-3 text-xs">
-                    <span className="min-w-0 truncate font-medium">{page.page}</span>
-                    <span className="h-2 bg-admin-raised">
-                      <span className="block h-2 bg-admin-primary" style={{ width: `${Math.max((page.views / topTrafficMax) * 100, 4)}%` }} />
-                    </span>
-                    <span className={monoClass + " text-right"}>{page.views.toLocaleString("en-IN")}</span>
-                  </div>
-                ))}
+                {topTrafficPages.map((page, index) => {
+                  const position = Math.max(0, Math.min(11, Math.round((page.views / topTrafficMax) * 11)));
+                  return (
+                    <div key={page.page} className="grid grid-cols-[minmax(8rem,0.32fr)_minmax(0,1fr)_4.5rem] items-center gap-3 text-xs">
+                      <span className="min-w-0 truncate font-medium"><span className="mr-2 text-admin-muted">0{index + 1}</span>{page.page}</span>
+                      <span className="grid h-8 grid-cols-12 items-center border-b border-admin-border bg-admin-bg">
+                        <span className={dotPositions[position] + " size-3 rounded-full bg-admin-primary ring-4 ring-admin-primary/10"} title={page.views.toLocaleString("en-IN") + " views"} />
+                      </span>
+                      <span className={monoClass + " text-right"}>{page.views.toLocaleString("en-IN")}</span>
+                    </div>
+                  );
+                })}
               </div>
+              <div className="mt-3 grid grid-cols-4 text-[10px] text-admin-muted"><span>0</span><span className="text-center">150</span><span className="text-center">300</span><span className="text-right">600 views</span></div>
             </div>
+          </Panel>
+          <Panel title="Traffic by page" description="Month-over-month page views and recorded enquiries for every page.">
             <div className="max-w-full overflow-x-auto">
               <table className="w-full min-w-[760px] border-collapse text-left text-xs">
                 <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
