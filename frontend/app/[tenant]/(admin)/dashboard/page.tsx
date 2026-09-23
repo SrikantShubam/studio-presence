@@ -139,9 +139,8 @@ export default async function DashboardPage({
   let currentRole: "owner" | "editor" | "viewer" = mode === "demo" ? "owner" : "viewer";
   let items: Enquiry[] = mode === "demo" ? DEMO_ENQUIRIES : [];
   let leadError: string | undefined;
-  if (mode === "live" && context) {
-    try {
   let teamAccess: TeamAccessSnapshot | undefined;
+  if (mode === "live" && context) {
   if (context && query?.tab === "settings") {
     try {
       const teamMembers = await listWorkspaceMembers(context.db, context.tenant.id);
@@ -150,9 +149,10 @@ export default async function DashboardPage({
         ? await listWorkspaceInvitations(context.db, context.tenant.id)
         : [];
       teamAccess = { currentRole: teamRole, members: teamMembers, invitations };
-    } catch { /* Team Access will load from its route. */ }
+    } catch { teamAccess = undefined; }
   }
 
+    try {
       members = await listWorkspaceMembers(context.db, context.tenant.id);
       currentRole = members.find((member) => member.user_id === context.user.id)?.role ?? "viewer";
     } catch {
