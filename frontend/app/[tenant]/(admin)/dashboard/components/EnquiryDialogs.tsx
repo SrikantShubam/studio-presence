@@ -14,6 +14,7 @@ import {
   type LeadAction,
   type LeadInput,
   type Mode,
+  type WorkspaceMember,
 } from "./types";
 
 const sourceLabels: Record<Enquiry["source"], string> = {
@@ -156,15 +157,22 @@ export function EnquiryDetails({
   action,
   onClose,
   onUpdated,
+  members,
+  canAssign = false,
+  canEdit = true,
 }: {
   enquiry: Enquiry;
   mode: Mode;
   action: LeadAction;
   onClose: () => void;
   onUpdated: (item: Enquiry) => void;
+  members?: WorkspaceMember[];
+  canAssign?: boolean;
+  canEdit?: boolean;
 }) {
   const [status, setStatus] = useState(enquiry.status);
   const [notes, setNotes] = useState(enquiry.notes ?? "");
+  const [assignee, setAssignee] = useState(enquiry.assigned_to ?? "");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -181,7 +189,13 @@ export function EnquiryDetails({
         notes,
       });
       if (!result.ok) throw new Error(result.error);
-      onUpdated(result.data);
+      let saved = result.data;
+      if (canAssign && assignee && assignee !== enquiry.assigned_to) {
+        const assignment = await action({ kind: "assign", id: enquiry.id, userId: assignee });
+        if (!assignment.ok) throw new Error(assignment.error);
+        saved = assignment.data;
+      }
+      onUpdated(saved);
       setMessage(
         mode === "demo"
           ? "Sample changes saved for this session."
@@ -218,7 +232,16 @@ export function EnquiryDetails({
           <p className="text-[11px] text-admin-muted">Source: {sourceLabels[enquiry.source]}</p>
         </div>
         <form onSubmit={submit}>
-          <fieldset disabled={pending || mode === "unavailable"} className="grid gap-5">
+          <fieldset disabled={pending || mode === "unavailable" || !canEdit} className="grid gap-5">
+            {canAssign && members && members.length > 0 && (
+            <div className="border-t border-admin-border py-5">
+              <Field label="Assigned to">
+                <select aria-label="Lead assignee" className={inputClass} value={assignee} onChange={(event) => setAssignee(event.target.value)}>
+                  {members.filter((member) => member.role === "owner" || member.role === "editor").map((member) => <option key={member.user_id} value={member.user_id}>{member.display_name || member.email || member.user_id.slice(0, 8)}</option>)}
+                </select>
+              </Field>
+            </div>
+            )}
             <div className="border-t border-admin-border py-5">
               <div className="mb-3 flex items-center justify-between"><h3 className="text-xs font-semibold">Lead status</h3><span className="text-[10px] text-admin-muted">{STATUS_LABELS[status]}</span></div>
               <select aria-label="Lead status" className={inputClass} value={status} onChange={(event) => setStatus(event.target.value as Enquiry["status"])}>

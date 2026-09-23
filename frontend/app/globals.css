@@ -290,6 +290,24 @@
   height: 2.5em;
 }
 
+.admin-scrollbar {
+  scrollbar-color: var(--a-border) var(--a-bg);
+  scrollbar-width: thin;
+}
+
+.admin-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-track {
+  background: var(--a-bg);
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--a-border);
+  border: 2px solid var(--a-bg);
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
@@ -697,3 +715,4 @@ body {
   background-color: var(--t-ink);
   pointer-events: none;
 }
+
