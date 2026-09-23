@@ -69,7 +69,7 @@ export function DashboardShell({
 }) {
   const [mobile, setMobile] = useState(false);
   const params = useSearchParams();
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
   const base = `/${tenant}/dashboard`;
   const isDashboardRoot = pathname === base || pathname === "/dashboard";
   const active = isDashboardRoot
