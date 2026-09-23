@@ -74,6 +74,7 @@ export function EnquiryDesk({
         item.budget_band,
         item.notes,
         item.source,
+        memberLabel(item.assigned_to, members),
       ]
         .join(" ")
         .toLowerCase()
@@ -210,6 +211,7 @@ export function EnquiryDesk({
                         </p>
                       </td>
                       <td className="px-5 py-4">{sourceLabels[item.source]}</td>
+                      <td className="px-5 py-4 text-[11px] text-admin-muted">{memberLabel(item.assigned_to, members)}</td>
                       <td className="px-5 py-4">
                         <StatusBadge status={item.status} />
                       </td>
@@ -219,7 +221,6 @@ export function EnquiryDesk({
                           {formatISTDate(item.created_at)}
                         </p>
                       </td>
-                      <td className="px-5 py-4 text-[11px] text-admin-muted">{memberLabel(item.assigned_to, members)}</td>
                       <td className="px-5 py-4">
                         <div className="flex gap-1">
                           <ContactActions enquiry={item} />

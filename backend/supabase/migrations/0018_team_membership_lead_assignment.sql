@@ -52,15 +52,21 @@ create index leads_tenant_assignee_idx
   on public.leads (tenant_id, assigned_to, created_at desc);
 
 update public.leads l
-set assigned_to = owners.user_id
-from lateral (
+set assigned_to = (
   select tm.user_id
   from public.tenant_members tm
-  where tm.tenant_id = l.tenant_id and tm.role = 'owner'
+  where tm.tenant_id = l.tenant_id
+    and tm.role = 'owner'
   order by tm.created_at
   limit 1
-) owners
-where l.assigned_to is null;
+)
+where l.assigned_to is null
+  and exists (
+    select 1
+    from public.tenant_members tm
+    where tm.tenant_id = l.tenant_id
+      and tm.role = 'owner'
+  );
 
 -- RLS-safe membership lookup. The definer is required to avoid recursion when
 -- policies on tenant_members use the helper to inspect another member row.
@@ -243,8 +249,8 @@ begin
   end if;
 
   if exists (
-    select 1 from public.tenant_members
-    where tenant_id = v_invitation.tenant_id and user_id = auth.uid()
+    select 1 from public.tenant_members tm
+    where tm.tenant_id = v_invitation.tenant_id and tm.user_id = auth.uid()
   ) then
     raise exception 'user is already a workspace member' using errcode = '23505';
   end if;
@@ -391,7 +397,7 @@ begin
   if not found then raise exception 'lead not found' using errcode = 'no_data_found'; end if;
 
   v_role := public.current_tenant_role(v_lead.tenant_id);
-  if v_role is null or (v_role = 'editor' and v_lead.assigned_to <> auth.uid()) or v_role not in ('owner', 'editor') then
+  if v_role is null or (v_role = 'editor' and (v_lead.assigned_to is null or v_lead.assigned_to <> auth.uid())) or v_role not in ('owner', 'editor') then
     raise exception 'you cannot update this lead' using errcode = '42501';
   end if;
 
