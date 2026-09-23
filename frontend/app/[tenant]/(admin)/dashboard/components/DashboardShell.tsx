@@ -83,7 +83,7 @@ export function DashboardShell({
           : "enquiries";
   function href(tab: DashboardView) {
     const next = new URLSearchParams();
-    if (params.has("demo")) next.set("demo", params.get("demo")!);
+    if (params?.has("demo")) next.set("demo", params.get("demo")!);
     next.set("tab", tab);
     return `${base}?${next}`;
   }
