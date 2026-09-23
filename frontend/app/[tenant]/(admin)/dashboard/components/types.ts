@@ -241,7 +241,7 @@ export function errorMessage(error: unknown) {
 export function memberDisplayName(member: WorkspaceMember) {
   return member.display_name?.trim() || member.email || member.role;
 }
-export function assigneeDisplayName(assignedTo: string | null, members: WorkspaceMember[] = []) {
+export function assigneeDisplayName(assignedTo: string | null | undefined, members: WorkspaceMember[] = []) {
   if (!assignedTo) return "Unassigned";
   const member = members.find((item) => item.user_id === assignedTo);
   return member ? memberDisplayName(member) : "Former workspace member";

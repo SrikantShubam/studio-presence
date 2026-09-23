@@ -18,7 +18,7 @@ import { DashboardWorkspace } from "./components/DashboardShell";
 import { DEMO_ENQUIRIES, DEMO_WORKSPACE_MEMBERS } from "./components/demo-data";
 import {
   applyConfigPatch,
-  canEditAuthenticatedWorkspace,
+
   dashboardMode,
   normalizeIndianPhone,
   type ActionResult,
@@ -167,10 +167,11 @@ export default async function DashboardPage({
       if (!actor) return { ok: false, error: "You are not an active workspace member." };
       let row: Enquiry;
       if (parsed.data.kind === "assign") {
+        const assignment = parsed.data;
         if (actor.role !== "owner") return { ok: false, error: "Only the workspace owner can assign enquiries." };
-        const assignee = workspaceMembers.find((member) => member.user_id === parsed.data.userId);
+        const assignee = workspaceMembers.find((member) => member.user_id === assignment.userId);
         if (!assignee || (assignee.role !== "owner" && assignee.role !== "editor")) return { ok: false, error: "Choose an active owner or editor." };
-        row = await leads.assign(current.db, parsed.data.id, parsed.data.userId);
+        row = await leads.assign(current.db, assignment.id, assignment.userId);
       } else if (parsed.data.kind === "create") {
         if (actor.role === "viewer") return { ok: false, error: "Viewers cannot create enquiries." };
         if (current.tenant.status !== "live") return { ok: false, error: "Lead capture is available after the studio goes live." };
@@ -188,7 +189,7 @@ export default async function DashboardPage({
         row = await leads.updateWork(current.db, parsed.data.id, parsed.data.status, parsed.data.notes.trim());
       }
       revalidatePath(`/${tenant}/dashboard`);
-      revalidatePath(`/${tenant}/dashboard/${parsed.data.id}`);
+      revalidatePath(`/${tenant}/dashboard/${row.id}`);
       return { ok: true, data: row };
     } catch {
       return { ok: false, error: "The enquiry could not be saved. Check your access and try again." };
@@ -205,11 +206,12 @@ export default async function DashboardPage({
         ownerName,
         ownerEmail: context?.user.email ?? base.business.email ?? "",
         enquiries: items,
+        currentUserId,
         members,
         currentRole,
         canAssign: currentRole === "owner",
-        canEdit: canEditAuthenticatedWorkspace({ authenticated: Boolean(context), isSampleDemo: mode === "demo" }),
-        canUploadAssets: Boolean(context),
+        canEdit: mode === "demo" || (Boolean(context) && currentRole !== "viewer"),
+        canUploadAssets: Boolean(context && currentRole !== "viewer"),
         canCreate:
           mode === "demo" ||
           Boolean(eligible && context?.tenant.status === "live" && currentRole !== "viewer"),

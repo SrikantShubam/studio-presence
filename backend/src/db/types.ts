@@ -71,7 +71,7 @@ export type Lead = {
   source_page: string | null
   status: LeadStatus
   notes: string | null
-  assigned_to: string | null
+  assigned_to?: string | null
   created_at: string
   contacted_at: string | null
 }
@@ -170,6 +170,7 @@ export type Database = {
         Args: Record<never, never>
         Returns: string[]
       }
+      current_tenant_role: { Args: { p_tenant_id: string }; Returns: TenantMemberRole | null }
       list_tenant_members: { Args: { p_tenant_id: string }; Returns: Array<{ user_id: string; tenant_id: string; role: TenantMemberRole; created_at: string; email: string | null; display_name: string | null }> }
       create_tenant_invitation: { Args: { p_tenant_id: string; p_email_lower: string; p_email_display: string; p_role: Exclude<TenantMemberRole, 'owner'>; p_token_hash: string; p_expires_at: string }; Returns: string }
       revoke_tenant_invitation: { Args: { p_invitation_id: string }; Returns: boolean }

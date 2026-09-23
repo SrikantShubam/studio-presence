@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { AuthError, canAccessDashboard, leads, requireTenant, type Lead, type LeadStatus } from '@studio/backend'
+import { AuthError, canAccessDashboard, leads, listWorkspaceMembers, requireTenant, type Lead, type LeadStatus, type WorkspaceMember } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { AdminCard, AdminChip, AdminLinkButton, AdminMetric, AdminPageHeader, AdminShell } from '../../components'
 import { DEMO_LEADS } from '../../demo-data'
+import { DEMO_WORKSPACE_MEMBERS } from '../components/demo-data'
 
 type Filter = 'all' | 'new' | 'not-contacted' | 'this-month'
 
@@ -33,7 +34,7 @@ export default async function EnquiriesPage({
   const query = await searchParams
   const activeFilter = filterFrom(query?.filter)
   const baseDashboard = `/${tenant}/dashboard`
-  const { leads: allLeads, mode } = await loadLeads(tenant, query?.demo)
+  const { leads: allLeads, mode, members } = await loadLeads(tenant, query?.demo)
   const visibleLeads = filterLeads(allLeads, activeFilter)
   const sampleMode = mode === 'demo'
   const unavailableMode = mode === 'unavailable'
@@ -89,13 +90,13 @@ export default async function EnquiriesPage({
         ))}
       </div>
 
-      {visibleLeads.length === 0 ? <EmptyState unavailable={unavailableMode} /> : <AdminCard className="overflow-hidden">{visibleLeads.map((lead) => <LeadRow key={lead.id} lead={lead} demo={sampleMode} />)}</AdminCard>}
+      {visibleLeads.length === 0 ? <EmptyState unavailable={unavailableMode} /> : <AdminCard className="overflow-hidden">{visibleLeads.map((lead) => <LeadRow key={lead.id} lead={lead} demo={sampleMode} members={members} />)}</AdminCard>}
     </AdminShell>
   )
 }
 
-async function loadLeads(tenantSlug: string, demoParam: string | undefined): Promise<{ leads: Lead[]; mode: 'paid' | 'demo' | 'unavailable' }> {
-  if (demoParam === '1') return { leads: DEMO_LEADS, mode: 'demo' }
+async function loadLeads(tenantSlug: string, demoParam: string | undefined): Promise<{ leads: Lead[]; mode: 'paid' | 'demo' | 'unavailable'; members: WorkspaceMember[] }> {
+  if (demoParam === '1') return { leads: DEMO_LEADS, mode: 'demo', members: DEMO_WORKSPACE_MEMBERS }
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -106,7 +107,7 @@ async function loadLeads(tenantSlug: string, demoParam: string | undefined): Pro
 
   if (!user?.email || !session) {
     if (demoParam === '0') redirect(`/login?next=/${encodeURIComponent(tenantSlug)}/dashboard/enquiries`)
-    return { leads: DEMO_LEADS, mode: 'demo' }
+    return { leads: DEMO_LEADS, mode: 'demo', members: DEMO_WORKSPACE_MEMBERS }
   }
 
   try {
@@ -116,12 +117,12 @@ async function loadLeads(tenantSlug: string, demoParam: string | undefined): Pro
       accessToken: session.access_token,
     })
 
-    if (tenantContext.tenant.slug !== tenantSlug) return { leads: [], mode: 'unavailable' }
-    if (demoParam === '0') return { leads: [], mode: 'unavailable' }
-    if (canAccessDashboard(tenantContext.tenant)) return { leads: await leads.list(tenantContext.db), mode: 'paid' }
-    return { leads: DEMO_LEADS, mode: 'demo' }
+    if (tenantContext.tenant.slug !== tenantSlug) return { leads: [], mode: 'unavailable', members: [] }
+    if (demoParam === '0') return { leads: [], mode: 'unavailable', members: [] }
+    if (canAccessDashboard(tenantContext.tenant)) return { leads: await leads.list(tenantContext.db), mode: 'paid', members: await listWorkspaceMembers(tenantContext.db, tenantContext.tenant.id) }
+    return { leads: DEMO_LEADS, mode: 'demo', members: DEMO_WORKSPACE_MEMBERS }
   } catch (e) {
-    if (e instanceof AuthError && (e.code === 'no-tenant' || e.code === 'wrong-tenant')) return { leads: [], mode: 'unavailable' }
+    if (e instanceof AuthError && (e.code === 'no-tenant' || e.code === 'wrong-tenant')) return { leads: [], mode: 'unavailable', members: [] }
     throw e
   }
 }
@@ -148,7 +149,7 @@ function isThisMonth(value: string): boolean {
   return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
 }
 
-function LeadRow({ lead, demo }: { lead: Lead; demo: boolean }) {
+function LeadRow({ lead, demo, members }: { lead: Lead; demo: boolean; members: WorkspaceMember[] }) {
   const whatsappHref = `https://wa.me/${lead.phone.replace(/\D/g, '')}`
   const detailLines = [lead.project_type, lead.locality, lead.timeline].filter(Boolean).join(' - ')
   const budget = lead.source === 'estimate' ? lead.budget_band : null
@@ -168,6 +169,7 @@ function LeadRow({ lead, demo }: { lead: Lead; demo: boolean }) {
         {lead.email && <span>{lead.email}</span>}
         {budget && <span>{budget}</span>}
         <span>{relativeTime(lead.created_at)} · {lead.source}</span>
+        <span>Assigned to: {members.find((member) => member.user_id === lead.assigned_to)?.display_name || members.find((member) => member.user_id === lead.assigned_to)?.email || 'Unassigned'}</span>
         {demo && <span>read-only sample</span>}
       </div>
       <div className="grid grid-cols-2 gap-2 lg:w-48">

@@ -315,7 +315,7 @@ export function SettingsTab({
   return (
     <>
       <PageHeading title="Your studio. Your workspace." description="Update the contact details your customers see." />
-<TeamManagement tenant={tenant} mode={mode} />
+      <TeamManagement tenant={tenant} mode={mode} />
       <form onSubmit={save}>
         <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)]">
           <Panel title="Public studio details" description="Studio name and domain are managed by your operator." action={<Globe aria-hidden="true" className="size-4 text-admin-muted" />}>
@@ -486,7 +486,6 @@ export function DigitalCardTab({
 }: {
   tenant: string;
   config: WorkspaceConfig;
-  tenant: string;
 }) {
   const [url, setURL] = useState("");
   const [message, setMessage] = useState("");

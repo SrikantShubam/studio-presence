@@ -153,6 +153,16 @@ export async function updateWork(db: Db, leadId: string, status: LeadStatus, not
   return assertSingleLead(data, error)
 }
 
+
+
+export async function assign(db: Db, leadId: string, userId: string): Promise<Lead> {
+  const { data, error } = await db.rpc('assign_lead', {
+    p_lead_id: leadId,
+    p_user_id: userId,
+  })
+  return assertSingleLead(data, error)
+}
+
 export async function updateStatus(db: Db, leadId: string, status: LeadStatus): Promise<Lead> {
   const current = await get(db, leadId)
   if (!current) throw new LeadWriteError('Lead was not found.')
@@ -165,20 +175,12 @@ export async function addNote(db: Db, leadId: string, note: string): Promise<Lea
   return updateWork(db, leadId, current.status, note)
 }
 
-export async function assign(db: Db, leadId: string, userId: string): Promise<Lead> {
-  const { data, error } = await db.rpc('assign_lead', {
-    p_lead_id: leadId,
-    p_user_id: userId,
-  })
-  return assertSingleLead(data, error)
-}
-
 export const leads = {
   create,
   list,
   get,
+  updateWork,
   updateStatus,
   addNote,
-  updateWork,
   assign,
 }

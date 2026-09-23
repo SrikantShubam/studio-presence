@@ -428,6 +428,7 @@ export function DashboardWorkspace({
           config={data.config}
           tenant={data.tenant}
           mode={data.mode}
+          canEdit={data.canEdit}
           canUploadAssets={data.canUploadAssets}
           onSave={saveConfig}
         />
@@ -436,6 +437,7 @@ export function DashboardWorkspace({
         <CalculatorTab
           config={data.config}
           mode={data.mode}
+          canEdit={data.canEdit}
           onSave={saveConfig}
         />
       </PersistentTab>
@@ -450,6 +452,7 @@ export function DashboardWorkspace({
           ownerName={profileOwnerName}
           ownerEmail={data.ownerEmail}
           mode={data.mode}
+          canEdit={data.canEdit}
           onSave={saveConfig}
         />
       </PersistentTab>
