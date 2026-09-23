@@ -18,6 +18,7 @@ import { confirmationRequest } from '../frontend/lib/auth-confirmation.ts'
 
 const inviteEntry = readFileSync('frontend/app/invite/[token]/InvitationEntry.tsx', 'utf8')
 const platformLogin = readFileSync('frontend/app/login/page.tsx', 'utf8')
+const loginForm = readFileSync('frontend/app/[tenant]/(admin)/login/LoginForm.tsx', 'utf8')
 const membershipRoute = readFileSync('frontend/app/[tenant]/(admin)/dashboard/components/../../../../api/[tenant]/members/route.ts', 'utf8')
 
 assert.equal(
@@ -118,5 +119,8 @@ assert.match(inviteEntry, /\/login\?next=/, 'invite entry page must preserve the
 assert.match(membershipRoute, /searchParams\.set\(['"]tenant['"]/, 'invitation links must carry the tenant slug for branding')
 assert.match(platformLogin, /Private workspace/, 'platform login must use invitation-specific eyebrow')
 assert.match(platformLogin, /email address that received this invitation/, 'platform login must explain invited email matching')
+assert.match(loginForm, /Show password/, 'login form must provide a visible password toggle')
+assert.match(loginForm, /Hide password/, 'login form must provide a visible password hide toggle')
+assert.match(loginForm, /pr-12/, 'password inputs must reserve space for the toggle')
 
 console.log('platform auth tests passed')

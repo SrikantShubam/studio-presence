@@ -1,5 +1,6 @@
 'use client'
 
+import { Eye, EyeOff } from 'lucide-react'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 import { AUTH_ERROR_MESSAGES, isValidPassword } from '@/lib/auth-policy'
@@ -34,6 +35,8 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmation, setConfirmation] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
   const [status, setStatus] = useState<'idle' | 'oauth' | 'submitting' | 'sent' | 'error'>('idle')
   const isInvite = Boolean(nextPath?.startsWith('/invite/'))
   const [intent, setIntent] = useState<'signin' | 'signup'>('signin')
@@ -202,9 +205,24 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
           </div>
           <div className="flex flex-col gap-1.5">
             <label htmlFor="password" className="text-sm font-medium text-admin-ink">Password</label>
-            <input id="password" type="password" autoComplete={isSignup ? 'new-password' : 'current-password'} minLength={12} required value={password} onChange={(event) => setPassword(event.target.value)} className="min-h-12 rounded-lg border border-admin-border bg-admin-surface px-4 text-base text-admin-ink outline-none focus:border-admin-primary" />
+            <div className="relative">
+              <input id="password" type={showPassword ? 'text' : 'password'} autoComplete={isSignup ? 'new-password' : 'current-password'} minLength={12} required value={password} onChange={(event) => setPassword(event.target.value)} className="min-h-12 w-full rounded-lg border border-admin-border bg-admin-surface px-4 pr-12 text-base text-admin-ink outline-none focus:border-admin-primary" />
+              <button type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} aria-pressed={showPassword} onClick={() => setShowPassword((visible) => !visible)} className="absolute inset-y-0 right-0 inline-flex w-12 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-admin-primary">
+                {showPassword ? <EyeOff aria-hidden="true" className="size-5" /> : <Eye aria-hidden="true" className="size-5" />}
+              </button>
+            </div>
           </div>
-          {isSignup && <div className="flex flex-col gap-1.5"><label htmlFor="password-confirmation" className="text-sm font-medium text-admin-ink">Confirm password</label><input id="password-confirmation" type="password" autoComplete="new-password" minLength={12} required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} className="min-h-12 rounded-lg border border-admin-border bg-admin-surface px-4 text-base text-admin-ink outline-none focus:border-admin-primary" /></div>}
+          {isSignup && (
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="password-confirmation" className="text-sm font-medium text-admin-ink">Confirm password</label>
+              <div className="relative">
+                <input id="password-confirmation" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" minLength={12} required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} className="min-h-12 w-full rounded-lg border border-admin-border bg-admin-surface px-4 pr-12 text-base text-admin-ink outline-none focus:border-admin-primary" />
+                <button type="button" aria-label={showConfirmation ? 'Hide confirmation password' : 'Show confirmation password'} aria-pressed={showConfirmation} onClick={() => setShowConfirmation((visible) => !visible)} className="absolute inset-y-0 right-0 inline-flex w-12 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-admin-primary">
+                  {showConfirmation ? <EyeOff aria-hidden="true" className="size-5" /> : <Eye aria-hidden="true" className="size-5" />}
+                </button>
+              </div>
+            </div>
+          )}
 
           {error && <p className="rounded-lg border border-admin-alert bg-admin-alert-soft px-3 py-2 text-sm font-medium text-admin-alert">{error}</p>}
           <button type="submit" disabled={status === 'submitting' || status === 'oauth'} className="min-h-12 rounded-full border border-admin-border bg-admin-surface px-4 text-base font-semibold text-admin-ink disabled:opacity-60">{status === 'submitting' ? 'Working…' : isSignup ? 'Create account' : 'Sign in with email'}</button>
