@@ -63,7 +63,13 @@ async function authenticatedContext(expectedTenant: string) {
     context.tenant.status === "archived"
   )
     throw new Error("Workspace access denied.");
-  return context;
+  return {
+    ...context,
+    profileMetadata: {
+      ...(user.user_metadata ?? {}),
+      ...(user.identities?.[0]?.identity_data ?? {}),
+    },
+  };
 }
 
 export default async function DashboardPage({
@@ -112,6 +118,14 @@ export default async function DashboardPage({
       ),
     );
   }
+  const profileMetadata = context?.profileMetadata ?? {};
+  const ownerName =
+    stringFrom(profileMetadata.full_name) ??
+    stringFrom(profileMetadata.name) ??
+    nameFromEmail(context?.user.email) ??
+    base.business.ownerName ??
+    "";
+
   let items: Enquiry[] = mode === "demo" ? DEMO_ENQUIRIES : [];
   let leadError: string | undefined;
   if (mode === "live" && context) {
@@ -213,6 +227,7 @@ export default async function DashboardPage({
         tenant,
         mode,
         config,
+        ownerName,
         ownerEmail: context?.user.email ?? base.business.email ?? "",
         enquiries: items,
         canEdit:
@@ -226,4 +241,18 @@ export default async function DashboardPage({
       leadAction={mutateLead}
     />
   );
+}
+
+function stringFrom(value: unknown): string | null {
+  return typeof value === "string" && value.trim() ? value : null;
+}
+
+function nameFromEmail(email: string | null | undefined): string | null {
+  const local = email?.split("@")[0]?.trim();
+  if (!local) return null;
+  const words = local
+    .split(/[._-]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+  return words.length ? words.join(" ") : null;
 }

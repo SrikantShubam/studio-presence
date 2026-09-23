@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, QrCode, ScanLine, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
 import { SAMPLE_CITIES, SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
@@ -231,12 +232,14 @@ function CityDemandPanel({ data, onNavigate }: { data: WorkspaceData; onNavigate
 
 export function SettingsTab({
   config,
+  ownerName,
   ownerEmail,
   mode,
   canEdit,
   onSave,
 }: {
   config: WorkspaceConfig;
+  ownerName: string;
   ownerEmail: string;
   mode: Mode;
   canEdit: boolean;
@@ -247,8 +250,16 @@ export function SettingsTab({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [ownerEmailDraft, setOwnerEmailDraft] = useState(ownerEmail);
   const [newLeadAlerts, setNewLeadAlerts] = useState(true);
   const [weeklyDigest, setWeeklyDigest] = useState(true);
+  const ownerNameValue = "ownerName" in edits ? String(edits.ownerName ?? "") : business.ownerName?.trim() || ownerName;
+  const ownerEmailChanged = ownerEmailDraft.trim() !== ownerEmail;
+
+  useEffect(() => {
+    setOwnerEmailDraft(ownerEmail);
+  }, [ownerEmail]);
+
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
@@ -265,6 +276,10 @@ export function SettingsTab({
       );
       return;
     }
+    if (ownerEmailChanged && !/^\S+@\S+\.\S+$/.test(ownerEmailDraft.trim())) {
+      setError("Enter a valid owner email address.");
+      return;
+    }
     setPending(true);
     try {
       const patch: Record<string, unknown> = Object.fromEntries(
@@ -272,12 +287,21 @@ export function SettingsTab({
       );
       if ("phone" in edits) patch["business.phone"] = `+${phone}`;
       if ("whatsapp" in edits) patch["business.whatsapp"] = `+${whatsapp}`;
-      await onSave(patch);
+      if (Object.keys(patch).length > 0) await onSave(patch);
+      if (ownerEmailChanged && mode !== "demo") {
+        const supabase = createSupabaseBrowserClient();
+        const { error: emailError } = await supabase.auth.updateUser({
+          email: ownerEmailDraft.trim(),
+        });
+        if (emailError) throw emailError;
+      }
       setEdits({});
       setMessage(
-        mode === "demo"
-          ? "Sample settings saved in this browser."
-          : "Studio details saved to the website.",
+        ownerEmailChanged && mode !== "demo"
+          ? "Studio details saved. Check both email addresses to confirm the owner email change."
+          : mode === "demo"
+            ? "Sample settings saved in this browser."
+            : "Studio details saved to the website.",
       );
     } catch (error) {
       setError(errorMessage(error));
@@ -323,8 +347,22 @@ export function SettingsTab({
           <div className="grid gap-5">
             <Panel title="Workspace owner" description="The owner visible to your studio team." action={<ShieldCheck aria-hidden="true" className="size-4 text-admin-muted" />}>
               <fieldset disabled={!canEdit || pending} className="grid gap-4 p-5">
-                <Field label="Owner name"><input className={inputClass} maxLength={250} value={business.ownerName ?? ""} onChange={(event) => setEdits({ ...edits, ownerName: event.target.value })} /></Field>
-                <Field label="Owner email"><input className={inputClass} value={ownerEmail} readOnly /></Field>
+                <Field label="Owner name">
+                  <div className="relative">
+                    <input className={inputClass + " pr-11"} maxLength={250} value={ownerNameValue} onChange={(event) => setEdits({ ...edits, ownerName: event.target.value })} />
+                    <button type="button" className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary" aria-label="Edit owner name" title="Edit owner name" onClick={(event) => { const input = event.currentTarget.previousElementSibling as HTMLInputElement | null; input?.focus(); input?.select(); }}>
+                      <Pencil aria-hidden="true" className="size-4" />
+                    </button>
+                  </div>
+                </Field>
+                <Field label="Owner email">
+                  <div className="relative">
+                    <input className={inputClass + " pr-11"} type="email" value={ownerEmailDraft} onChange={(event) => setOwnerEmailDraft(event.target.value)} />
+                    <button type="button" className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary" aria-label="Edit owner email" title="Edit owner email" onClick={(event) => { const input = event.currentTarget.previousElementSibling as HTMLInputElement | null; input?.focus(); input?.select(); }}>
+                      <Pencil aria-hidden="true" className="size-4" />
+                    </button>
+                  </div>
+                </Field>
                 <p className="text-xs leading-6 text-admin-muted">Workspace access and sign out are available from the studio account menu.</p>
               </fieldset>
             </Panel>

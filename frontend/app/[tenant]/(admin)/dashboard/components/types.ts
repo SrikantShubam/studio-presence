@@ -69,6 +69,7 @@ export type WorkspaceData = {
   tenant: string;
   mode: Mode;
   config: WorkspaceConfig;
+  ownerName: string;
   ownerEmail: string;
   enquiries: Enquiry[];
   canEdit: boolean;

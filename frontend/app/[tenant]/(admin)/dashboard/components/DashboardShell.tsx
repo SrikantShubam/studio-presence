@@ -432,6 +432,7 @@ export function DashboardWorkspace({
       <PersistentTab active={view === "settings"}>
         <SettingsTab
           config={data.config}
+          ownerName={data.ownerName}
           ownerEmail={data.ownerEmail}
           mode={data.mode}
           canEdit={data.canEdit}
