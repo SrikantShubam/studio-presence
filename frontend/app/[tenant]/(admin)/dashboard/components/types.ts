@@ -102,6 +102,15 @@ export function dashboardMode(
   if (demo === "0" && eligible) return "live";
   return demo === "0" ? "unavailable" : "demo";
 }
+export function sampleDataToggleHref(
+  base: string,
+  queryString: string,
+  mode: Mode,
+): string {
+  const query = new URLSearchParams(queryString);
+  query.set("demo", mode === "demo" ? "0" : "1");
+  return `${base}?${query}`;
+}
 export function canUploadWorkspaceLogo({
   canUploadAssets,
 }: {

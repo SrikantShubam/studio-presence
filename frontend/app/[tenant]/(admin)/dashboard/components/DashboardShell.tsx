@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { Calculator, ChartNoAxesCombined, ChevronDown, Inbox, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, UserRound, type LucideIcon } from "lucide-react";
+import { Calculator, ChartNoAxesCombined, ChevronDown, Inbox, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, ToggleLeft, ToggleRight, Unplug, UserRound, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
 import {
   Button,
@@ -21,6 +21,7 @@ import {
   type EnquiryFilters,
   type LeadAction,
   type WorkspaceData,
+  sampleDataToggleHref,
 } from "./types";
 import OverviewTab from "./OverviewTab";
 import { EnquiryDesk } from "./EnquiryDesk";
@@ -211,6 +212,21 @@ export function DashboardShell({
             </p>
           </div>
           <div className="flex shrink-0 items-center gap-2">
+            {/* Manual-only control: never auto-toggle sample data from effects or background actions. */}
+            <Link
+              href={sampleDataToggleHref(base, params.toString(), params.get("demo") === "1" ? "demo" : "live")}
+              className={buttonClass + " gap-2 px-3"}
+              aria-pressed={params.get("demo") === "1"}
+              aria-label={params.get("demo") === "1" ? "Turn sample data off" : "Turn sample data on"}
+              title={params.get("demo") === "1" ? "Turn sample data off" : "Turn sample data on"}
+            >
+              {params.get("demo") === "1" ? (
+                <ToggleRight aria-hidden="true" className="size-4" />
+              ) : (
+                <ToggleLeft aria-hidden="true" className="size-4" />
+              )}
+              <span className="hidden sm:inline">Sample data {params.get("demo") === "1" ? "on" : "off"}</span>
+            </Link>
             <ThemeToggle />
             {authenticated ? (
               <AccountMenu
