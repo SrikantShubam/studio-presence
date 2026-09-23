@@ -40,6 +40,8 @@ const phoneFieldClass = [
   "[&_.react-international-phone-country-selector-button]:!border-0",
   "[&_.react-international-phone-country-selector-button]:!h-11",
   "[&_.react-international-phone-country-selector-button]:!min-h-11",
+  "[&_.react-international-phone-country-selector-button]:!justify-start",
+  "[&_.react-international-phone-country-selector-button]:!px-2",
   "[&_.react-international-phone-country-selector-button]:!bg-transparent",
   "[&_.react-international-phone-country-selector-button]:!text-admin-ink",
   "[&_.react-international-phone-country-selector-button:hover]:!bg-transparent",
