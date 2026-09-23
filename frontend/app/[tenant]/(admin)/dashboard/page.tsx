@@ -136,7 +136,6 @@ export default async function DashboardPage({
 
   let members: WorkspaceMember[] = mode === "demo" ? DEMO_WORKSPACE_MEMBERS : [];
   let currentRole: "owner" | "editor" | "viewer" = mode === "demo" ? "owner" : "viewer";
-  const currentUserId = context?.user.id ?? "demo-owner";
   let items: Enquiry[] = mode === "demo" ? DEMO_ENQUIRIES : [];
   let leadError: string | undefined;
   if (mode === "live" && context) {
