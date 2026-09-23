@@ -16,7 +16,6 @@ import {
 } from '../frontend/lib/auth-policy.ts'
 import { confirmationRequest } from '../frontend/lib/auth-confirmation.ts'
 
-const invitePage = readFileSync('frontend/app/invite/[token]/page.tsx', 'utf8')
 const inviteEntry = readFileSync('frontend/app/invite/[token]/InvitationEntry.tsx', 'utf8')
 
 assert.equal(
