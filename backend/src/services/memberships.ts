@@ -108,19 +108,40 @@ export async function sendWorkspaceInvitation(input: {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) throw new Error('RESEND_API_KEY is not set')
   const from = process.env.RESEND_FROM_EMAIL ?? 'Studio Presence <onboarding@resend.dev>'
+  if (/@(gmail|googlemail|yahoo|hotmail|outlook|icloud)\./i.test(from)) {
+    throw new Error('RESEND_FROM_EMAIL must use a verified sending domain, not a personal mailbox address.')
+  }
+  const escapeHtml = (value: string) => value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+  const logoUrl = new URL('/brand/studio-presence-logo.svg', input.inviteUrl).toString()
+  const inviter = input.inviterName || 'your workspace owner'
   const text = [
-    `You have been invited to join ${input.studioName} on Studio Presence.`,
+    `${inviter} has invited you to join ${input.studioName} on Studio Presence.`,
     '',
     `Role: ${input.role}`,
-    `Invited by: ${input.inviterName || 'Workspace owner'}`,
+    `Invited by: ${inviter}`,
     '',
     `This invitation expires in 24 hours. Open the link to accept:`,
     input.inviteUrl,
   ].join('\n')
+  const html = `<!doctype html><html><body style="margin:0;background:#f4f3ef;color:#171717;font-family:Arial,Helvetica,sans-serif"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:32px 16px"><tr><td align="center"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#fff;border:1px solid #deddd8"><tr><td style="padding:28px 32px;border-bottom:1px solid #deddd8"><img src="${logoUrl}" width="48" height="48" alt="Studio Presence" style="display:block;margin-bottom:16px"><div style="font-size:18px;font-weight:700">Studio Presence</div><div style="margin-top:4px;color:#686862;font-size:12px">by Vector Veda</div></td></tr><tr><td style="padding:32px"><div style="color:#686862;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase">Workspace invitation</div><h1 style="margin:12px 0 16px;font-size:28px;line-height:1.2">Join ${escapeHtml(input.studioName)} on Studio Presence</h1><p style="font-size:16px;line-height:1.6">${escapeHtml(inviter)} has invited you to join the workspace as a <strong>${escapeHtml(input.role)}</strong>.</p><p style="font-size:14px;line-height:1.6;color:#686862">Use the button below to sign in or create an account with this invited email address. Your access will be connected to the workspace after you accept.</p><p style="margin:28px 0"><a href="${escapeHtml(input.inviteUrl)}" style="display:inline-block;background:#171717;color:#fff;text-decoration:none;padding:14px 20px;font-size:14px;font-weight:700">Accept invitation</a></p><p style="font-size:12px;line-height:1.5;color:#686862">This invitation expires in 24 hours. If you were not expecting it, you can ignore this message.</p></td></tr></table></td></tr></table></body></html>`
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from, to: input.to, subject: `Join ${input.studioName} on Studio Presence`, text }),
+    body: JSON.stringify({ from, to: input.to, subject: `Join ${input.studioName} on Studio Presence`, text, html }),
   })
-  if (!response.ok) throw new Error(`Resend returned ${response.status}`)
+  if (!response.ok) {
+    let providerMessage = ''
+    try {
+      const payload = (await response.json()) as { message?: string; name?: string }
+      providerMessage = payload.message || payload.name || ''
+    } catch {
+      // Keep the status when the provider does not return JSON.
+    }
+    throw new Error(`Resend rejected the invitation email (${response.status})${providerMessage ? `: ${providerMessage}` : ''}`)
+  }
 }

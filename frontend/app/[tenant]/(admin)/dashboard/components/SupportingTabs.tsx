@@ -664,56 +664,133 @@ export function SettingsTab({
             <fieldset disabled={!canEdit || pending} className="grid gap-5 p-5 sm:grid-cols-2">
               <Field label="Studio name"><input className={inputClass} value={business.name} readOnly /></Field>
               <Field label="Studio tagline">
-                <input
-                  className={inputClass}
-                  maxLength={250}
-                  value={business.tagline ?? ""}
-                  onChange={(event) => setEdits({ ...edits, tagline: event.target.value })}
-                />
+                <div className="relative">
+                  <input
+                    className={inputClass + " pr-11"}
+                    maxLength={250}
+                    value={business.tagline ?? ""}
+                    onChange={(event) => setEdits({ ...edits, tagline: event.target.value })}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    aria-label="Edit studio tagline"
+                    title="Edit studio tagline"
+                    onClick={(event) => {
+                      const input = event.currentTarget.previousElementSibling as HTMLInputElement | null;
+                      input?.focus();
+                      input?.select();
+                    }}
+                  >
+                    <Pencil aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
               </Field>
               <Field label="Studio phone" hint="Choose a country, then enter the number without the country code.">
-                <PhoneInput
-                  international
-                  defaultCountry="IN"
-                  countryCallingCodeEditable={false}
-                  labels={COUNTRY_LABELS}
-                  required
-                  value={business.phone || undefined}
-                  onChange={(value) => setEdits({ ...edits, phone: value ?? "" })}
-                  className={inputClass + " flex items-center gap-2"}
-                  numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
-                />
+                <div className="relative">
+                  <PhoneInput
+                    international
+                    defaultCountry="IN"
+                    countryCallingCodeEditable={false}
+                    labels={COUNTRY_LABELS}
+                    required
+                    value={business.phone || undefined}
+                    onChange={(value) => setEdits({ ...edits, phone: value ?? "" })}
+                    className={inputClass + " flex items-center gap-2 pr-11"}
+                    numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    aria-label="Edit studio phone"
+                    title="Edit studio phone"
+                    onClick={(event) => {
+                      const container = event.currentTarget.previousElementSibling as HTMLElement | null;
+                      const input = container?.querySelector("input[type='tel'], input") as HTMLInputElement | null;
+                      input?.focus();
+                      input?.select();
+                    }}
+                  >
+                    <Pencil aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
               </Field>
               <Field label="WhatsApp number" hint="Choose a country, then enter the number without the country code.">
-                <PhoneInput
-                  international
-                  defaultCountry="IN"
-                  countryCallingCodeEditable={false}
-                  labels={COUNTRY_LABELS}
-                  required
-                  value={business.whatsapp || undefined}
-                  onChange={(value) => setEdits({ ...edits, whatsapp: value ?? "" })}
-                  className={inputClass + " flex items-center gap-2"}
-                  numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
-                />
+                <div className="relative">
+                  <PhoneInput
+                    international
+                    defaultCountry="IN"
+                    countryCallingCodeEditable={false}
+                    labels={COUNTRY_LABELS}
+                    required
+                    value={business.whatsapp || undefined}
+                    onChange={(value) => setEdits({ ...edits, whatsapp: value ?? "" })}
+                    className={inputClass + " flex items-center gap-2 pr-11"}
+                    numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    aria-label="Edit WhatsApp number"
+                    title="Edit WhatsApp number"
+                    onClick={(event) => {
+                      const container = event.currentTarget.previousElementSibling as HTMLElement | null;
+                      const input = container?.querySelector("input[type='tel'], input") as HTMLInputElement | null;
+                      input?.focus();
+                      input?.select();
+                    }}
+                  >
+                    <Pencil aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
               </Field>
               <Field label="Public email">
-                <input
-                  className={inputClass}
-                  maxLength={250}
-                  type="email"
-                  required={Boolean(config.business.email)}
-                  value={business.email ?? ""}
-                  onChange={(event) => setEdits({ ...edits, email: event.target.value })}
-                />
+                <div className="relative">
+                  <input
+                    className={inputClass + " pr-11"}
+                    maxLength={250}
+                    type="email"
+                    required={Boolean(config.business.email)}
+                    value={business.email ?? ""}
+                    onChange={(event) => setEdits({ ...edits, email: event.target.value })}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    aria-label="Edit public email"
+                    title="Edit public email"
+                    onClick={(event) => {
+                      const input = event.currentTarget.previousElementSibling as HTMLInputElement | null;
+                      input?.focus();
+                      input?.select();
+                    }}
+                  >
+                    <Pencil aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
               </Field>
               <Field label="Primary city" hint="The main city where your studio is physically based.">
-                <input
-                  className={inputClass}
-                  required
-                  value={business.address.city}
-                  onChange={(event) => setEdits({ ...edits, address: { ...business.address, city: event.target.value } })}
-                />
+                <div className="relative">
+                  <input
+                    className={inputClass + " pr-11"}
+                    required
+                    value={business.address.city}
+                    onChange={(event) => setEdits({ ...edits, address: { ...business.address, city: event.target.value } })}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    aria-label="Edit primary city"
+                    title="Edit primary city"
+                    onClick={(event) => {
+                      const input = event.currentTarget.previousElementSibling as HTMLInputElement | null;
+                      input?.focus();
+                      input?.select();
+                    }}
+                  >
+                    <Pencil aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
               </Field>
               <div className="sm:col-span-2">
                 <Field label="Other cities & service areas" hint="Additional cities or regions your studio accepts projects in.">

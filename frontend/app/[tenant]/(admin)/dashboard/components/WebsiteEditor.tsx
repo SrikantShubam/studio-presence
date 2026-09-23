@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, FileText, Image as ImageIcon, Images, Layers, Monitor, PanelBottom, Phone, Smartphone } from "lucide-react";
+import { ArrowUpRight, Check, FileText, Image as ImageIcon, Images, Layers, Monitor, PanelBottom, Phone, Share2, Smartphone, Upload } from "lucide-react";
 import { createPortal } from "react-dom";
 import {
   Button,
@@ -57,6 +57,9 @@ export default function WebsiteEditor({
   const [pending, setPending] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [selectedLogoFile, setSelectedLogoFile] = useState("");
+  const [uploadingOgImage, setUploadingOgImage] = useState(false);
+  const [selectedOgFile, setSelectedOgFile] = useState("");
+  const [showCustomOgUrl, setShowCustomOgUrl] = useState(false);
   const [review, setReview] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [error, setError] = useState("");
@@ -131,6 +134,25 @@ export default function WebsiteEditor({
     }
   }
 
+  async function uploadOgImage(file: File) {
+    setUploadingOgImage(true);
+    setError("");
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("assetType", "photo");
+      const response = await fetch("/api/onboarding/upload", { method: "POST", body: formData });
+      const payload = (await response.json()) as { assetPath?: string; error?: string };
+      if (!response.ok || !payload.assetPath) throw new Error(payload.error ?? "Social share image upload failed.");
+      update("brand.ogImage", payload.assetPath);
+      setFeedback("Social share image uploaded. Review and save to apply it.");
+    } catch (uploadError) {
+      setError(errorMessage(uploadError));
+    } finally {
+      setUploadingOgImage(false);
+    }
+  }
+
   async function save() {
     setPending(true);
     setError("");
@@ -187,17 +209,55 @@ export default function WebsiteEditor({
         <p className="pb-2 text-[10px] text-admin-muted">Language changes the editor view. Publish translated content separately.</p>
       </div>
       <Panel title="Studio identity & search" description="Set the public logo and the metadata used when your site is shared.">
-        <div className="grid gap-4 p-4 sm:grid-cols-2">
-          <Field label="Upload your logo" hint={canUploadLogo ? "PNG, JPG, or WebP up to 2 MB." : "Logo upload is available from the authenticated dashboard."}>
-            {draft.brand.logo && (
-              <div className="border border-admin-border bg-admin-bg p-3">
-                <p className="mb-2 text-[10px] text-admin-muted">Current logo</p>
-                <img src={draft.brand.logo} alt="Current studio logo" className="h-14 w-28 object-contain" />
+        <div className="grid gap-5 p-4 lg:grid-cols-2">
+          {/* Logo Card */}
+          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-4">
+            <div>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-xs font-semibold text-admin-ink">Choose logo</h3>
+                  <p className="mt-1 text-[11px] text-admin-muted">
+                    {canUploadLogo
+                      ? "PNG, JPG, or WebP up to 2 MB."
+                      : "Logo upload is available from the authenticated dashboard."}
+                  </p>
+                </div>
+                {/* Top-right corner: Current logo showcase */}
+                <div className="shrink-0 text-right">
+                  <div className="mb-1.5 flex items-center justify-end gap-1.5">
+                    <span
+                      className={`inline-block size-1.5 rounded-full ${
+                        draft.brand.logo ? "bg-admin-success" : "bg-admin-muted"
+                      }`}
+                    />
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-admin-muted">
+                      {draft.brand.logo ? "Active logo" : "No logo set"}
+                    </span>
+                  </div>
+                  <div className="flex h-16 w-32 items-center justify-center border border-admin-border bg-admin-bg p-2">
+                    {draft.brand.logo ? (
+                      <img
+                        src={draft.brand.logo}
+                        alt="Current studio logo"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    ) : (
+                      <span className="text-[11px] text-admin-muted">No logo</span>
+                    )}
+                  </div>
+                </div>
               </div>
-            )}
-            <div className="flex min-h-11 items-center gap-3">
-              <label className={`${buttonClass} shrink-0 border-admin-ink bg-admin-ink text-admin-bg hover:bg-admin-ink/90 ${uploadingLogo || !canUploadLogo ? "pointer-events-none opacity-50" : "cursor-pointer"}`}>
-                <span>{uploadingLogo ? "Uploading…" : "Choose file"}</span>
+            </div>
+
+            {/* Bottom action bar */}
+            <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-admin-border pt-4">
+              <label
+                className={`${buttonClass} shrink-0 cursor-pointer border-admin-border bg-admin-raised text-admin-ink hover:bg-admin-surface ${
+                  uploadingLogo || !canUploadLogo ? "pointer-events-none opacity-50" : ""
+                }`}
+              >
+                <Upload aria-hidden="true" className="size-3.5" />
+                <span>{uploadingLogo ? "Uploading…" : "Choose logo"}</span>
                 <input
                   className="sr-only"
                   type="file"
@@ -211,18 +271,164 @@ export default function WebsiteEditor({
                   }}
                 />
               </label>
-              <span className="min-w-0 truncate text-xs text-admin-muted">{selectedLogoFile || "No file selected"}</span>
+              <span className="min-w-0 flex-1 truncate text-xs text-admin-muted">
+                {selectedLogoFile ? (
+                  <span className="inline-flex items-center gap-1 font-medium text-admin-ink">
+                    <Check aria-hidden="true" className="size-3 text-admin-success" />
+                    {selectedLogoFile}
+                  </span>
+                ) : draft.brand.logo ? (
+                  "Active logo in use"
+                ) : (
+                  "No file selected"
+                )}
+              </span>
+              {draft.brand.logo && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    update("brand.logo", "");
+                    setSelectedLogoFile("");
+                  }}
+                  className="text-xs text-admin-muted hover:text-admin-alert"
+                  title="Remove logo"
+                >
+                  Remove
+                </button>
+              )}
             </div>
+          </div>
+
+          {/* Social Share Image Card */}
+          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-4">
+            <div>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-xs font-semibold text-admin-ink">Social share image</h3>
+                  <p className="mt-1 text-[11px] text-admin-muted">
+                    Preview card shown when your link is shared on WhatsApp, Instagram, or LinkedIn.
+                  </p>
+                </div>
+                <div className="shrink-0 text-right">
+                  <span className="text-[10px] font-medium uppercase tracking-wider text-admin-muted">
+                    1200 × 630 recommended
+                  </span>
+                </div>
+              </div>
+
+              {/* Realistic 16:9 preview card */}
+              <div className="my-3 overflow-hidden border border-admin-border bg-admin-bg">
+                <div className="relative aspect-video w-full bg-admin-raised">
+                  {draft.brand.ogImage ? (
+                    <img
+                      src={draft.brand.ogImage}
+                      alt="Social share preview"
+                      className="size-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex size-full flex-col items-center justify-center p-4 text-center">
+                      <Share2 aria-hidden="true" className="size-5 text-admin-muted opacity-50" />
+                      <p className="mt-1 text-xs font-medium text-admin-muted">No social share image</p>
+                      <p className="text-[10px] text-admin-muted">Upload a photo to show a rich preview card when shared</p>
+                    </div>
+                  )}
+                </div>
+                <div className="border-t border-admin-border bg-admin-surface px-3 py-2">
+                  <p className="truncate text-xs font-medium text-admin-ink">
+                    {draft.seo.title || config.business.name}
+                  </p>
+                  <p className="truncate text-[10px] text-admin-muted">
+                    {config.business.tagline || `${config.business.address.city} · Interior Design Studio`}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom action bar */}
+            <div>
+              <div className="flex flex-wrap items-center gap-3 border-t border-admin-border pt-4">
+                <label
+                  className={`${buttonClass} shrink-0 cursor-pointer border-admin-border bg-admin-raised text-admin-ink hover:bg-admin-surface ${
+                    uploadingOgImage || !canUploadLogo ? "pointer-events-none opacity-50" : ""
+                  }`}
+                >
+                  <Upload aria-hidden="true" className="size-3.5" />
+                  <span>{uploadingOgImage ? "Uploading…" : "Choose image"}</span>
+                  <input
+                    className="sr-only"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                    disabled={uploadingOgImage || !canUploadLogo}
+                    onChange={(event) => {
+                      const file = event.target.files?.[0];
+                      if (!file) return;
+                      setSelectedOgFile(file.name);
+                      void uploadOgImage(file);
+                    }}
+                  />
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowCustomOgUrl((v) => !v)}
+                  className="text-xs text-admin-muted hover:text-admin-ink"
+                >
+                  {showCustomOgUrl ? "Hide URL input" : "Paste URL"}
+                </button>
+                <span className="min-w-0 flex-1 truncate text-xs text-admin-muted">
+                  {selectedOgFile && (
+                    <span className="inline-flex items-center gap-1 font-medium text-admin-ink">
+                      <Check aria-hidden="true" className="size-3 text-admin-success" />
+                      {selectedOgFile}
+                    </span>
+                  )}
+                </span>
+                {draft.brand.ogImage && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      update("brand.ogImage", "");
+                      setSelectedOgFile("");
+                    }}
+                    className="text-xs text-admin-muted hover:text-admin-alert"
+                    title="Remove social share image"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+              {showCustomOgUrl && (
+                <div className="mt-3">
+                  <input
+                    className={inputClass}
+                    type="url"
+                    value={draft.brand.ogImage ?? ""}
+                    placeholder="https://your-studio.in/share-image.jpg"
+                    onChange={(event) => update("brand.ogImage", event.target.value)}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Search Engine Metadata */}
+        <div className="grid gap-4 border-t border-admin-border p-4 sm:grid-cols-2">
+          <Field label="Meta title" hint="Recommended 50–60 characters.">
+            <input
+              className={inputClass}
+              maxLength={160}
+              value={draft.seo.title}
+              onChange={(event) => update("seo.title", event.target.value)}
+            />
           </Field>
-          <Field label="Social share image" hint="Shown when your website is shared on WhatsApp, Instagram, or LinkedIn.">
-            {draft.brand.ogImage && <img src={draft.brand.ogImage} alt="Current social share image" className="h-24 w-full border border-admin-border bg-admin-bg object-cover" />}
-            <input className={inputClass} type="url" value={draft.brand.ogImage ?? ""} placeholder="https://your-studio.in/share-image.jpg" onChange={(event) => update("brand.ogImage", event.target.value)} />
-          </Field>
-          <Field label="Meta title">
-            <input className={inputClass} maxLength={160} value={draft.seo.title} onChange={(event) => update("seo.title", event.target.value)} />
-          </Field>
-          <Field label="Meta description">
-            <textarea className={inputClass} rows={2} maxLength={320} value={draft.seo.description} onChange={(event) => update("seo.description", event.target.value)} />
+          <Field label="Meta description" hint="Summary shown in search engine results. Recommended 120–160 characters.">
+            <textarea
+              className={inputClass}
+              rows={2}
+              maxLength={320}
+              value={draft.seo.description}
+              onChange={(event) => update("seo.description", event.target.value)}
+            />
           </Field>
         </div>
       </Panel>

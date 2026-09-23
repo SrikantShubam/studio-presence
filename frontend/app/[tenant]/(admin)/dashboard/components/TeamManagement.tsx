@@ -163,12 +163,12 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      const result = (await response.json()) as { error?: string; inviteUrl?: string; emailSent?: boolean };
+      const result = (await response.json()) as { error?: string; inviteUrl?: string; emailSent?: boolean; emailError?: string };
       if (!response.ok) throw new Error(result.error ?? "Membership action failed.");
       if (result.inviteUrl) {
         setCopyLink(result.inviteUrl);
         void copyToClipboard(result.inviteUrl);
-        setMessage(result.emailSent ? "Invitation sent and link copied." : "Invitation created. Copy the link below to share it.");
+        setMessage(result.emailSent ? "Invitation sent and link copied." : `Invitation link copied, but the email was not sent. ${result.emailError ?? "Check the configured email sender."}`);
         setEmail("");
       } else {
         setMessage("Workspace access updated.");

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 
 import {
   authCallbackUrl,
@@ -14,6 +15,8 @@ import {
   safeAuthNextPath,
 } from '../frontend/lib/auth-policy.ts'
 import { confirmationRequest } from '../frontend/lib/auth-confirmation.ts'
+
+const invitePage = readFileSync('frontend/app/invite/[token]/page.tsx', 'utf8')
 
 assert.equal(
   canonicalAuthOrigin('https://temporary.vercel.app', 'https://preview.example.com'),
@@ -100,5 +103,10 @@ assert.equal(
   tenantDestinationUrl('https://tenant-a.example.com', 'tenant-a', '/dashboard', 'host'),
   'https://tenant-a.example.com/dashboard',
 )
+
+assert.match(invitePage, /Join workspace/, 'invite entry page must use concise title')
+assert.match(invitePage, /Continue with Google/, 'invite entry page must offer Google')
+assert.match(invitePage, /Use email/, 'invite entry page must offer email')
+assert.match(invitePage, /\/login\\?next=/, 'invite entry page must preserve the invitation token for email auth')
 
 console.log('platform auth tests passed')

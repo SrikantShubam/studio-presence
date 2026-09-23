@@ -911,7 +911,7 @@ function PhoneField({
                       }`}
                     >
                       <CountryFlag code={c.code} className="h-3.5 w-5 shrink-0 rounded-sm object-cover" />
-                      <span className="flex-1 truncate">{c.name}</span>
+                      <span className="flex-1 truncate">{c.code} {c.name}</span>
                       <span className="text-admin-muted">{c.dialCode}</span>
                     </button>
                   </li>
