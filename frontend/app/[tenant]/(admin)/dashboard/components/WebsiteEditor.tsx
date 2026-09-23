@@ -118,9 +118,10 @@ export default function WebsiteEditor({
       formData.append("file", file);
       formData.append("assetType", "logo");
       const response = await fetch("/api/onboarding/upload", { method: "POST", body: formData });
-      const payload = (await response.json()) as { assetPath?: string; error?: string };
+      const payload = (await response.json()) as { assetPath?: string; faviconPath?: string; error?: string };
       if (!response.ok || !payload.assetPath) throw new Error(payload.error ?? "Logo upload failed.");
       update("brand.logo", payload.assetPath);
+      if (payload.faviconPath) update("brand.favicon", payload.faviconPath);
       setFeedback("Logo uploaded. Review and save to apply it.");
     } catch (uploadError) {
       setError(errorMessage(uploadError));

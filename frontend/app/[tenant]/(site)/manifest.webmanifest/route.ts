@@ -1,5 +1,6 @@
 import { loadPublicClientConfig } from '@studio/backend'
 import { getTokenSet } from '@/lib/tokens'
+import { faviconVariantPath } from '@/lib/logo-derivatives'
 
 export const runtime = 'nodejs'
 
@@ -22,7 +23,13 @@ export async function GET(
       display: 'browser',
       background_color: palette?.surface ?? colors.surface,
       theme_color: palette?.ink ?? colors.ink,
-      icons: [{ src: site.brand.favicon ?? `/${tenant}/icon.svg`, sizes: 'any', type: 'image/svg+xml' }],
+      icons: site.brand.favicon
+        ? [32, 180, 192, 512].map((size) => ({
+            src: faviconVariantPath(site.brand.favicon!, size),
+            sizes: size + 'x' + size,
+            type: 'image/png',
+          }))
+        : [{ src: '/' + tenant + '/icon.svg', sizes: 'any', type: 'image/svg+xml' }],
     }
   } catch {
     body = { name: 'Studio', start_url: '/' }

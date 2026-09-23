@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { uploadAsset } from '@studio/backend'
+import { createLogoDerivatives } from '@/lib/logo-derivatives'
 
 export const dynamic = 'force-dynamic'
 
@@ -51,8 +52,56 @@ export async function POST(request: Request) {
   }
 
   try {
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const filename = `${assetType}-${Date.now()}.webp`
+    const inputBuffer = Buffer.from(await file.arrayBuffer())
+    const uploadId = Date.now()
+
+    if (assetType === 'logo') {
+      const derivatives = await createLogoDerivatives(inputBuffer)
+      const logoResult = await uploadAsset(
+        {
+          buffer: derivatives.logo,
+          contentType: 'image/webp',
+          filename: 'logo-' + uploadId + '.webp',
+          assetType: 'logo',
+          userId: userData.user.id,
+          isStaging: true,
+        },
+        sessionData.session.access_token,
+      )
+
+      const iconResults = await Promise.all(
+        derivatives.icons.map((icon) =>
+          uploadAsset(
+            {
+              buffer: icon.buffer,
+              contentType: 'image/png',
+              filename: uploadId + '-' + icon.filename,
+              assetType: 'logo',
+              userId: userData.user.id,
+              isStaging: true,
+            },
+            sessionData.session.access_token,
+          ),
+        ),
+      )
+
+      const favicon = iconResults.find((result) => result.key.endsWith('favicon-32.png'))
+      if (!favicon) throw new Error('Favicon derivative was not created.')
+
+      return NextResponse.json({
+        ok: true,
+        assetPath: logoResult.assetPath,
+        faviconPath: favicon.assetPath,
+        faviconPaths: Object.fromEntries(
+          iconResults.map((result, index) => [derivatives.icons[index]!.size, result.assetPath]),
+        ),
+        bytes: logoResult.bytes,
+        url: logoResult.url,
+      })
+    }
+
+    const buffer = inputBuffer
+    const filename = assetType + '-' + uploadId + '.webp'
 
     const uploadResult = await uploadAsset(
       {

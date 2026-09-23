@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { ConfigError } from '@studio/backend'
 import { getTokenSet, tokensToCssVars } from '@/lib/tokens'
 import { loadPublicTenantConfigWithOverrides } from '@/lib/tenant-config'
+import { faviconVariantPath } from '@/lib/logo-derivatives'
 
 /**
  * Tenant layout — where a client's identity becomes CSS.
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Without this a browser falls back to requesting `/favicon.ico` at the
     // root, which is not a tenant-scoped path and has no file behind it. The
     // schema has carried `brand.favicon` from the start; nothing was reading it.
-    icons: config.brand.favicon ? { icon: config.brand.favicon } : undefined,
+    icons: config.brand.favicon ? { icon: config.brand.favicon, apple: faviconVariantPath(config.brand.favicon, 180) } : undefined,
     // Belt and braces with the middleware header. A demo indexed under the
     // client's own name is expensive to undo and cheap to prevent twice.
     robots: config.seo.noindex ? { index: false, follow: false } : undefined,
