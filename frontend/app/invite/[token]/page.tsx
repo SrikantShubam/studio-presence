@@ -2,10 +2,19 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { acceptWorkspaceInvitation, createScopedClient } from "@studio/backend";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { loadPublicTenantConfig } from "@/lib/tenant-config";
 import { InvitationEntry } from "./InvitationEntry";
 
-export default async function InvitationPage({ params }: { params: Promise<{ token: string }> }) {
+export default async function InvitationPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ token: string }>;
+  searchParams?: Promise<{ tenant?: string }>;
+}) {
   const { token } = await params;
+  const tenantSlug = (await searchParams)?.tenant;
+  const branding = await loadInvitationBranding(tenantSlug);
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
@@ -13,7 +22,16 @@ export default async function InvitationPage({ params }: { params: Promise<{ tok
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  if (!user?.email || !session) return <InvitationEntry token={token} />;
+  if (!user?.email || !session) {
+    return (
+      <InvitationEntry
+        token={token}
+        tenantSlug={tenantSlug}
+        studioName={branding.name}
+        logoUrl={branding.logo}
+      />
+    );
+  }
 
   const db = createScopedClient(session.access_token);
   let accepted: { tenantId: string; role: "editor" | "viewer" };
@@ -26,6 +44,16 @@ export default async function InvitationPage({ params }: { params: Promise<{ tok
   const { data: tenant } = await db.from("tenants").select("slug").eq("id", accepted.tenantId).single();
   if (!tenant?.slug) return <InvitationError email={user.email} />;
   redirect(`/${tenant.slug}/dashboard`);
+}
+
+async function loadInvitationBranding(tenantSlug: string | undefined): Promise<{ name?: string; logo?: string | null }> {
+  if (!tenantSlug) return {};
+  try {
+    const config = await loadPublicTenantConfig(tenantSlug);
+    return { name: config.business.name, logo: config.brand.logo ?? null };
+  } catch {
+    return {};
+  }
 }
 
 function InvitationError({ email, error }: { email: string; error?: string }) {

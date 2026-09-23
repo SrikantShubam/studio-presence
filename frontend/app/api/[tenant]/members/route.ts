@@ -79,17 +79,19 @@ export async function POST(request: NextRequest, context: RouteContext) {
     if (body.action === "invite" || body.action === "resend") {
       if (body.action === "resend") await revokeWorkspaceInvitation(tenantContext.db, body.invitationId);
       const invitation = await createWorkspaceInvitation(tenantContext.db, { tenantId: tenantContext.tenant.id, email: body.email, role: body.role });
-      const inviteUrl = new URL(`/invite/${invitation.token}`, request.url).toString();
+      const inviteUrl = new URL(`/invite/${invitation.token}`, request.url);
+      inviteUrl.searchParams.set("tenant", parsedParams.data.tenant);
+      const inviteUrlString = inviteUrl.toString();
       let emailSent = false;
       let emailError: string | undefined;
       try {
-        await sendWorkspaceInvitation({ to: body.email, studioName: tenantContext.tenant.name, inviterName: auth.user.user_metadata?.full_name ?? auth.user.email ?? "", role: body.role, inviteUrl });
+        await sendWorkspaceInvitation({ to: body.email, studioName: tenantContext.tenant.name, inviterName: auth.user.user_metadata?.full_name ?? auth.user.email ?? "", role: body.role, inviteUrl: inviteUrlString });
         emailSent = true;
       } catch (error) {
         console.error("Workspace invitation email failed", { tenant: parsedParams.data.tenant, error });
         emailError = "Email failed. Link copied.";
       }
-      return NextResponse.json({ invitationId: invitation.invitationId, inviteUrl, expiresAt: invitation.expiresAt, emailSent, emailError });
+      return NextResponse.json({ invitationId: invitation.invitationId, inviteUrl: inviteUrlString, expiresAt: invitation.expiresAt, emailSent, emailError });
     }
     if (body.action === "revoke") await revokeWorkspaceInvitation(tenantContext.db, body.invitationId);
     if (body.action === "role") await changeWorkspaceMemberRole(tenantContext.db, { tenantId: tenantContext.tenant.id, userId: body.userId, role: body.role });

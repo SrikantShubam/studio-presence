@@ -18,6 +18,7 @@ import { confirmationRequest } from '../frontend/lib/auth-confirmation.ts'
 
 const inviteEntry = readFileSync('frontend/app/invite/[token]/InvitationEntry.tsx', 'utf8')
 const platformLogin = readFileSync('frontend/app/login/page.tsx', 'utf8')
+const membershipRoute = readFileSync('frontend/app/[tenant]/(admin)/dashboard/components/../../../../api/[tenant]/members/route.ts', 'utf8')
 
 assert.equal(
   canonicalAuthOrigin('https://temporary.vercel.app', 'https://preview.example.com'),
@@ -109,9 +110,12 @@ assert.equal(
 
 assert.match(inviteEntry, /Private workspace/, 'invite entry page must use premium invitation eyebrow')
 assert.match(inviteEntry, /Your place in the studio/, 'invite entry page must use premium invitation title')
+assert.match(inviteEntry, /studioName/, 'invite entry page must render the studio name')
+assert.match(inviteEntry, /logoUrl/, 'invite entry page must render the studio logo')
 assert.match(inviteEntry, /Continue with Google/, 'invite entry page must offer Google')
 assert.match(inviteEntry, /Continue with email/, 'invite entry page must offer email')
 assert.match(inviteEntry, /\/login\?next=/, 'invite entry page must preserve the invitation token for email auth')
+assert.match(membershipRoute, /searchParams\.set\(['"]tenant['"]/, 'invitation links must carry the tenant slug for branding')
 assert.match(platformLogin, /Private workspace/, 'platform login must use invitation-specific eyebrow')
 assert.match(platformLogin, /email address that received this invitation/, 'platform login must explain invited email matching')
 

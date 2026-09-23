@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 import { authCallbackUrl } from '@/lib/platform-auth'
 
-export function InvitationEntry({ token }: { token: string }) {
+export function InvitationEntry({ token, tenantSlug, studioName, logoUrl }: { token: string; tenantSlug?: string; studioName?: string; logoUrl?: string | null }) {
   const [status, setStatus] = useState<'idle' | 'opening' | 'error'>('idle')
-  const nextPath = `/invite/${token}`
+  const nextPath = tenantSlug ? `/invite/${token}?tenant=${encodeURIComponent(tenantSlug)}` : `/invite/${token}`
 
   async function continueWithGoogle() {
     setStatus('opening')
@@ -24,8 +24,14 @@ export function InvitationEntry({ token }: { token: string }) {
   return (
     <main className="flex min-h-dvh items-center justify-center bg-admin-bg px-5 text-admin-ink">
       <section className="w-full max-w-md border border-admin-border bg-admin-surface p-6 sm:p-8">
-        <p className="text-xs font-semibold uppercase tracking-wide text-admin-primary">Private workspace</p>
-        <h1 className="mt-3 text-3xl font-semibold">Your place in the studio</h1>
+        <div className="flex items-center gap-3">
+          {logoUrl ? <img src={logoUrl} alt="" className="size-12 rounded-lg border border-admin-border object-contain" /> : null}
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-admin-primary">Private workspace</p>
+            {studioName ? <p className="mt-1 text-sm font-semibold text-admin-ink">{studioName}</p> : null}
+          </div>
+        </div>
+        <h1 className="mt-6 text-3xl font-semibold">Your place in the studio</h1>
         <p className="mt-3 text-sm leading-6 text-admin-muted">A considered invitation is waiting for you. Continue with the account that received it.</p>
         <div className="mt-7 grid gap-3">
           <button
