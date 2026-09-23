@@ -27,8 +27,8 @@ import {
   type LeadAction,
   type WorkspaceConfig,
   type WorkspaceMember,
-} from "./components/types";
   type TeamAccessSnapshot,
+} from "./components/types";
 
 const leadInput = z.object({
   name: z.string().trim().min(1).max(120),
