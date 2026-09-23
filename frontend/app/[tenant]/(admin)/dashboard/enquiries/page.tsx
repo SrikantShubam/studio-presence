@@ -43,7 +43,7 @@ export default async function EnquiriesPage({
 
   return (
     <AdminShell>
-      <AdminCard className={`p-4 ${sampleMode ? 'border-admin-alert bg-admin-alert-soft' : unavailableMode ? 'border-admin-alert bg-admin-alert-soft' : 'border-admin-primary bg-admin-primary-soft'}`}>
+      <AdminCard className={`p-4 ${sampleMode ? 'border-admin-alert bg-admin-alert-soft rounded-xl' : unavailableMode ? 'border-admin-alert bg-admin-alert-soft rounded-xl' : 'border-admin-primary bg-admin-primary-soft rounded-xl'}`}>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-semibold text-admin-ink">{sampleMode ? 'Sample enquiries' : unavailableMode ? 'Live enquiries unavailable' : 'Live enquiries'}</p>
@@ -55,7 +55,7 @@ export default async function EnquiriesPage({
                   : 'All enquiries submitted through the website are listed here.'}
             </p>
           </div>
-          <Link href={sampleMode ? `${baseDashboard}/enquiries?demo=0` : `${baseDashboard}/enquiries?demo=1`} className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-md border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
+          <Link href={sampleMode ? `${baseDashboard}/enquiries?demo=0` : `${baseDashboard}/enquiries?demo=1`} className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
             {sampleMode ? 'Turn sample data off' : 'Turn sample data on'}
           </Link>
         </div>
@@ -81,8 +81,8 @@ export default async function EnquiriesPage({
           <Link
             key={filter.value}
             href={filter.value === 'all' ? (sampleMode ? `${baseDashboard}/enquiries?demo=1` : `${baseDashboard}/enquiries`) : `${baseDashboard}/enquiries?${sampleMode ? 'demo=1&' : ''}filter=${filter.value}`}
-            className={`flex min-h-11 shrink-0 items-center rounded border px-4 text-sm font-semibold ${
-              activeFilter === filter.value ? 'border-admin-primary bg-admin-primary-soft text-admin-primary' : 'border-admin-border bg-admin-surface text-admin-ink'
+            className={`flex min-h-11 shrink-0 items-center rounded-xl border px-4 text-sm font-semibold ${
+              activeFilter === filter.value ? 'border-admin-primary bg-admin-primary-soft text-admin-primary' : 'border-admin-border bg-admin-surface text-admin-ink rounded-xl'
             }`}
           >
             {filter.label}
@@ -155,7 +155,7 @@ function LeadRow({ lead, demo, members }: { lead: Lead; demo: boolean; members: 
   const budget = lead.source === 'estimate' ? lead.budget_band : null
 
   return (
-    <article className="grid gap-3 border-b border-admin-border p-4 last:border-b-0 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] lg:items-center">
+    <article className="grid gap-3 border-b border-admin-border p-4 last:border-b-0 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] lg:items-center rounded-xl">
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2">
           <h2 className="truncate text-base font-semibold text-admin-ink">{lead.name}</h2>
@@ -176,7 +176,7 @@ function LeadRow({ lead, demo, members }: { lead: Lead; demo: boolean; members: 
         <a href={whatsappHref} className="flex min-h-11 items-center justify-center rounded-md bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary">
           WhatsApp
         </a>
-        <a href={`tel:${lead.phone}`} className="flex min-h-11 items-center justify-center rounded-md border border-admin-border px-3 text-sm font-semibold text-admin-ink">
+        <a href={`tel:${lead.phone}`} className="flex min-h-11 items-center justify-center rounded-xl border border-admin-border px-3 text-sm font-semibold text-admin-ink">
           Call
         </a>
       </div>

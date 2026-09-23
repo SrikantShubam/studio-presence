@@ -221,21 +221,21 @@ export function EnquiryDetails({
     >
       <div className="admin-scrollbar max-h-[calc(100dvh-90px)] overflow-y-auto px-6 pb-28">
         <p className="pt-4 text-xs text-admin-muted">{enquiry.locality || "Locality not supplied"}</p>
-        <div className="border-t border-admin-border py-5">
+        <div className="border-t border-admin-border py-5 rounded-xl">
           <div className="mb-1 flex items-center justify-between gap-3">
             <strong>{enquiry.project_type || "Project brief"}</strong>
             <span className="font-mono text-xs">{enquiry.budget_band || "Budget not supplied"}</span>
           </div>
           <p className="text-[11px] text-admin-muted">{enquiry.timeline || "Timeline not supplied"} Â· Received {new Date(enquiry.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: "Asia/Kolkata" })}</p>
         </div>
-        <div className="border-t border-admin-border py-5">
+        <div className="border-t border-admin-border py-5 rounded-xl">
           <h3 className="text-xs font-semibold">Client brief</h3>
           <p className="mb-3 mt-2 whitespace-pre-wrap text-sm leading-6">{enquiry.message || "No client brief added yet."}</p>
           <p className="text-[11px] text-admin-muted">Source: {sourceLabels[enquiry.source]}</p>
         </div>
         <form onSubmit={submit}>
           <fieldset disabled={pending || mode === "unavailable" || !canUpdateWork} className="grid gap-5">
-            <div className="border-t border-admin-border py-5">
+            <div className="border-t border-admin-border py-5 rounded-xl">
               <div className="mb-3 flex items-center justify-between gap-3"><h3 className="text-xs font-semibold">Assignee</h3><span className="text-[10px] text-admin-muted">{assigneeDisplayName(enquiry.assigned_to, members)}</span></div>
               {canAssignLead && assignableMembers.length > 0 ? (
                 <Field label="Assign to active owner or editor">
@@ -247,14 +247,14 @@ export function EnquiryDetails({
                 <p className="text-xs text-admin-muted">{canAssignLead ? "No active owner or editor is available." : "Only the workspace owner can reassign enquiries."}</p>
               )}
             </div>
-            <div className="border-t border-admin-border py-5">
+            <div className="border-t border-admin-border py-5 rounded-xl">
               <div className="mb-3 flex items-center justify-between"><h3 className="text-xs font-semibold">Lead status</h3><span className="text-[10px] text-admin-muted">{STATUS_LABELS[status]}</span></div>
               <Select aria-label="Lead status" value={status} onChange={(event) => setStatus(event.target.value as Enquiry["status"])}>
                 {Object.entries(STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
               </Select>
               <p className="mt-2 text-[10px] text-admin-muted">Opening WhatsApp does not automatically mark a lead contacted.</p>
             </div>
-            <div className="border-t border-admin-border py-5">
+            <div className="border-t border-admin-border py-5 rounded-xl">
               <Field label="Private studio notes" hint="Notes are private and saved to your workspace.">
                 <textarea className={inputClass} rows={6} maxLength={2000} value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Next step, measurements, preferencesâ€¦" />
               </Field>
@@ -270,7 +270,7 @@ export function EnquiryDetails({
         <p className="mt-5 text-[10px] text-admin-muted">{enquiry.id.startsWith("sample-") ? "Demo phone" : "Client phone"}: <span className="font-mono">+{enquiry.phone}</span></p>
       </div>
       {contactPhone(enquiry.phone) && (
-        <div className="sticky bottom-0 flex gap-2.5 border-t border-admin-border bg-admin-bg px-6 py-4">
+        <div className="sticky bottom-0 flex gap-2.5 border-t border-admin-border bg-admin-bg px-6 py-4 rounded-xl">
           <a className={buttonClass + " flex-1 justify-center"} href={"https://wa.me/" + contactPhone(enquiry.phone)} target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-4 text-admin-primary" />WhatsApp</a>
           <a className={buttonClass + " flex-1 justify-center"} href={"tel:+" + contactPhone(enquiry.phone)}><Phone aria-hidden="true" className="size-4" />Call client</a>
         </div>

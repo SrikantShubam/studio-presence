@@ -146,7 +146,7 @@ export default function OverviewTab({
       </div>
       {waiting > 0 && (
         <section
-          className="my-5 flex flex-col items-start gap-4 border border-admin-alert/30 border-l-[3px] border-l-admin-alert bg-admin-bg p-4 xl:flex-row xl:items-center xl:justify-between"
+          className="my-5 flex flex-col items-start gap-4 border border-admin-alert/30 border-l-[3px] border-l-admin-alert bg-admin-bg p-4 xl:flex-row xl:items-center xl:justify-between rounded-xl"
           aria-label="Enquiries awaiting response"
         >
           <div className="flex items-start gap-2.5">
@@ -171,7 +171,7 @@ export default function OverviewTab({
           <button
             key={metric.label}
             onClick={() => onNavigate(metric.view)}
-            className="min-w-0 border border-admin-border bg-admin-bg p-4 text-left hover:border-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary sm:p-5"
+            className="min-w-0 border border-admin-border bg-admin-bg p-4 text-left hover:border-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary sm:p-5 rounded-xl"
           >
             <div className="flex items-center justify-between gap-2"><p className="text-xs font-medium">{metric.label}</p><metric.icon aria-hidden="true" className="size-4 text-admin-muted" strokeWidth={1.8} /></div>
             <p className={`${monoClass} my-3 text-[29px] tracking-tight`}>
@@ -206,7 +206,7 @@ export default function OverviewTab({
                       .getElementById("enquiries")
                       ?.scrollIntoView({ block: "start" });
                   }}
-                  className="grid min-h-16 w-full grid-cols-[minmax(0,1fr)_55px_80px] items-center gap-3 border-t border-admin-border py-3 text-left hover:bg-admin-raised/40"
+                  className="grid min-h-16 w-full grid-cols-[minmax(0,1fr)_55px_80px] items-center gap-3 border-t border-admin-border py-3 text-left hover:bg-admin-raised/40 rounded-xl"
                   aria-label={`View ${area.name} enquiries`}
                 >
                   <div>
@@ -295,7 +295,7 @@ export function AttentionChart({
     <Panel
       title="Attention into enquiries"
       description={sample ? "Sample visits and recorded enquiries" : "Recorded enquiry trend. Traffic history is not supplied."}
-      action={sample ? <label className="relative block"><span className="sr-only">Analytics date range</span><select aria-label="Analytics date range" className="min-h-8 appearance-none border border-admin-border bg-admin-bg py-1 pl-2 pr-8 text-[10px] text-admin-ink" value={rangeStart} onChange={(event) => setRangeStart(Number(event.target.value))}><option value="0">Apr – Sep</option><option value="1">May – Sep</option><option value="2">Jun – Sep</option></select><ChevronDown aria-hidden="true" className="pointer-events-none absolute right-2 top-1/2 size-3 -translate-y-1/2 text-admin-muted" /></label> : <Badge>Enquiries</Badge>}
+      action={sample ? <label className="relative block"><span className="sr-only">Analytics date range</span><select aria-label="Analytics date range" className="min-h-8 appearance-none border border-admin-border bg-admin-bg py-1 pl-2 pr-8 text-[10px] text-admin-ink rounded-xl" value={rangeStart} onChange={(event) => setRangeStart(Number(event.target.value))}><option value="0">Apr – Sep</option><option value="1">May – Sep</option><option value="2">Jun – Sep</option></select><ChevronDown aria-hidden="true" className="pointer-events-none absolute right-2 top-1/2 size-3 -translate-y-1/2 text-admin-muted" /></label> : <Badge>Enquiries</Badge>}
     >
       <div className="px-5 pb-5">
         <div className="mb-4 mt-4 flex gap-8">
@@ -311,8 +311,8 @@ export function AttentionChart({
           {rows.map((row, index) => <g key={row.month}><circle cx={x(index)} cy={sample ? visitY(visits[index] ?? 0) : enquiryY(row.count)} r="3" className="fill-admin-bg stroke-admin-ink" strokeWidth="1.5"><title>{row.month + ": " + (visits[index]?.toLocaleString("en-IN") ?? "no visit data") + " visits, " + row.count + " enquiries"}</title></circle><text x={x(index)} y="201" textAnchor="middle" className="fill-admin-muted text-[10px]">{row.month.length > 3 ? row.month.slice(5) : row.month}</text></g>)}
         </svg>
         <div className="mt-3 flex flex-wrap gap-5 text-[10px] text-admin-muted">
-          {sample && <span className="flex items-center gap-1.5"><span className="w-4 border-t-[1.5px] border-admin-ink" />Visits · left scale</span>}
-          <span className="flex items-center gap-1.5"><span className="w-4 border-t border-dashed border-admin-muted" />Enquiries · scale <span className={monoClass}>0–{maxEnquiries}</span></span>
+          {sample && <span className="flex items-center gap-1.5"><span className="w-4 border-t-[1.5px] border-admin-ink rounded-xl" />Visits · left scale</span>}
+          <span className="flex items-center gap-1.5"><span className="w-4 border-t border-dashed border-admin-muted rounded-xl" />Enquiries · scale <span className={monoClass}>0–{maxEnquiries}</span></span>
         </div>
       </div>
     </Panel>

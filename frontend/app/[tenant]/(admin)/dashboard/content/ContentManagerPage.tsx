@@ -38,7 +38,7 @@ export async function ContentManagerPage({
   if (!window?.available) {
     return (
       <main className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-xl items-center px-4 py-12">
-        <section className="rounded-lg border border-admin-border bg-admin-surface p-6">
+        <section className="rounded-xl border border-admin-border bg-admin-surface p-6">
           <p className="text-sm text-admin-muted">Demo unavailable</p>
           <h1 className="mt-2 text-2xl font-semibold text-admin-ink">This preview has ended</h1>
           <p className="mt-3 text-sm text-admin-muted">Contact Studio Presence by Vector Veda if you would like a fresh preview or a customer plan.</p>

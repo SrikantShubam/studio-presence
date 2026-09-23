@@ -141,7 +141,7 @@ function nameFromEmail(email: string | null | undefined): string | null {
 function ProvisioningGap({ message }: { message: string }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-admin-bg px-4">
-      <div className="w-full max-w-sm rounded-none border border-admin-border bg-admin-surface p-6">
+      <div className="w-full max-w-sm rounded-xl border border-admin-border bg-admin-surface p-6">
         <h1 className="mb-2 text-lg font-semibold text-admin-ink">
           Almost there
         </h1>
@@ -170,7 +170,7 @@ function TenantMismatchNotice({
 }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-admin-bg px-4">
-      <div className="w-full max-w-md rounded-none border border-admin-border bg-admin-surface p-6">
+      <div className="w-full max-w-md rounded-xl border border-admin-border bg-admin-surface p-6">
         <h1 className="mb-2 text-lg font-semibold text-admin-ink">
           Different workspace
         </h1>
@@ -192,7 +192,7 @@ function TenantMismatchNotice({
           <form action={signOut}>
             <button
               type="submit"
-              className="inline-flex min-h-11 w-full items-center justify-center rounded-none border border-admin-border px-4 text-sm font-semibold text-admin-ink"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-admin-border px-4 text-sm font-semibold text-admin-ink"
             >
               Sign out to switch account
             </button>

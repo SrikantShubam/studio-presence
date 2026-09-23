@@ -145,7 +145,7 @@ export function DashboardShell({
         aria-label="Go to workspace overview"
         className="flex items-center gap-2 px-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary"
       >
-        <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-ink text-admin-bg">
+        <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-ink text-admin-bg rounded-xl">
           <PanelsTopLeft aria-hidden="true" className="size-4" strokeWidth={1.8} />
         </span>
         <p className="text-sm font-semibold tracking-tight">
@@ -154,9 +154,9 @@ export function DashboardShell({
       </Link>
       <div className="my-7 flex items-center gap-3">
         {currentStudioLogoUrl ? (
-          <img src={currentStudioLogoUrl} alt="" className="size-8 shrink-0 border border-admin-border object-cover" />
+          <img src={currentStudioLogoUrl} alt="" className="size-8 shrink-0 border border-admin-border object-cover rounded-xl" />
         ) : (
-          <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
+          <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold rounded-xl">
             {(studioName.trim() || "S").slice(0, 2).toUpperCase()}
           </span>
         )}
@@ -175,18 +175,18 @@ export function DashboardShell({
       >
         Skip to dashboard content
       </a>
-      <aside className="sticky top-0 hidden h-dvh flex-col border-r border-admin-border bg-admin-bg p-4 pt-7 lg:flex">
+      <aside className="sticky top-0 hidden h-dvh flex-col border-r border-admin-border bg-admin-bg p-4 pt-7 lg:flex rounded-xl">
         {brand}
         {navigation}
         <div className="mt-auto px-3 pt-5">
-          <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted">
+          <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted rounded-xl">
             Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}
           </p>
           <div className="flex items-center gap-2.5">
             {ownerAvatarUrl ? (
               <img src={ownerAvatarUrl} alt="" referrerPolicy="no-referrer" className="size-8 rounded-full border border-admin-border object-cover" />
             ) : (
-              <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
+              <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold rounded-xl">
                 <UserRound aria-hidden="true" className="size-4" />
               </span>
             )}
@@ -195,7 +195,7 @@ export function DashboardShell({
         </div>
       </aside>
       <div className="min-w-0">
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-admin-border bg-admin-bg px-4 sm:px-8">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-admin-border bg-admin-bg px-4 sm:px-8 rounded-xl">
           <div className="flex min-w-0 items-center gap-3">
             <Button
               className="lg:hidden"
@@ -275,8 +275,8 @@ export function DashboardShell({
           {brand}
           {navigation}
           <div className="mt-auto px-3 pt-5">
-            <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted">Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}</p>
-            <div className="flex items-center gap-2.5">{ownerAvatarUrl ? <img src={ownerAvatarUrl} alt="" referrerPolicy="no-referrer" className="size-8 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised"><UserRound aria-hidden="true" className="size-4" /></span>}<div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div></div>
+            <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted rounded-xl">Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}</p>
+            <div className="flex items-center gap-2.5">{ownerAvatarUrl ? <img src={ownerAvatarUrl} alt="" referrerPolicy="no-referrer" className="size-8 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised rounded-xl"><UserRound aria-hidden="true" className="size-4" /></span>}<div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div></div>
           </div>
         </div>
       </Dialog>
@@ -565,7 +565,7 @@ function AccountMenu({
   return (
     <details className="group relative">
       <summary
-        className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-admin-border bg-admin-bg px-2 outline-none focus-visible:ring-2 focus-visible:ring-admin-primary [&::-webkit-details-marker]:hidden"
+        className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-xl border border-admin-border bg-admin-bg px-2 outline-none focus-visible:ring-2 focus-visible:ring-admin-primary [&::-webkit-details-marker]:hidden"
         aria-label="Open account menu"
         title="Open account menu"
       >
@@ -579,7 +579,7 @@ function AccountMenu({
         <span className="hidden max-w-32 truncate text-xs font-semibold text-admin-ink sm:block">{ownerName || ownerEmail || "Account"}</span>
         <ChevronDown aria-hidden="true" className="size-4 text-admin-muted transition-transform group-open:rotate-180" />
       </summary>
-      <div className="absolute right-0 top-full z-40 mt-2 w-56 border border-admin-border bg-admin-surface p-2">
+      <div className="absolute right-0 top-full z-40 mt-2 w-56 border border-admin-border bg-admin-surface p-2 rounded-xl">
         <p className="truncate px-2 py-2 text-xs text-admin-muted">{ownerEmail || "Workspace account"}</p>
         <form action={signOutAction}>
           <Button type="submit" className="w-full justify-start px-2">

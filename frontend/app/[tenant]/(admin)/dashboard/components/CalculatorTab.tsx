@@ -152,7 +152,7 @@ export default function CalculatorTab({
                 </Field>
               ))}
               </div>
-              <h3 className="border-t border-admin-border pt-4 font-semibold">
+              <h3 className="border-t border-admin-border pt-4 font-semibold rounded-xl">
                 Home type multipliers
               </h3>
               <div className="grid gap-4 sm:grid-cols-2">
@@ -271,7 +271,7 @@ export default function CalculatorTab({
               ))}
             </div>
             <div
-              className="mt-8 border-y border-admin-border py-6"
+              className="mt-8 border-y border-admin-border py-6 rounded-xl"
               aria-live="polite"
             >
               <p className="text-xs text-admin-muted">Your indicative investment</p>
@@ -287,7 +287,7 @@ export default function CalculatorTab({
               Estimated timeline: <span className={monoClass + " text-admin-ink"}>{timeline}</span>
             </div>
             {estimate.included.length > 0 && (
-              <section className="mt-5 border-t border-admin-border pt-5">
+              <section className="mt-5 border-t border-admin-border pt-5 rounded-xl">
                 <h3 className="text-xs font-semibold">Included in the estimate</h3>
                 <ul className="mt-3 grid gap-3">
                   {estimate.included.map((item) => (

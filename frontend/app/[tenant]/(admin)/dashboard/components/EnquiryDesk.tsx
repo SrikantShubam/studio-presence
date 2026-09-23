@@ -120,7 +120,7 @@ export function EnquiryDesk({
                 key={status}
                 aria-pressed={filters.status === status}
                 onClick={() => onFiltersChange({ ...filters, status })}
-                className={`min-h-11 border-b-2 px-2 text-xs focus-visible:outline-2 focus-visible:outline-admin-primary ${filters.status === status ? "border-admin-ink font-semibold" : "border-transparent text-admin-muted"}`}
+                className={`min-h-11 border-b-2 px-2 text-xs focus-visible:outline-2 focus-visible:outline-admin-primary ${filters.status === status ? "border-admin-ink font-semibold rounded-xl" : "border-transparent text-admin-muted"}`}
               >
                 {status === "all" ? "All" : STATUS_LABELS[status]}
                 <span className={`${monoClass} ml-2 text-[10px]`}>
@@ -164,7 +164,7 @@ export function EnquiryDesk({
               aria-label="Enquiry table"
             >
               <table className="w-full min-w-[920px] border-collapse text-left text-xs">
-                <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
+                <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted rounded-xl">
                   <tr>
                     {[
                       "Client & locality",
@@ -189,7 +189,7 @@ export function EnquiryDesk({
                   {filtered.map((item) => (
                     <tr
                       key={item.id}
-                      className="border-b border-admin-border last:border-b-0 hover:bg-admin-raised/40"
+                      className="border-b border-admin-border last:border-b-0 hover:bg-admin-raised/40 rounded-xl"
                     >
                       <td className="px-5 py-4">
                         <button
@@ -241,13 +241,13 @@ export function EnquiryDesk({
             </div>
             <p
               aria-live="polite"
-              className="border-t border-admin-border px-5 py-3 text-[10px] text-admin-muted"
+              className="border-t border-admin-border px-5 py-3 text-[10px] text-admin-muted rounded-xl"
             >
               {filtered.length} of {enquiries.length} enquiries
             </p>
           </>
         ) : (
-          <div className="border-t border-admin-border p-8 text-center">
+          <div className="border-t border-admin-border p-8 text-center rounded-xl">
             <h3 className="font-semibold">
               {enquiries.length
                 ? "No enquiries match these filters"

@@ -128,7 +128,7 @@ export function StudioOverviewHub({
             <button
               type="button"
               onClick={copyWebsiteLink}
-              className="inline-flex min-h-10 items-center justify-center rounded-lg border border-admin-border bg-admin-bg px-3.5 text-xs font-semibold text-admin-ink transition-colors hover:bg-admin-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-admin-primary motion-reduce:transition-none"
+              className="inline-flex min-h-10 items-center justify-center rounded-xl border border-admin-border bg-admin-bg px-3.5 text-xs font-semibold text-admin-ink transition-colors hover:bg-admin-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-admin-primary motion-reduce:transition-none"
             >
               {copied ? 'Copied link!' : 'Copy website link'}
             </button>
@@ -136,27 +136,27 @@ export function StudioOverviewHub({
               href={previewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-10 items-center justify-center rounded-lg border border-admin-border bg-admin-surface px-3.5 text-xs font-semibold text-admin-ink transition-colors hover:border-admin-primary hover:text-admin-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-admin-primary motion-reduce:transition-none"
+              className="inline-flex min-h-10 items-center justify-center rounded-xl border border-admin-border bg-admin-surface px-3.5 text-xs font-semibold text-admin-ink transition-colors hover:border-admin-primary hover:text-admin-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-admin-primary motion-reduce:transition-none"
             >
               Open public site ↗
             </Link>
           </div>
         </div>
 
-        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3 border-t border-admin-border pt-4">
-          <div className="rounded-lg border border-admin-border bg-admin-bg p-3">
+        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3 border-t border-admin-border pt-4 rounded-xl">
+          <div className="rounded-xl border border-admin-border bg-admin-bg p-3">
             <p className="text-xs font-medium text-admin-muted">Connected WhatsApp</p>
             <p className="mt-1 truncate text-sm font-semibold text-admin-ink">
               {whatsapp || phone || 'Not connected'}
             </p>
           </div>
-          <div className="rounded-lg border border-admin-border bg-admin-bg p-3">
+          <div className="rounded-xl border border-admin-border bg-admin-bg p-3">
             <p className="text-xs font-medium text-admin-muted">Visual Identity</p>
             <p className="mt-1 truncate text-sm font-semibold text-admin-ink">
               {paletteName}
             </p>
           </div>
-          <div className="rounded-lg border border-admin-border bg-admin-bg p-3">
+          <div className="rounded-xl border border-admin-border bg-admin-bg p-3">
             <p className="text-xs font-medium text-admin-muted">Service Coverage</p>
             <p className="mt-1 truncate text-sm font-semibold text-admin-ink">
               {coverageDisplay}
@@ -212,13 +212,13 @@ export function StudioOverviewHub({
           </div>
 
           <ul className="mt-5 space-y-3">
-            <li className="flex items-center justify-between rounded-lg border border-admin-border bg-admin-bg p-3">
+            <li className="flex items-center justify-between rounded-xl border border-admin-border bg-admin-bg p-3">
               <div className="flex items-center gap-3">
                 <span
                   className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                     isIdentityComplete
                       ? 'bg-admin-primary text-admin-on-primary'
-                      : 'border border-admin-border text-admin-muted'
+                      : 'border border-admin-border text-admin-muted rounded-xl'
                   }`}
                   aria-hidden="true"
                 >
@@ -240,13 +240,13 @@ export function StudioOverviewHub({
               )}
             </li>
 
-            <li className="flex items-center justify-between rounded-lg border border-admin-border bg-admin-bg p-3">
+            <li className="flex items-center justify-between rounded-xl border border-admin-border bg-admin-bg p-3">
               <div className="flex items-center gap-3">
                 <span
                   className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                     isPhoneComplete
                       ? 'bg-admin-primary text-admin-on-primary'
-                      : 'border border-admin-border text-admin-muted'
+                      : 'border border-admin-border text-admin-muted rounded-xl'
                   }`}
                   aria-hidden="true"
                 >
@@ -268,13 +268,13 @@ export function StudioOverviewHub({
               )}
             </li>
 
-            <li className="flex items-center justify-between rounded-lg border border-admin-border bg-admin-bg p-3">
+            <li className="flex items-center justify-between rounded-xl border border-admin-border bg-admin-bg p-3">
               <div className="flex items-center gap-3">
                 <span
                   className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                     isPortfolioComplete
                       ? 'bg-admin-primary text-admin-on-primary'
-                      : 'border border-admin-border text-admin-muted'
+                      : 'border border-admin-border text-admin-muted rounded-xl'
                   }`}
                   aria-hidden="true"
                 >
@@ -296,13 +296,13 @@ export function StudioOverviewHub({
               )}
             </li>
 
-            <li className="flex items-center justify-between rounded-lg border border-admin-border bg-admin-bg p-3">
+            <li className="flex items-center justify-between rounded-xl border border-admin-border bg-admin-bg p-3">
               <div className="flex items-center gap-3">
                 <span
                   className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                     isShareComplete
                       ? 'bg-admin-primary text-admin-on-primary'
-                      : 'border border-admin-border text-admin-muted'
+                      : 'border border-admin-border text-admin-muted rounded-xl'
                   }`}
                   aria-hidden="true"
                 >

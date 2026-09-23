@@ -127,7 +127,7 @@ export function AnalyticsTab({
                 <p className={monoClass + " text-[clamp(20px,3vw,28px)]"}>{metric.value}</p>
                 <div className="mt-3 flex min-h-5 items-center justify-between gap-2 text-[10px] text-admin-muted">
                   <span className="truncate">{metric.detail}</span>
-                  <span className="shrink-0 border border-admin-border bg-admin-raised px-1.5 py-1 text-admin-ink">{metric.detail.startsWith("+") ? metric.detail : "Details"}</span>
+                  <span className="shrink-0 border border-admin-border bg-admin-raised px-1.5 py-1 text-admin-ink rounded-xl">{metric.detail.startsWith("+") ? metric.detail : "Details"}</span>
                 </div>
               </div>
             </Panel>
@@ -144,7 +144,7 @@ export function AnalyticsTab({
         <Panel title="Where actions started" description="Recorded enquiry sources · September" action={sample ? <Badge>September</Badge> : undefined}>
           <div className="px-5 pb-5">
             {sample ? SAMPLE_SOURCES.map((source, index) => (
-              <div key={source.name} className="border-t border-admin-border py-3 first:border-t-0 first:pt-0">
+              <div key={source.name} className="border-t border-admin-border py-3 first:border-t-0 first:pt-0 rounded-xl">
                 <div className="mb-2 flex items-center justify-between text-xs">
                   <span>{source.name}</span><span className={monoClass}>{source.count}</span>
                 </div>
@@ -158,7 +158,7 @@ export function AnalyticsTab({
             <p className="text-xs leading-6 text-admin-muted">
               {sample ? "The sample shows how visits turn into conversations. WhatsApp clicks are link clicks, not access to private messages. Enquiry counts include submitted and manually recorded briefs." : "Traffic totals and recorded enquiries are kept separate from private client conversations."}
             </p>
-            <div className="my-5 border-y border-admin-border py-5">
+            <div className="my-5 border-y border-admin-border py-5 rounded-xl">
               <p className="text-[11px] text-admin-muted">Visitor-to-enquiry conversion</p>
               <p className={monoClass + " mt-2 text-[29px]"}>{sample ? "2.48" : "—"}<span className="text-[18px]">%</span></p>
             </div>
@@ -176,7 +176,7 @@ export function AnalyticsTab({
                   return (
                     <div key={page.page} className="grid grid-cols-[minmax(8rem,0.32fr)_minmax(0,1fr)_4.5rem] items-center gap-3 text-xs">
                       <span className="min-w-0 truncate font-medium"><span className="mr-2 text-admin-muted">0{index + 1}</span>{page.page}</span>
-                      <span className="grid h-8 grid-cols-12 items-center border-b border-admin-border bg-admin-bg">
+                      <span className="grid h-8 grid-cols-12 items-center border-b border-admin-border bg-admin-bg rounded-xl">
                         <span className={dotPositions[position] + " size-3 rounded-full bg-admin-primary ring-4 ring-admin-primary/10"} title={page.views.toLocaleString("en-IN") + " views"} />
                       </span>
                       <span className={monoClass + " text-right"}>{page.views.toLocaleString("en-IN")}</span>
@@ -190,12 +190,12 @@ export function AnalyticsTab({
           <Panel title="Traffic by page" description="Month-over-month page views and recorded enquiries for every page.">
             <div className="max-w-full overflow-x-auto">
               <table className="w-full min-w-[760px] border-collapse text-left text-xs">
-                <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted">
+                <thead className="border-y border-admin-border bg-admin-bg text-[10px] text-admin-muted rounded-xl">
                   <tr><th scope="col" className="px-5 py-3 font-medium">Page</th><th scope="col" className="px-5 py-3 text-right font-medium">Last month</th><th scope="col" className="px-5 py-3 text-right font-medium">Current month</th><th scope="col" className="px-5 py-3 text-right font-medium">Change</th><th scope="col" className="px-5 py-3 text-right font-medium">Views</th><th scope="col" className="px-5 py-3 text-right font-medium">Enquiries</th></tr>
                 </thead>
                 <tbody>
                   {pageRows.map((page) => (
-                    <tr key={page.page} className="border-b border-admin-border last:border-b-0">
+                    <tr key={page.page} className="border-b border-admin-border last:border-b-0 rounded-xl">
                       <td className="px-5 py-3 font-medium">{page.page}</td>
                       <td className={monoClass + " px-5 py-3 text-right"}>{page.lastMonthViews?.toLocaleString("en-IN") ?? "—"}</td>
                       <td className={monoClass + " px-5 py-3 text-right"}>{page.views.toLocaleString("en-IN")}</td>
@@ -222,7 +222,7 @@ function CityDemandPanel({ data, onNavigate }: { data: WorkspaceData; onNavigate
     <Panel title="Where your next project begins" description="City demand · visits and enquiries" action={sample ? <Badge>September</Badge> : undefined}>
       <div className="px-5 pb-5">
         {sample ? SAMPLE_CITIES.map((city, index) => (
-          <button key={city.name} type="button" className="grid w-full grid-cols-[minmax(0,1fr)_4rem_4rem] items-center gap-3 border-t border-admin-border py-3 text-left first:border-t-0" onClick={() => onNavigate("enquiries")}>
+          <button key={city.name} type="button" className="grid w-full grid-cols-[minmax(0,1fr)_4rem_4rem] items-center gap-3 border-t border-admin-border py-3 text-left first:border-t-0 rounded-xl" onClick={() => onNavigate("enquiries")}>
             <span className="min-w-0"><span className="block truncate text-xs font-semibold">{city.name}</span><span className="mt-2 block h-1 max-w-44 bg-admin-raised"><span className={"block h-1 bg-admin-ink/60 " + (cityBars[index] ?? "w-1/12")} /></span></span>
             <span className={monoClass + " text-right text-xs"}>{city.visits}</span>
             <span className={monoClass + " text-right text-xs"}>{city.enquiries}</span>
@@ -304,10 +304,10 @@ function DashboardCountrySelect({
         <ChevronDown aria-hidden="true" className="size-3 text-admin-muted" />
       </button>
       {open && (
-        <div role="listbox" aria-label="Country" className="absolute left-0 top-full z-50 mt-1 max-h-72 w-[min(19rem,calc(100vw-2rem))] overflow-y-auto rounded-md border border-admin-border bg-admin-surface p-1 shadow-lg">
+        <div role="listbox" aria-label="Country" className="absolute left-0 top-full z-50 mt-1 max-h-72 w-[min(19rem,calc(100vw-2rem))] overflow-y-auto rounded-xl border border-admin-border bg-admin-surface p-1 shadow-lg">
           {options.map((option, index) =>
             option.divider ? (
-              <div key={`divider-${index}`} role="separator" className="my-1 border-t border-admin-border" />
+              <div key={`divider-${index}`} role="separator" className="my-1 border-t border-admin-border rounded-xl" />
             ) : (
               <button
                 key={option.value ?? `country-${index}`}
@@ -543,7 +543,7 @@ function OpeningHoursBuilder({
           )}
         </div>
       )}
-      <div className="flex flex-wrap items-center justify-between gap-2 border border-admin-border bg-admin-raised px-3 py-2 text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-2 border border-admin-border bg-admin-raised px-3 py-2 text-xs rounded-xl">
         <div className="flex items-center gap-2">
           <Clock3 aria-hidden="true" className="size-3.5 text-admin-muted" />
           <span className="font-mono text-admin-ink">{value || "No hours set"}</span>
@@ -593,7 +593,7 @@ function ServiceAreasInput({
           value.map((area, index) => (
             <span
               key={index}
-              className="inline-flex items-center gap-1.5 border border-admin-border bg-admin-raised px-2.5 py-1 text-xs text-admin-ink"
+              className="inline-flex items-center gap-1.5 border border-admin-border bg-admin-raised px-2.5 py-1 text-xs text-admin-ink rounded-xl"
             >
               <span>{area}</span>
               {!disabled && (
@@ -934,7 +934,7 @@ export function SettingsTab({
             <Panel title="Notification preferences" description="Choose the updates shown for this workspace." action={<Bell aria-hidden="true" className="size-4 text-admin-muted" />}>
               <div className="grid gap-3 p-5 text-xs">
                 <label className="flex items-center justify-between gap-3"><span><span className="block font-medium">New enquiry alerts</span><span className="text-admin-muted">Show an alert when a lead arrives.</span></span><input type="checkbox" className="size-4 accent-admin-primary" checked={newLeadAlerts} onChange={(event) => setNewLeadAlerts(event.target.checked)} /></label>
-                <label className="flex items-center justify-between gap-3 border-t border-admin-border pt-3"><span><span className="block font-medium">Weekly activity digest</span><span className="text-admin-muted">Show the last seven days in your workspace.</span></span><input type="checkbox" className="size-4 accent-admin-primary" checked={weeklyDigest} onChange={(event) => setWeeklyDigest(event.target.checked)} /></label>
+                <label className="flex items-center justify-between gap-3 border-t border-admin-border pt-3 rounded-xl"><span><span className="block font-medium">Weekly activity digest</span><span className="text-admin-muted">Show the last seven days in your workspace.</span></span><input type="checkbox" className="size-4 accent-admin-primary" checked={weeklyDigest} onChange={(event) => setWeeklyDigest(event.target.checked)} /></label>
               </div>
             </Panel>
           </div>
@@ -1015,7 +1015,7 @@ export function IntegrationsTab({
           <Panel
             key={item.title}
             title={item.title}
-            action={<div className="flex items-center gap-2"><Icon aria-hidden="true" className="size-4 text-admin-muted" /><Badge className={item.status === "Connected" || item.status === "Ready" ? "border-admin-success text-admin-success" : ""}>{item.status}</Badge></div>}
+            action={<div className="flex items-center gap-2"><Icon aria-hidden="true" className="size-4 text-admin-muted" /><Badge className={item.status === "Connected" || item.status === "Ready" ? "border-admin-success text-admin-success rounded-xl" : ""}>{item.status}</Badge></div>}
           >
             <div className="p-5">
               <p className="mb-5 text-xs leading-6 text-admin-muted">
@@ -1102,8 +1102,8 @@ export function DigitalCardTab({
       <div className="grid items-start gap-5 xl:grid-cols-2">
         <Panel title="Your studio card" action={<PanelsTopLeft aria-hidden="true" className="size-4 text-admin-muted" />}>
           <div className="p-5">
-            <div className="border border-admin-border bg-admin-bg p-6">
-              <div className="mb-4 flex items-center justify-between gap-3 text-[10px] uppercase tracking-wider text-admin-muted"><span className="flex items-center gap-2">{config.brand.logo ? <img src={config.brand.logo} alt={config.business.name} className="size-10 border border-admin-border object-contain" /> : <PanelsTopLeft aria-hidden="true" className="size-4" />}{config.business.address.city}</span><a className="text-admin-primary hover:underline" href={`/${tenant}/dashboard?tab=website`}>Change logo</a></div>
+            <div className="border border-admin-border bg-admin-bg p-6 rounded-xl">
+              <div className="mb-4 flex items-center justify-between gap-3 text-[10px] uppercase tracking-wider text-admin-muted"><span className="flex items-center gap-2">{config.brand.logo ? <img src={config.brand.logo} alt={config.business.name} className="size-10 border border-admin-border object-contain rounded-xl" /> : <PanelsTopLeft aria-hidden="true" className="size-4" />}{config.business.address.city}</span><a className="text-admin-primary hover:underline" href={`/${tenant}/dashboard?tab=website`}>Change logo</a></div>
               <h2 className="text-2xl font-semibold">{config.business.name}</h2>
               <p className="my-5 text-xs text-admin-muted">
                 {config.business.tagline}

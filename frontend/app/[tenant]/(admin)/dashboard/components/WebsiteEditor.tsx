@@ -224,7 +224,7 @@ export default function WebsiteEditor({
         }
       />
       <Feedback error={error} message={feedback} />
-      <div className="mb-4 flex flex-wrap items-end gap-4 border border-admin-border bg-admin-surface p-4">
+      <div className="mb-4 flex flex-wrap items-end gap-4 border border-admin-border bg-admin-surface p-4 rounded-xl">
         <label className="grid min-w-40 gap-1 text-xs font-medium">
           Page
           <Select
@@ -256,7 +256,7 @@ export default function WebsiteEditor({
       <Panel title="Studio identity & search" description="Set the public logo and the metadata used when your site is shared.">
         <div className="grid gap-4 p-4 lg:grid-cols-2">
           {/* Compact Logo Card */}
-          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-3.5">
+          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-3.5 rounded-xl">
             <div>
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -279,7 +279,7 @@ export default function WebsiteEditor({
                       {draft.brand.logo ? "Active" : "None"}
                     </span>
                   </div>
-                  <div className="flex h-11 w-24 items-center justify-center border border-admin-border bg-admin-bg p-1">
+                  <div className="flex h-11 w-24 items-center justify-center border border-admin-border bg-admin-bg p-1 rounded-xl">
                     {draft.brand.logo ? (
                       <img
                         src={draft.brand.logo}
@@ -295,7 +295,7 @@ export default function WebsiteEditor({
             </div>
 
             {/* Compact Action row */}
-            <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-admin-border pt-3">
+            <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-admin-border pt-3 rounded-xl">
               <label
                 className={`${buttonClass} shrink-0 cursor-pointer border-admin-border bg-admin-raised px-2.5 py-1.5 text-xs text-admin-ink hover:bg-admin-surface ${
                   uploadingLogo || !canUploadLogo ? "pointer-events-none opacity-50" : ""
@@ -345,7 +345,7 @@ export default function WebsiteEditor({
           </div>
 
           {/* Compact Social Share Image Card */}
-          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-3.5">
+          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-3.5 rounded-xl">
             <div>
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -366,7 +366,7 @@ export default function WebsiteEditor({
                       {draft.brand.ogImage ? "Custom" : "Auto"}
                     </span>
                   </div>
-                  <div className="flex h-11 w-24 items-center justify-center overflow-hidden border border-admin-border bg-admin-bg">
+                  <div className="flex h-11 w-24 items-center justify-center overflow-hidden border border-admin-border bg-admin-bg rounded-xl">
                     {draft.brand.ogImage ? (
                       <img
                         src={draft.brand.ogImage}
@@ -386,7 +386,7 @@ export default function WebsiteEditor({
 
             {/* Compact Action row */}
             <div>
-              <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-admin-border pt-3">
+              <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-admin-border pt-3 rounded-xl">
                 <label
                   className={`${buttonClass} shrink-0 cursor-pointer border-admin-border bg-admin-raised px-2.5 py-1.5 text-xs text-admin-ink hover:bg-admin-surface ${
                     uploadingOgImage || !canUploadLogo ? "pointer-events-none opacity-50" : ""
@@ -452,7 +452,7 @@ export default function WebsiteEditor({
         </div>
 
         {/* Search Engine Metadata (Spacious & Prominent) */}
-        <div className="grid gap-4 border-t border-admin-border p-4">
+        <div className="grid gap-4 border-t border-admin-border p-4 rounded-xl">
           <div className="grid gap-4 lg:grid-cols-[1fr_1.5fr]">
             <Field
               label="Meta title"
@@ -481,7 +481,7 @@ export default function WebsiteEditor({
           </div>
 
           {/* Search Result Snippet Simulation */}
-          <div className="border border-admin-border bg-admin-bg p-3">
+          <div className="border border-admin-border bg-admin-bg p-3 rounded-xl">
             <p className="mb-1 text-[10px] font-medium uppercase tracking-wider text-admin-muted">
               Google search result preview
             </p>
@@ -512,10 +512,10 @@ export default function WebsiteEditor({
             ))}
           </div>
           <fieldset
-            className="grid gap-4 border-t border-admin-border p-4"
+            className="grid gap-4 border-t border-admin-border p-4 rounded-xl"
             disabled={pending || !canEdit}
           >
-            <label className="flex items-center justify-between gap-3 border border-admin-border bg-admin-bg px-3 py-2 text-xs">
+            <label className="flex items-center justify-between gap-3 border border-admin-border bg-admin-bg px-3 py-2 text-xs rounded-xl">
               Show on website
               <input
                 type="checkbox"
@@ -580,7 +580,7 @@ export default function WebsiteEditor({
                 )}
                 {draft.sections.portfolio.projects.map((project, index) => (
                   <div
-                    className="grid gap-3 border border-admin-border p-3"
+                    className="grid gap-3 border border-admin-border p-3 rounded-xl"
                     key={project.slug}
                   >
                     <p className="text-[10px] text-admin-muted">
@@ -622,7 +622,7 @@ export default function WebsiteEditor({
               (draft.sections.services ? (
                 draft.sections.services.items.map((service, index) => (
                   <div
-                    className="grid gap-3 border border-admin-border p-3"
+                    className="grid gap-3 border border-admin-border p-3 rounded-xl"
                     key={index}
                   >
                     {(["title", "blurb"] as const).map((key) => (
@@ -683,10 +683,10 @@ export default function WebsiteEditor({
           </fieldset>
         </Panel>
         <section
-          className="min-w-0 border border-admin-border bg-admin-surface"
+          className="min-w-0 border border-admin-border bg-admin-surface rounded-xl"
           aria-label="Website preview"
         >
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-admin-border p-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-admin-border p-3 rounded-xl">
             <div className="flex flex-wrap gap-1">
               <Button
                 aria-pressed={device === "desktop"}
@@ -710,7 +710,7 @@ export default function WebsiteEditor({
               Open public site <ArrowUpRight aria-hidden="true" className="size-4" />
             </a>
           </div>
-          <div className="flex flex-wrap gap-2 border-b border-admin-border p-3">
+          <div className="flex flex-wrap gap-2 border-b border-admin-border p-3 rounded-xl">
             <Button
               variant={preview === "draft" ? "primary" : undefined}
               onClick={() => setPreview("draft")}
@@ -735,7 +735,7 @@ export default function WebsiteEditor({
                   key={revision}
                   title="Published website preview"
                   src={`/${tenant}`}
-                  className="h-[740px] w-full border border-admin-border bg-admin-surface"
+                  className="h-[740px] w-full border border-admin-border bg-admin-surface rounded-xl"
                 />
               )}
             </div>
@@ -805,17 +805,17 @@ function DraftFrame({ config }: { config: WorkspaceConfig }) {
       <iframe
         ref={frame}
         title="Draft website preview"
-        className="h-[740px] w-full border border-admin-border bg-admin-surface"
+        className="h-[740px] w-full border border-admin-border bg-admin-surface rounded-xl"
         onLoad={ready}
       />
       {body &&
         createPortal(
           <article className="bg-admin-surface text-admin-ink">
-            <header className="border-b border-admin-border p-6 text-sm font-semibold">
+            <header className="border-b border-admin-border p-6 text-sm font-semibold rounded-xl">
               {business.name}
             </header>
             {sections.hero.enabled && sections.hero.headline && (
-              <section className="border-b border-admin-border p-6 py-12">
+              <section className="border-b border-admin-border p-6 py-12 rounded-xl">
                 {sections.hero.image && (
                   <img
                     src={sections.hero.image}
@@ -827,13 +827,13 @@ function DraftFrame({ config }: { config: WorkspaceConfig }) {
                   {sections.hero.headline}
                 </h1>
                 <p className="my-5 text-sm">{sections.hero.sub}</p>
-                <span className="inline-block border border-admin-border px-4 py-3 text-xs">
+                <span className="inline-block border border-admin-border px-4 py-3 text-xs rounded-xl">
                   {sections.hero.ctaLabel}
                 </span>
               </section>
             )}
             {sections.about?.enabled && sections.about.body && (
-              <section className="border-b border-admin-border p-6 py-10">
+              <section className="border-b border-admin-border p-6 py-10 rounded-xl">
                 <h2 className="text-2xl font-semibold">
                   {sections.about.heading}
                 </h2>
@@ -844,7 +844,7 @@ function DraftFrame({ config }: { config: WorkspaceConfig }) {
             )}
             {sections.portfolio.enabled &&
               sections.portfolio.projects.length > 0 && (
-                <section className="grid gap-6 border-b border-admin-border p-6 py-10">
+                <section className="grid gap-6 border-b border-admin-border p-6 py-10 rounded-xl">
                   <p>{sections.portfolio.introText}</p>
                   {sections.portfolio.projects.map((project) => (
                     <div key={project.slug}>
@@ -865,7 +865,7 @@ function DraftFrame({ config }: { config: WorkspaceConfig }) {
               )}
             {sections.services?.enabled &&
               sections.services.items.length > 0 && (
-                <section className="grid gap-6 border-b border-admin-border p-6 py-10">
+                <section className="grid gap-6 border-b border-admin-border p-6 py-10 rounded-xl">
                   {sections.services.items.map((service, index) => (
                     <div key={index}>
                       <h2 className="text-xl font-semibold">{service.title}</h2>
@@ -882,7 +882,7 @@ function DraftFrame({ config }: { config: WorkspaceConfig }) {
               </section>
             )}
             {sections.footer?.enabled && (
-              <footer className="border-t border-admin-border p-6 text-xs">
+              <footer className="border-t border-admin-border p-6 text-xs rounded-xl">
                 {sections.footer.reassuranceLine}
               </footer>
             )}

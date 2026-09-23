@@ -165,7 +165,7 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
             />
             <div className="relative inline-flex items-center">
               <select
-                className="min-h-11 w-full appearance-none border border-admin-border bg-admin-bg pl-3 pr-8 text-sm font-medium text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary sm:w-32 cursor-pointer"
+                className="min-h-11 w-full appearance-none border border-admin-border bg-admin-bg pl-3 pr-8 text-sm font-medium text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary sm:w-32 cursor-pointer rounded-xl"
                 value={role}
                 onChange={(event) => setRole(event.target.value as Exclude<Role, "owner">)}
                 aria-label="Invite role"
@@ -187,7 +187,7 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
         )}
 
         {copyLink && (
-          <div className="border border-admin-border bg-admin-raised p-4 transition-all">
+          <div className="border border-admin-border bg-admin-raised p-4 transition-all rounded-xl">
             <div className="flex items-center justify-between gap-2 pb-2">
               <div className="flex items-center gap-2">
                 <span className="flex size-5 items-center justify-center bg-admin-primary text-admin-on-primary">
@@ -209,13 +209,13 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
               Share this private link with your teammate. It will expire in 24 hours.
             </p>
             <div className="flex flex-wrap items-center gap-2">
-              <div className="flex min-w-0 flex-1 items-center border border-admin-border bg-admin-bg px-3 py-2 text-xs">
+              <div className="flex min-w-0 flex-1 items-center border border-admin-border bg-admin-bg px-3 py-2 text-xs rounded-xl">
                 <span className="truncate font-mono text-admin-ink select-all">{copyLink}</span>
               </div>
               <Button
                 type="button"
                 variant={copied ? undefined : "primary"}
-                className={copied ? "border-admin-success! text-admin-success!" : ""}
+                className={copied ? "border-admin-success! text-admin-success! rounded-xl" : ""}
                 onClick={() => void copyToClipboard(copyLink)}
               >
                 {copied ? (
@@ -238,7 +238,7 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
 
         <div className="grid gap-2">
           {members.map((member) => (
-            <div key={member.user_id} className="flex flex-wrap items-center gap-3 border-t border-admin-border py-3">
+            <div key={member.user_id} className="flex flex-wrap items-center gap-3 border-t border-admin-border py-3 rounded-xl">
               {member.avatar_url ? (
                 <img
                   src={member.avatar_url}
@@ -266,7 +266,7 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
                 <>
                   <div className="relative inline-flex items-center">
                     <select
-                      className="appearance-none border border-admin-border bg-admin-surface pl-2.5 pr-7 py-1.5 text-xs font-medium text-admin-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-admin-primary"
+                      className="appearance-none border border-admin-border bg-admin-surface pl-2.5 pr-7 py-1.5 text-xs font-medium text-admin-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-admin-primary rounded-xl"
                       value={member.role}
                       disabled={pending}
                       onChange={(event) => void action({ action: "role", userId: member.user_id, role: event.target.value })}
@@ -298,10 +298,10 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
         </div>
 
         {isOwner && invitations.length > 0 && (
-          <div className="border-t border-admin-border pt-4">
+          <div className="border-t border-admin-border pt-4 rounded-xl">
             <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-admin-muted">Pending invitations</p>
             {invitations.map((invitation) => (
-              <div key={invitation.id} className="flex flex-wrap items-center gap-3 border-t border-admin-border py-3 text-xs">
+              <div key={invitation.id} className="flex flex-wrap items-center gap-3 border-t border-admin-border py-3 text-xs rounded-xl">
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-semibold">{invitation.email_display}</span>
                   <span className="text-[11px] text-admin-muted">

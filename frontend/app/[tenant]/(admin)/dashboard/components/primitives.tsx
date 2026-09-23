@@ -13,11 +13,11 @@ import type { LeadStatus } from "@studio/backend";
 import { STATUS_LABELS } from "./types";
 
 export const buttonClass =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-none border border-admin-border bg-admin-bg px-3 py-2 text-xs font-medium text-admin-ink hover:bg-admin-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-admin-border bg-admin-bg px-3 py-2 text-xs font-medium text-admin-ink hover:bg-admin-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:cursor-not-allowed disabled:opacity-50";
 export const inputClass =
-  "min-h-11 w-full min-w-0 rounded-none border border-admin-border bg-admin-bg px-3 py-2 text-sm text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:opacity-50";
+  "min-h-11 w-full min-w-0 rounded-xl border border-admin-border bg-admin-bg px-3 py-2 text-sm text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:opacity-50";
 export const selectClass =
-  "min-h-11 w-full min-w-0 appearance-none rounded-none border border-admin-border bg-admin-bg pl-3 pr-9 py-2 text-sm text-admin-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:cursor-not-allowed disabled:opacity-50";
+  "min-h-11 w-full min-w-0 appearance-none rounded-xl border border-admin-border bg-admin-bg pl-3 pr-9 py-2 text-sm text-admin-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:cursor-not-allowed disabled:opacity-50";
 export const monoClass =
   "[font-family:var(--font-dashboard-mono)] tabular-nums";
 
@@ -50,14 +50,14 @@ export function Button({
   return (
     <button
       type={type}
-      className={`${buttonClass} ${variant === "primary" ? "border-admin-primary! bg-admin-primary! text-admin-on-primary! hover:opacity-90" : ""} ${className}`}
+      className={`${buttonClass} ${variant === "primary" ? "border-admin-primary! bg-admin-primary! text-admin-on-primary! hover:opacity-90 rounded-xl" : ""} ${className}`}
       {...props}
     />
   );
 }
 export function Badge({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-1 border border-admin-border px-2 py-1 text-[10px] text-admin-muted ${className}`}>
+    <span className={`inline-flex items-center gap-1 border border-admin-border px-2 py-1 text-[10px] text-admin-muted rounded-xl ${className}`}>
       {children}
     </span>
   );
@@ -65,7 +65,7 @@ export function Badge({ children, className = "" }: { children: ReactNode; class
 export function StatusBadge({ status }: { status: LeadStatus }) {
   return (
     <span
-      className={`inline-flex border px-2 py-1 text-[10px] ${status === "new" ? "border-admin-alert text-admin-alert" : "border-admin-border text-admin-muted"}`}
+      className={`inline-flex border px-2 py-1 text-[10px] ${status === "new" ? "border-admin-alert text-admin-alert rounded-xl" : "border-admin-border text-admin-muted rounded-xl"}`}
     >
       {STATUS_LABELS[status]}
     </span>
@@ -86,7 +86,7 @@ export function Panel({
 }) {
   return (
     <section
-      className={`min-w-0 border border-admin-border bg-admin-bg ${className}`}
+      className={`min-w-0 border border-admin-border bg-admin-bg rounded-xl ${className}`}
     >
       <div className="flex flex-wrap items-start justify-between gap-3 p-5 pb-3">
         <div>
@@ -150,7 +150,7 @@ export function Feedback({
   return (
     <p
       role={error ? "alert" : "status"}
-      className={`my-3 border border-admin-border p-3 text-xs ${error ? "text-admin-alert" : "text-admin-ink"}`}
+      className={`my-3 border border-admin-border p-3 text-xs rounded-xl ${error ? "text-admin-alert" : "text-admin-ink"}`}
     >
       {error || message}
     </p>
@@ -206,7 +206,7 @@ export function Dialog({
       }}
       className={`fixed border border-admin-border bg-admin-bg p-0 text-admin-ink backdrop:bg-transparent ${side ? `inset-y-0 ${side === "left" ? "left-0 right-auto" : "right-0 left-auto"} m-0 h-dvh max-h-dvh w-full max-w-md` : "inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg"}`}
     >
-      <header className="flex items-start justify-between gap-3 border-b border-admin-border p-5">
+      <header className="flex items-start justify-between gap-3 border-b border-admin-border p-5 rounded-xl">
         <div className="min-w-0">
           {eyebrow && <p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-admin-muted">{eyebrow}</p>}
           <h2 id={id} className="text-lg font-semibold">

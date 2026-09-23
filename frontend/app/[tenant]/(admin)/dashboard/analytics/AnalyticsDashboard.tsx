@@ -81,13 +81,13 @@ export function AnalyticsDashboard({
   if (mode === 'unavailable') {
     return (
       <Shell>
-        <AdminCard className="border-admin-alert bg-admin-alert-soft p-5">
+        <AdminCard className="border-admin-alert bg-admin-alert-soft p-5 rounded-xl">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-lg font-semibold text-admin-ink">Analytics unavailable</h1>
               <p className="mt-2 text-base text-admin-muted">Sample data is off, but this login is not connected to this tenant or Umami is not reachable for live analytics.</p>
             </div>
-            <a href="/dashboard/analytics?demo=1" className="inline-flex min-h-11 items-center justify-center rounded border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
+            <a href="/dashboard/analytics?demo=1" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-admin-primary px-4 text-sm font-semibold text-admin-primary">
               Turn sample data on
             </a>
           </div>
@@ -147,7 +147,7 @@ export function AnalyticsDashboard({
           <div className="flex flex-wrap gap-2">
             {mode === 'demo' && <AdminChip tone="alert">sample data</AdminChip>}
             {mode === 'demo' && (
-              <a href="/dashboard/analytics" className="inline-flex min-h-7 items-center rounded border border-admin-primary px-2 text-xs font-semibold uppercase tracking-wide text-admin-primary">
+              <a href="/dashboard/analytics" className="inline-flex min-h-7 items-center rounded-xl border border-admin-primary px-2 text-xs font-semibold uppercase tracking-wide text-admin-primary">
                 Turn sample data off
               </a>
             )}
@@ -319,9 +319,9 @@ function QuestionCard({
 }) {
   const toneClass =
     tone === 'alert'
-      ? 'border-admin-alert bg-admin-alert-soft'
+      ? 'border-admin-alert bg-admin-alert-soft rounded-xl'
       : tone === 'primary'
-        ? 'border-admin-primary bg-admin-primary-soft'
+        ? 'border-admin-primary bg-admin-primary-soft rounded-xl'
         : ''
 
   return (
@@ -343,7 +343,7 @@ function RankedCard({ title, empty, children }: { title: string; empty: string; 
   const hasChildren = Array.isArray(children) ? children.length > 0 : Boolean(children)
   return (
     <AdminCard className="overflow-hidden">
-      <div className="border-b border-admin-border px-5 py-4">
+      <div className="border-b border-admin-border px-5 py-4 rounded-xl">
         <h2 className="text-base font-semibold text-admin-ink">{title}</h2>
       </div>
       {hasChildren ? <ol className="flex flex-col">{children}</ol> : <p className="p-5 text-base text-admin-muted">{empty}</p>}
@@ -353,7 +353,7 @@ function RankedCard({ title, empty, children }: { title: string; empty: string; 
 
 function RankedRow({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <li className="flex min-h-12 items-center justify-between gap-3 border-b border-admin-border px-5 py-3 last:border-b-0">
+    <li className="flex min-h-12 items-center justify-between gap-3 border-b border-admin-border px-5 py-3 last:border-b-0 rounded-xl">
       <span className="min-w-0 text-sm font-medium text-admin-ink">{label}</span>
       <span className="shrink-0 text-sm font-semibold tabular-nums text-admin-muted">{value}</span>
     </li>
