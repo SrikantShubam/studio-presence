@@ -15,6 +15,7 @@ import {
 } from "./primitives";
 import {
   applyConfigPatch,
+  canUploadWorkspaceLogo,
   errorMessage,
   type Mode,
   type SaveConfig,
@@ -37,12 +38,14 @@ export default function WebsiteEditor({
   tenant,
   mode,
   canEdit,
+  canUploadAssets,
   onSave,
 }: {
   config: WorkspaceConfig;
   tenant: string;
   mode: Mode;
   canEdit: boolean;
+  canUploadAssets: boolean;
   onSave: SaveConfig;
 }) {
   const [patch, setPatch] = useState<Record<string, unknown>>({});
@@ -66,6 +69,7 @@ export default function WebsiteEditor({
     section === "contact" ? Boolean(draft.sections.contact?.enabled) :
     Boolean(draft.sections.footer?.enabled);
   const dirty = Object.keys(patch).length > 0;
+  const canUploadLogo = canUploadWorkspaceLogo({ canUploadAssets });
   useEffect(() => {
     if (!dirty) return;
     const handler = (event: BeforeUnloadEvent) => {
@@ -182,12 +186,9 @@ export default function WebsiteEditor({
       </div>
       <Panel title="Studio identity & search" description="Set the public logo and the metadata used when your site is shared.">
         <div className="grid gap-4 p-4 sm:grid-cols-2">
-          <Field label="Upload your logo" hint={mode === "live" ? "PNG, JPG, or WebP up to 2 MB." : "Sign in to upload a logo to this workspace."}>
-            <input className={inputClass} type="file" accept="image/png,image/jpeg,image/webp" disabled={uploadingLogo || !canEdit || mode !== "live"} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadLogo(file); }} />
+          <Field label="Upload your logo" hint={canUploadLogo ? "PNG, JPG, or WebP up to 2 MB." : "Logo upload is available from the authenticated dashboard."}>
+            <input className={inputClass} type="file" accept="image/png,image/jpeg,image/webp" disabled={uploadingLogo || !canUploadLogo} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadLogo(file); }} />
             {draft.brand.logo && <img src={draft.brand.logo} alt="Current studio logo" className="mt-2 h-12 w-24 border border-admin-border bg-admin-bg object-contain p-2" />}
-          </Field>
-          <Field label="Logo URL or uploaded asset path">
-            <input className={inputClass} value={draft.brand.logo ?? ""} placeholder="/clients/your-studio/logo.svg" onChange={(event) => update("brand.logo", event.target.value)} />
           </Field>
           <Field label="Social share image">
             <input className={inputClass} value={draft.brand.ogImage ?? ""} placeholder="/clients/your-studio/og-image.jpg" onChange={(event) => update("brand.ogImage", event.target.value)} />

@@ -11,6 +11,14 @@ export type DashboardView =
   | "settings"
   | "integrations";
 export type Enquiry = Lead;
+export type WorkspaceMember = {
+  user_id: string;
+  tenant_id: string;
+  role: "owner" | "editor" | "viewer";
+  created_at: string;
+  email: string | null;
+  display_name: string | null;
+};
 export type WorkspaceConfig = Pick<
   ClientConfig,
   "business" | "brand" | "seo" | "sections" | "integrations" | "status"
@@ -56,7 +64,8 @@ export type ActionResult<T> =
 export type LeadAction = (
   input:
     | { kind: "create"; values: LeadInput }
-    | { kind: "update"; id: string; status: LeadStatus; notes: string },
+    | { kind: "update"; id: string; status: LeadStatus; notes: string }
+    | { kind: "assign"; id: string; userId: string },
 ) => Promise<ActionResult<Enquiry>>;
 export type SaveConfig = (patch: Record<string, unknown>) => Promise<void>;
 export type Analytics = {
@@ -72,7 +81,12 @@ export type WorkspaceData = {
   ownerName: string;
   ownerEmail: string;
   enquiries: Enquiry[];
+  members?: WorkspaceMember[];
+  currentRole?: "owner" | "editor" | "viewer";
+  currentUserId?: string;
+  canAssign?: boolean;
   canEdit: boolean;
+  canUploadAssets: boolean;
   canCreate: boolean;
   leadError?: string;
 };
@@ -84,6 +98,23 @@ export function dashboardMode(
   if (demo === "1") return "demo";
   if (eligible) return "live";
   return demo === "0" ? "unavailable" : "demo";
+}
+export function canUploadWorkspaceLogo({
+  canUploadAssets,
+}: {
+  canUploadAssets: boolean;
+}) {
+  return canUploadAssets;
+}
+
+export function canEditAuthenticatedWorkspace({
+  authenticated,
+  isSampleDemo,
+}: {
+  authenticated: boolean;
+  isSampleDemo: boolean;
+}) {
+  return authenticated || isSampleDemo;
 }
 export function viewFrom(value: string | null): DashboardView {
   return NAV_ITEMS.find((item) => item.id === value)?.id ?? "overview";
@@ -206,4 +237,12 @@ export function errorMessage(error: unknown) {
   return error instanceof Error
     ? error.message
     : "Could not save. Please try again.";
+}
+export function memberDisplayName(member: WorkspaceMember) {
+  return member.display_name?.trim() || member.email || member.role;
+}
+export function assigneeDisplayName(assignedTo: string | null, members: WorkspaceMember[] = []) {
+  if (!assignedTo) return "Unassigned";
+  const member = members.find((item) => item.user_id === assignedTo);
+  return member ? memberDisplayName(member) : "Former workspace member";
 }

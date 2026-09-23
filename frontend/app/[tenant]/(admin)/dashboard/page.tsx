@@ -4,6 +4,7 @@ import { z } from "zod";
 import {
   canAccessDashboard,
   leads,
+  listWorkspaceMembers,
   leadStatusSchema,
   panel,
   requireTenant,
@@ -14,15 +15,17 @@ import {
   loadTenantWorkspaceConfig,
 } from "@/lib/tenant-config";
 import { DashboardWorkspace } from "./components/DashboardShell";
-import { DEMO_ENQUIRIES } from "./components/demo-data";
+import { DEMO_ENQUIRIES, DEMO_WORKSPACE_MEMBERS } from "./components/demo-data";
 import {
   applyConfigPatch,
+  canEditAuthenticatedWorkspace,
   dashboardMode,
   normalizeIndianPhone,
   type ActionResult,
   type Enquiry,
   type LeadAction,
   type WorkspaceConfig,
+  type WorkspaceMember,
 } from "./components/types";
 
 const leadInput = z.object({
@@ -41,6 +44,11 @@ const mutation = z.discriminatedUnion("kind", [
     id: z.string().uuid(),
     status: leadStatusSchema,
     notes: z.string().max(2000),
+  }),
+  z.object({
+    kind: z.literal("assign"),
+    id: z.string().uuid(),
+    userId: z.string().uuid(),
   }),
 ]);
 
@@ -126,13 +134,22 @@ export default async function DashboardPage({
     base.business.ownerName ??
     "";
 
+  let members: WorkspaceMember[] = mode === "demo" ? DEMO_WORKSPACE_MEMBERS : [];
+  let currentRole: "owner" | "editor" | "viewer" = mode === "demo" ? "owner" : "viewer";
+  const currentUserId = context?.user.id ?? "demo-owner";
   let items: Enquiry[] = mode === "demo" ? DEMO_ENQUIRIES : [];
   let leadError: string | undefined;
   if (mode === "live" && context) {
     try {
+      members = await listWorkspaceMembers(context.db, context.tenant.id);
+      currentRole = members.find((member) => member.user_id === context.user.id)?.role ?? "viewer";
+    } catch {
+      leadError = "Workspace members could not be loaded. Assignment is temporarily unavailable.";
+    }
+    try {
       items = await leads.list(context.db);
     } catch {
-      leadError = "Live enquiries could not be loaded. Refresh to try again.";
+      leadError = leadError ?? "Live enquiries could not be loaded. Refresh to try again.";
     }
   }
 
@@ -140,83 +157,42 @@ export default async function DashboardPage({
     input: Parameters<LeadAction>[0],
   ): Promise<ActionResult<Enquiry>> {
     "use server";
-    if (mode !== "live")
-      return {
-        ok: false,
-        error:
-          "Sample and unavailable workspaces cannot change live enquiries.",
-      };
+    if (mode !== "live") return { ok: false, error: "Sample and unavailable workspaces cannot change live enquiries." };
     const parsed = mutation.safeParse(input);
-    if (!parsed.success)
-      return {
-        ok: false,
-        error: "Check the lead details. Notes must be under 2,000 characters.",
-      };
+    if (!parsed.success) return { ok: false, error: "Check the lead details. Notes must be under 2,000 characters." };
     try {
       const current = await authenticatedContext(tenant);
-      if (
-        !current ||
-        !canAccessDashboard(current.tenant) ||
-        current.tenant.status === "demo"
-      )
-        return {
-          ok: false,
-          error: "You do not have access to this enquiry desk.",
-        };
+      if (!current || !canAccessDashboard(current.tenant) || current.tenant.status === "demo") return { ok: false, error: "You do not have access to this enquiry desk." };
+      const workspaceMembers = await listWorkspaceMembers(current.db, current.tenant.id);
+      const actor = workspaceMembers.find((member) => member.user_id === current.user.id);
+      if (!actor) return { ok: false, error: "You are not an active workspace member." };
       let row: Enquiry;
-      if (parsed.data.kind === "create") {
-        if (current.tenant.status !== "live")
-          return {
-            ok: false,
-            error: "Lead capture is available after the studio goes live.",
-          };
+      if (parsed.data.kind === "assign") {
+        if (actor.role !== "owner") return { ok: false, error: "Only the workspace owner can assign enquiries." };
+        const assignee = workspaceMembers.find((member) => member.user_id === parsed.data.userId);
+        if (!assignee || (assignee.role !== "owner" && assignee.role !== "editor")) return { ok: false, error: "Choose an active owner or editor." };
+        row = await leads.assign(current.db, parsed.data.id, parsed.data.userId);
+      } else if (parsed.data.kind === "create") {
+        if (actor.role === "viewer") return { ok: false, error: "Viewers cannot create enquiries." };
+        if (current.tenant.status !== "live") return { ok: false, error: "Lead capture is available after the studio goes live." };
         const phone = normalizeIndianPhone(parsed.data.values.phone);
-        if (!phone)
-          return {
-            ok: false,
-            error: "Enter a valid 10-digit Indian mobile number.",
-          };
-        const result = await leads.create({
-          ...parsed.data.values,
-          phone: `+${phone}`,
-          tenantSlug: tenant,
-          source: "other",
-          sourcePage: `/${tenant}/dashboard#walk-in`,
-        });
+        if (!phone) return { ok: false, error: "Enter a valid 10-digit Indian mobile number." };
+        const result = await leads.create({ ...parsed.data.values, phone: `+${phone}`, tenantSlug: tenant, source: "other", sourcePage: `/${tenant}/dashboard#walk-in` });
         const created = await leads.get(current.db, result.leadId);
-        if (!created)
-          return {
-            ok: false,
-            error:
-              "The lead was submitted but could not be reloaded. Refresh before trying again.",
-          };
+        if (!created) return { ok: false, error: "The lead was submitted but could not be reloaded. Refresh before trying again." };
         row = created;
       } else {
-        const { data, error } = await current.db
-          .from("leads")
-          .update({
-            status: parsed.data.status,
-            notes: parsed.data.notes.trim(),
-          })
-          .eq("id", parsed.data.id)
-          .eq("tenant_id", current.tenant.id)
-          .select("*")
-          .single();
-        if (error || !data)
-          return {
-            ok: false,
-            error: "The enquiry could not be saved. Refresh and try again.",
-          };
-        row = data;
+        if (actor.role === "viewer") return { ok: false, error: "Viewers cannot update enquiries." };
+        const existing = await leads.get(current.db, parsed.data.id);
+        if (!existing) return { ok: false, error: "The enquiry could not be found." };
+        if (actor.role === "editor" && existing.assigned_to !== current.user.id) return { ok: false, error: "Editors can update only enquiries assigned to them." };
+        row = await leads.updateWork(current.db, parsed.data.id, parsed.data.status, parsed.data.notes.trim());
       }
       revalidatePath(`/${tenant}/dashboard`);
+      revalidatePath(`/${tenant}/dashboard/${parsed.data.id}`);
       return { ok: true, data: row };
     } catch {
-      return {
-        ok: false,
-        error:
-          "The enquiry could not be saved. Check your access and try again.",
-      };
+      return { ok: false, error: "The enquiry could not be saved. Check your access and try again." };
     }
   }
 
@@ -230,12 +206,14 @@ export default async function DashboardPage({
         ownerName,
         ownerEmail: context?.user.email ?? base.business.email ?? "",
         enquiries: items,
-        canEdit:
-          mode === "demo" ||
-          Boolean(context && context.tenant.status !== "demo"),
+        members,
+        currentRole,
+        canAssign: currentRole === "owner",
+        canEdit: canEditAuthenticatedWorkspace({ authenticated: Boolean(context), isSampleDemo: mode === "demo" }),
+        canUploadAssets: Boolean(context),
         canCreate:
           mode === "demo" ||
-          Boolean(eligible && context?.tenant.status === "live"),
+          Boolean(eligible && context?.tenant.status === "live" && currentRole !== "viewer"),
         leadError,
       }}
       leadAction={mutateLead}
