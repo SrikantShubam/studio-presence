@@ -54,6 +54,14 @@ exception is a dark scrim behind text sitting on a photo.
 **Sample content must read as sample.** On a `demo` build, a plausible-looking fake testimonial is
 worse than an obvious placeholder, because it can reach a real prospect and be believed.
 
+**Development-phase feature visibility.** While features are being built, fixed, and validated, use
+one feature-complete demo/test workspace and keep implemented features visible there. Treat `tier`
+and `status` as metadata during this phase; do not hide or disable a feature merely because the
+workspace is currently `t0`, `t1`, or another provisional tier. Apply strict tier-based feature
+isolation only in an explicitly requested final tierization/release task. When a test workspace needs
+to exercise a feature, resolve it as `t3`/demo or use an explicit feature block in the test config;
+do not let provisional tier separation block product validation.
+
 ## Definition of done
 
 ```bash
