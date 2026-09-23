@@ -206,7 +206,6 @@ export default async function DashboardPage({
         ownerName,
         ownerEmail: context?.user.email ?? base.business.email ?? "",
         enquiries: items,
-        currentUserId,
         members,
         currentRole,
         canAssign: currentRole === "owner",
