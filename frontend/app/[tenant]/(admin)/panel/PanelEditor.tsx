@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { createLocalDraft, type LocalDraft } from '@/lib/demo-draft/patch'
 import { clearLocalDraft, readLocalDraft, writeLocalDraft } from '@/lib/demo-draft/local-store'
 import { AdminCard, AdminChip, AdminMetric, AdminShell } from '../components'
+import { ChevronDown } from 'lucide-react'
 
 type Address = {
   line1?: string
@@ -1770,16 +1771,19 @@ function ProjectRow({
           <TextInput label="Location" value={project.location ?? ''} onChange={(location) => onChange({ ...project, location })} />
           <label className="flex flex-col gap-1.5 text-sm font-medium text-admin-ink">
             Room type
-            <select
-              value={project.projectType ?? 'residential'}
-              onChange={(e) => onChange({ ...project, projectType: e.target.value as Project['projectType'] })}
-              className="min-h-12 rounded-lg border border-admin-border bg-admin-surface px-3 text-base font-normal text-admin-ink outline-none focus:border-admin-primary"
-            >
-              <option value="residential">Residential</option>
-              <option value="commercial">Commercial</option>
-              <option value="office">Office</option>
-              <option value="retail">Retail</option>
-            </select>
+            <div className="relative flex items-center">
+              <select
+                value={project.projectType ?? 'residential'}
+                onChange={(e) => onChange({ ...project, projectType: e.target.value as Project['projectType'] })}
+                className="min-h-12 w-full appearance-none rounded-lg border border-admin-border bg-admin-surface pl-3 pr-9 text-base font-normal text-admin-ink outline-none focus:border-admin-primary cursor-pointer"
+              >
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+                <option value="office">Office</option>
+                <option value="retail">Retail</option>
+              </select>
+              <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3 size-4 text-admin-muted" />
+            </div>
           </label>
           <TextInput label="Duration" value={project.duration ?? ''} onChange={(duration) => onChange({ ...project, duration })} />
           <TextInput label="Cover image path" value={project.cover ?? ''} onChange={(cover) => onChange({ ...project, cover })} />

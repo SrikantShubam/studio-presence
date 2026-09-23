@@ -52,6 +52,7 @@ function shapeOf(schema: z.ZodTypeAny): Record<string, z.ZodTypeAny> {
 }
 
 const businessShape = shapeOf(clientConfigSchema.shape.business)
+const brandShape = shapeOf(clientConfigSchema.shape.brand)
 const ctaShape = shapeOf(clientConfigSchema.shape.cta)
 const seoShape = shapeOf(clientConfigSchema.shape.seo)
 const legalShape = shapeOf(clientConfigSchema.shape.legal)
@@ -90,6 +91,9 @@ const areasShape = shapeOf(sectionsShape.areas!)
  * testimonials, Instagram picks.
  */
 const ALLOWLIST: Record<string, z.ZodTypeAny> = {
+  'brand.logo': brandShape.logo!,
+  'brand.favicon': brandShape.favicon!,
+  'brand.ogImage': brandShape.ogImage!,
   'business.phone': businessShape.phone!,
   'business.whatsapp': businessShape.whatsapp!,
   'business.email': businessShape.email!,

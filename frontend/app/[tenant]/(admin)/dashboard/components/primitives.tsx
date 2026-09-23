@@ -6,8 +6,9 @@ import {
   useRef,
   type ButtonHTMLAttributes,
   type ReactNode,
+  type SelectHTMLAttributes,
 } from "react";
-import { X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import type { LeadStatus } from "@studio/backend";
 import { STATUS_LABELS } from "./types";
 
@@ -15,8 +16,31 @@ export const buttonClass =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-none border border-admin-border bg-admin-bg px-3 py-2 text-xs font-medium text-admin-ink hover:bg-admin-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:cursor-not-allowed disabled:opacity-50";
 export const inputClass =
   "min-h-11 w-full min-w-0 rounded-none border border-admin-border bg-admin-bg px-3 py-2 text-sm text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:opacity-50";
+export const selectClass =
+  "min-h-11 w-full min-w-0 appearance-none rounded-none border border-admin-border bg-admin-bg pl-3 pr-9 py-2 text-sm text-admin-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary disabled:cursor-not-allowed disabled:opacity-50";
 export const monoClass =
   "[font-family:var(--font-dashboard-mono)] tabular-nums";
+
+export function Select({
+  className = "",
+  containerClassName = "",
+  children,
+  ...props
+}: SelectHTMLAttributes<HTMLSelectElement> & {
+  containerClassName?: string;
+}) {
+  return (
+    <div className={`relative flex w-full items-center ${containerClassName}`}>
+      <select className={`${selectClass} ${className}`} {...props}>
+        {children}
+      </select>
+      <ChevronDown
+        aria-hidden="true"
+        className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-admin-muted"
+      />
+    </div>
+  );
+}
 export function Button({
   variant,
   className = "",

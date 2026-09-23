@@ -24,15 +24,18 @@ export async function loadTenantWorkspaceConfig(
   accessToken: string,
 ): Promise<ClientConfig> {
   const db = createScopedClient(accessToken)
-  const { data, error } = await db
-    .from('tenant_workspaces')
-    .select('config')
-    .eq('tenant_id', tenantId)
-    .maybeSingle()
+  const [{ data, error }, override] = await Promise.all([
+    db
+      .from('tenant_workspaces')
+      .select('config')
+      .eq('tenant_id', tenantId)
+      .maybeSingle(),
+    fetchClientOverridePatch(slug),
+  ])
 
   if (error) throw new Error(`Could not load workspace config: ${error.message}`)
-  if (data?.config) return resolveClientConfig(slug, data.config)
-  return loadClientConfig(slug)
+  if (data?.config) return resolveClientConfig(slug, data.config, { override })
+  return loadClientConfig(slug, { override })
 }
 
 /**

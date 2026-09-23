@@ -10,6 +10,7 @@ import {
   Feedback,
   Panel,
   PageHeading,
+  Select,
   inputClass,
   buttonClass,
 } from "./primitives";
@@ -224,8 +225,32 @@ export default function WebsiteEditor({
       />
       <Feedback error={error} message={feedback} />
       <div className="mb-4 flex flex-wrap items-end gap-4 border border-admin-border bg-admin-surface p-4">
-        <label className="grid min-w-40 gap-1 text-xs font-medium">Page<select className={inputClass} value={page} onChange={(event) => { setPage(event.target.value); setSection(PAGES[event.target.value]![0]!); }}><option>Home</option><option>About</option><option>Projects</option><option>Services</option><option>Contact</option></select></label>
-        <label className="grid min-w-40 gap-1 text-xs font-medium">Language<select className={inputClass} value={language} onChange={(event) => setLanguage(event.target.value)}><option>English</option><option>Hindi</option></select></label>
+        <label className="grid min-w-40 gap-1 text-xs font-medium">
+          Page
+          <Select
+            value={page}
+            onChange={(event) => {
+              setPage(event.target.value);
+              setSection(PAGES[event.target.value]![0]!);
+            }}
+          >
+            <option>Home</option>
+            <option>About</option>
+            <option>Projects</option>
+            <option>Services</option>
+            <option>Contact</option>
+          </Select>
+        </label>
+        <label className="grid min-w-40 gap-1 text-xs font-medium">
+          Language
+          <Select
+            value={language}
+            onChange={(event) => setLanguage(event.target.value)}
+          >
+            <option>English</option>
+            <option>Hindi</option>
+          </Select>
+        </label>
         <p className="pb-2 text-[10px] text-admin-muted">Language changes the editor view. Publish translated content separately.</p>
       </div>
       <Panel title="Studio identity & search" description="Set the public logo and the metadata used when your site is shared.">

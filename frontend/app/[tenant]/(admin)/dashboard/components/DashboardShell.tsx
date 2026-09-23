@@ -45,6 +45,11 @@ const NAV_ICONS: Record<DashboardView, LucideIcon> = {
   integrations: Unplug,
 };
 const WorkspaceOwnerContext = createContext<string>('');
+type WorkspaceBrandingContextType = {
+  studioLogoUrl: string | null;
+  setStudioLogoUrl: (url: string | null) => void;
+};
+const WorkspaceBrandingContext = createContext<WorkspaceBrandingContextType | null>(null);
 
 export function DashboardShell({
   tenant,
@@ -67,6 +72,12 @@ export function DashboardShell({
   signOutAction: () => Promise<void>;
   children: ReactNode;
 }) {
+  const [currentStudioLogoUrl, setCurrentStudioLogoUrl] = useState<string | null>(studioLogoUrl ?? null);
+
+  useEffect(() => {
+    setCurrentStudioLogoUrl(studioLogoUrl ?? null);
+  }, [studioLogoUrl]);
+
   const [mobile, setMobile] = useState(false);
   const params = useSearchParams() ?? new URLSearchParams();
   const pathname = usePathname() ?? "";
@@ -140,8 +151,8 @@ export function DashboardShell({
         </p>
       </Link>
       <div className="my-7 flex items-center gap-3 border border-admin-border bg-admin-bg p-3">
-        {studioLogoUrl ? (
-          <img src={studioLogoUrl} alt="" className="size-8 shrink-0 border border-admin-border object-cover" />
+        {currentStudioLogoUrl ? (
+          <img src={currentStudioLogoUrl} alt="" className="size-8 shrink-0 border border-admin-border object-cover" />
         ) : (
           <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
             {(studioName.trim() || "S").slice(0, 2).toUpperCase()}
@@ -225,9 +236,16 @@ export function DashboardShell({
           tabIndex={-1}
           className="mx-auto max-w-[1580px] p-4 pb-12 sm:p-8"
         >
-          <WorkspaceOwnerContext.Provider value={ownerName}>
-            {children}
-          </WorkspaceOwnerContext.Provider>
+          <WorkspaceBrandingContext.Provider
+            value={{
+              studioLogoUrl: currentStudioLogoUrl,
+              setStudioLogoUrl: setCurrentStudioLogoUrl,
+            }}
+          >
+            <WorkspaceOwnerContext.Provider value={ownerName}>
+              {children}
+            </WorkspaceOwnerContext.Provider>
+          </WorkspaceBrandingContext.Provider>
         </main>
       </div>
       <Dialog
@@ -257,7 +275,15 @@ export function DashboardWorkspace({
   leadAction: LeadAction;
 }) {
   const profileOwnerName = useContext(WorkspaceOwnerContext);
+  const brandingContext = useContext(WorkspaceBrandingContext);
   const [data, setData] = useState(initialData);
+
+  useEffect(() => {
+    if (data.config.brand.logo !== undefined) {
+      brandingContext?.setStudioLogoUrl(data.config.brand.logo || null);
+    }
+  }, [data.config.brand.logo, brandingContext]);
+
   const [restored, setRestored] = useState(initialData.mode !== "demo");
   const params = useSearchParams() ?? new URLSearchParams();
   const view = viewFrom(params?.get("tab") ?? null);

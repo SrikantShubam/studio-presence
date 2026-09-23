@@ -15,6 +15,7 @@ import {
   Feedback,
   Panel,
   PageHeading,
+  Select,
   buttonClass,
   inputClass,
   monoClass,
@@ -402,9 +403,8 @@ function OpeningHoursBuilder({
         <div className="grid gap-3 sm:grid-cols-3">
           <div>
             <label className="mb-1 block text-[11px] font-medium text-admin-muted">Days</label>
-            <select
+            <Select
               disabled={disabled}
-              className={inputClass}
               value={days}
               onChange={(e) => applyChanges(e.target.value, start, end, note)}
             >
@@ -413,16 +413,16 @@ function OpeningHoursBuilder({
                   {d}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
           {days !== "By appointment only" ? (
             <>
               <div>
                 <label className="mb-1 block text-[11px] font-medium text-admin-muted">Hours</label>
                 <div className="grid grid-cols-2 gap-1.5">
-                  <select
+                  <Select
                     disabled={disabled}
-                    className={inputClass + " px-1 text-xs"}
+                    className="px-2 text-xs"
                     value={start}
                     onChange={(e) => applyChanges(days, e.target.value, end, note)}
                   >
@@ -431,10 +431,10 @@ function OpeningHoursBuilder({
                         {t}
                       </option>
                     ))}
-                  </select>
-                  <select
+                  </Select>
+                  <Select
                     disabled={disabled}
-                    className={inputClass + " px-1 text-xs"}
+                    className="px-2 text-xs"
                     value={end}
                     onChange={(e) => applyChanges(days, start, e.target.value, note)}
                   >
@@ -443,14 +443,13 @@ function OpeningHoursBuilder({
                         {t}
                       </option>
                     ))}
-                  </select>
+                  </Select>
                 </div>
               </div>
               <div>
                 <label className="mb-1 block text-[11px] font-medium text-admin-muted">Weekend / note</label>
-                <select
+                <Select
                   disabled={disabled}
-                  className={inputClass}
                   value={note}
                   onChange={(e) => applyChanges(days, start, end, e.target.value)}
                 >
@@ -459,7 +458,7 @@ function OpeningHoursBuilder({
                       {n}
                     </option>
                   ))}
-                </select>
+                </Select>
               </div>
             </>
           ) : (

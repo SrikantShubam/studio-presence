@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { ChevronDown } from 'lucide-react'
 import { canAccessDashboard, leads, listWorkspaceMembers, leadStatusSchema, requireTenant, type Lead, type WorkspaceMember } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 
@@ -87,9 +88,56 @@ export default async function LeadDetailPage({
       {estimateRows.length > 0 && <section className="rounded-lg border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Estimate details</h2><dl className="mt-3 grid gap-3 text-sm sm:grid-cols-2">{estimateRows.map(([label, value]) => <DetailRow key={label} label={label} value={value} />)}</dl></section>}
       <section className="rounded-lg border border-admin-border bg-admin-surface p-4">
         <h2 className="text-base font-semibold text-admin-ink">Assignee</h2>
-        {canAssign ? <form action={saveAssignment} className="mt-3 flex flex-col gap-3 sm:flex-row"><label className="flex flex-1 flex-col gap-1.5 text-sm font-medium text-admin-ink">Assign to active owner or editor<select name="userId" defaultValue={lead.assigned_to ?? ''} className="min-h-12 rounded-lg border border-admin-border bg-admin-surface px-3 text-base font-normal text-admin-ink outline-none focus:border-admin-primary">{assignableMembers.map((member) => <option key={member.user_id} value={member.user_id}>{member.display_name || member.email || member.role}</option>)}</select></label><button type="submit" className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary sm:self-end">Save assignment</button></form> : <p className="mt-3 text-sm text-admin-muted">{assignee?.display_name || assignee?.email || 'Unassigned'} · Only the workspace owner can reassign enquiries.</p>}
+        {canAssign ? (
+          <form action={saveAssignment} className="mt-3 flex flex-col gap-3 sm:flex-row">
+            <label className="flex flex-1 flex-col gap-1.5 text-sm font-medium text-admin-ink">
+              Assign to active owner or editor
+              <div className="relative flex items-center">
+                <select
+                  name="userId"
+                  defaultValue={lead.assigned_to ?? ''}
+                  className="min-h-12 w-full appearance-none rounded-lg border border-admin-border bg-admin-surface pl-3 pr-9 text-base font-normal text-admin-ink outline-none focus:border-admin-primary cursor-pointer"
+                >
+                  {assignableMembers.map((member) => (
+                    <option key={member.user_id} value={member.user_id}>
+                      {member.display_name || member.email || member.role}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3 size-4 text-admin-muted" />
+              </div>
+            </label>
+            <button type="submit" className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary sm:self-end">Save assignment</button>
+          </form>
+        ) : (
+          <p className="mt-3 text-sm text-admin-muted">{assignee?.display_name || assignee?.email || 'Unassigned'} · Only the workspace owner can reassign enquiries.</p>
+        )}
       </section>
-      <section className="rounded-lg border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Status</h2><form action={saveStatus} className="mt-3 flex flex-col gap-3 sm:flex-row"><label className="flex flex-1 flex-col gap-1.5 text-sm font-medium text-admin-ink">Lead status<select name="status" defaultValue={lead.status} disabled={!canUpdateWork} className="min-h-12 rounded-lg border border-admin-border bg-admin-surface px-3 text-base font-normal text-admin-ink outline-none focus:border-admin-primary">{Object.entries(STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label><button type="submit" disabled={!canUpdateWork} className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:cursor-not-allowed disabled:opacity-50 sm:self-end">Save status</button></form>{!canUpdateWork && <p className="mt-3 text-xs text-admin-muted">Only the assigned editor or workspace owner can update status and notes.</p>}</section>
+      <section className="rounded-lg border border-admin-border bg-admin-surface p-4">
+        <h2 className="text-base font-semibold text-admin-ink">Status</h2>
+        <form action={saveStatus} className="mt-3 flex flex-col gap-3 sm:flex-row">
+          <label className="flex flex-1 flex-col gap-1.5 text-sm font-medium text-admin-ink">
+            Lead status
+            <div className="relative flex items-center">
+              <select
+                name="status"
+                defaultValue={lead.status}
+                disabled={!canUpdateWork}
+                className="min-h-12 w-full appearance-none rounded-lg border border-admin-border bg-admin-surface pl-3 pr-9 text-base font-normal text-admin-ink outline-none focus:border-admin-primary disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+              >
+                {Object.entries(STATUS_LABELS).map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3 size-4 text-admin-muted" />
+            </div>
+          </label>
+          <button type="submit" disabled={!canUpdateWork} className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:cursor-not-allowed disabled:opacity-50 sm:self-end">Save status</button>
+        </form>
+        {!canUpdateWork && <p className="mt-3 text-xs text-admin-muted">Only the assigned editor or workspace owner can update status and notes.</p>}
+      </section>
       <section className="rounded-lg border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Notes</h2><form action={saveNote} className="mt-3 flex flex-col gap-3"><label className="flex flex-col gap-1.5 text-sm font-medium text-admin-ink">Private note<textarea name="notes" defaultValue={lead.notes ?? ''} disabled={!canUpdateWork} rows={6} className="min-h-36 rounded-lg border border-admin-border bg-admin-surface px-3 py-3 text-base font-normal text-admin-ink outline-none focus:border-admin-primary" /></label><button type="submit" disabled={!canUpdateWork} className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:cursor-not-allowed disabled:opacity-50">Save note</button></form></section>
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-admin-border bg-admin-surface p-3"><div className="mx-auto grid max-w-3xl grid-cols-2 gap-2"><a href={whatsappHref} className="flex min-h-12 items-center justify-center rounded-lg bg-admin-primary px-3 text-base font-semibold text-admin-on-primary">WhatsApp</a><a href={'tel:' + lead.phone} className="flex min-h-12 items-center justify-center rounded-lg border border-admin-border px-3 text-base font-semibold text-admin-ink">Call</a></div></div>
     </div>

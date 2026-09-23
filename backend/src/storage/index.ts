@@ -108,7 +108,7 @@ export async function uploadAsset(
  */
 export function resolveAssetPublicUrl(key: string): string {
   const cdnBase = process.env.NEXT_PUBLIC_CDN_BASE_URL
-  if ((key.startsWith('tenants/') || key.startsWith('staging/')) && cdnBase) {
+  if (key.startsWith('tenants/') && !key.startsWith('tenants/demo/') && cdnBase) {
     return `${cdnBase.replace(/\/$/, '')}/${key}`
   }
 

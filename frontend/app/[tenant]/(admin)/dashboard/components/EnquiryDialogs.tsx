@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { Check, Phone, Save } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { Button, Dialog, Field, Feedback, buttonClass, inputClass } from "./primitives";
+import { Button, Dialog, Field, Feedback, Select, buttonClass, inputClass } from "./primitives";
 import {
   assigneeDisplayName,
   contactPhone,
@@ -239,9 +239,9 @@ export function EnquiryDetails({
               <div className="mb-3 flex items-center justify-between gap-3"><h3 className="text-xs font-semibold">Assignee</h3><span className="text-[10px] text-admin-muted">{assigneeDisplayName(enquiry.assigned_to, members)}</span></div>
               {canAssignLead && assignableMembers.length > 0 ? (
                 <Field label="Assign to active owner or editor">
-                  <select aria-label="Lead assignee" className={inputClass} value={assignee} onChange={(event) => setAssignee(event.target.value)}>
+                  <Select aria-label="Lead assignee" value={assignee} onChange={(event) => setAssignee(event.target.value)}>
                     {assignableMembers.map((member) => <option key={member.user_id} value={member.user_id}>{member.display_name || member.email || member.role}</option>)}
-                  </select>
+                  </Select>
                 </Field>
               ) : (
                 <p className="text-xs text-admin-muted">{canAssignLead ? "No active owner or editor is available." : "Only the workspace owner can reassign enquiries."}</p>
@@ -249,9 +249,9 @@ export function EnquiryDetails({
             </div>
             <div className="border-t border-admin-border py-5">
               <div className="mb-3 flex items-center justify-between"><h3 className="text-xs font-semibold">Lead status</h3><span className="text-[10px] text-admin-muted">{STATUS_LABELS[status]}</span></div>
-              <select aria-label="Lead status" className={inputClass} value={status} onChange={(event) => setStatus(event.target.value as Enquiry["status"])}>
+              <Select aria-label="Lead status" value={status} onChange={(event) => setStatus(event.target.value as Enquiry["status"])}>
                 {Object.entries(STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-              </select>
+              </Select>
               <p className="mt-2 text-[10px] text-admin-muted">Opening WhatsApp does not automatically mark a lead contacted.</p>
             </div>
             <div className="border-t border-admin-border py-5">
