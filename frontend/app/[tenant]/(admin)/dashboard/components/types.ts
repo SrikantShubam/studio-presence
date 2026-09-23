@@ -19,6 +19,13 @@ export type WorkspaceMember = {
   email: string | null;
   display_name: string | null;
 };
+export type TeamInvitation = { id: string; email_display: string; role: "editor" | "viewer"; expires_at: string; created_at: string };
+export type TeamAccessSnapshot = {
+  currentRole: WorkspaceMember["role"];
+  members: WorkspaceMember[];
+  invitations: TeamInvitation[];
+};
+
 export type WorkspaceConfig = Pick<
   ClientConfig,
   "business" | "brand" | "seo" | "sections" | "integrations" | "status"
@@ -82,6 +89,7 @@ export type WorkspaceData = {
   ownerEmail: string;
   enquiries: Enquiry[];
   members?: WorkspaceMember[];
+  teamAccess?: TeamAccessSnapshot;
   currentRole?: "owner" | "editor" | "viewer";
   currentUserId?: string;
   canAssign?: boolean;

@@ -3,6 +3,7 @@
 import { Check, ChevronDown, Copy, Link2, MailPlus, RefreshCw, ShieldCheck, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import type { TeamAccessSnapshot } from "./types";
 import { Badge, Button, Feedback, Panel, inputClass } from "./primitives";
 
 type Role = "owner" | "editor" | "viewer";
@@ -27,10 +28,10 @@ function memberInitials(name: string | null, email: string | null): string {
   return "SP";
 }
 
-export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" | "live" | "unavailable" }) {
-  const [members, setMembers] = useState<Member[]>([]);
-  const [invitations, setInvitations] = useState<Invitation[]>([]);
-  const [currentRole, setCurrentRole] = useState<Role>("owner");
+export function TeamManagement({ tenant, mode, initialData }: { tenant: string; mode: "demo" | "live" | "unavailable"; initialData?: TeamAccessSnapshot }) {
+  const [members, setMembers] = useState<Member[]>(initialData?.members ?? []);
+  const [invitations, setInvitations] = useState<Invitation[]>(initialData?.invitations ?? []);
+  const [currentRole, setCurrentRole] = useState<Role>(initialData?.currentRole ?? "viewer");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<Exclude<Role, "owner">>("editor");
   const [copyLink, setCopyLink] = useState("");
@@ -38,7 +39,7 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialData);
   async function showCurrentProfile() {
     const { data: { user } } = await createSupabaseBrowserClient().auth.getUser();
     if (!user) {
@@ -90,12 +91,13 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
     }
   }
 
+    if (initialData) return;
   useEffect(() => {
     void load().catch((loadError: unknown) => {
       setLoading(false);
       setError(loadError instanceof Error ? loadError.message : "Team details could not be loaded.");
     });
-  }, [mode, tenant]);
+  }, [initialData, mode, tenant]);
 
   async function copyToClipboard(url: string) {
     try {

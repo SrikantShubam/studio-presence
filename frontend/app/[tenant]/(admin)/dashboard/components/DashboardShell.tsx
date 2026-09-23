@@ -495,6 +495,7 @@ export function DashboardWorkspace({
           ownerName={profileOwnerName}
           ownerEmail={data.ownerEmail}
           mode={data.mode}
+          teamAccess={data.teamAccess}
           canEdit={data.canEdit}
           onSave={saveConfig}
         />

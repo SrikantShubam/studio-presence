@@ -5,6 +5,7 @@ import {
   canAccessDashboard,
   leads,
   listWorkspaceMembers,
+  listWorkspaceInvitations,
   leadStatusSchema,
   panel,
   requireTenant,
@@ -27,6 +28,7 @@ import {
   type WorkspaceConfig,
   type WorkspaceMember,
 } from "./components/types";
+  type TeamAccessSnapshot,
 
 const leadInput = z.object({
   name: z.string().trim().min(1).max(120),
@@ -139,6 +141,18 @@ export default async function DashboardPage({
   let leadError: string | undefined;
   if (mode === "live" && context) {
     try {
+  let teamAccess: TeamAccessSnapshot | undefined;
+  if (context && query?.tab === "settings") {
+    try {
+      const teamMembers = await listWorkspaceMembers(context.db, context.tenant.id);
+      const teamRole = teamMembers.find((member) => member.user_id === context.user.id)?.role ?? "viewer";
+      const invitations = teamRole === "owner"
+        ? await listWorkspaceInvitations(context.db, context.tenant.id)
+        : [];
+      teamAccess = { currentRole: teamRole, members: teamMembers, invitations };
+    } catch { teamAccess = undefined; }
+  }
+
       members = await listWorkspaceMembers(context.db, context.tenant.id);
       currentRole = members.find((member) => member.user_id === context.user.id)?.role ?? "viewer";
     } catch {
@@ -207,6 +221,7 @@ export default async function DashboardPage({
         members,
         currentRole,
         canAssign: currentRole === "owner",
+        teamAccess,
         canEdit: mode === "demo" || (Boolean(context) && currentRole !== "viewer"),
         canUploadAssets: Boolean(context && currentRole !== "viewer"),
         canCreate:

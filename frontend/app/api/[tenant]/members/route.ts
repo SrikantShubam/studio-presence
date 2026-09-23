@@ -27,8 +27,10 @@ type RouteContext = { params: Promise<{ tenant: string }> };
 
 async function authenticate(tenantSlug: string) {
   const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const { data: { session } } = await supabase.auth.getSession();
+  const [{ data: { user } }, { data: { session } }] = await Promise.all([
+    supabase.auth.getUser(),
+    supabase.auth.getSession(),
+  ]);
   if (!user?.email || !session) return { error: NextResponse.json({ error: "unauthorized" }, { status: 401 }) };
   const tenantContext = await requireTenant({ id: user.id, email: user.email, accessToken: session.access_token });
   if (tenantContext.tenant.slug !== tenantSlug) return { error: NextResponse.json({ error: "forbidden" }, { status: 403 }) };
@@ -41,9 +43,8 @@ export async function GET(_request: NextRequest, context: RouteContext) {
   try {
     const auth = await authenticate(parsed.data.tenant);
     if (auth.error) return auth.error;
-    const roleResult = await auth.tenantContext.db.rpc("current_tenant_role", { p_tenant_id: auth.tenantContext.tenant.id });
-    const currentRole = (roleResult.data as "owner" | "editor" | "viewer" | null) ?? "viewer";
     const rawMembers = await listWorkspaceMembers(auth.tenantContext.db, auth.tenantContext.tenant.id);
+    const currentRole = rawMembers.find((member) => member.user_id === auth.user.id)?.role ?? "viewer";
     const userMeta = {
       ...(auth.user.user_metadata ?? {}),
       ...(auth.user.identities?.[0]?.identity_data ?? {}),
