@@ -34,6 +34,31 @@ import {
   type TeamAccessSnapshot,
 } from "./types";
 
+const phoneFieldClass = [
+  "relative flex min-h-11 w-full min-w-0 items-center rounded-xl border border-admin-border bg-admin-bg pr-11",
+  "[&_.react-international-phone-input-container]:!w-full",
+  "[&_.react-international-phone-country-selector-button]:!border-0",
+  "[&_.react-international-phone-country-selector-button]:!bg-transparent",
+  "[&_.react-international-phone-country-selector-button]:!text-admin-ink",
+  "[&_.react-international-phone-country-selector-button:hover]:!bg-transparent",
+  "[&_.react-international-phone-country-selector-button__dropdown-arrow]:!border-t-admin-muted",
+  "[&_.react-international-phone-input]:!min-h-11",
+  "[&_.react-international-phone-input]:!w-full",
+  "[&_.react-international-phone-input]:!border-0",
+  "[&_.react-international-phone-input]:!bg-transparent",
+  "[&_.react-international-phone-input]:!text-admin-ink",
+  "[&_.react-international-phone-country-selector-dropdown]:!max-h-72",
+  "[&_.react-international-phone-country-selector-dropdown]:!rounded-md",
+  "[&_.react-international-phone-country-selector-dropdown]:!border-admin-border",
+  "[&_.react-international-phone-country-selector-dropdown]:!bg-admin-surface",
+  "[&_.react-international-phone-country-selector-dropdown]:!text-admin-ink",
+  "[&_.react-international-phone-country-selector-dropdown__list-item]:!text-admin-ink",
+  "[&_.react-international-phone-country-selector-dropdown__list-item:hover]:!bg-admin-raised",
+  "[&_.react-international-phone-country-selector-dropdown__list-item--selected]:!bg-admin-raised",
+  "[&_.react-international-phone-country-selector-dropdown__list-item--focused]:!bg-admin-raised",
+  "[&_.react-international-phone-country-selector-dropdown__list-item-dial-code]:!text-admin-muted",
+].join(" ");
+
 export function AnalyticsTab({
   data,
   onNavigate,
@@ -785,48 +810,52 @@ export function SettingsTab({
                 </div>
               </Field>
               <Field label="Studio phone" hint="Choose a country, then enter the number without the country code.">
-                <InternationalPhoneInput
+                <div className={phoneFieldClass}>
+                  <InternationalPhoneInput
                     defaultCountry="in"
                     forceDialCode
                     required
                     value={business.phone || ""}
                     onChange={(value) => setEdits({ ...edits, phone: value })}
-                    className={inputClass + " flex items-center gap-2 pr-11"}
-                    inputClassName="min-w-0 flex-1 border-0! bg-transparent! px-2 py-2 text-sm text-admin-ink outline-none"
-                    countrySelectorStyleProps={{
-                      buttonClassName: "flex h-full min-h-11 items-center gap-2 rounded-l-md bg-transparent! px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary",
-                      flagClassName: "h-3.5 w-5 shrink-0 rounded-sm",
-                      dropdownStyleProps: {
-                        className: "max-h-72 overflow-y-auto rounded-md border border-admin-border bg-admin-surface p-1 shadow-lg",
-                        listItemClassName: "flex w-full items-center gap-2 rounded px-2 py-2 text-left text-xs text-admin-ink hover:bg-admin-raised focus-visible:bg-admin-raised focus-visible:outline-none",
-                        listItemFlagClassName: "order-1 h-3.5 w-5 shrink-0 rounded-sm",
-                        listItemDialCodeClassName: "order-2 text-admin-muted",
-                        listItemCountryNameClassName: "order-3 truncate",
-                      },
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    aria-label="Edit studio phone"
+                    title="Edit studio phone"
+                    onClick={(event) => {
+                      const input = event.currentTarget.parentElement?.querySelector("input");
+                      input?.focus();
+                      input?.select();
                     }}
-                />
+                  >
+                    <Pencil aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
               </Field>
               <Field label="WhatsApp number" hint="Choose a country, then enter the number without the country code.">
-                <InternationalPhoneInput
+                <div className={phoneFieldClass}>
+                  <InternationalPhoneInput
                     defaultCountry="in"
                     forceDialCode
                     required
                     value={business.whatsapp || ""}
                     onChange={(value) => setEdits({ ...edits, whatsapp: value })}
-                    className={inputClass + " flex items-center gap-2 pr-11"}
-                    inputClassName="min-w-0 flex-1 border-0! bg-transparent! px-2 py-2 text-sm text-admin-ink outline-none"
-                    countrySelectorStyleProps={{
-                      buttonClassName: "flex h-full min-h-11 items-center gap-2 rounded-l-md bg-transparent! px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary",
-                      flagClassName: "h-3.5 w-5 shrink-0 rounded-sm",
-                      dropdownStyleProps: {
-                        className: "max-h-72 overflow-y-auto rounded-md border border-admin-border bg-admin-surface p-1 shadow-lg",
-                        listItemClassName: "flex w-full items-center gap-2 rounded px-2 py-2 text-left text-xs text-admin-ink hover:bg-admin-raised focus-visible:bg-admin-raised focus-visible:outline-none",
-                        listItemFlagClassName: "order-1 h-3.5 w-5 shrink-0 rounded-sm",
-                        listItemDialCodeClassName: "order-2 text-admin-muted",
-                        listItemCountryNameClassName: "order-3 truncate",
-                      },
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    aria-label="Edit WhatsApp number"
+                    title="Edit WhatsApp number"
+                    onClick={(event) => {
+                      const input = event.currentTarget.parentElement?.querySelector("input");
+                      input?.focus();
+                      input?.select();
                     }}
-                />
+                  >
+                    <Pencil aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
               </Field>
               <Field label="Public email">
                 <div className="relative">
