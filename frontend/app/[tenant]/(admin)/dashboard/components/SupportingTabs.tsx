@@ -775,7 +775,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit studio name"
                     title="Edit studio name"
                     onClick={(event) => {
@@ -798,7 +798,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit studio tagline"
                     title="Edit studio tagline"
                     onClick={(event) => {
@@ -822,7 +822,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit studio phone"
                     title="Edit studio phone"
                     onClick={(event) => {
@@ -846,7 +846,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit WhatsApp number"
                     title="Edit WhatsApp number"
                     onClick={(event) => {
