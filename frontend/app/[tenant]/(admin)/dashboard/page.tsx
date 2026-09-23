@@ -150,7 +150,7 @@ export default async function DashboardPage({
         ? await listWorkspaceInvitations(context.db, context.tenant.id)
         : [];
       teamAccess = { currentRole: teamRole, members: teamMembers, invitations };
-    } catch { teamAccess = undefined; }
+    } catch { /* Team Access will load from its route. */ }
   }
 
       members = await listWorkspaceMembers(context.db, context.tenant.id);
