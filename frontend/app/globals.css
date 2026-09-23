@@ -308,6 +308,16 @@
   border: 2px solid var(--a-bg);
 }
 
+.PhoneInputCountrySelect {
+  background-color: var(--a-bg);
+  color: var(--a-ink);
+}
+
+.PhoneInputCountrySelect option {
+  background-color: var(--a-surface);
+  color: var(--a-ink);
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }

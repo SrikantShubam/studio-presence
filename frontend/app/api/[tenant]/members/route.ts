@@ -43,7 +43,16 @@ export async function GET(_request: NextRequest, context: RouteContext) {
     if (auth.error) return auth.error;
     const roleResult = await auth.tenantContext.db.rpc("current_tenant_role", { p_tenant_id: auth.tenantContext.tenant.id });
     const currentRole = (roleResult.data as "owner" | "editor" | "viewer" | null) ?? "viewer";
-    const members = await listWorkspaceMembers(auth.tenantContext.db, auth.tenantContext.tenant.id);
+    const rawMembers = await listWorkspaceMembers(auth.tenantContext.db, auth.tenantContext.tenant.id);
+    const userMeta = {
+      ...(auth.user.user_metadata ?? {}),
+      ...(auth.user.identities?.[0]?.identity_data ?? {}),
+    };
+    const currentAvatar = (userMeta.avatar_url as string | undefined) ?? (userMeta.picture as string | undefined) ?? null;
+    const members = rawMembers.map((m) => ({
+      ...m,
+      avatar_url: m.user_id === auth.user.id ? currentAvatar : (m as { avatar_url?: string | null }).avatar_url ?? null,
+    }));
     const invitations = currentRole === "owner"
       ? await listWorkspaceInvitations(auth.tenantContext.db, auth.tenantContext.tenant.id)
       : [];
