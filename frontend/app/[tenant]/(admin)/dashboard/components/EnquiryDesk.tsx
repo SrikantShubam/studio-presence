@@ -12,7 +12,7 @@ import {
   inputClass,
   monoClass,
 } from "./primitives";
-const contactButtonClass = "!min-h-10 !w-10 !border-0 !bg-admin-raised !p-0";
+const contactButtonClass = "!min-h-10 !w-10 !border-0 !bg-transparent !p-0 hover:!bg-transparent";
 const sourceLabels = {
   estimate: "Estimate calculator",
   form: "Website direct form",
@@ -277,7 +277,7 @@ export function ContactActions({
           aria-label={"WhatsApp " + enquiry.name}
           title="Contact actions are unavailable for sample contacts"
         >
-          <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-5 text-admin-success" />
+          <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-7 text-admin-success" />
         </Button>
         <Button
           className={contactButtonClass}
@@ -292,17 +292,17 @@ export function ContactActions({
   return (
     <>
       <a
-        className={buttonClass + " " + contactButtonClass + " !border-0 !bg-admin-raised"}
+        className={buttonClass + " " + contactButtonClass + " !border-0 !bg-transparent hover:!bg-transparent"}
         href={"https://wa.me/" + phone}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={"WhatsApp " + enquiry.name}
         title={"WhatsApp " + enquiry.name}
       >
-        <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-5 text-admin-success" />
+        <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-7 text-admin-success" />
       </a>
       <a
-        className={buttonClass + " " + contactButtonClass + " !border-0 !bg-admin-raised"}
+        className={buttonClass + " " + contactButtonClass + " !border-0 !bg-transparent hover:!bg-transparent"}
         href={"tel:+" + phone}
         aria-label={"Call " + enquiry.name}
         title={"Call " + enquiry.name}
