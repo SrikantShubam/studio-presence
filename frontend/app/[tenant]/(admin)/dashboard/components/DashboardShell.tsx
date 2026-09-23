@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { Calculator, ChartNoAxesCombined, ChevronDown, Inbox, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, UserRound, type LucideIcon } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
+import { Calculator, ChartNoAxesCombined, Inbox, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, Unplug, UserRound, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
 import {
   Button,
@@ -44,15 +44,12 @@ const NAV_ICONS: Record<DashboardView, LucideIcon> = {
   settings: Settings2,
   integrations: Unplug,
 };
-const WorkspaceOwnerContext = createContext<string>('');
-
 export function DashboardShell({
   tenant,
   studioName,
   ownerName,
   ownerEmail,
   ownerAvatarUrl,
-  studioLogoUrl,
   authenticated,
   signOutAction,
   children,
@@ -62,7 +59,6 @@ export function DashboardShell({
   ownerName: string;
   ownerEmail: string;
   ownerAvatarUrl?: string | null;
-  studioLogoUrl?: string | null;
   authenticated: boolean;
   signOutAction: () => Promise<void>;
   children: ReactNode;
@@ -140,13 +136,9 @@ export function DashboardShell({
         </p>
       </Link>
       <div className="my-7 flex items-center gap-3 border border-admin-border bg-admin-bg p-3">
-        {studioLogoUrl ? (
-          <img src={studioLogoUrl} alt="" className="size-8 shrink-0 border border-admin-border object-cover" />
-        ) : (
-          <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
-            {(studioName.trim() || "S").slice(0, 2).toUpperCase()}
-          </span>
-        )}
+        <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold">
+          {(studioName || "S").slice(0, 2).toUpperCase()}
+        </span>
         <div className="min-w-0">
           <p className="truncate text-xs font-semibold">{studioName}</p>
           <p className="mt-1 text-[11px] text-admin-muted">Studio workspace</p>
@@ -202,12 +194,16 @@ export function DashboardShell({
           <div className="flex shrink-0 items-center gap-2">
             <ThemeToggle />
             {authenticated ? (
-              <AccountMenu
-                ownerName={ownerName}
-                ownerEmail={ownerEmail}
-                ownerAvatarUrl={ownerAvatarUrl}
-                signOutAction={signOutAction}
-              />
+              <form action={signOutAction}>
+                <Button
+                  type="submit"
+                  className="border-0 px-2"
+                  aria-label="Sign out"
+                  title="Sign out"
+                >
+                  <LogOut aria-hidden="true" className="size-4" /><span className="hidden sm:inline">Sign out</span>
+                </Button>
+              </form>
             ) : (
               <Link
                 className={buttonClass + " w-11 px-0"}
@@ -225,9 +221,7 @@ export function DashboardShell({
           tabIndex={-1}
           className="mx-auto max-w-[1580px] p-4 pb-12 sm:p-8"
         >
-          <WorkspaceOwnerContext.Provider value={ownerName}>
-            {children}
-          </WorkspaceOwnerContext.Provider>
+          {children}
         </main>
       </div>
       <Dialog
@@ -256,7 +250,6 @@ export function DashboardWorkspace({
   initialData: WorkspaceData;
   leadAction: LeadAction;
 }) {
-  const profileOwnerName = useContext(WorkspaceOwnerContext);
   const [data, setData] = useState(initialData);
   const [restored, setRestored] = useState(initialData.mode !== "demo");
   const params = useSearchParams();
@@ -327,11 +320,6 @@ export function DashboardWorkspace({
   }
   const performLeadAction: LeadAction = async (input) => {
     if (data.mode !== "demo") return leadAction(input);
-    if (input.kind === "assign") {
-      const existing = data.enquiries.find((item) => item.id === input.id);
-      if (!existing) return { ok: false, error: "Sample enquiry not found." };
-      return { ok: true, data: { ...existing, assigned_to: input.userId } };
-    }
     if (input.kind === "update") {
       const existing = data.enquiries.find((item) => item.id === input.id);
       if (!existing) return { ok: false, error: "Sample enquiry not found." };
@@ -358,7 +346,6 @@ export function DashboardWorkspace({
         source_page: "sample",
         status: "new",
         notes: "",
-        assigned_to: null,
         created_at: new Date().toISOString(),
         contacted_at: null,
       },
@@ -418,7 +405,6 @@ export function DashboardWorkspace({
             onOpenEnquiry={(item) => setSelected(item.id)}
             mode={data.mode}
             tenant={data.tenant}
-            members={data.members}
           />
         </div>
       )}
@@ -428,7 +414,6 @@ export function DashboardWorkspace({
           tenant={data.tenant}
           mode={data.mode}
           canEdit={data.canEdit}
-          canUploadAssets={data.canUploadAssets}
           onSave={saveConfig}
         />
       </PersistentTab>
@@ -447,7 +432,6 @@ export function DashboardWorkspace({
       <PersistentTab active={view === "settings"}>
         <SettingsTab
           config={data.config}
-          ownerName={profileOwnerName}
           ownerEmail={data.ownerEmail}
           mode={data.mode}
           canEdit={data.canEdit}
@@ -481,8 +465,6 @@ export function DashboardWorkspace({
           action={performLeadAction}
           onClose={() => setSelected(null)}
           onUpdated={updateLead}
-          members={data.members}
-          canAssign={Boolean(data.canAssign)}
         />
       )}
     </>
@@ -501,46 +483,4 @@ function PersistentTab({
     if (active) setVisited(true);
   }, [active]);
   return active || visited ? <div hidden={!active}>{children}</div> : null;
-}
-
-function AccountMenu({
-  ownerName,
-  ownerEmail,
-  ownerAvatarUrl,
-  signOutAction,
-}: {
-  ownerName: string;
-  ownerEmail: string;
-  ownerAvatarUrl?: string | null;
-  signOutAction: () => Promise<void>;
-}) {
-  const fallback = (ownerName || ownerEmail || "O").trim().slice(0, 2).toUpperCase();
-  return (
-    <details className="group relative">
-      <summary
-        className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-admin-border bg-admin-bg px-2 outline-none focus-visible:ring-2 focus-visible:ring-admin-primary [&::-webkit-details-marker]:hidden"
-        aria-label="Open account menu"
-        title="Open account menu"
-      >
-        {ownerAvatarUrl ? (
-          <img src={ownerAvatarUrl} alt="" referrerPolicy="no-referrer" className="size-7 rounded-full border border-admin-border object-cover" />
-        ) : (
-          <span className="flex size-7 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[10px] font-semibold text-admin-ink">
-            {fallback}
-          </span>
-        )}
-        <span className="hidden max-w-32 truncate text-xs font-semibold text-admin-ink sm:block">{ownerName || ownerEmail || "Account"}</span>
-        <ChevronDown aria-hidden="true" className="size-4 text-admin-muted transition-transform group-open:rotate-180" />
-      </summary>
-      <div className="absolute right-0 top-full z-40 mt-2 w-56 border border-admin-border bg-admin-surface p-2">
-        <p className="truncate px-2 py-2 text-xs text-admin-muted">{ownerEmail || "Workspace account"}</p>
-        <form action={signOutAction}>
-          <Button type="submit" className="w-full justify-start px-2">
-            <LogOut aria-hidden="true" className="size-4" />
-            Sign out
-          </Button>
-        </form>
-      </div>
-    </details>
-  );
 }
