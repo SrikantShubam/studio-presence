@@ -17,6 +17,7 @@ import {
 import { confirmationRequest } from '../frontend/lib/auth-confirmation.ts'
 
 const invitePage = readFileSync('frontend/app/invite/[token]/page.tsx', 'utf8')
+const inviteEntry = readFileSync('frontend/app/invite/[token]/InvitationEntry.tsx', 'utf8')
 
 assert.equal(
   canonicalAuthOrigin('https://temporary.vercel.app', 'https://preview.example.com'),
@@ -104,9 +105,9 @@ assert.equal(
   'https://tenant-a.example.com/dashboard',
 )
 
-assert.match(invitePage, /Join workspace/, 'invite entry page must use concise title')
-assert.match(invitePage, /Continue with Google/, 'invite entry page must offer Google')
-assert.match(invitePage, /Use email/, 'invite entry page must offer email')
+assert.match(inviteEntry, /Join workspace/, 'invite entry page must use concise title')
+assert.match(inviteEntry, /Continue with Google/, 'invite entry page must offer Google')
+assert.match(inviteEntry, /Use email/, 'invite entry page must offer email')
 assert.match(invitePage, /\/login\\?next=/, 'invite entry page must preserve the invitation token for email auth')
 
 console.log('platform auth tests passed')
