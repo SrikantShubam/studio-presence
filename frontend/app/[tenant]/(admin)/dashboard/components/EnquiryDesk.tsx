@@ -12,7 +12,7 @@ import {
   inputClass,
   monoClass,
 } from "./primitives";
-const contactButtonClass = "!min-h-10 !w-10 !border-0 !bg-transparent !p-0 hover:!bg-transparent transition-transform duration-150 ease-out hover:scale-105 active:scale-95";
+const contactButtonClass = "!min-h-10 !w-10 !border-0 !bg-transparent !p-0 hover:!bg-transparent cursor-pointer transition-transform duration-150 ease-out hover:scale-105 active:scale-95";
 const sourceLabels = {
   estimate: "Estimate calculator",
   form: "Website direct form",
@@ -312,3 +312,4 @@ export function ContactActions({
     </>
   );
 }
+
