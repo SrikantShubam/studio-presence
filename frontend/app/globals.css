@@ -286,6 +286,10 @@
   --color-admin-success: var(--a-success);
 }
 
+.svg-inline--fa {
+  height: 2.5em;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
