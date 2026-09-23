@@ -150,7 +150,7 @@ export function DashboardShell({
           Studio Presence
         </p>
       </Link>
-      <div className="my-7 flex items-center gap-3 border border-admin-border bg-admin-bg p-3">
+      <div className="my-7 flex items-center gap-3">
         {currentStudioLogoUrl ? (
           <img src={currentStudioLogoUrl} alt="" className="size-8 shrink-0 border border-admin-border object-cover" />
         ) : (
