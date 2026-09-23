@@ -108,7 +108,7 @@ export function Field({
   hint?: string;
 }) {
   return (
-    <label className="grid min-w-0 gap-2 text-xs">
+    <label className="grid min-w-0 content-start gap-2 text-xs">
       <span className="font-medium">{label}</span>
       {children}
       {hint && <span className="text-[11px] text-admin-muted">{hint}</span>}

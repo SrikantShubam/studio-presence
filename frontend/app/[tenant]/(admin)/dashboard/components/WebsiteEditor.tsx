@@ -209,32 +209,32 @@ export default function WebsiteEditor({
         <p className="pb-2 text-[10px] text-admin-muted">Language changes the editor view. Publish translated content separately.</p>
       </div>
       <Panel title="Studio identity & search" description="Set the public logo and the metadata used when your site is shared.">
-        <div className="grid gap-5 p-4 lg:grid-cols-2">
-          {/* Logo Card */}
-          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-4">
+        <div className="grid gap-4 p-4 lg:grid-cols-2">
+          {/* Compact Logo Card */}
+          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-3.5">
             <div>
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <h3 className="text-xs font-semibold text-admin-ink">Choose logo</h3>
-                  <p className="mt-1 text-[11px] text-admin-muted">
+                  <p className="mt-0.5 text-[11px] text-admin-muted">
                     {canUploadLogo
-                      ? "PNG, JPG, or WebP up to 2 MB."
-                      : "Logo upload is available from the authenticated dashboard."}
+                      ? "Header, favicon & documents · PNG, JPG, WebP"
+                      : "Available from authenticated dashboard."}
                   </p>
                 </div>
-                {/* Top-right corner: Current logo showcase */}
+                {/* Compact Current Logo Box */}
                 <div className="shrink-0 text-right">
-                  <div className="mb-1.5 flex items-center justify-end gap-1.5">
+                  <div className="mb-1 flex items-center justify-end gap-1">
                     <span
                       className={`inline-block size-1.5 rounded-full ${
                         draft.brand.logo ? "bg-admin-success" : "bg-admin-muted"
                       }`}
                     />
-                    <span className="text-[10px] font-medium uppercase tracking-wider text-admin-muted">
-                      {draft.brand.logo ? "Active logo" : "No logo set"}
+                    <span className="text-[10px] uppercase tracking-wider text-admin-muted">
+                      {draft.brand.logo ? "Active" : "None"}
                     </span>
                   </div>
-                  <div className="flex h-16 w-32 items-center justify-center border border-admin-border bg-admin-bg p-2">
+                  <div className="flex h-11 w-24 items-center justify-center border border-admin-border bg-admin-bg p-1">
                     {draft.brand.logo ? (
                       <img
                         src={draft.brand.logo}
@@ -242,26 +242,26 @@ export default function WebsiteEditor({
                         className="max-h-full max-w-full object-contain"
                       />
                     ) : (
-                      <span className="text-[11px] text-admin-muted">No logo</span>
+                      <span className="text-[10px] text-admin-muted">No logo</span>
                     )}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Bottom action bar */}
-            <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-admin-border pt-4">
+            {/* Compact Action row */}
+            <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-admin-border pt-3">
               <label
-                className={`${buttonClass} shrink-0 cursor-pointer border-admin-border bg-admin-raised text-admin-ink hover:bg-admin-surface ${
+                className={`${buttonClass} shrink-0 cursor-pointer border-admin-border bg-admin-raised px-2.5 py-1.5 text-xs text-admin-ink hover:bg-admin-surface ${
                   uploadingLogo || !canUploadLogo ? "pointer-events-none opacity-50" : ""
                 }`}
               >
-                <Upload aria-hidden="true" className="size-3.5" />
+                <Upload aria-hidden="true" className="size-3" />
                 <span>{uploadingLogo ? "Uploading…" : "Choose logo"}</span>
                 <input
                   className="sr-only"
                   type="file"
-                  accept="image/png,image/jpeg,image/webp"
+                  accept="image/png,image/jpeg,image/webp,image/svg+xml"
                   disabled={uploadingLogo || !canUploadLogo}
                   onChange={(event) => {
                     const file = event.target.files?.[0];
@@ -271,7 +271,7 @@ export default function WebsiteEditor({
                   }}
                 />
               </label>
-              <span className="min-w-0 flex-1 truncate text-xs text-admin-muted">
+              <span className="min-w-0 flex-1 truncate text-[11px] text-admin-muted">
                 {selectedLogoFile ? (
                   <span className="inline-flex items-center gap-1 font-medium text-admin-ink">
                     <Check aria-hidden="true" className="size-3 text-admin-success" />
@@ -280,7 +280,7 @@ export default function WebsiteEditor({
                 ) : draft.brand.logo ? (
                   "Active logo in use"
                 ) : (
-                  "No file selected"
+                  "No file chosen"
                 )}
               </span>
               {draft.brand.logo && (
@@ -290,7 +290,7 @@ export default function WebsiteEditor({
                     update("brand.logo", "");
                     setSelectedLogoFile("");
                   }}
-                  className="text-xs text-admin-muted hover:text-admin-alert"
+                  className="text-[11px] text-admin-muted hover:text-admin-alert"
                   title="Remove logo"
                 >
                   Remove
@@ -299,60 +299,55 @@ export default function WebsiteEditor({
             </div>
           </div>
 
-          {/* Social Share Image Card */}
-          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-4">
+          {/* Compact Social Share Image Card */}
+          <div className="flex flex-col justify-between border border-admin-border bg-admin-surface p-3.5">
             <div>
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <h3 className="text-xs font-semibold text-admin-ink">Social share image</h3>
-                  <p className="mt-1 text-[11px] text-admin-muted">
-                    Preview card shown when your link is shared on WhatsApp, Instagram, or LinkedIn.
+                  <p className="mt-0.5 text-[11px] text-admin-muted">
+                    Chat & link preview card · 1200 × 630 recommended
                   </p>
                 </div>
+                {/* Compact Social Thumbnail */}
                 <div className="shrink-0 text-right">
-                  <span className="text-[10px] font-medium uppercase tracking-wider text-admin-muted">
-                    1200 × 630 recommended
-                  </span>
-                </div>
-              </div>
-
-              {/* Realistic 16:9 preview card */}
-              <div className="my-3 overflow-hidden border border-admin-border bg-admin-bg">
-                <div className="relative aspect-video w-full bg-admin-raised">
-                  {draft.brand.ogImage ? (
-                    <img
-                      src={draft.brand.ogImage}
-                      alt="Social share preview"
-                      className="size-full object-cover"
+                  <div className="mb-1 flex items-center justify-end gap-1">
+                    <span
+                      className={`inline-block size-1.5 rounded-full ${
+                        draft.brand.ogImage ? "bg-admin-success" : "bg-admin-muted"
+                      }`}
                     />
-                  ) : (
-                    <div className="flex size-full flex-col items-center justify-center p-4 text-center">
-                      <Share2 aria-hidden="true" className="size-5 text-admin-muted opacity-50" />
-                      <p className="mt-1 text-xs font-medium text-admin-muted">No social share image</p>
-                      <p className="text-[10px] text-admin-muted">Upload a photo to show a rich preview card when shared</p>
-                    </div>
-                  )}
-                </div>
-                <div className="border-t border-admin-border bg-admin-surface px-3 py-2">
-                  <p className="truncate text-xs font-medium text-admin-ink">
-                    {draft.seo.title || config.business.name}
-                  </p>
-                  <p className="truncate text-[10px] text-admin-muted">
-                    {config.business.tagline || `${config.business.address.city} · Interior Design Studio`}
-                  </p>
+                    <span className="text-[10px] uppercase tracking-wider text-admin-muted">
+                      {draft.brand.ogImage ? "Custom" : "Auto"}
+                    </span>
+                  </div>
+                  <div className="flex h-11 w-24 items-center justify-center overflow-hidden border border-admin-border bg-admin-bg">
+                    {draft.brand.ogImage ? (
+                      <img
+                        src={draft.brand.ogImage}
+                        alt="Social share preview"
+                        className="size-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex items-center gap-1 text-[10px] text-admin-muted">
+                        <Share2 aria-hidden="true" className="size-3 opacity-50" />
+                        <span>Dynamic</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Bottom action bar */}
+            {/* Compact Action row */}
             <div>
-              <div className="flex flex-wrap items-center gap-3 border-t border-admin-border pt-4">
+              <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-admin-border pt-3">
                 <label
-                  className={`${buttonClass} shrink-0 cursor-pointer border-admin-border bg-admin-raised text-admin-ink hover:bg-admin-surface ${
+                  className={`${buttonClass} shrink-0 cursor-pointer border-admin-border bg-admin-raised px-2.5 py-1.5 text-xs text-admin-ink hover:bg-admin-surface ${
                     uploadingOgImage || !canUploadLogo ? "pointer-events-none opacity-50" : ""
                   }`}
                 >
-                  <Upload aria-hidden="true" className="size-3.5" />
+                  <Upload aria-hidden="true" className="size-3" />
                   <span>{uploadingOgImage ? "Uploading…" : "Choose image"}</span>
                   <input
                     className="sr-only"
@@ -370,11 +365,11 @@ export default function WebsiteEditor({
                 <button
                   type="button"
                   onClick={() => setShowCustomOgUrl((v) => !v)}
-                  className="text-xs text-admin-muted hover:text-admin-ink"
+                  className="text-[11px] text-admin-muted hover:text-admin-ink"
                 >
-                  {showCustomOgUrl ? "Hide URL input" : "Paste URL"}
+                  {showCustomOgUrl ? "Hide URL" : "Paste URL"}
                 </button>
-                <span className="min-w-0 flex-1 truncate text-xs text-admin-muted">
+                <span className="min-w-0 flex-1 truncate text-[11px] text-admin-muted">
                   {selectedOgFile && (
                     <span className="inline-flex items-center gap-1 font-medium text-admin-ink">
                       <Check aria-hidden="true" className="size-3 text-admin-success" />
@@ -389,7 +384,7 @@ export default function WebsiteEditor({
                       update("brand.ogImage", "");
                       setSelectedOgFile("");
                     }}
-                    className="text-xs text-admin-muted hover:text-admin-alert"
+                    className="text-[11px] text-admin-muted hover:text-admin-alert"
                     title="Remove social share image"
                   >
                     Remove
@@ -397,7 +392,7 @@ export default function WebsiteEditor({
                 )}
               </div>
               {showCustomOgUrl && (
-                <div className="mt-3">
+                <div className="mt-2.5">
                   <input
                     className={inputClass}
                     type="url"
@@ -411,25 +406,50 @@ export default function WebsiteEditor({
           </div>
         </div>
 
-        {/* Search Engine Metadata */}
-        <div className="grid gap-4 border-t border-admin-border p-4 sm:grid-cols-2">
-          <Field label="Meta title" hint="Recommended 50–60 characters.">
-            <input
-              className={inputClass}
-              maxLength={160}
-              value={draft.seo.title}
-              onChange={(event) => update("seo.title", event.target.value)}
-            />
-          </Field>
-          <Field label="Meta description" hint="Summary shown in search engine results. Recommended 120–160 characters.">
-            <textarea
-              className={inputClass}
-              rows={2}
-              maxLength={320}
-              value={draft.seo.description}
-              onChange={(event) => update("seo.description", event.target.value)}
-            />
-          </Field>
+        {/* Search Engine Metadata (Spacious & Prominent) */}
+        <div className="grid gap-4 border-t border-admin-border p-4">
+          <div className="grid gap-4 lg:grid-cols-[1fr_1.5fr]">
+            <Field
+              label="Meta title"
+              hint={`${(draft.seo.title ?? "").length} / 160 characters · Browser tab & Google headline`}
+            >
+              <input
+                className={inputClass}
+                maxLength={160}
+                value={draft.seo.title}
+                onChange={(event) => update("seo.title", event.target.value)}
+              />
+            </Field>
+
+            <Field
+              label="Meta description"
+              hint={`${(draft.seo.description ?? "").length} / 320 characters · Primary snippet in Google search results`}
+            >
+              <textarea
+                className={inputClass}
+                rows={4}
+                maxLength={320}
+                value={draft.seo.description}
+                onChange={(event) => update("seo.description", event.target.value)}
+              />
+            </Field>
+          </div>
+
+          {/* Search Result Snippet Simulation */}
+          <div className="border border-admin-border bg-admin-bg p-3">
+            <p className="mb-1 text-[10px] font-medium uppercase tracking-wider text-admin-muted">
+              Google search result preview
+            </p>
+            <p className="truncate text-xs text-admin-primary">
+              https://{tenant}.studiopresence.in
+            </p>
+            <p className="truncate text-sm font-semibold text-admin-ink hover:underline">
+              {draft.seo.title || config.business.name}
+            </p>
+            <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-admin-muted">
+              {draft.seo.description || "Interior design studio portfolio, residential and commercial design services."}
+            </p>
+          </div>
         </div>
       </Panel>
       <div className="grid items-start gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">

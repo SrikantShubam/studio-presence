@@ -661,8 +661,29 @@ export function SettingsTab({
       <form onSubmit={save}>
         <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)]">
           <Panel title="Public studio details" description="Studio name and domain are managed by your operator." action={<Globe aria-hidden="true" className="size-4 text-admin-muted" />}>
-            <fieldset disabled={!canEdit || pending} className="grid gap-5 p-5 sm:grid-cols-2">
-              <Field label="Studio name"><input className={inputClass} value={business.name} readOnly /></Field>
+            <fieldset disabled={!canEdit || pending} className="grid items-start gap-5 p-5 sm:grid-cols-2">
+              <Field label="Studio name">
+                <div className="relative">
+                  <input
+                    className={inputClass + " pr-11"}
+                    value={business.name}
+                    readOnly
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    aria-label="Edit studio name"
+                    title="Edit studio name"
+                    onClick={(event) => {
+                      const input = event.currentTarget.previousElementSibling as HTMLInputElement | null;
+                      input?.focus();
+                      input?.select();
+                    }}
+                  >
+                    <Pencil aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
+              </Field>
               <Field label="Studio tagline">
                 <div className="relative">
                   <input
@@ -673,7 +694,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit studio tagline"
                     title="Edit studio tagline"
                     onClick={(event) => {
@@ -701,7 +722,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit studio phone"
                     title="Edit studio phone"
                     onClick={(event) => {
@@ -730,7 +751,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit WhatsApp number"
                     title="Edit WhatsApp number"
                     onClick={(event) => {
@@ -756,7 +777,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit public email"
                     title="Edit public email"
                     onClick={(event) => {
@@ -779,7 +800,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit primary city"
                     title="Edit primary city"
                     onClick={(event) => {
