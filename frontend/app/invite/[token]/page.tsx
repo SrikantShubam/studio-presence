@@ -3,17 +3,19 @@ import { redirect } from "next/navigation";
 import { acceptWorkspaceInvitation, createScopedClient } from "@studio/backend";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { loadPublicTenantConfig } from "@/lib/tenant-config";
-import { InvitationEntry } from "./InvitationEntry";
+import { InvitationEntry, InvitationSessionReset } from "./InvitationEntry";
 
 export default async function InvitationPage({
   params,
   searchParams,
 }: {
   params: Promise<{ token: string }>;
-  searchParams?: Promise<{ tenant?: string }>;
+  searchParams?: Promise<{ tenant?: string; auth?: string }>;
 }) {
   const { token } = await params;
-  const tenantSlug = (await searchParams)?.tenant;
+  const inviteParams = await searchParams;
+  const tenantSlug = inviteParams?.tenant;
+  const isAuthenticatedInvite = inviteParams?.auth === "1";
   const branding = await loadInvitationBranding(tenantSlug);
   const supabase = await createSupabaseServerClient();
   const {
@@ -29,6 +31,18 @@ export default async function InvitationPage({
         tenantSlug={tenantSlug}
         studioName={branding.name}
         logoUrl={branding.logo}
+      />
+    );
+  }
+
+  if (!isAuthenticatedInvite) {
+    return (
+      <InvitationSessionReset
+        token={token}
+        tenantSlug={tenantSlug}
+        studioName={branding.name}
+        logoUrl={branding.logo}
+        email={user.email}
       />
     );
   }

@@ -45,11 +45,12 @@ export async function GET(_request: NextRequest, context: RouteContext) {
     if (auth.error) return auth.error;
     const rawMembers = await listWorkspaceMembers(auth.tenantContext.db, auth.tenantContext.tenant.id);
     const currentRole = rawMembers.find((member) => member.user_id === auth.user.id)?.role ?? "viewer";
-    const userMeta = {
-      ...(auth.user.user_metadata ?? {}),
-      ...(auth.user.identities?.[0]?.identity_data ?? {}),
-    };
-    const currentAvatar = (userMeta.avatar_url as string | undefined) ?? (userMeta.picture as string | undefined) ?? null;
+    const userMeta = (auth.user.identities ?? []).reduce<Record<string, unknown>>(
+      (metadata, identity) => ({ ...metadata, ...(identity.identity_data ?? {}) }),
+      { ...(auth.user.user_metadata ?? {}) },
+    );
+    const currentAvatar = [userMeta.avatar_url, userMeta.picture, userMeta.avatarUrl, userMeta.photoURL, userMeta.image]
+      .find((value): value is string => typeof value === "string" && value.trim().length > 0) ?? null;
     const members = rawMembers.map((m) => ({
       ...m,
       avatar_url: m.user_id === auth.user.id ? currentAvatar : (m as { avatar_url?: string | null }).avatar_url ?? null,

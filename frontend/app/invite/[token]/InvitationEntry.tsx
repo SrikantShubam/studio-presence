@@ -1,13 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 import { authCallbackUrl } from '@/lib/platform-auth'
 
 export function InvitationEntry({ token, tenantSlug, studioName, logoUrl }: { token: string; tenantSlug?: string; studioName?: string; logoUrl?: string | null }) {
   const [status, setStatus] = useState<'idle' | 'opening' | 'error'>('idle')
   const nextPath = tenantSlug ? `/invite/${token}?tenant=${encodeURIComponent(tenantSlug)}` : `/invite/${token}`
+  const authenticatedNextPath = withAuthenticatedInvite(nextPath)
 
   async function continueWithGoogle() {
     setStatus('opening')
@@ -15,7 +16,7 @@ export function InvitationEntry({ token, tenantSlug, studioName, logoUrl }: { to
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: authCallbackUrl(window.location.origin, { next: nextPath }),
+        redirectTo: authCallbackUrl(window.location.origin, { next: authenticatedNextPath }),
       },
     })
     if (error) setStatus('error')
@@ -53,4 +54,42 @@ export function InvitationEntry({ token, tenantSlug, studioName, logoUrl }: { to
       </section>
     </main>
   )
+}
+
+export function InvitationSessionReset({ token, tenantSlug, studioName, logoUrl, email }: { token: string; tenantSlug?: string; studioName?: string; logoUrl?: string | null; email: string }) {
+  const [error, setError] = useState<string | null>(null)
+  const nextPath = tenantSlug ? `/invite/${token}?tenant=${encodeURIComponent(tenantSlug)}` : `/invite/${token}`
+
+  useEffect(() => {
+    const supabase = createSupabaseBrowserClient()
+    void supabase.auth.signOut().then(({ error: signOutError }) => {
+      if (signOutError) {
+        setError('We could not switch accounts automatically. Sign out and open the invitation again.')
+        return
+      }
+      window.location.replace(nextPath)
+    })
+  }, [nextPath])
+
+  return (
+    <main className="flex min-h-dvh items-center justify-center bg-admin-bg px-5 text-admin-ink">
+      <section className="w-full max-w-md border border-admin-border bg-admin-surface p-6 sm:p-8">
+        <div className="flex items-center gap-3">
+          {logoUrl ? <img src={logoUrl} alt="" className="size-12 rounded-lg border border-admin-border object-contain" /> : null}
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-admin-primary">Switching accounts</p>
+            {studioName ? <p className="mt-1 text-sm font-semibold text-admin-ink">{studioName}</p> : null}
+          </div>
+        </div>
+        <h1 className="mt-6 text-3xl font-semibold">This invitation is for another account.</h1>
+        <p className="mt-3 text-sm leading-6 text-admin-muted">You are currently signed in as {email}. We are signing out this browser session so you can join with the invited email address.</p>
+        {error && <p className="mt-4 text-sm text-admin-alert">{error}</p>}
+      </section>
+    </main>
+  )
+}
+
+function withAuthenticatedInvite(nextPath: string): string {
+  const query = nextPath.includes('?') ? '&' : '?'
+  return `${nextPath}${query}auth=1`
 }

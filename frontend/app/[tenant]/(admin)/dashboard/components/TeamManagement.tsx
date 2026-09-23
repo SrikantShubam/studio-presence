@@ -56,12 +56,15 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
     const displayName = [metadata.full_name, metadata.name]
       .find((value): value is string => typeof value === "string" && value.trim().length > 0)
       ?.trim() ?? user.email?.split("@")[0] ?? null;
+    const avatarUrl = [metadata.avatar_url, metadata.picture, metadata.avatarUrl, metadata.photoURL, metadata.image]
+      .find((value): value is string => typeof value === "string" && value.trim().length > 0) ?? null;
     setMembers([{
       user_id: user.id,
       role: "viewer",
       email: user.email ?? null,
       display_name: displayName,
       created_at: user.created_at,
+      avatar_url: avatarUrl,
     }]);
     setInvitations([]);
     setCurrentRole("viewer");
@@ -259,13 +262,8 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
                   {member.display_name || member.email || `Member ${member.user_id.slice(0, 8)}`}
                 </span>
                 <span className="block truncate text-[11px] text-admin-muted">{member.email || member.user_id}</span>
-                {member.role === "owner" && (
-                  <span className="mt-1 inline-flex items-center rounded-full border border-admin-border bg-admin-raised px-2 py-0.5 text-[10px] font-medium text-admin-ink">
-                    Owner
-                  </span>
-                )}
               </span>
-              {member.role === "owner" ? null : isOwner ? (
+              {member.role === "owner" ? <Badge>Owner</Badge> : isOwner ? (
                 <>
                   <div className="relative inline-flex items-center">
                     <select

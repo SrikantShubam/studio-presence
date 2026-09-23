@@ -93,7 +93,10 @@ export default async function DashboardLayout({
     }
   }
 
-  const profileMetadata = { ...(user?.user_metadata ?? {}), ...(user?.identities?.[0]?.identity_data ?? {}) };
+  const profileMetadata = (user?.identities ?? []).reduce<Record<string, unknown>>(
+    (metadata, identity) => ({ ...metadata, ...(identity.identity_data ?? {}) }),
+    { ...(user?.user_metadata ?? {}) },
+  );
   const profileName =
     stringFrom(profileMetadata.full_name) ??
     stringFrom(profileMetadata.name) ??

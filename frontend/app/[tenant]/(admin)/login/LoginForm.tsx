@@ -39,6 +39,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [status, setStatus] = useState<'idle' | 'oauth' | 'submitting' | 'sent' | 'error'>('idle')
   const isInvite = Boolean(nextPath?.startsWith('/invite/'))
+  const nextPathForAuth = isInvite && nextPath ? withAuthenticatedInvite(nextPath) : nextPath
   const [intent, setIntent] = useState<'signin' | 'signup'>(isInvite ? 'signup' : 'signin')
   const [emailOpen, setEmailOpen] = useState(isInvite)
   const [completedFlow, setCompletedFlow] = useState<CompletedFlow>('signup')
@@ -48,14 +49,19 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
 
   useEffect(() => {
     let active = true
-    void supabase.auth.getSession().then(({ data }) => {
+    void supabase.auth.getSession().then(async ({ data }) => {
       if (!active || !data.session) return
-      window.location.replace(authCallbackUrl(window.location.origin, { tenant, next: nextPath }))
+      if (isInvite) {
+        const { error: signOutError } = await supabase.auth.signOut()
+        if (active && signOutError) setError('Sign out before switching accounts, then open the invitation again.')
+        return
+      }
+      window.location.replace(authCallbackUrl(window.location.origin, { tenant, next: nextPathForAuth }))
     })
     return () => {
       active = false
     }
-  }, [nextPath, supabase, tenant])
+  }, [isInvite, nextPathForAuth, supabase, tenant])
 
   useEffect(() => {
     if (cooldown <= 0) return
@@ -67,7 +73,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     return authCallbackUrl(window.location.origin, {
       path: '/auth/confirm',
       tenant,
-      next: nextPath,
+      next: nextPathForAuth,
     })
   }
 
@@ -80,7 +86,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
       setError(messageForAuthError(signInError ?? { message: 'No session' }, false))
       return
     }
-    window.location.replace(authCallbackUrl(window.location.origin, { tenant, next: nextPath }))
+    window.location.replace(authCallbackUrl(window.location.origin, { tenant, next: nextPathForAuth }))
   }
 
   async function signUp() {
@@ -108,7 +114,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
       return
     }
     if (data.session) {
-      window.location.replace(authCallbackUrl(window.location.origin, { tenant, next: nextPath }))
+      window.location.replace(authCallbackUrl(window.location.origin, { tenant, next: nextPathForAuth }))
       return
     }
     setCompletedFlow('signup')
@@ -137,7 +143,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     setError(null)
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: authCallbackUrl(window.location.origin, { tenant, next: nextPath }) },
+      options: { redirectTo: authCallbackUrl(window.location.origin, { tenant, next: nextPathForAuth }) },
     })
     if (oauthError) {
       setStatus('error')
@@ -207,7 +213,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
           <div className="flex flex-col gap-1.5">
             <label htmlFor="password" className="text-sm font-medium text-admin-ink">Password</label>
             <div className="relative">
-              <input id="password" type={showPassword ? 'text' : 'password'} autoComplete={isSignup ? 'new-password' : 'current-password'} minLength={12} required value={password} onChange={(event) => setPassword(event.target.value)} className="min-h-12 w-full rounded-lg border border-admin-border bg-admin-surface px-4 pr-12 text-base text-admin-ink outline-none focus:border-admin-primary" />
+              <input id="password" type={showPassword ? 'text' : 'password'} autoComplete={isSignup ? 'new-password' : 'current-password'} minLength={12} required value={password} onChange={(event) => setPassword(event.target.value)} className="min-h-12 w-full rounded-lg border border-admin-border bg-admin-surface px-4 pr-12 text-base text-admin-ink outline-none focus:border-admin-primary [&::-ms-reveal]:hidden" />
               <button type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} aria-pressed={showPassword} onClick={() => setShowPassword((visible) => !visible)} className="absolute inset-y-0 right-0 inline-flex w-12 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-admin-primary">
                 {showPassword ? <EyeOff aria-hidden="true" className="size-5" /> : <Eye aria-hidden="true" className="size-5" />}
               </button>
@@ -217,7 +223,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
             <div className="flex flex-col gap-1.5">
               <label htmlFor="password-confirmation" className="text-sm font-medium text-admin-ink">Confirm password</label>
               <div className="relative">
-                <input id="password-confirmation" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" minLength={12} required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} className="min-h-12 w-full rounded-lg border border-admin-border bg-admin-surface px-4 pr-12 text-base text-admin-ink outline-none focus:border-admin-primary" />
+                <input id="password-confirmation" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" minLength={12} required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} className="min-h-12 w-full rounded-lg border border-admin-border bg-admin-surface px-4 pr-12 text-base text-admin-ink outline-none focus:border-admin-primary [&::-ms-reveal]:hidden" />
                 <button type="button" aria-label={showConfirmation ? 'Hide confirmation password' : 'Show confirmation password'} aria-pressed={showConfirmation} onClick={() => setShowConfirmation((visible) => !visible)} className="absolute inset-y-0 right-0 inline-flex w-12 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-admin-primary">
                   {showConfirmation ? <EyeOff aria-hidden="true" className="size-5" /> : <Eye aria-hidden="true" className="size-5" />}
                 </button>
@@ -236,4 +242,9 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
       {whatsappHref && <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="text-sm text-admin-muted underline">Trouble signing in? Message us on WhatsApp</a>}
     </div>
   )
+}
+
+function withAuthenticatedInvite(nextPath: string): string {
+  const query = nextPath.includes('?') ? '&' : '?'
+  return `${nextPath}${query}auth=1`
 }
