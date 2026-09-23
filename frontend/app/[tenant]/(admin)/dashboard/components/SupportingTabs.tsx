@@ -785,8 +785,7 @@ export function SettingsTab({
                 </div>
               </Field>
               <Field label="Studio phone" hint="Choose a country, then enter the number without the country code.">
-                <div className="relative">
-                  <InternationalPhoneInput
+                <InternationalPhoneInput
                     defaultCountry="in"
                     forceDialCode
                     required
@@ -805,26 +804,10 @@ export function SettingsTab({
                         listItemCountryNameClassName: "order-3 truncate",
                       },
                     }}
-                  />
-                  <button
-                    type="button"
-                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
-                    aria-label="Edit studio phone"
-                    title="Edit studio phone"
-                    onClick={(event) => {
-                      const container = event.currentTarget.previousElementSibling as HTMLElement | null;
-                      const input = container?.querySelector("input[type='tel'], input") as HTMLInputElement | null;
-                      input?.focus();
-                      input?.select();
-                    }}
-                  >
-                    <Pencil aria-hidden="true" className="size-4" />
-                  </button>
-                </div>
+                />
               </Field>
               <Field label="WhatsApp number" hint="Choose a country, then enter the number without the country code.">
-                <div className="relative">
-                  <InternationalPhoneInput
+                <InternationalPhoneInput
                     defaultCountry="in"
                     forceDialCode
                     required
@@ -843,22 +826,7 @@ export function SettingsTab({
                         listItemCountryNameClassName: "order-3 truncate",
                       },
                     }}
-                  />
-                  <button
-                    type="button"
-                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
-                    aria-label="Edit WhatsApp number"
-                    title="Edit WhatsApp number"
-                    onClick={(event) => {
-                      const container = event.currentTarget.previousElementSibling as HTMLElement | null;
-                      const input = container?.querySelector("input[type='tel'], input") as HTMLInputElement | null;
-                      input?.focus();
-                      input?.select();
-                    }}
-                  >
-                    <Pencil aria-hidden="true" className="size-4" />
-                  </button>
-                </div>
+                />
               </Field>
               <Field label="Public email">
                 <div className="relative">
