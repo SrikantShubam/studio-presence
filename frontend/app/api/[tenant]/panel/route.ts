@@ -96,8 +96,19 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     if (e instanceof ConfigError) return NextResponse.json({ error: 'not-found' }, { status: 404 })
     if (e instanceof PanelScopeError) return NextResponse.json({ error: e.message }, { status: 400 })
     if (e instanceof PanelError) {
-      console.error('Panel save failed', { tenant: parsed.data.tenant, error: e.message })
-      return NextResponse.json({ error: 'Could not save changes, please try again.' }, { status: 502 })
+      console.error('Panel save failed', {
+        tenant: parsed.data.tenant,
+        error: e.message,
+        cause: e.cause,
+      })
+      const detail =
+        e.cause && typeof e.cause === 'object' && 'message' in e.cause
+          ? String((e.cause as { message: unknown }).message)
+          : ''
+      return NextResponse.json(
+        { error: detail ? `Could not save changes: ${detail}` : 'Could not save changes, please try again.' },
+        { status: 502 },
+      )
     }
     throw e
   }
