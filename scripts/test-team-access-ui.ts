@@ -33,6 +33,7 @@ assert.match(source, /user_id: user\.id/, "Team Access must use the authenticate
 assert.match(source, /display_name: displayName/, "Team Access must display the authenticated user's name");
 assert.match(source, /member\.role === "owner" \? <Badge>Owner<\/Badge>/, "Owner badge must share the member role badge position");
 assert.match(source, /member\.avatar_url/, "Team Access must render member avatars when available");
+assert.match(source, /hydrateCurrentAvatar/, "Team Access must hydrate the current member avatar when initial data is present");
 assert.match(source, /if \(mode === "unavailable"\)/, "Team Access must remain available in both sample and live modes");
 assert.match(source, /await showCurrentProfile\(\);\s+return;/, "Team Access must fall back to the authenticated profile");
 assert.doesNotMatch(source, /Ashish Sharma|ashish@ashishinteriors\.com/, "Team Access must not contain a fake owner");

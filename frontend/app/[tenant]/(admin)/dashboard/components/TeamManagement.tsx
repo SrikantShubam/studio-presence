@@ -71,6 +71,18 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
     setError("");
   }
 
+  async function hydrateCurrentAvatar() {
+    const { data: { user } } = await createSupabaseBrowserClient().auth.getUser();
+    if (!user) return;
+    const metadata = {
+      ...(user.identities?.[0]?.identity_data ?? {}),
+      ...user.user_metadata,
+    };
+    const avatarUrl = [metadata.avatar_url, metadata.picture, metadata.avatarUrl, metadata.photoURL, metadata.image]
+      .find((value): value is string => typeof value === "string" && value.trim().length > 0) ?? null;
+    setMembers((current) => current.map((member) => member.user_id === user.id ? { ...member, avatar_url: avatarUrl } : member));
+  }
+
   async function load() {
     if (mode === "unavailable") {
       setLoading(false);
@@ -94,8 +106,11 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
     }
   }
 
-    if (initialData) return;
   useEffect(() => {
+    if (initialData) {
+      void hydrateCurrentAvatar();
+      return;
+    }
     void load().catch((loadError: unknown) => {
       setLoading(false);
       setError(loadError instanceof Error ? loadError.message : "Team details could not be loaded.");
