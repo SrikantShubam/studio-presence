@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, ChevronDown, Phone, 
 import PhoneInput, { getCountries, getCountryCallingCode, type Country } from "react-phone-number-input";
 import enLabels from "react-phone-number-input/locale/en.json";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { CountryFlag } from "@/lib/onboarding/countries";
+import { countryOptionLabel, CountryFlag } from "@/lib/onboarding/countries";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
 import { SAMPLE_CITIES, SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
@@ -244,7 +244,7 @@ const COUNTRY_LABELS: Record<string, string> = (() => {
     } catch {
       // ignore
     }
-    labels[country] = `${name}${code}`.trim();
+    labels[country] = countryOptionLabel(name, code.trim());
   }
   return labels;
 })();

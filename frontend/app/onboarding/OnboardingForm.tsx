@@ -19,6 +19,7 @@ import {
 } from '@/lib/onboarding/image-compression'
 import {
   COUNTRY_DIAL_CODES,
+  countryOptionLabel,
   CountryFlag,
   getCountryByDialCode,
   splitPhoneAndCountry,
@@ -911,8 +912,7 @@ function PhoneField({
                       }`}
                     >
                       <CountryFlag code={c.code} className="h-3.5 w-5 shrink-0 rounded-sm object-cover" />
-                      <span className="flex-1 truncate">{c.code} {c.name}</span>
-                      <span className="text-admin-muted">{c.dialCode}</span>
+                      <span className="flex-1 truncate">{countryOptionLabel(c.name, c.dialCode)}</span>
                     </button>
                   </li>
                 ))}

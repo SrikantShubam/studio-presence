@@ -9,6 +9,10 @@ export interface CountryDialCode {
   flag: string
 }
 
+export function countryOptionLabel(name: string, dialCode: string): string {
+  return `${dialCode} ${name}`
+}
+
 export function CountryFlag({ code, className = 'h-3.5 w-5' }: { code: string; className?: string }) {
   const Flag = (Flags as Record<string, ComponentType<{ className?: string; title?: string }>>)[code]
   if (!Flag) return null
