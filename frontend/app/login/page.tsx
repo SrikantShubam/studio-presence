@@ -53,11 +53,11 @@ export default async function PlatformLoginPage({
                 {isInvite ? 'Workspace invitation' : PLATFORM_LOGIN_COPY.eyebrow}
               </p>
               <h1 className="mt-2 text-3xl font-semibold leading-tight text-admin-ink">
-                {isInvite ? 'Accept your workspace invite' : PLATFORM_LOGIN_COPY.title}
+                {isInvite ? 'Continue to workspace' : PLATFORM_LOGIN_COPY.title}
               </h1>
               <p className="mt-3 text-sm leading-6 text-admin-muted">
                 {isInvite
-                  ? 'Sign in with Google or create an account using your invited email address to join the workspace.'
+                  ? 'Use Google or your invited email.'
                   : PLATFORM_LOGIN_COPY.description}
               </p>
             </div>
