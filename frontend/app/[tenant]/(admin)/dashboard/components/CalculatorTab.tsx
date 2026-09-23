@@ -112,7 +112,7 @@ export default function CalculatorTab({
       setPending(false);
     }
   }
-  const lakh = (value: number) => "₹" + (value / 100000).toFixed(1) + "L";
+  const lakh = (value: number) => value >= 10000000 ? "₹" + (value / 10000000).toFixed(1) + "Cr" : "₹" + (value / 100000).toFixed(1) + "L";
   const effectiveRate = Math.round(base * (finish.low ?? 1) * (home?.factor ?? 1));
   const timeline = ["8–10 weeks", "10–14 weeks", "14–18 weeks"][finishIndex] ?? "10–14 weeks";
   function reset() {
