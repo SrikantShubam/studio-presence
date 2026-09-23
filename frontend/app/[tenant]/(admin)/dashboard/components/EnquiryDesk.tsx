@@ -12,7 +12,7 @@ import {
   inputClass,
   monoClass,
 } from "./primitives";
-const contactButtonClass = "!min-h-10 !w-10 !border-0 !bg-transparent !p-0 hover:!bg-transparent";
+const contactButtonClass = "!min-h-10 !w-10 !border-0 !bg-transparent !p-0 hover:!bg-transparent transition-transform duration-150 ease-out hover:scale-105 active:scale-95";
 const sourceLabels = {
   estimate: "Estimate calculator",
   form: "Website direct form",
@@ -277,7 +277,7 @@ export function ContactActions({
           aria-label={"WhatsApp " + enquiry.name}
           title="Contact actions are unavailable for sample contacts"
         >
-          <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-7 text-admin-success" />
+          <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="h-[2.5em] w-[2.5em] text-admin-success" />
         </Button>
         <Button
           className={contactButtonClass}
@@ -299,7 +299,7 @@ export function ContactActions({
         aria-label={"WhatsApp " + enquiry.name}
         title={"WhatsApp " + enquiry.name}
       >
-        <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-7 text-admin-success" />
+        <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="h-[2.5em] w-[2.5em] text-admin-success" />
       </a>
       <a
         className={buttonClass + " " + contactButtonClass + " !border-0 !bg-transparent hover:!bg-transparent"}
