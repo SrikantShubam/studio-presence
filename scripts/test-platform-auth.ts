@@ -108,6 +108,6 @@ assert.equal(
 assert.match(inviteEntry, /Join workspace/, 'invite entry page must use concise title')
 assert.match(inviteEntry, /Continue with Google/, 'invite entry page must offer Google')
 assert.match(inviteEntry, /Use email/, 'invite entry page must offer email')
-assert.match(invitePage, /\/login\\?next=/, 'invite entry page must preserve the invitation token for email auth')
+assert.match(inviteEntry, /\/login\?next=/, 'invite entry page must preserve the invitation token for email auth')
 
 console.log('platform auth tests passed')
