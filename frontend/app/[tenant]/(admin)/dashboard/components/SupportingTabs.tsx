@@ -3,7 +3,7 @@
 import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users, X } from "lucide-react";
 import { PhoneInput as InternationalPhoneInput } from "react-international-phone";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
 import { SAMPLE_CITIES, SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
 import { TeamManagement } from "./TeamManagement";
