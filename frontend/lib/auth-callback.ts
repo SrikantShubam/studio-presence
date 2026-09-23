@@ -111,6 +111,11 @@ export async function routeAuthenticatedSession(
   const { user, access_token: accessToken } = session
   if (!user.email) return NextResponse.redirect(`${origin}/login?error=no-email`)
 
+  // Invitees do not have a tenant membership yet. Send them back to the
+  // invitation page so it can validate the token and create the membership.
+  // The path has already been restricted by safeAuthNextPath above.
+  if (next?.startsWith('/invite/')) return NextResponse.redirect(`${origin}${next}`)
+
   const db = createScopedClient(accessToken)
   await claimPendingAccess(db)
   await claimOperatorAccess(db)

@@ -21,6 +21,7 @@ export function isValidPassword(password: string): boolean {
 }
 
 const ALLOWED_NEXT_PREFIXES = ['/admin', '/dashboard', '/panel']
+const INVITATION_NEXT_PATH_REGEX = /^\/invite\/[A-Za-z0-9_-]+(?:[/?#]|$)/
 const TENANT_NEXT_PATH_REGEX = /^\/([a-z0-9-]+)\/(admin|dashboard|panel)(?:[/?#]|$)/
 
 export function safeAuthNextPath(next: string | undefined): string {
@@ -31,7 +32,7 @@ export function safeAuthNextPath(next: string | undefined): string {
     return next
   }
 
-  if (TENANT_NEXT_PATH_REGEX.test(path)) {
+  if (INVITATION_NEXT_PATH_REGEX.test(path) || TENANT_NEXT_PATH_REGEX.test(path)) {
     return next
   }
 

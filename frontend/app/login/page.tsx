@@ -18,7 +18,7 @@ export default async function PlatformLoginPage({
   searchParams: Promise<{ error?: string; next?: string; tenant?: string }>
 }) {
   const { error: errorCode, next, tenant: paramTenant } = await searchParams
-  const hintedTenant = paramTenant ?? next?.match(/^\/([a-z0-9-]+)\//)?.[1]
+  const hintedTenant = paramTenant ?? next?.match(/^\/([a-z0-9-]+)\/(?:admin|dashboard|panel)(?:\/|$)/)?.[1]
 
   const isInvite = Boolean(next?.startsWith('/invite/'))
 

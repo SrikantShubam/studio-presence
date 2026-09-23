@@ -105,12 +105,11 @@ export async function sendWorkspaceInvitation(input: {
   role: WorkspaceMemberRole
   inviteUrl: string
 }): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) throw new Error('RESEND_API_KEY is not set')
-  const from = process.env.RESEND_FROM_EMAIL ?? 'Studio Presence <onboarding@resend.dev>'
-  if (/@(gmail|googlemail|yahoo|hotmail|outlook|icloud)\./i.test(from)) {
-    throw new Error('RESEND_FROM_EMAIL must use a verified sending domain, not a personal mailbox address.')
-  }
+  const apiKey = process.env.BREVO_API_KEY
+  if (!apiKey) throw new Error('BREVO_API_KEY is not set')
+  const fromEmail = process.env.BREVO_FROM_EMAIL
+  if (!fromEmail) throw new Error('BREVO_FROM_EMAIL is not set')
+  const fromName = process.env.BREVO_FROM_NAME ?? 'Studio Presence'
   const escapeHtml = (value: string) => value
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -129,19 +128,22 @@ export async function sendWorkspaceInvitation(input: {
     input.inviteUrl,
   ].join('\n')
   const html = `<!doctype html><html><body style="margin:0;background:#f4f3ef;color:#171717;font-family:Arial,Helvetica,sans-serif"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:32px 16px"><tr><td align="center"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#fff;border:1px solid #deddd8"><tr><td style="padding:28px 32px;border-bottom:1px solid #deddd8"><img src="${logoUrl}" width="48" height="48" alt="Studio Presence" style="display:block;margin-bottom:16px"><div style="font-size:18px;font-weight:700">Studio Presence</div><div style="margin-top:4px;color:#686862;font-size:12px">by Vector Veda</div></td></tr><tr><td style="padding:32px"><div style="color:#686862;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase">Workspace invite</div><h1 style="margin:12px 0 16px;font-size:28px;line-height:1.2">Join ${escapeHtml(input.studioName)}</h1><p style="font-size:16px;line-height:1.6">${escapeHtml(inviter)} invited you as a <strong>${escapeHtml(input.role)}</strong>.</p><p style="font-size:14px;line-height:1.6;color:#686862">Open the invite to join your workspace.</p><p style="margin:28px 0"><a href="${escapeHtml(input.inviteUrl)}" style="display:inline-block;background:#171717;color:#fff;text-decoration:none;padding:14px 20px;font-size:14px;font-weight:700">Accept invite</a></p><p style="font-size:12px;line-height:1.5;color:#686862">This invitation expires in 24 hours. If you were not expecting it, you can ignore this message.</p></td></tr></table></td></tr></table></body></html>`
-  const response = await fetch('https://api.resend.com/emails', {
+  const response = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from, to: input.to, subject: `Join ${input.studioName}`, text, html }),
+    headers: { 'api-key': apiKey, accept: 'application/json', 'content-type': 'application/json' },
+    body: JSON.stringify({
+      sender: { email: fromEmail, name: fromName },
+      to: [{ email: input.to }],
+      subject: `Join ${input.studioName}`,
+      textContent: text,
+      htmlContent: html,
+    }),
   })
-  if (!response.ok) {
-    let providerMessage = ''
-    try {
-      const payload = (await response.json()) as { message?: string; name?: string }
-      providerMessage = payload.message || payload.name || ''
-    } catch {
-      // Keep the status when the provider does not return JSON.
-    }
-    throw new Error(`Resend rejected the invitation email (${response.status})${providerMessage ? `: ${providerMessage}` : ''}`)
+  const payload = (await response.json().catch(() => ({}))) as { messageId?: string; message?: string; code?: string }
+  if (response.ok) {
+    if (payload.messageId) console.info('Workspace invitation email sent', { messageId: payload.messageId })
+    return
   }
+  const providerMessage = payload.message || payload.code || ''
+  throw new Error(`Brevo rejected the invitation email (${response.status})${providerMessage ? `: ${providerMessage}` : ''}`)
 }
