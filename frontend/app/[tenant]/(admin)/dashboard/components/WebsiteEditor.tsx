@@ -56,6 +56,7 @@ export default function WebsiteEditor({
   const [preview, setPreview] = useState<"draft" | "published">("draft");
   const [pending, setPending] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [selectedLogoFile, setSelectedLogoFile] = useState("");
   const [review, setReview] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [error, setError] = useState("");
@@ -188,11 +189,34 @@ export default function WebsiteEditor({
       <Panel title="Studio identity & search" description="Set the public logo and the metadata used when your site is shared.">
         <div className="grid gap-4 p-4 sm:grid-cols-2">
           <Field label="Upload your logo" hint={canUploadLogo ? "PNG, JPG, or WebP up to 2 MB." : "Logo upload is available from the authenticated dashboard."}>
-            <input className={inputClass} type="file" accept="image/png,image/jpeg,image/webp" disabled={uploadingLogo || !canUploadLogo} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadLogo(file); }} />
-            {draft.brand.logo && <img src={draft.brand.logo} alt="Current studio logo" className="mt-2 h-12 w-24 border border-admin-border bg-admin-bg object-contain p-2" />}
+            {draft.brand.logo && (
+              <div className="border border-admin-border bg-admin-bg p-3">
+                <p className="mb-2 text-[10px] text-admin-muted">Current logo</p>
+                <img src={draft.brand.logo} alt="Current studio logo" className="h-14 w-28 object-contain" />
+              </div>
+            )}
+            <div className="flex min-h-11 items-center gap-3">
+              <label className={`${buttonClass} shrink-0 border-admin-ink bg-admin-ink text-admin-bg hover:bg-admin-ink/90 ${uploadingLogo || !canUploadLogo ? "pointer-events-none opacity-50" : "cursor-pointer"}`}>
+                <span>{uploadingLogo ? "Uploading…" : "Choose file"}</span>
+                <input
+                  className="sr-only"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  disabled={uploadingLogo || !canUploadLogo}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (!file) return;
+                    setSelectedLogoFile(file.name);
+                    void uploadLogo(file);
+                  }}
+                />
+              </label>
+              <span className="min-w-0 truncate text-xs text-admin-muted">{selectedLogoFile || "No file selected"}</span>
+            </div>
           </Field>
-          <Field label="Social share image">
-            <input className={inputClass} value={draft.brand.ogImage ?? ""} placeholder="/clients/your-studio/og-image.jpg" onChange={(event) => update("brand.ogImage", event.target.value)} />
+          <Field label="Social share image" hint="Shown when your website is shared on WhatsApp, Instagram, or LinkedIn.">
+            {draft.brand.ogImage && <img src={draft.brand.ogImage} alt="Current social share image" className="h-24 w-full border border-admin-border bg-admin-bg object-cover" />}
+            <input className={inputClass} type="url" value={draft.brand.ogImage ?? ""} placeholder="https://your-studio.in/share-image.jpg" onChange={(event) => update("brand.ogImage", event.target.value)} />
           </Field>
           <Field label="Meta title">
             <input className={inputClass} maxLength={160} value={draft.seo.title} onChange={(event) => update("seo.title", event.target.value)} />
