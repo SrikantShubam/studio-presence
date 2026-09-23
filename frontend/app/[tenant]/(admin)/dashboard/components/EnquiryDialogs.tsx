@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Check, MessageCircle, Phone, Save } from "lucide-react";
+import { Check, Phone, Save } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { Button, Dialog, Field, Feedback, buttonClass, inputClass } from "./primitives";
 import {
   contactPhone,
@@ -137,7 +139,7 @@ export function NewEnquiryDialog({
           </Button>
           <Button variant="primary" type="submit" disabled={pending}>
             {pending
-              ? "Saving…"
+              ? "Savingâ€¦"
               : mode === "demo"
                 ? "Add sample lead"
                 : "Add enquiry"}
@@ -196,7 +198,7 @@ export function EnquiryDetails({
       open
       side="right"
       title={enquiry.name}
-      eyebrow="Enquiry details · Studio workspace"
+      eyebrow="Enquiry details Â· Studio workspace"
       onClose={() => {
         if (!pending) onClose();
       }}
@@ -208,7 +210,7 @@ export function EnquiryDetails({
             <strong>{enquiry.project_type || "Project brief"}</strong>
             <span className="font-mono text-xs">{enquiry.budget_band || "Budget not supplied"}</span>
           </div>
-          <p className="text-[11px] text-admin-muted">{enquiry.timeline || "Timeline not supplied"} · Received {new Date(enquiry.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: "Asia/Kolkata" })}</p>
+          <p className="text-[11px] text-admin-muted">{enquiry.timeline || "Timeline not supplied"} Â· Received {new Date(enquiry.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: "Asia/Kolkata" })}</p>
         </div>
         <div className="border-t border-admin-border py-5">
           <h3 className="text-xs font-semibold">Client brief</h3>
@@ -226,10 +228,10 @@ export function EnquiryDetails({
             </div>
             <div className="border-t border-admin-border py-5">
               <Field label="Private studio notes" hint="Notes are private and saved to your workspace.">
-                <textarea className={inputClass} rows={6} maxLength={2000} value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Next step, measurements, preferences…" />
+                <textarea className={inputClass} rows={6} maxLength={2000} value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Next step, measurements, preferencesâ€¦" />
               </Field>
               <div className="mt-3 flex items-center gap-3">
-                <Button type="submit" disabled={pending || mode === "unavailable"}><Save aria-hidden="true" className="size-4" />{pending ? "Saving…" : "Save notes"}</Button>
+                <Button type="submit" disabled={pending || mode === "unavailable"}><Save aria-hidden="true" className="size-4" />{pending ? "Savingâ€¦" : "Save notes"}</Button>
                 {message && <span className="flex items-center gap-1 text-[11px] text-admin-muted"><Check aria-hidden="true" className="size-3.5" />Saved</span>}
               </div>
               <p className="mt-2 text-[10px] text-admin-muted">Closing also saves your note when it has changed.</p>
@@ -241,7 +243,7 @@ export function EnquiryDetails({
       </div>
       {contactPhone(enquiry.phone) && (
         <div className="sticky bottom-0 flex gap-2.5 border-t border-admin-border bg-admin-bg px-6 py-4">
-          <a className={buttonClass + " flex-1 justify-center"} href={"https://wa.me/" + contactPhone(enquiry.phone)} target="_blank" rel="noopener noreferrer"><MessageCircle aria-hidden="true" className="size-4 text-admin-primary" />WhatsApp</a>
+          <a className={buttonClass + " flex-1 justify-center"} href={"https://wa.me/" + contactPhone(enquiry.phone)} target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-4 text-admin-primary" />WhatsApp</a>
           <a className={buttonClass + " flex-1 justify-center"} href={"tel:+" + contactPhone(enquiry.phone)}><Phone aria-hidden="true" className="size-4" />Call client</a>
         </div>
       )}

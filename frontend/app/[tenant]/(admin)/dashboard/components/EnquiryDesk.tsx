@@ -1,5 +1,7 @@
 "use client";
-import { Download, MessageCircle, NotebookPen, Phone, Search, X } from "lucide-react";
+import { Download, NotebookPen, Phone, Search, X } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 import { useDeferredValue } from "react";
 import {
@@ -76,7 +78,7 @@ export function EnquiryDesk({
         title="Your enquiry desk"
         description={
           mode === "demo"
-            ? "Representative sample leads · review demo contact details before calling"
+            ? "Representative sample leads Â· review demo contact details before calling"
             : "Budget bands are estimates, not booked revenue."
         }
         action={
@@ -275,7 +277,7 @@ export function ContactActions({
           aria-label={"WhatsApp " + enquiry.name}
           title="Contact actions are unavailable for sample contacts"
         >
-          <MessageCircle aria-hidden="true" className="size-4 text-admin-primary" />
+          <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-4 text-admin-primary" />
         </Button>
         <Button
           className={contactButtonClass}
@@ -297,7 +299,7 @@ export function ContactActions({
         aria-label={"WhatsApp " + enquiry.name}
         title={"WhatsApp " + enquiry.name}
       >
-        <MessageCircle aria-hidden="true" className="size-4 text-admin-primary" />
+        <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="size-4 text-admin-primary" />
       </a>
       <a
         className={buttonClass + " " + contactButtonClass}
