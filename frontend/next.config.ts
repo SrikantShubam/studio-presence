@@ -29,6 +29,7 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: true,
+  serverExternalPackages: ['sharp'],
   transpilePackages: [
     '@fortawesome/fontawesome-svg-core',
     '@fortawesome/react-fontawesome',
