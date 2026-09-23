@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { ConfigError } from '@studio/backend'
 import { getTokenSet, tokensToCssVars } from '@/lib/tokens'
 import { loadPublicTenantConfigWithOverrides } from '@/lib/tenant-config'
-import { faviconVariantPath } from '@/lib/logo-derivatives'
+import { faviconVariantPath } from '@/lib/favicon-path'
 
 /**
  * Tenant layout — where a client's identity becomes CSS.

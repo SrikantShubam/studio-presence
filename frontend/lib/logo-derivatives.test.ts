@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import sharp from "sharp";
-import { createLogoDerivatives, faviconVariantPath, LOGO_ICON_SIZES } from "./logo-derivatives";
+import { createLogoDerivatives, LOGO_ICON_SIZES } from "./logo-derivatives";
+import { faviconVariantPath } from "./favicon-path";
 
 const source = await sharp({
   create: {

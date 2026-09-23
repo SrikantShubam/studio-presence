@@ -1,6 +1,6 @@
 import { loadPublicClientConfig } from '@studio/backend'
 import { getTokenSet } from '@/lib/tokens'
-import { faviconVariantPath } from '@/lib/logo-derivatives'
+import { faviconVariantPath } from '@/lib/favicon-path'
 
 export const runtime = 'nodejs'
 
