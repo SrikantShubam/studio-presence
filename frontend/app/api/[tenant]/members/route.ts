@@ -86,7 +86,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
         emailSent = true;
       } catch (error) {
         console.error("Workspace invitation email failed", { tenant: parsedParams.data.tenant, error });
-        emailError = error instanceof Error ? error.message : "The email provider rejected the invitation.";
+        emailError = "Email failed. Link copied.";
       }
       return NextResponse.json({ invitationId: invitation.invitationId, inviteUrl, expiresAt: invitation.expiresAt, emailSent, emailError });
     }

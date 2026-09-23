@@ -168,7 +168,7 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
       if (result.inviteUrl) {
         setCopyLink(result.inviteUrl);
         void copyToClipboard(result.inviteUrl);
-        setMessage(result.emailSent ? "Invitation sent and link copied." : `Invitation link copied, but the email was not sent. ${result.emailError ?? "Check the configured email sender."}`);
+        setMessage(result.emailSent ? "Invite sent." : (result.emailError ?? "Email failed. Link copied."));
         setEmail("");
       } else {
         setMessage("Workspace access updated.");

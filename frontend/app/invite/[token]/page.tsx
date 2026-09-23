@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { acceptWorkspaceInvitation, createScopedClient } from "@studio/backend";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { InvitationEntry } from "./InvitationEntry";
 
 export default async function InvitationPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
@@ -12,7 +14,7 @@ export default async function InvitationPage({ params }: { params: Promise<{ tok
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  if (!user?.email || !session) redirect(`/login?next=${encodeURIComponent(`/invite/${token}`)}`);
+  if (!user?.email || !session) return <InvitationEntry token={token} />;
 
   const db = createScopedClient(session.access_token);
   let accepted: { tenantId: string; role: "editor" | "viewer" };
