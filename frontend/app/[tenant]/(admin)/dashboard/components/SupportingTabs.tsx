@@ -6,6 +6,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
 import { SAMPLE_CITIES, SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
+import { TeamManagement } from "./TeamManagement";
 import {
   Button,
   Badge,
@@ -231,6 +232,7 @@ function CityDemandPanel({ data, onNavigate }: { data: WorkspaceData; onNavigate
 }
 
 export function SettingsTab({
+  tenant,
   config,
   ownerName,
   ownerEmail,
@@ -238,6 +240,7 @@ export function SettingsTab({
   canEdit,
   onSave,
 }: {
+  tenant: string;
   config: WorkspaceConfig;
   ownerName: string;
   ownerEmail: string;
@@ -312,6 +315,7 @@ export function SettingsTab({
   return (
     <>
       <PageHeading title="Your studio. Your workspace." description="Update the contact details your customers see." />
+<TeamManagement tenant={tenant} mode={mode} />
       <form onSubmit={save}>
         <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)]">
           <Panel title="Public studio details" description="Studio name and domain are managed by your operator." action={<Globe aria-hidden="true" className="size-4 text-admin-muted" />}>
@@ -480,6 +484,7 @@ export function DigitalCardTab({
   config,
   tenant,
 }: {
+  tenant: string;
   config: WorkspaceConfig;
   tenant: string;
 }) {

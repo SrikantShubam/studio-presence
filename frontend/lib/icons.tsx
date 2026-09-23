@@ -1,5 +1,6 @@
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
-import { faFacebookF, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
+import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { MessageCircle } from 'lucide-react'
 import {
   faArrowDown,
   faArrowLeft,
@@ -36,8 +37,7 @@ export type EditorialIconName =
   | 'bars'
   | 'close'
 
-const icons: Record<EditorialIconName, IconDefinition> = {
-  'message-circle': faWhatsapp,
+const icons: Partial<Record<EditorialIconName, IconDefinition>> = {
   phone: faPhone,
   'map-pin': faLocationDot,
   email: faEnvelope,
@@ -63,6 +63,10 @@ export function EditorialIcon({
   name: EditorialIconName
   className?: string
 }) {
+  if (name === 'message-circle') {
+    return <MessageCircle aria-hidden="true" className={className} />
+  }
+
   const iconDef = icons[name]
   if (!iconDef) return null
 

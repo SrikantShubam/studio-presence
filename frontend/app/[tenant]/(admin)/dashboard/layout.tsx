@@ -97,6 +97,7 @@ export default async function DashboardLayout({
   const profileName =
     stringFrom(profileMetadata.full_name) ??
     stringFrom(profileMetadata.name) ??
+    nameFromEmail(user?.email) ??
     branding.business.ownerName ??
     "";
   const profileAvatarUrl =
@@ -111,6 +112,7 @@ export default async function DashboardLayout({
       <DashboardShell
         tenant={tenantSlug}
         studioName={branding.business.name}
+        studioLogoUrl={branding.brand.logo ?? null}
         ownerName={profileName}
         ownerEmail={user?.email ?? branding.business.email ?? ""}
         ownerAvatarUrl={profileAvatarUrl}
@@ -124,6 +126,16 @@ export default async function DashboardLayout({
 }
 function stringFrom(value: unknown): string | null {
   return typeof value === "string" && value.trim() ? value : null;
+}
+
+function nameFromEmail(email: string | null | undefined): string | null {
+  const local = email?.split("@")[0]?.trim();
+  if (!local) return null;
+  const words = local
+    .split(/[._-]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+  return words.length ? words.join(" ") : null;
 }
 
 function ProvisioningGap({ message }: { message: string }) {

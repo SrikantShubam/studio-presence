@@ -144,25 +144,32 @@ export async function get(db: Db, leadId: string): Promise<Lead | null> {
   return data
 }
 
-export async function updateStatus(db: Db, leadId: string, status: LeadStatus): Promise<Lead> {
-  const { data, error } = await db
-    .from('leads')
-    .update({ status })
-    .eq('id', leadId)
-    .select('*')
-    .single()
-
+export async function updateWork(db: Db, leadId: string, status: LeadStatus, notes: string): Promise<Lead> {
+  const { data, error } = await db.rpc('update_lead_work', {
+    p_lead_id: leadId,
+    p_status: status,
+    p_notes: notes,
+  })
   return assertSingleLead(data, error)
 }
 
-export async function addNote(db: Db, leadId: string, note: string): Promise<Lead> {
-  const { data, error } = await db
-    .from('leads')
-    .update({ notes: note })
-    .eq('id', leadId)
-    .select('*')
-    .single()
+export async function updateStatus(db: Db, leadId: string, status: LeadStatus): Promise<Lead> {
+  const current = await get(db, leadId)
+  if (!current) throw new LeadWriteError('Lead was not found.')
+  return updateWork(db, leadId, status, current.notes ?? '')
+}
 
+export async function addNote(db: Db, leadId: string, note: string): Promise<Lead> {
+  const current = await get(db, leadId)
+  if (!current) throw new LeadWriteError('Lead was not found.')
+  return updateWork(db, leadId, current.status, note)
+}
+
+export async function assign(db: Db, leadId: string, userId: string): Promise<Lead> {
+  const { data, error } = await db.rpc('assign_lead', {
+    p_lead_id: leadId,
+    p_user_id: userId,
+  })
   return assertSingleLead(data, error)
 }
 
@@ -172,4 +179,6 @@ export const leads = {
   get,
   updateStatus,
   addNote,
+  updateWork,
+  assign,
 }

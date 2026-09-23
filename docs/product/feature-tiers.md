@@ -37,6 +37,8 @@ Legend: ● included · ○ paid add-on · — not included · Quote = named sco
 | 19 | Thank-you page | ● with form | ● with form | Named scope | Named scope |
 | 20 | QR digital card | — | One-card add-on or included when ready | Named scope | Named scope |
 | 21 | WhatsApp conversation tracking | — | — | Separate integration add-on | Separate integration add-on |
+| 21a | Intelligent bot & spam defense with lead triage | ● | ● | ● | ● |
+| 21b | Digital card & WhatsApp conversion pre-filter | ○ | ● | ● | ● |
 | **Trust and reporting** |||||
 | 22 | Google Reviews | — | ● | ● | ● |
 | 23 | Umami visitor reporting | Current month, all-time total, top pages | Trends, comparisons, more history | Deeper filters and exports when available | Custom reporting scope |

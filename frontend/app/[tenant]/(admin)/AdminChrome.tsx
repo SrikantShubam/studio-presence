@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { redirect } from 'next/navigation'
 import { ConfigError, loadPublicClientConfig } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { ChevronDown } from 'lucide-react'
 import { SignOutButton } from './SignOutButton'
 import { DashboardTabs } from './dashboard/DashboardTabs'
 
@@ -150,12 +151,23 @@ function ProfileAvatar({ profile }: { profile: Profile }) {
 
 function ProfileMenu({ profile, email }: { profile: Profile; email: string }) {
   return (
-    <div className="flex min-w-0 items-center gap-2 rounded-lg border border-admin-border bg-admin-bg px-2 py-1.5">
-      <ProfileAvatar profile={profile} />
-      <div className="hidden min-w-0 sm:block">
-        <p className="max-w-40 truncate text-sm font-semibold text-admin-ink">{profile.name}</p>
-        <p className="max-w-40 truncate text-xs text-admin-muted">{email}</p>
+    <details className="group relative min-w-0">
+      <summary
+        className="flex min-h-12 cursor-pointer list-none items-center gap-2 rounded-lg border border-admin-border bg-admin-bg px-2 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-admin-primary [&::-webkit-details-marker]:hidden"
+        aria-label="Open account menu"
+        title="Open account menu"
+      >
+        <ProfileAvatar profile={profile} />
+        <div className="hidden min-w-0 sm:block">
+          <p className="max-w-40 truncate text-sm font-semibold text-admin-ink">{profile.name}</p>
+          <p className="max-w-40 truncate text-xs text-admin-muted">{email}</p>
+        </div>
+        <ChevronDown aria-hidden="true" className="size-4 text-admin-muted transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="absolute right-0 top-full z-40 mt-2 w-56 border border-admin-border bg-admin-surface p-2">
+        <p className="truncate px-2 py-2 text-xs text-admin-muted">Signed in as {email}</p>
+        <SignOutButton />
       </div>
-    </div>
+    </details>
   )
 }

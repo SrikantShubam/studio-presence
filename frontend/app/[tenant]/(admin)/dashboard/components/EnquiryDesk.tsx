@@ -20,6 +20,10 @@ const sourceLabels = {
   call: "Walk-in / call",
   other: "Digital QR card",
 } as const;
+const memberLabel = (userId: string | null | undefined, members?: WorkspaceMember[]) => {
+  const member = members?.find((item) => item.user_id === userId);
+  return member?.display_name || member?.email || (userId ? `Member ${userId.slice(0, 8)}` : "Unassigned");
+};
 const formatISTDate = (value: string) =>
   new Intl.DateTimeFormat("en-IN", {
     day: "2-digit",
@@ -37,6 +41,7 @@ import {
   type Enquiry,
   type EnquiryFilters,
   type Mode,
+  type WorkspaceMember,
 } from "./types";
 
 export function EnquiryDesk({
@@ -46,6 +51,7 @@ export function EnquiryDesk({
   onOpenEnquiry,
   mode,
   tenant,
+  members,
 }: {
   enquiries: Enquiry[];
   filters: EnquiryFilters;
@@ -53,6 +59,7 @@ export function EnquiryDesk({
   onOpenEnquiry: (enquiry: Enquiry) => void;
   mode: Mode;
   tenant: string;
+  members?: WorkspaceMember[];
 }) {
   const query = useDeferredValue(filters.query.trim().toLowerCase());
   const filtered = enquiries.filter(
@@ -162,6 +169,7 @@ export function EnquiryDesk({
                       "Client & locality",
                       "Project & budget",
                       "Source",
+                      "Assignee",
                       "Status",
                       "Timeline",
                       "Contact",
@@ -211,6 +219,7 @@ export function EnquiryDesk({
                           {formatISTDate(item.created_at)}
                         </p>
                       </td>
+                      <td className="px-5 py-4 text-[11px] text-admin-muted">{memberLabel(item.assigned_to, members)}</td>
                       <td className="px-5 py-4">
                         <div className="flex gap-1">
                           <ContactActions enquiry={item} />

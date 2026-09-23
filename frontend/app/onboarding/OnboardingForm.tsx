@@ -886,18 +886,18 @@ function PhoneField({
           </button>
 
           {open && (
-            <div className="absolute left-0 top-full z-50 mt-1 max-h-64 w-[min(18rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-admin-border bg-admin-surface">
+            <div className="[color-scheme:dark] absolute left-0 top-full z-50 mt-1 max-h-64 w-[min(18rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-admin-border bg-admin-surface text-admin-ink">
               <div className="border-b border-admin-border p-2">
                 <input
                   type="text"
                   placeholder="Search country or code..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="min-h-10 w-full rounded-lg border border-admin-border bg-admin-bg px-2.5 text-sm text-admin-ink outline-none focus-visible:border-admin-primary focus-visible:ring-2 focus-visible:ring-admin-primary"
+                  className="[color-scheme:dark] min-h-10 w-full rounded-lg border border-admin-border bg-admin-bg px-2.5 text-sm text-admin-ink outline-none placeholder:text-admin-muted focus-visible:border-admin-primary focus-visible:ring-2 focus-visible:ring-admin-primary"
                   autoFocus
                 />
               </div>
-              <ul className="py-1">
+              <ul className="bg-admin-surface py-1 text-admin-ink">
                 {filteredCountries.map((c) => (
                   <li key={`${c.code}-${c.dialCode}`}>
                     <button

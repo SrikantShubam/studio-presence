@@ -11,6 +11,7 @@ export type LeadSource = 'whatsapp' | 'estimate' | 'form' | 'call' | 'other'
 export type LeadStatus = 'new' | 'contacted' | 'quoted' | 'won' | 'lost'
 export type TenantTier = 't0' | 't1' | 't2' | 't3'
 export type TenantStatus = 'demo' | 'sold' | 'live' | 'archived'
+export type TenantMemberRole = 'owner' | 'editor' | 'viewer'
 export type DemoWorkflowState = 'generated' | 'review_failed' | 'review_passed' | 'sent' | 'opened' | 'editor_opened' | 'edited_locally' | 'activation_requested' | 'expired' | 'payment_confirmed' | 'activated' | 'domain_live' | 'lost' | 'removed'
 export type PaidDraftState = 'draft' | 'published' | 'discarded' | 'rolled_back'
 
@@ -26,7 +27,32 @@ export type Tenant = {
 export type TenantMember = {
   user_id: string
   tenant_id: string
-  role: string
+  role: TenantMemberRole
+  created_at: string
+}
+
+export type TenantInvitation = {
+  id: string
+  tenant_id: string
+  email_lower: string
+  email_display: string
+  role: Exclude<TenantMemberRole, 'owner'>
+  token_hash?: string
+  expires_at: string
+  accepted_at: string | null
+  revoked_at: string | null
+  invited_by: string
+  created_at: string
+}
+
+export type TenantMembershipEvent = {
+  id: string
+  tenant_id: string
+  actor_user_id: string | null
+  target_user_id: string | null
+  invitation_id: string | null
+  type: string
+  payload: Record<string, unknown>
   created_at: string
 }
 
@@ -45,6 +71,7 @@ export type Lead = {
   source_page: string | null
   status: LeadStatus
   notes: string | null
+  assigned_to: string | null
   created_at: string
   contacted_at: string | null
 }
@@ -105,6 +132,9 @@ export type Database = {
       tenants: Table<Tenant>
       tenant_members: Table<TenantMember>
       leads: Table<Lead>
+      tenant_invitations: Table<TenantInvitation>
+      tenant_membership_events: Table<TenantMembershipEvent>
+
       lead_events: Table<LeadEvent>
       client_overrides: Table<ClientOverride>
       onboarding_drafts: Table<OnboardingDraft>
@@ -140,6 +170,14 @@ export type Database = {
         Args: Record<never, never>
         Returns: string[]
       }
+      list_tenant_members: { Args: { p_tenant_id: string }; Returns: Array<{ user_id: string; tenant_id: string; role: TenantMemberRole; created_at: string; email: string | null; display_name: string | null }> }
+      create_tenant_invitation: { Args: { p_tenant_id: string; p_email_lower: string; p_email_display: string; p_role: Exclude<TenantMemberRole, 'owner'>; p_token_hash: string; p_expires_at: string }; Returns: string }
+      revoke_tenant_invitation: { Args: { p_invitation_id: string }; Returns: boolean }
+      accept_tenant_invitation: { Args: { p_token_hash: string }; Returns: { tenant_id: string; role: Exclude<TenantMemberRole, 'owner'> }[] }
+      change_tenant_member_role: { Args: { p_tenant_id: string; p_user_id: string; p_role: Exclude<TenantMemberRole, 'owner'> }; Returns: boolean }
+      remove_tenant_member: { Args: { p_tenant_id: string; p_user_id: string }; Returns: boolean }
+      assign_lead: { Args: { p_lead_id: string; p_user_id: string }; Returns: Lead }
+      update_lead_work: { Args: { p_lead_id: string; p_status: LeadStatus; p_notes: string }; Returns: Lead }
       get_client_overrides: {
         Args: { p_tenant_slug: string }
         Returns: Record<string, unknown>

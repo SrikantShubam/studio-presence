@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { Button, Dialog, Field, Feedback, buttonClass, inputClass } from "./primitives";
 import {
+  assigneeDisplayName,
   contactPhone,
   errorMessage,
   normalizeIndianPhone,
@@ -14,6 +15,7 @@ import {
   type LeadAction,
   type LeadInput,
   type Mode,
+  type WorkspaceMember,
 } from "./types";
 
 const sourceLabels: Record<Enquiry["source"], string> = {
@@ -157,50 +159,62 @@ export function EnquiryDetails({
   action,
   onClose,
   onUpdated,
+  members = [],
+  currentRole = "viewer",
+  currentUserId,
+  canAssign = false,
 }: {
   enquiry: Enquiry;
-  studioName: string;
+  studioName?: string;
   mode: Mode;
   action: LeadAction;
   onClose: () => void;
   onUpdated: (item: Enquiry) => void;
+  members?: WorkspaceMember[];
+  currentRole?: WorkspaceMember["role"];
+  currentUserId?: string;
+  canAssign?: boolean;
 }) {
   const [status, setStatus] = useState(enquiry.status);
   const [notes, setNotes] = useState(enquiry.notes ?? "");
+  const [assignee, setAssignee] = useState(enquiry.assigned_to ?? "");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const canUpdateWork = mode === "demo" || currentRole === "owner" || (currentRole === "editor" && enquiry.assigned_to === currentUserId);
+  const canAssignLead = mode === "demo" || canAssign;
+  const assignableMembers = members.filter((member) => member.role === "owner" || member.role === "editor");
+
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!canUpdateWork) return;
     setPending(true);
     setError("");
     setMessage("");
     try {
-      const result = await action({
-        kind: "update",
-        id: enquiry.id,
-        status,
-        notes,
-      });
+      const result = await action({ kind: "update", id: enquiry.id, status, notes });
       if (!result.ok) throw new Error(result.error);
-      onUpdated(result.data);
-      setMessage(
-        mode === "demo"
-          ? "Sample changes saved for this session."
-          : "Enquiry updated.",
-      );
+      let saved = result.data;
+      if (canAssignLead && assignee && assignee !== enquiry.assigned_to) {
+        const assignment = await action({ kind: "assign", id: enquiry.id, userId: assignee });
+        if (!assignment.ok) throw new Error(assignment.error);
+        saved = assignment.data;
+      }
+      onUpdated(saved);
+      setMessage(mode === "demo" ? "Sample changes saved for this session." : "Enquiry updated.");
     } catch (error) {
       setError(errorMessage(error));
     } finally {
       setPending(false);
     }
   }
+
   return (
     <Dialog
       open
       side="right"
       title={enquiry.name}
-      eyebrow={`Enquiry details · ${studioName}`}
+      eyebrow={`Enquiry details - ${studioName || "Studio workspace"}`}
       onClose={() => {
         if (!pending) onClose();
       }}
@@ -220,7 +234,19 @@ export function EnquiryDetails({
           <p className="text-[11px] text-admin-muted">Source: {sourceLabels[enquiry.source]}</p>
         </div>
         <form onSubmit={submit}>
-          <fieldset disabled={pending || mode === "unavailable"} className="grid gap-5">
+          <fieldset disabled={pending || mode === "unavailable" || !canUpdateWork} className="grid gap-5">
+            <div className="border-t border-admin-border py-5">
+              <div className="mb-3 flex items-center justify-between gap-3"><h3 className="text-xs font-semibold">Assignee</h3><span className="text-[10px] text-admin-muted">{assigneeDisplayName(enquiry.assigned_to, members)}</span></div>
+              {canAssignLead && assignableMembers.length > 0 ? (
+                <Field label="Assign to active owner or editor">
+                  <select aria-label="Lead assignee" className={inputClass} value={assignee} onChange={(event) => setAssignee(event.target.value)}>
+                    {assignableMembers.map((member) => <option key={member.user_id} value={member.user_id}>{member.display_name || member.email || member.role}</option>)}
+                  </select>
+                </Field>
+              ) : (
+                <p className="text-xs text-admin-muted">{canAssignLead ? "No active owner or editor is available." : "Only the workspace owner can reassign enquiries."}</p>
+              )}
+            </div>
             <div className="border-t border-admin-border py-5">
               <div className="mb-3 flex items-center justify-between"><h3 className="text-xs font-semibold">Lead status</h3><span className="text-[10px] text-admin-muted">{STATUS_LABELS[status]}</span></div>
               <select aria-label="Lead status" className={inputClass} value={status} onChange={(event) => setStatus(event.target.value as Enquiry["status"])}>
@@ -233,10 +259,10 @@ export function EnquiryDetails({
                 <textarea className={inputClass} rows={6} maxLength={2000} value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Next step, measurements, preferencesâ€¦" />
               </Field>
               <div className="mt-3 flex items-center gap-3">
-                <Button type="submit" disabled={pending || mode === "unavailable"}><Save aria-hidden="true" className="size-4" />{pending ? "Savingâ€¦" : "Save notes"}</Button>
+                <Button type="submit" disabled={pending || mode === "unavailable" || !canUpdateWork}><Save aria-hidden="true" className="size-4" />{pending ? "Savingâ€¦" : "Save changes"}</Button>
                 {message && <span className="flex items-center gap-1 text-[11px] text-admin-muted"><Check aria-hidden="true" className="size-3.5" />Saved</span>}
               </div>
-              <p className="mt-2 text-[10px] text-admin-muted">Closing also saves your note when it has changed.</p>
+              {!canUpdateWork && <p className="mt-2 text-[10px] text-admin-muted">Only the assigned editor or workspace owner can update status and notes.</p>}
             </div>
             <Feedback error={error} message={message} />
           </fieldset>

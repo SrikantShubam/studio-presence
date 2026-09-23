@@ -1,4 +1,9 @@
-import type { Enquiry } from "./types";
+import type { Enquiry, WorkspaceMember } from "./types";
+
+export const DEMO_WORKSPACE_MEMBERS: WorkspaceMember[] = [
+  { user_id: "demo-owner", tenant_id: "sample", role: "owner", created_at: "2026-01-01T00:00:00.000Z", email: "owner@example.invalid", display_name: "Workspace owner (demo)" },
+  { user_id: "demo-editor", tenant_id: "sample", role: "editor", created_at: "2026-01-01T00:00:00.000Z", email: "editor@example.invalid", display_name: "Design editor (demo)" },
+];
 
 /**
  * Candidate/demo-only dashboard records. Production must replace this path with
@@ -13,7 +18,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
       timeline: "Within 2 months",
       message: "Moving into our new 3 BHK. Looking for a warm, practical home with a modular kitchen and plenty of storage.",
       source: "estimate", source_page: "sample", status: "new",
-      notes: "", created_at: "2026-09-18T10:42:00.000Z", contacted_at: null,
+      notes: "", assigned_to: "demo-owner", created_at: "2026-09-18T10:42:00.000Z", contacted_at: null,
     },
     {
       id: "sample-2", tenant_id: "sample", name: "Rahul Verma",
@@ -22,7 +27,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
       timeline: "Within 1 month",
       message: "Visited your studio and scanned the card. Need a kitchen renovation for our family home.",
       source: "other", source_page: "sample", status: "new",
-      notes: "", created_at: "2026-09-18T10:18:00.000Z", contacted_at: null,
+      notes: "", assigned_to: "demo-editor", created_at: "2026-09-18T10:18:00.000Z", contacted_at: null,
     },
     {
       id: "sample-3", tenant_id: "sample", name: "Priya & Amit",
@@ -31,7 +36,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
       timeline: "Within 3 months",
       message: "Need interiors for a new apartment. Handover is next month.",
       source: "form", source_page: "sample", status: "contacted",
-      notes: "Requested floor plan. Follow up on Monday.", created_at: "2026-09-17T09:00:00.000Z", contacted_at: "2026-09-17T10:00:00.000Z",
+      notes: "Requested floor plan. Follow up on Monday.", assigned_to: "demo-owner", created_at: "2026-09-17T09:00:00.000Z", contacted_at: "2026-09-17T10:00:00.000Z",
     },
     {
       id: "sample-4", tenant_id: "sample", name: "Saurabh Mishra",
@@ -40,7 +45,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
       timeline: "Within 2 months",
       message: "Redesign our living and dining rooms. Prefer easy maintenance finishes.",
       source: "form", source_page: "sample", status: "quoted",
-      notes: "Sent estimate. Site measurement pending.", created_at: "2026-09-16T09:00:00.000Z", contacted_at: "2026-09-16T10:00:00.000Z",
+      notes: "Sent estimate. Site measurement pending.", assigned_to: "demo-editor", created_at: "2026-09-16T09:00:00.000Z", contacted_at: "2026-09-16T10:00:00.000Z",
     },
     {
       id: "sample-5", tenant_id: "sample", name: "Meera Bose",
@@ -49,7 +54,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
       timeline: "Within 4 months",
       message: "Sample enquiry manually recorded after a WhatsApp conversation. Click tracking alone does not create a lead.",
       source: "whatsapp", source_page: "sample", status: "contacted",
-      notes: "", created_at: "2026-09-15T09:00:00.000Z", contacted_at: "2026-09-15T10:00:00.000Z",
+      notes: "", assigned_to: "demo-editor", created_at: "2026-09-15T09:00:00.000Z", contacted_at: "2026-09-15T10:00:00.000Z",
     },
     {
       id: "sample-6", tenant_id: "sample", name: "Rohan Kapoor",
@@ -58,7 +63,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
       timeline: "This month",
       message: "A quiet, practical home office with custom storage and a comfortable workspace.",
       source: "other", source_page: "sample", status: "won",
-      notes: "Design consultation booked. Advance received.", created_at: "2026-09-14T09:00:00.000Z", contacted_at: "2026-09-14T10:00:00.000Z",
+      notes: "Design consultation booked. Advance received.", assigned_to: "demo-owner", created_at: "2026-09-14T09:00:00.000Z", contacted_at: "2026-09-14T10:00:00.000Z",
     },
     {
       id: "sample-7", tenant_id: "sample", name: "Neha Rao",
@@ -67,7 +72,7 @@ export function createCandidateDemoEnquiries(): Enquiry[] {
       timeline: "Within 3 months",
       message: "Looking for a restful bedroom with full-height wardrobes and thoughtful storage.",
       source: "estimate", source_page: "sample", status: "quoted",
-      notes: "Shared premium and essential finish options.", created_at: "2026-09-13T09:00:00.000Z", contacted_at: "2026-09-13T10:00:00.000Z",
+      notes: "Shared premium and essential finish options.", assigned_to: "demo-editor", created_at: "2026-09-13T09:00:00.000Z", contacted_at: "2026-09-13T10:00:00.000Z",
     },
   ];
 }
