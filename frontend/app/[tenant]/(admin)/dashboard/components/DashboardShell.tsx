@@ -68,7 +68,7 @@ export function DashboardShell({
   children: ReactNode;
 }) {
   const [mobile, setMobile] = useState(false);
-  const params = useSearchParams();
+  const params = useSearchParams() ?? new URLSearchParams();
   const pathname = usePathname() ?? "";
   const base = `/${tenant}/dashboard`;
   const isDashboardRoot = pathname === base || pathname === "/dashboard";
@@ -259,7 +259,7 @@ export function DashboardWorkspace({
   const profileOwnerName = useContext(WorkspaceOwnerContext);
   const [data, setData] = useState(initialData);
   const [restored, setRestored] = useState(initialData.mode !== "demo");
-  const params = useSearchParams();
+  const params = useSearchParams() ?? new URLSearchParams();
   const view = viewFrom(params?.get("tab") ?? null);
   const [filters, setFilters] = useState<EnquiryFilters>({ ...EMPTY_FILTERS });
   const [selected, setSelected] = useState<string | null>(null);
