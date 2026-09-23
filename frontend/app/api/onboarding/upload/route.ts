@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
+import sharp from 'sharp'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { uploadAsset } from '@studio/backend'
 import { createLogoDerivatives } from '@/lib/logo-derivatives'
 
 export const dynamic = 'force-dynamic'
 
-const ALLOWED_MIME_TYPES = new Set(['image/webp', 'image/png', 'image/jpeg'])
+const ALLOWED_MIME_TYPES = new Set(['image/webp', 'image/png', 'image/jpeg', 'image/svg+xml'])
 const MAX_FILE_SIZE = 2 * 1024 * 1024 // 2 MB
 
 export async function POST(request: Request) {
@@ -100,13 +101,18 @@ export async function POST(request: Request) {
       })
     }
 
-    const buffer = inputBuffer
+    const processedBuffer = await sharp(inputBuffer)
+      .rotate()
+      .resize({ width: 1920, height: 1080, fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 82 })
+      .toBuffer()
+
     const filename = assetType + '-' + uploadId + '.webp'
 
     const uploadResult = await uploadAsset(
       {
-        buffer,
-        contentType: file.type || 'image/webp',
+        buffer: processedBuffer,
+        contentType: 'image/webp',
         filename,
         assetType: assetType as 'logo' | 'photo',
         userId: userData.user.id,

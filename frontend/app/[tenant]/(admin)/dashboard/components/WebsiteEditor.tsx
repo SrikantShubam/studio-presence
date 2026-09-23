@@ -115,6 +115,16 @@ export default function WebsiteEditor({
     );
   }
   async function uploadLogo(file: File) {
+    if (file.size > 2 * 1024 * 1024) {
+      setError("File exceeds the 2 MB limit. Please select an image under 2 MB.");
+      setSelectedLogoFile("");
+      return;
+    }
+    if (file.type && !["image/png", "image/jpeg", "image/webp", "image/svg+xml"].includes(file.type)) {
+      setError("Unsupported format. Please upload a PNG, JPG, WebP, or SVG logo.");
+      setSelectedLogoFile("");
+      return;
+    }
     setUploadingLogo(true);
     setError("");
     try {
@@ -135,6 +145,16 @@ export default function WebsiteEditor({
   }
 
   async function uploadOgImage(file: File) {
+    if (file.size > 2 * 1024 * 1024) {
+      setError("File exceeds the 2 MB limit. Please select an image under 2 MB.");
+      setSelectedOgFile("");
+      return;
+    }
+    if (file.type && !["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+      setError("Unsupported format. Please upload a PNG, JPG, or WebP photo.");
+      setSelectedOgFile("");
+      return;
+    }
     setUploadingOgImage(true);
     setError("");
     try {
