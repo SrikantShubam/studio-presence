@@ -289,11 +289,11 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
                 <img
                   src={member.avatar_url}
                   alt=""
-                  className="size-8 shrink-0 border border-admin-border object-cover"
+                  className="size-9 shrink-0 rounded-full border border-admin-border object-cover"
                   referrerPolicy="no-referrer"
                 />
               ) : (
-                <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold text-admin-ink">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[11px] font-semibold text-admin-ink">
                   {memberInitials(member.display_name, member.email)}
                 </span>
               )}
@@ -302,10 +302,13 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
                   {member.display_name || member.email || `Member ${member.user_id.slice(0, 8)}`}
                 </span>
                 <span className="block truncate text-[11px] text-admin-muted">{member.email || member.user_id}</span>
+                {member.role === "owner" && (
+                  <span className="mt-1 inline-flex items-center rounded-full border border-admin-border bg-admin-raised px-2 py-0.5 text-[10px] font-medium text-admin-ink">
+                    Owner
+                  </span>
+                )}
               </span>
-              {member.role === "owner" ? (
-                <Badge>Owner</Badge>
-              ) : isOwner ? (
+              {member.role === "owner" ? null : isOwner ? (
                 <>
                   <div className="relative inline-flex items-center">
                     <select

@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users } from "lucide-react";
-import PhoneInput from "react-phone-number-input";
+import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users, X } from "lucide-react";
+import PhoneInput, { getCountries, getCountryCallingCode } from "react-phone-number-input";
+import enLabels from "react-phone-number-input/locale/en.json";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
@@ -231,6 +232,338 @@ function CityDemandPanel({ data, onNavigate }: { data: WorkspaceData; onNavigate
   );
 }
 
+function countryToFlag(isoCode: string): string {
+  if (isoCode.length !== 2) return "";
+  return isoCode
+    .toUpperCase()
+    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
+}
+
+const COUNTRY_LABELS: Record<string, string> = (() => {
+  const labels: Record<string, string> = { ...(enLabels as Record<string, string>) };
+  for (const country of getCountries()) {
+    const name = labels[country] || country;
+    let code = "";
+    try {
+      code = ` (+${getCountryCallingCode(country)})`;
+    } catch {
+      // ignore
+    }
+    const flag = countryToFlag(country);
+    labels[country] = `${flag} ${name}${code}`.trim();
+  }
+  return labels;
+})();
+
+const DAY_PRESETS = [
+  "Mon – Sat",
+  "Mon – Fri",
+  "Mon – Sun",
+  "Tue – Sun",
+  "By appointment only",
+] as const;
+
+const TIME_OPTIONS = [
+  "08:00 AM",
+  "08:30 AM",
+  "09:00 AM",
+  "09:30 AM",
+  "10:00 AM",
+  "10:30 AM",
+  "11:00 AM",
+  "11:30 AM",
+  "12:00 PM",
+  "12:30 PM",
+  "01:00 PM",
+  "01:30 PM",
+  "02:00 PM",
+  "02:30 PM",
+  "03:00 PM",
+  "03:30 PM",
+  "04:00 PM",
+  "04:30 PM",
+  "05:00 PM",
+  "05:30 PM",
+  "06:00 PM",
+  "06:30 PM",
+  "07:00 PM",
+  "07:30 PM",
+  "08:00 PM",
+  "08:30 PM",
+  "09:00 PM",
+  "09:30 PM",
+  "10:00 PM",
+];
+
+const CLOSED_NOTE_PRESETS = [
+  "Closed Sundays",
+  "Sunday by appointment",
+  "Open all days",
+  "Closed Mondays",
+  "None",
+] as const;
+
+function parseHours(raw: string | undefined) {
+  if (!raw?.trim()) {
+    return {
+      days: "Mon – Sat",
+      start: "10:00 AM",
+      end: "07:00 PM",
+      note: "Closed Sundays",
+      isCustom: false,
+    };
+  }
+  if (raw.trim() === "By appointment only") {
+    return {
+      days: "By appointment only",
+      start: "10:00 AM",
+      end: "07:00 PM",
+      note: "None",
+      isCustom: false,
+    };
+  }
+  const match = raw.match(/^(.*?):\s*(.*?)\s*[–-]\s*(.*?)(?:\s*\((.*?)\))?$/);
+  if (match) {
+    const [, days, start, end, note] = match;
+    return {
+      days: days?.trim() || "Mon – Sat",
+      start: start?.trim() || "10:00 AM",
+      end: end?.trim() || "07:00 PM",
+      note: note ? note.trim() : "None",
+      isCustom: false,
+    };
+  }
+  return {
+    days: "Mon – Sat",
+    start: "10:00 AM",
+    end: "07:00 PM",
+    note: "Closed Sundays",
+    isCustom: true,
+  };
+}
+
+function OpeningHoursBuilder({
+  value,
+  onChange,
+  disabled,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+}) {
+  const initial = parseHours(value);
+  const [isTextMode, setIsTextMode] = useState(initial.isCustom);
+  const [days, setDays] = useState(initial.days);
+  const [start, setStart] = useState(initial.start);
+  const [end, setEnd] = useState(initial.end);
+  const [note, setNote] = useState(initial.note);
+
+  const applyChanges = (newDays: string, newStart: string, newEnd: string, newNote: string) => {
+    setDays(newDays);
+    setStart(newStart);
+    setEnd(newEnd);
+    setNote(newNote);
+    if (newDays === "By appointment only") {
+      onChange("By appointment only");
+      return;
+    }
+    const noteSuffix = newNote && newNote !== "None" ? ` (${newNote})` : "";
+    onChange(`${newDays}: ${newStart} – ${newEnd}${noteSuffix}`);
+  };
+
+  const toggleMode = () => {
+    if (isTextMode) {
+      const p = parseHours(value);
+      setDays(p.days);
+      setStart(p.start);
+      setEnd(p.end);
+      setNote(p.note);
+      setIsTextMode(false);
+      if (!value) {
+        applyChanges(p.days, p.start, p.end, p.note);
+      }
+    } else {
+      setIsTextMode(true);
+    }
+  };
+
+  return (
+    <div className="grid gap-3">
+      {isTextMode ? (
+        <input
+          className={inputClass}
+          value={value}
+          disabled={disabled}
+          maxLength={250}
+          placeholder="e.g. Mon – Sat: 10:00 AM – 07:00 PM (Closed Sundays)"
+          onChange={(e) => onChange(e.target.value)}
+        />
+      ) : (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <div>
+            <label className="mb-1 block text-[11px] font-medium text-admin-muted">Days</label>
+            <select
+              disabled={disabled}
+              className={inputClass}
+              value={days}
+              onChange={(e) => applyChanges(e.target.value, start, end, note)}
+            >
+              {DAY_PRESETS.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+          {days !== "By appointment only" ? (
+            <>
+              <div>
+                <label className="mb-1 block text-[11px] font-medium text-admin-muted">Hours</label>
+                <div className="grid grid-cols-2 gap-1.5">
+                  <select
+                    disabled={disabled}
+                    className={inputClass + " px-1 text-xs"}
+                    value={start}
+                    onChange={(e) => applyChanges(days, e.target.value, end, note)}
+                  >
+                    {TIME_OPTIONS.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    disabled={disabled}
+                    className={inputClass + " px-1 text-xs"}
+                    value={end}
+                    onChange={(e) => applyChanges(days, start, e.target.value, note)}
+                  >
+                    {TIME_OPTIONS.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-medium text-admin-muted">Weekend / note</label>
+                <select
+                  disabled={disabled}
+                  className={inputClass}
+                  value={note}
+                  onChange={(e) => applyChanges(days, start, end, e.target.value)}
+                >
+                  {CLOSED_NOTE_PRESETS.map((n) => (
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center pt-5 text-xs text-admin-muted sm:col-span-2">
+              Studio visits and consultations are scheduled by appointment.
+            </div>
+          )}
+        </div>
+      )}
+      <div className="flex flex-wrap items-center justify-between gap-2 border border-admin-border bg-admin-raised px-3 py-2 text-xs">
+        <div className="flex items-center gap-2">
+          <Clock3 aria-hidden="true" className="size-3.5 text-admin-muted" />
+          <span className="font-mono text-admin-ink">{value || "No hours set"}</span>
+        </div>
+        <button
+          type="button"
+          onClick={toggleMode}
+          className="text-[11px] text-admin-primary underline hover:text-admin-ink"
+        >
+          {isTextMode ? "Use visual builder" : "Edit as text"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ServiceAreasInput({
+  value,
+  onChange,
+  disabled,
+}: {
+  value: string[];
+  onChange: (value: string[]) => void;
+  disabled?: boolean;
+}) {
+  const [draft, setDraft] = useState("");
+
+  const addAreas = () => {
+    const tokens = draft
+      .split(/[,;\n]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+    if (tokens.length === 0) return;
+    const combined = Array.from(new Set([...value, ...tokens]));
+    onChange(combined);
+    setDraft("");
+  };
+
+  const removeArea = (indexToRemove: number) => {
+    onChange(value.filter((_, i) => i !== indexToRemove));
+  };
+
+  return (
+    <div className="grid gap-2">
+      <div className="flex min-h-8 flex-wrap items-center gap-1.5">
+        {value.length > 0 ? (
+          value.map((area, index) => (
+            <span
+              key={index}
+              className="inline-flex items-center gap-1.5 border border-admin-border bg-admin-raised px-2.5 py-1 text-xs text-admin-ink"
+            >
+              <span>{area}</span>
+              {!disabled && (
+                <button
+                  type="button"
+                  onClick={() => removeArea(index)}
+                  className="text-admin-muted hover:text-admin-ink focus-visible:outline-none"
+                  aria-label={`Remove ${area}`}
+                >
+                  <X aria-hidden="true" className="size-3" />
+                </button>
+              )}
+            </span>
+          ))
+        ) : (
+          <span className="text-xs text-admin-muted">No additional cities or service areas added yet.</span>
+        )}
+      </div>
+      <div className="flex items-center gap-2">
+        <input
+          className={inputClass + " flex-1"}
+          placeholder="e.g. Jamshedpur, Dhanbad, Bokaro (press Enter to add)"
+          value={draft}
+          disabled={disabled}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === ",") {
+              e.preventDefault();
+              addAreas();
+            }
+          }}
+        />
+        <Button
+          type="button"
+          disabled={disabled || !draft.trim()}
+          onClick={addAreas}
+        >
+          Add
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 export function SettingsTab({
   tenant,
   config,
@@ -290,6 +623,15 @@ export function SettingsTab({
       );
       if ("phone" in edits) patch["business.phone"] = `+${phone}`;
       if ("whatsapp" in edits) patch["business.whatsapp"] = `+${whatsapp}`;
+      if ("address" in edits) {
+        patch["business.address"] = {
+          ...config.business.address,
+          ...business.address,
+        };
+      }
+      if ("serviceAreas" in edits) {
+        patch["business.serviceAreas"] = business.serviceAreas;
+      }
       if (Object.keys(patch).length > 0) await onSave(patch);
       if (ownerEmailChanged && mode !== "demo") {
         const supabase = createSupabaseBrowserClient();
@@ -321,31 +663,76 @@ export function SettingsTab({
           <Panel title="Public studio details" description="Studio name and domain are managed by your operator." action={<Globe aria-hidden="true" className="size-4 text-admin-muted" />}>
             <fieldset disabled={!canEdit || pending} className="grid gap-5 p-5 sm:grid-cols-2">
               <Field label="Studio name"><input className={inputClass} value={business.name} readOnly /></Field>
-              {([
-                { key: "tagline", label: "Studio tagline" },
-                { key: "phone", label: "Studio phone", type: "tel" },
-                { key: "whatsapp", label: "WhatsApp number", type: "tel" },
-                { key: "email", label: "Public email", type: "email" },
-                { key: "hours", label: "Opening hours" },
-              ] as const).map((field) => (
-                <Field key={field.key} label={field.label} hint={field.key === "phone" || field.key === "whatsapp" ? "Choose a country, then enter the number without the country code." : undefined}>
-                  {field.key === "phone" || field.key === "whatsapp" ? (
-                    <PhoneInput
-                      international
-                      defaultCountry="IN"
-                      countryCallingCodeEditable={false}
-                      required
-                      value={business[field.key] || undefined}
-                      onChange={(value) => setEdits({ ...edits, [field.key]: value ?? "" })}
-                      className={inputClass + " flex items-center gap-2"}
-                      numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
-                    />
-                  ) : (
-                    <input className={inputClass} maxLength={250} type={"type" in field ? field.type : "text"} required={field.key === "email" && Boolean(config.business.email)} value={business[field.key] ?? ""} onChange={(event) => setEdits({ ...edits, [field.key]: event.target.value })} />
-                  )}
+              <Field label="Studio tagline">
+                <input
+                  className={inputClass}
+                  maxLength={250}
+                  value={business.tagline ?? ""}
+                  onChange={(event) => setEdits({ ...edits, tagline: event.target.value })}
+                />
+              </Field>
+              <Field label="Studio phone" hint="Choose a country, then enter the number without the country code.">
+                <PhoneInput
+                  international
+                  defaultCountry="IN"
+                  countryCallingCodeEditable={false}
+                  labels={COUNTRY_LABELS}
+                  required
+                  value={business.phone || undefined}
+                  onChange={(value) => setEdits({ ...edits, phone: value ?? "" })}
+                  className={inputClass + " flex items-center gap-2"}
+                  numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
+                />
+              </Field>
+              <Field label="WhatsApp number" hint="Choose a country, then enter the number without the country code.">
+                <PhoneInput
+                  international
+                  defaultCountry="IN"
+                  countryCallingCodeEditable={false}
+                  labels={COUNTRY_LABELS}
+                  required
+                  value={business.whatsapp || undefined}
+                  onChange={(value) => setEdits({ ...edits, whatsapp: value ?? "" })}
+                  className={inputClass + " flex items-center gap-2"}
+                  numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
+                />
+              </Field>
+              <Field label="Public email">
+                <input
+                  className={inputClass}
+                  maxLength={250}
+                  type="email"
+                  required={Boolean(config.business.email)}
+                  value={business.email ?? ""}
+                  onChange={(event) => setEdits({ ...edits, email: event.target.value })}
+                />
+              </Field>
+              <Field label="Primary city" hint="The main city where your studio is physically based.">
+                <input
+                  className={inputClass}
+                  required
+                  value={business.address.city}
+                  onChange={(event) => setEdits({ ...edits, address: { ...business.address, city: event.target.value } })}
+                />
+              </Field>
+              <div className="sm:col-span-2">
+                <Field label="Other cities & service areas" hint="Additional cities or regions your studio accepts projects in.">
+                  <ServiceAreasInput
+                    value={business.serviceAreas ?? []}
+                    disabled={!canEdit || pending}
+                    onChange={(serviceAreas) => setEdits({ ...edits, serviceAreas })}
+                  />
                 </Field>
-              ))}
-              <Field label="City"><input className={inputClass} required value={business.address.city} onChange={(event) => setEdits({ ...edits, address: { ...business.address, city: event.target.value } })} /></Field>
+              </div>
+              <div className="sm:col-span-2">
+                <Field label="Opening hours" hint="Set working days, daily studio hours, and weekend notes, or switch to custom text.">
+                  <OpeningHoursBuilder
+                    value={business.hours ?? ""}
+                    disabled={!canEdit || pending}
+                    onChange={(hours) => setEdits({ ...edits, hours })}
+                  />
+                </Field>
+              </div>
             </fieldset>
           </Panel>
           <div className="grid gap-5">
