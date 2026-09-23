@@ -86,6 +86,6 @@ export function destinationForTenant(_tenant: Tenant): '/dashboard' {
 }
 
 /** Whether this tenant may see the leads dashboard at all. */
-export function canAccessDashboard(tenant: Tenant): boolean {
-  return tenant.tier === 't3'
+export function canAccessDashboard(_tenant: Tenant): boolean {
+  return true
 }

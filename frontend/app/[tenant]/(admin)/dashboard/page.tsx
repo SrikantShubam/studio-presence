@@ -101,8 +101,7 @@ export default async function DashboardPage({
     redirect(`/login?next=${encodeURIComponent(`/${tenant}/dashboard`)}`);
   const eligible = Boolean(
     context &&
-    canAccessDashboard(context.tenant) &&
-    context.tenant.status !== "demo",
+    canAccessDashboard(context.tenant),
   );
   const mode = dashboardMode(query?.demo, eligible);
   let config: WorkspaceConfig = {
@@ -161,7 +160,7 @@ export default async function DashboardPage({
     if (!parsed.success) return { ok: false, error: "Check the lead details. Notes must be under 2,000 characters." };
     try {
       const current = await authenticatedContext(tenant);
-      if (!current || !canAccessDashboard(current.tenant) || current.tenant.status === "demo") return { ok: false, error: "You do not have access to this enquiry desk." };
+      if (!current || !canAccessDashboard(current.tenant)) return { ok: false, error: "You do not have access to this enquiry desk." };
       const workspaceMembers = await listWorkspaceMembers(current.db, current.tenant.id);
       const actor = workspaceMembers.find((member) => member.user_id === current.user.id);
       if (!actor) return { ok: false, error: "You are not an active workspace member." };
@@ -174,7 +173,6 @@ export default async function DashboardPage({
         row = await leads.assign(current.db, assignment.id, assignment.userId);
       } else if (parsed.data.kind === "create") {
         if (actor.role === "viewer") return { ok: false, error: "Viewers cannot create enquiries." };
-        if (current.tenant.status !== "live") return { ok: false, error: "Lead capture is available after the studio goes live." };
         const phone = normalizeIndianPhone(parsed.data.values.phone);
         if (!phone) return { ok: false, error: "Enter a valid 10-digit Indian mobile number." };
         const result = await leads.create({ ...parsed.data.values, phone: `+${phone}`, tenantSlug: tenant, source: "other", sourcePage: `/${tenant}/dashboard#walk-in` });
@@ -213,7 +211,7 @@ export default async function DashboardPage({
         canUploadAssets: Boolean(context && currentRole !== "viewer"),
         canCreate:
           mode === "demo" ||
-          Boolean(eligible && context?.tenant.status === "live" && currentRole !== "viewer"),
+          Boolean(context && currentRole !== "viewer"),
         leadError,
       }}
       leadAction={mutateLead}

@@ -42,12 +42,12 @@ export async function GET(_request: NextRequest, context: RouteContext) {
     const auth = await authenticate(parsed.data.tenant);
     if (auth.error) return auth.error;
     const roleResult = await auth.tenantContext.db.rpc("current_tenant_role", { p_tenant_id: auth.tenantContext.tenant.id });
-    if (roleResult.data !== "owner") return NextResponse.json({ error: "owner access required" }, { status: 403 });
-    const [members, invitations] = await Promise.all([
-      listWorkspaceMembers(auth.tenantContext.db, auth.tenantContext.tenant.id),
-      listWorkspaceInvitations(auth.tenantContext.db, auth.tenantContext.tenant.id),
-    ]);
-    return NextResponse.json({ currentRole: roleResult.data, members, invitations });
+    const currentRole = (roleResult.data as "owner" | "editor" | "viewer" | null) ?? "viewer";
+    const members = await listWorkspaceMembers(auth.tenantContext.db, auth.tenantContext.tenant.id);
+    const invitations = currentRole === "owner"
+      ? await listWorkspaceInvitations(auth.tenantContext.db, auth.tenantContext.tenant.id)
+      : [];
+    return NextResponse.json({ currentRole, members, invitations });
   } catch (error) {
     if (error instanceof AuthError) return NextResponse.json({ error: error.code }, { status: 403 });
     return NextResponse.json({ error: error instanceof Error ? error.message : "Could not load workspace members." }, { status: 500 });
