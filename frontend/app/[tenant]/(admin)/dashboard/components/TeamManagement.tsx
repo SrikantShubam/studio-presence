@@ -39,39 +39,36 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  async function load() {
-    if (mode === "demo") {
-      const { data: { user } } = await createSupabaseBrowserClient().auth.getUser();
-      if (!user) {
-        setMembers([]);
-        setInvitations([]);
-        setCurrentRole("viewer");
-        setError("");
-        setLoading(false);
-        return;
-      }
-      const metadata = {
-        ...(user.identities?.[0]?.identity_data ?? {}),
-        ...user.user_metadata,
-      };
-      const displayName = [metadata.full_name, metadata.name]
-        .find((value): value is string => typeof value === "string" && value.trim().length > 0)
-        ?.trim() ?? user.email?.split("@")[0] ?? null;
-      setMembers([{
-        user_id: user.id,
-        role: "owner",
-        email: user.email ?? null,
-        display_name: displayName,
-        created_at: user.created_at,
-      }]);
+  async function showCurrentProfile() {
+    const { data: { user } } = await createSupabaseBrowserClient().auth.getUser();
+    if (!user) {
+      setMembers([]);
       setInvitations([]);
-      setCurrentRole("owner");
+      setCurrentRole("viewer");
       setError("");
-      setLoading(false);
       return;
     }
-    if (mode !== "live") {
+    const metadata = {
+      ...(user.identities?.[0]?.identity_data ?? {}),
+      ...user.user_metadata,
+    };
+    const displayName = [metadata.full_name, metadata.name]
+      .find((value): value is string => typeof value === "string" && value.trim().length > 0)
+      ?.trim() ?? user.email?.split("@")[0] ?? null;
+    setMembers([{
+      user_id: user.id,
+      role: "viewer",
+      email: user.email ?? null,
+      display_name: displayName,
+      created_at: user.created_at,
+    }]);
+    setInvitations([]);
+    setCurrentRole("viewer");
+    setError("");
+  }
+
+  async function load() {
+    if (mode === "unavailable") {
       setLoading(false);
       return;
     }
@@ -79,14 +76,13 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
     try {
       const response = await fetch(`/api/${encodeURIComponent(tenant)}/members`, { cache: "no-store" });
       if (response.status === 403) {
-        setMembers([]);
-        setInvitations([]);
-        setError("");
+        await showCurrentProfile();
         return;
       }
       if (!response.ok) throw new Error("Team details could not be loaded.");
       const result = (await response.json()) as { currentRole?: Role; members: Member[]; invitations: Invitation[] };
-      if (result.currentRole) setCurrentRole(result.currentRole);
+      const currentRole = result.currentRole;
+      if (currentRole) setCurrentRole(currentRole);
       setMembers(result.members);
       setInvitations(result.invitations);
     } finally {
@@ -139,7 +135,7 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
     }
   }
 
-  if (mode === "demo" || mode === "unavailable") return null;
+  if (mode === "unavailable") return null;
 
   const isOwner = currentRole === "owner";
 

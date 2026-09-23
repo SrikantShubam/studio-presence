@@ -20,6 +20,8 @@ assert.equal(
 assert.match(source, /createSupabaseBrowserClient\(\)\.auth\.getUser\(\)/, "Team Access must read the authenticated profile");
 assert.match(source, /user_id: user\.id/, "Team Access must use the authenticated user's ID");
 assert.match(source, /display_name: displayName/, "Team Access must display the authenticated user's name");
+assert.match(source, /if \(mode === "unavailable"\)/, "Team Access must remain available in both sample and live modes");
+assert.match(source, /await showCurrentProfile\(\);\s+return;/, "Team Access must fall back to the authenticated profile");
 assert.doesNotMatch(source, /Ashish Sharma|ashish@ashishinteriors\.com/, "Team Access must not contain a fake owner");
 
 console.log("team access UI checks passed");
