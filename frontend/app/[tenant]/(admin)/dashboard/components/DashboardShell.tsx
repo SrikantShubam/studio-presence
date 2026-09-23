@@ -73,7 +73,7 @@ export function DashboardShell({
   const base = `/${tenant}/dashboard`;
   const isDashboardRoot = pathname === base || pathname === "/dashboard";
   const active = isDashboardRoot
-    ? viewFrom(params?.get("tab") ?? null)
+    ? viewFrom(params.get("tab"))
     : pathname.includes("/content")
       ? "website"
       : pathname.includes("/analytics")
@@ -260,7 +260,7 @@ export function DashboardWorkspace({
   const [data, setData] = useState(initialData);
   const [restored, setRestored] = useState(initialData.mode !== "demo");
   const params = useSearchParams();
-  const view = viewFrom(params?.get("tab") ?? null);
+  const view = viewFrom(params.get("tab"));
   const [filters, setFilters] = useState<EnquiryFilters>({ ...EMPTY_FILTERS });
   const [selected, setSelected] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
