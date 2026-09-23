@@ -792,9 +792,9 @@ export function SettingsTab({
                     value={business.phone || ""}
                     onChange={(value) => setEdits({ ...edits, phone: value })}
                     className={inputClass + " flex items-center gap-2 pr-11"}
-                    inputClassName="min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none"
+                    inputClassName="min-w-0 flex-1 border-0! bg-transparent! px-2 py-2 text-sm text-admin-ink outline-none"
                     countrySelectorStyleProps={{
-                      buttonClassName: "flex h-full min-h-11 items-center gap-2 rounded-l-md px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary",
+                      buttonClassName: "flex h-full min-h-11 items-center gap-2 rounded-l-md bg-transparent! px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary",
                       flagClassName: "h-3.5 w-5 shrink-0 rounded-sm",
                       dropdownStyleProps: {
                         className: "max-h-72 overflow-y-auto rounded-md border border-admin-border bg-admin-surface p-1 shadow-lg",
@@ -814,9 +814,9 @@ export function SettingsTab({
                     value={business.whatsapp || ""}
                     onChange={(value) => setEdits({ ...edits, whatsapp: value })}
                     className={inputClass + " flex items-center gap-2 pr-11"}
-                    inputClassName="min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none"
+                    inputClassName="min-w-0 flex-1 border-0! bg-transparent! px-2 py-2 text-sm text-admin-ink outline-none"
                     countrySelectorStyleProps={{
-                      buttonClassName: "flex h-full min-h-11 items-center gap-2 rounded-l-md px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary",
+                      buttonClassName: "flex h-full min-h-11 items-center gap-2 rounded-l-md bg-transparent! px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary",
                       flagClassName: "h-3.5 w-5 shrink-0 rounded-sm",
                       dropdownStyleProps: {
                         className: "max-h-72 overflow-y-auto rounded-md border border-admin-border bg-admin-surface p-1 shadow-lg",
