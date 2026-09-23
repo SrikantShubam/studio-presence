@@ -16,40 +16,6 @@ type Member = {
 type Invitation = { id: string; email_display: string; role: Exclude<Role, "owner">; expires_at: string; created_at: string };
 const roleLabels: Record<Exclude<Role, "owner">, string> = { editor: "Editor", viewer: "Viewer" };
 
-const DEMO_MEMBERS: Member[] = [
-  {
-    user_id: "demo-owner",
-    role: "owner",
-    email: "ashish@ashishinteriors.com",
-    display_name: "Ashish Sharma",
-    created_at: "2026-08-01T00:00:00.000Z",
-  },
-  {
-    user_id: "demo-editor",
-    role: "editor",
-    email: "priya@ashishinteriors.com",
-    display_name: "Priya Patel",
-    created_at: "2026-08-15T00:00:00.000Z",
-  },
-  {
-    user_id: "demo-viewer",
-    role: "viewer",
-    email: "rohit@ashishinteriors.com",
-    display_name: "Rohit Verma",
-    created_at: "2026-09-01T00:00:00.000Z",
-  },
-];
-
-const DEMO_INVITATIONS: Invitation[] = [
-  {
-    id: "demo-invite-1",
-    email_display: "neha@ashishinteriors.com",
-    role: "editor",
-    expires_at: new Date(Date.now() + 20 * 3600000).toISOString(),
-    created_at: new Date(Date.now() - 4 * 3600000).toISOString(),
-  },
-];
-
 function memberInitials(name: string | null, email: string | null): string {
   const source = name?.trim() || email?.split("@")[0]?.trim() || "";
   const parts = source.split(/[\s._-]+/).filter(Boolean);
@@ -75,9 +41,6 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
 
   async function load() {
     if (mode === "demo") {
-      setMembers(DEMO_MEMBERS);
-      setInvitations(DEMO_INVITATIONS);
-      setCurrentRole("owner");
       setLoading(false);
       return;
     }
@@ -126,38 +89,6 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
     setError("");
     setMessage("");
     try {
-      if (mode === "demo") {
-        if (body.action === "invite") {
-          const newInvite: Invitation = {
-            id: `demo-invite-${Date.now()}`,
-            email_display: body.email ?? "",
-            role: (body.role as Exclude<Role, "owner">) || "editor",
-            expires_at: new Date(Date.now() + 24 * 3600000).toISOString(),
-            created_at: new Date().toISOString(),
-          };
-          setInvitations((prev) => [newInvite, ...prev]);
-          const url = `${window.location.origin}/invite/sample-${Date.now().toString(36)}`;
-          setCopyLink(url);
-          void copyToClipboard(url);
-          setEmail("");
-          setMessage("Sample invitation created. Copy the link below to share it.");
-        } else if (body.action === "resend") {
-          const url = `${window.location.origin}/invite/sample-${Date.now().toString(36)}`;
-          setCopyLink(url);
-          void copyToClipboard(url);
-          setMessage("Sample invitation resent and link copied.");
-        } else if (body.action === "revoke") {
-          setInvitations((prev) => prev.filter((i) => i.id !== body.invitationId));
-          setMessage("Sample invitation revoked.");
-        } else if (body.action === "role") {
-          setMembers((prev) => prev.map((m) => (m.user_id === body.userId ? { ...m, role: body.role as Role } : m)));
-          setMessage("Workspace access updated.");
-        } else if (body.action === "remove") {
-          setMembers((prev) => prev.filter((m) => m.user_id !== body.userId));
-          setMessage("Member removed from workspace.");
-        }
-        return;
-      }
       const response = await fetch(`/api/${encodeURIComponent(tenant)}/members`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -181,7 +112,7 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
     }
   }
 
-  if (mode === "unavailable") return null;
+  if (mode === "demo" || mode === "unavailable") return null;
 
   const isOwner = currentRole === "owner";
 
