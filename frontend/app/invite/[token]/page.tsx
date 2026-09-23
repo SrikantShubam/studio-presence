@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { acceptWorkspaceInvitation, createScopedClient } from "@studio/backend";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { InvitationEntry } from "./InvitationEntry";
