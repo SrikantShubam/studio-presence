@@ -144,6 +144,7 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
   return (
     <Panel
       title="Team access"
+      className="mb-5"
       description="Invite people to work in this workspace. Invitations expire after 24 hours."
       action={<ShieldCheck aria-hidden="true" className="size-4 text-admin-muted" />}
     >
