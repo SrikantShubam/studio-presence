@@ -93,6 +93,7 @@ export function DashboardShell({
         : pathname.includes("/settings")
           ? "settings"
           : "enquiries";
+  const sampleDataOn = params.get("demo") !== "0";
   function href(tab: DashboardView) {
     const next = new URLSearchParams();
     if (params?.has("demo")) next.set("demo", params.get("demo")!);
@@ -214,18 +215,18 @@ export function DashboardShell({
           <div className="flex shrink-0 items-center gap-2">
             {/* Manual-only control: never auto-toggle sample data from effects or background actions. */}
             <Link
-              href={sampleDataToggleHref(base, params.toString(), params.get("demo") === "1" ? "demo" : "live")}
+              href={sampleDataToggleHref(base, params.toString(), sampleDataOn ? "demo" : "live")}
               className={buttonClass + " gap-2 px-3"}
-              aria-pressed={params.get("demo") === "1"}
-              aria-label={params.get("demo") === "1" ? "Turn sample data off" : "Turn sample data on"}
-              title={params.get("demo") === "1" ? "Turn sample data off" : "Turn sample data on"}
+              aria-pressed={sampleDataOn}
+              aria-label={sampleDataOn ? "Turn sample data off" : "Turn sample data on"}
+              title={sampleDataOn ? "Turn sample data off" : "Turn sample data on"}
             >
-              {params.get("demo") === "1" ? (
+              {sampleDataOn ? (
                 <ToggleRight aria-hidden="true" className="size-4" />
               ) : (
                 <ToggleLeft aria-hidden="true" className="size-4" />
               )}
-              <span className="hidden sm:inline">Sample data {params.get("demo") === "1" ? "on" : "off"}</span>
+              <span className="hidden sm:inline">Sample data {sampleDataOn ? "on" : "off"}</span>
             </Link>
             <ThemeToggle />
             {authenticated ? (

@@ -31,8 +31,7 @@ export default function CalculatorTab({
   canEdit: boolean;
   onSave: SaveConfig;
 }) {
-  const initial =
-    config.sections.estimate ?? (mode === "demo" ? SAMPLE_ESTIMATE : undefined);
+  const initial = config.sections.estimate ?? SAMPLE_ESTIMATE;
   const [estimate, setEstimate] = useState(initial);
   const [area, setArea] = useState(1000);
   const [homeIndex, setHomeIndex] = useState(0);
@@ -40,20 +39,6 @@ export default function CalculatorTab({
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  if (!estimate)
-    return (
-      <>
-        <PageHeading
-          title="Estimate calculator"
-          description="Pricing follows your studio's configured estimate model."
-        />
-        <Panel title="Calculator is not configured">
-          <p className="p-5 text-sm text-admin-muted">
-            Ask your operator to configure this section for your studio.
-          </p>
-        </Panel>
-      </>
-    );
   const rates = estimate.ratePerSqft ?? { basic: 0, standard: 0, premium: 0 };
   const home = estimate.homeTypes[homeIndex];
   const finishes = estimate.finishLevels.length
@@ -116,7 +101,7 @@ export default function CalculatorTab({
   const effectiveRate = Math.round(base * (finish.low ?? 1) * (home?.factor ?? 1));
   const timeline = ["8–10 weeks", "10–14 weeks", "14–18 weeks"][finishIndex] ?? "10–14 weeks";
   function reset() {
-    if (mode === "demo") setEstimate(SAMPLE_ESTIMATE);
+    setEstimate(initial);
     setArea(1000);
     setHomeIndex(0);
     setFinishIndex(0);
