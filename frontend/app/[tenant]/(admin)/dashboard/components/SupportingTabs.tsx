@@ -38,6 +38,8 @@ const phoneFieldClass = [
   "relative flex min-h-11 w-full min-w-0 items-center rounded-xl border border-admin-border bg-admin-bg pr-11",
   "[&_.react-international-phone-input-container]:!w-full",
   "[&_.react-international-phone-country-selector-button]:!border-0",
+  "[&_.react-international-phone-country-selector-button]:!h-11",
+  "[&_.react-international-phone-country-selector-button]:!min-h-11",
   "[&_.react-international-phone-country-selector-button]:!bg-transparent",
   "[&_.react-international-phone-country-selector-button]:!text-admin-ink",
   "[&_.react-international-phone-country-selector-button:hover]:!bg-transparent",
@@ -773,7 +775,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit studio name"
                     title="Edit studio name"
                     onClick={(event) => {
@@ -796,7 +798,7 @@ export function SettingsTab({
                   />
                   <button
                     type="button"
-                    className="absolute top-0 right-0 flex h-11 w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-admin-muted hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
                     aria-label="Edit studio tagline"
                     title="Edit studio tagline"
                     onClick={(event) => {
