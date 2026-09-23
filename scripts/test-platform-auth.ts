@@ -122,5 +122,8 @@ assert.match(platformLogin, /email address that received this invitation/, 'plat
 assert.match(loginForm, /Show password/, 'login form must provide a visible password toggle')
 assert.match(loginForm, /Hide password/, 'login form must provide a visible password hide toggle')
 assert.match(loginForm, /pr-12/, 'password inputs must reserve space for the toggle')
+assert.match(loginForm, /isInvite \? 'signup' : 'signin'/, 'invitation email auth must default to account creation')
+assert.match(loginForm, /New to this workspace\? Create your account below\./, 'invitation email auth must explain the account creation path')
+assert.match(platformLogin, /Create your account to join/, 'invitation login must use dedicated account creation copy')
 
 console.log('platform auth tests passed')

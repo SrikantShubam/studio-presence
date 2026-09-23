@@ -39,7 +39,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [status, setStatus] = useState<'idle' | 'oauth' | 'submitting' | 'sent' | 'error'>('idle')
   const isInvite = Boolean(nextPath?.startsWith('/invite/'))
-  const [intent, setIntent] = useState<'signin' | 'signup'>('signin')
+  const [intent, setIntent] = useState<'signin' | 'signup'>(isInvite ? 'signup' : 'signin')
   const [emailOpen, setEmailOpen] = useState(isInvite)
   const [completedFlow, setCompletedFlow] = useState<CompletedFlow>('signup')
   const [error, setError] = useState<string | null>(null)
@@ -191,6 +191,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
         <button type="button" aria-pressed={intent === 'signin'} onClick={() => { setIntent('signin'); resetForm() }} className={intent === 'signin' ? 'min-h-10 rounded-full bg-admin-surface text-sm font-semibold text-admin-ink' : 'min-h-10 rounded-full text-sm font-semibold text-admin-muted'}>Sign in</button>
         <button type="button" aria-pressed={intent === 'signup'} onClick={() => { setIntent('signup'); resetForm() }} className={intent === 'signup' ? 'min-h-10 rounded-full bg-admin-surface text-sm font-semibold text-admin-ink' : 'min-h-10 rounded-full text-sm font-semibold text-admin-muted'}>Create account</button>
       </div>
+      {isInvite && <p className="text-sm leading-6 text-admin-muted">New to this workspace? Create your account below. Already have an account? Choose Sign in.</p>}
 
       <button type="button" onClick={() => setEmailOpen((open) => !open)} className="flex min-h-11 items-center justify-between rounded-lg border border-admin-border bg-admin-bg px-4 text-sm font-semibold text-admin-ink">
         <span>Use email and password</span>

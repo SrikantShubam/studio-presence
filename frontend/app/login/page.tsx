@@ -1,5 +1,6 @@
 import { ThemeToggle } from '../[tenant]/(admin)/ThemeToggle'
 import { LoginForm } from '../[tenant]/(admin)/login/LoginForm'
+import { loadPublicTenantConfig } from '@/lib/tenant-config'
 import { AUTH_ERROR_MESSAGES } from '@/lib/auth-messages'
 import { PLATFORM_BRAND } from '@/lib/platform-brand'
 
@@ -18,9 +19,12 @@ export default async function PlatformLoginPage({
   searchParams: Promise<{ error?: string; next?: string; tenant?: string }>
 }) {
   const { error: errorCode, next, tenant: paramTenant } = await searchParams
-  const hintedTenant = paramTenant ?? next?.match(/^\/([a-z0-9-]+)\/(?:admin|dashboard|panel)(?:\/|$)/)?.[1]
+  const hintedTenant = paramTenant ?? next?.match(/^\/([a-z0-9-]+)\/(?:admin|dashboard|panel)(?:\/|$)/)?.[1] ?? inviteTenantFromNextPath(next)
 
   const isInvite = Boolean(next?.startsWith('/invite/'))
+  const invitedStudioName = isInvite && hintedTenant ? await loadInvitedStudioName(hintedTenant) : undefined
+  const inviteWorkspaceLabel = invitedStudioName ? `${invitedStudioName} workspace` : 'your studio workspace'
+  const inviteTitle = `Create your account to join ${inviteWorkspaceLabel}.`
 
   return (
     <main className="min-h-screen bg-admin-bg px-4 py-5 text-admin-ink lg:flex lg:items-center lg:justify-center">
@@ -28,15 +32,15 @@ export default async function PlatformLoginPage({
         <section className="flex min-h-[32rem] flex-col justify-between border-b border-admin-border bg-admin-primary-soft p-6 sm:p-8 lg:border-b-0 lg:border-r">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-sm font-semibold text-admin-ink">{PLATFORM_BRAND}</p>
-              <p className="mt-1 text-xs font-medium uppercase tracking-wide text-admin-muted">{PLATFORM_LOGIN_COPY.demoLabel}</p>
+              <p className="text-sm font-semibold text-admin-ink">{isInvite ? invitedStudioName ?? PLATFORM_BRAND : PLATFORM_BRAND}</p>
+              <p className="mt-1 text-xs font-medium uppercase tracking-wide text-admin-muted">{isInvite ? 'Invitation access' : PLATFORM_LOGIN_COPY.demoLabel}</p>
             </div>
             <ThemeToggle />
           </div>
 
           <div className="my-10 max-w-xl">
-            <h2 className="text-4xl font-semibold leading-tight text-admin-ink sm:text-5xl">{PLATFORM_LOGIN_COPY.demoTitle}</h2>
-            <p className="mt-5 max-w-md text-base leading-7 text-admin-muted">{PLATFORM_LOGIN_COPY.demoDescription}</p>
+            <h2 className="text-4xl font-semibold leading-tight text-admin-ink sm:text-5xl">{isInvite ? inviteTitle : PLATFORM_LOGIN_COPY.demoTitle}</h2>
+            <p className="mt-5 max-w-md text-base leading-7 text-admin-muted">{isInvite ? 'Create a secure account with the invited email address, confirm it, and your place in the studio will be ready.' : PLATFORM_LOGIN_COPY.demoDescription}</p>
           </div>
 
           <div className="grid max-w-md grid-cols-3 gap-2 text-xs">
@@ -53,11 +57,11 @@ export default async function PlatformLoginPage({
                 {isInvite ? 'Private workspace' : PLATFORM_LOGIN_COPY.eyebrow}
               </p>
               <h1 className="mt-2 text-3xl font-semibold leading-tight text-admin-ink">
-                {isInvite ? 'Enter your place in the studio.' : PLATFORM_LOGIN_COPY.title}
+                {isInvite ? 'Create your account to join.' : PLATFORM_LOGIN_COPY.title}
               </h1>
               <p className="mt-3 text-sm leading-6 text-admin-muted">
                 {isInvite
-                  ? 'Sign in or create an account with the email address that received this invitation.'
+                  ? `Use the email address that received this invitation to join ${inviteWorkspaceLabel}. Create a password and confirm your email to continue.`
                   : PLATFORM_LOGIN_COPY.description}
               </p>
             </div>
@@ -74,4 +78,19 @@ export default async function PlatformLoginPage({
       </div>
     </main>
   )
+}
+
+function inviteTenantFromNextPath(next: string | undefined): string | undefined {
+  if (!next?.startsWith('/invite/')) return undefined
+  const query = next.indexOf('?')
+  if (query < 0) return undefined
+  return new URLSearchParams(next.slice(query + 1)).get('tenant') ?? undefined
+}
+
+async function loadInvitedStudioName(tenantSlug: string): Promise<string | undefined> {
+  try {
+    return (await loadPublicTenantConfig(tenantSlug)).business.name
+  } catch {
+    return undefined
+  }
 }
