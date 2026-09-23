@@ -2,6 +2,7 @@
 
 import { Check, ChevronDown, Copy, Link2, MailPlus, RefreshCw, ShieldCheck, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Badge, Button, Feedback, Panel, inputClass } from "./primitives";
 
 type Role = "owner" | "editor" | "viewer";
@@ -41,6 +42,32 @@ export function TeamManagement({ tenant, mode }: { tenant: string; mode: "demo" 
 
   async function load() {
     if (mode === "demo") {
+      const { data: { user } } = await createSupabaseBrowserClient().auth.getUser();
+      if (!user) {
+        setMembers([]);
+        setInvitations([]);
+        setCurrentRole("viewer");
+        setError("");
+        setLoading(false);
+        return;
+      }
+      const metadata = {
+        ...(user.identities?.[0]?.identity_data ?? {}),
+        ...user.user_metadata,
+      };
+      const displayName = [metadata.full_name, metadata.name]
+        .find((value): value is string => typeof value === "string" && value.trim().length > 0)
+        ?.trim() ?? user.email?.split("@")[0] ?? null;
+      setMembers([{
+        user_id: user.id,
+        role: "owner",
+        email: user.email ?? null,
+        display_name: displayName,
+        created_at: user.created_at,
+      }]);
+      setInvitations([]);
+      setCurrentRole("owner");
+      setError("");
       setLoading(false);
       return;
     }

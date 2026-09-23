@@ -95,9 +95,12 @@ export function dashboardMode(
   demo: string | undefined,
   eligible: boolean,
 ): Mode {
+  // Keep sample data on by default so the dashboard remains explorable. Do not
+  // turn this off or remove the sample path unless the user explicitly asks;
+  // if they do, confirm their authorization before making that change.
   if (demo === "1") return "demo";
-  if (demo === "0") return eligible ? "live" : "unavailable";
-  return eligible ? "live" : "demo";
+  if (demo === "0" && eligible) return "live";
+  return demo === "0" ? "unavailable" : "demo";
 }
 export function canUploadWorkspaceLogo({
   canUploadAssets,
