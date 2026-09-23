@@ -20,6 +20,8 @@ export default async function PlatformLoginPage({
   const { error: errorCode, next, tenant: paramTenant } = await searchParams
   const hintedTenant = paramTenant ?? next?.match(/^\/([a-z0-9-]+)\//)?.[1]
 
+  const isInvite = Boolean(next?.startsWith('/invite/'))
+
   return (
     <main className="min-h-screen bg-admin-bg px-4 py-5 text-admin-ink lg:flex lg:items-center lg:justify-center">
       <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-lg border border-admin-border bg-admin-surface lg:min-h-[40rem] lg:grid-cols-[1.05fr_0.95fr]">
@@ -47,9 +49,17 @@ export default async function PlatformLoginPage({
         <section className="flex items-center justify-center p-5 sm:p-8">
           <div className="w-full max-w-md">
             <div className="mb-7">
-              <p className="text-xs font-semibold uppercase tracking-wide text-admin-muted">{PLATFORM_LOGIN_COPY.eyebrow}</p>
-              <h1 className="mt-2 text-3xl font-semibold leading-tight text-admin-ink">{PLATFORM_LOGIN_COPY.title}</h1>
-              <p className="mt-3 text-sm leading-6 text-admin-muted">{PLATFORM_LOGIN_COPY.description}</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-admin-primary">
+                {isInvite ? 'Workspace invitation' : PLATFORM_LOGIN_COPY.eyebrow}
+              </p>
+              <h1 className="mt-2 text-3xl font-semibold leading-tight text-admin-ink">
+                {isInvite ? 'Accept your workspace invite' : PLATFORM_LOGIN_COPY.title}
+              </h1>
+              <p className="mt-3 text-sm leading-6 text-admin-muted">
+                {isInvite
+                  ? 'Sign in with Google or create an account using your invited email address to join the workspace.'
+                  : PLATFORM_LOGIN_COPY.description}
+              </p>
             </div>
 
             {errorCode && AUTH_ERROR_MESSAGES[errorCode] && (
