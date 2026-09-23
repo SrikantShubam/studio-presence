@@ -476,6 +476,7 @@ export function DashboardWorkspace({
         <EnquiryDetails
           key={chosen.id}
           enquiry={chosen}
+          studioName={studioName}
           mode={data.mode}
           action={performLeadAction}
           onClose={() => setSelected(null)}

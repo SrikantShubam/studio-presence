@@ -153,6 +153,7 @@ export function NewEnquiryDialog({
 
 export function EnquiryDetails({
   enquiry,
+  studioName,
   mode,
   action,
   onClose,
@@ -162,6 +163,7 @@ export function EnquiryDetails({
   canEdit = true,
 }: {
   enquiry: Enquiry;
+  studioName: string;
   mode: Mode;
   action: LeadAction;
   onClose: () => void;
@@ -212,7 +214,7 @@ export function EnquiryDetails({
       open
       side="right"
       title={enquiry.name}
-      eyebrow="Enquiry details Â· Studio workspace"
+      eyebrow={`Enquiry details · ${studioName}`}
       onClose={() => {
         if (!pending) onClose();
       }}
