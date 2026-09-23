@@ -1,9 +1,10 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users, X } from "lucide-react";
-import PhoneInput, { getCountries, getCountryCallingCode } from "react-phone-number-input";
+import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, ChevronDown, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users, X } from "lucide-react";
+import PhoneInput, { getCountries, getCountryCallingCode, type Country } from "react-phone-number-input";
 import enLabels from "react-phone-number-input/locale/en.json";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { CountryFlag } from "@/lib/onboarding/countries";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
 import { SAMPLE_CITIES, SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
@@ -233,13 +234,6 @@ function CityDemandPanel({ data, onNavigate }: { data: WorkspaceData; onNavigate
   );
 }
 
-function countryToFlag(isoCode: string): string {
-  if (isoCode.length !== 2) return "";
-  return isoCode
-    .toUpperCase()
-    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
-}
-
 const COUNTRY_LABELS: Record<string, string> = (() => {
   const labels: Record<string, string> = { ...(enLabels as Record<string, string>) };
   for (const country of getCountries()) {
@@ -250,11 +244,92 @@ const COUNTRY_LABELS: Record<string, string> = (() => {
     } catch {
       // ignore
     }
-    const flag = countryToFlag(country);
-    labels[country] = `${flag} ${name}${code}`.trim();
+    labels[country] = `${name}${code}`.trim();
   }
   return labels;
 })();
+
+type CountryOption = { value?: string; label: string; divider?: boolean };
+
+function DashboardCountrySelect({
+  value,
+  onChange,
+  options,
+  disabled,
+  readOnly,
+}: {
+  value?: Country;
+  onChange: (value?: Country) => void;
+  options: CountryOption[];
+  disabled?: boolean;
+  readOnly?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const selected = options.find((option) => !option.divider && option.value === value) ?? options.find((option) => !option.divider);
+
+  useEffect(() => {
+    if (!open) return;
+    function closeOnOutsideClick(event: PointerEvent) {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpen(false);
+        buttonRef.current?.focus();
+      }
+    }
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsideClick);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
+  return (
+    <div ref={rootRef} className="PhoneInputCountry relative">
+      <button
+        ref={buttonRef}
+        type="button"
+        disabled={disabled || readOnly}
+        aria-label={selected?.label ?? "Choose country"}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className="flex h-full min-h-11 items-center gap-2 rounded-l-md px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary"
+        onClick={() => setOpen((current) => !current)}
+      >
+        {selected?.value ? <CountryFlag code={selected.value} className="h-3.5 w-5 shrink-0 rounded-sm" /> : <Globe aria-hidden="true" className="size-4 text-admin-muted" />}
+        <ChevronDown aria-hidden="true" className="size-3 text-admin-muted" />
+      </button>
+      {open && (
+        <div role="listbox" aria-label="Country" className="absolute left-0 top-full z-50 mt-1 max-h-72 w-[min(19rem,calc(100vw-2rem))] overflow-y-auto rounded-md border border-admin-border bg-admin-surface p-1 shadow-lg">
+          {options.map((option, index) =>
+            option.divider ? (
+              <div key={`divider-${index}`} role="separator" className="my-1 border-t border-admin-border" />
+            ) : (
+              <button
+                key={option.value ?? `country-${index}`}
+                type="button"
+                role="option"
+                aria-selected={option.value === value}
+                className="flex w-full items-center gap-2 rounded px-2 py-2 text-left text-xs text-admin-ink hover:bg-admin-raised focus-visible:bg-admin-raised focus-visible:outline-none"
+                onClick={() => {
+                  onChange(option.value === "ZZ" ? undefined : option.value as Country | undefined);
+                  setOpen(false);
+                }}
+              >
+                {option.value && option.value !== "ZZ" ? <CountryFlag code={option.value} className="h-3.5 w-5 shrink-0 rounded-sm" /> : <Globe aria-hidden="true" className="size-4 shrink-0 text-admin-muted" />}
+                <span className="truncate">{option.label}</span>
+              </button>
+            ),
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 const DAY_PRESETS = [
   "Mon – Sat",
@@ -713,6 +788,7 @@ export function SettingsTab({
                     defaultCountry="IN"
                     countryCallingCodeEditable={false}
                     labels={COUNTRY_LABELS}
+                    countrySelectComponent={DashboardCountrySelect}
                     required
                     value={business.phone || undefined}
                     onChange={(value) => setEdits({ ...edits, phone: value ?? "" })}
@@ -742,6 +818,7 @@ export function SettingsTab({
                     defaultCountry="IN"
                     countryCallingCodeEditable={false}
                     labels={COUNTRY_LABELS}
+                    countrySelectComponent={DashboardCountrySelect}
                     required
                     value={business.whatsapp || undefined}
                     onChange={(value) => setEdits({ ...edits, whatsapp: value ?? "" })}
