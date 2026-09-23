@@ -24,9 +24,9 @@ export function InvitationEntry({ token }: { token: string }) {
   return (
     <main className="flex min-h-dvh items-center justify-center bg-admin-bg px-5 text-admin-ink">
       <section className="w-full max-w-md border border-admin-border bg-admin-surface p-6 sm:p-8">
-        <p className="text-xs font-semibold uppercase tracking-wide text-admin-primary">Studio Presence</p>
-        <h1 className="mt-3 text-3xl font-semibold">Join workspace</h1>
-        <p className="mt-3 text-sm leading-6 text-admin-muted">You have an invite to Studio Presence.</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-admin-primary">Private workspace</p>
+        <h1 className="mt-3 text-3xl font-semibold">Your place in the studio</h1>
+        <p className="mt-3 text-sm leading-6 text-admin-muted">A considered invitation is waiting for you. Continue with the account that received it.</p>
         <div className="mt-7 grid gap-3">
           <button
             type="button"
@@ -40,10 +40,10 @@ export function InvitationEntry({ token }: { token: string }) {
             href={`/login?next=${encodeURIComponent(nextPath)}`}
             className="inline-flex min-h-12 items-center justify-center rounded-full border border-admin-border bg-admin-bg px-4 text-sm font-semibold text-admin-ink"
           >
-            Use email
+            Continue with email
           </Link>
         </div>
-        {status === 'error' && <p className="mt-4 text-sm text-admin-alert">Google unavailable. Use email.</p>}
+        {status === 'error' && <p className="mt-4 text-sm text-admin-alert">Google is unavailable. Continue with email.</p>}
       </section>
     </main>
   )

@@ -209,7 +209,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
           {error && <p className="rounded-lg border border-admin-alert bg-admin-alert-soft px-3 py-2 text-sm font-medium text-admin-alert">{error}</p>}
           <button type="submit" disabled={status === 'submitting' || status === 'oauth'} className="min-h-12 rounded-full border border-admin-border bg-admin-surface px-4 text-base font-semibold text-admin-ink disabled:opacity-60">{status === 'submitting' ? 'Working…' : isSignup ? 'Create account' : 'Sign in with email'}</button>
           {!isSignup && <button type="button" disabled={!email.trim() || status === 'submitting'} onClick={() => void requestRecovery()} className="text-left text-sm font-medium text-admin-primary disabled:cursor-not-allowed disabled:text-admin-muted">Forgot password?</button>}
-          <p className="text-sm text-admin-muted">Use at least 12 characters. We never create a studio or grant access during signup.</p>
+          <p className="text-sm text-admin-muted">{isInvite ? 'Use the email address that received this invitation.' : 'Use at least 12 characters. We never create a studio or grant access during signup.'}</p>
         </form>
       )}
 

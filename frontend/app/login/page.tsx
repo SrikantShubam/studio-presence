@@ -50,14 +50,14 @@ export default async function PlatformLoginPage({
           <div className="w-full max-w-md">
             <div className="mb-7">
               <p className="text-xs font-semibold uppercase tracking-wide text-admin-primary">
-                {isInvite ? 'Workspace invitation' : PLATFORM_LOGIN_COPY.eyebrow}
+                {isInvite ? 'Private workspace' : PLATFORM_LOGIN_COPY.eyebrow}
               </p>
               <h1 className="mt-2 text-3xl font-semibold leading-tight text-admin-ink">
-                {isInvite ? 'Continue to workspace' : PLATFORM_LOGIN_COPY.title}
+                {isInvite ? 'Enter your place in the studio.' : PLATFORM_LOGIN_COPY.title}
               </h1>
               <p className="mt-3 text-sm leading-6 text-admin-muted">
                 {isInvite
-                  ? 'Use Google or your invited email.'
+                  ? 'Sign in or create an account with the email address that received this invitation.'
                   : PLATFORM_LOGIN_COPY.description}
               </p>
             </div>
