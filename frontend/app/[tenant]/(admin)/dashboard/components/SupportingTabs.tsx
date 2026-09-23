@@ -1,11 +1,9 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, ChevronDown, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users, X } from "lucide-react";
-import PhoneInput, { getCountries, getCountryCallingCode, type Country } from "react-phone-number-input";
-import enLabels from "react-phone-number-input/locale/en.json";
+import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users, X } from "lucide-react";
+import { PhoneInput as InternationalPhoneInput } from "react-international-phone";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { countryOptionLabel, CountryFlag } from "@/lib/onboarding/countries";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { AttentionChart } from "./OverviewTab";
 import { SAMPLE_CITIES, SAMPLE_PAGE_BREAKDOWN, SAMPLE_SOURCES } from "./demo-data";
 import { TeamManagement } from "./TeamManagement";
@@ -235,6 +233,7 @@ function CityDemandPanel({ data, onNavigate }: { data: WorkspaceData; onNavigate
   );
 }
 
+/* LEGACY COUNTRY SELECTOR: retained for rollback while the package replacement is validated.
 const COUNTRY_LABELS: Record<string, string> = (() => {
   const labels: Record<string, string> = { ...(enLabels as Record<string, string>) };
   for (const country of getCountries()) {
@@ -331,6 +330,7 @@ function DashboardCountrySelect({
     </div>
   );
 }
+*/
 
 const DAY_PRESETS = [
   "Mon – Sat",
@@ -786,17 +786,25 @@ export function SettingsTab({
               </Field>
               <Field label="Studio phone" hint="Choose a country, then enter the number without the country code.">
                 <div className="relative">
-                  <PhoneInput
-                    international
-                    defaultCountry="IN"
-                    countryCallingCodeEditable={false}
-                    labels={COUNTRY_LABELS}
-                    countrySelectComponent={DashboardCountrySelect}
+                  <InternationalPhoneInput
+                    defaultCountry="in"
+                    forceDialCode
                     required
-                    value={business.phone || undefined}
-                    onChange={(value) => setEdits({ ...edits, phone: value ?? "" })}
+                    value={business.phone || ""}
+                    onChange={(value) => setEdits({ ...edits, phone: value })}
                     className={inputClass + " flex items-center gap-2 pr-11"}
-                    numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
+                    inputClassName="min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none"
+                    countrySelectorStyleProps={{
+                      buttonClassName: "flex h-full min-h-11 items-center gap-2 rounded-l-md px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary",
+                      flagClassName: "h-3.5 w-5 shrink-0 rounded-sm",
+                      dropdownStyleProps: {
+                        className: "max-h-72 overflow-y-auto rounded-md border border-admin-border bg-admin-surface p-1 shadow-lg",
+                        listItemClassName: "flex w-full items-center gap-2 rounded px-2 py-2 text-left text-xs text-admin-ink hover:bg-admin-raised focus-visible:bg-admin-raised focus-visible:outline-none",
+                        listItemFlagClassName: "order-1 h-3.5 w-5 shrink-0 rounded-sm",
+                        listItemDialCodeClassName: "order-2 text-admin-muted",
+                        listItemCountryNameClassName: "order-3 truncate",
+                      },
+                    }}
                   />
                   <button
                     type="button"
@@ -816,17 +824,25 @@ export function SettingsTab({
               </Field>
               <Field label="WhatsApp number" hint="Choose a country, then enter the number without the country code.">
                 <div className="relative">
-                  <PhoneInput
-                    international
-                    defaultCountry="IN"
-                    countryCallingCodeEditable={false}
-                    labels={COUNTRY_LABELS}
-                    countrySelectComponent={DashboardCountrySelect}
+                  <InternationalPhoneInput
+                    defaultCountry="in"
+                    forceDialCode
                     required
-                    value={business.whatsapp || undefined}
-                    onChange={(value) => setEdits({ ...edits, whatsapp: value ?? "" })}
+                    value={business.whatsapp || ""}
+                    onChange={(value) => setEdits({ ...edits, whatsapp: value })}
                     className={inputClass + " flex items-center gap-2 pr-11"}
-                    numberInputProps={{ className: "min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none" }}
+                    inputClassName="min-w-0 flex-1 border-0 bg-transparent px-2 py-2 text-sm text-admin-ink outline-none"
+                    countrySelectorStyleProps={{
+                      buttonClassName: "flex h-full min-h-11 items-center gap-2 rounded-l-md px-2 text-admin-ink outline-none focus-visible:ring-2 focus-visible:ring-admin-primary",
+                      flagClassName: "h-3.5 w-5 shrink-0 rounded-sm",
+                      dropdownStyleProps: {
+                        className: "max-h-72 overflow-y-auto rounded-md border border-admin-border bg-admin-surface p-1 shadow-lg",
+                        listItemClassName: "flex w-full items-center gap-2 rounded px-2 py-2 text-left text-xs text-admin-ink hover:bg-admin-raised focus-visible:bg-admin-raised focus-visible:outline-none",
+                        listItemFlagClassName: "order-1 h-3.5 w-5 shrink-0 rounded-sm",
+                        listItemDialCodeClassName: "order-2 text-admin-muted",
+                        listItemCountryNameClassName: "order-3 truncate",
+                      },
+                    }}
                   />
                   <button
                     type="button"

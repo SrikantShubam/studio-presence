@@ -5,6 +5,8 @@ import { dashboardMode, sampleDataToggleHref } from "../frontend/app/[tenant]/(a
 import { countryOptionLabel } from "../frontend/lib/onboarding/countries.tsx";
 
 const source = readFileSync("frontend/app/[tenant]/(admin)/dashboard/components/TeamManagement.tsx", "utf8");
+const supportingTabs = readFileSync("frontend/app/[tenant]/(admin)/dashboard/components/SupportingTabs.tsx", "utf8");
+const frontendPackage = readFileSync("frontend/package.json", "utf8");
 
 assert.equal(dashboardMode(undefined, true), "demo", "signed-in workspaces must preserve sample dashboard data");
 assert.equal(dashboardMode(undefined, false), "demo", "ineligible workspaces can remain in demo mode");
@@ -23,6 +25,9 @@ assert.equal(
   "+93 Afghanistan",
   "country options must show the calling code before the country name",
 );
+assert.match(frontendPackage, /"react-international-phone"/, "the replacement phone package must be installed");
+assert.match(supportingTabs, /<InternationalPhoneInput/, "dashboard phone fields must use the replacement package");
+assert.match(supportingTabs, /LEGACY COUNTRY SELECTOR/, "the previous selector must remain available for rollback");
 assert.match(source, /createSupabaseBrowserClient\(\)\.auth\.getUser\(\)/, "Team Access must read the authenticated profile");
 assert.match(source, /user_id: user\.id/, "Team Access must use the authenticated user's ID");
 assert.match(source, /display_name: displayName/, "Team Access must display the authenticated user's name");
