@@ -123,7 +123,7 @@ export function dashboardMode(
 }
 
 export { getWorkspaceCapabilities, WORKSPACE_ROLE_LABELS };
-export type { WorkspaceCapabilities, WorkspaceCapability, WorkspaceRole } from "@studio/backend/auth/permissions";
+export type { WorkspaceCapabilities, WorkspaceCapability, WorkspaceRole } from "@studio/backend";
 export function sampleDataToggleHref(
   base: string,
   queryString: string,
