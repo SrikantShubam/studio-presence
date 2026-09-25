@@ -23,7 +23,7 @@ export default async function LeadDetailPage({
 }) {
   const { tenant: tenantSlug, leadId } = await params
   const { lead, context, members, role } = await loadLead(tenantSlug, leadId)
-  const canUpdateWork = role === 'owner' || (role === 'editor' && lead.assigned_to === context.user.id)
+  const canUpdateWork = role === 'owner' || role === 'viewer' || (role === 'editor' && lead.assigned_to === context.user.id)
   const canAssign = role === 'owner'
   const assignableMembers = members.filter((member) => member.role === 'owner' || member.role === 'editor')
 
@@ -33,7 +33,7 @@ export default async function LeadDetailPage({
     const current = await requireDashboardContext(tenantSlug)
     const actor = await workspaceActor(current)
     const currentLead = await leads.get(current.db, leadId)
-    if (!currentLead || (actor.role !== 'owner' && !(actor.role === 'editor' && currentLead.assigned_to === current.user.id))) redirect('/' + tenantSlug + '/dashboard/enquiries')
+    if (!currentLead || (actor.role !== 'owner' && actor.role !== 'viewer' && !(actor.role === 'editor' && currentLead.assigned_to === current.user.id))) redirect('/' + tenantSlug + '/dashboard/enquiries')
     await leads.updateWork(current.db, leadId, status, currentLead.notes ?? '')
     revalidatePath('/' + tenantSlug + '/dashboard')
     revalidatePath('/' + tenantSlug + '/dashboard/' + leadId)
@@ -45,7 +45,7 @@ export default async function LeadDetailPage({
     const current = await requireDashboardContext(tenantSlug)
     const actor = await workspaceActor(current)
     const currentLead = await leads.get(current.db, leadId)
-    if (!currentLead || (actor.role !== 'owner' && !(actor.role === 'editor' && currentLead.assigned_to === current.user.id))) redirect('/' + tenantSlug + '/dashboard/enquiries')
+    if (!currentLead || (actor.role !== 'owner' && actor.role !== 'viewer' && !(actor.role === 'editor' && currentLead.assigned_to === current.user.id))) redirect('/' + tenantSlug + '/dashboard/enquiries')
     await leads.updateWork(current.db, leadId, currentLead.status, note.trim())
     revalidatePath('/' + tenantSlug + '/dashboard')
     revalidatePath('/' + tenantSlug + '/dashboard/' + leadId)
@@ -136,7 +136,7 @@ export default async function LeadDetailPage({
           </label>
           <button type="submit" disabled={!canUpdateWork} className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:cursor-not-allowed disabled:opacity-50 sm:self-end">Save status</button>
         </form>
-        {!canUpdateWork && <p className="mt-3 text-xs text-admin-muted">Only the assigned editor or workspace owner can update status and notes.</p>}
+        {!canUpdateWork && <p className="mt-3 text-xs text-admin-muted">Only the lead coordinator, assigned content manager, or workspace owner can update status and notes.</p>}
       </section>
       <section className="rounded-xl border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Notes</h2><form action={saveNote} className="mt-3 flex flex-col gap-3"><label className="flex flex-col gap-1.5 text-sm font-medium text-admin-ink">Private note<textarea name="notes" defaultValue={lead.notes ?? ''} disabled={!canUpdateWork} rows={6} className="min-h-36 rounded-xl border border-admin-border bg-admin-surface px-3 py-3 text-base font-normal text-admin-ink outline-none focus:border-admin-primary" /></label><button type="submit" disabled={!canUpdateWork} className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:cursor-not-allowed disabled:opacity-50">Save note</button></form></section>
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-admin-border bg-admin-surface p-3 rounded-xl"><div className="mx-auto grid max-w-3xl grid-cols-2 gap-2"><a href={whatsappHref} className="flex min-h-12 items-center justify-center rounded-lg bg-admin-primary px-3 text-base font-semibold text-admin-on-primary">WhatsApp</a><a href={'tel:' + lead.phone} className="flex min-h-12 items-center justify-center rounded-xl border border-admin-border px-3 text-base font-semibold text-admin-ink">Call</a></div></div>

@@ -21,6 +21,7 @@ import {
   type EnquiryFilters,
   type LeadAction,
   type WorkspaceData,
+  type WorkspaceCapabilities,
   sampleDataToggleHref,
 } from "./types";
 import OverviewTab from "./OverviewTab";
@@ -61,6 +62,7 @@ export function DashboardShell({
   studioLogoUrl,
   authenticated,
   signOutAction,
+  capabilities,
   children,
 }: {
   tenant: string;
@@ -71,6 +73,7 @@ export function DashboardShell({
   studioLogoUrl?: string | null;
   authenticated: boolean;
   signOutAction: () => Promise<void>;
+  capabilities: WorkspaceCapabilities;
   children: ReactNode;
 }) {
   const [currentStudioLogoUrl, setCurrentStudioLogoUrl] = useState<string | null>(studioLogoUrl ?? null);
@@ -104,6 +107,10 @@ export function DashboardShell({
     <nav className="grid gap-1" aria-label="Dashboard navigation">
       {NAV_ITEMS.map((item) => {
         const Icon = NAV_ICONS[item.id];
+        const allowed = !item.requiredCapability || Boolean(capabilities[item.requiredCapability]);
+        const linkClass = active === item.id
+          ? "flex min-h-11 items-center gap-3 bg-admin-raised px-3 py-2 text-xs font-semibold text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+          : "flex min-h-11 items-center gap-3 px-3 py-2 text-xs text-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary hover:bg-admin-raised";
         return (
           <div key={item.id}>
             {item.group && (
@@ -111,31 +118,43 @@ export function DashboardShell({
                 {item.group}
               </p>
             )}
-            <Link
-              href={href(item.id)}
-              onClick={(event) => {
-                if (
-                  isDashboardRoot &&
-                  !event.ctrlKey &&
-                  !event.metaKey &&
-                  !event.shiftKey &&
-                  !event.altKey
-                ) {
-                  event.preventDefault();
-                  window.history.pushState(null, "", href(item.id));
-                }
-                setMobile(false);
-              }}
-              aria-current={active === item.id ? "page" : undefined}
-              className={active === item.id ? "flex min-h-11 items-center gap-3 bg-admin-raised px-3 py-2 text-xs font-semibold text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary" : "flex min-h-11 items-center gap-3 px-3 py-2 text-xs text-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary hover:bg-admin-raised"}
-            >
-              <Icon aria-hidden="true" className="size-4 shrink-0" strokeWidth={1.8} />
-              {item.label}
-            </Link>
+            {allowed ? (
+              <Link
+                href={href(item.id)}
+                onClick={(event) => {
+                  if (
+                    isDashboardRoot &&
+                    !event.ctrlKey &&
+                    !event.metaKey &&
+                    !event.shiftKey &&
+                    !event.altKey
+                  ) {
+                    event.preventDefault();
+                    window.history.pushState(null, "", href(item.id));
+                  }
+                  setMobile(false);
+                }}
+                aria-current={active === item.id ? "page" : undefined}
+                className={linkClass}
+              >
+                <Icon aria-hidden="true" className="size-4 shrink-0" strokeWidth={1.8} />
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                type="button"
+                disabled
+                title="Available to the studio owner only"
+                className={`${linkClass} w-full cursor-not-allowed opacity-45`}
+              >
+                <Icon aria-hidden="true" className="size-4 shrink-0" strokeWidth={1.8} />
+                {item.label}
+              </button>
+            )}
           </div>
         );
       })}
-    </nav>
+            </nav>
   );
   const brand = (
     <>
@@ -310,7 +329,10 @@ export function DashboardWorkspace({
   const [storageError, setStorageError] = useState("");
   const demoKey = `studio-presence:dashboard:demo:v1:${data.tenant}`;
   useEffect(() => {
-    if (initialData.mode !== "demo") return;
+    if (initialData.mode !== "demo" || !initialData.canEdit) {
+      setRestored(true);
+      return;
+    }
     try {
       const saved = localStorage.getItem(demoKey);
       if (saved) {
@@ -379,11 +401,18 @@ export function DashboardWorkspace({
     if (input.kind === "update") {
       const existing = data.enquiries.find((item) => item.id === input.id);
       if (!existing) return { ok: false, error: "Sample enquiry not found." };
+      if (data.currentRole === "editor" && existing.assigned_to !== data.currentUserId) {
+        return { ok: false, error: "Content managers can update only enquiries assigned to them." };
+      }
+      if (data.currentRole !== "owner" && data.currentRole !== "editor" && data.currentRole !== "viewer") {
+        return { ok: false, error: "You cannot update enquiries." };
+      }
       return {
         ok: true,
         data: { ...existing, status: input.status, notes: input.notes },
       };
     }
+    if (data.currentRole !== "owner") return { ok: false, error: "Only the studio owner can create enquiries." };
     const values = input.values;
     return {
       ok: true,
@@ -417,6 +446,9 @@ export function DashboardWorkspace({
     }));
   }
   const chosen = data.enquiries.find((item) => item.id === selected);
+  const restrictedView = NAV_ITEMS.find(
+    (item) => item.id === view && item.requiredCapability && !data.capabilities[item.requiredCapability],
+  );
   if (!restored)
     return (
       <p role="status" className="text-sm text-admin-muted">
@@ -426,13 +458,23 @@ export function DashboardWorkspace({
   return (
     <>
       <Feedback error={storageError || data.leadError} />
+      {restrictedView && (
+        <section className="rounded-xl border border-admin-border bg-admin-surface p-6">
+          <h1 className="text-xl font-semibold">{restrictedView.label}</h1>
+          <p className="mt-2 max-w-xl text-sm leading-6 text-admin-muted">
+            This area is available to the studio owner only. Your current role is {data.roleLabel}.
+          </p>
+        </section>
+      )}
       {view === "overview" && (
         <OverviewTab
           data={data}
           filters={filters}
           onFiltersChange={setFilters}
           onNavigate={navigate}
-          onCreate={() => setCreating(true)}
+          onCreate={() => {
+            if (data.canCreate) setCreating(true);
+          }}
           onOpen={(item) => setSelected(item.id)}
         />
       )}
@@ -466,7 +508,7 @@ export function DashboardWorkspace({
           />
         </div>
       )}
-      <PersistentTab active={view === "website"}>
+      {!restrictedView && <PersistentTab active={view === "website"}>
         <WebsiteEditor
           config={data.config}
           tenant={data.tenant}
@@ -475,20 +517,20 @@ export function DashboardWorkspace({
           canUploadAssets={data.canUploadAssets}
           onSave={saveConfig}
         />
-      </PersistentTab>
-      <PersistentTab active={view === "calculator"}>
+      </PersistentTab>}
+      {!restrictedView && <PersistentTab active={view === "calculator"}>
         <CalculatorTab
           config={data.config}
           mode={data.mode}
-          canEdit={data.canEdit}
+          canEdit={data.capabilities.calculatorManage}
           onSave={saveConfig}
         />
-      </PersistentTab>
-      {view === "card" && (
+      </PersistentTab>}
+      {!restrictedView && view === "card" && (
         <DigitalCardTab config={data.config} tenant={data.tenant} />
       )}
       {view === "analytics" && <AnalyticsTab data={data} onNavigate={navigate} />}
-      <PersistentTab active={view === "settings"}>
+      {!restrictedView && <PersistentTab active={view === "settings"}>
         <SettingsTab
           tenant={data.tenant}
           config={data.config}
@@ -496,14 +538,14 @@ export function DashboardWorkspace({
           ownerEmail={data.ownerEmail}
           mode={data.mode}
           teamAccess={data.teamAccess}
-          canEdit={data.canEdit}
+          canEdit={data.capabilities.membersManage}
           onSave={saveConfig}
         />
-      </PersistentTab>
-      {view === "integrations" && (
+      </PersistentTab>}
+      {!restrictedView && view === "integrations" && (
         <IntegrationsTab data={data} onNavigate={navigate} />
       )}
-      {creating && (
+      {creating && data.canCreate && (
         <NewEnquiryDialog
           mode={data.mode}
           action={performLeadAction}

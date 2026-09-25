@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { AuthError, createAnonClient, demoAccess, loadPublicClientConfig, requireTenant } from '@studio/backend'
+import { AuthError, createAnonClient, demoAccess, listWorkspaceMembers, loadPublicClientConfig, requireTenant } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { PanelEditor, type Field } from '../../panel/PanelEditor'
 
@@ -27,6 +27,9 @@ export async function ContentManagerPage({
       accessToken: session.access_token,
     })
     if (tenantContext.tenant.slug === tenant) {
+      const members = await listWorkspaceMembers(tenantContext.db, tenantContext.tenant.id)
+      const role = members.find((member) => member.user_id === user.id)?.role
+      if (role !== 'owner' && role !== 'editor') redirect('/' + tenant + '/dashboard/enquiries')
       const window = await demoAccess.getDemoWindow(createAnonClient(), tenant)
       return <PanelEditor tenant={tenant} baseRevision={window?.base_revision ?? `${tenant}:seed`} initialSection={initialSection} />
     }

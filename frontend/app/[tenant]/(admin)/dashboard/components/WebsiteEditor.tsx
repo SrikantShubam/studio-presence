@@ -132,6 +132,7 @@ export default function WebsiteEditor({
       const formData = new FormData();
       formData.append("file", file);
       formData.append("assetType", "logo");
+      formData.append("tenant", tenant);
       const response = await fetch("/api/onboarding/upload", { method: "POST", body: formData });
       const payload = (await response.json()) as { assetPath?: string; faviconPath?: string; error?: string };
       if (!response.ok || !payload.assetPath) throw new Error(payload.error ?? "Logo upload failed.");
@@ -162,6 +163,7 @@ export default function WebsiteEditor({
       const formData = new FormData();
       formData.append("file", file);
       formData.append("assetType", "photo");
+      formData.append("tenant", tenant);
       const response = await fetch("/api/onboarding/upload", { method: "POST", body: formData });
       const payload = (await response.json()) as { assetPath?: string; error?: string };
       if (!response.ok || !payload.assetPath) throw new Error(payload.error ?? "Social share image upload failed.");
@@ -512,7 +514,7 @@ export default function WebsiteEditor({
           </div>
         </div>
       </Panel>
-      <div className="grid items-start gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
+      <div className="grid items-start my-4 gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
         <Panel title="Website sections">
           <div className="grid grid-cols-2 gap-2 p-4">
             {SECTIONS.filter((item) => PAGES[page]!.includes(item.id)).map((item) => (

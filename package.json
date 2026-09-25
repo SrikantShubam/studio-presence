@@ -21,6 +21,8 @@
     "test:admin-redesign": "node --env-file-if-exists=.env --import tsx scripts/test-admin-redesign.ts",
     "test:platform-auth": "node --env-file-if-exists=.env --import tsx scripts/test-platform-auth.ts",
     "test:team-membership": "node --env-file-if-exists=.env --import tsx scripts/test-team-membership.ts",
+    "test:role-permissions": "node --env-file-if-exists=.env --import tsx scripts/test-role-permissions.ts",
+    "test:authorization": "node --env-file-if-exists=.env --import tsx scripts/test-authorization.ts",
     "test:workspace-invitation-email": "node --env-file-if-exists=.env --import tsx scripts/test-workspace-invitation-email.ts",
     "check:tiers": "node --env-file-if-exists=.env --import tsx scripts/check-tiers.ts",
     "check:tenant-isolation": "node --env-file-if-exists=.env --import tsx scripts/check-tenant-isolation.ts",

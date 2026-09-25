@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
-import { AuthError, ConfigError, PanelError, PanelScopeError, panel, requireTenant } from '@studio/backend'
+import { AuthError, canWorkspaceRole, ConfigError, PanelError, PanelScopeError, listWorkspaceMembers, panel, requireTenant } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 
 /**
@@ -82,6 +82,11 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     const auth = await authenticate(parsed.data.tenant)
     if (auth.error) return auth.error
     const { tenantContext } = auth
+    const members = await listWorkspaceMembers(tenantContext.db, tenantContext.tenant.id)
+    const role = members.find((member) => member.user_id === tenantContext.user.id)?.role
+    if (!role || !canWorkspaceRole(role, 'contentEdit')) {
+      return NextResponse.json({ error: 'Only the studio owner or content manager can save website content.' }, { status: 403 })
+    }
 
     const result = await panel.saveEditableConfig(
       tenantContext.db,

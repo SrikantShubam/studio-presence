@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import sharp from 'sharp'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
-import { uploadAsset } from '@studio/backend'
+import { canWorkspaceRole, listWorkspaceMembers, requireTenant, uploadAsset } from '@studio/backend'
 import { createLogoDerivatives } from '@/lib/logo-derivatives'
 
 export const dynamic = 'force-dynamic'
@@ -29,6 +29,27 @@ export async function POST(request: Request) {
 
   const file = formData.get('file') as File | null
   const assetType = ((formData.get('assetType') as string) || 'logo').toLowerCase()
+  const tenantSlug = formData.get('tenant')
+
+  if (typeof tenantSlug === 'string' && tenantSlug.trim()) {
+    try {
+      const tenantContext = await requireTenant({
+        id: userData.user.id,
+        email: userData.user.email ?? '',
+        accessToken: sessionData.session.access_token,
+      })
+      if (tenantContext.tenant.slug !== tenantSlug) {
+        return NextResponse.json({ error: 'Workspace access denied.' }, { status: 403 })
+      }
+      const members = await listWorkspaceMembers(tenantContext.db, tenantContext.tenant.id)
+      const role = members.find((member) => member.user_id === userData.user.id)?.role
+      if (!role || !canWorkspaceRole(role, 'contentEdit')) {
+        return NextResponse.json({ error: 'Only the studio owner or content manager can upload website assets.' }, { status: 403 })
+      }
+    } catch {
+      return NextResponse.json({ error: 'Only the studio owner or content manager can upload website assets.' }, { status: 403 })
+    }
+  }
 
   if (!file) {
     return NextResponse.json({ error: 'No file provided.' }, { status: 400 })

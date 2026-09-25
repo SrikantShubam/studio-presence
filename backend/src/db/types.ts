@@ -166,6 +166,22 @@ export type Database = {
         }
         Returns: string
       }
+      create_dashboard_lead: {
+        Args: {
+          p_tenant_id: string
+          p_name: string
+          p_phone: string
+          p_email?: string | null
+          p_locality?: string | null
+          p_project_type?: string | null
+          p_budget_band?: string | null
+          p_timeline?: string | null
+          p_message?: string | null
+          p_source?: LeadSource
+          p_source_page?: string | null
+        }
+        Returns: string
+      }
       current_tenant_ids: {
         Args: Record<never, never>
         Returns: string[]

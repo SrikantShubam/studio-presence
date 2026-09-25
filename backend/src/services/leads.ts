@@ -126,6 +126,33 @@ export async function create(input: CreateLeadInput): Promise<{ leadId: string }
   return { leadId }
 }
 
+export async function createDashboardLead(
+  db: Db,
+  tenantId: string,
+  input: Omit<PublicLeadInput, 'source'> & { source?: PublicLeadInput['source'] },
+): Promise<{ leadId: string }> {
+  const parsed = publicLeadInputSchema.parse(input)
+  const { data, error } = await db.rpc('create_dashboard_lead', {
+    p_tenant_id: tenantId,
+    p_name: parsed.name,
+    p_phone: parsed.phone,
+    p_email: parsed.email ?? null,
+    p_locality: parsed.locality ?? null,
+    p_project_type: parsed.projectType ?? null,
+    p_budget_band: parsed.budgetBand ?? null,
+    p_timeline: parsed.timeline ?? null,
+    p_message: parsed.message ?? null,
+    p_source: parsed.source ?? 'other',
+    p_source_page: parsed.sourcePage ?? null,
+  })
+
+  if (error || !data) {
+    throw new LeadWriteError('Dashboard lead write failed.', error ?? new Error('create_dashboard_lead returned no lead id'))
+  }
+
+  return { leadId: data }
+}
+
 export async function list(db: Db, params: { status?: LeadStatus } = {}): Promise<Lead[]> {
   let query = db.from('leads').select('*').order('created_at', { ascending: false })
 
@@ -177,6 +204,7 @@ export async function addNote(db: Db, leadId: string, note: string): Promise<Lea
 
 export const leads = {
   create,
+  createDashboardLead,
   list,
   get,
   updateWork,

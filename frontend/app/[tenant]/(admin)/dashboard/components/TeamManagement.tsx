@@ -3,7 +3,7 @@
 import { Check, ChevronDown, Copy, Link2, MailPlus, RefreshCw, ShieldCheck, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import type { TeamAccessSnapshot } from "./types";
+import { WORKSPACE_ROLE_LABELS, type TeamAccessSnapshot } from "./types";
 import { Badge, Button, Feedback, Panel, inputClass } from "./primitives";
 
 type Role = "owner" | "editor" | "viewer";
@@ -16,7 +16,7 @@ type Member = {
   avatar_url?: string | null;
 };
 type Invitation = { id: string; email_display: string; role: Exclude<Role, "owner">; expires_at: string; created_at: string };
-const roleLabels: Record<Exclude<Role, "owner">, string> = { editor: "Editor", viewer: "Viewer" };
+const roleLabels: Record<Role, string> = WORKSPACE_ROLE_LABELS;
 
 function memberInitials(name: string | null, email: string | null): string {
   const source = name?.trim() || email?.split("@")[0]?.trim() || "";
@@ -166,7 +166,7 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
       description="Invite people to work in this workspace. Invitations expire after 24 hours."
       action={<ShieldCheck aria-hidden="true" className="size-4 text-admin-muted" />}
     >
-      <div className="grid gap-5 p-5">
+      <div className="grid gap-3 px-4 pb-4 pt-2">
         {isOwner ? (
           <form
             className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto_auto]"
@@ -191,8 +191,8 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
                 onChange={(event) => setRole(event.target.value as Exclude<Role, "owner">)}
                 aria-label="Invite role"
               >
-                <option value="editor">Editor</option>
-                <option value="viewer">Viewer</option>
+                <option value="editor">Website &amp; content manager</option>
+                <option value="viewer">Lead coordinator</option>
               </select>
               <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-2.5 size-4 text-admin-muted" />
             </div>
@@ -257,9 +257,9 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
 
         <Feedback error={error} message={loading ? "Loading team access…" : message} />
 
-        <div className="grid gap-2">
+        <div className="grid gap-1">
           {members.map((member) => (
-            <div key={member.user_id} className="flex flex-wrap items-center gap-3 border-t border-admin-border py-3 rounded-xl">
+            <div key={member.user_id} className="flex flex-wrap items-center gap-3 border-t border-admin-border py-2 rounded-xl">
               {member.avatar_url ? (
                 <img
                   src={member.avatar_url}
@@ -277,6 +277,7 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
                   {member.display_name || member.email || `Member ${member.user_id.slice(0, 8)}`}
                 </span>
                 <span className="block truncate text-[11px] text-admin-muted">{member.email || member.user_id}</span>
+
               </span>
               {member.role === "owner" ? <Badge>Owner</Badge> : isOwner ? (
                 <>
@@ -288,8 +289,8 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
                       onChange={(event) => void action({ action: "role", userId: member.user_id, role: event.target.value })}
                       aria-label={`Role for ${member.email || member.user_id}`}
                     >
-                      <option value="editor">Editor</option>
-                      <option value="viewer">Viewer</option>
+                      <option value="editor">Website &amp; content manager</option>
+                      <option value="viewer">Lead coordinator</option>
                     </select>
                     <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-2 size-3.5 text-admin-muted" />
                   </div>
@@ -317,7 +318,7 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
           <div className="border-t border-admin-border pt-4 rounded-xl">
             <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-admin-muted">Pending invitations</p>
             {invitations.map((invitation) => (
-              <div key={invitation.id} className="flex flex-wrap items-center gap-3 border-t border-admin-border py-3 text-xs rounded-xl">
+              <div key={invitation.id} className="flex flex-wrap items-center gap-3 border-t border-admin-border py-2 text-xs rounded-xl">
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-semibold">{invitation.email_display}</span>
                   <span className="text-[11px] text-admin-muted">

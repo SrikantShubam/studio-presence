@@ -6,7 +6,10 @@ import { redirect } from "next/navigation";
 import {
   AuthError,
   ConfigError,
+  getWorkspaceCapabilities,
+  listWorkspaceMembers,
   requireTenant,
+  type WorkspaceRole,
   type ClientConfig,
 } from "@studio/backend";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -43,6 +46,7 @@ export default async function DashboardLayout({
   const isAuthenticated = Boolean(user?.email && session);
 
   let branding: ClientConfig | null = null;
+  let workspaceRole: WorkspaceRole = isAuthenticated ? "viewer" : "owner";
 
   if (isAuthenticated && user?.email && session) {
     let tenantContext;
@@ -68,6 +72,9 @@ export default async function DashboardLayout({
         />
       );
     }
+
+    const members = await listWorkspaceMembers(tenantContext.db, tenantContext.tenant.id);
+    workspaceRole = members.find((member) => member.user_id === user.id)?.role ?? "viewer";
 
     try {
       branding = await loadTenantWorkspaceConfig(
@@ -121,6 +128,7 @@ export default async function DashboardLayout({
         ownerAvatarUrl={profileAvatarUrl}
         authenticated={isAuthenticated}
         signOutAction={signOut}
+        capabilities={getWorkspaceCapabilities(workspaceRole)}
       >
         {children}
       </DashboardShell>

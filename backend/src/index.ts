@@ -13,6 +13,7 @@
 export * from './config/index'
 export * from './db/index'
 export * from './auth/index'
+export * from './auth/permissions'
 export * from './services/analytics'
 export * from './services/umami'
 export * from './services/leads'

@@ -181,8 +181,10 @@ export function EnquiryDetails({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const canUpdateWork = mode === "demo" || currentRole === "owner" || (currentRole === "editor" && enquiry.assigned_to === currentUserId);
-  const canAssignLead = mode === "demo" || canAssign;
+  const canUpdateWork = mode === "demo"
+    ? currentRole === "owner" || currentRole === "viewer" || (currentRole === "editor" && enquiry.assigned_to === currentUserId)
+    : currentRole === "owner" || currentRole === "viewer" || (currentRole === "editor" && enquiry.assigned_to === currentUserId);
+  const canAssignLead = mode === "demo" ? currentRole === "owner" : canAssign;
   const assignableMembers = members.filter((member) => member.role === "owner" || member.role === "editor");
 
   async function submit(event: FormEvent<HTMLFormElement>) {

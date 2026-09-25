@@ -1,4 +1,11 @@
 import type { ClientConfig, Lead, LeadStatus } from "@studio/backend";
+import {
+  getWorkspaceCapabilities,
+  type WorkspaceCapability,
+  type WorkspaceCapabilities,
+  type WorkspaceRole,
+  WORKSPACE_ROLE_LABELS,
+} from "@studio/backend/auth/permissions";
 
 export type Mode = "demo" | "live" | "unavailable";
 export type DashboardView =
@@ -47,15 +54,15 @@ export const STATUS_LABELS: Record<LeadStatus, string> = {
   won: "Won",
   lost: "Lost",
 };
-export const NAV_ITEMS: { id: DashboardView; label: string; mark: string; group?: string }[] = [
+export const NAV_ITEMS: { id: DashboardView; label: string; mark: string; group?: string; requiredCapability?: WorkspaceCapability }[] = [
   { id: "overview", label: "Overview", mark: "01" },
   { id: "enquiries", label: "Enquiries", mark: "02" },
   { id: "analytics", label: "Traffic & analytics", mark: "03" },
-  { id: "website", label: "Website editor", mark: "04", group: "Your website" },
-  { id: "calculator", label: "Estimate calculator", mark: "05" },
-  { id: "card", label: "Digital card & QR", mark: "06" },
-  { id: "settings", label: "Workspace settings", mark: "07", group: "Workspace" },
-  { id: "integrations", label: "Integrations", mark: "08" },
+  { id: "website", label: "Website editor", mark: "04", group: "Your website", requiredCapability: "contentEdit" },
+  { id: "calculator", label: "Estimate calculator", mark: "05", requiredCapability: "calculatorManage" },
+  { id: "card", label: "Digital card & QR", mark: "06", requiredCapability: "digitalCardManage" },
+  { id: "settings", label: "Workspace settings", mark: "07", group: "Workspace", requiredCapability: "membersManage" },
+  { id: "integrations", label: "Integrations", mark: "08", requiredCapability: "integrationsManage" },
 ];
 export type LeadInput = {
   name: string;
@@ -90,8 +97,10 @@ export type WorkspaceData = {
   enquiries: Enquiry[];
   members?: WorkspaceMember[];
   teamAccess?: TeamAccessSnapshot;
-  currentRole?: "owner" | "editor" | "viewer";
+  currentRole?: WorkspaceRole;
   currentUserId?: string;
+  capabilities: WorkspaceCapabilities;
+  roleLabel: string;
   canAssign?: boolean;
   canEdit: boolean;
   canUploadAssets: boolean;
@@ -110,6 +119,9 @@ export function dashboardMode(
   if (demo === "0" && eligible) return "live";
   return demo === "0" ? "unavailable" : "demo";
 }
+
+export { getWorkspaceCapabilities, WORKSPACE_ROLE_LABELS };
+export type { WorkspaceCapabilities, WorkspaceCapability, WorkspaceRole } from "@studio/backend/auth/permissions";
 export function sampleDataToggleHref(
   base: string,
   queryString: string,
@@ -259,7 +271,7 @@ export function errorMessage(error: unknown) {
     : "Could not save. Please try again.";
 }
 export function memberDisplayName(member: WorkspaceMember) {
-  return member.display_name?.trim() || member.email || member.role;
+  return member.display_name?.trim() || member.email || WORKSPACE_ROLE_LABELS[member.role];
 }
 export function assigneeDisplayName(assignedTo: string | null | undefined, members: WorkspaceMember[] = []) {
   if (!assignedTo) return "Unassigned";
