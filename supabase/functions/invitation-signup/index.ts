@@ -83,6 +83,11 @@ function isPasswordError(message: string): boolean {
   return message.toLowerCase().includes('password')
 }
 
+function isRateLimited(error: { status?: number; message?: string } | null): boolean {
+  const message = error?.message?.toLowerCase() ?? ''
+  return error?.status === 429 || message.includes('rate limit') || message.includes('too many')
+}
+
 function adminClient(): SupabaseClient {
   return createClient(supabaseUrl, serviceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },
@@ -110,9 +115,9 @@ async function handleSignup(request: Request, origin: string): Promise<Response>
   if (contentLength > MAX_BODY_BYTES) return errorResponse('unavailable', origin, 413)
 
   const body = await request.json().catch(() => null) as { token?: unknown; email?: unknown; password?: unknown } | null
-  if (!body || !validToken(body.token) || !validEmail(body.email) || !validPassword(body.password)) {
-    return errorResponse('invalid_password', origin)
-  }
+  if (!body || !validToken(body.token)) return errorResponse('invalid_invitation', origin)
+  if (!validEmail(body.email)) return errorResponse('wrong_email', origin)
+  if (!validPassword(body.password)) return errorResponse('invalid_password', origin)
 
   const email = normalizeEmail(body.email)
   const tokenHash = await hashToken(body.token)
@@ -132,13 +137,17 @@ async function handleSignup(request: Request, origin: string): Promise<Response>
   })
   if (createError || !created.user) {
     if (createError && isExistingAccountError(createError.message)) return errorResponse('account_exists', origin, 409)
+    if (createError && isRateLimited(createError)) return errorResponse('rate_limited', origin, 429)
     if (createError && isPasswordError(createError.message)) return errorResponse('invalid_password', origin)
     return errorResponse('unavailable', origin, 503)
   }
 
   const auth = anonymousClient()
   const { data: signedIn, error: signInError } = await auth.auth.signInWithPassword({ email, password: body.password })
-  if (signInError || !signedIn.session) return errorResponse('unavailable', origin, 503)
+  if (signInError || !signedIn.session) {
+    if (isRateLimited(signInError)) return errorResponse('rate_limited', origin, 429)
+    return errorResponse('unavailable', origin, 503)
+  }
 
   const scoped = createClient(supabaseUrl, anonKey, {
     auth: { autoRefreshToken: false, persistSession: false },
