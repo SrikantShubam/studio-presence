@@ -480,20 +480,27 @@ export default function WebsiteEditor({
             </Field>
           </div>
 
-          {/* Search Result Snippet Simulation */}
-          <div className="border border-admin-border bg-admin-bg p-3 rounded-xl">
-            <p className="mb-1 text-[10px] font-medium uppercase tracking-wider text-admin-muted">
+          {/* Google-style organic result simulation */}
+          <div className="grid gap-2 border border-admin-border bg-admin-raised p-4 rounded-xl">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-admin-muted">
               Google search result preview
             </p>
-            <p className="truncate text-xs text-admin-primary">
-              https://{tenant}.studiopresence.in
-            </p>
-            <p className="truncate text-sm font-semibold text-admin-ink hover:underline">
-              {draft.seo.title || config.business.name}
-            </p>
-            <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-admin-muted">
-              {draft.seo.description || "Interior design studio portfolio, residential and commercial design services."}
-            </p>
+            <div className="max-w-2xl rounded-lg border border-admin-border bg-admin-surface px-4 py-3 text-left">
+              <div className="flex min-w-0 items-center gap-2 text-xs text-admin-muted">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-admin-primary-soft text-[11px] font-semibold text-admin-ink">
+                  {config.business.name.trim().slice(0, 1).toUpperCase()}
+                </span>
+                <span className="min-w-0 truncate">
+                  {tenant}.studiopresence.in
+                </span>
+              </div>
+              <p className="mt-2 line-clamp-2 text-base font-medium leading-6 text-admin-primary hover:underline">
+                {draft.seo.title || config.business.name}
+              </p>
+              <p className="mt-1 line-clamp-2 text-sm leading-5 text-admin-muted">
+                {draft.seo.description || "Interior design studio portfolio, residential and commercial design services."}
+              </p>
+            </div>
           </div>
         </div>
       </Panel>
