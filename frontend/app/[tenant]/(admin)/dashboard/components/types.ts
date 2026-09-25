@@ -151,19 +151,49 @@ export function canEditAuthenticatedWorkspace({
 export function viewFrom(value: string | null): DashboardView {
   return NAV_ITEMS.find((item) => item.id === value)?.id ?? "overview";
 }
-export function normalizeIndianPhone(value: string): string | null {
-  if (!/^[+\d\s()-]+$/.test(value)) return null;
+export type ProjectTypeOption = { value: string; label: string };
+
+export const projectTypeOptions: ProjectTypeOption[] = [
+  { value: "Full home", label: "Full home" },
+  { value: "Renovation", label: "Renovation" },
+  { value: "Modular kitchen", label: "Modular kitchen" },
+  { value: "Living & dining", label: "Living & dining" },
+  { value: "Bedroom & storage", label: "Bedroom & storage" },
+  { value: "Home office", label: "Home office" },
+  { value: "Commercial", label: "Commercial" },
+  { value: "Other", label: "Other" },
+];
+
+export function normalizeContactPhone(value: string): string | null {
+  if (!/^[+\d\s().-]+$/.test(value)) return null;
   const digits = value.replace(/\D/g, "");
-  const national =
-    digits.length === 12 && digits.startsWith("91") ? digits.slice(2) : digits;
-  return /^[6-9]\d{9}$/.test(national) ? `91${national}` : null;
+  return /^\d{7,15}$/.test(digits) ? digits : null;
 }
+
+export const normalizeIndianPhone = normalizeContactPhone;
+
 export function contactPhone(value: string): string | null {
-  if (!/^[+\d\s()-]+$/.test(value)) return null;
-  const digits = value.replace(/\D/g, "");
-  return (
-    normalizeIndianPhone(value) ?? (/^\d{11,15}$/.test(digits) ? digits : null)
-  );
+  return normalizeContactPhone(value);
+}
+
+export function projectTypeValue(selection: string, custom: string): string | null {
+  if (selection === "Other") {
+    const value = custom.trim();
+    return value ? value : null;
+  }
+  return selection.trim() || null;
+}
+
+export function isRecentlyUpdated(
+  updatedAt: string | null | undefined,
+  createdAt: string,
+  now = new Date(),
+): boolean {
+  if (!updatedAt) return false;
+  const updated = Date.parse(updatedAt);
+  const created = Date.parse(createdAt);
+  const age = now.getTime() - updated;
+  return updated > created && age >= 0 && age <= 3 * 24 * 60 * 60 * 1000;
 }
 export function calculateQuote(
   area: number,

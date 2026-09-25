@@ -24,6 +24,7 @@
     "test:role-permissions": "node --env-file-if-exists=.env --import tsx scripts/test-role-permissions.ts",
     "test:authorization": "node --env-file-if-exists=.env --import tsx scripts/test-authorization.ts",
     "test:workspace-invitation-email": "node --env-file-if-exists=.env --import tsx scripts/test-workspace-invitation-email.ts",
+    "test:enquiry-capture": "node --env-file-if-exists=.env --import tsx scripts/test-enquiry-capture.ts",
     "check:tiers": "node --env-file-if-exists=.env --import tsx scripts/check-tiers.ts",
     "check:tenant-isolation": "node --env-file-if-exists=.env --import tsx scripts/check-tenant-isolation.ts",
     "check:public-content": "node --env-file-if-exists=.env --import tsx scripts/check-public-hardcoded-content.ts",
