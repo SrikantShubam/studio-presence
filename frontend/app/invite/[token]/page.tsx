@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { acceptWorkspaceInvitation, createScopedClient } from "@studio/backend";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { loadPublicTenantConfig } from "@/lib/tenant-config";
+import { loadPublicTenantConfigWithOverrides } from "@/lib/tenant-config";
 import { InvitationEntry, InvitationSessionReset } from "./InvitationEntry";
 
 export default async function InvitationPage({
@@ -63,7 +63,7 @@ export default async function InvitationPage({
 async function loadInvitationBranding(tenantSlug: string | undefined): Promise<{ name?: string; logo?: string | null }> {
   if (!tenantSlug) return {};
   try {
-    const config = await loadPublicTenantConfig(tenantSlug);
+    const config = await loadPublicTenantConfigWithOverrides(tenantSlug);
     return { name: config.business.name, logo: config.brand.logo ?? null };
   } catch {
     return {};

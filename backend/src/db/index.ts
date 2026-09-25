@@ -12,6 +12,7 @@ export { createAnonClient, createScopedClient, type Db } from './scoped'
 export type {
   ClientOverride,
   Database,
+  WorkspacePreferences,
   Lead,
   LeadEvent,
   LeadSource,

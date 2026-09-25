@@ -6,7 +6,6 @@ import {
   canAccessDashboard,
   createUmamiClient,
   enquiryStats,
-  loadClientConfig,
   monthlyTrend,
   requireTenant,
   sourceBreakdown,
@@ -14,6 +13,7 @@ import {
   visitStats,
 } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { loadTenantWorkspaceConfig } from '@/lib/tenant-config'
 
 const paramsSchema = z.object({
   tenant: z.string().regex(/^[a-z0-9-]+$/),
@@ -60,7 +60,11 @@ export async function GET(
       return NextResponse.json({ error: 'forbidden' }, { status: 403 })
     }
 
-    const config = loadClientConfig(tenantContext.tenant.slug)
+    const config = await loadTenantWorkspaceConfig(
+      tenantContext.tenant.slug,
+      tenantContext.tenant.id,
+      session.access_token,
+    )
     const projects = config.sections.portfolio.projects.map((project) => ({
       slug: project.slug,
       title: project.title,

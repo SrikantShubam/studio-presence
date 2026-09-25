@@ -29,8 +29,10 @@ import {
   type DashboardView,
   type Mode,
   type SaveConfig,
+  type SavePreferences,
   type WorkspaceConfig,
   type WorkspaceData,
+  type WorkspacePreferences,
   type TeamAccessSnapshot,
 } from "./types";
 
@@ -155,7 +157,9 @@ export function AnalyticsTab({
                 <p className={monoClass + " text-[clamp(20px,3vw,28px)]"}>{metric.value}</p>
                 <div className="mt-3 flex min-h-5 items-center justify-between gap-2 text-[10px] text-admin-muted">
                   <span className="truncate">{metric.detail}</span>
-                  <span className="shrink-0 border border-admin-border bg-admin-raised px-1.5 py-1 text-admin-ink rounded-xl">{metric.detail.startsWith("+") ? metric.detail : "Details"}</span>
+                  <span className="inline-flex items-center shrink-0 rounded-full border border-admin-border bg-admin-raised px-2.5 py-0.5 font-medium leading-none text-admin-ink">
+                    {metric.detail.startsWith("+") ? metric.detail : "Details"}
+                  </span>
                 </div>
               </div>
             </Panel>
@@ -677,7 +681,10 @@ export function SettingsTab({
   canEdit,
   canUploadAssets,
   teamAccess,
+  preferences,
+  preferencesError,
   onSave,
+  onSavePreferences,
 }: {
   tenant: string;
   config: WorkspaceConfig;
@@ -687,7 +694,10 @@ export function SettingsTab({
   canEdit: boolean;
   canUploadAssets: boolean;
   teamAccess?: TeamAccessSnapshot;
+  preferences: WorkspacePreferences;
+  preferencesError?: string;
   onSave: SaveConfig;
+  onSavePreferences: SavePreferences;
 }) {
   const [edits, setEdits] = useState<Partial<WorkspaceConfig["business"]>>({});
   const [brandEdits, setBrandEdits] = useState<Partial<WorkspaceConfig["brand"]>>({});
@@ -699,8 +709,8 @@ export function SettingsTab({
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [ownerEmailDraft, setOwnerEmailDraft] = useState(ownerEmail);
-  const [newLeadAlerts, setNewLeadAlerts] = useState(true);
-  const [weeklyDigest, setWeeklyDigest] = useState(true);
+  const [newLeadAlerts, setNewLeadAlerts] = useState(preferences.new_lead_alerts);
+  const [weeklyDigest, setWeeklyDigest] = useState(preferences.weekly_digest);
   const ownerNameValue = "ownerName" in edits ? String(edits.ownerName ?? "") : business.ownerName?.trim() || ownerName;
   const ownerEmailChanged = ownerEmailDraft.trim() !== ownerEmail;
 
@@ -741,6 +751,11 @@ export function SettingsTab({
     setOwnerEmailDraft(ownerEmail);
   }, [ownerEmail]);
 
+  useEffect(() => {
+    setNewLeadAlerts(preferences.new_lead_alerts);
+    setWeeklyDigest(preferences.weekly_digest);
+  }, [preferences.new_lead_alerts, preferences.weekly_digest]);
+
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
@@ -762,6 +777,8 @@ export function SettingsTab({
       return;
     }
     setPending(true);
+    let websiteSaved = false;
+    let preferencesSaved = false;
     try {
       const patch: Record<string, unknown> = Object.fromEntries(
         Object.entries(edits).map(([key, value]) => [`business.${key}`, value]),
@@ -778,7 +795,15 @@ export function SettingsTab({
       if ("serviceAreas" in edits) {
         patch["business.serviceAreas"] = business.serviceAreas;
       }
-      if (Object.keys(patch).length > 0) await onSave(patch);
+      if (Object.keys(patch).length > 0) {
+        await onSave(patch);
+        websiteSaved = true;
+      }
+      await onSavePreferences({
+        new_lead_alerts: newLeadAlerts,
+        weekly_digest: weeklyDigest,
+      });
+      preferencesSaved = true;
       if (ownerEmailChanged && mode !== "demo") {
         const supabase = createSupabaseBrowserClient();
         const { error: emailError } = await supabase.auth.updateUser({
@@ -794,10 +819,15 @@ export function SettingsTab({
           ? "Studio details saved. Check both email addresses to confirm the owner email change."
           : mode === "demo"
             ? "Sample settings saved in this browser."
-            : "Studio details saved to the website.",
+            : "Workspace settings saved.",
       );
+      if (mode !== "demo") window.setTimeout(() => window.location.reload(), 0);
     } catch (error) {
-      setError(errorMessage(error));
+      setError(
+        websiteSaved && !preferencesSaved
+          ? "Studio details saved, but notification preferences could not be saved. Try again."
+          : errorMessage(error),
+      );
     } finally {
       setPending(false);
     }
@@ -1019,8 +1049,9 @@ export function SettingsTab({
             </Panel>
             <Panel title="Notification preferences" description="Choose the updates shown for this workspace." action={<Bell aria-hidden="true" className="size-4 text-admin-muted" />}>
               <div className="grid gap-3 p-5 text-xs">
-                <label className="flex items-center justify-between gap-3"><span><span className="block font-medium">New enquiry alerts</span><span className="text-admin-muted">Show an alert when a lead arrives.</span></span><input type="checkbox" className="size-4 accent-admin-primary" checked={newLeadAlerts} onChange={(event) => setNewLeadAlerts(event.target.checked)} /></label>
-                <label className="flex items-center justify-between gap-3 border-t border-admin-border pt-3 rounded-xl"><span><span className="block font-medium">Weekly activity digest</span><span className="text-admin-muted">Show the last seven days in your workspace.</span></span><input type="checkbox" className="size-4 accent-admin-primary" checked={weeklyDigest} onChange={(event) => setWeeklyDigest(event.target.checked)} /></label>
+                <Feedback error={preferencesError} />
+                <label className="flex items-center justify-between gap-3"><span><span className="block font-medium">New enquiry alerts</span><span className="text-admin-muted">Show an alert when a lead arrives.</span></span><input type="checkbox" disabled={!canEdit || pending} className="size-4 accent-admin-primary" checked={newLeadAlerts} onChange={(event) => setNewLeadAlerts(event.target.checked)} /></label>
+                <label className="flex items-center justify-between gap-3 border-t border-admin-border pt-3 rounded-xl"><span><span className="block font-medium">Weekly activity digest</span><span className="text-admin-muted">Show the last seven days in your workspace.</span></span><input type="checkbox" disabled={!canEdit || pending} className="size-4 accent-admin-primary" checked={weeklyDigest} onChange={(event) => setWeeklyDigest(event.target.checked)} /></label>
               </div>
             </Panel>
           </div>

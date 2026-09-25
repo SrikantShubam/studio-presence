@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import {
   canAccessDashboard,
+  getWorkspacePreferences,
   leads,
   listWorkspaceMembers,
   listWorkspaceInvitations,
@@ -12,7 +13,7 @@ import {
 } from "@studio/backend";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
-  loadPublicTenantConfig,
+  loadPublicTenantConfigWithOverrides,
   loadTenantWorkspaceConfig,
 } from "@/lib/tenant-config";
 import { DashboardWorkspace } from "./components/DashboardShell";
@@ -100,7 +101,7 @@ export default async function DashboardPage({
         context.tenant.id,
         context.user.accessToken,
       )
-    : await loadPublicTenantConfig(tenant);
+    : await loadPublicTenantConfigWithOverrides(tenant);
   if (!context && (base.status !== "demo" || query?.demo === "0"))
     redirect(`/login?next=${encodeURIComponent(`/${tenant}/dashboard`)}`);
   const eligible = Boolean(
@@ -131,11 +132,13 @@ export default async function DashboardPage({
   }
   const profileMetadata = context?.profileMetadata ?? {};
   const ownerName =
+    stringFrom(base.business.ownerName) ??
     stringFrom(profileMetadata.full_name) ??
     stringFrom(profileMetadata.name) ??
     nameFromEmail(context?.user.email) ??
-    base.business.ownerName ??
     "";
+  let preferences = { new_lead_alerts: true, weekly_digest: true };
+  let preferencesError: string | undefined;
 
   let members: WorkspaceMember[] = mode === "demo" ? DEMO_WORKSPACE_MEMBERS : [];
   let currentRole: "owner" | "editor" | "viewer" = context ? "viewer" : "owner";
@@ -156,6 +159,11 @@ export default async function DashboardPage({
           : [];
         teamAccess = { currentRole, members, invitations };
       } catch { teamAccess = undefined; }
+    }
+    try {
+      preferences = await getWorkspacePreferences(context.db, context.tenant.id);
+    } catch {
+      preferencesError = "Notification preferences could not be loaded. Refresh to try again.";
     }
     if (mode === "live") {
       try {
@@ -216,6 +224,7 @@ export default async function DashboardPage({
         tenant,
         mode,
         config,
+        preferences,
         ownerName,
         ownerEmail: context?.user.email ?? base.business.email ?? "",
         enquiries: items,
@@ -230,6 +239,7 @@ export default async function DashboardPage({
         canUploadAssets: Boolean(context && getWorkspaceCapabilities(currentRole).contentEdit),
         canCreate: getWorkspaceCapabilities(currentRole).leadCreate,
         leadError,
+        preferencesError,
       }}
       leadAction={mutateLead}
     />

@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: config.seo.title,
+    title: config.business.name,
     description: config.seo.description,
     keywords: config.seo.keywords,
     // Without this a browser falls back to requesting `/favicon.ico` at the

@@ -3,6 +3,7 @@ import { getTokenSet } from '@/lib/tokens'
 import { faviconVariantPath } from '@/lib/favicon-path'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function GET(
   _request: Request,
@@ -36,6 +37,9 @@ export async function GET(
   }
 
   return new Response(JSON.stringify(body), {
-    headers: { 'content-type': 'application/manifest+json; charset=utf-8' },
+    headers: {
+      'content-type': 'application/manifest+json; charset=utf-8',
+      'cache-control': 'no-store',
+    },
   })
 }

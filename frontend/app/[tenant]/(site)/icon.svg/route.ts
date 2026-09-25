@@ -3,6 +3,7 @@ import { brandIconSvg } from '@/lib/brand-icon'
 import { getTokenSet } from '@/lib/tokens'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function GET(
   _request: Request,
@@ -23,7 +24,7 @@ export async function GET(
       {
         headers: {
           'content-type': 'image/svg+xml; charset=utf-8',
-          'cache-control': 'public, max-age=3600',
+          'cache-control': 'no-store',
         },
       },
     )

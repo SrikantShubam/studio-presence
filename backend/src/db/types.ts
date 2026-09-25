@@ -93,6 +93,14 @@ export type ClientOverride = {
   updated_by: string | null
 }
 
+export type WorkspacePreferences = {
+  tenant_id: string
+  new_lead_alerts: boolean
+  weekly_digest: boolean
+  updated_at: string
+  updated_by: string
+}
+
 export type OnboardingDraft = {
   user_id: string
   payload: Record<string, unknown>
@@ -138,6 +146,7 @@ export type Database = {
 
       lead_events: Table<LeadEvent>
       client_overrides: Table<ClientOverride>
+      workspace_preferences: Table<WorkspacePreferences>
       onboarding_drafts: Table<OnboardingDraft>
       tenant_hostnames: Table<TenantHostname>
       tenant_workspaces: Table<TenantWorkspace>

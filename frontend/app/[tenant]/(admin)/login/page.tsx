@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { loadClientConfig, ConfigError } from '@studio/backend'
+import { loadPublicClientConfig, ConfigError } from '@studio/backend'
 import { ThemeToggle } from '../ThemeToggle'
 import { LoginForm } from './LoginForm'
 import { PLATFORM_BRAND } from '@/lib/platform-brand'
@@ -30,7 +30,7 @@ export default async function LoginPage({
 
   let config
   try {
-    config = loadClientConfig(tenant)
+    config = await loadPublicClientConfig(tenant)
   } catch (e) {
     if (e instanceof ConfigError) notFound()
     throw e

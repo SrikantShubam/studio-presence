@@ -37,6 +37,10 @@ export type WorkspaceConfig = Pick<
   ClientConfig,
   "business" | "brand" | "seo" | "sections" | "integrations" | "status"
 >;
+export type WorkspacePreferences = {
+  new_lead_alerts: boolean;
+  weekly_digest: boolean;
+};
 export type EnquiryFilters = {
   status: "all" | LeadStatus;
   query: string;
@@ -82,6 +86,7 @@ export type LeadAction = (
     | { kind: "assign"; id: string; userId: string },
 ) => Promise<ActionResult<Enquiry>>;
 export type SaveConfig = (patch: Record<string, unknown>) => Promise<void>;
+export type SavePreferences = (preferences: WorkspacePreferences) => Promise<void>;
 export type Analytics = {
   enquiryStats: { thisMonth: number; lastMonth: number };
   monthlyTrend: { month: string; count: number }[];
@@ -92,6 +97,7 @@ export type WorkspaceData = {
   tenant: string;
   mode: Mode;
   config: WorkspaceConfig;
+  preferences: WorkspacePreferences;
   ownerName: string;
   ownerEmail: string;
   enquiries: Enquiry[];
@@ -106,6 +112,7 @@ export type WorkspaceData = {
   canUploadAssets: boolean;
   canCreate: boolean;
   leadError?: string;
+  preferencesError?: string;
 };
 
 export function dashboardMode(

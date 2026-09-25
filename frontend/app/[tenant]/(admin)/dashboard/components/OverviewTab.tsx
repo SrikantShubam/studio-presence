@@ -144,7 +144,7 @@ export default function OverviewTab({
           View live site <ArrowUpRight aria-hidden="true" className="size-4" />
         </a>
       </div>
-      {waiting > 0 && (
+      {data.preferences.new_lead_alerts && waiting > 0 && (
         <section
           className="my-5 flex flex-col items-start gap-4 border border-admin-alert/30 border-l-[3px] border-l-admin-alert bg-admin-bg p-4 xl:flex-row xl:items-center xl:justify-between rounded-xl"
           aria-label="Enquiries awaiting response"
@@ -167,21 +167,40 @@ export default function OverviewTab({
         aria-label="Studio performance"
         className="my-5 grid grid-cols-2 gap-3 xl:grid-cols-3"
       >
-        {metrics.map((metric, index) => (
-          <button
-            key={metric.label}
-            onClick={() => onNavigate(metric.view)}
-            className="min-w-0 border border-admin-border bg-admin-bg p-4 text-left hover:border-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary sm:p-5 rounded-xl"
-          >
-            <div className="flex items-center justify-between gap-2"><p className="text-xs font-medium">{metric.label}</p><metric.icon aria-hidden="true" className="size-4 text-admin-muted" strokeWidth={1.8} /></div>
-            <p className={`${monoClass} my-3 text-[29px] tracking-tight`}>
-              {data.mode === "unavailable" || data.leadError
-                ? "—"
-                : metric.value}
-            </p>
-            <div className="mt-3 flex flex-col items-start gap-2 text-[10px] text-admin-muted sm:flex-row sm:items-center sm:justify-between"><span>{metric.subtitle}</span><span className={`${monoClass} shrink-0 bg-admin-raised px-1.5 py-0.5 font-medium ${index === 2 && waiting > 0 ? "text-admin-alert" : "text-admin-ink"}`}>{metric.delta}</span></div>
-          </button>
-        ))}
+        {metrics.map((metric) => {
+          const isWaitingAlert =
+            waiting > 0 &&
+            (metric.delta.includes("waiting") || metric.delta.includes("awaiting"));
+          return (
+            <button
+              key={metric.label}
+              onClick={() => onNavigate(metric.view)}
+              className="min-w-0 border border-admin-border bg-admin-bg p-4 text-left hover:border-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary sm:p-5 rounded-xl"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs font-medium">{metric.label}</p>
+                <metric.icon aria-hidden="true" className="size-4 text-admin-muted" strokeWidth={1.8} />
+              </div>
+              <p className={`${monoClass} my-3 text-[29px] tracking-tight`}>
+                {data.mode === "unavailable" || data.leadError
+                  ? "—"
+                  : metric.value}
+              </p>
+              <div className="mt-3 flex flex-col items-start gap-2 text-[10px] text-admin-muted sm:flex-row sm:items-center sm:justify-between">
+                <span>{metric.subtitle}</span>
+                <span
+                  className={`${monoClass} inline-flex items-center shrink-0 rounded-full border px-2.5 py-0.5 font-medium leading-none ${
+                    isWaitingAlert
+                      ? "border-admin-alert bg-admin-alert-soft text-admin-alert"
+                      : "border-admin-border bg-admin-raised text-admin-ink"
+                  }`}
+                >
+                  {metric.delta}
+                </span>
+              </div>
+            </button>
+          );
+        })}
       </section>
       <div className="mb-6 grid gap-5 xl:grid-cols-[1.15fr_1fr]">
         <AttentionChart enquiries={data.enquiries} sample={sample} />

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { Calculator, ChartNoAxesCombined, ChevronDown, Inbox, LayoutDashboard, LogIn, LogOut, Menu, PanelsTopLeft, QrCode, Settings2, ToggleLeft, ToggleRight, Unplug, UserRound, type LucideIcon } from "lucide-react";
 import { ThemeToggle } from "../../ThemeToggle";
@@ -22,6 +22,7 @@ import {
   type LeadAction,
   type WorkspaceData,
   type WorkspaceCapabilities,
+  type WorkspacePreferences,
   sampleDataToggleHref,
 } from "./types";
 import OverviewTab from "./OverviewTab";
@@ -48,8 +49,14 @@ const NAV_ICONS: Record<DashboardView, LucideIcon> = {
 };
 const WorkspaceOwnerContext = createContext<string>('');
 type WorkspaceBrandingContextType = {
+  studioName: string;
+  setStudioName: (name: string) => void;
   studioLogoUrl: string | null;
   setStudioLogoUrl: (url: string | null) => void;
+  ownerName: string;
+  setOwnerName: (name: string) => void;
+  ownerEmail: string;
+  setOwnerEmail: (email: string) => void;
 };
 const WorkspaceBrandingContext = createContext<WorkspaceBrandingContextType | null>(null);
 
@@ -58,6 +65,7 @@ export function DashboardShell({
   studioName,
   ownerName,
   ownerEmail,
+  ownerNameFallback,
   ownerAvatarUrl,
   studioLogoUrl,
   authenticated,
@@ -69,6 +77,7 @@ export function DashboardShell({
   studioName: string;
   ownerName: string;
   ownerEmail: string;
+  ownerNameFallback?: string;
   ownerAvatarUrl?: string | null;
   studioLogoUrl?: string | null;
   authenticated: boolean;
@@ -76,11 +85,31 @@ export function DashboardShell({
   capabilities: WorkspaceCapabilities;
   children: ReactNode;
 }) {
+  const fallbackOwnerName = ownerNameFallback ?? ownerName;
+  const [currentStudioName, setCurrentStudioName] = useState(studioName);
   const [currentStudioLogoUrl, setCurrentStudioLogoUrl] = useState<string | null>(studioLogoUrl ?? null);
+  const [currentOwnerName, setCurrentOwnerName] = useState(ownerName);
+  const [currentOwnerEmail, setCurrentOwnerEmail] = useState(ownerEmail);
+
+  useEffect(() => {
+    setCurrentStudioName(studioName);
+  }, [studioName]);
 
   useEffect(() => {
     setCurrentStudioLogoUrl(studioLogoUrl ?? null);
   }, [studioLogoUrl]);
+
+  useEffect(() => {
+    setCurrentOwnerName(ownerName);
+  }, [ownerName]);
+
+  useEffect(() => {
+    setCurrentOwnerEmail(ownerEmail);
+  }, [ownerEmail]);
+
+  function setWorkspaceOwnerName(value: string) {
+    setCurrentOwnerName(value.trim() || fallbackOwnerName);
+  }
 
   const [mobile, setMobile] = useState(false);
   const params = useSearchParams() ?? new URLSearchParams();
@@ -176,11 +205,11 @@ export function DashboardShell({
           <img src={currentStudioLogoUrl} alt="" className="size-8 shrink-0 border border-admin-border object-cover rounded-xl" />
         ) : (
           <span className="flex size-8 shrink-0 items-center justify-center border border-admin-border bg-admin-raised text-[11px] font-semibold rounded-xl">
-            {(studioName.trim() || "S").slice(0, 2).toUpperCase()}
+            {(currentStudioName.trim() || "S").slice(0, 2).toUpperCase()}
           </span>
         )}
         <div className="min-w-0">
-          <p className="truncate text-xs font-semibold">{studioName}</p>
+          <p className="truncate text-xs font-semibold">{currentStudioName}</p>
           <p className="mt-1 text-[11px] text-admin-muted">Studio workspace</p>
         </div>
       </div>
@@ -209,7 +238,7 @@ export function DashboardShell({
                 <UserRound aria-hidden="true" className="size-4" />
               </span>
             )}
-            <div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div>
+            <div className="min-w-0"><p className="truncate text-xs font-semibold">{currentOwnerName || currentStudioName}</p><p className="truncate text-[11px] text-admin-muted">{currentOwnerEmail || "Workspace owner"}</p></div>
           </div>
         </div>
       </aside>
@@ -250,8 +279,8 @@ export function DashboardShell({
             <ThemeToggle />
             {authenticated ? (
               <AccountMenu
-                ownerName={ownerName}
-                ownerEmail={ownerEmail}
+                ownerName={currentOwnerName}
+                ownerEmail={currentOwnerEmail}
                 ownerAvatarUrl={ownerAvatarUrl}
                 signOutAction={signOutAction}
               />
@@ -274,11 +303,17 @@ export function DashboardShell({
         >
           <WorkspaceBrandingContext.Provider
             value={{
+              studioName: currentStudioName,
+              setStudioName: setCurrentStudioName,
               studioLogoUrl: currentStudioLogoUrl,
               setStudioLogoUrl: setCurrentStudioLogoUrl,
+              ownerName: currentOwnerName,
+              setOwnerName: setWorkspaceOwnerName,
+              ownerEmail: currentOwnerEmail,
+              setOwnerEmail: setCurrentOwnerEmail,
             }}
           >
-            <WorkspaceOwnerContext.Provider value={ownerName}>
+            <WorkspaceOwnerContext.Provider value={currentOwnerName}>
               {children}
             </WorkspaceOwnerContext.Provider>
           </WorkspaceBrandingContext.Provider>
@@ -295,7 +330,7 @@ export function DashboardShell({
           {navigation}
           <div className="mt-auto px-3 pt-5">
             <p className="mb-4 border-b border-admin-border pb-4 text-[11px] leading-5 text-admin-muted rounded-xl">Concept <span className="[font-family:var(--font-dashboard-mono)]">03</span> · {authenticated ? "Live workspace" : "Sample workspace"}</p>
-            <div className="flex items-center gap-2.5">{ownerAvatarUrl ? <img src={ownerAvatarUrl} alt="" referrerPolicy="no-referrer" className="size-8 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised rounded-xl"><UserRound aria-hidden="true" className="size-4" /></span>}<div className="min-w-0"><p className="truncate text-xs font-semibold">{ownerName || studioName}</p><p className="truncate text-[11px] text-admin-muted">{ownerEmail || "Workspace owner"}</p></div></div>
+            <div className="flex items-center gap-2.5">{ownerAvatarUrl ? <img src={ownerAvatarUrl} alt="" referrerPolicy="no-referrer" className="size-8 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 items-center justify-center border border-admin-border bg-admin-raised rounded-xl"><UserRound aria-hidden="true" className="size-4" /></span>}<div className="min-w-0"><p className="truncate text-xs font-semibold">{currentOwnerName || currentStudioName}</p><p className="truncate text-[11px] text-admin-muted">{currentOwnerEmail || "Workspace owner"}</p></div></div>
           </div>
         </div>
       </Dialog>
@@ -315,19 +350,30 @@ export function DashboardWorkspace({
   const [data, setData] = useState(initialData);
 
   useEffect(() => {
+    brandingContext?.setStudioName(data.config.business.name);
+    if (data.config.business.ownerName !== undefined) {
+      brandingContext?.setOwnerName(data.config.business.ownerName);
+    }
     if (data.config.brand.logo !== undefined) {
       brandingContext?.setStudioLogoUrl(data.config.brand.logo || null);
     }
-  }, [data.config.brand.logo, brandingContext]);
+  }, [
+    data.config.business.name,
+    data.config.business.ownerName,
+    data.config.brand.logo,
+    brandingContext,
+  ]);
 
   const [restored, setRestored] = useState(initialData.mode !== "demo");
   const params = useSearchParams() ?? new URLSearchParams();
+  const router = useRouter();
   const view = viewFrom(params?.get("tab") ?? null);
   const [filters, setFilters] = useState<EnquiryFilters>({ ...EMPTY_FILTERS });
   const [selected, setSelected] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [storageError, setStorageError] = useState("");
   const demoKey = `studio-presence:dashboard:demo:v1:${data.tenant}`;
+  const demoPreferencesKey = `studio-presence:dashboard:preferences:v1:${data.tenant}`;
   useEffect(() => {
     if (initialData.mode !== "demo" || !initialData.canEdit) {
       setRestored(true);
@@ -350,6 +396,21 @@ export function DashboardWorkspace({
           }));
         }
       }
+      const savedPreferences = localStorage.getItem(demoPreferencesKey);
+      if (savedPreferences) {
+        const parsedPreferences: unknown = JSON.parse(savedPreferences);
+        if (
+          parsedPreferences &&
+          typeof parsedPreferences === "object" &&
+          typeof (parsedPreferences as Record<string, unknown>).new_lead_alerts === "boolean" &&
+          typeof (parsedPreferences as Record<string, unknown>).weekly_digest === "boolean"
+        ) {
+          setData((previous) => ({
+            ...previous,
+            preferences: parsedPreferences as WorkspacePreferences,
+          }));
+        }
+      }
     } catch {
       setStorageError(
         "Local demo changes could not be restored. You can continue with the saved studio content.",
@@ -357,7 +418,7 @@ export function DashboardWorkspace({
     } finally {
       setRestored(true);
     }
-  }, [demoKey, initialData.config, initialData.mode]);
+  }, [demoKey, demoPreferencesKey, initialData.config, initialData.mode]);
   function navigate(next: DashboardView, status?: EnquiryFilters["status"]) {
     if (status) setFilters({ ...EMPTY_FILTERS, status });
     const query = new URLSearchParams(params.toString());
@@ -389,6 +450,43 @@ export function DashboardWorkspace({
       ...previous,
       config: applyConfigPatch(previous.config, patch),
     }));
+    if (typeof patch["business.name"] === "string") {
+      brandingContext?.setStudioName(patch["business.name"]);
+    }
+    if (typeof patch["brand.logo"] === "string" || patch["brand.logo"] === null) {
+      brandingContext?.setStudioLogoUrl(patch["brand.logo"] as string | null);
+    }
+    if (typeof patch["business.ownerName"] === "string") {
+      brandingContext?.setOwnerName(patch["business.ownerName"]);
+    }
+    if (data.mode !== "demo") router.refresh();
+  }
+  async function savePreferences(preferences: WorkspacePreferences) {
+    if (!data.capabilities.membersManage) {
+      throw new Error("Workspace settings are unavailable for this account.");
+    }
+    if (data.mode === "demo") {
+      localStorage.setItem(demoPreferencesKey, JSON.stringify(preferences));
+    } else {
+      const response = await fetch(
+        `/api/${encodeURIComponent(data.tenant)}/workspace-preferences`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(preferences),
+        },
+      );
+      const result = (await response.json()) as { error?: string };
+      if (!response.ok) {
+        throw new Error(result.error ?? "Could not save notification preferences.");
+      }
+    }
+    setData((previous) => ({
+      ...previous,
+      preferences,
+      preferencesError: undefined,
+    }));
+    if (data.mode !== "demo") router.refresh();
   }
   const performLeadAction: LeadAction = async (input) => {
     if (data.mode !== "demo") return leadAction(input);
@@ -536,11 +634,14 @@ export function DashboardWorkspace({
           config={data.config}
           ownerName={profileOwnerName}
           ownerEmail={data.ownerEmail}
+          preferences={data.preferences}
+          preferencesError={data.preferencesError}
           mode={data.mode}
           teamAccess={data.teamAccess}
           canEdit={data.capabilities.membersManage}
           canUploadAssets={data.canUploadAssets}
           onSave={saveConfig}
+          onSavePreferences={savePreferences}
         />
       </PersistentTab>}
       {!restrictedView && view === "integrations" && (

@@ -32,6 +32,9 @@ The same settings also need an explicit propagation contract so future edits do 
 - `business.ownerName` is saved, but dashboard layout currently prefers the authenticated profile name over that workspace value.
 - Public website loaders already merge `client_overrides` on request.
 - The tenant admin login route still uses synchronous seed-config loading and can miss saved overrides.
+- Public lead notification delivery and the authenticated analytics route also read the seed config directly, so saved email and project-title edits can be stale there.
+- Invitation and unauthenticated dashboard branding must use the merged tenant loader, not the base workspace loader.
+- Generated icon and manifest responses need no-store caching so identity edits appear on the next request.
 - `newLeadAlerts` and `weeklyDigest` are local checkbox state with no persistence or consumer.
 
 ## Design
@@ -100,7 +103,7 @@ Use the merged public config for server-rendered tenant branding wherever an own
 - dashboard layout branding
 - legacy admin chrome, where still reachable
 
-The tenant admin login route will use the async public loader so saved overrides are visible there. Existing public loaders already merge overrides and will remain request-based. Other open pages update on navigation or refresh, not through polling.
+The tenant admin login route will use the async public loader so saved overrides are visible there. Lead delivery will use the same merged loader, and authenticated analytics will load the merged workspace config. Existing public loaders already merge overrides and will remain request-based. Other open pages update on navigation or refresh, not through polling.
 
 ### 5. Save behavior
 
@@ -152,7 +155,9 @@ Add or update tests for:
 6. The tenant admin login uses the merged config.
 7. Notification preferences persist, reload, and remain tenant-isolated.
 8. New enquiry alert visibility follows `new_lead_alerts`.
-9. Owner email changes retain the confirmation-required behavior.
-10. Existing `npm run check:all` remains green.
+9. Lead delivery and analytics use the merged workspace config.
+10. Generated identity routes are not served from a stale one-hour cache.
+11. Owner email changes retain the confirmation-required behavior.
+12. Existing `npm run check:all` remains green.
 
 Manual verification will use the existing minimal, Ashish Interiors, and stress fixtures where applicable, plus an authenticated workspace for database-backed settings. The final response will include a field-by-field propagation checklist and the verification commands run.

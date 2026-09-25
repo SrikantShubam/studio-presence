@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { loadClientConfig } from '../config/index'
+import { loadPublicClientConfig } from '../config/index'
 import { createAnonClient, type Db } from '../db/index'
 import type { Lead, LeadStatus } from '../db/types'
 import { sendOwnerLeadNotification } from './notify'
@@ -99,7 +99,7 @@ export async function create(input: CreateLeadInput): Promise<{ leadId: string }
   }
 
   try {
-    const config = loadClientConfig(parsed.tenantSlug)
+    const config = await loadPublicClientConfig(parsed.tenantSlug)
     await sendOwnerLeadNotification({
       leadId,
       to: config.business.email,

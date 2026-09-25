@@ -14,7 +14,7 @@
  *
  *   npx tsx scripts/test-panel.ts
  *
- * Needs SUPABASE_SERVICE_ROLE_KEY and migration 0002 applied. Writes two
+ * Needs SUPABASE_SERVICE_ROLE_KEY and migrations 0002 and 0022 applied. Writes two
  * temporary clients/<slug>.json fixtures for the duration of the run — real
  * tenant slugs are needed because loadClientConfig() reads from disk — and
  * removes them (and the database rows) in a finally block either way.
@@ -25,6 +25,7 @@ import { join } from 'node:path'
 import { createServiceRoleClient } from '../backend/src/db/service-role'
 import { createAnonClient, createScopedClient } from '../backend/src/db/scoped'
 import { getEditableConfig, saveEditableConfig, PanelScopeError } from '../backend/src/services/panel'
+import { getWorkspacePreferences, saveWorkspacePreferences } from '../backend/src/services/preferences'
 import { loadPublicClientConfig, fetchClientOverridePatch } from '../backend/src/config/index'
 import { heading, fail } from './_report'
 
@@ -271,6 +272,45 @@ async function main() {
       "loadPublicClientConfig() — the public site's own loader — reflects the saved edit",
       publicConfig.business.phone === '+919876500001',
       `Public config phone: ${publicConfig.business.phone}`,
+    )
+
+    // --- Durable workspace preferences --------------------------------------
+
+    await saveWorkspacePreferences(asA, a.tenantId, a.userId, {
+      new_lead_alerts: false,
+      weekly_digest: true,
+    })
+    const preferencesA = await getWorkspacePreferences(asA, a.tenantId)
+    assert(
+      "A's notification preferences persist",
+      preferencesA.new_lead_alerts === false && preferencesA.weekly_digest === true,
+      `A's preferences: ${JSON.stringify(preferencesA)}`,
+    )
+
+    await saveWorkspacePreferences(asB, b.tenantId, b.userId, {
+      new_lead_alerts: false,
+      weekly_digest: false,
+    })
+    const preferencesFromA = await getWorkspacePreferences(asA, b.tenantId)
+    assert(
+      "A cannot read B's workspace preferences",
+      preferencesFromA.new_lead_alerts === true && preferencesFromA.weekly_digest === true,
+      `A read B's preferences: ${JSON.stringify(preferencesFromA)}`,
+    )
+
+    let crossTenantPreferencesWriteBlocked = false
+    try {
+      await saveWorkspacePreferences(asA, b.tenantId, a.userId, {
+        new_lead_alerts: true,
+        weekly_digest: true,
+      })
+    } catch {
+      crossTenantPreferencesWriteBlocked = true
+    }
+    assert(
+      "A cannot write B's workspace preferences",
+      crossTenantPreferencesWriteBlocked,
+      "A's preferences save into B's tenant succeeded.",
     )
 
     const anonForB = await fetchClientOverridePatch(B.slug)

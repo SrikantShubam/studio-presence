@@ -14,7 +14,7 @@ import {
 } from "@studio/backend";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
-  loadPublicTenantConfig,
+  loadPublicTenantConfigWithOverrides,
   loadTenantWorkspaceConfig,
 } from "@/lib/tenant-config";
 import { signOut } from "../actions";
@@ -90,7 +90,7 @@ export default async function DashboardLayout({
   } else {
     // Unauthenticated visit: allow demo preview if the tenant is a demo studio
     try {
-      branding = await loadPublicTenantConfig(tenantSlug);
+      branding = await loadPublicTenantConfigWithOverrides(tenantSlug);
     } catch {
       branding = null;
     }
@@ -108,8 +108,8 @@ export default async function DashboardLayout({
     stringFrom(profileMetadata.full_name) ??
     stringFrom(profileMetadata.name) ??
     nameFromEmail(user?.email) ??
-    branding.business.ownerName ??
     "";
+  const workspaceOwnerName = branding.business.ownerName?.trim() || profileName;
   const profileAvatarUrl =
     stringFrom(profileMetadata.avatar_url) ??
     stringFrom(profileMetadata.picture) ??
@@ -123,7 +123,8 @@ export default async function DashboardLayout({
         tenant={tenantSlug}
         studioName={branding.business.name}
         studioLogoUrl={branding.brand.logo ?? null}
-        ownerName={profileName}
+        ownerName={workspaceOwnerName}
+        ownerNameFallback={profileName}
         ownerEmail={user?.email ?? branding.business.email ?? ""}
         ownerAvatarUrl={profileAvatarUrl}
         authenticated={isAuthenticated}
