@@ -6,7 +6,8 @@
   "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./config": "./src/config/index.ts"
+    "./config": "./src/config/index.ts",
+    "./auth/permissions": "./src/auth/permissions.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1135.0",
