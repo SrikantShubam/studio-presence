@@ -1,11 +1,13 @@
-import type { ClientConfig, Lead, LeadStatus } from "@studio/backend";
 import {
   getWorkspaceCapabilities,
+  type ClientConfig,
+  type Lead,
+  type LeadStatus,
   type WorkspaceCapability,
   type WorkspaceCapabilities,
   type WorkspaceRole,
   WORKSPACE_ROLE_LABELS,
-} from "@studio/backend/auth/permissions";
+} from "@studio/backend";
 
 export type Mode = "demo" | "live" | "unavailable";
 export type DashboardView =

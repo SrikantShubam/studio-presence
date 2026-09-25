@@ -186,7 +186,7 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
             />
             <div className="relative inline-flex items-center">
               <select
-                className="min-h-11 w-full appearance-none border border-admin-border bg-admin-bg pl-3 pr-8 text-sm font-medium text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary sm:w-32 cursor-pointer rounded-xl"
+                className="min-h-11 w-full appearance-none border border-admin-border bg-admin-bg pl-3 pr-8 text-sm font-medium text-admin-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-admin-primary sm:w-64 cursor-pointer rounded-xl"
                 value={role}
                 onChange={(event) => setRole(event.target.value as Exclude<Role, "owner">)}
                 aria-label="Invite role"
@@ -283,7 +283,7 @@ export function TeamManagement({ tenant, mode, initialData }: { tenant: string; 
                 <>
                   <div className="relative inline-flex items-center">
                     <select
-                      className="appearance-none border border-admin-border bg-admin-surface pl-2.5 pr-7 py-1.5 text-xs font-medium text-admin-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-admin-primary rounded-xl"
+                      className="min-w-56 appearance-none border border-admin-border bg-admin-surface pl-2.5 pr-7 py-1.5 text-xs font-medium text-admin-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-admin-primary rounded-xl"
                       value={member.role}
                       disabled={pending}
                       onChange={(event) => void action({ action: "role", userId: member.user_id, role: event.target.value })}

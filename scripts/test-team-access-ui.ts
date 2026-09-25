@@ -32,6 +32,8 @@ assert.match(source, /createSupabaseBrowserClient\(\)\.auth\.getUser\(\)/, "Team
 assert.match(source, /user_id: user\.id/, "Team Access must use the authenticated user's ID");
 assert.match(source, /display_name: displayName/, "Team Access must display the authenticated user's name");
 assert.match(source, /member\.role === "owner" \? <Badge>Owner<\/Badge>/, "Owner badge must share the member role badge position");
+assert.match(source, /sm:w-64/, "Invite role selector must be wide enough for its labels");
+assert.match(source, /min-w-56/, "Member role selector must be wide enough for its labels");
 assert.match(source, /member\.avatar_url/, "Team Access must render member avatars when available");
 assert.match(source, /hydrateCurrentAvatar/, "Team Access must hydrate the current member avatar when initial data is present");
 assert.match(source, /if \(mode === "unavailable"\)/, "Team Access must remain available in both sample and live modes");
