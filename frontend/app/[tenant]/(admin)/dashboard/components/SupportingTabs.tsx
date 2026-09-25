@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Users, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Phone, Clock3, Download, Globe, Mail, MessageCircle, PanelsTopLeft, Pencil, QrCode, ScanLine, ShieldCheck, Upload, Users, X } from "lucide-react";
 import { PhoneInput as InternationalPhoneInput } from "react-international-phone";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
@@ -675,6 +675,7 @@ export function SettingsTab({
   ownerEmail,
   mode,
   canEdit,
+  canUploadAssets,
   teamAccess,
   onSave,
 }: {
@@ -684,12 +685,17 @@ export function SettingsTab({
   ownerEmail: string;
   mode: Mode;
   canEdit: boolean;
+  canUploadAssets: boolean;
   teamAccess?: TeamAccessSnapshot;
   onSave: SaveConfig;
 }) {
   const [edits, setEdits] = useState<Partial<WorkspaceConfig["business"]>>({});
+  const [brandEdits, setBrandEdits] = useState<Partial<WorkspaceConfig["brand"]>>({});
   const business = { ...config.business, ...edits };
+  const brand = { ...config.brand, ...brandEdits };
   const [pending, setPending] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [logoFileName, setLogoFileName] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [ownerEmailDraft, setOwnerEmailDraft] = useState(ownerEmail);
@@ -697,6 +703,39 @@ export function SettingsTab({
   const [weeklyDigest, setWeeklyDigest] = useState(true);
   const ownerNameValue = "ownerName" in edits ? String(edits.ownerName ?? "") : business.ownerName?.trim() || ownerName;
   const ownerEmailChanged = ownerEmailDraft.trim() !== ownerEmail;
+
+  async function uploadLogo(file: File) {
+    if (file.size > 2 * 1024 * 1024) {
+      setError("File exceeds the 2 MB limit. Please select an image under 2 MB.");
+      return;
+    }
+    if (file.type && !['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml'].includes(file.type)) {
+      setError("Unsupported format. Please upload a PNG, JPG, WebP, or SVG logo.");
+      return;
+    }
+    setUploadingLogo(true);
+    setError("");
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("assetType", "logo");
+      formData.append("tenant", tenant);
+      const response = await fetch("/api/onboarding/upload", { method: "POST", body: formData });
+      const payload = (await response.json()) as { assetPath?: string; faviconPath?: string; error?: string };
+      if (!response.ok || !payload.assetPath) throw new Error(payload.error ?? "Logo upload failed.");
+      setBrandEdits((previous) => ({
+        ...previous,
+        logo: payload.assetPath,
+        ...(payload.faviconPath ? { favicon: payload.faviconPath } : {}),
+      }));
+      setLogoFileName(file.name);
+      setMessage("Logo uploaded. Save studio details to apply it.");
+    } catch (uploadError) {
+      setError(errorMessage(uploadError));
+    } finally {
+      setUploadingLogo(false);
+    }
+  }
 
   useEffect(() => {
     setOwnerEmailDraft(ownerEmail);
@@ -727,6 +766,7 @@ export function SettingsTab({
       const patch: Record<string, unknown> = Object.fromEntries(
         Object.entries(edits).map(([key, value]) => [`business.${key}`, value]),
       );
+      for (const [key, value] of Object.entries(brandEdits)) patch[`brand.${key}`] = value;
       if ("phone" in edits) patch["business.phone"] = `+${phone}`;
       if ("whatsapp" in edits) patch["business.whatsapp"] = `+${whatsapp}`;
       if ("address" in edits) {
@@ -747,6 +787,8 @@ export function SettingsTab({
         if (emailError) throw emailError;
       }
       setEdits({});
+      setBrandEdits({});
+      setLogoFileName("");
       setMessage(
         ownerEmailChanged && mode !== "demo"
           ? "Studio details saved. Check both email addresses to confirm the owner email change."
@@ -766,14 +808,15 @@ export function SettingsTab({
       <TeamManagement tenant={tenant} mode={mode} initialData={teamAccess} />
       <form onSubmit={save}>
         <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)]">
-          <Panel title="Public studio details" description="Studio name and domain are managed by your operator." action={<Globe aria-hidden="true" className="size-4 text-admin-muted" />}>
+          <Panel title="Public studio details" description="Update the details customers see on your public website." action={<Globe aria-hidden="true" className="size-4 text-admin-muted" />}>
             <fieldset disabled={!canEdit || pending} className="grid items-start gap-5 p-5 sm:grid-cols-2">
               <Field label="Studio name">
                 <div className="relative">
                   <input
                     className={inputClass + " pr-11"}
+                    maxLength={250}
                     value={business.name}
-                    readOnly
+                    onChange={(event) => setEdits({ ...edits, name: event.target.value })}
                   />
                   <button
                     type="button"
@@ -788,6 +831,29 @@ export function SettingsTab({
                   >
                     <Pencil aria-hidden="true" className="size-4" />
                   </button>
+                </div>
+              </Field>
+              <Field label="Studio logo" hint="PNG, JPG, WebP, or SVG. Maximum 2 MB.">
+                <div className="flex items-center gap-3">
+                  <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-admin-border bg-admin-bg p-1">
+                    {brand.logo ? <img src={brand.logo} alt="Current studio logo" className="max-h-full max-w-full object-contain" /> : <PanelsTopLeft aria-hidden="true" className="size-4 text-admin-muted" />}
+                  </div>
+                  <label className={`${buttonClass} cursor-pointer ${uploadingLogo || !canUploadAssets ? "pointer-events-none opacity-50" : ""}`}>
+                    <Upload aria-hidden="true" className="size-4" />
+                    <span>{uploadingLogo ? "Uploading..." : "Choose logo"}</span>
+                    <input
+                      className="sr-only"
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                      disabled={uploadingLogo || !canUploadAssets}
+                      onChange={(event) => {
+                        const file = event.target.files?.[0];
+                        if (file) void uploadLogo(file);
+                        event.currentTarget.value = "";
+                      }}
+                    />
+                  </label>
+                  <span className="min-w-0 truncate text-xs text-admin-muted">{logoFileName || (brand.logo ? "Current logo" : "No logo uploaded")}</span>
                 </div>
               </Field>
               <Field label="Studio tagline">

@@ -94,6 +94,7 @@ const ALLOWLIST: Record<string, z.ZodTypeAny> = {
   'brand.logo': brandShape.logo!,
   'brand.favicon': brandShape.favicon!,
   'brand.ogImage': brandShape.ogImage!,
+  'business.name': businessShape.name!,
   'business.phone': businessShape.phone!,
   'business.whatsapp': businessShape.whatsapp!,
   'business.email': businessShape.email!,

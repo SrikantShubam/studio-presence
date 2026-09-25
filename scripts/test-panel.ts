@@ -179,10 +179,25 @@ async function main() {
       'Expected PanelScopeError for an invalid phone number.',
     )
 
+    let invalidNameRejected = false
+    try {
+      await saveEditableConfig(asA, { id: a.tenantId, slug: A.slug }, a.userId, {
+        'business.name': '',
+      })
+    } catch (e) {
+      invalidNameRejected = e instanceof PanelScopeError
+    }
+    assert(
+      'saving an empty studio name is rejected',
+      invalidNameRejected,
+      'Expected PanelScopeError for an empty studio name.',
+    )
+
     // --- Merge, not replace -------------------------------------------------
 
     await saveEditableConfig(asA, { id: a.tenantId, slug: A.slug }, a.userId, {
       'business.phone': '+919876500001',
+      'business.name': 'Updated Alpha Studio',
     })
     await saveEditableConfig(asA, { id: a.tenantId, slug: A.slug }, a.userId, {
       'sections.about.body': 'Updated about text for A.',
@@ -192,8 +207,9 @@ async function main() {
     assert(
       'a later save does not erase an earlier save to a different field',
       afterTwoSaves.current['business.phone'] === '+919876500001' &&
+        afterTwoSaves.current['business.name'] === 'Updated Alpha Studio' &&
         afterTwoSaves.current['sections.about.body'] === 'Updated about text for A.',
-      `Got phone=${afterTwoSaves.current['business.phone']} body=${afterTwoSaves.current['sections.about.body']}`,
+      `Got name=${afterTwoSaves.current['business.name']} phone=${afterTwoSaves.current['business.phone']} body=${afterTwoSaves.current['sections.about.body']}`,
     )
 
     // --- Isolation, against Postgres directly -------------------------------

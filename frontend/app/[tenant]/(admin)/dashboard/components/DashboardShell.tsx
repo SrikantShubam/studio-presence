@@ -539,6 +539,7 @@ export function DashboardWorkspace({
           mode={data.mode}
           teamAccess={data.teamAccess}
           canEdit={data.capabilities.membersManage}
+          canUploadAssets={data.canUploadAssets}
           onSave={saveConfig}
         />
       </PersistentTab>}
