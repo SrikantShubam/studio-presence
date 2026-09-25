@@ -8,7 +8,8 @@
  * - raw invitation token is not stored
  * - wrong email cannot accept
  * - matching email can accept
- * - invitation cannot be accepted twice
+ * - accepted invitation can be reopened by the same user
+ * - accepted invitation cannot be reopened by another user
  * - revoked invitation cannot be accepted
  * - expired invitation cannot be accepted
  * - owner can change a member role
@@ -16,7 +17,7 @@
  * - editor cannot reassign
  * - owner cannot assign to viewer
  * - assigned editor can update lead work
- * - viewer cannot update lead work
+ * - viewer can update lead status and private notes
  * - assignment creates lead activity
  * - new leads default to owner
  * - removed editor loses lead access immediately
@@ -194,17 +195,30 @@ async function main() {
       `Expected editor role, got: ${editorRole}`,
     )
 
-    // Test 7: invitation cannot be accepted twice
-    let acceptTwiceFailed = false
+    // Test 7: reopening an accepted invitation is idempotent for the same user
+    let reopenedEditor: { tenantId: string; role: 'editor' | 'viewer' } | null = null
+    let reopenEditorError = ''
     try {
-      await acceptWorkspaceInvitation(editorClient, inviteEditor.token)
-    } catch {
-      acceptTwiceFailed = true
+      reopenedEditor = await acceptWorkspaceInvitation(editorClient, inviteEditor.token)
+    } catch (error) {
+      reopenEditorError = error instanceof Error ? error.message : String(error)
     }
     assert(
-      'invitation cannot be accepted twice',
-      acceptTwiceFailed,
-      'Accepted invitation was accepted a second time.',
+      'accepted invitation can be reopened by the same user',
+      reopenedEditor?.tenantId === tenant.id && reopenedEditor?.role === 'editor',
+      `Reopening the accepted invitation failed: ${reopenEditorError || JSON.stringify(reopenedEditor)}`,
+    )
+
+    let strangerReopenError = ''
+    try {
+      await acceptWorkspaceInvitation(strangerClient, inviteEditor.token)
+    } catch (error) {
+      strangerReopenError = error instanceof Error ? error.message : String(error)
+    }
+    assert(
+      'accepted invitation cannot be reopened by another user',
+      strangerReopenError.includes('already accepted'),
+      `Expected an already-accepted error, got: ${strangerReopenError || 'no error'}`,
     )
 
     // Test 8: revoked invitation cannot be accepted
@@ -342,17 +356,17 @@ async function main() {
       `Expected status contacted and notes updated, got: ${JSON.stringify(updatedLead)}`,
     )
 
-    // Test 15: viewer cannot update lead work
-    let viewerUpdateFailed = false
+    // Test 15: viewer can update lead status and private notes
+    let viewerUpdated: Awaited<ReturnType<typeof leads.updateWork>> | null = null
     try {
-      await leads.updateWork(viewerClient, newLeadId, 'quoted', 'Viewer attempt')
+      viewerUpdated = await leads.updateWork(viewerClient, newLeadId, 'quoted', 'Lead coordinator follow-up')
     } catch {
-      viewerUpdateFailed = true
+      viewerUpdated = null
     }
     assert(
-      'viewer cannot update lead work',
-      viewerUpdateFailed,
-      'Viewer was able to update lead work.',
+      'viewer can update lead status and private notes',
+      viewerUpdated?.status === 'quoted' && viewerUpdated.notes === 'Lead coordinator follow-up',
+      `Viewer could not update lead work: ${JSON.stringify(viewerUpdated)}`,
     )
 
     // Test 16: assignment creates lead activity
