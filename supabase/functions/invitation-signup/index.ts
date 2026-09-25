@@ -57,15 +57,18 @@ function originFor(request: Request): string | null {
   }
 }
 
-function responseBody(body: Record<string, unknown>, status: number, origin: string | null): Response {
-  const headers = new Headers({ 'content-type': 'application/json' })
+function responseBody(body: Record<string, unknown> | null, status: number, origin: string | null): Response {
+  const headers = new Headers()
+  if (status !== 204) {
+    headers.set('content-type', 'application/json')
+  }
   if (origin) {
     headers.set('access-control-allow-origin', origin)
     headers.set('access-control-allow-headers', 'apikey, authorization, content-type')
     headers.set('access-control-allow-methods', 'POST, OPTIONS')
     headers.set('vary', 'Origin')
   }
-  return new Response(JSON.stringify(body), { status, headers })
+  return new Response(status === 204 ? null : JSON.stringify(body), { status, headers })
 }
 
 function errorResponse(code: ErrorCode, origin: string | null, status = 400): Response {
@@ -172,7 +175,7 @@ async function handleSignup(request: Request, origin: string): Promise<Response>
 Deno.serve(async (request) => {
   const origin = originFor(request)
   if (!origin) return responseBody({ ok: false, code: 'unavailable' }, 403, null)
-  if (request.method === 'OPTIONS') return responseBody({}, 204, origin)
+  if (request.method === 'OPTIONS') return responseBody(null, 204, origin)
   if (request.method !== 'POST') return errorResponse('unavailable', origin, 405)
 
   try {
