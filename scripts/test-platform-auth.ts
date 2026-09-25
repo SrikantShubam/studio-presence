@@ -20,6 +20,8 @@ const inviteEntry = readFileSync('frontend/app/invite/[token]/InvitationEntry.ts
 const invitePage = readFileSync('frontend/app/invite/[token]/page.tsx', 'utf8')
 const platformLogin = readFileSync('frontend/app/login/page.tsx', 'utf8')
 const loginForm = readFileSync('frontend/app/[tenant]/(admin)/login/LoginForm.tsx', 'utf8')
+const invitationSignup = readFileSync('frontend/lib/invitation-signup.ts', 'utf8')
+const invitationFunction = readFileSync('supabase/functions/invitation-signup/index.ts', 'utf8')
 const membershipRoute = readFileSync('frontend/app/[tenant]/(admin)/dashboard/components/../../../../api/[tenant]/members/route.ts', 'utf8')
 
 assert.equal(
@@ -130,6 +132,11 @@ assert.match(loginForm, /Hide password/, 'login form must provide a visible pass
 assert.match(loginForm, /pr-12/, 'password inputs must reserve space for the toggle')
 assert.match(loginForm, /\[&::-ms-reveal\]:hidden/, 'login form must hide the browser password reveal control')
 assert.match(loginForm, /isInvite \? 'signup' : 'signin'/, 'invitation email auth must default to account creation')
+assert.match(loginForm, /createInvitationAccount/, 'invitation signup must use the confirmed-account function')
+assert.match(loginForm, /supabase\.auth\.signUp/, 'ordinary signup must retain Supabase email confirmation')
+assert.match(invitationSignup, /functions\/v1\/invitation-signup/, 'browser invitation signup must call the Edge Function')
+assert.match(invitationFunction, /email_confirm: true/, 'invitation function must confirm invitation-created accounts')
+assert.match(invitationFunction, /accept_tenant_invitation/, 'invitation function must accept the workspace invitation')
 assert.match(loginForm, /if \(isInvite\) \{/, 'invitation login must clear an existing session instead of redirecting it')
 assert.match(loginForm, /signOut\(\{ scope: 'local' \}\)/, 'invitation login must clear only the current browser session')
 assert.match(loginForm, /New to this workspace\? Create your account below\./, 'invitation email auth must explain the account creation path')

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 import { AUTH_ERROR_MESSAGES, isValidPassword } from '@/lib/auth-policy'
 import { authCallbackUrl } from '@/lib/platform-auth'
+import { createInvitationAccount, invitationSignupMessage, invitationTokenFromPath } from '@/lib/invitation-signup'
 
 const RESEND_SECONDS = 30
 
@@ -103,6 +104,30 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
 
     setStatus('submitting')
     setError(null)
+
+    if (isInvite) {
+      const token = invitationTokenFromPath(nextPath)
+      if (!token) {
+        setStatus('error')
+        setError(invitationSignupMessage('invalid_invitation'))
+        return
+      }
+      const invitationResult = await createInvitationAccount({ token, email: email.trim(), password })
+      if (!invitationResult.ok) {
+        setStatus('error')
+        setError(invitationSignupMessage(invitationResult.code))
+        return
+      }
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({ email: email.trim(), password })
+      if (signInError || !data.session) {
+        setStatus('error')
+        setError('Your account was created, but we could not sign you in. Choose Sign in and try again.')
+        return
+      }
+      window.location.replace(authCallbackUrl(window.location.origin, { tenant, next: nextPathForAuth }))
+      return
+    }
+
     const { data, error: signUpError } = await supabase.auth.signUp({
       email: email.trim(),
       password,
