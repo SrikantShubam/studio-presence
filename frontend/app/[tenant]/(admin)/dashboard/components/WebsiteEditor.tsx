@@ -485,10 +485,18 @@ export default function WebsiteEditor({
             <p className="text-[10px] font-medium uppercase tracking-wider text-admin-muted">
               Google search result preview
             </p>
-            <div className="max-w-2xl rounded-lg border border-admin-border bg-admin-surface px-4 py-3 text-left">
+            <div className="w-full min-w-0 rounded-lg border border-admin-border bg-admin-surface px-4 py-3 text-left">
               <div className="flex min-w-0 items-center gap-2 text-xs text-admin-muted">
-                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-admin-primary-soft text-[11px] font-semibold text-admin-ink">
-                  {config.business.name.trim().slice(0, 1).toUpperCase()}
+                <span className="flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-md border border-admin-border bg-admin-primary-soft p-1 text-[11px] font-semibold text-admin-ink">
+                  {draft.brand.logo ? (
+                    <img
+                      src={draft.brand.logo}
+                      alt={`${config.business.name} logo`}
+                      className="size-full object-contain"
+                    />
+                  ) : (
+                    config.business.name.trim().slice(0, 1).toUpperCase()
+                  )}
                 </span>
                 <span className="min-w-0 truncate">
                   {tenant}.studiopresence.in
