@@ -295,7 +295,7 @@ export function ContactActions({
           aria-label={"WhatsApp " + enquiry.name}
           title="Contact actions are unavailable for sample contacts"
         >
-          <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="h-[2.5em] w-[2.5em] text-admin-success" />
+          <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="!h-5 !w-5 text-admin-success" />
         </Button>
         <Button
           className={contactButtonClass}
@@ -317,7 +317,7 @@ export function ContactActions({
         aria-label={"WhatsApp " + enquiry.name}
         title={"WhatsApp " + enquiry.name}
       >
-        <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="h-[2.5em] w-[2.5em] text-admin-success" />
+        <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" className="!h-5 !w-5 text-admin-success" />
       </a>
       <a
         className={buttonClass + " " + contactButtonClass + " !border-0 !bg-transparent hover:!bg-transparent"}
