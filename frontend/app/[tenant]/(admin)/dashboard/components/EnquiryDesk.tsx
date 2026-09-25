@@ -199,11 +199,6 @@ export function EnquiryDesk({
                         >
                           {item.name}
                         </button>
-                        {isRecentlyUpdated(item.updated_at, item.created_at) && (
-                          <span className="ml-2 inline-flex items-center border border-admin-success px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-admin-success">
-                            Updated
-                          </span>
-                        )}
                         <p className="text-[10px] text-admin-muted">
                           {item.locality || "Area not supplied"}
                         </p>
@@ -219,7 +214,14 @@ export function EnquiryDesk({
                       <td className="px-5 py-4">{sourceLabels[item.source]}</td>
                       <td className="px-5 py-4 text-[11px] text-admin-muted">{memberLabel(item.assigned_to, members)}</td>
                       <td className="px-5 py-4">
-                        <StatusBadge status={item.status} />
+                        <div className="flex flex-wrap items-center gap-2">
+                          <StatusBadge status={item.status} />
+                          {isRecentlyUpdated(item.updated_at, item.created_at) && (
+                            <span className="inline-flex rounded-xl border border-admin-success px-2 py-1 text-[10px] text-admin-success">
+                              Updated
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="px-5 py-4">
                         <p>{item.timeline || "Not supplied"}</p>

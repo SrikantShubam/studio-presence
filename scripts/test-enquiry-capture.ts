@@ -50,7 +50,7 @@ const enquiryDesk = readFileSync(
 );
 assert.match(enquiryDialogs, /InternationalPhoneInput/);
 assert.match(enquiryDialogs, /Describe the project type/);
-assert.match(enquiryDesk, /Updated/);
+assert.match(enquiryDesk, /<StatusBadge status=\{item\.status\} \/>[\s\S]*Updated/);
 assert.doesNotMatch(enquiryDialogs, /Savingâ€¦|Â·|preferencesâ€¦/);
 assert.doesNotMatch(enquiryDesk, /Â·/);
 
