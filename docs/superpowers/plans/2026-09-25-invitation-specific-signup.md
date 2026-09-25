@@ -93,7 +93,7 @@ export type InvitationSignupErrorCode =
 **File:**
 - Create: `supabase/functions/invitation-signup/index.ts`
 
-- [ ] Handle `OPTIONS` with an allowlist-based CORS response. Allow only the configured candidate and production origins. Reject unknown origins.
+- [ ] Handle `OPTIONS` with an allowlist-based CORS response. Allow the configured candidate and production roots plus their tenant subdomains. Reject unknown origins.
 - [ ] Accept only `POST` with `{ token, email, password }`.
 - [ ] Normalize the email with trim and lowercase. Enforce the existing 12-character password policy before touching Auth.
 - [ ] Hash the raw invitation token with Web Crypto SHA-256. Never log the raw token, email-plus-password body, or service-role client responses.
@@ -196,7 +196,7 @@ The human must perform these dashboard or credential actions because the agent m
 
 1. In Supabase Dashboard, open **Edge Functions** for project `ujlmztnfngotxvgdlcry`.
 2. Confirm the Free plan has function deployment available and review the current invocation quota.
-3. Set the function's allowed-origin configuration to the candidate URL and production URL. Do not paste secrets into chat.
+3. Set the function's allowed-origin configuration to the candidate URL and production URL roots. The function allows those roots and their tenant subdomains. Do not paste secrets into chat.
 4. If the function does not receive the platform-injected admin secret automatically, add the service-role secret through the Supabase secret manager. Never add it to Git or a `NEXT_PUBLIC_` variable.
 5. Confirm the function is deployed and returns a non-sensitive health response.
 6. Send one fresh invitation to a test address and complete the new single-email flow.

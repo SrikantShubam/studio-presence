@@ -43,8 +43,18 @@ function hashToken(token: string): Promise<string> {
 
 function originFor(request: Request): string | null {
   const origin = request.headers.get('origin')
-  if (!origin || !allowedOrigins.has(origin)) return null
-  return origin
+  if (!origin) return null
+  try {
+    const requested = new URL(origin)
+    const allowed = [...allowedOrigins].some((value) => {
+      const base = new URL(value)
+      return requested.protocol === base.protocol &&
+        (requested.hostname === base.hostname || requested.hostname.endsWith(`.${base.hostname}`))
+    })
+    return allowed ? origin : null
+  } catch {
+    return null
+  }
 }
 
 function responseBody(body: Record<string, unknown>, status: number, origin: string | null): Response {
