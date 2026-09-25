@@ -121,6 +121,7 @@ assert.match(inviteEntry, /signOut\(\{ scope: 'local' \}\)/, 'invite flow must c
 assert.match(inviteEntry, /auth=1/, 'invite auth callbacks must mark a newly authenticated invitation session')
 assert.match(invitePage, /InvitationSessionReset/, 'invite page must reset an existing session before accepting an invitation')
 assert.match(invitePage, /auth === "1"/, 'invite page must only accept sessions created by the invitation flow')
+assert.doesNotMatch(invitePage, /error\?\.includes\("expired"\)/, 'invite page must not label every invitation error as expired')
 assert.match(membershipRoute, /searchParams\.set\(['"]tenant['"]/, 'invitation links must carry the tenant slug for branding')
 assert.match(platformLogin, /Private workspace/, 'platform login must use invitation-specific eyebrow')
 assert.match(platformLogin, /email address that received this invitation/, 'platform login must explain invited email matching')

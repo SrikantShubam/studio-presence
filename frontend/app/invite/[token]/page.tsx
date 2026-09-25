@@ -72,7 +72,7 @@ async function loadInvitationBranding(tenantSlug: string | undefined): Promise<{
 
 function InvitationError({ email, error }: { email: string; error?: string }) {
   const isWrongEmail = error?.includes("another email address");
-  const isExpired = error?.includes("expired");
+  const isExpired = /invitation (?:has )?expired(?: because|\.|$)/i.test(error ?? "");
   const isRevoked = error?.includes("revoked");
   const isAccepted = error?.includes("already been accepted");
 
@@ -94,7 +94,7 @@ function InvitationError({ email, error }: { email: string; error?: string }) {
         ? "This invitation was revoked by the workspace owner."
         : isAccepted
           ? "This invitation has already been accepted. You can proceed directly to your workspace dashboard."
-          : "This invitation link is invalid or no longer active.";
+          : "We could not complete this invitation. It may already have been used, revoked, expired, or created for another email. Ask the workspace owner to send a fresh invitation.";
 
   return (
     <main className="flex min-h-dvh items-center justify-center bg-admin-bg px-5 text-admin-ink">
