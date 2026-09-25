@@ -21,7 +21,7 @@ import {
   applyConfigPatch,
 
   dashboardMode,
-  normalizeIndianPhone,
+  normalizeContactPhone,
   type ActionResult,
   type Enquiry,
   type LeadAction,
@@ -188,8 +188,8 @@ export default async function DashboardPage({
         row = await leads.assign(current.db, assignment.id, assignment.userId);
       } else if (parsed.data.kind === "create") {
         if (actor.role === "viewer" || actor.role === "editor") return { ok: false, error: "Only the studio owner can create enquiries." };
-        const phone = normalizeIndianPhone(parsed.data.values.phone);
-        if (!phone) return { ok: false, error: "Enter a valid 10-digit Indian mobile number." };
+        const phone = normalizeContactPhone(parsed.data.values.phone);
+        if (!phone) return { ok: false, error: "Enter a valid international mobile number." };
         const result = await leads.createDashboardLead(current.db, current.tenant.id, { ...parsed.data.values, phone: `+${phone}`, source: "other", sourcePage: `/${tenant}/dashboard#walk-in` });
         const created = await leads.get(current.db, result.leadId);
         if (!created) return { ok: false, error: "The lead was submitted but could not be reloaded. Refresh before trying again." };

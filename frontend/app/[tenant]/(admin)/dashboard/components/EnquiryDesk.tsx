@@ -35,6 +35,7 @@ const formatISTDate = (value: string) =>
 import {
   contactPhone,
   downloadFile,
+  isRecentlyUpdated,
   EMPTY_FILTERS,
   enquiriesCSV,
   STATUS_LABELS,
@@ -86,7 +87,7 @@ export function EnquiryDesk({
         title="Your enquiry desk"
         description={
           mode === "demo"
-            ? "Representative sample leads Â· review demo contact details before calling"
+            ? "Representative sample leads · review demo contact details before calling"
             : "Budget bands are estimates, not booked revenue."
         }
         action={
@@ -198,6 +199,11 @@ export function EnquiryDesk({
                         >
                           {item.name}
                         </button>
+                        {isRecentlyUpdated(item.updated_at, item.created_at) && (
+                          <span className="ml-2 inline-flex items-center border border-admin-success px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-admin-success">
+                            Updated
+                          </span>
+                        )}
                         <p className="text-[10px] text-admin-muted">
                           {item.locality || "Area not supplied"}
                         </p>
