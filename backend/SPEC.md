@@ -63,7 +63,9 @@ Two Supabase clients, and the distinction is load-bearing:
 - **Scoped client** — carries the user's access token, subject to RLS. **Every request path uses
   this.** No exceptions.
 - **Service-role client** — bypasses RLS. Migrations, the deploy script and the lead-capture insert
-  only. Never reachable from a route handler that serves a signed-in user.
+  only. Never reachable from a Next.js route handler that serves a signed-in user. The sole approved
+  exception is the Supabase-managed `invitation-signup` Edge Function, which may use the service-role
+  key only inside that function's trusted server boundary for invitation-specific confirmed signup.
 
 `check:tenant-isolation` fails the build if a service-role import appears anywhere under
 `frontend/app/**`.
@@ -161,7 +163,7 @@ Base configs keep their git history; panel edits take effect on revalidation, in
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | project URL | B9 |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | scoped client | B9 |
-| `SUPABASE_SERVICE_ROLE_KEY` | migrations, deploy script. **Never in a request path** | B9 |
+| `SUPABASE_SERVICE_ROLE_KEY` | migrations, deploy script, and the approved `invitation-signup` Edge Function only. Never in Next.js or browser code | B9 |
 | `RESEND_API_KEY` | lead notification email | B11 |
 | `UMAMI_API_URL` · `UMAMI_USERNAME` · `UMAMI_PASSWORD` | analytics reads. Self-hosted Umami has no permanent API key — only session-token login | B12 |
 | `GOOGLE_PLACES_API_KEY` | build-time review fetch, t2+ | later |
