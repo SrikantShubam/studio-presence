@@ -62,7 +62,7 @@ export function InvitationSessionReset({ token, tenantSlug, studioName, logoUrl,
 
   useEffect(() => {
     const supabase = createSupabaseBrowserClient()
-    void supabase.auth.signOut().then(({ error: signOutError }) => {
+    void supabase.auth.signOut({ scope: 'local' }).then(({ error: signOutError }) => {
       if (signOutError) {
         setError('We could not switch accounts automatically. Sign out and open the invitation again.')
         return

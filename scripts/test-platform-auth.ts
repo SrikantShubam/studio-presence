@@ -117,7 +117,7 @@ assert.match(inviteEntry, /logoUrl/, 'invite entry page must render the studio l
 assert.match(inviteEntry, /Continue with Google/, 'invite entry page must offer Google')
 assert.match(inviteEntry, /Continue with email/, 'invite entry page must offer email')
 assert.match(inviteEntry, /\/login\?next=/, 'invite entry page must preserve the invitation token for email auth')
-assert.match(inviteEntry, /signOut\(\)/, 'invite flow must clear an existing browser session before switching accounts')
+assert.match(inviteEntry, /signOut\(\{ scope: 'local' \}\)/, 'invite flow must clear only the current browser session before switching accounts')
 assert.match(inviteEntry, /auth=1/, 'invite auth callbacks must mark a newly authenticated invitation session')
 assert.match(invitePage, /InvitationSessionReset/, 'invite page must reset an existing session before accepting an invitation')
 assert.match(invitePage, /auth === "1"/, 'invite page must only accept sessions created by the invitation flow')
@@ -130,6 +130,7 @@ assert.match(loginForm, /pr-12/, 'password inputs must reserve space for the tog
 assert.match(loginForm, /\[&::-ms-reveal\]:hidden/, 'login form must hide the browser password reveal control')
 assert.match(loginForm, /isInvite \? 'signup' : 'signin'/, 'invitation email auth must default to account creation')
 assert.match(loginForm, /if \(isInvite\) \{/, 'invitation login must clear an existing session instead of redirecting it')
+assert.match(loginForm, /signOut\(\{ scope: 'local' \}\)/, 'invitation login must clear only the current browser session')
 assert.match(loginForm, /New to this workspace\? Create your account below\./, 'invitation email auth must explain the account creation path')
 assert.match(platformLogin, /Create your account to join/, 'invitation login must use dedicated account creation copy')
 

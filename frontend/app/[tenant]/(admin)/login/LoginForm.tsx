@@ -52,7 +52,7 @@ export function LoginForm({ whatsappHref, tenant, nextPath }: Props) {
     void supabase.auth.getSession().then(async ({ data }) => {
       if (!active || !data.session) return
       if (isInvite) {
-        const { error: signOutError } = await supabase.auth.signOut()
+        const { error: signOutError } = await supabase.auth.signOut({ scope: 'local' })
         if (active && signOutError) setError('Sign out before switching accounts, then open the invitation again.')
         return
       }
