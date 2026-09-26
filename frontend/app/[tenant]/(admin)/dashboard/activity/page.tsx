@@ -17,11 +17,12 @@ export default async function WorkspaceActivityPage({
   const supabase = await createSupabaseServerClient()
   const { data: { user } } = await supabase.auth.getUser()
   const { data: { session } } = await supabase.auth.getSession()
+  const isDemo = query?.demo === '1'
 
   let events = DEMO_ACTIVITY
   let nextCursor: string | null = null
   let timezone = 'Asia/Kolkata'
-  if (user?.email && session) {
+  if (!isDemo && user?.email && session) {
     const context = await requireTenant({ id: user.id, email: user.email, accessToken: session.access_token })
     if (context.tenant.slug !== tenant || !canAccessDashboard(context.tenant)) redirect(`/${context.tenant.slug}/dashboard`)
     const page = await listWorkspaceActivity(context.db, context.tenant.id, { limit: 10, cursor: query?.cursor })
@@ -29,7 +30,7 @@ export default async function WorkspaceActivityPage({
     nextCursor = page.nextCursor
     const { data: preferences } = await context.db.from('workspace_preferences').select('timezone').eq('tenant_id', context.tenant.id).maybeSingle()
     timezone = preferences?.timezone || timezone
-  } else if (query?.demo !== '1') {
+  } else if (!isDemo) {
     redirect(`/login?next=/${encodeURIComponent(tenant)}/dashboard/activity`)
   }
 
@@ -55,8 +56,8 @@ export default async function WorkspaceActivityPage({
           </div>
         )) : <p className="py-8 text-sm text-admin-muted">No new activities.</p>}
       </section>
-      {nextCursor && <a href={`/${tenant}/dashboard/activity?cursor=${encodeURIComponent(nextCursor)}`} className="flex min-h-12 items-center justify-center rounded-xl border border-admin-border bg-admin-surface text-sm font-semibold text-admin-ink hover:bg-admin-raised">Load more</a>}
-      <a href={`/${tenant}/dashboard`} className="flex min-h-12 items-center justify-center gap-2 text-sm font-semibold text-admin-primary hover:underline"><ArrowLeft aria-hidden="true" className="size-4" />Back to overview</a>
+      {nextCursor && <a href={`/${tenant}/dashboard/activity?${isDemo ? 'demo=1&' : 'demo=0&'}cursor=${encodeURIComponent(nextCursor)}`} className="flex min-h-12 items-center justify-center rounded-xl border border-admin-border bg-admin-surface text-sm font-semibold text-admin-ink hover:bg-admin-raised">Load more</a>}
+      <a href={`/${tenant}/dashboard?demo=${isDemo ? '1' : '0'}`} className="flex min-h-12 items-center justify-center gap-2 text-sm font-semibold text-admin-primary hover:underline"><ArrowLeft aria-hidden="true" className="size-4" />Back to overview</a>
     </main>
   )
 }

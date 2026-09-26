@@ -269,11 +269,13 @@ export default function OverviewTab({
           tenant={data.tenant}
           events={data.activity ?? []}
           timezone={data.preferences.timezone}
+          demo={sample}
         />
         <WorkspacePulse
           tenant={data.tenant}
           events={data.activity ?? []}
           timezone={data.preferences.timezone}
+          demo={sample}
         />
       </div>
       <EnquiryDesk
@@ -292,10 +294,12 @@ function RecentActivityCard({
   tenant,
   events,
   timezone,
+  demo,
 }: {
   tenant: string;
   events: WorkspaceData["activity"];
   timezone: string;
+  demo: boolean;
 }) {
   const visibleEvents = (events ?? []).slice(0, 5);
   const formatter = new Intl.DateTimeFormat("en-IN", {
@@ -309,7 +313,7 @@ function RecentActivityCard({
     <Panel
       title="Recent workspace activity"
       description="Meaningful changes across your workspace."
-      action={visibleEvents.length ? <a href={`/${tenant}/dashboard/activity`} className="text-xs font-semibold text-admin-primary hover:underline">View all</a> : undefined}
+      action={visibleEvents.length ? <a href={`/${tenant}/dashboard/activity?demo=${demo ? '1' : '0'}`} className="text-xs font-semibold text-admin-primary hover:underline">View all</a> : undefined}
       className="my-5"
     >
       <div className="divide-y divide-admin-border px-5">
@@ -330,10 +334,12 @@ function WorkspacePulse({
   tenant,
   events,
   timezone,
+  demo,
 }: {
   tenant: string;
   events: WorkspaceData["activity"];
   timezone: string;
+  demo: boolean;
 }) {
   const visibleEvents = events ?? [];
   const leadUpdates = visibleEvents.filter((event) => event.type.startsWith("lead_")).length;
@@ -351,7 +357,7 @@ function WorkspacePulse({
         <div className="flex items-start justify-between gap-3 rounded-xl border border-admin-border bg-admin-raised p-4"><div><p className={`${monoClass} text-2xl`}>{leadUpdates}</p><p className="mt-1 text-xs text-admin-muted">Lead updates</p></div><ActivityIcon type="lead_created" /></div>
         <div className="flex items-start justify-between gap-3 rounded-xl border border-admin-border bg-admin-raised p-4"><div><p className={`${monoClass} text-2xl`}>{teamUpdates + published}</p><p className="mt-1 text-xs text-admin-muted">Workspace updates</p></div><ActivityIcon type="member_role_changed" /></div>
       </div>
-      <div className="border-t border-admin-border px-5 py-4"><a href={`/${tenant}/dashboard/activity`} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-admin-primary hover:underline">Review the full activity log <ArrowUpRight aria-hidden="true" className="size-3.5" /></a></div>
+      <div className="border-t border-admin-border px-5 py-4"><a href={`/${tenant}/dashboard/activity?demo=${demo ? '1' : '0'}`} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-admin-primary hover:underline">Review the full activity log <ArrowUpRight aria-hidden="true" className="size-3.5" /></a></div>
     </Panel>
   );
 }
