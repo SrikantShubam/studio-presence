@@ -138,8 +138,8 @@ export function DashboardShell({
         const Icon = NAV_ICONS[item.id];
         const allowed = !item.requiredCapability || Boolean(capabilities[item.requiredCapability]);
         const linkClass = active === item.id
-          ? "flex min-h-11 items-center gap-3 bg-admin-raised px-3 py-2 text-xs font-semibold text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
-          : "flex min-h-11 items-center gap-3 px-3 py-2 text-xs text-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary hover:bg-admin-raised";
+          ? "flex min-h-11 items-center gap-3 rounded-xl bg-admin-raised px-3 py-2 text-xs font-semibold text-admin-ink focus-visible:outline-2 focus-visible:outline-admin-primary"
+          : "flex min-h-11 items-center gap-3 rounded-xl px-3 py-2 text-xs text-admin-muted focus-visible:outline-2 focus-visible:outline-admin-primary hover:bg-admin-raised";
         return (
           <div key={item.id}>
             {item.group && (
