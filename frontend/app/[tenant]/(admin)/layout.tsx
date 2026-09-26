@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { loadPublicTenantConfigWithOverrides } from '@/lib/tenant-config'
+import { faviconVariantPath } from '@/lib/favicon-path'
 import { NO_FLASH_SCRIPT } from './ThemeToggle'
 
 export async function generateMetadata({
@@ -9,19 +10,21 @@ export async function generateMetadata({
   params: Promise<{ tenant: string }>
 }): Promise<Metadata> {
   const { tenant } = await params
-  let title = 'Studio Presence'
   try {
     const config = await loadPublicTenantConfigWithOverrides(tenant)
-    title = config.business.name
+    return {
+      title: config.seo.title,
+      description: config.seo.description,
+      icons: config.brand.favicon
+        ? { icon: config.brand.favicon, apple: faviconVariantPath(config.brand.favicon, 180) }
+        : undefined,
+      robots: { index: false, follow: false },
+    }
   } catch {
-    title = 'Studio Presence'
-  }
-  return {
-    title,
-    robots: {
-      index: false,
-      follow: false,
-    },
+    return {
+      title: 'Studio Presence',
+      robots: { index: false, follow: false },
+    }
   }
 }
 
