@@ -49,9 +49,9 @@ export default async function WorkspaceActivityPage({
       <section className="divide-y divide-admin-border rounded-xl border border-admin-border bg-admin-surface px-5">
         {events.length ? events.map((event) => (
           <div key={`${event.source}:${event.eventId}`} className="flex min-w-0 items-start gap-3 py-4">
-            <ActivityIcon type={event.type} />
             {event.actor.avatarUrl ? <img src={event.actor.avatarUrl} alt="" className="size-9 shrink-0 rounded-full border border-admin-border object-cover" /> : <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[10px] font-semibold">{event.actor.initials}</span>}
             <div className="min-w-0 flex-1"><p className="text-sm font-semibold text-admin-ink">{event.title}</p><p className="mt-1 text-sm text-admin-muted">{event.description}</p><p className="mt-1 text-xs text-admin-muted">{event.actor.name} · {formatter.format(new Date(event.createdAt))}</p></div>
+            <ActivityIcon type={event.type} />
           </div>
         )) : <p className="py-8 text-sm text-admin-muted">No new activities.</p>}
       </section>

@@ -29,9 +29,9 @@ export function LeadDetailTabs({
       <div className="mt-4 divide-y divide-admin-border">
         {timeline.length ? timeline.map((event) => (
           <article key={`${event.source}:${event.eventId}`} className="flex items-start gap-3 py-4 first:pt-0 last:pb-0">
-            <ActivityIcon type={event.type} />
             {event.actor.avatarUrl ? <img src={event.actor.avatarUrl} alt="" className="size-8 shrink-0 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[10px] font-semibold">{event.actor.initials}</span>}
-            <div className="min-w-0"><p className="text-sm font-semibold text-admin-ink">{event.title}</p><p className="mt-1 text-sm text-admin-muted">{event.description}</p><p className="mt-1 text-xs text-admin-muted">{event.actor.name} · {formatter.format(new Date(event.createdAt))}</p></div>
+            <div className="min-w-0 flex-1"><p className="text-sm font-semibold text-admin-ink">{event.title}</p><p className="mt-1 text-sm text-admin-muted">{event.description}</p><p className="mt-1 text-xs text-admin-muted">{event.actor.name} · {formatter.format(new Date(event.createdAt))}</p></div>
+            <ActivityIcon type={event.type} />
           </article>
         )) : <p className="py-4 text-sm text-admin-muted">No timeline events yet.</p>}
       </div>

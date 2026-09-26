@@ -315,9 +315,9 @@ function RecentActivityCard({
       <div className="divide-y divide-admin-border px-5">
         {visibleEvents.length ? visibleEvents.map((event) => {
           const content = <div className="flex min-w-0 items-start gap-3 py-4">
-            <ActivityIcon type={event.type} />
             {event.actor.avatarUrl ? <img src={event.actor.avatarUrl} alt="" className="size-8 shrink-0 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[10px] font-semibold">{event.actor.initials}</span>}
             <div className="min-w-0 flex-1"><p className="text-xs font-semibold">{event.title}</p><p className="mt-1 text-xs text-admin-muted">{event.description}</p><p className="mt-1 text-[10px] text-admin-muted">{event.actor.name} · {formatter.format(new Date(event.createdAt))}</p></div>
+            <ActivityIcon type={event.type} />
           </div>;
           return event.entityType === "lead" && event.entityId ? <a key={`${event.source}:${event.eventId}`} href={`/${tenant}/dashboard/${event.entityId}`} className="block hover:bg-admin-raised/40">{content}</a> : <div key={`${event.source}:${event.eventId}`}>{content}</div>;
         }) : <p className="py-6 text-xs text-admin-muted">No new activities.</p>}
@@ -347,9 +347,9 @@ function WorkspacePulse({
       action={<span className="text-[10px] text-admin-muted">{timezone}</span>}
     >
       <div className="grid gap-3 p-5 sm:grid-cols-3 xl:grid-cols-1">
-        <div className="rounded-xl border border-admin-border bg-admin-raised p-4"><p className={`${monoClass} text-2xl`}>{visibleEvents.length}</p><p className="mt-1 text-xs text-admin-muted">Recent events</p></div>
-        <div className="rounded-xl border border-admin-border bg-admin-raised p-4"><p className={`${monoClass} text-2xl`}>{leadUpdates}</p><p className="mt-1 text-xs text-admin-muted">Lead updates</p></div>
-        <div className="rounded-xl border border-admin-border bg-admin-raised p-4"><p className={`${monoClass} text-2xl`}>{teamUpdates + published}</p><p className="mt-1 text-xs text-admin-muted">Workspace updates</p></div>
+        <div className="flex items-start justify-between gap-3 rounded-xl border border-admin-border bg-admin-raised p-4"><div><p className={`${monoClass} text-2xl`}>{visibleEvents.length}</p><p className="mt-1 text-xs text-admin-muted">Recent events</p></div><ActivityIcon type="lead_status_changed" /></div>
+        <div className="flex items-start justify-between gap-3 rounded-xl border border-admin-border bg-admin-raised p-4"><div><p className={`${monoClass} text-2xl`}>{leadUpdates}</p><p className="mt-1 text-xs text-admin-muted">Lead updates</p></div><ActivityIcon type="lead_created" /></div>
+        <div className="flex items-start justify-between gap-3 rounded-xl border border-admin-border bg-admin-raised p-4"><div><p className={`${monoClass} text-2xl`}>{teamUpdates + published}</p><p className="mt-1 text-xs text-admin-muted">Workspace updates</p></div><ActivityIcon type="member_role_changed" /></div>
       </div>
       <div className="border-t border-admin-border px-5 py-4"><a href={`/${tenant}/dashboard/activity`} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-admin-primary hover:underline">Review the full activity log <ArrowUpRight aria-hidden="true" className="size-3.5" /></a></div>
     </Panel>
