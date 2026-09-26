@@ -134,11 +134,13 @@ export default async function DashboardPage({
     );
   }
   const profileMetadata = context?.profileMetadata ?? {};
-  const ownerName =
-    stringFrom(base.business.ownerName) ??
+  const currentUserDisplayName =
     stringFrom(profileMetadata.full_name) ??
     stringFrom(profileMetadata.name) ??
-    nameFromEmail(context?.user.email) ??
+    nameFromEmail(context?.user.email);
+  const ownerName =
+    stringFrom(base.business.ownerName) ??
+    currentUserDisplayName ??
     "";
   let preferences = { new_lead_alerts: true, weekly_digest: true, timezone: "Asia/Kolkata" };
   let preferencesError: string | undefined;
@@ -179,7 +181,12 @@ export default async function DashboardPage({
       ].find((value): value is string => typeof value === "string" && value.length > 0) ?? null;
       activity = (await listWorkspaceActivity(context.db, context.tenant.id, {
         limit: 5,
-        currentActor: { userId: context.user.id, avatarUrl: currentAvatar },
+        currentActor: {
+          userId: context.user.id,
+          displayName: currentUserDisplayName ?? WORKSPACE_ROLE_LABELS[currentRole],
+          email: context.user.email,
+          avatarUrl: currentAvatar,
+        },
       })).events;
     } catch {
       activity = [];

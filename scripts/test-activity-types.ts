@@ -30,8 +30,8 @@ assert.deepEqual(formatActivityActor({ displayName: 'Ada Lovelace' }), {
 })
 assert.deepEqual(formatActivityActor({ email: 'owner@example.com' }), {
   userId: null,
-  name: 'owner@example.com',
-  initials: 'OW',
+  name: 'Workspace member',
+  initials: 'WM',
   avatarUrl: null,
 })
 assert.equal(mapLeadEventType('created'), 'lead_created')

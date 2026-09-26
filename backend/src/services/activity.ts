@@ -81,7 +81,7 @@ function actorWords(value: string): string[] {
 }
 
 export function formatActivityActor(input: ActivityActorInput): ActivityActor {
-  const name = input.displayName?.trim() || input.email?.trim() || 'Workspace member'
+  const name = input.displayName?.trim() || 'Workspace member'
   const words = actorWords(name)
   const initials = words.length > 1
     ? `${words[0]![0]}${words.at(-1)![0]}`
@@ -196,7 +196,7 @@ export type WorkspaceActivityOptions = {
   limit?: number
   cursor?: string
   leadId?: string
-  currentActor?: Pick<ActivityActorInput, 'userId' | 'avatarUrl'>
+  currentActor?: ActivityActorInput
 }
 
 function actorIdFromPayload(payload: Record<string, unknown>): string | null {
@@ -282,12 +282,22 @@ export async function listWorkspaceActivity(
     : { data: [], error: null }
   if (leadsResult.error) throw new Error(`Could not load activity leads: ${leadsResult.error.message}`)
   const leadNames = new Map((leadsResult.data ?? []).map((lead) => [lead.id, lead.name]))
-  const actors = new Map((membersResult.data ?? []).map((member) => [member.user_id, formatActivityActor({
-    userId: member.user_id,
-    displayName: member.display_name,
-    email: member.email,
-    avatarUrl: options.currentActor?.userId === member.user_id ? options.currentActor.avatarUrl : null,
-  })]))
+  const actors = new Map((membersResult.data ?? []).map((member) => {
+    const isCurrentActor = options.currentActor?.userId === member.user_id
+    return [member.user_id, formatActivityActor({
+      userId: member.user_id,
+      displayName: isCurrentActor
+        ? options.currentActor?.displayName ?? member.display_name
+        : member.display_name,
+      email: isCurrentActor
+        ? options.currentActor?.email ?? member.email
+        : member.email,
+      avatarUrl: isCurrentActor ? options.currentActor?.avatarUrl : null,
+    })]
+  }))
+  if (options.currentActor?.userId && !actors.has(options.currentActor.userId)) {
+    actors.set(options.currentActor.userId, formatActivityActor(options.currentActor))
+  }
   const fallbackActor = formatActivityActor({})
   const events: NormalizedActivityEvent[] = []
 
