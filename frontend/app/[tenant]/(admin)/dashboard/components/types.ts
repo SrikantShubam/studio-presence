@@ -1,4 +1,4 @@
-import type { ClientConfig, Lead, LeadStatus } from "@studio/backend";
+import type { ClientConfig, Lead, LeadStatus, NormalizedActivityEvent } from "@studio/backend";
 import {
   getWorkspaceCapabilities,
   type WorkspaceCapability,
@@ -40,6 +40,7 @@ export type WorkspaceConfig = Pick<
 export type WorkspacePreferences = {
   new_lead_alerts: boolean;
   weekly_digest: boolean;
+  timezone: string;
 };
 export type EnquiryFilters = {
   status: "all" | LeadStatus;
@@ -113,6 +114,7 @@ export type WorkspaceData = {
   canCreate: boolean;
   leadError?: string;
   preferencesError?: string;
+  activity?: NormalizedActivityEvent[];
 };
 
 export function dashboardMode(

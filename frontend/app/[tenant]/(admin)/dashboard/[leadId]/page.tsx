@@ -3,8 +3,9 @@ import { notFound, redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { ChevronDown } from 'lucide-react'
-import { canAccessDashboard, leads, listWorkspaceMembers, leadStatusSchema, requireTenant, type Lead, type WorkspaceMember } from '@studio/backend'
+import { canAccessDashboard, leads, listWorkspaceActivity, listWorkspaceMembers, leadStatusSchema, requireTenant, type Lead, type WorkspaceMember } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { LeadDetailTabs } from '../components/LeadDetailTabs'
 
 const STATUS_LABELS: Record<Lead['status'], string> = {
   new: 'New',
@@ -23,6 +24,9 @@ export default async function LeadDetailPage({
 }) {
   const { tenant: tenantSlug, leadId } = await params
   const { lead, context, members, role } = await loadLead(tenantSlug, leadId)
+  const timeline = (await listWorkspaceActivity(context.db, context.tenant.id, { limit: 10, leadId: lead.id })).events
+  const preferences = await context.db.from('workspace_preferences').select('timezone').eq('tenant_id', context.tenant.id).maybeSingle()
+  const timezone = preferences.data?.timezone || 'Asia/Kolkata'
   const canUpdateWork = role === 'owner' || role === 'viewer' || (role === 'editor' && lead.assigned_to === context.user.id)
   const canAssign = role === 'owner'
   const assignableMembers = members.filter((member) => member.role === 'owner' || member.role === 'editor')
@@ -84,7 +88,13 @@ export default async function LeadDetailPage({
           <DetailRow label="Phone" value={lead.phone} /><DetailRow label="Email" value={lead.email} /><DetailRow label="Source" value={lead.source} /><DetailRow label="Source page" value={lead.source_page} /><DetailRow label="Arrived" value={new Date(lead.created_at).toLocaleString('en-IN')} /><DetailRow label="Contacted" value={lead.contacted_at ? new Date(lead.contacted_at).toLocaleString('en-IN') : null} />
         </dl>
       </section>
-      <section className="rounded-xl border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Message</h2><p className="mt-3 whitespace-pre-wrap text-base text-admin-ink">{lead.message || 'No message was included with this enquiry.'}</p></section>
+      <LeadDetailTabs
+        notes={<a href="#lead-notes" className="text-sm text-admin-primary hover:underline">Jump to the private notes panel below.</a>}
+        booklet={<a href="#lead-booklet" className="text-sm text-admin-primary hover:underline">Jump to the lead booklet details below.</a>}
+        timeline={timeline}
+        timezone={timezone}
+      />
+      <section id="lead-booklet" className="rounded-xl border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Message</h2><p className="mt-3 whitespace-pre-wrap text-base text-admin-ink">{lead.message || 'No message was included with this enquiry.'}</p></section>
       {estimateRows.length > 0 && <section className="rounded-xl border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Estimate details</h2><dl className="mt-3 grid gap-3 text-sm sm:grid-cols-2">{estimateRows.map(([label, value]) => <DetailRow key={label} label={label} value={value} />)}</dl></section>}
       <section className="rounded-xl border border-admin-border bg-admin-surface p-4">
         <h2 className="text-base font-semibold text-admin-ink">Assignee</h2>
@@ -138,7 +148,7 @@ export default async function LeadDetailPage({
         </form>
         {!canUpdateWork && <p className="mt-3 text-xs text-admin-muted">Only the lead coordinator, assigned content manager, or workspace owner can update status and notes.</p>}
       </section>
-      <section className="rounded-xl border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Notes</h2><form action={saveNote} className="mt-3 flex flex-col gap-3"><label className="flex flex-col gap-1.5 text-sm font-medium text-admin-ink">Private note<textarea name="notes" defaultValue={lead.notes ?? ''} disabled={!canUpdateWork} rows={6} className="min-h-36 rounded-xl border border-admin-border bg-admin-surface px-3 py-3 text-base font-normal text-admin-ink outline-none focus:border-admin-primary" /></label><button type="submit" disabled={!canUpdateWork} className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:cursor-not-allowed disabled:opacity-50">Save note</button></form></section>
+      <section id="lead-notes" className="rounded-xl border border-admin-border bg-admin-surface p-4"><h2 className="text-base font-semibold text-admin-ink">Notes</h2><form action={saveNote} className="mt-3 flex flex-col gap-3"><label className="flex flex-col gap-1.5 text-sm font-medium text-admin-ink">Private note<textarea name="notes" defaultValue={lead.notes ?? ''} disabled={!canUpdateWork} rows={6} className="min-h-36 rounded-xl border border-admin-border bg-admin-surface px-3 py-3 text-base font-normal text-admin-ink outline-none focus:border-admin-primary" /></label><button type="submit" disabled={!canUpdateWork} className="min-h-12 rounded-lg bg-admin-primary px-4 text-base font-semibold text-admin-on-primary disabled:cursor-not-allowed disabled:opacity-50">Save note</button></form></section>
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-admin-border bg-admin-surface p-3 rounded-xl"><div className="mx-auto grid max-w-3xl grid-cols-2 gap-2"><a href={whatsappHref} className="flex min-h-12 items-center justify-center rounded-lg bg-admin-primary px-3 text-base font-semibold text-admin-on-primary">WhatsApp</a><a href={'tel:' + lead.phone} className="flex min-h-12 items-center justify-center rounded-xl border border-admin-border px-3 text-base font-semibold text-admin-ink">Call</a></div></div>
     </div>
   )

@@ -711,6 +711,7 @@ export function SettingsTab({
   const [ownerEmailDraft, setOwnerEmailDraft] = useState(ownerEmail);
   const [newLeadAlerts, setNewLeadAlerts] = useState(preferences.new_lead_alerts);
   const [weeklyDigest, setWeeklyDigest] = useState(preferences.weekly_digest);
+  const [timezone, setTimezone] = useState(preferences.timezone);
   const ownerNameValue = "ownerName" in edits ? String(edits.ownerName ?? "") : business.ownerName?.trim() || ownerName;
   const ownerEmailChanged = ownerEmailDraft.trim() !== ownerEmail;
 
@@ -754,7 +755,8 @@ export function SettingsTab({
   useEffect(() => {
     setNewLeadAlerts(preferences.new_lead_alerts);
     setWeeklyDigest(preferences.weekly_digest);
-  }, [preferences.new_lead_alerts, preferences.weekly_digest]);
+    setTimezone(preferences.timezone);
+  }, [preferences.new_lead_alerts, preferences.weekly_digest, preferences.timezone]);
 
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -802,6 +804,7 @@ export function SettingsTab({
       await onSavePreferences({
         new_lead_alerts: newLeadAlerts,
         weekly_digest: weeklyDigest,
+        timezone,
       });
       preferencesSaved = true;
       if (ownerEmailChanged && mode !== "demo") {
@@ -1052,6 +1055,7 @@ export function SettingsTab({
                 <Feedback error={preferencesError} />
                 <label className="flex items-center justify-between gap-3"><span><span className="block font-medium">New enquiry alerts</span><span className="text-admin-muted">Show an alert when a lead arrives.</span></span><input type="checkbox" disabled={!canEdit || pending} className="size-4 accent-admin-primary" checked={newLeadAlerts} onChange={(event) => setNewLeadAlerts(event.target.checked)} /></label>
                 <label className="flex items-center justify-between gap-3 border-t border-admin-border pt-3 rounded-xl"><span><span className="block font-medium">Weekly activity digest</span><span className="text-admin-muted">Show the last seven days in your workspace.</span></span><input type="checkbox" disabled={!canEdit || pending} className="size-4 accent-admin-primary" checked={weeklyDigest} onChange={(event) => setWeeklyDigest(event.target.checked)} /></label>
+                <label className="grid gap-1 border-t border-admin-border pt-3"><span className="font-medium">Workspace timezone</span><span className="text-admin-muted">Activity timestamps and monthly reports use this timezone.</span><select disabled={!canEdit || pending} className="mt-1 min-h-11 rounded-xl border border-admin-border bg-admin-surface px-3 text-sm text-admin-ink" value={timezone} onChange={(event) => setTimezone(event.target.value)}><option value="Asia/Kolkata">India Standard Time (Asia/Kolkata)</option><option value="Asia/Dubai">Gulf Standard Time (Asia/Dubai)</option><option value="Asia/Singapore">Singapore Time (Asia/Singapore)</option><option value="Europe/London">United Kingdom (Europe/London)</option><option value="America/New_York">Eastern Time (America/New_York)</option><option value="America/Los_Angeles">Pacific Time (America/Los_Angeles)</option></select></label>
               </div>
             </Panel>
           </div>

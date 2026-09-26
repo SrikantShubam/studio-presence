@@ -7,6 +7,7 @@ import {
   leads,
   listWorkspaceMembers,
   listWorkspaceInvitations,
+  listWorkspaceActivity,
   leadStatusSchema,
   panel,
   requireTenant,
@@ -17,7 +18,7 @@ import {
   loadTenantWorkspaceConfig,
 } from "@/lib/tenant-config";
 import { DashboardWorkspace } from "./components/DashboardShell";
-import { DEMO_ENQUIRIES, DEMO_WORKSPACE_MEMBERS } from "./components/demo-data";
+import { DEMO_ACTIVITY, DEMO_ENQUIRIES, DEMO_WORKSPACE_MEMBERS } from "./components/demo-data";
 import {
   applyConfigPatch,
 
@@ -137,8 +138,9 @@ export default async function DashboardPage({
     stringFrom(profileMetadata.name) ??
     nameFromEmail(context?.user.email) ??
     "";
-  let preferences = { new_lead_alerts: true, weekly_digest: true };
+  let preferences = { new_lead_alerts: true, weekly_digest: true, timezone: "Asia/Kolkata" };
   let preferencesError: string | undefined;
+  let activity: Awaited<ReturnType<typeof listWorkspaceActivity>>['events'] = mode === "demo" ? DEMO_ACTIVITY : [];
 
   let members: WorkspaceMember[] = mode === "demo" ? DEMO_WORKSPACE_MEMBERS : [];
   let currentRole: "owner" | "editor" | "viewer" = context ? "viewer" : "owner";
@@ -164,6 +166,11 @@ export default async function DashboardPage({
       preferences = await getWorkspacePreferences(context.db, context.tenant.id);
     } catch {
       preferencesError = "Notification preferences could not be loaded. Refresh to try again.";
+    }
+    try {
+      activity = (await listWorkspaceActivity(context.db, context.tenant.id, { limit: 5 })).events;
+    } catch {
+      activity = [];
     }
     if (mode === "live") {
       try {
@@ -240,6 +247,7 @@ export default async function DashboardPage({
         canCreate: getWorkspaceCapabilities(currentRole).leadCreate,
         leadError,
         preferencesError,
+        activity,
       }}
       leadAction={mutateLead}
     />

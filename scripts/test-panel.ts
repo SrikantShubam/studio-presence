@@ -279,6 +279,7 @@ async function main() {
     await saveWorkspacePreferences(asA, a.tenantId, a.userId, {
       new_lead_alerts: false,
       weekly_digest: true,
+      timezone: 'Asia/Kolkata',
     })
     const preferencesA = await getWorkspacePreferences(asA, a.tenantId)
     assert(
@@ -290,6 +291,7 @@ async function main() {
     await saveWorkspacePreferences(asB, b.tenantId, b.userId, {
       new_lead_alerts: false,
       weekly_digest: false,
+      timezone: 'Asia/Kolkata',
     })
     const preferencesFromA = await getWorkspacePreferences(asA, b.tenantId)
     assert(
@@ -303,6 +305,7 @@ async function main() {
       await saveWorkspacePreferences(asA, b.tenantId, a.userId, {
         new_lead_alerts: true,
         weekly_digest: true,
+        timezone: 'Asia/Kolkata',
       })
     } catch {
       crossTenantPreferencesWriteBlocked = true

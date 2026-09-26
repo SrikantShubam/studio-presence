@@ -263,6 +263,11 @@ export default function OverviewTab({
           </div>
         </Panel>
       </div>
+      <RecentActivityCard
+        tenant={data.tenant}
+        events={data.activity ?? []}
+        timezone={data.preferences.timezone}
+      />
       <EnquiryDesk
         enquiries={data.enquiries}
         filters={filters}
@@ -272,6 +277,42 @@ export default function OverviewTab({
         tenant={data.tenant}
       />
     </>
+  );
+}
+
+function RecentActivityCard({
+  tenant,
+  events,
+  timezone,
+}: {
+  tenant: string;
+  events: WorkspaceData["activity"];
+  timezone: string;
+}) {
+  const visibleEvents = (events ?? []).slice(0, 5);
+  const formatter = new Intl.DateTimeFormat("en-IN", {
+    timeZone: timezone,
+    day: "numeric",
+    month: "short",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+  return (
+    <Panel
+      title="Recent workspace activity"
+      description="Meaningful changes across your workspace."
+      action={<a href={`/${tenant}/dashboard/activity`} className="text-xs font-semibold text-admin-primary hover:underline">View all</a>}
+    >
+      <div className="divide-y divide-admin-border px-5">
+        {visibleEvents.length ? visibleEvents.map((event) => {
+          const content = <div className="flex min-w-0 items-start gap-3 py-4">
+            {event.actor.avatarUrl ? <img src={event.actor.avatarUrl} alt="" className="size-8 shrink-0 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[10px] font-semibold">{event.actor.initials}</span>}
+            <div className="min-w-0 flex-1"><p className="text-xs font-semibold">{event.title}</p><p className="mt-1 text-xs text-admin-muted">{event.description}</p><p className="mt-1 text-[10px] text-admin-muted">{event.actor.name} · {formatter.format(new Date(event.createdAt))}</p></div>
+          </div>;
+          return event.entityType === "lead" && event.entityId ? <a key={`${event.source}:${event.eventId}`} href={`/${tenant}/dashboard/${event.entityId}`} className="block hover:bg-admin-raised/40">{content}</a> : <div key={`${event.source}:${event.eventId}`}>{content}</div>;
+        }) : <p className="py-6 text-xs text-admin-muted">No workspace activity yet.</p>}
+      </div>
+    </Panel>
   );
 }
 

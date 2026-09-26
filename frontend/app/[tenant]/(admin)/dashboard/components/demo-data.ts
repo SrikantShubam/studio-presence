@@ -1,4 +1,13 @@
 import type { Enquiry, WorkspaceMember } from "./types";
+import type { NormalizedActivityEvent } from "@studio/backend";
+
+export const DEMO_ACTIVITY: NormalizedActivityEvent[] = [
+  { source: "lead_events", eventId: "00000000-0000-4000-8000-000000000001", createdAt: "2026-09-18T10:42:00.000Z", type: "lead_created", tenantId: "sample", actor: { userId: "demo-owner", name: "Workspace owner (demo)", initials: "WO", avatarUrl: null }, title: "New enquiry", description: "Ananya Sinha sent a new enquiry.", entityType: "lead", entityId: "sample-1", payload: {} },
+  { source: "tenant_membership_events", eventId: "00000000-0000-4000-8000-000000000002", createdAt: "2026-09-18T09:30:00.000Z", type: "member_role_changed", tenantId: "sample", actor: { userId: "demo-owner", name: "Workspace owner (demo)", initials: "WO", avatarUrl: null }, title: "Team role changed", description: "Design editor (demo) is now an editor.", entityType: "member", entityId: "demo-editor", payload: {} },
+  { source: "lead_events", eventId: "00000000-0000-4000-8000-000000000003", createdAt: "2026-09-17T09:00:00.000Z", type: "lead_status_changed", tenantId: "sample", actor: { userId: "demo-editor", name: "Design editor (demo)", initials: "DE", avatarUrl: null }, title: "Lead status changed", description: "Priya & Amit moved from new to contacted.", entityType: "lead", entityId: "sample-3", payload: { from: "new", to: "contacted" } },
+  { source: "workspace_activity_events", eventId: "00000000-0000-4000-8000-000000000004", createdAt: "2026-09-16T09:00:00.000Z", type: "content_published", tenantId: "sample", actor: { userId: "demo-owner", name: "Workspace owner (demo)", initials: "WO", avatarUrl: null }, title: "Website published", description: "Website content was published.", entityType: "workspace", entityId: null, payload: {} },
+  { source: "workspace_activity_events", eventId: "00000000-0000-4000-8000-000000000005", createdAt: "2026-09-15T09:00:00.000Z", type: "analytics_monthly_summary", tenantId: "sample", actor: { userId: null, name: "Workspace member", initials: "WM", avatarUrl: null }, title: "Monthly analytics summary", description: "A completed-month website report is available.", entityType: "analytics", entityId: null, payload: {} },
+];
 
 export const DEMO_WORKSPACE_MEMBERS: WorkspaceMember[] = [
   { user_id: "demo-owner", tenant_id: "sample", role: "owner", created_at: "2026-01-01T00:00:00.000Z", email: "owner@example.invalid", display_name: "Workspace owner (demo)" },

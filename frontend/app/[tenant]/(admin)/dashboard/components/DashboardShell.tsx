@@ -403,7 +403,8 @@ export function DashboardWorkspace({
           parsedPreferences &&
           typeof parsedPreferences === "object" &&
           typeof (parsedPreferences as Record<string, unknown>).new_lead_alerts === "boolean" &&
-          typeof (parsedPreferences as Record<string, unknown>).weekly_digest === "boolean"
+          typeof (parsedPreferences as Record<string, unknown>).weekly_digest === "boolean" &&
+          typeof (parsedPreferences as Record<string, unknown>).timezone === "string"
         ) {
           setData((previous) => ({
             ...previous,

@@ -97,8 +97,21 @@ export type WorkspacePreferences = {
   tenant_id: string
   new_lead_alerts: boolean
   weekly_digest: boolean
+  timezone: string
   updated_at: string
   updated_by: string
+}
+
+export type WorkspaceActivityEvent = {
+  id: string
+  tenant_id: string
+  actor_user_id: string | null
+  event_type: string
+  entity_type: string | null
+  entity_id: string | null
+  payload: Record<string, unknown>
+  period_key: string | null
+  created_at: string
 }
 
 export type OnboardingDraft = {
@@ -147,6 +160,7 @@ export type Database = {
       lead_events: Table<LeadEvent>
       client_overrides: Table<ClientOverride>
       workspace_preferences: Table<WorkspacePreferences>
+      workspace_activity_events: Table<WorkspaceActivityEvent>
       onboarding_drafts: Table<OnboardingDraft>
       tenant_hostnames: Table<TenantHostname>
       tenant_workspaces: Table<TenantWorkspace>

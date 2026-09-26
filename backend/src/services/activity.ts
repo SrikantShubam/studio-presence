@@ -187,6 +187,111 @@ export function mapLeadEventType(type: string): ActivityEventType | null {
   }
 }
 
+export type WorkspaceActivityPage = {
+  events: NormalizedActivityEvent[]
+  nextCursor: string | null
+}
+
+export type WorkspaceActivityOptions = {
+  limit?: number
+  cursor?: string
+  leadId?: string
+}
+
+function actorIdFromPayload(payload: Record<string, unknown>): string | null {
+  return typeof payload.actor_user_id === 'string' ? payload.actor_user_id : null
+}
+
+function eventEntity(type: ActivityEventType): NormalizedActivityEvent['entityType'] {
+  if (type.startsWith('lead_')) return 'lead'
+  if (type.startsWith('member_')) return type.includes('invitation') ? 'invitation' : 'member'
+  if (type === 'analytics_monthly_summary') return 'analytics'
+  return 'workspace'
+}
+
+function leadEventText(type: ActivityEventType, leadName: string, payload: Record<string, unknown>) {
+  switch (type) {
+    case 'lead_created': return { title: 'New enquiry', description: `${leadName} sent a new enquiry.` }
+    case 'lead_assigned': return { title: 'Lead assigned', description: `${leadName} was assigned.` }
+    case 'lead_reassigned': return { title: 'Lead reassigned', description: `${leadName} was reassigned.` }
+    case 'lead_status_changed': return { title: 'Lead status changed', description: `${leadName} moved from ${String(payload.from ?? 'unknown')} to ${String(payload.to ?? 'unknown')}.` }
+    case 'lead_note_updated': return { title: 'Lead note updated', description: `A note on ${leadName} was updated.` }
+    default: return { title: 'Lead activity', description: `Activity was recorded for ${leadName}.` }
+  }
+}
+
+function membershipEventText(type: ActivityEventType): { title: string; description: string } {
+  switch (type) {
+    case 'member_invitation_created': return { title: 'Team invitation', description: 'A team invitation was sent.' }
+    case 'member_invitation_accepted': return { title: 'Team member joined', description: 'A team invitation was accepted.' }
+    case 'member_invitation_revoked': return { title: 'Team invitation revoked', description: 'A pending team invitation was revoked.' }
+    case 'member_role_changed': return { title: 'Team role changed', description: 'A team member role was changed.' }
+    case 'member_removed': return { title: 'Team member removed', description: 'A team member was removed.' }
+    default: return { title: 'Team activity', description: 'Workspace membership changed.' }
+  }
+}
+
+export async function listWorkspaceActivity(
+  db: import('../db/scoped').Db,
+  tenantId: string,
+  options: WorkspaceActivityOptions = {},
+): Promise<WorkspaceActivityPage> {
+  const limit = Math.min(Math.max(options.limit ?? 10, 1), 50)
+  const cursor = options.cursor ? decodeActivityCursor(options.cursor) : null
+  const [leadResult, membershipResult, workspaceResult, membersResult] = await Promise.all([
+    db.from('lead_events').select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false }).limit(100),
+    db.from('tenant_membership_events').select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false }).limit(100),
+    db.from('workspace_activity_events').select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false }).limit(100),
+    db.rpc('list_tenant_members', { p_tenant_id: tenantId }),
+  ])
+  if (leadResult.error) throw new Error(`Could not load lead activity: ${leadResult.error.message}`)
+  if (membershipResult.error) throw new Error(`Could not load membership activity: ${membershipResult.error.message}`)
+  if (workspaceResult.error) throw new Error(`Could not load workspace activity: ${workspaceResult.error.message}`)
+  if (membersResult.error) throw new Error(`Could not load activity actors: ${membersResult.error.message}`)
+
+  const leadRows = (leadResult.data ?? []) as Array<{ id: string; lead_id: string; tenant_id: string; type: string; payload: Record<string, unknown>; created_at: string }>
+  const leadIds = [...new Set(leadRows.map((row) => row.lead_id))]
+  const leadsResult = leadIds.length
+    ? await db.from('leads').select('id, name').in('id', leadIds)
+    : { data: [], error: null }
+  if (leadsResult.error) throw new Error(`Could not load activity leads: ${leadsResult.error.message}`)
+  const leadNames = new Map((leadsResult.data ?? []).map((lead) => [lead.id, lead.name]))
+  const actors = new Map((membersResult.data ?? []).map((member) => [member.user_id, formatActivityActor({ userId: member.user_id, displayName: member.display_name, email: member.email })]))
+  const fallbackActor = formatActivityActor({})
+  const events: NormalizedActivityEvent[] = []
+
+  for (const row of leadRows) {
+    const type = mapLeadEventType(row.type)
+    if (!type) continue
+    const text = leadEventText(type, leadNames.get(row.lead_id) ?? 'Lead', row.payload)
+    events.push({ source: 'lead_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(actorIdFromPayload(row.payload) ?? '') ?? fallbackActor, title: text.title, description: text.description, entityType: eventEntity(type), entityId: row.lead_id, payload: row.payload })
+  }
+
+  for (const row of (membershipResult.data ?? []) as Array<{ id: string; tenant_id: string; actor_user_id: string | null; target_user_id: string | null; invitation_id: string | null; type: string; payload: Record<string, unknown>; created_at: string }>) {
+    const type = mapMembershipEventType(row.type)
+    if (!type) continue
+    const text = membershipEventText(type)
+    const entityId = row.target_user_id ?? row.invitation_id
+    events.push({ source: 'tenant_membership_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(row.actor_user_id ?? '') ?? fallbackActor, title: text.title, description: text.description, entityType: eventEntity(type), entityId, payload: row.payload })
+  }
+
+  for (const row of (workspaceResult.data ?? []) as Array<{ id: string; tenant_id: string; actor_user_id: string | null; event_type: string; entity_type: string | null; entity_id: string | null; payload: Record<string, unknown>; created_at: string }>) {
+    if (!ACTIVITY_EVENT_TYPES.includes(row.event_type as ActivityEventType)) continue
+    const type = row.event_type as ActivityEventType
+    events.push({ source: 'workspace_activity_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(row.actor_user_id ?? '') ?? fallbackActor, title: type === 'content_published' ? 'Website published' : 'Monthly analytics summary', description: type === 'content_published' ? 'Website content was published.' : 'A completed-month website report is available.', entityType: eventEntity(type), entityId: row.entity_id, payload: row.payload })
+  }
+
+  const filtered = events
+    .filter((event) => !options.leadId || (event.entityType === 'lead' && event.entityId === options.leadId))
+    .filter((event) => !cursor || isOlderActivityPosition(event, cursor))
+    .sort((left, right) => compareActivityPositions(right, left))
+  const page = filtered.slice(0, limit)
+  return {
+    events: page,
+    nextCursor: filtered.length > limit && page.length ? encodeActivityCursor(page.at(-1)!) : null,
+  }
+}
+
 export function mapMembershipEventType(type: string): ActivityEventType | null {
   switch (type) {
     case 'invitation_created':

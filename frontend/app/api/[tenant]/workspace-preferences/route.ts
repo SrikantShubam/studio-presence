@@ -14,6 +14,7 @@ const paramsSchema = z.object({ tenant: z.string().regex(/^[a-z0-9-]+$/) })
 const valuesSchema = z.object({
   new_lead_alerts: z.boolean(),
   weekly_digest: z.boolean(),
+  timezone: z.string().trim().min(1).default('Asia/Kolkata'),
 }).strict()
 
 type RouteContext = { params: Promise<{ tenant: string }> }
