@@ -63,6 +63,8 @@ const supportingTabs = readFileSync(
 assert.match(enquiryDialogs, /InternationalPhoneInput/);
 assert.match(enquiryDialogs, /Describe the project type/);
 assert.match(enquiryDesk, /<StatusBadge status=\{item\.status\} \/>[\s\S]*Updated/);
+assert.match(enquiryDesk, /aria-pressed=\{filters\.status === status\}[\s\S]*rounded-xl border px-3[\s\S]*bg-admin-primary-soft/);
+assert.doesNotMatch(enquiryDesk, /border-b-2/);
 assert.match(dashboardShell, /initialData\.mode !== "demo"\) setData\(initialData\)/);
 for (const status of ["new", "contacted", "quoted", "won", "lost"]) {
   assert.match(primitives, new RegExp(`${status}: ".*admin-`));

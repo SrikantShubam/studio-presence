@@ -121,7 +121,7 @@ export function EnquiryDesk({
                 key={status}
                 aria-pressed={filters.status === status}
                 onClick={() => onFiltersChange({ ...filters, status })}
-                className={`min-h-11 border-b-2 px-2 text-xs focus-visible:outline-2 focus-visible:outline-admin-primary ${filters.status === status ? "border-admin-ink font-semibold rounded-xl" : "border-transparent text-admin-muted"}`}
+                className={`min-h-11 rounded-xl border px-3 text-xs focus-visible:outline-2 focus-visible:outline-admin-primary ${filters.status === status ? "border-admin-primary bg-admin-primary-soft font-semibold text-admin-primary" : "border-transparent text-admin-muted hover:bg-admin-raised"}`}
               >
                 {status === "all" ? "All" : STATUS_LABELS[status]}
                 <span className={`${monoClass} ml-2 text-[10px]`}>
