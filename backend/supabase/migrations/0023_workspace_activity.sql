@@ -26,6 +26,8 @@ create unique index if not exists workspace_activity_events_monthly_summary_uniq
 
 alter table public.workspace_activity_events enable row level security;
 
+grant select on table public.workspace_activity_events to authenticated;
+
 create policy workspace_activity_events_select on public.workspace_activity_events
   for select to authenticated
   using (tenant_id in (select public.current_tenant_ids()));
@@ -58,7 +60,7 @@ begin
   if not found then raise exception 'lead not found' using errcode = 'no_data_found'; end if;
 
   v_role := public.current_tenant_role(v_lead.tenant_id);
-  if v_role is null or (v_role = 'editor' and (v_lead.assigned_to is null or v_lead.assigned_to <> auth.uid())) or v_role not in ('owner', 'editor') then
+  if v_role is null or (v_role = 'editor' and (v_lead.assigned_to is null or v_lead.assigned_to <> auth.uid())) or v_role not in ('owner', 'editor', 'viewer') then
     raise exception 'you cannot update this lead' using errcode = '42501';
   end if;
 
@@ -66,7 +68,9 @@ begin
   v_previous_notes := v_lead.notes;
 
   update public.leads
-  set status = p_status, notes = v_next_notes
+  set status = p_status,
+      notes = v_next_notes,
+      updated_at = now()
   where id = p_lead_id
   returning * into v_lead;
 
