@@ -11,6 +11,7 @@ import {
   monoClass,
 } from "./primitives";
 import { EnquiryDesk } from "./EnquiryDesk";
+import { ActivityIcon } from "./ActivityIcon";
 import { SAMPLE_CITIES, SAMPLE_TREND } from "./demo-data";
 import type {
   DashboardView,
@@ -308,17 +309,18 @@ function RecentActivityCard({
     <Panel
       title="Recent workspace activity"
       description="Meaningful changes across your workspace."
-      action={<a href={`/${tenant}/dashboard/activity`} className="text-xs font-semibold text-admin-primary hover:underline">View all</a>}
+      action={visibleEvents.length ? <a href={`/${tenant}/dashboard/activity`} className="text-xs font-semibold text-admin-primary hover:underline">View all</a> : undefined}
       className="my-5"
     >
       <div className="divide-y divide-admin-border px-5">
         {visibleEvents.length ? visibleEvents.map((event) => {
           const content = <div className="flex min-w-0 items-start gap-3 py-4">
+            <ActivityIcon type={event.type} />
             {event.actor.avatarUrl ? <img src={event.actor.avatarUrl} alt="" className="size-8 shrink-0 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[10px] font-semibold">{event.actor.initials}</span>}
             <div className="min-w-0 flex-1"><p className="text-xs font-semibold">{event.title}</p><p className="mt-1 text-xs text-admin-muted">{event.description}</p><p className="mt-1 text-[10px] text-admin-muted">{event.actor.name} · {formatter.format(new Date(event.createdAt))}</p></div>
           </div>;
           return event.entityType === "lead" && event.entityId ? <a key={`${event.source}:${event.eventId}`} href={`/${tenant}/dashboard/${event.entityId}`} className="block hover:bg-admin-raised/40">{content}</a> : <div key={`${event.source}:${event.eventId}`}>{content}</div>;
-        }) : <p className="py-6 text-xs text-admin-muted">No workspace activity yet.</p>}
+        }) : <p className="py-6 text-xs text-admin-muted">No new activities.</p>}
       </div>
     </Panel>
   );

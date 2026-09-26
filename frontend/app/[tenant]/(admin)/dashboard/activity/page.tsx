@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation'
+import { ArrowLeft } from 'lucide-react'
 import { canAccessDashboard, listWorkspaceActivity, requireTenant } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { ActivityIcon } from '../components/ActivityIcon'
 import { DEMO_ACTIVITY } from '../components/demo-data'
 
 export default async function WorkspaceActivityPage({
@@ -39,7 +41,6 @@ export default async function WorkspaceActivityPage({
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-5 pb-28 sm:px-6 lg:py-8">
-      <a href={`/${tenant}/dashboard`} className="flex min-h-12 items-center text-sm font-medium text-admin-primary">Back to overview</a>
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-admin-muted">Workspace history</p>
         <h1 className="mt-2 text-2xl font-semibold text-admin-ink">All activity</h1>
@@ -48,12 +49,14 @@ export default async function WorkspaceActivityPage({
       <section className="divide-y divide-admin-border rounded-xl border border-admin-border bg-admin-surface px-5">
         {events.length ? events.map((event) => (
           <div key={`${event.source}:${event.eventId}`} className="flex min-w-0 items-start gap-3 py-4">
+            <ActivityIcon type={event.type} />
             {event.actor.avatarUrl ? <img src={event.actor.avatarUrl} alt="" className="size-9 shrink-0 rounded-full border border-admin-border object-cover" /> : <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[10px] font-semibold">{event.actor.initials}</span>}
             <div className="min-w-0 flex-1"><p className="text-sm font-semibold text-admin-ink">{event.title}</p><p className="mt-1 text-sm text-admin-muted">{event.description}</p><p className="mt-1 text-xs text-admin-muted">{event.actor.name} · {formatter.format(new Date(event.createdAt))}</p></div>
           </div>
-        )) : <p className="py-8 text-sm text-admin-muted">No workspace activity yet.</p>}
+        )) : <p className="py-8 text-sm text-admin-muted">No new activities.</p>}
       </section>
       {nextCursor && <a href={`/${tenant}/dashboard/activity?cursor=${encodeURIComponent(nextCursor)}`} className="flex min-h-12 items-center justify-center rounded-xl border border-admin-border bg-admin-surface text-sm font-semibold text-admin-ink hover:bg-admin-raised">Load more</a>}
+      <a href={`/${tenant}/dashboard`} className="flex min-h-12 items-center justify-center gap-2 text-sm font-semibold text-admin-primary hover:underline"><ArrowLeft aria-hidden="true" className="size-4" />Back to overview</a>
     </main>
   )
 }
