@@ -3,7 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { ChevronDown } from 'lucide-react'
-import { canAccessDashboard, getWorkspacePreferences, leads, listWorkspaceActivity, listWorkspaceMembers, leadStatusSchema, requireTenant, type Lead, type WorkspaceMember } from '@studio/backend'
+import { canAccessDashboard, getWorkspacePreferences, leads, listWorkspaceActivity, listWorkspaceMembers, leadStatusSchema, requireTenant, WORKSPACE_ROLE_LABELS, type Lead, type WorkspaceMember } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { LeadDetailTabs } from '../components/LeadDetailTabs'
 
@@ -31,12 +31,21 @@ export default async function LeadDetailPage({
     context.profileMetadata?.photoURL,
     context.profileMetadata?.image,
   ].find((value): value is string => typeof value === 'string' && value.length > 0) ?? null
+  const currentDisplayName = [
+    context.profileMetadata?.full_name,
+    context.profileMetadata?.name,
+  ].find((value): value is string => typeof value === 'string' && value.trim().length > 0) ?? WORKSPACE_ROLE_LABELS[role]
   let timeline = [] as Awaited<ReturnType<typeof listWorkspaceActivity>>['events']
   try {
     timeline = (await listWorkspaceActivity(context.db, context.tenant.id, {
       limit: 10,
       leadId: lead.id,
-      currentActor: { userId: context.user.id, avatarUrl: currentAvatar },
+      currentActor: {
+        userId: context.user.id,
+        displayName: currentDisplayName,
+        email: context.user.email,
+        avatarUrl: currentAvatar,
+      },
     })).events
   } catch {
     timeline = []

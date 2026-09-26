@@ -33,10 +33,17 @@ export default async function WorkspaceActivityPage({
     } as Record<string, unknown>
     const currentAvatar = [metadata.avatar_url, metadata.picture, metadata.avatarUrl, metadata.photoURL, metadata.image]
       .find((value): value is string => typeof value === 'string' && value.length > 0) ?? null
+    const currentDisplayName = [metadata.full_name, metadata.name]
+      .find((value): value is string => typeof value === 'string' && value.trim().length > 0) ?? null
     const page = await listWorkspaceActivity(context.db, context.tenant.id, {
       limit: 10,
       cursor: query?.cursor,
-      currentActor: { userId: user.id, avatarUrl: currentAvatar },
+      currentActor: {
+        userId: user.id,
+        displayName: currentDisplayName,
+        email: user.email,
+        avatarUrl: currentAvatar,
+      },
     })
     events = page.events
     nextCursor = page.nextCursor
