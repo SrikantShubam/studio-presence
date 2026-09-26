@@ -5,6 +5,8 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { ActivityIcon } from '../components/ActivityIcon'
 import { DEMO_ACTIVITY } from '../components/demo-data'
 
+export const dynamic = 'force-dynamic'
+
 export default async function WorkspaceActivityPage({
   params,
   searchParams,

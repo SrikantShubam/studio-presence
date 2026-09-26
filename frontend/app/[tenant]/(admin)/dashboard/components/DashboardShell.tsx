@@ -490,7 +490,11 @@ export function DashboardWorkspace({
     if (data.mode !== "demo") router.refresh();
   }
   const performLeadAction: LeadAction = async (input) => {
-    if (data.mode !== "demo") return leadAction(input);
+    if (data.mode !== "demo") {
+      const result = await leadAction(input);
+      if (result.ok) router.refresh();
+      return result;
+    }
     if (input.kind === "assign") {
       const existing = data.enquiries.find((item) => item.id === input.id);
       const member = data.members?.find((item) => item.user_id === input.userId);

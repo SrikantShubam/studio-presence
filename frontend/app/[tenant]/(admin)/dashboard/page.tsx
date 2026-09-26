@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+
+export const dynamic = "force-dynamic";
 import {
   canAccessDashboard,
   getWorkspacePreferences,
