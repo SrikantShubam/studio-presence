@@ -315,12 +315,12 @@ function RecentActivityCard({
     >
       <div className="divide-y divide-admin-border px-5">
         {visibleEvents.length ? visibleEvents.map((event) => {
-          const content = <div className="flex min-w-0 items-start gap-3 py-4">
+          const content = <div className="flex min-w-0 items-start gap-3 px-2 py-4 hover:rounded-xl hover:bg-admin-raised/40">
             {event.actor.avatarUrl ? <img src={event.actor.avatarUrl} alt="" className="size-8 shrink-0 rounded-full border border-admin-border object-cover" /> : <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-admin-border bg-admin-raised text-[10px] font-semibold">{event.actor.initials}</span>}
             <div className="min-w-0 flex-1"><p className="text-xs font-semibold">{event.title}</p><p className="mt-1 text-xs text-admin-muted">{event.description}</p><p className="mt-1 text-[10px] text-admin-muted">{event.actor.name} · {formatter.format(new Date(event.createdAt))}</p></div>
             <ActivityIcon type={event.type} />
           </div>;
-          return event.entityType === "lead" && event.entityId ? <a key={`${event.source}:${event.eventId}`} href={`/${tenant}/dashboard/${event.entityId}`} className="block hover:bg-admin-raised/40">{content}</a> : <div key={`${event.source}:${event.eventId}`}>{content}</div>;
+          return event.entityType === "lead" && event.entityId ? <a key={`${event.source}:${event.eventId}`} href={`/${tenant}/dashboard/${event.entityId}`} className="block">{content}</a> : <div key={`${event.source}:${event.eventId}`}>{content}</div>;
         }) : <p className="py-6 text-xs text-admin-muted">No new activities.</p>}
       </div>
     </Panel>
