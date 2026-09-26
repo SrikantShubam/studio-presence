@@ -2,7 +2,9 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import { ArrowLeft, ChevronDown, MessageCircle, Phone } from 'lucide-react'
+import { ArrowLeft, ChevronDown, Phone } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { canAccessDashboard, getWorkspacePreferences, leads, listWorkspaceActivity, listWorkspaceMembers, leadStatusSchema, requireTenant, WORKSPACE_ROLE_LABELS, type Lead, type WorkspaceMember } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { LeadTimeline } from '../components/LeadDetailTabs'
@@ -141,7 +143,7 @@ export default async function LeadDetailPage({
           </div>
           <div className="hidden shrink-0 gap-2 sm:flex">
             <a href={whatsappHref} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-admin-primary px-4 text-sm font-semibold text-admin-on-primary">
-              <MessageCircle aria-hidden="true" className="size-4" />WhatsApp
+              <FontAwesomeIcon aria-hidden="true" icon={faWhatsapp} className="size-4" />WhatsApp
             </a>
             <a href={'tel:+' + phoneDigits} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-admin-border bg-admin-bg px-4 text-sm font-semibold text-admin-ink hover:bg-admin-raised">
               <Phone aria-hidden="true" className="size-4" />Call
@@ -244,7 +246,7 @@ export default async function LeadDetailPage({
 
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-admin-border bg-admin-surface p-3 sm:hidden">
         <div className="mx-auto grid max-w-md grid-cols-2 gap-2">
-          <a href={whatsappHref} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary"><MessageCircle aria-hidden="true" className="size-4" />WhatsApp</a>
+          <a href={whatsappHref} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-admin-primary px-3 text-sm font-semibold text-admin-on-primary"><FontAwesomeIcon aria-hidden="true" icon={faWhatsapp} className="size-4" />WhatsApp</a>
           <a href={'tel:+' + phoneDigits} className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-admin-border bg-admin-bg px-3 text-sm font-semibold text-admin-ink"><Phone aria-hidden="true" className="size-4" />Call</a>
         </div>
       </div>
