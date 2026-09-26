@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
-import { canAccessDashboard, listWorkspaceActivity, requireTenant } from '@studio/backend'
+import { canAccessDashboard, getWorkspacePreferences, listWorkspaceActivity, requireTenant } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { ActivityIcon } from '../components/ActivityIcon'
 import { DEMO_ACTIVITY } from '../components/demo-data'
@@ -40,8 +40,11 @@ export default async function WorkspaceActivityPage({
     })
     events = page.events
     nextCursor = page.nextCursor
-    const { data: preferences } = await context.db.from('workspace_preferences').select('timezone').eq('tenant_id', context.tenant.id).maybeSingle()
-    timezone = preferences?.timezone || timezone
+    try {
+      timezone = (await getWorkspacePreferences(context.db, context.tenant.id)).timezone
+    } catch {
+      timezone = 'Asia/Kolkata'
+    }
   } else if (!isDemo) {
     redirect(`/login?next=/${encodeURIComponent(tenant)}/dashboard/activity`)
   }

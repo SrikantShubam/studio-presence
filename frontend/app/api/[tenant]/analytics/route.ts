@@ -6,6 +6,7 @@ import {
   canAccessDashboard,
   createUmamiClient,
   enquiryStats,
+  getWorkspacePreferences,
   monthlyTrend,
   requireTenant,
   sourceBreakdown,
@@ -70,9 +71,10 @@ export async function GET(
       title: project.title,
     }))
 
+    const preferences = await getWorkspacePreferences(tenantContext.db, tenantContext.tenant.id)
     const umami =
       config.integrations.umami.enabled && config.integrations.umami.siteId
-        ? safeUmamiClient(config.integrations.umami.siteId)
+        ? safeUmamiClient(config.integrations.umami.siteId, preferences.timezone)
         : null
 
     const [enquiries, trend, sources, visits, topProjectList] = await Promise.all([
@@ -82,6 +84,18 @@ export async function GET(
       visitStats(umami),
       topProjects(tenantContext.db, tenantContext.tenant.id, umami, projects),
     ])
+
+    if (visits) {
+      const periodKey = completedMonthKey(preferences.timezone)
+      const { error: summaryError } = await tenantContext.db.rpc('record_workspace_activity', {
+        p_tenant_id: tenantContext.tenant.id,
+        p_event_type: 'analytics_monthly_summary',
+        p_entity_type: 'analytics',
+        p_payload: { visitors: visits.lastMonth },
+        p_period_key: periodKey,
+      })
+      if (summaryError) console.error('Could not record monthly analytics summary.', summaryError)
+    }
 
     return NextResponse.json({
       enquiryStats: enquiries,
@@ -103,9 +117,17 @@ export async function GET(
   }
 }
 
-function safeUmamiClient(siteId: string) {
+function completedMonthKey(timeZone: string, now = new Date()): string {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric', month: 'numeric' }).formatToParts(now)
+  const year = Number(parts.find((part) => part.type === 'year')?.value)
+  const month = Number(parts.find((part) => part.type === 'month')?.value)
+  const previous = new Date(Date.UTC(year, month - 2, 1))
+  return `${previous.getUTCFullYear()}-${String(previous.getUTCMonth() + 1).padStart(2, '0')}`
+}
+
+function safeUmamiClient(siteId: string, timeZone: string) {
   try {
-    return createUmamiClient(siteId)
+    return createUmamiClient(siteId, new Date(), timeZone)
   } catch {
     return null
   }

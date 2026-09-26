@@ -81,7 +81,7 @@ function actorWords(value: string): string[] {
 }
 
 export function formatActivityActor(input: ActivityActorInput): ActivityActor {
-  const name = input.displayName?.trim() || input.email?.trim() || 'Workspace member'
+  const name = input.displayName?.trim() || 'Workspace member'
   const words = actorWords(name)
   const initials = words.length > 1
     ? `${words[0]![0]}${words.at(-1)![0]}`
@@ -157,9 +157,9 @@ export function compareActivityPositions(left: ActivityPosition, right: Activity
 
   const leftSource = ACTIVITY_SOURCE_ORDER[left.source]
   const rightSource = ACTIVITY_SOURCE_ORDER[right.source]
-  if (leftSource !== rightSource) return leftSource - rightSource
+  if (leftSource !== rightSource) return rightSource - leftSource
 
-  return left.eventId.localeCompare(right.eventId)
+  return right.eventId.localeCompare(left.eventId)
 }
 
 export function isOlderActivityPosition(
@@ -203,6 +203,13 @@ function actorIdFromPayload(payload: Record<string, unknown>): string | null {
   return typeof payload.actor_user_id === 'string' ? payload.actor_user_id : null
 }
 
+function safeActivityPayload(source: ActivitySource, payload: Record<string, unknown>): Record<string, unknown> {
+  if (source !== 'tenant_membership_events') return payload
+  return Object.fromEntries(
+    Object.entries(payload).filter(([key]) => !/(email|token|secret|password)/i.test(key)),
+  )
+}
+
 function eventEntity(type: ActivityEventType): NormalizedActivityEvent['entityType'] {
   if (type.startsWith('lead_')) return 'lead'
   if (type.startsWith('member_')) return type.includes('invitation') ? 'invitation' : 'member'
@@ -239,10 +246,28 @@ export async function listWorkspaceActivity(
 ): Promise<WorkspaceActivityPage> {
   const limit = Math.min(Math.max(options.limit ?? 10, 1), 50)
   const cursor = options.cursor ? decodeActivityCursor(options.cursor) : null
+  const sourceRange = (source: ActivitySource): 'lt' | 'lte' | 'same' | null => {
+    if (!cursor) return null
+    const sourceRank = ACTIVITY_SOURCE_ORDER[source]
+    const cursorRank = ACTIVITY_SOURCE_ORDER[cursor.source]
+    if (sourceRank < cursorRank) return 'lt'
+    if (sourceRank > cursorRank) return 'lte'
+    return 'same'
+  }
+
+  const leadQuery = db.from('lead_events').select('*').eq('tenant_id', tenantId)
+  const membershipQuery = db.from('tenant_membership_events').select('*').eq('tenant_id', tenantId)
+  const workspaceQuery = db.from('workspace_activity_events').select('*').eq('tenant_id', tenantId)
+  for (const [source, query] of [['lead_events', leadQuery], ['tenant_membership_events', membershipQuery], ['workspace_activity_events', workspaceQuery]] as const) {
+    const range = sourceRange(source)
+    if (range === 'lt') query.lt('created_at', cursor!.createdAt)
+    if (range === 'lte') query.lte('created_at', cursor!.createdAt)
+    if (range === 'same') query.or(`created_at.lt.${cursor!.createdAt},and(created_at.eq.${cursor!.createdAt},id.gt.${cursor!.eventId})`)
+  }
   const [leadResult, membershipResult, workspaceResult, membersResult] = await Promise.all([
-    db.from('lead_events').select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false }).limit(100),
-    db.from('tenant_membership_events').select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false }).limit(100),
-    db.from('workspace_activity_events').select('*').eq('tenant_id', tenantId).order('created_at', { ascending: false }).limit(100),
+    leadQuery.order('created_at', { ascending: false }).order('id', { ascending: true }).limit(limit),
+    membershipQuery.order('created_at', { ascending: false }).order('id', { ascending: true }).limit(limit),
+    workspaceQuery.order('created_at', { ascending: false }).order('id', { ascending: true }).limit(limit),
     db.rpc('list_tenant_members', { p_tenant_id: tenantId }),
   ])
   if (leadResult.error) throw new Error(`Could not load lead activity: ${leadResult.error.message}`)
@@ -270,7 +295,7 @@ export async function listWorkspaceActivity(
     const type = mapLeadEventType(row.type)
     if (!type) continue
     const text = leadEventText(type, leadNames.get(row.lead_id) ?? 'Lead', row.payload)
-    events.push({ source: 'lead_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(actorIdFromPayload(row.payload) ?? '') ?? fallbackActor, title: text.title, description: text.description, entityType: eventEntity(type), entityId: row.lead_id, payload: row.payload })
+    events.push({ source: 'lead_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(actorIdFromPayload(row.payload) ?? '') ?? fallbackActor, title: text.title, description: text.description, entityType: eventEntity(type), entityId: row.lead_id, payload: safeActivityPayload('lead_events', row.payload) })
   }
 
   for (const row of (membershipResult.data ?? []) as Array<{ id: string; tenant_id: string; actor_user_id: string | null; target_user_id: string | null; invitation_id: string | null; type: string; payload: Record<string, unknown>; created_at: string }>) {
@@ -278,13 +303,13 @@ export async function listWorkspaceActivity(
     if (!type) continue
     const text = membershipEventText(type)
     const entityId = row.target_user_id ?? row.invitation_id
-    events.push({ source: 'tenant_membership_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(row.actor_user_id ?? '') ?? fallbackActor, title: text.title, description: text.description, entityType: eventEntity(type), entityId, payload: row.payload })
+    events.push({ source: 'tenant_membership_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(row.actor_user_id ?? '') ?? fallbackActor, title: text.title, description: text.description, entityType: eventEntity(type), entityId, payload: safeActivityPayload('tenant_membership_events', row.payload) })
   }
 
   for (const row of (workspaceResult.data ?? []) as Array<{ id: string; tenant_id: string; actor_user_id: string | null; event_type: string; entity_type: string | null; entity_id: string | null; payload: Record<string, unknown>; created_at: string }>) {
     if (!ACTIVITY_EVENT_TYPES.includes(row.event_type as ActivityEventType)) continue
     const type = row.event_type as ActivityEventType
-    events.push({ source: 'workspace_activity_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(row.actor_user_id ?? '') ?? fallbackActor, title: type === 'content_published' ? 'Website published' : 'Monthly analytics summary', description: type === 'content_published' ? 'Website content was published.' : 'A completed-month website report is available.', entityType: eventEntity(type), entityId: row.entity_id, payload: row.payload })
+    events.push({ source: 'workspace_activity_events', eventId: row.id, createdAt: row.created_at, type, tenantId, actor: actors.get(row.actor_user_id ?? '') ?? fallbackActor, title: type === 'content_published' ? 'Website published' : 'Monthly analytics summary', description: type === 'content_published' ? 'Website content was published.' : 'A completed-month website report is available.', entityType: eventEntity(type), entityId: row.entity_id, payload: safeActivityPayload('workspace_activity_events', row.payload) })
   }
 
   const filtered = events

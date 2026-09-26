@@ -243,6 +243,7 @@ export type Database = {
       get_demo_window: { Args: { p_tenant_slug: string }; Returns: Array<{ available: boolean; base_revision: string; expires_at: string | null }> }
       operator_import_paid_draft: { Args: { p_tenant_id: string; p_source_demo_id?: string | null; p_base_revision: string; p_patch: Record<string, unknown> }; Returns: string }
       operator_publish_paid_draft: { Args: { p_draft_id: string }; Returns: boolean }
+      record_workspace_activity: { Args: { p_tenant_id: string; p_event_type: string; p_entity_type?: string | null; p_entity_id?: string | null; p_payload?: Record<string, unknown>; p_period_key?: string | null }; Returns: string }
       submit_paid_draft: { Args: { p_tenant_slug: string; p_base_revision: string; p_patch: Record<string, unknown> }; Returns: string }
       get_public_tenant_config_by_hostname: {
         Args: { p_hostname: string }

@@ -27,7 +27,7 @@ type MonthWindow = {
   end: Date
 }
 
-const TIMEZONE = 'Asia/Kolkata'
+const DEFAULT_TIMEZONE = 'Asia/Kolkata'
 
 function requireEnv(name: string): string {
   const v = process.env[name]
@@ -62,11 +62,50 @@ async function login(baseUrl: string, username: string, password: string): Promi
   return data.token
 }
 
-function monthWindow(monthOffset: number, now = new Date()): MonthWindow {
-  const shifted = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + monthOffset, 1))
+function localParts(now: Date, timeZone: string): { year: number; month: number } {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric', month: 'numeric' }).formatToParts(now)
   return {
-    start: shifted,
-    end: new Date(Date.UTC(shifted.getUTCFullYear(), shifted.getUTCMonth() + 1, 1)),
+    year: Number(parts.find((part) => part.type === 'year')?.value),
+    month: Number(parts.find((part) => part.type === 'month')?.value),
+  }
+}
+
+function zonedMidnightUtc(year: number, month: number, timeZone: string): Date {
+  const target = Date.UTC(year, month - 1, 1)
+  let guess = target
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23',
+  })
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const parts = formatter.formatToParts(new Date(guess))
+    const asUtc = Date.UTC(
+      Number(parts.find((part) => part.type === 'year')?.value),
+      Number(parts.find((part) => part.type === 'month')?.value) - 1,
+      Number(parts.find((part) => part.type === 'day')?.value),
+      Number(parts.find((part) => part.type === 'hour')?.value),
+      Number(parts.find((part) => part.type === 'minute')?.value),
+      Number(parts.find((part) => part.type === 'second')?.value),
+    )
+    guess += target - asUtc
+  }
+  return new Date(guess)
+}
+
+function monthWindow(monthOffset: number, now = new Date(), timeZone = DEFAULT_TIMEZONE): MonthWindow {
+  const local = localParts(now, timeZone)
+  const shifted = new Date(Date.UTC(local.year, local.month - 1 + monthOffset, 1))
+  const start = zonedMidnightUtc(shifted.getUTCFullYear(), shifted.getUTCMonth() + 1, timeZone)
+  const next = new Date(Date.UTC(shifted.getUTCFullYear(), shifted.getUTCMonth() + 1, 1))
+  return {
+    start,
+    end: zonedMidnightUtc(next.getUTCFullYear(), next.getUTCMonth() + 1, timeZone),
   }
 }
 
@@ -78,12 +117,12 @@ function projectPath(slug: string): string {
   return `/portfolio/${slug}`
 }
 
-function endpoint(baseUrl: string, siteId: string, resource: 'stats' | 'metrics', window: MonthWindow): URL {
+function endpoint(baseUrl: string, siteId: string, resource: 'stats' | 'metrics', window: MonthWindow, timeZone: string): URL {
   const url = new URL(`/api/websites/${siteId}/${resource}`, baseUrl)
   url.searchParams.set('startAt', String(window.start.getTime()))
   url.searchParams.set('endAt', String(window.end.getTime()))
   url.searchParams.set('unit', 'month')
-  url.searchParams.set('timezone', TIMEZONE)
+  url.searchParams.set('timezone', timeZone)
   return url
 }
 
@@ -91,7 +130,7 @@ async function fetchWithToken(url: URL, token: string): Promise<Response> {
   return fetch(url, { headers: { Authorization: `Bearer ${token}` } })
 }
 
-export function createUmamiClient(siteId: string, now = new Date()): UmamiClient {
+export function createUmamiClient(siteId: string, now = new Date(), timeZone = DEFAULT_TIMEZONE): UmamiClient {
   const baseUrl = requireEnv('UMAMI_API_URL')
   const username = requireEnv('UMAMI_USERNAME')
   const password = requireEnv('UMAMI_PASSWORD')
@@ -119,8 +158,8 @@ export function createUmamiClient(siteId: string, now = new Date()): UmamiClient
   return {
     async visitStats() {
       const [current, previous] = await Promise.all([
-        fetchJson<UmamiStatsResponse>(endpoint(baseUrl, siteId, 'stats', monthWindow(0, now))),
-        fetchJson<UmamiStatsResponse>(endpoint(baseUrl, siteId, 'stats', monthWindow(-1, now))),
+        fetchJson<UmamiStatsResponse>(endpoint(baseUrl, siteId, 'stats', monthWindow(0, now, timeZone), timeZone)),
+        fetchJson<UmamiStatsResponse>(endpoint(baseUrl, siteId, 'stats', monthWindow(-1, now, timeZone), timeZone)),
       ])
 
       return {
@@ -130,7 +169,7 @@ export function createUmamiClient(siteId: string, now = new Date()): UmamiClient
     },
 
     async topProjectPaths() {
-      const url = endpoint(baseUrl, siteId, 'metrics', monthWindow(0, now))
+      const url = endpoint(baseUrl, siteId, 'metrics', monthWindow(0, now, timeZone), timeZone)
       url.searchParams.set('type', 'path')
 
       const metrics = await fetchJson<UmamiMetricResponse>(url)

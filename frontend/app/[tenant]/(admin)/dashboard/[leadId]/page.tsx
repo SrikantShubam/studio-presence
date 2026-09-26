@@ -3,7 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { ChevronDown } from 'lucide-react'
-import { canAccessDashboard, leads, listWorkspaceActivity, listWorkspaceMembers, leadStatusSchema, requireTenant, type Lead, type WorkspaceMember } from '@studio/backend'
+import { canAccessDashboard, getWorkspacePreferences, leads, listWorkspaceActivity, listWorkspaceMembers, leadStatusSchema, requireTenant, type Lead, type WorkspaceMember } from '@studio/backend'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { LeadDetailTabs } from '../components/LeadDetailTabs'
 
@@ -43,8 +43,7 @@ export default async function LeadDetailPage({
   }
   let timezone = 'Asia/Kolkata'
   try {
-    const preferences = await context.db.from('workspace_preferences').select('timezone').eq('tenant_id', context.tenant.id).maybeSingle()
-    timezone = preferences.data?.timezone || timezone
+    timezone = (await getWorkspacePreferences(context.db, context.tenant.id)).timezone
   } catch {
     timezone = 'Asia/Kolkata'
   }
