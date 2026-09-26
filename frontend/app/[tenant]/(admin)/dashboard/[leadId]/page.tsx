@@ -61,6 +61,7 @@ export default async function LeadDetailPage({
     await leads.updateWork(current.db, leadId, status, currentLead.notes ?? '')
     revalidatePath('/' + tenantSlug + '/dashboard')
     revalidatePath('/' + tenantSlug + '/dashboard/' + leadId)
+    redirect('/' + tenantSlug + '/dashboard/' + leadId)
   }
 
   async function saveNote(formData: FormData) {
@@ -73,6 +74,7 @@ export default async function LeadDetailPage({
     await leads.updateWork(current.db, leadId, currentLead.status, note.trim())
     revalidatePath('/' + tenantSlug + '/dashboard')
     revalidatePath('/' + tenantSlug + '/dashboard/' + leadId)
+    redirect('/' + tenantSlug + '/dashboard/' + leadId)
   }
 
   async function saveAssignment(formData: FormData) {
@@ -86,6 +88,7 @@ export default async function LeadDetailPage({
     await leads.assign(current.db, leadId, userId)
     revalidatePath('/' + tenantSlug + '/dashboard')
     revalidatePath('/' + tenantSlug + '/dashboard/' + leadId)
+    redirect('/' + tenantSlug + '/dashboard/' + leadId)
   }
 
   const whatsappHref = 'https://wa.me/' + lead.phone.replace(/\D/g, '')
