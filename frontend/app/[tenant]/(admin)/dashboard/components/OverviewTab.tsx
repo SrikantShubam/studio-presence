@@ -263,11 +263,18 @@ export default function OverviewTab({
           </div>
         </Panel>
       </div>
-      <RecentActivityCard
-        tenant={data.tenant}
-        events={data.activity ?? []}
-        timezone={data.preferences.timezone}
-      />
+      <div className="grid gap-5 xl:grid-cols-[1.15fr_1fr]">
+        <RecentActivityCard
+          tenant={data.tenant}
+          events={data.activity ?? []}
+          timezone={data.preferences.timezone}
+        />
+        <WorkspacePulse
+          tenant={data.tenant}
+          events={data.activity ?? []}
+          timezone={data.preferences.timezone}
+        />
+      </div>
       <EnquiryDesk
         enquiries={data.enquiries}
         filters={filters}
@@ -302,6 +309,7 @@ function RecentActivityCard({
       title="Recent workspace activity"
       description="Meaningful changes across your workspace."
       action={<a href={`/${tenant}/dashboard/activity`} className="text-xs font-semibold text-admin-primary hover:underline">View all</a>}
+      className="my-5"
     >
       <div className="divide-y divide-admin-border px-5">
         {visibleEvents.length ? visibleEvents.map((event) => {
@@ -312,6 +320,36 @@ function RecentActivityCard({
           return event.entityType === "lead" && event.entityId ? <a key={`${event.source}:${event.eventId}`} href={`/${tenant}/dashboard/${event.entityId}`} className="block hover:bg-admin-raised/40">{content}</a> : <div key={`${event.source}:${event.eventId}`}>{content}</div>;
         }) : <p className="py-6 text-xs text-admin-muted">No workspace activity yet.</p>}
       </div>
+    </Panel>
+  );
+}
+
+function WorkspacePulse({
+  tenant,
+  events,
+  timezone,
+}: {
+  tenant: string;
+  events: WorkspaceData["activity"];
+  timezone: string;
+}) {
+  const visibleEvents = events ?? [];
+  const leadUpdates = visibleEvents.filter((event) => event.type.startsWith("lead_")).length;
+  const teamUpdates = visibleEvents.filter((event) => event.type.startsWith("member_")).length;
+  const published = visibleEvents.filter((event) => event.type === "content_published").length;
+  return (
+    <Panel
+      title="Workspace pulse"
+      description="A quick read of the activity above."
+      className="my-5"
+      action={<span className="text-[10px] text-admin-muted">{timezone}</span>}
+    >
+      <div className="grid gap-3 p-5 sm:grid-cols-3 xl:grid-cols-1">
+        <div className="rounded-xl border border-admin-border bg-admin-raised p-4"><p className={`${monoClass} text-2xl`}>{visibleEvents.length}</p><p className="mt-1 text-xs text-admin-muted">Recent events</p></div>
+        <div className="rounded-xl border border-admin-border bg-admin-raised p-4"><p className={`${monoClass} text-2xl`}>{leadUpdates}</p><p className="mt-1 text-xs text-admin-muted">Lead updates</p></div>
+        <div className="rounded-xl border border-admin-border bg-admin-raised p-4"><p className={`${monoClass} text-2xl`}>{teamUpdates + published}</p><p className="mt-1 text-xs text-admin-muted">Workspace updates</p></div>
+      </div>
+      <div className="border-t border-admin-border px-5 py-4"><a href={`/${tenant}/dashboard/activity`} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-admin-primary hover:underline">Review the full activity log <ArrowUpRight aria-hidden="true" className="size-3.5" /></a></div>
     </Panel>
   );
 }
