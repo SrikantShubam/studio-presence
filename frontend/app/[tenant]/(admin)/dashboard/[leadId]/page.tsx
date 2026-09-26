@@ -24,9 +24,20 @@ export default async function LeadDetailPage({
 }) {
   const { tenant: tenantSlug, leadId } = await params
   const { lead, context, members, role } = await loadLead(tenantSlug, leadId)
+  const currentAvatar = [
+    context.profileMetadata?.avatar_url,
+    context.profileMetadata?.picture,
+    context.profileMetadata?.avatarUrl,
+    context.profileMetadata?.photoURL,
+    context.profileMetadata?.image,
+  ].find((value): value is string => typeof value === 'string' && value.length > 0) ?? null
   let timeline = [] as Awaited<ReturnType<typeof listWorkspaceActivity>>['events']
   try {
-    timeline = (await listWorkspaceActivity(context.db, context.tenant.id, { limit: 10, leadId: lead.id })).events
+    timeline = (await listWorkspaceActivity(context.db, context.tenant.id, {
+      limit: 10,
+      leadId: lead.id,
+      currentActor: { userId: context.user.id, avatarUrl: currentAvatar },
+    })).events
   } catch {
     timeline = []
   }
@@ -187,7 +198,13 @@ async function requireDashboardContext(expectedTenantSlug?: string) {
   const tenantContext = await requireTenant({ id: user.id, email: user.email, accessToken: session.access_token })
   if (expectedTenantSlug && tenantContext.tenant.slug !== expectedTenantSlug) redirect('/' + tenantContext.tenant.slug + '/dashboard/enquiries')
   if (!canAccessDashboard(tenantContext.tenant)) redirect('/' + tenantContext.tenant.slug + '/dashboard/enquiries')
-  return tenantContext
+  return {
+    ...tenantContext,
+    profileMetadata: {
+      ...(user.user_metadata ?? {}),
+      ...(user.identities?.[0]?.identity_data ?? {}),
+    } as Record<string, unknown>,
+  }
 }
 
 function DetailRow({ label, value }: { label: string; value: string | null }) {

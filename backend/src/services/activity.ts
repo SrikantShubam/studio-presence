@@ -196,6 +196,7 @@ export type WorkspaceActivityOptions = {
   limit?: number
   cursor?: string
   leadId?: string
+  currentActor?: Pick<ActivityActorInput, 'userId' | 'avatarUrl'>
 }
 
 function actorIdFromPayload(payload: Record<string, unknown>): string | null {
@@ -256,7 +257,12 @@ export async function listWorkspaceActivity(
     : { data: [], error: null }
   if (leadsResult.error) throw new Error(`Could not load activity leads: ${leadsResult.error.message}`)
   const leadNames = new Map((leadsResult.data ?? []).map((lead) => [lead.id, lead.name]))
-  const actors = new Map((membersResult.data ?? []).map((member) => [member.user_id, formatActivityActor({ userId: member.user_id, displayName: member.display_name, email: member.email })]))
+  const actors = new Map((membersResult.data ?? []).map((member) => [member.user_id, formatActivityActor({
+    userId: member.user_id,
+    displayName: member.display_name,
+    email: member.email,
+    avatarUrl: options.currentActor?.userId === member.user_id ? options.currentActor.avatarUrl : null,
+  })]))
   const fallbackActor = formatActivityActor({})
   const events: NormalizedActivityEvent[] = []
 

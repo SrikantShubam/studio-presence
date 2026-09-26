@@ -27,7 +27,17 @@ export default async function WorkspaceActivityPage({
   if (!isDemo && user?.email && session) {
     const context = await requireTenant({ id: user.id, email: user.email, accessToken: session.access_token })
     if (context.tenant.slug !== tenant || !canAccessDashboard(context.tenant)) redirect(`/${context.tenant.slug}/dashboard`)
-    const page = await listWorkspaceActivity(context.db, context.tenant.id, { limit: 10, cursor: query?.cursor })
+    const metadata = {
+      ...(user.user_metadata ?? {}),
+      ...(user.identities?.[0]?.identity_data ?? {}),
+    } as Record<string, unknown>
+    const currentAvatar = [metadata.avatar_url, metadata.picture, metadata.avatarUrl, metadata.photoURL, metadata.image]
+      .find((value): value is string => typeof value === 'string' && value.length > 0) ?? null
+    const page = await listWorkspaceActivity(context.db, context.tenant.id, {
+      limit: 10,
+      cursor: query?.cursor,
+      currentActor: { userId: user.id, avatarUrl: currentAvatar },
+    })
     events = page.events
     nextCursor = page.nextCursor
     const { data: preferences } = await context.db.from('workspace_preferences').select('timezone').eq('tenant_id', context.tenant.id).maybeSingle()

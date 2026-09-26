@@ -170,7 +170,17 @@ export default async function DashboardPage({
       preferencesError = "Notification preferences could not be loaded. Refresh to try again.";
     }
     try {
-      activity = (await listWorkspaceActivity(context.db, context.tenant.id, { limit: 5 })).events;
+      const currentAvatar = [
+        profileMetadata.avatar_url,
+        profileMetadata.picture,
+        profileMetadata.avatarUrl,
+        profileMetadata.photoURL,
+        profileMetadata.image,
+      ].find((value): value is string => typeof value === "string" && value.length > 0) ?? null;
+      activity = (await listWorkspaceActivity(context.db, context.tenant.id, {
+        limit: 5,
+        currentActor: { userId: context.user.id, avatarUrl: currentAvatar },
+      })).events;
     } catch {
       activity = [];
     }

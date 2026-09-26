@@ -269,7 +269,6 @@ export default function OverviewTab({
           tenant={data.tenant}
           events={data.activity ?? []}
           timezone={data.preferences.timezone}
-          demo={sample}
         />
         <WorkspacePulse
           tenant={data.tenant}
@@ -294,12 +293,10 @@ function RecentActivityCard({
   tenant,
   events,
   timezone,
-  demo,
 }: {
   tenant: string;
   events: WorkspaceData["activity"];
   timezone: string;
-  demo: boolean;
 }) {
   const visibleEvents = (events ?? []).slice(0, 5);
   const formatter = new Intl.DateTimeFormat("en-IN", {
@@ -313,7 +310,7 @@ function RecentActivityCard({
     <Panel
       title="Recent workspace activity"
       description="Meaningful changes across your workspace."
-      action={visibleEvents.length ? <a href={`/${tenant}/dashboard/activity?demo=${demo ? '1' : '0'}`} className="text-xs font-semibold text-admin-primary hover:underline">View all</a> : undefined}
+      action={undefined}
       className="my-5"
     >
       <div className="divide-y divide-admin-border px-5">
