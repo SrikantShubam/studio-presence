@@ -81,7 +81,7 @@ function actorWords(value: string): string[] {
 }
 
 export function formatActivityActor(input: ActivityActorInput): ActivityActor {
-  const name = input.displayName?.trim() || 'Workspace member'
+  const name = input.displayName?.trim() || input.email?.trim() || 'Workspace member'
   const words = actorWords(name)
   const initials = words.length > 1
     ? `${words[0]![0]}${words.at(-1)![0]}`
