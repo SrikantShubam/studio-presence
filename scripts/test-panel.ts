@@ -284,7 +284,7 @@ async function main() {
     const preferencesA = await getWorkspacePreferences(asA, a.tenantId)
     assert(
       "A's notification preferences persist",
-      preferencesA.new_lead_alerts === false && preferencesA.weekly_digest === true,
+      preferencesA.new_lead_alerts === false && preferencesA.weekly_digest === true && preferencesA.timezone === 'Asia/Kolkata',
       `A's preferences: ${JSON.stringify(preferencesA)}`,
     )
 
@@ -296,7 +296,7 @@ async function main() {
     const preferencesFromA = await getWorkspacePreferences(asA, b.tenantId)
     assert(
       "A cannot read B's workspace preferences",
-      preferencesFromA.new_lead_alerts === true && preferencesFromA.weekly_digest === true,
+      preferencesFromA.new_lead_alerts === true && preferencesFromA.weekly_digest === true && preferencesFromA.timezone === 'Asia/Kolkata',
       `A read B's preferences: ${JSON.stringify(preferencesFromA)}`,
     )
 
