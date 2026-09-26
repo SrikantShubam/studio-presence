@@ -60,6 +60,14 @@ const supportingTabs = readFileSync(
   "frontend/app/[tenant]/(admin)/dashboard/components/SupportingTabs.tsx",
   "utf8",
 );
+const leadDetailPage = readFileSync(
+  "frontend/app/[tenant]/(admin)/dashboard/[leadId]/page.tsx",
+  "utf8",
+);
+const leadDetailTimeline = readFileSync(
+  "frontend/app/[tenant]/(admin)/dashboard/components/LeadDetailTabs.tsx",
+  "utf8",
+);
 assert.match(enquiryDialogs, /InternationalPhoneInput/);
 assert.match(enquiryDialogs, /Describe the project type/);
 assert.match(enquiryDesk, /<StatusBadge status=\{item\.status\} \/>[\s\S]*Updated/);
@@ -70,6 +78,10 @@ for (const status of ["new", "contacted", "quoted", "won", "lost"]) {
   assert.match(primitives, new RegExp(`${status}: ".*admin-`));
 }
 assert.match(supportingTabs, /Workspace timezone[\s\S]*<Select[\s\S]*containerClassName="mt-1"/);
+assert.match(leadDetailPage, /<LeadTimeline timeline=\{timeline\} timezone=\{timezone\} \/>/);
+assert.match(leadDetailPage, /lg:grid-cols-\[minmax\(0,1\.35fr\)_minmax\(320px,0\.65fr\)\]/);
+assert.doesNotMatch(leadDetailPage, /Jump to the private notes|Jump to the lead booklet|id="lead-booklet"/);
+assert.doesNotMatch(leadDetailTimeline, /role="tablist"|type Tab =|useState/);
 assert.doesNotMatch(enquiryDialogs, /Savingâ€¦|Â·|preferencesâ€¦/);
 assert.doesNotMatch(enquiryDesk, /Â·/);
 
