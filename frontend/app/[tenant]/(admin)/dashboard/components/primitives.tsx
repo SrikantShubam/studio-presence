@@ -62,11 +62,17 @@ export function Badge({ children, className = "" }: { children: ReactNode; class
     </span>
   );
 }
+const statusBadgeClass: Record<LeadStatus, string> = {
+  new: "border-admin-alert bg-admin-alert-soft text-admin-alert",
+  contacted: "border-admin-primary bg-admin-primary-soft text-admin-primary",
+  quoted: "border-admin-ink bg-admin-raised text-admin-ink",
+  won: "border-admin-success bg-admin-success/10 text-admin-success",
+  lost: "border-admin-muted bg-admin-raised text-admin-muted",
+};
+
 export function StatusBadge({ status }: { status: LeadStatus }) {
   return (
-    <span
-      className={`inline-flex border px-2 py-1 text-[10px] ${status === "new" ? "border-admin-alert text-admin-alert rounded-xl" : "border-admin-border text-admin-muted rounded-xl"}`}
-    >
+    <span className={`inline-flex rounded-xl border px-2 py-1 text-[10px] ${statusBadgeClass[status]}`}>
       {STATUS_LABELS[status]}
     </span>
   );

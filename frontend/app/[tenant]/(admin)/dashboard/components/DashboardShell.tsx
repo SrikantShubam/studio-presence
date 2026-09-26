@@ -350,6 +350,10 @@ export function DashboardWorkspace({
   const [data, setData] = useState(initialData);
 
   useEffect(() => {
+    if (initialData.mode !== "demo") setData(initialData);
+  }, [initialData]);
+
+  useEffect(() => {
     brandingContext?.setStudioName(data.config.business.name);
     if (data.config.business.ownerName !== undefined) {
       brandingContext?.setOwnerName(data.config.business.ownerName);

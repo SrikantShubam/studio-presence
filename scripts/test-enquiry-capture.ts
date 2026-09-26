@@ -48,9 +48,26 @@ const enquiryDesk = readFileSync(
   "frontend/app/[tenant]/(admin)/dashboard/components/EnquiryDesk.tsx",
   "utf8",
 );
+const dashboardShell = readFileSync(
+  "frontend/app/[tenant]/(admin)/dashboard/components/DashboardShell.tsx",
+  "utf8",
+);
+const primitives = readFileSync(
+  "frontend/app/[tenant]/(admin)/dashboard/components/primitives.tsx",
+  "utf8",
+);
+const supportingTabs = readFileSync(
+  "frontend/app/[tenant]/(admin)/dashboard/components/SupportingTabs.tsx",
+  "utf8",
+);
 assert.match(enquiryDialogs, /InternationalPhoneInput/);
 assert.match(enquiryDialogs, /Describe the project type/);
 assert.match(enquiryDesk, /<StatusBadge status=\{item\.status\} \/>[\s\S]*Updated/);
+assert.match(dashboardShell, /initialData\.mode !== "demo"\) setData\(initialData\)/);
+for (const status of ["new", "contacted", "quoted", "won", "lost"]) {
+  assert.match(primitives, new RegExp(`${status}: ".*admin-`));
+}
+assert.match(supportingTabs, /Workspace timezone[\s\S]*<Select[\s\S]*containerClassName="mt-1"/);
 assert.doesNotMatch(enquiryDialogs, /Savingâ€¦|Â·|preferencesâ€¦/);
 assert.doesNotMatch(enquiryDesk, /Â·/);
 

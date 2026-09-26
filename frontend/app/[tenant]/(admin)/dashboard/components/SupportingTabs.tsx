@@ -1055,7 +1055,23 @@ export function SettingsTab({
                 <Feedback error={preferencesError} />
                 <label className="flex items-center justify-between gap-3"><span><span className="block font-medium">New enquiry alerts</span><span className="text-admin-muted">Show an alert when a lead arrives.</span></span><input type="checkbox" disabled={!canEdit || pending} className="size-4 accent-admin-primary" checked={newLeadAlerts} onChange={(event) => setNewLeadAlerts(event.target.checked)} /></label>
                 <label className="flex items-center justify-between gap-3 border-t border-admin-border pt-3 rounded-xl"><span><span className="block font-medium">Weekly activity digest</span><span className="text-admin-muted">Show the last seven days in your workspace.</span></span><input type="checkbox" disabled={!canEdit || pending} className="size-4 accent-admin-primary" checked={weeklyDigest} onChange={(event) => setWeeklyDigest(event.target.checked)} /></label>
-                <label className="grid gap-1 border-t border-admin-border pt-3"><span className="font-medium">Workspace timezone</span><span className="text-admin-muted">Activity timestamps and monthly reports use this timezone.</span><select disabled={!canEdit || pending} className="mt-1 min-h-11 rounded-xl border border-admin-border bg-admin-surface px-3 text-sm text-admin-ink" value={timezone} onChange={(event) => setTimezone(event.target.value)}><option value="Asia/Kolkata">India Standard Time (Asia/Kolkata)</option><option value="Asia/Dubai">Gulf Standard Time (Asia/Dubai)</option><option value="Asia/Singapore">Singapore Time (Asia/Singapore)</option><option value="Europe/London">United Kingdom (Europe/London)</option><option value="America/New_York">Eastern Time (America/New_York)</option><option value="America/Los_Angeles">Pacific Time (America/Los_Angeles)</option></select></label>
+                <label className="grid gap-1 border-t border-admin-border pt-3">
+                  <span className="font-medium">Workspace timezone</span>
+                  <span className="text-admin-muted">Activity timestamps and monthly reports use this timezone.</span>
+                  <Select
+                    disabled={!canEdit || pending}
+                    containerClassName="mt-1"
+                    value={timezone}
+                    onChange={(event) => setTimezone(event.target.value)}
+                  >
+                    <option value="Asia/Kolkata">India Standard Time (Asia/Kolkata)</option>
+                    <option value="Asia/Dubai">Gulf Standard Time (Asia/Dubai)</option>
+                    <option value="Asia/Singapore">Singapore Time (Asia/Singapore)</option>
+                    <option value="Europe/London">United Kingdom (Europe/London)</option>
+                    <option value="America/New_York">Eastern Time (America/New_York)</option>
+                    <option value="America/Los_Angeles">Pacific Time (America/Los_Angeles)</option>
+                  </Select>
+                </label>
               </div>
             </Panel>
           </div>
