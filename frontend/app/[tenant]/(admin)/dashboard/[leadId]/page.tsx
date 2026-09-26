@@ -24,9 +24,19 @@ export default async function LeadDetailPage({
 }) {
   const { tenant: tenantSlug, leadId } = await params
   const { lead, context, members, role } = await loadLead(tenantSlug, leadId)
-  const timeline = (await listWorkspaceActivity(context.db, context.tenant.id, { limit: 10, leadId: lead.id })).events
-  const preferences = await context.db.from('workspace_preferences').select('timezone').eq('tenant_id', context.tenant.id).maybeSingle()
-  const timezone = preferences.data?.timezone || 'Asia/Kolkata'
+  let timeline = [] as Awaited<ReturnType<typeof listWorkspaceActivity>>['events']
+  try {
+    timeline = (await listWorkspaceActivity(context.db, context.tenant.id, { limit: 10, leadId: lead.id })).events
+  } catch {
+    timeline = []
+  }
+  let timezone = 'Asia/Kolkata'
+  try {
+    const preferences = await context.db.from('workspace_preferences').select('timezone').eq('tenant_id', context.tenant.id).maybeSingle()
+    timezone = preferences.data?.timezone || timezone
+  } catch {
+    timezone = 'Asia/Kolkata'
+  }
   const canUpdateWork = role === 'owner' || role === 'viewer' || (role === 'editor' && lead.assigned_to === context.user.id)
   const canAssign = role === 'owner'
   const assignableMembers = members.filter((member) => member.role === 'owner' || member.role === 'editor')
